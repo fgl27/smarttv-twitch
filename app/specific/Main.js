@@ -47,7 +47,7 @@ var Main_values = {
     "Play_selectedChannelDisplayname": '',
     "Play_selectedChannel": '',
     "Play_gameSelected": '',
-    "Users_Position": '',
+    "Users_Position": 0,
     "Main_WasOpen": false,
     "Play_WasPlaying": 0,
     "ChannelVod_vodId": '',

@@ -10,6 +10,13 @@ Full support for all 2015 TV is not possible as the TV firmware doesn't supports
 
 In doubt [open a issue](https://github.com/fgl27/smarttv-twitch/issues/new/choose)
 
+Android TV version
+===============
+
+A android version of this is available here:
+[SmartTwitchTV](https://github.com/fgl27/SmartTwitchTV)<br>
+The android version is a full web base app that can be used to port this project to any other OS, so check that in case you wanna to port this for a web base OS.
+
 About this fork
 ===============
 

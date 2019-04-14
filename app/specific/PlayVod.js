@@ -512,7 +512,14 @@ function PlayVod_onPlayer() {
     Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_RESUME", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayVod_Buffer);
     Play_avplay.setListener(PlayVod_listener);
 
-    Play_avplay.prepareAsync(function() {
+    Play_avplay.prepareAsync(function() { //successCallback
+        Play_avplay.play();
+        PlayVod_Playing = true;
+        ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;
+        Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
+        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+    }, function() { //errorCallback
+        Play_avplay.prepare();
         Play_avplay.play();
         PlayVod_Playing = true;
         ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;

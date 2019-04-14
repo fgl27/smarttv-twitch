@@ -676,7 +676,12 @@ function Play_onPlayer() {
     Play_offsettime = Play_oldcurrentTime;
 
     //Use prepareAsync as prepare() only can freeze up the app
-    Play_avplay.prepareAsync(function() {
+    Play_avplay.prepareAsync(function() { //successCallback
+        Play_avplay.play();
+        Play_Playing = true;
+        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+    }, function() { //errorCallback
+        Play_avplay.prepare();
         Play_avplay.play();
         Play_Playing = true;
         if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();

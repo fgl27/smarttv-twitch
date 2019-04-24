@@ -719,15 +719,21 @@ function Play_loadChat() {
 
 function Play_CheckChat() {
     var doc = Play_Chatobj.contentDocument;
-    if (doc !== undefined && doc.body !== null)
-        Play_ChatLoadOK = doc.body.innerHTML.indexOf('Connected') !== -1; //when connected OK a "Connected" is see in the chat
+    var skipothers = false;
+    try {
+        if (doc !== undefined && doc.body !== null)
+            Play_ChatLoadOK = doc.body.innerHTML.indexOf('Connected') !== -1; //when connected OK a "Connected" is see in the chat
+        skipothers = Play_ChatLoadOK;
+    } catch (e) {
+        Play_ChatLoadOK = true;
+    }
 
     if (!Play_ChatLoadOK) {
         if (Play_ChatLoadStarted && Play_CheckChatCounter < 7) {
             Play_CheckChatCounter++;
             Play_CheckChatId = window.setTimeout(Play_CheckChat, 1000);
         } else Play_loadChat();
-    } else {
+    } else if (skipothers) {
         Play_ChatFixPositionId = window.setInterval(Play_ChatFixPosition, 500);
         doc = doc.getElementById('chat_box');
         if (doc) doc.style.fontFamily = "'Helvetica Neue',Helvetica, Arial,sans-serif,Sans,Jomolhari,dejavu-sans, CambriaMath, CODE2000 , BabelStoneHan";
@@ -1049,10 +1055,12 @@ function Play_setHidePanel() {
 // with causes the line to be half off screen, in that case the interval will fix it
 function Play_ChatFixPosition() {
     var doc = Play_Chatobj.contentDocument;
-    if (doc !== undefined && doc.body !== null) {
-        doc = doc.getElementById('chat_box');
-        if (doc) doc.scrollTop = doc.scrollHeight;
-    }
+    try {
+        if (doc !== undefined && doc.body !== null) {
+            doc = doc.getElementById('chat_box');
+            if (doc) doc.scrollTop = doc.scrollHeight;
+        }
+    } catch (e) {}
 }
 
 function Play_showChat() {

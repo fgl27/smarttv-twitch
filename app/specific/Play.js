@@ -9,10 +9,10 @@ var Play_quality = "source";
 var Play_qualityPlaying = Play_quality;
 var Play_PanelOffset = 0;
 var Play_isFullScreen = true;
-var Play_ChatPositionsBF;
-var Play_ChatEnableBF;
-var Play_ChatSizeValueBF;
-var Play_isHost;
+var Play_ChatPositionsBF = 0;
+var Play_ChatEnableBF = 0;
+var Play_ChatSizeValueBF = 0;
+var Play_isHost = false;
 
 var Play_STATE_LOADING_TOKEN = 0;
 var Play_STATE_LOADING_PLAYLIST = 1;

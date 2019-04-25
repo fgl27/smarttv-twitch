@@ -1,4 +1,6 @@
-//This is a moded version of twemoji, I only need this from this file, check original in they github
+// https://github.com/twitter/twemoji
+
+// This is a moded version of twemoji, I only need this from this file, check original in they github
 var twemoji = (function(
     /*! Copyright Twitter Inc. and other contributors. Licensed under MIT */
     /*
@@ -169,9 +171,9 @@ var twemoji = (function(
         return r.join('-');
     }
 
-    function parse(str) {
+    function parse(str, dontremove) {
         //Twitch title may contain < or > with causes html problems
-        str = str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        if (!dontremove) str = str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
         return replace(str, function(rawText) {
             var iconId = grabTheRightIcon(rawText);
 

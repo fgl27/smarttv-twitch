@@ -219,6 +219,7 @@ function Main_initWindows() {
 
     Main_ready(function() {
 
+        Chat_Preinit();
         Play_PreStart();
         AddUser_RestoreUsers();
         document.body.addEventListener("keyup", Main_handleKeyUp, false);
@@ -228,7 +229,6 @@ function Main_initWindows() {
         //keep 4k streams disable until we have 4k content from twitch
         //TV models that don't like "setStreamingProperty("SET_MODE_4K", "TRUE");" all 1080p and UNU7090
         Main_Is4k = false; //webapis.productinfo.isUdPanelSupported();
-        Chat_Preinit();
         Main_SetTopOpacityId = window.setTimeout(Main_SetTopOpacity, 5000);
 
         if (Main_checkVersion()) {

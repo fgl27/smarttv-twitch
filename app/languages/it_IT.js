@@ -192,7 +192,7 @@ function it_ITLang() {
     STR_SETTINGS_BUFFER_CLIP = "Buffer Clip";
     STR_SETTINGS_GENERAL = "General related";
     STR_SETTINGS_LANG = "Lingua";
-    STR_LOADING_CHAT = "Chat: Connessione al server della cronologia della chat.." + STR_BR + "Chat: Connesso." + STR_BR + "Chat: Unito al canale ";
+    STR_LOADING_CHAT = "Chat: Connessione al server della chat.." + STR_BR + "Chat: Connesso." + STR_BR + "Chat: Unito al canale ";
     STR_VOD_HISTORY = "Vuoi guardare dall'inizio o da dove sei rimasto l'ultima volta?";
     STR_FROM = "Da:" + STR_BR;
     STR_FROM_START = STR_FROM + "Inizio";

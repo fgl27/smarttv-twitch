@@ -9,7 +9,7 @@ var Play_quality = "source";
 var Play_qualityPlaying = Play_quality;
 var Play_PanelOffset = 0;
 var Play_isFullScreen = true;
-var Play_ChatPositionsBF = 0;
+var Play_ChatPositionsBF;
 var Play_ChatEnableBF = 0;
 var Play_ChatSizeValueBF = Play_ChatSizeValue;
 var Play_isHost = false;
@@ -74,17 +74,11 @@ var Play_BufferPercentage = 0;
 var Play_TargetHost = '';
 var Play_isLive = true;
 var Play_RestoreFromResume = false;
-var Play_Chatobj;
-var Play_ChatLoadOK = false;
-var Play_CheckChatCounter = 0;
-var Play_CheckChatId;
-var Play_ChatLoadStarted = false;
 var Play_Buffer = 4;
 var Play_PlayerCheckTimer = 4;
 var Play_PlayerCheckInterval = 1000;
 var Play_updateStreamInfoErrorTry = 0;
 var Play_chat_container;
-var Play_ChatFixPositionId;
 var Play_IncrementView = '';
 var Play_ProgresBarrElm;
 var Play_DefaultjumpTimers = [];
@@ -157,7 +151,6 @@ var Play_ChatFontObj = ['chat_size_small', 'chat_size_default', 'chat_size_biger
 function Play_PreStart() {
     Play_avplay = (window.tizen && window.webapis.avplay) || {};
 
-    Play_Chatobj = document.getElementById('chat_frame');
     Play_chat_container = document.getElementById("chat_container");
     Play_ProgresBarrElm = document.getElementById("inner_progress_bar");
 
@@ -273,8 +266,6 @@ function Play_Start() {
     Main_textContent("stream_watching_time", STR_WATCHING + Play_timeMs(0));
     Play_created = Play_timeMs(0);
     Main_textContent("stream_live_time", STR_SINCE + Play_created + STR_AGO);
-    Main_HideElement('chat_box');
-    Main_ShowElement('chat_frame');
     Main_HideElement('progress_bar_div');
 
     Play_EndSet(1);
@@ -282,7 +273,6 @@ function Play_Start() {
     Play_updateStreamInfoErrorTry = 0;
     Play_PlayerCheckCounter = 0;
     Play_PlayerCheckRun = false;
-    Play_ChatLoadOK = false;
     Play_currentTime = 0;
     Play_loadingInfoDataTry = 0;
     Play_loadingInfoDataTimeout = 3000;
@@ -309,8 +299,8 @@ function Play_Resume() {
             Main_ready(Play_shutdownStream);
         } else {
             Play_ClearPlayer();
+            ChatLive_Clear();
             Play_Playing = false;
-            Play_Chatobj.src = 'about:blank';
             window.clearInterval(Play_streamInfoTimer);
             window.clearInterval(Play_streamCheck);
         }
@@ -607,7 +597,6 @@ var Play_listener = {
         Play_PlayerCheckTimer = Play_Buffer;
         Play_PlayerCheckQualityChanged = true;
         // sync chat and stream
-        if (!Play_ChatLoadStarted) Play_loadChat();
     },
     onbufferingcomplete: function() {
         Play_HideBufferDialog();
@@ -617,7 +606,6 @@ var Play_listener = {
         Play_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = Play_Buffer;
         Play_PlayerCheckQualityChanged = true;
-        if (!Play_ChatLoadStarted) Play_loadChat();
     },
     onbufferingprogress: function(percent) {
         if (percent < 5) Play_PlayerCheckCount = 0;
@@ -634,7 +622,6 @@ var Play_listener = {
             Play_bufferingcomplete = true;
             Main_empty('dialog_buffer_play_percentage');
         }
-        if (!Play_ChatLoadStarted) Play_loadChat();
         Play_RestoreFromResume = false;
     },
     oncurrentplaytime: function(currentTime) {
@@ -671,19 +658,19 @@ function Play_onPlayer() {
     //}
 
     Play_avplay.setListener(Play_listener);
-    window.clearTimeout(Play_CheckChatId);
-    Play_ChatLoadStarted = false;
     Play_offsettime = Play_oldcurrentTime;
 
     //Use prepareAsync as prepare() only can freeze up the app
     Play_avplay.prepareAsync(function() { //successCallback
         Play_avplay.play();
         Play_Playing = true;
+        Play_loadChat();
         if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
     }, function() { //errorCallback
         Play_avplay.prepare();
         Play_avplay.play();
         Play_Playing = true;
+        Play_loadChat();
         if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
     });
 
@@ -696,48 +683,12 @@ function Play_onPlayer() {
 
 function Play_loadChat() {
     if (Main_values.Play_ChatForceDisable) {
+        ChatLive_Clear();
         Chat_Disable();
         return;
     }
-    Play_ChatLoadStarted = true;
-    window.clearInterval(Play_ChatFixPositionId);
 
-    //Clear the iframe doc to prevent false true from Play_CheckChat "indexOf('Connected') !== -1"
-    var doc = Play_Chatobj.contentDocument;
-    if (doc !== undefined && doc.body !== null) {
-        doc.open();
-        doc.write("");
-        doc.close();
-    }
-
-    window.clearTimeout(Play_CheckChatId);
-    Play_CheckChatCounter = 0;
-    Play_ChatLoadOK = false;
-    Play_Chatobj.src = 'https://www.nightdev.com/hosted/obschat/?theme=bttv_blackchat&channel=' + Main_values.Play_selectedChannel + '&fade=false&bot_activity=true&prevent_clipping=false';
-    Play_CheckChatId = window.setTimeout(Play_CheckChat, 5000);
-}
-
-function Play_CheckChat() {
-    var doc = Play_Chatobj.contentDocument;
-    var skipothers = false;
-    try {
-        if (doc !== undefined && doc.body !== null)
-            Play_ChatLoadOK = doc.body.innerHTML.indexOf('Connected') !== -1; //when connected OK a "Connected" is see in the chat
-        skipothers = Play_ChatLoadOK;
-    } catch (e) {
-        Play_ChatLoadOK = true;
-    }
-
-    if (!Play_ChatLoadOK) {
-        if (Play_ChatLoadStarted && Play_CheckChatCounter < 7) {
-            Play_CheckChatCounter++;
-            Play_CheckChatId = window.setTimeout(Play_CheckChat, 1000);
-        } else Play_loadChat();
-    } else if (skipothers) {
-        Play_ChatFixPositionId = window.setInterval(Play_ChatFixPosition, 500);
-        doc = doc.getElementById('chat_box');
-        if (doc) doc.style.fontFamily = "'Helvetica Neue',Helvetica, Arial,sans-serif,Sans,Jomolhari,dejavu-sans, CambriaMath, CODE2000 , BabelStoneHan";
-    }
+    ChatLive_Init();
 }
 
 // If idle or playing, the media is be played or process to
@@ -902,7 +853,6 @@ function Play_PreshutdownStream() {
     Chat_Clear();
     Play_ClearPlayer();
     Play_ClearPlay();
-    window.clearInterval(Play_ChatFixPositionId);
     Main_values.Play_selectedChannel_id = '';
 }
 
@@ -931,9 +881,9 @@ function Play_ClearPlay() {
     Play_Playing = false;
     document.body.removeEventListener("keydown", Play_handleKeyDown);
     document.removeEventListener('visibilitychange', Play_Resume);
+    ChatLive_Clear();
     Play_oldcurrentTime = 0;
     Play_offsettime = 0;
-    Play_Chatobj.src = 'about:blank';
     window.clearInterval(Play_streamInfoTimer);
     window.clearInterval(Play_streamCheck);
     Play_IsWarning = false;
@@ -1050,19 +1000,6 @@ function Play_setHidePanel() {
     Play_PanelHideID = window.setTimeout(Play_hidePanel, 5000);
 }
 
-// chat_box is a inner element from the chat_frame iframe, when changing it size it's content may be off screen
-// This also help with a bug when the emote is slow to load and loads after the scrollTop function from the iframe
-// with causes the line to be half off screen, in that case the interval will fix it
-function Play_ChatFixPosition() {
-    var doc = Play_Chatobj.contentDocument;
-    try {
-        if (doc !== undefined && doc.body !== null) {
-            doc = doc.getElementById('chat_box');
-            if (doc) doc.scrollTop = doc.scrollHeight;
-        }
-    } catch (e) {}
-}
-
 function Play_showChat() {
     Play_ChatPosition();
     Main_ShowElement('chat_container');
@@ -1130,7 +1067,7 @@ function Play_ChatSize(showDialog) {
     Play_chat_container.style.height = Play_ChatSizeVal[Play_ChatSizeValue - 1].containerHeight + '%';
     document.getElementById("play_chat_dialog").style.marginTop = Play_ChatSizeVal[Play_ChatSizeValue - 1].dialogTop + '%';
     Play_ChatPosition();
-    Play_ChatFixPosition();
+    ChatLive_ChatFixPosition();
 
     if (showDialog) Play_showChatBackgroundDialog(STR_SIZE + Play_ChatSizeVal[Play_ChatSizeValue - 1].percentage);
 
@@ -1501,8 +1438,7 @@ function Play_CheckHostStart() {
     Play_state = -1;
     Play_loadingDataTry = 0;
     Play_loadingDataTimeout = 2000;
-    window.clearTimeout(Play_CheckChatId);
-    Play_Chatobj.src = 'about:blank';
+    ChatLive_Clear();
     window.clearInterval(Play_streamInfoTimer);
     window.clearInterval(Play_streamCheck);
     if (Main_values.Play_selectedChannel_id !== '') Play_loadDataCheckHost();
@@ -1777,14 +1713,7 @@ function Play_handleKeyDown(e) {
             case KEY_GREEN:
                 //if (!Main_isReleased) window.location.reload(true); // refresh the app from live
                 Main_values.Play_ChatForceDisable = !Main_values.Play_ChatForceDisable;
-                if (Main_values.Play_ChatForceDisable) {
-                    Play_Chatobj.src = 'about:blank';
-                    Chat_Disable();
-                } else {
-                    Main_HideElement('chat_box');
-                    Main_ShowElement('chat_frame');
-                    Play_loadChat();
-                }
+                Play_loadChat();
                 Main_SaveValues();
                 break;
             case KEY_RED:

@@ -106,8 +106,6 @@ function PlayVod_Start() {
 function PlayVod_PosStart() {
     Play_offsettimeMinus = 0;
 
-    Main_ShowElement('chat_box');
-    Main_HideElement('chat_frame');
     window.setTimeout(function() {
         Main_ShowElement('scene_channel_panel_bottom');
         Main_ShowElement('progress_bar_div');

@@ -28,7 +28,7 @@ temp_maker_folder="release/temp_maker/";
 html_file=("$temp_maker_folder""config.xml" "$temp_maker_folder""index.html" "$temp_maker_folder""master.css" "release/index.html");
 
 # add js folders here
-js_folders=("app/languages/" "app/general/" "app/specific/");
+js_folders=("app/languages/" "app/general/" "app/specific/" "app/thirdparty/");
 
 # no changes needed to be done bellow this line
 
@@ -182,7 +182,7 @@ echo -e "#				   #\\n####################################\\n";
 
 if [ "$canjshint" == 1 ]; then
 	echo -e "${bldgrn}JSHint Test started...\\n";
-	echo -e '/* jshint undef: true, unused: true, node: true, browser: true */\n/*globals tizen, webapis, STR_BODY */' > "$mainfolder"/release/master.js;
+	echo -e '/* jshint undef: true, unused: true, node: true, browser: true */\n/*globals tizen, webapis, STR_BODY, ReconnectingWebSocket, punycode */' > "$mainfolder"/release/master.js;
 	js_jshint "${js_folders[@]}";
 fi;
 
@@ -194,7 +194,7 @@ mkdir -p "$temp_maker_folder"
 cp -rf index.html "$temp_maker_folder"master.css
 cp -rf index.html "$temp_maker_folder"index.html
 cp -rf config.xml "$temp_maker_folder"config.xml
-sed -i 's/flbtxFhd64/qY6HyNzLIR/g' "$temp_maker_folder"config.xml
+sed -i 's/flbtxFhd64/k8XoHuvp2a/g' "$temp_maker_folder"config.xml
 cp -rf release/index.html index_release.html
 
 sed -i -n '/bodystart/,/bodyend/p' "$temp_maker_folder"index.html

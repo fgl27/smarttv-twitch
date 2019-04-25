@@ -11,7 +11,7 @@ var Play_PanelOffset = 0;
 var Play_isFullScreen = true;
 var Play_ChatPositionsBF = 0;
 var Play_ChatEnableBF = 0;
-var Play_ChatSizeValueBF = 0;
+var Play_ChatSizeValueBF = Play_ChatSizeValue;
 var Play_isHost = false;
 
 var Play_STATE_LOADING_TOKEN = 0;

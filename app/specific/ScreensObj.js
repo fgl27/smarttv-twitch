@@ -367,7 +367,7 @@ function ScreensObj_InitGame() {
             if (this.data) {
                 var tempObj = JSON.parse(responseText);
 
-                this.MaxOffset = this.data._total;
+                this.MaxOffset = tempObj._total;
                 this.data = this.data.concat(tempObj.top);
 
                 this.offset = this.data.length;
@@ -466,7 +466,7 @@ function ScreensObj_InitUserGames() {
             if (this.data) {
                 var tempObj = JSON.parse(responseText);
 
-                this.MaxOffset = this.data._total;
+                this.MaxOffset = tempObj._total;
                 this.data = this.data.concat(tempObj.follows);
 
                 this.offset = this.data.length;

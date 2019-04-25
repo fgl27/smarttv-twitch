@@ -143,14 +143,15 @@ function Screens_loadDataSuccess() {
     //var appendDiv = !inUseObj.coloumn_id;
 
     if (response_items > inUseObj.ItemsLimit) response_items = inUseObj.ItemsLimit;
-    else inUseObj.dataEnded = true;
+    else if (!inUseObj.loadingData) inUseObj.dataEnded = true;
 
     if (response_items) {
         var response_rows = Math.ceil(response_items / inUseObj.ColoumnsCount);
 
         var max_row = inUseObj.row_id + response_rows;
+        var doc = document.getElementById(inUseObj.table);
 
-        for (inUseObj.row_id; inUseObj.row_id < max_row; inUseObj.row_id++) {
+        for (inUseObj.row_id; inUseObj.row_id < max_row;) {
 
             if (inUseObj.coloumn_id === inUseObj.ColoumnsCount) {
                 inUseObj.row = document.createElement('div');
@@ -158,10 +159,15 @@ function Screens_loadDataSuccess() {
                 //appendDiv = true;
             }
 
-            for (inUseObj.coloumn_id; inUseObj.coloumn_id < inUseObj.ColoumnsCount && inUseObj.data_cursor < inUseObj.data.length; inUseObj.data_cursor++) inUseObj.addCell(inUseObj.data[inUseObj.data_cursor]);
+            for (inUseObj.coloumn_id; inUseObj.coloumn_id < inUseObj.ColoumnsCount && inUseObj.data_cursor < inUseObj.data.length; inUseObj.data_cursor++) {
+                //TODO understand and fix before the code reaches this point way a cell is undefined some times
+                if (inUseObj.data[inUseObj.data_cursor]) inUseObj.addCell(inUseObj.data[inUseObj.data_cursor]);
+            }
 
             //if (appendDiv)
-            document.getElementById(inUseObj.table).appendChild(inUseObj.row);
+            doc.appendChild(inUseObj.row);
+            if (inUseObj.coloumn_id === inUseObj.ColoumnsCount) inUseObj.row_id++;
+            else if (inUseObj.data_cursor >= inUseObj.data.length) break;
         }
 
     }
@@ -255,15 +261,15 @@ function Screens_loadDataSuccessFinish(emptyContent) {
 function Screens_addFocus() {
     inUseObj.addFocus(inUseObj.posY, inUseObj.posX, inUseObj.ids, inUseObj.ColoumnsCount, inUseObj.itemsCount);
 
+    //Load more as the data is getting used
+    if ((inUseObj.posY > 2) && (inUseObj.data_cursor + Main_ItemsLimitMax) > inUseObj.data.length && !inUseObj.dataEnded && !inUseObj.loadingData) {
+        Screens_loadDataPrepare();
+        Screens_loadDataRequest();
+    }
+
     if ((inUseObj.posY + inUseObj.ItemsReloadLimit) > (inUseObj.itemsCount / inUseObj.ColoumnsCount) && inUseObj.data_cursor < inUseObj.data.length) {
         Main_imgVectorRst();
         inUseObj.loadDataSuccess();
-    }
-
-    //Load more as the data is getting used
-    if ((inUseObj.data_cursor + Main_ItemsLimitMax) > inUseObj.data.length && !inUseObj.dataEnded && !inUseObj.loadingData) {
-        Screens_loadDataPrepare();
-        Screens_loadDataRequest();
     }
 }
 

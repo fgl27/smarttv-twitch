@@ -129,7 +129,6 @@ var PlayClip_listener = {
         PlayClip_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = Play_Buffer;
         PlayClip_PlayerCheckQualityChanged = true;
-        if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + (new Date()));
     },
     onbufferingcomplete: function() {
         Play_HideBufferDialog();
@@ -140,7 +139,6 @@ var PlayClip_listener = {
         PlayClip_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = Play_Buffer;
         PlayClip_PlayerCheckQualityChanged = true;
-        if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + (new Date()));
     },
     onbufferingprogress: function(percent) {
         if (percent < 5) PlayClip_PlayerCheckCount = 0;
@@ -160,7 +158,6 @@ var PlayClip_listener = {
             Main_empty('dialog_buffer_play_percentage');
             // reset the values after using
             PlayClip_offsettime = 0;
-            if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + (new Date()));
         }
     },
     oncurrentplaytime: function(currentTime) {
@@ -170,7 +167,6 @@ var PlayClip_listener = {
         Play_PannelEndStart(3);
     },
     onerror: function(eventType) {
-        if (!Main_isReleased) console.log('onerror:', 'date: ' + (new Date()) + ' eventType: ' + eventType);
         if (eventType === "PLAYER_ERROR_CONNECTION_FAILED" || eventType === "PLAYER_ERROR_INVALID_URI")
             Play_PannelEndStart(3);
     }
@@ -228,49 +224,40 @@ function PlayClip_qualityChanged() {
 
 function PlayClip_onPlayer() {
     Play_showBufferDialog();
-
-    if (!Main_isReleased) {
-        console.log('PlayClip_onPlayer:', 'date: ' + (new Date()));
-        console.log('PlayClip_onPlayer:', '\n' + '\n"' + PlayClip_playingUrl + '"\n');
-    }
-
+    if (!Main_isReleased) console.log('PlayClip_onPlayer:', '\n' + '\n"' + PlayClip_playingUrl + '"\n');
     try {
-        webapis.avplay.stop();
-        webapis.avplay.close();
-        webapis.avplay.open(PlayClip_playingUrl);
+        Play_avplay.stop();
+        Play_avplay.close();
+        Play_avplay.open(PlayClip_playingUrl);
     } catch (e) {
         console.log('PlayClip_onPlayer open ' + e);
     }
 
-    if (PlayClip_offsettime > 0 && PlayClip_offsettime !== webapis.avplay.getCurrentTime()) {
+    if (PlayClip_offsettime > 0 && PlayClip_offsettime !== Play_avplay.getCurrentTime()) {
         try {
-            webapis.avplay.seekTo(PlayClip_offsettime - 3500); // minor delay on the seekTo to show were it stop or at least before
+            Play_avplay.seekTo(PlayClip_offsettime - 3500); // minor delay on the seekTo to show were it stop or at least before
         } catch (e) {
             console.log('PlayClip_onPlayer seekTo ' + e);
         }
         Play_clearPause();
     }
 
-    webapis.avplay.setListener(PlayClip_listener);
-    webapis.avplay.setBufferingParam("PLAYER_BUFFER_FOR_PLAY", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayClip_Buffer);
-    webapis.avplay.setBufferingParam("PLAYER_BUFFER_FOR_RESUME", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayClip_Buffer);
+    Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_PLAY", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayClip_Buffer);
+    Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_RESUME", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayClip_Buffer);
+    Play_avplay.setListener(PlayClip_listener);
 
-//    webapis.avplay.prepareAsync(function() { //successCallback
-//        webapis.avplay.play();
-//        PlayClip_DurationSeconds = webapis.avplay.getDuration() / 1000;
-//        Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
-//        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-//    }, function() { //errorCallback
-    try {
-        webapis.avplay.prepare();
-        webapis.avplay.play();
-        PlayClip_DurationSeconds = webapis.avplay.getDuration() / 1000;
+    Play_avplay.prepareAsync(function() { //successCallback
+        Play_avplay.play();
+        PlayClip_DurationSeconds = Play_avplay.getDuration() / 1000;
         Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
         if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-//    });
-    } catch (e) {
-        console.log('PlayClip_onPlayer prepare ' + e);
-    }
+    }, function() { //errorCallback
+        Play_avplay.prepare();
+        Play_avplay.play();
+        PlayClip_DurationSeconds = Play_avplay.getDuration() / 1000;
+        Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
+        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+    });
 
     PlayClip_PlayerCheckCount = 0;
     Play_PlayerCheckTimer = 4 + PlayClip_Buffer;
@@ -302,7 +289,7 @@ function PlayClip_PlayerCheck() {
             else if (PlayClip_PlayerCheckCounter > 1) Play_CheckConnection(PlayClip_PlayerCheckCounter, 3, PlayClip_DropOneQuality);
             else {
                 PlayClip_qualityDisplay();
-                if (!PlayClip_offsettime) PlayClip_offsettime = webapis.avplay.getCurrentTime();
+                if (!PlayClip_offsettime) PlayClip_offsettime = Play_avplay.getCurrentTime();
                 PlayClip_qualityChanged();
                 PlayClip_PlayerCheckRun = true;
             }
@@ -330,7 +317,7 @@ function PlayClip_DropOneQuality(ConnectionDrop) {
 
     PlayClip_PlayerCheckCounter = 0;
     PlayClip_qualityDisplay();
-    if (!PlayClip_offsettime) PlayClip_offsettime = webapis.avplay.getCurrentTime();
+    if (!PlayClip_offsettime) PlayClip_offsettime = Play_avplay.getCurrentTime();
     PlayClip_qualityChanged();
     PlayClip_PlayerCheckRun = true;
 }

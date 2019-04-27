@@ -263,8 +263,8 @@ function PlayVod_Resume() {
             PlayVod_SaveOffset();
             PlayVod_SaveVodIds();
             Chat_Pause();
-            webapis.avplay.pause();
-            PlayVod_offsettime = webapis.avplay.getCurrentTime();
+            Play_avplay.pause();
+            PlayVod_offsettime = Play_avplay.getCurrentTime();
             Play_ClearPlayer();
             window.clearInterval(PlayVod_streamCheck);
             window.clearInterval(PlayVod_SaveOffsetId);
@@ -437,7 +437,6 @@ var PlayVod_listener = {
         PlayVod_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = PlayVod_Buffer;
         PlayVod_PlayerCheckQualityChanged = true;
-        if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + (new Date()));
     },
     onbufferingcomplete: function() {
         Play_HideBufferDialog();
@@ -449,7 +448,6 @@ var PlayVod_listener = {
         PlayVod_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = PlayVod_Buffer;
         PlayVod_PlayerCheckQualityChanged = true;
-        if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + (new Date()));
     },
     onbufferingprogress: function(percent) {
         if (percent < 5) PlayVod_PlayerCheckCount = 0;
@@ -469,7 +467,6 @@ var PlayVod_listener = {
             // reset the values after using
             Main_values.vodOffset = 0;
             PlayVod_offsettime = 0;
-            if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + (new Date()));
         }
     },
     oncurrentplaytime: function(currentTime) {
@@ -477,10 +474,8 @@ var PlayVod_listener = {
     },
     onstreamcompleted: function() {
         Play_PannelEndStart(2);
-        if (!Main_isReleased) console.log('onstreamcompleted:', 'date: ' + (new Date()));
     },
     onerror: function(eventType) {
-        if (!Main_isReleased) console.log('onerror:', 'date: ' + (new Date()) + ' eventType: ' + eventType);
         if (eventType === "PLAYER_ERROR_CONNECTION_FAILED" || eventType === "PLAYER_ERROR_INVALID_URI")
             Play_PannelEndStart(2);
     }
@@ -488,16 +483,11 @@ var PlayVod_listener = {
 
 function PlayVod_onPlayer() {
     Play_showBufferDialog();
-
-    if (!Main_isReleased) {
-        console.log('PlayVod_onPlayer:', 'date: ' + (new Date()));
-        console.log('PlayVod_onPlayer:', '\n' + '\n"' + PlayVod_playingUrl + '"\n');
-    }
-
+    if (!Main_isReleased) console.log('PlayVod_onPlayer:', '\n' + '\n"' + PlayVod_playingUrl + '"\n');
     try {
-        webapis.avplay.stop();
-        webapis.avplay.close();
-        webapis.avplay.open(PlayVod_playingUrl);
+        Play_avplay.stop();
+        Play_avplay.close();
+        Play_avplay.open(PlayVod_playingUrl);
     } catch (e) {
         console.log('PlayVod_onPlayer open ' + e);
     }
@@ -507,38 +497,34 @@ function PlayVod_onPlayer() {
     if (Main_values.vodOffset) {
         Chat_offset = Main_values.vodOffset;
         Chat_Init();
-        webapis.avplay.seekTo(Main_values.vodOffset * 1000);
-    } else if (PlayVod_offsettime > 0 && PlayVod_offsettime !== webapis.avplay.getCurrentTime()) {
+        Play_avplay.seekTo(Main_values.vodOffset * 1000);
+    } else if (PlayVod_offsettime > 0 && PlayVod_offsettime !== Play_avplay.getCurrentTime()) {
         try {
-            webapis.avplay.seekTo(PlayVod_offsettime - 3500); // minor delay on the seekTo to show were it stop or at least before
+            Play_avplay.seekTo(PlayVod_offsettime - 3500); // minor delay on the seekTo to show were it stop or at least before
         } catch (e) {
             console.log('PlayVod_onPlayer seekTo ' + e);
         }
         Play_clearPause();
     }
 
-    webapis.avplay.setListener(PlayVod_listener);
-    webapis.avplay.setBufferingParam("PLAYER_BUFFER_FOR_PLAY", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayVod_Buffer);
-    webapis.avplay.setBufferingParam("PLAYER_BUFFER_FOR_RESUME", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayVod_Buffer);
+    Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_PLAY", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayVod_Buffer);
+    Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_RESUME", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayVod_Buffer);
+    Play_avplay.setListener(PlayVod_listener);
 
-//    webapis.avplay.prepareAsync(function() { //successCallback
-//        webapis.avplay.play();
-//        PlayVod_Playing = true;
-//        ChannelVod_DurationSeconds = webapis.avplay.getDuration() / 1000;
-//        Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
-//        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-//    }, function() { //errorCallback
-    try {
-        webapis.avplay.prepare();
-        webapis.avplay.play();
+    Play_avplay.prepareAsync(function() { //successCallback
+        Play_avplay.play();
         PlayVod_Playing = true;
-        ChannelVod_DurationSeconds = webapis.avplay.getDuration() / 1000;
+        ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;
         Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
         if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-//    });
-    } catch (e) {
-        console.log('PlayVod_onPlayer prepare ' + e);
-    }
+    }, function() { //errorCallback
+        Play_avplay.prepare();
+        Play_avplay.play();
+        PlayVod_Playing = true;
+        ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;
+        Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
+        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+    });
 
     PlayVod_PlayerCheckCount = 0;
     Play_PlayerCheckTimer = 4 + PlayVod_Buffer;
@@ -561,7 +547,7 @@ function PlayVod_PlayerCheck() {
             else if (PlayVod_PlayerCheckCounter > 1) Play_CheckConnection(PlayVod_PlayerCheckCounter, 2, PlayVod_DropOneQuality);
             else {
                 PlayVod_qualityDisplay();
-                if (!PlayVod_offsettime) PlayVod_offsettime = webapis.avplay.getCurrentTime();
+                if (!PlayVod_offsettime) PlayVod_offsettime = Play_avplay.getCurrentTime();
                 PlayVod_qualityChanged();
                 PlayVod_PlayerCheckRun = true;
             }
@@ -588,7 +574,7 @@ function PlayVod_DropOneQuality(ConnectionDrop) {
 
     PlayVod_PlayerCheckCounter = 0;
     PlayVod_qualityDisplay();
-    if (!PlayVod_offsettime) PlayVod_offsettime = webapis.avplay.getCurrentTime();
+    if (!PlayVod_offsettime) PlayVod_offsettime = Play_avplay.getCurrentTime();
     PlayVod_qualityChanged();
     PlayVod_PlayerCheckRun = true;
 }
@@ -729,12 +715,12 @@ function PlayVod_ProgresBarrUpdate(current_time_seconds, duration_seconds, updat
 function PlayVod_jump() {
     Play_clearPause();
     if (!Play_isEndDialogVisible()) {
-        if (Play_isIdleOrPlaying()) webapis.avplay.pause();
+        if (Play_isIdleOrPlaying()) Play_avplay.pause();
 
         PlayVod_PlayerCheckQualityChanged = false;
         PlayClip_PlayerCheckQualityChanged = false;
         try {
-            webapis.avplay.seekTo(PlayVod_TimeToJump * 1000);
+            Play_avplay.seekTo(PlayVod_TimeToJump * 1000);
         } catch (e) {
             Play_HideWarningDialog();
             console.log('PlayVod_jump ' + e);
@@ -744,7 +730,7 @@ function PlayVod_jump() {
         else Chat_offset = ChannelVod_vodOffset;
 
         if (PlayClip_HasVOD) Chat_Init();
-        if (!Play_isIdleOrPlaying()) webapis.avplay.play();
+        if (!Play_isIdleOrPlaying()) Play_avplay.play();
     }
     Main_innerHTML('progress_bar_jump_to', STR_SPACE);
     document.getElementById('progress_bar_steps').style.display = 'none';
@@ -775,7 +761,7 @@ function PlayVod_jumpTime() {
 }
 
 function PlayVod_jumpStart(multiplier, duration_seconds) {
-    var currentTime = webapis.avplay.getCurrentTime() / 1000;
+    var currentTime = Play_avplay.getCurrentTime() / 1000;
 
     window.clearTimeout(PlayVod_SizeClearID);
     PlayVod_IsJumping = true;

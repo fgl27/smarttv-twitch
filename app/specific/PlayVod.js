@@ -437,6 +437,7 @@ var PlayVod_listener = {
         PlayVod_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = PlayVod_Buffer;
         PlayVod_PlayerCheckQualityChanged = true;
+        if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + (new Date()));
     },
     onbufferingcomplete: function() {
         Play_HideBufferDialog();
@@ -448,6 +449,7 @@ var PlayVod_listener = {
         PlayVod_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = PlayVod_Buffer;
         PlayVod_PlayerCheckQualityChanged = true;
+        if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + (new Date()));
     },
     onbufferingprogress: function(percent) {
         if (percent < 5) PlayVod_PlayerCheckCount = 0;
@@ -467,6 +469,7 @@ var PlayVod_listener = {
             // reset the values after using
             Main_values.vodOffset = 0;
             PlayVod_offsettime = 0;
+            if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + (new Date()));
         }
     },
     oncurrentplaytime: function(currentTime) {
@@ -476,6 +479,7 @@ var PlayVod_listener = {
         Play_PannelEndStart(2);
     },
     onerror: function(eventType) {
+        if (!Main_isReleased) console.log('onerror:', 'date: ' + (new Date()) + ' eventType: ' + eventType);
         if (eventType === "PLAYER_ERROR_CONNECTION_FAILED" || eventType === "PLAYER_ERROR_INVALID_URI")
             Play_PannelEndStart(2);
     }
@@ -483,7 +487,12 @@ var PlayVod_listener = {
 
 function PlayVod_onPlayer() {
     Play_showBufferDialog();
-    if (!Main_isReleased) console.log('PlayVod_onPlayer:', '\n' + '\n"' + PlayVod_playingUrl + '"\n');
+
+    if (!Main_isReleased) {
+        console.log('PlayClip_onPlayer:', 'date: ' + (new Date()));
+        console.log('PlayVod_onPlayer:', '\n' + '\n"' + PlayVod_playingUrl + '"\n');
+    }
+
     try {
         Play_avplay.stop();
         Play_avplay.close();

@@ -129,6 +129,7 @@ var PlayClip_listener = {
         PlayClip_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = Play_Buffer;
         PlayClip_PlayerCheckQualityChanged = true;
+        if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + (new Date()));
     },
     onbufferingcomplete: function() {
         Play_HideBufferDialog();
@@ -139,6 +140,7 @@ var PlayClip_listener = {
         PlayClip_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = Play_Buffer;
         PlayClip_PlayerCheckQualityChanged = true;
+        if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + (new Date()));
     },
     onbufferingprogress: function(percent) {
         if (percent < 5) PlayClip_PlayerCheckCount = 0;
@@ -158,6 +160,7 @@ var PlayClip_listener = {
             Main_empty('dialog_buffer_play_percentage');
             // reset the values after using
             PlayClip_offsettime = 0;
+            if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + (new Date()));
         }
     },
     oncurrentplaytime: function(currentTime) {
@@ -167,6 +170,7 @@ var PlayClip_listener = {
         Play_PannelEndStart(3);
     },
     onerror: function(eventType) {
+        if (!Main_isReleased) console.log('onerror:', 'date: ' + (new Date()) + ' eventType: ' + eventType);
         if (eventType === "PLAYER_ERROR_CONNECTION_FAILED" || eventType === "PLAYER_ERROR_INVALID_URI")
             Play_PannelEndStart(3);
     }
@@ -224,7 +228,12 @@ function PlayClip_qualityChanged() {
 
 function PlayClip_onPlayer() {
     Play_showBufferDialog();
-    if (!Main_isReleased) console.log('PlayClip_onPlayer:', '\n' + '\n"' + PlayClip_playingUrl + '"\n');
+
+    if (!Main_isReleased) {
+        console.log('PlayClip_onPlayer:', 'date: ' + (new Date()));
+        console.log('PlayClip_onPlayer:', '\n' + '\n"' + PlayClip_playingUrl + '"\n');
+    }
+
     try {
         Play_avplay.stop();
         Play_avplay.close();

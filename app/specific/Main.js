@@ -721,6 +721,7 @@ function Main_checkVersion() {
         TizenVersion = tizen.systeminfo.getCapability("http://tizen.org/feature/platform.version");
         fw = webapis.productinfo.getFirmware();
         Main_tvModel = webapis.productinfo.getModel();
+        console.log('App version: ' + Main_minversion);
     } catch (e) {}
 
     if (Appversion !== null && TizenVersion !== null && Main_tvModel !== null && fw !== null) {

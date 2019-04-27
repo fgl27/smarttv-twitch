@@ -57,7 +57,6 @@ var Play_PlayerCheckRun = false;
 var Play_Playing = false;
 var Play_Panelcounter = 1;
 var Play_IsWarning = false;
-var Play_avplay;
 var Play_LoadLogoSucess = false;
 var Play_loadingInfoDataTimeout = 10000;
 var Play_loadingDataTimeout = 2000;
@@ -149,8 +148,6 @@ var Play_ChatFontObj = ['chat_size_small', 'chat_size_default', 'chat_size_biger
 //Variable initialization end
 
 function Play_PreStart() {
-    Play_avplay = (window.tizen && window.webapis.avplay) || {};
-
     Play_chat_container = document.getElementById("chat_container");
     Play_ProgresBarrElm = document.getElementById("inner_progress_bar");
 
@@ -171,22 +168,23 @@ function Play_PreStart() {
 //and they need to be set like this to work, faking a video playback
 function Play_SetAvPlayGlobal() {
     try {
-        Play_avplay.stop();
-        Play_avplay.close();
-        Play_avplay.open(GIT_IO + "temp.mp4");
+        webapis.avplay.stop();
+        webapis.avplay.close();
+        webapis.avplay.open(GIT_IO + "temp.mp4");
+
+        Play_SetFullScreen(Play_isFullScreen);
+        webapis.avplay.setListener(PlayStart_listener);
+        webapis.avplay.prepareAsync();
     } catch (e) {
         console.log(e + " Play_SetAvPlayGlobal()");
     }
-    Play_SetFullScreen(Play_isFullScreen);
-    Play_avplay.setListener(PlayStart_listener);
-    Play_avplay.prepareAsync();
 }
 
 var PlayStart_listener = {
     onstreamcompleted: function() {
         try {
-            Play_avplay.stop();
-            Play_avplay.close();
+            webapis.avplay.stop();
+            webapis.avplay.close();
         } catch (e) {
             console.log(e + " PlayStart_listener");
         }
@@ -203,7 +201,7 @@ function Play_SetFullScreen(isfull) {
             Play_ChatSize(false);
         }
         try {
-            Play_avplay.setDisplayRect(0, 0, screen.width, screen.height);
+            webapis.avplay.setDisplayRect(0, 0, screen.width, screen.height);
         } catch (e) {
             console.log(e + " Play_SetFullScreen true");
         }
@@ -213,7 +211,7 @@ function Play_SetFullScreen(isfull) {
         Play_ChatSizeValueBF = Play_ChatSizeValue;
         // Chat is 25% of the screen, resize to 75% and center left
         try {
-            Play_avplay.setDisplayRect(0, (screen.height * 0.25) / 2, screen.width * 0.75, screen.height * 0.75);
+            webapis.avplay.setDisplayRect(0, (screen.height * 0.25) / 2, screen.width * 0.75, screen.height * 0.75);
         } catch (e) {
             console.log(e + " Play_SetFullScreen false");
         }
@@ -651,39 +649,44 @@ function Play_onPlayer() {
     }
 
     try {
-        Play_avplay.stop();
-        Play_avplay.close();
-        Play_avplay.open(Play_playingUrl);
+        console.log('Play_onPlayer getState stop:', webapis.avplay.getState());
+        webapis.avplay.stop();
+        console.log('Play_onPlayer getState close:', webapis.avplay.getState());
+        webapis.avplay.close();
+        console.log('Play_onPlayer getState open:', webapis.avplay.getState());
+        webapis.avplay.open(Play_playingUrl);
+        console.log('Play_onPlayer getStateopen after:', webapis.avplay.getState());
     } catch (e) {
         console.log('Play_onPlayer open ' + e);
     }
 
-    Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_PLAY", "PLAYER_BUFFER_SIZE_IN_SECOND", Play_Buffer);
-    Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_RESUME", "PLAYER_BUFFER_SIZE_IN_SECOND", Play_Buffer);
-
-    //Old 4k check no longer used because causes problem
-    //leave it here to be recheck on a future 4k streams from twitch
-    //if (Main_Is4k && !Play_4K_ModeEnable) {
-    //    Play_avplay.setStreamingProperty("SET_MODE_4K", "TRUE");
-    //    Play_4K_ModeEnable = true;
-    //}
-
-    Play_avplay.setListener(Play_listener);
+    webapis.avplay.setListener(Play_listener);
+    console.log('Play_onPlayer getStateopen setListener:', webapis.avplay.getState());
     Play_offsettime = Play_oldcurrentTime;
+    webapis.avplay.setBufferingParam("PLAYER_BUFFER_FOR_PLAY", "PLAYER_BUFFER_SIZE_IN_SECOND", Play_Buffer);
+    webapis.avplay.setBufferingParam("PLAYER_BUFFER_FOR_RESUME", "PLAYER_BUFFER_SIZE_IN_SECOND", Play_Buffer);
+    console.log('Play_onPlayer getStateopen setBufferingParam:', webapis.avplay.getState());
 
     //Use prepareAsync as prepare() only can freeze up the app
-    Play_avplay.prepareAsync(function() { //successCallback
-        Play_avplay.play();
+//    webapis.avplay.prepareAsync(function() { //successCallback
+//        webapis.avplay.play();
+//        Play_Playing = true;
+//        Play_loadChat();
+//        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+//    }, function() { //errorCallback
+    try {
+        console.log('Play_onPlayer getState prepare:', webapis.avplay.getState());
+        webapis.avplay.prepare();
+        console.log('Play_onPlayer getState play:', webapis.avplay.getState());
+        webapis.avplay.play();
+        console.log('Play_onPlayer getState play after:', webapis.avplay.getState());
         Play_Playing = true;
         Play_loadChat();
         if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-    }, function() { //errorCallback
-        Play_avplay.prepare();
-        Play_avplay.play();
-        Play_Playing = true;
-        Play_loadChat();
-        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-    });
+//    });
+    } catch (e) {
+        console.log('Play_onPlayer prepare ' + e);
+    }
 
     Play_PlayerCheckCount = 0;
     Play_PlayerCheckTimer = 4 + Play_Buffer;
@@ -705,7 +708,7 @@ function Play_loadChat() {
 // If idle or playing, the media is be played or process to
 // So we use PlayerCheck to avaluate if we are staled fro too long or not and drop the quality
 function Play_isIdleOrPlaying() {
-    var state = Play_avplay.getState();
+    var state = webapis.avplay.getState();
     return !Play_isEndDialogVisible() && (state === 'IDLE' || state === 'PLAYING');
 }
 
@@ -779,13 +782,13 @@ function Play_CheckConnection(counter, PlayVodClip, DropOneQuality) {
 }
 
 function Play_isNotplaying() {
-    return Play_avplay.getState() !== 'PLAYING';
+    return webapis.avplay.getState() !== 'PLAYING';
 }
 
 function Play_offPlayer() {
     try {
-        Play_avplay.stop();
-        Play_avplay.close();
+        webapis.avplay.stop();
+        webapis.avplay.close();
     } catch (e) {
         console.log('Play_offPlayer ' + e);
     }
@@ -1141,7 +1144,7 @@ function Play_hideChatBackgroundDialog() {
 function Play_KeyPause(PlayVodClip) {
     if (Play_isNotplaying()) {
         Play_clearPause();
-        Play_avplay.play();
+        webapis.avplay.play();
         webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_OFF);
 
         if (PlayVodClip === 1) {
@@ -1159,7 +1162,7 @@ function Play_KeyPause(PlayVodClip) {
         else if (PlayVodClip === 2) window.clearInterval(PlayVod_streamCheck);
         else if (PlayVodClip === 3) window.clearInterval(PlayClip_streamCheck);
 
-        Play_avplay.pause();
+        webapis.avplay.pause();
         webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_ON);
         Play_showPauseDialog();
     }
@@ -1409,12 +1412,12 @@ function Play_BottomOptionsPressed(PlayVodClip) {
             Play_qualityChanged();
             Play_hidePanel();
         } else if (PlayVodClip === 2) {
-            if (!PlayVod_offsettime) PlayVod_offsettime = Play_avplay.getCurrentTime();
+            if (!PlayVod_offsettime) PlayVod_offsettime = webapis.avplay.getCurrentTime();
             PlayVod_PlayerCheckQualityChanged = false;
             PlayVod_qualityChanged();
             PlayVod_hidePanel();
         } else if (PlayVodClip === 3) {
-            if (!PlayClip_offsettime) PlayClip_offsettime = Play_avplay.getCurrentTime();
+            if (!PlayClip_offsettime) PlayClip_offsettime = webapis.avplay.getCurrentTime();
             PlayClip_PlayerCheckQualityChanged = false;
             PlayClip_qualityChanged();
             PlayClip_hidePanel();

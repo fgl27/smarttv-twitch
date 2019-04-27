@@ -172,6 +172,7 @@ function Play_PreStart() {
 function Play_SetAvPlayGlobal() {
     try {
         Play_avplay.stop();
+        Play_avplay.close();
         Play_avplay.open(GIT_IO + "temp.mp4");
     } catch (e) {
         console.log(e + " Play_SetAvPlayGlobal()");
@@ -185,6 +186,7 @@ var PlayStart_listener = {
     onstreamcompleted: function() {
         try {
             Play_avplay.stop();
+            Play_avplay.close();
         } catch (e) {
             console.log(e + " PlayStart_listener");
         }
@@ -642,6 +644,7 @@ function Play_onPlayer() {
 
     try {
         Play_avplay.stop();
+        Play_avplay.close();
         Play_avplay.open(Play_playingUrl);
     } catch (e) {
         console.log('Play_onPlayer open ' + e);
@@ -774,6 +777,7 @@ function Play_isNotplaying() {
 function Play_offPlayer() {
     try {
         Play_avplay.stop();
+        Play_avplay.close();
     } catch (e) {
         console.log('Play_offPlayer ' + e);
     }

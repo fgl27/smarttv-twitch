@@ -486,6 +486,7 @@ function PlayVod_onPlayer() {
     if (!Main_isReleased) console.log('PlayVod_onPlayer:', '\n' + '\n"' + PlayVod_playingUrl + '"\n');
     try {
         Play_avplay.stop();
+        Play_avplay.close();
         Play_avplay.open(PlayVod_playingUrl);
     } catch (e) {
         console.log('PlayVod_onPlayer open ' + e);

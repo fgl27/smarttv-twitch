@@ -227,6 +227,7 @@ function PlayClip_onPlayer() {
     if (!Main_isReleased) console.log('PlayClip_onPlayer:', '\n' + '\n"' + PlayClip_playingUrl + '"\n');
     try {
         Play_avplay.stop();
+        Play_avplay.close();
         Play_avplay.open(PlayClip_playingUrl);
     } catch (e) {
         console.log('PlayClip_onPlayer open ' + e);

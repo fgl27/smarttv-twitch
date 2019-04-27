@@ -599,6 +599,7 @@ var Play_listener = {
         Play_PlayerCheckTimer = Play_Buffer;
         Play_PlayerCheckQualityChanged = true;
         // sync chat and stream
+        if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + (new Date()));
     },
     onbufferingcomplete: function() {
         Play_HideBufferDialog();
@@ -608,6 +609,7 @@ var Play_listener = {
         Play_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = Play_Buffer;
         Play_PlayerCheckQualityChanged = true;
+        if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + (new Date()));
     },
     onbufferingprogress: function(percent) {
         if (percent < 5) Play_PlayerCheckCount = 0;
@@ -623,6 +625,7 @@ var Play_listener = {
             Play_HideBufferDialog();
             Play_bufferingcomplete = true;
             Main_empty('dialog_buffer_play_percentage');
+            if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + (new Date()));
         }
         Play_RestoreFromResume = false;
     },
@@ -631,8 +634,10 @@ var Play_listener = {
     },
     onstreamcompleted: function() {
         Play_CheckHostStart();
+        if (!Main_isReleased) console.log('onstreamcompleted:', 'date: ' + (new Date()));
     },
     onerror: function(eventType) {
+        if (!Main_isReleased) console.log('onerror:', 'date: ' + (new Date()) + ' eventType: ' + eventType);
         if (eventType === "PLAYER_ERROR_CONNECTION_FAILED" || eventType === "PLAYER_ERROR_INVALID_URI")
             Play_CheckHostStart();
     }
@@ -640,7 +645,10 @@ var Play_listener = {
 
 function Play_onPlayer() {
     Play_showBufferDialog();
-    if (!Main_isReleased) console.log('Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
+    if (!Main_isReleased) {
+        console.log('Play_onPlayer:', 'date: ' + (new Date()));
+        console.log('Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
+    }
 
     try {
         Play_avplay.stop();

@@ -149,7 +149,7 @@ function Featured_loadDataSuccess(responseText) {
                         stream.channel.status, stream.game,
                         STR_SINCE + Play_streamLiveAt(stream.created_at) + STR_AGO + ', ' + STR_FOR +
                         Main_addCommas(stream.viewers) + STR_VIEWER,
-                        Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.language)
+                        Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language)
                     ]));
             }
         }
@@ -256,7 +256,7 @@ function Featured_loadDataSuccessReplace(responseText) {
                     stream.channel.status, stream.game,
                     STR_SINCE + Play_streamLiveAt(stream.created_at) + STR_AGO + ', ' + STR_FOR +
                     Main_addCommas(stream.viewers) + STR_VIEWER,
-                    Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.language)
+                    Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language)
                 ], Featured_ids);
             tempVector.push(i);
         }

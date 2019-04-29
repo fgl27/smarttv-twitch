@@ -80,7 +80,7 @@ function Live_loadDataRequest() {
     }
 
     xmlHttp.open("GET", 'https://api.twitch.tv/kraken/streams?limit=' + Main_ItemsLimitVideo + '&offset=' + offset +
-        (Main_ContentLang !== "" ? ('&language=' + Main_ContentLang) : '') + '&' + Math.round(Math.random() * 1e7), true);
+        (Main_ContentLang !== "" ? ('&broadcaster_language=' + Main_ContentLang) : '') + '&' + Math.round(Math.random() * 1e7), true);
     xmlHttp.timeout = Live_loadingDataTimeout;
     xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
     xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
@@ -153,7 +153,7 @@ function Live_loadDataSuccess(responseText) {
                         Main_is_playlist(JSON.stringify(stream.stream_type)) + stream.channel.display_name,
                         stream.channel.status, stream.game,
                         STR_SINCE + Play_streamLiveAt(stream.created_at) + STR_AGO + ', ' + STR_FOR + Main_addCommas(stream.viewers) + STR_VIEWER,
-                        Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.language)
+                        Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language)
                     ]));
             }
         }
@@ -234,7 +234,7 @@ function Live_loadDataReplace() {
     }
 
     xmlHttp.open("GET", 'https://api.twitch.tv/kraken/streams?limit=' + Main_ItemsLimitReplace + '&offset=' + offset +
-        (Main_ContentLang !== "" ? ('&language=' + Main_ContentLang) : '') + '&' + Math.round(Math.random() * 1e7), true);
+        (Main_ContentLang !== "" ? ('&broadcaster_language=' + Main_ContentLang) : '') + '&' + Math.round(Math.random() * 1e7), true);
 
     xmlHttp.timeout = Live_loadingDataTimeout;
     xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
@@ -288,7 +288,7 @@ function Live_loadDataSuccessReplace(responseText) {
                 stream.channel.status, stream.game,
                 STR_SINCE + Play_streamLiveAt(stream.created_at) + STR_AGO + ', ' + STR_FOR +
                 Main_addCommas(stream.viewers) + STR_VIEWER,
-                Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.language)
+                Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language)
             ], Live_ids);
 
             tempVector.push(i);

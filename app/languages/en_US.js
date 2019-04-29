@@ -81,7 +81,7 @@ function en_USLang() {
     STR_HR = " Hr";
     STR_SOURCE = "Source";
     STR_VERSION = "Version: ";
-    STR_TWITCH_TV = "Twitch.TV";
+    STR_TWITCH_TV = "SmartTV Twitch";
     STR_CLOSE_THIS = "Press return key to close this.";
     STR_PLAYER = "Player Related:";
     STR_CHAT = "Chat Related:";

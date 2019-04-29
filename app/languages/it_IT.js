@@ -76,7 +76,6 @@ function it_ITLang() {
     STR_HR = " Hr";
     STR_SOURCE = "Source";
     STR_VERSION = "Version: ";
-    STR_TWITCH_TV = "Twitch.TV";
     STR_CLOSE_THIS = "Premi indietro per chiudere.";
     STR_PLAYER = "Riguardo il Player:";
     STR_CHAT = "Riguardo la Chat:";

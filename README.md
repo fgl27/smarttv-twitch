@@ -72,7 +72,7 @@ The key **INFO** is also map in the app with the same functions as the **GUIDE**
 Installation instructions:
 ==============
 
-Installation guide **Tizen Studio** (tested on Linux Ubuntu 16 and up and windows 10 64 bits)
+Installation guide **Tizen Studio** (tested on Linux Ubuntu 16 and up, windows 10 64 bits and macOS Mojave 10.14.4)
 ==============
 
 ## Account and Downloads

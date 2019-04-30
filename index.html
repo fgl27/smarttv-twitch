@@ -588,6 +588,11 @@
             text-shadow: #000000 0 0 5.7px, #000000 0 0 5.7px, #000000 0 0 4px;
         }
 
+        .strokedextraminired {
+            color: #FF0000;
+            text-shadow: #000000 0 0 5.7px, #000000 0 0 5.7px, #000000 0 0 4px, #FFFFFF 0 0 2px;
+        }
+
         .strokedbig {
             text-shadow: #000000 0 0 15px, #000000 0 0 15px, #000000 0 0 10px;
         }
@@ -999,6 +1004,7 @@
     <script src="app/specific/UserChannels.js" defer></script>
     <script src="app/specific/UserVod.js" defer></script>
     <script src="app/specific/Settings.js" defer></script>
+    <script src="app/specific/SettingsLanguages.js" defer></script>
     <script src="app/specific/ChatVod.js" defer></script>
     <script src="app/specific/ChatLive.js" defer></script>
     <script src="app/thirdparty/irc-message.js" defer></script>
@@ -1171,6 +1177,9 @@
             <div id="settings_scroll" class="screen_holder_settings hide">
                 <div id="settings_main" class="settings_main">
                     <!-- Settings_SetSettings()-->
+                </div>
+                <div id="settings_lang" class="settings_main hide">
+                    <!-- Settings_SetLang()-->
                 </div>
             </div>
 

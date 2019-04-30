@@ -35,14 +35,8 @@ var Settings_value = {
         "defaultValue": 49
     },
     "content_lang": { //content_lang
-        "values": ["All", "Dansk [DA]", "Deutsch [DE]", "English [EN][EN-GB]", "English - USA [EN]", "English - UK [EN-GB]",
-            "Español [ES][ES-MX]", "Español - España [ES]", "Español - Latinoamérica [ES-MX]", "Français [FR]", "Italiano [IT]",
-            "Magyar [HU]", "Nederlands [NL]", "Norsk [NO]", "Polski [PL]", "Português [PT][PT-BR]", "Português -Portugal [PT]",
-            "Português - Brasil [PT-BR]", "Slovenčina [SK]", "Suomi [FI]", "Svenska [SV]", "Tiếng Việt [VI]", "Türkçe [TR]",
-            "Čeština [CS]", "Ελληνικά [EL]", "Български [BG]", "Русский [RU]", "ภาษาไทย [TH]", "中文 [ZH-ALL]",
-            "中文 简体 [ZH-CN]", "中文 繁體 [ZH-TW]", "日本語 [JA]", "한국어 [KO]", "Română [RO]"
-        ],
-        "set_values": ["", "da", "de", "en,en-gb", "en", "en-gb", "es,es-mx", "es", "es-mx", "fr", "it", "hu", "nl", "no", "pl", "pt,pt-br", "pt", "pt-br", "sk", "fi", "sv", "vi", "tr", "cs", "el", "bg", "ru", "th", "zh-cn,zh-tw", "zh-cn", "zh-tw", "ja", "ko", "ro"],
+        "values": ["All"],
+        "set_values": [""],
         "defaultValue": 1
     }
 };
@@ -89,6 +83,7 @@ function Settings_init() {
     Main_ShowElement('settings_scroll');
     Settings_cursorY = 0;
     Settings_inputFocus(Settings_cursorY);
+    Settings_DivOptionChangeLang('content_lang', STR_CONTENT_LANG, Languages_Selected);
 }
 
 function Settings_exit() {
@@ -118,8 +113,9 @@ function Settings_SetSettings() {
     // Content Language selection
     key = "content_lang";
     Settings_value_keys.push(key);
+    Settings_value[key].values = [STR_CONTENT_LANG_SUMARRY];
 
-    div += Settings_DivOptionNoSummary(key, STR_CONTENT_LANG);
+    div += Settings_DivOptionWithSummary(key, STR_CONTENT_LANG, '');
 
     // App Language selection
     key = "general_lang";
@@ -180,6 +176,7 @@ function Settings_SetSettings() {
 
     Main_innerHTML("settings_main", div);
     Settings_positions_length = Settings_value_keys.length;
+    Languages_SetSettings();
 }
 
 function Settings_DivTitle(key, string) {
@@ -225,8 +222,8 @@ function Settings_SetStrings() {
     // Content Language selection
     key = "content_lang";
     Main_textContent(key + '_name', STR_CONTENT_LANG);
-    Settings_value[key].values[0] = STR_LANG_ALL;
     Main_textContent(key, Settings_Obj_values(key));
+    Settings_value[key].values = [STR_CONTENT_LANG_SUMARRY];
 
     //Player settings
     Main_textContent('setting_title_play', STR_SETTINGS_PLAYER);
@@ -259,17 +256,19 @@ function Settings_SetStrings() {
     for (key in Settings_value)
         if (Settings_value.hasOwnProperty(key))
             Main_textContent(key, Settings_Obj_values(key));
+
+    Languages_SetLang();
 }
 
 function Settings_SetDefautls() {
     for (var key in Settings_value) {
         Settings_value[key].defaultValue = Main_getItemInt(key, Settings_value[key].defaultValue);
         Settings_value[key].defaultValue -= 1;
+        if (Settings_value[key].defaultValue > Settings_Obj_length(key)) Settings_value[key].defaultValue = 0;
     }
     Play_SetBuffers();
     Settings_SetClock();
     Vod_DoAnimateThumb = Settings_Obj_default("videos_animation");
-    Main_ContentLang = Settings_Obj_set_values("content_lang");
 }
 
 function Settings_Obj_values(key) {
@@ -314,6 +313,8 @@ function Settings_ChangeSettigs(position) {
 function Settings_Setarrows(position) {
     var key = Settings_value_keys[position];
 
+    if (!Settings_Obj_length(key)) return;
+
     var currentValue = Settings_Obj_default(key);
     var maxValue = Settings_Obj_length(key);
 
@@ -335,8 +336,7 @@ function Settings_SetDefault(position) {
     if (position === "general_lang") {
         Main_setItem('user_language', 1);
         Settings_SetLang(Settings_Obj_set_values("general_lang"));
-    } else if (position === "content_lang") Main_ContentLang = Settings_Obj_set_values("content_lang");
-    else if (position === "videos_animation") Vod_DoAnimateThumb = Settings_Obj_default("videos_animation");
+    } else if (position === "videos_animation") Vod_DoAnimateThumb = Settings_Obj_default("videos_animation");
     else if (position === "buffer_live") Play_Buffer = Settings_Obj_values("buffer_live");
     else if (position === "buffer_vod") PlayVod_Buffer = Settings_Obj_values("buffer_vod");
     else if (position === "buffer_clip") PlayClip_Buffer = Settings_Obj_values("buffer_clip");
@@ -413,7 +413,6 @@ function Settings_handleKeyDown(event) {
         case KEY_PLAY:
         case KEY_PAUSE:
         case KEY_PLAYPAUSE:
-        case KEY_ENTER:
             break;
         case KEY_RED:
             Main_SidePannelStart(Settings_handleKeyDown);
@@ -428,6 +427,9 @@ function Settings_handleKeyDown(event) {
             Main_values.Main_Go = Main_Search;
             Settings_exit();
             Main_SwitchScreen();
+            break;
+        case KEY_ENTER:
+            if (!Settings_cursorY) Languages_init();
             break;
         default:
             break;

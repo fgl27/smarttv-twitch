@@ -115,8 +115,8 @@ Installation guide **Tizen Studio** (tested on Linux Ubuntu 16 and up, windows 1
 ## Tizen Package Manager(Installing the tools)
 
 * Open **Tizen Package Manager** to start installing the bellow (some may already be installed by default)
-* Main tab **(Main SDK)** Install **4.0 TV**(or wherever X.X TV version there is) and **Tizen SDK tools**,  **(on Linux it may request you to use apt-get to install missing dependencies)**
-* Second tab **(Extension SDK)** under **TV Extensions-4.0** (or wherever X.X TV version there is) install **Web app. Development**, install **Samsung Certificate Extension** and under **TV Extension Tools** install **Web app. Tools** (on Linux it may request you to use apt-get to install missing dependencies)
+* Main tab **(Main SDK)** Install **5.0 TV**(or wherever X.X TV version there is) and **Tizen SDK tools**,  **(on Linux it may request you to use apt-get to install missing dependencies)**
+* Second tab **(Extension SDK)** under **TV Extensions-5.0** (or wherever X.X TV version there is) install **Web app. Development**, install **Samsung Certificate Extension** and under **TV Extension Tools** install **Web app. Tools** (on Linux it may request you to use apt-get to install missing dependencies)
 * After everything finishes installing as you close the package manager it will ask if you want to open the **Tizen Studio** - click YES to open it. On windows it may ask you to give firewall permission for Tizen.
 
 ### Bellow imgs showing the installed packages (the one with a delete option are installed)

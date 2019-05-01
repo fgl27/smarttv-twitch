@@ -125,6 +125,8 @@ Installation guide **Tizen Studio** (tested on Linux Ubuntu 16 and up, windows 1
 ![SDK_installation_3](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_3.png)
 ![SDK_installation_4](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_4.png)
 
+**Emulator not needed** but they may install automatic.<br>
+
 ## Setting up the build environment:
 
 * Open **Tizen Studio**, then start the device manager by clicking on the drop-down menu that has the default option **"No target"** and select **"Launch remote device manager"**. If you don't find the device manager on the studio, just open it as a separate app - it must be installed just like the studio.
@@ -141,7 +143,9 @@ Installation guide **Tizen Studio** (tested on Linux Ubuntu 16 and up, windows 1
 
 ![certificate](https://fgl27.github.io/smarttv-twitch/screenshot/install/certificate.png)
 
-* If you click on finish and you see the image above, just go to the next step [Setup the application:](https://github.com/fgl27/smarttv-twitch#setup-the-application) if not, read the instructions below in order to address the Tizen issue on creating a certificate that started in late 2018 after some Tizen SDK version update
+* **If you click on finish and you see the image above, just go to the next step [Setup the application:](https://github.com/fgl27/smarttv-twitch#setup-the-application)**
+
+* if not, read the instructions below in order to address the Tizen issue on creating a certificate that started in late 2018 after some Tizen SDK version update
 
 * If when you click on **Finish** the app just tries and doesn't do anything, it is because it has an issue creating an Author - this is a bug of Tizen. To fix that, generate a certificate using this recommendation [Creating Certificates Samsung site](https://developer.samsung.com/galaxy-watch/develop/getting-certificates/create), but after you finish don't use that certificate because it may not work to install the app, repeat the process of creating a **Tizen** certificate ... Certificate Manager > + > select/click **Tizen** > here use the author created before by choosing "select existing..."
 

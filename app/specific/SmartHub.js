@@ -131,23 +131,15 @@ function SmartHub_previewDataSuccess(responseText) {
 }
 
 function SmartHub_msetPreviewData() {
-    //first we erase all data '{}' to make shore when the new data is load it updates the imgs
-    //then set a new data SmartHub_previewDataGenerator(), on sucess we SmartHub_cleanVector
-    try {
-        webapis.preview.setPreviewData('{}', function() {
-            Main_ready(function() {
-                try {
-                    webapis.preview.setPreviewData(SmartHub_previewDataGenerator(), function() {
-                        window.setTimeout(SmartHub_cleanVector, 1000);
-                    });
-                } catch (ex) {
-                    console.log(ex.message);
-                }
+    Main_ready(function() {
+        try {
+            webapis.preview.setPreviewData(SmartHub_previewDataGenerator(), function() {
+                window.setTimeout(SmartHub_cleanVector, 1000);
             });
-        });
-    } catch (ex) {
-        console.log(ex.message);
-    }
+        } catch (ex) {
+            console.log(ex.message);
+        }
+    });
 }
 
 function SmartHub_StartInterval() {
@@ -371,7 +363,7 @@ function SmartHub_SetNoUserPreviewData() {
 function SmartHub_Tile(title, tiles_title, subtitle, image_size, image_url, action) {
     return {
         "title": title,
-        "tiles": [SmartHub_SubTile(tiles_title, subtitle, image_size, image_url, action)]
+        "tiles": [SmartHub_SubTile(tiles_title, subtitle, image_size, image_url + Main_randomimg, action)]
     };
 }
 
@@ -380,7 +372,7 @@ function SmartHub_SubTile(tiles_title, subtitle, image_size, image_url, action) 
         "title": tiles_title,
         "subtitle": subtitle,
         "image_ratio": image_size,
-        "image_url": image_url,
+        "image_url": image_url + Main_randomimg,
         "action_data": JSON.stringify(action),
         "is_playable": false
     };

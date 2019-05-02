@@ -129,10 +129,8 @@ var Main_versionTag = '';
 var Main_TizenVersion;
 var Main_ClockOffset = 0;
 
+var Main_randomimg = '?' + Math.random();
 var GIT_IO = "https://fgl27.github.io/smarttv-twitch/release/githubio/images/";
-var IMG_404_GAME = GIT_IO + "404_game.png";
-var IMG_404_LOGO = GIT_IO + "404_logo.png";
-var IMG_404_VIDEO = GIT_IO + "404_video.png";
 var IMG_SMART_LIVE = GIT_IO + "smart_live.png";
 var IMG_SMART_GAME = GIT_IO + "smart_games.png";
 var IMG_SMART_USER = GIT_IO + "smart_users.png";
@@ -258,11 +256,6 @@ function Main_initWindows() {
             Main_SearchInput = document.getElementById("search_input");
             Main_AddUserInput = document.getElementById("user_input");
             Main_AddCodeInput = document.getElementById("oauth_input");
-
-            // pre load All img
-            Main_CacheImage(IMG_404_VIDEO);
-            Main_CacheImage(IMG_404_GAME);
-            Main_CacheImage(IMG_404_LOGO);
 
             window.setTimeout(Main_NetworkStateChangeListenerStart, 5000);
             document.addEventListener('visibilitychange', Main_ResumeNetwork, false);
@@ -794,7 +787,7 @@ function Main_imgVectorLoad(img_type) {
     var elem;
     for (var i = 0; i < Main_imgVector.length; i++) {
         elem = document.getElementById(Main_imgVector[i].id);
-        if (elem !== null) Main_loadImg(elem, Main_imgVector[i].src, img_type);
+        if (elem !== null) Main_loadImg(elem, Main_imgVector[i].src + Main_randomimg, img_type);
     }
 }
 
@@ -1135,6 +1128,7 @@ function Main_getclock() {
 
 function Main_updateclock() {
     Main_textContent('label_clock', Main_getclock());
+    Main_randomimg = '?' + Math.random();
 }
 
 function Main_SidePannelAddFocus() {

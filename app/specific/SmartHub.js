@@ -131,15 +131,21 @@ function SmartHub_previewDataSuccess(responseText) {
 }
 
 function SmartHub_msetPreviewData() {
-    Main_ready(function() {
-        try {
-            webapis.preview.setPreviewData(SmartHub_previewDataGenerator(), function() {
-                window.setTimeout(SmartHub_cleanVector, 1000);
+    try {
+        webapis.preview.setPreviewData('{}', function() {
+            Main_ready(function() {
+                try {
+                    webapis.preview.setPreviewData(SmartHub_previewDataGenerator(), function() {
+                        window.setTimeout(SmartHub_cleanVector, 1000);
+                    });
+                } catch (ex) {
+                    console.log(ex.message);
+                }
             });
-        } catch (ex) {
-            console.log(ex.message);
-        }
-    });
+        });
+    } catch (ex) {
+        console.log(ex.message);
+    }
 }
 
 function SmartHub_StartInterval() {

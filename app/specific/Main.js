@@ -115,6 +115,8 @@ var Main_AcceptHeader = 'Accept';
 var Main_Authorization = 'Authorization';
 var Main_OAuth = 'OAuth ';
 var Main_TwithcV5Json = 'application/vnd.twitchtv.v5+json';
+var proxyurl = "https://cors-anywhere.herokuapp.com/";
+
 var Main_VideoSize = "528x297"; // default size 640x360
 var Main_GameSize = "340x475"; // default size 272x380
 
@@ -272,6 +274,7 @@ function Main_SetStringsMain(isStarting) {
         isStarting ? (STR_REFRESH + STR_GUIDE) : STR_GOBACK);
     Main_IconLoad('label_switch', 'icon-switch', STR_SWITCH);
     Main_IconLoad('label_side_panel', 'icon-ellipsis', STR_SIDE_PANEL_KEY);
+    Main_IconLoad('icon_feed_refresh', 'icon-refresh', STR_REFRESH_FEED);
 
     Main_textContent('top_bar_live', STR_LIVE);
     Main_textContent('top_bar_user', isStarting ? STR_USER : STR_SETTINGS);
@@ -999,6 +1002,7 @@ function Main_openStream() {
     Play_hideChat();
     Play_HideEndDialog();
     Main_HideElement('scene1');
+    if (AddUser_UserIsSet() && !UserLiveFeed_loadingData && UserLiveFeed_status) UserLiveFeed_FeedFindPos();
     Play_Start();
 }
 
@@ -1030,7 +1034,7 @@ function Main_OpenClip(id, idsArray, handleKeyDownFunction) {
     Play_HideWarningDialog();
     Play_CleanHideExit();
     Main_HideElement('scene1');
-
+    if (AddUser_UserIsSet() && !UserLiveFeed_loadingData && UserLiveFeed_status) UserLiveFeed_FeedFindPos();
     PlayClip_Start();
 }
 
@@ -1068,6 +1072,7 @@ function Main_openVod() {
     Play_CleanHideExit();
     Main_HideElement('scene1');
     PlayVod_HasVodInfo = false;
+    if (AddUser_UserIsSet() && !UserLiveFeed_loadingData && UserLiveFeed_status) UserLiveFeed_FeedFindPos();
     PlayVod_Start();
 }
 
@@ -1129,6 +1134,19 @@ function Main_getclock() {
 function Main_updateclock() {
     Main_textContent('label_clock', Main_getclock());
     Main_randomimg = '?' + Math.random();
+}
+
+function Main_updateUserFeed() {
+    if (!document.hidden) {
+        if (AddUser_UserIsSet()) {
+            window.setTimeout(function() {
+                if (!UserLiveFeed_isFeedShow() && !UserLiveFeed_loadingData) {
+                    Play_FeedOldUserName = AddUser_UsernameArray[Main_values.Users_Position].name;
+                    UserLiveFeed_StartLoad();
+                }
+            }, 5000);
+        }
+    }
 }
 
 function Main_SidePannelAddFocus() {
@@ -1244,4 +1262,32 @@ function Main_PrintUnicode(string) {
     console.log(string);
     for (var i = 0; i < string.length; i++)
         console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
+}
+
+function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, useProxy) {
+    var xmlHttp = new XMLHttpRequest();
+
+    xmlHttp.open("GET", (useProxy ? proxyurl : '') + theUrl, true);
+    xmlHttp.timeout = Timeout;
+
+    if (HeaderQuatity > 0) xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
+    //Header TWITHCV5 to load all screens and some stream info
+    if (HeaderQuatity > 1) xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
+    //Header to access User VOD screen
+    if (HeaderQuatity > 2) xmlHttp.setRequestHeader(Main_Authorization, access_token);
+
+    xmlHttp.ontimeout = function() {};
+
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) {
+                callbackSucess(xmlHttp.responseText);
+                return;
+            } else {
+                calbackError();
+            }
+        }
+    };
+
+    xmlHttp.send(null);
 }

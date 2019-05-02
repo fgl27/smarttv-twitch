@@ -40,6 +40,7 @@ function SmartHub_Start() {
             console.log(ex.message);
         }
     } else {
+        Main_updateUserFeed();
         SmartHub_followerUsername = AddUser_UsernameArray[0].name;
         SmartHub_loadDataRequest();
     }

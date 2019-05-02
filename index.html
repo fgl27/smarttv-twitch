@@ -178,11 +178,19 @@
 
         div.stream_thumbnail_video,
         div.stream_thumbnail_game,
+        div.stream_thumbnail_clip,
         div.stream_thumbnail_channel {
             width: 100%;
             height: 0;
             position: relative;
             border-radius: 4px;
+        }
+
+        div.stream_thumbnail_clip {
+            width: 99%;
+            /* height / width * 100% of Main.VideoSize*/
+            padding-bottom: 56.25%;
+            background-repeat: no-repeat;
         }
 
         div.stream_thumbnail_video {
@@ -201,6 +209,10 @@
 
         div.stream_thumbnail_focused {
             box-shadow: 0 0 0 4px #000000, 0 0 0 10px #FFFFFF;
+        }
+
+        div.feed_thumbnail_focused {
+            box-shadow: 0 0 0 2px #000000, 0 0 0 4px #FFFFFF;
         }
 
         div.stream_user_icon {
@@ -292,6 +304,29 @@
             font-size: 135%;
         }
 
+        div.user_feed {
+            z-index: 3;
+            position: absolute;
+            bottom: 0.1%;
+            height: 26vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        div.user_feed_scroll {
+            position: absolute;
+            width: 100vw;
+            bottom: 0;
+            height: auto;
+            white-space: nowrap;
+        }
+
+        div.user_feed_thumb {
+            width: 19.55%;
+            display: inline-block;
+            padding: 4px;
+        }
+
         div.input_text_box {
             width: 70%;
             margin-top: 13%;
@@ -358,7 +393,7 @@
         div.about_text_title {
             text-align: center;
             width: 100%;
-            font-size: 130%;
+            font-size: 110%;
             font-weight: bold;
         }
 
@@ -374,7 +409,7 @@
             width: 98%;
             text-align: center;
             word-wrap: break-word;
-            font-size: 175%;
+            font-size: 165%;
             text-shadow: #000000 0 0 4px, #000000 0 0 4px, #000000 0 0 3px;
         }
 
@@ -386,7 +421,7 @@
         }
 
         div.controls_text {
-            font-size: 172%;
+            font-size: 170%;
         }
 
         div.playsideinfo {
@@ -992,6 +1027,7 @@
     <script src="app/specific/UserHost.js" defer></script>
     <script src="app/specific/UserChannels.js" defer></script>
     <script src="app/specific/UserVod.js" defer></script>
+    <script src="app/specific/UserLiveFeed.js" defer></script>
     <script src="app/specific/Settings.js" defer></script>
     <script src="app/specific/SettingsLanguages.js" defer></script>
     <script src="app/specific/ChatVod.js" defer></script>
@@ -1240,6 +1276,15 @@
         </div>
     </div>
     <div id="scene2" class="screen_size hide">
+        <div id="user_feed" class="user_feed hide">
+            <div id="icon_feed_refresh" class="dialogs" style="bottom: 22vh; text-align: left; margin-left: 1%; font-size: 200%;">
+            </div>
+            <div id="dialog_loading_feed" class="dialogs hide" style="bottom: 2.5%;">
+                <i class="icon icon-circle-o-notch fa fa-spin strokeloading" style="font-size: 650%;"></i>
+            </div>
+            <div id="user_feed_scroll" class="user_feed_scroll">
+            </div>
+        </div>
         <div id="chat_container" class="chat_container hide">
             <div id="chat_inner_container" class="chat_size_default">
                 <div id="chat_box">

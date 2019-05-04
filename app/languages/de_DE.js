@@ -45,8 +45,8 @@ function de_DELang() {
     STR_PAST_HIGHL = " Highlight";
     STR_CLIPS = " Clips";
     STR_CONTENT = " Content";
-    STR_STREAM_ON = "Gestreamt am\: ";
-    STR_DURATION = "Länge\: ";
+    STR_STREAM_ON = "Gestreamt am ";
+    STR_DURATION = "Länge ";
     STR_VIEWS = " Aufrufe";
     STR_VIEWER = " Zuschauer";
     STR_EXIT_AGAIN = "Zum Verlassen erneut (Return) drücken";
@@ -166,7 +166,7 @@ function de_DELang() {
     STR_STREAM_END = "Verlassen in ";
     STR_STREAM_END_EXIT = '(Return) zum Verlassen';
     STR_FEATURED = 'Featured';
-    STR_CREATED_AT = "Erstellt am\: ";
+    STR_CREATED_AT = "Erstellt am ";
     STR_OPEN_BROADCAST = "Übertragung wiedergeben";
     STR_NO_BROADCAST = "Keine Übertragung";
     STR_NO_BROADCAST_WARNING = "Keine frühere Übertragung zum Clip verfügbar. ";

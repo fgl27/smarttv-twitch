@@ -35,7 +35,7 @@ function pt_BRLang() {
     STR_PAST_HIGHL = " Destaque";
     STR_CLIPS = " Clipes";
     STR_CONTENT = " Conteúdo";
-    STR_STREAM_ON = "Transmitido ";
+    STR_STREAM_ON = "Transmitido em ";
     STR_DURATION = "Duração ";
     STR_VIEWS = " Visualizações";
     STR_VIEWER = " Espectadores";
@@ -160,7 +160,7 @@ function pt_BRLang() {
     STR_STREAM_END = "saindo em ";
     STR_STREAM_END_EXIT = 'pressione "Retornar" para sair';
     STR_FEATURED = 'Destaques';
-    STR_CREATED_AT = "Criado ";
+    STR_CREATED_AT = "Criado em";
     STR_OPEN_BROADCAST = "Abrir a Transmissão";
     STR_NO_BROADCAST = "Sem Transmissão";
     STR_NO_BROADCAST_WARNING = "Não ha uma transmissão anterior para este clip";

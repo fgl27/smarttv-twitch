@@ -23,8 +23,8 @@ function de_DELang() {
     STR_USER = "Benutzer ";
     STR_LIVE = "Live";
     STR_GAMES = "Spiele";
-    //STR_PLAYING = "";
-    //STR_FOR = " | ";
+    STR_PLAYING = "Spielt ";
+    STR_FOR = " für ";
     STR_WATCHING = "Dabei seit ";
     STR_SINCE = "Dauer ";
     STR_AGAME = "Spiel";
@@ -45,7 +45,7 @@ function de_DELang() {
     STR_PAST_HIGHL = " Highlight";
     STR_CLIPS = " Clips";
     STR_CONTENT = " Content";
-    //STR_STREAM_ON = "";
+    STR_STREAM_ON = "Gestreamt ";
     STR_DURATION = "Länge ";
     STR_VIEWS = " Aufrufe";
     STR_VIEWER = " Zuschauer";
@@ -95,27 +95,12 @@ function de_DELang() {
     STR_CONTROLS_MAIN_4 = "Ansicht aktualisieren: (Guide/Info)";
     STR_CONTROLS_MAIN_5 = "Anwendung beenden: (Return)";
     STR_CONTROLS_MAIN_6 = "Anwendung beenden (erzwungen): (Return) gedrückt halten";
-    //STR_CONTROLS_MAIN_7 = "";
     STR_CONTROLS_MAIN_8 = "Kategorie wechseln: (Kanal auf) nach rechts, (Kanal ab) nach links";
     STR_CONTROLS_MAIN_9 = "Zurück zur Übersicht: (Grüne Taste [B])";
     STR_CONTROLS_MAIN_10 = "Anwendung neu laden: In der Übersicht (Grüne Taste [B])";
-    //STR_CONTROLS_MAIN_11 = "";
     STR_CONTROLS_MAIN_12 = "Suchen: (Blaue Taste [D]) oder über die Menüleiste";
     STR_CONTROLS_MAIN_13 = "Steuerung: (Gelbe Taste [C]) oder über die Menüleiste";
     STR_CONTROLS_MAIN_14 = "Menüleiste: (Rote Taste [A])";
-    STR_ABOUT_INFO_1 = "This is a unofficial Twitch.Tv application develop by a individual on his free time, for TV\'s that don't have access to a official application, released for free to any one that wanna to use it.";
-    STR_ABOUT_INFO_2 = "On 99% on the updates the app can update it self to add fixes and new featuring, the app will warn the user the day there is a need to update manually by reinstalling it via computer in the case you use a computer to install it.";
-    STR_ABOUT_INFO_2_SOURCE = "This version of the app is for test only, if you aren't testing please reinstall the app using the release version from https://github.com/fgl27/smarttv-twitch/releases in doubt check the README.md https://github.com/fgl27/smarttv-twitch";
-    STR_ABOUT_INFO_3 = "Developer information:";
-    STR_ABOUT_INFO_4 = "This is an open source application licensed under the GNU General Public License v3.0, check it on github";
-    STR_ABOUT_INFO_5 = "github.com/fgl27/smarttv-twitch";
-    STR_ABOUT_INFO_6 = "This application uses following dependencies:";
-    STR_ABOUT_INFO_7 = "Nightdev KapChat - KapChat captures Twitch chat directly into OBS or XSplit (https://www.nightdev.com/kapchat/)";
-    STR_ABOUT_INFO_8 = "Fontastic - Create your customized icon fonts in seconds (http://app.fontastic.me)";
-    STR_ABOUT_INFO_9 = "Twemoji - A simple library that provides standard Unicode emoji support across all platforms (https://github.com/twitter/twemoji)";
-    STR_ABOUT_INFO_10 = "UglifyJS - is a JavaScript parser, minifier, compressor and beautifier toolkit (https://github.com/mishoo/UglifyJS2)";
-    STR_ABOUT_INFO_11 = "JS Beautifier - Beautify, unpack or deobfuscate JavaScript and HTML, make JSON/JSONP readable, etc. (https://github.com/beautify-web/js-beautify)";
-    STR_ABOUT_INFO_12 = "JSHint - A Static Code Analysis Tool for JavaScript (https://github.com/jshint/jshint)";
     STR_CONTROLS_PLAY_1 = "Playerleiste anzeigen: (Enter)";
     STR_CONTROLS_PLAY_2 = "Wiedergabe beenden: Zwei Mal (Return)";
     STR_CONTROLS_PLAY_3 = "Play/Pause: (Play/Pause)";
@@ -131,7 +116,6 @@ function de_DELang() {
     STR_CONTROLS_PLAY_13 = "Kanal oder Spiel öffnen: über die Playerleiste";
     STR_CONTROLS_PLAY_14 = "Video und Chat getrennt anzeigen: (Rote Taste [A])";
     STR_CONTROLS_PLAY_15 = "Chat deaktivieren: (Grüne Taste [B])";
-    //STR_CONTROLS_PLAY_16 = "";
     STR_UPDATE_AVAILABLE = "Update verfügbar, auf github prüfen ";
     STR_UPDATE_MAIN_0 = "ACHTUNG: Bei der Neuinstallation gehen alle gespeicherten Benutzer, Auth-Keys und Einstellungen verloren";
     STR_UPDATE_MAIN_1 = "Update verfügbar, die Anwendung kann dieses Update nicht automatisch durchführen ";
@@ -175,7 +159,6 @@ function de_DELang() {
     STR_GUIDE = " (Guide/Info)";
     STR_MONTHS = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
     STR_DAYS = ["Sonntag,", "Montag,", "Dienstag,", "Mittwoch,", "Donnerstag,", "Freitag,", "Samstag,"];
-    //STR_STARTED = "";
     STR_KEY_UP_DOWN = " (Kanal auf/Kanal ab)";
     STR_VIDEOS = "Videos";
     STR_VIDEO = " Video";
@@ -219,7 +202,7 @@ function de_DELang() {
     STR_SIZE = "Größe ";
     STR_BRIGHTNESS = "Transparenz ";
     STR_FORBIDDEN = "Eingeschränkter Inhalt. Diese Übertragung ist nur für Prime-Mitglieder oder über die offizielle Twitch-App sowie Webseite verfügbar.";
-    //STR_JUMPING_STEP = "";
+    STR_JUMPING_STEP = "Sprunggröße";
     STR_SECONDS = " Sekunden";
     STR_MINUTES = " Minuten";
     STR_CLOCK_OFFSET = "Zeitversatz";
@@ -230,4 +213,8 @@ function de_DELang() {
     STR_JUMP_BUFFER_WARNING = "Springen während des Bufferns nicht möglich";
     STR_CHAT_DISABLE = "Chat ist deaktiviert, (Grüne Taste [B]) zum Aktivieren ";
     STR_CONTENT_LANG_SUMARRY = "Mit (Enter) ändern ";
+    //STR_CONTROLS_MAIN_7 = "";
+    //STR_CONTROLS_MAIN_11 = "";
+    //STR_CONTROLS_PLAY_16 = "";
+    //STR_STARTED = "";
 }

@@ -228,12 +228,12 @@ function Screens_createCellClip(row_id, coloumn_id, idArray, thumbnail, display_
         idArray[3] + id + '" class="stream_info" style="width: 72%; display: inline-block; font-size: 155%;">' +
         display_name + '</div><div id="' + idArray[7] + id +
         '"class="stream_info" style="width:27%; float: right; text-align: right; display: inline-block;">' + language +
-        '</div><div><div id="' + idArray[4] + id + '"class="stream_info" style="width: 59%; display: inline-block;">' +
+        '</div><div id="' + idArray[11] + id + '"class="stream_info">' +
+        title_game[0] + STR_BR + title_game[1] + title_game[2] + '</div><div id="' + idArray[6] + id +
+        '"class="stream_info">' + views + STR_VIEWS + '</div><div><div id="' + idArray[4] + id + '"class="stream_info" style="width: 59%; display: inline-block;">' +
         created_at[0] + created_at[1] + '</div><div id="' + idArray[5] + id +
         '"class="stream_info" style="width: 39%; display: inline-block; float: right; text-align: right;">' +
-        STR_DURATION + Play_timeS(duration) + '</div></div><div id="' + idArray[11] + id + '"class="stream_info">' +
-        title_game[0] + STR_BR + title_game[1] + title_game[2] + '</div><div id="' + idArray[6] + id +
-        '"class="stream_info">' + views + STR_VIEWS + '</div></div></div>';
+        STR_DURATION + Play_timeS(duration) + '</div></div></div></div>';
 
     return Main_td;
 }

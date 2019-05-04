@@ -248,7 +248,7 @@ function Play_SetChatFont() {
 function Play_Start() {
     webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_OFF);
     Play_showBufferDialog();
-    Main_innerHTML("stream_live_icon", '<div style="vertical-align: middle; display: inline-block"><i class="icon-circle" style="color: red; font-size: 105%; "></i></div><div style="vertical-align: middle; display: inline-block">' + STR_SPACE + STR_LIVE.toUpperCase() + '</div>');
+    Main_innerHTML("stream_live_icon", '<div style="vertical-align: middle; display: inline-block"><i class="icon-circle" style="color: red; font-size: 105%; "></i></div><div style="display: inline-block">' + STR_SPACE + STR_LIVE.toUpperCase() + '</div>');
     Main_empty('stream_info_title');
     Play_LoadLogoSucess = false;
     PlayClip_HasVOD = true;
@@ -269,7 +269,7 @@ function Play_Start() {
     Play_offsettimeMinus = 0;
     Main_textContent("stream_watching_time", STR_WATCHING + Play_timeMs(0));
     Play_created = Play_timeMs(0);
-    Main_textContent("stream_live_time", STR_SINCE + Play_created + STR_AGO);
+    Main_textContent("stream_live_time", STR_SINCE + Play_created);
     Main_HideElement('progress_bar_div');
 
     Play_EndSet(1);
@@ -359,7 +359,7 @@ function Play_updateStreamInfoStart() {
                     Main_values.Play_selectedChannel_id = response.stream.channel._id;
                     Main_innerHTML("stream_info_title", twemoji.parse(response.stream.channel.status));
                     Main_values.Play_gameSelected = response.stream.game;
-                    Play_Lang = ', [' + (response.stream.channel.broadcaster_language).toUpperCase() + ']';
+                    Play_Lang = ' [' + (response.stream.channel.broadcaster_language).toUpperCase() + ']';
                     Main_textContent("stream_info_game", STR_PLAYING + Main_values.Play_gameSelected + STR_FOR +
                         Main_addCommas(response.stream.viewers) + ' ' + STR_VIEWER + Play_Lang);
                     Main_values.Play_selectedChannelLogo = response.stream.channel.logo;
@@ -802,7 +802,7 @@ function Play_updateCurrentTime(currentTime) {
     Play_oldcurrentTime = currentTime + Play_offsettime - 14000; // 14s buffer size from twitch
     if (Play_isPanelShown()) {
         Main_textContent("stream_watching_time", STR_WATCHING + Play_timeMs(Play_oldcurrentTime));
-        Main_textContent("stream_live_time", STR_SINCE + Play_streamLiveAt(Play_created) + STR_AGO);
+        Main_textContent("stream_live_time", STR_SINCE + Play_streamLiveAt(Play_created));
     }
 }
 
@@ -833,21 +833,10 @@ function Play_timeS(time) {
 }
 
 function Play_timeMs(time) {
-    var seconds, minutes, hours;
-
     if (time < 0 && !Play_offsettimeMinus) Play_offsettimeMinus = time * -1;
     time += Play_offsettimeMinus;
 
-    seconds = Play_lessthanten(parseInt(time / 1000) % 60);
-
-    time = Math.floor(time / 1000 / 60);
-    minutes = Play_lessthanten(time % 60);
-
-    time = Math.floor(time / 60);
-    hours = Play_lessthanten(time);
-
-    //final time 00:00 or 00:00:00
-    return (!time) ? (minutes + ":" + seconds) : (hours + ":" + minutes + ":" + seconds);
+    return Play_timeS(parseInt(time / 1000));
 }
 
 function Play_streamLiveAt(time) { //time in '2017-10-27T13:27:27Z'
@@ -997,7 +986,7 @@ function Play_showPanel() {
     Play_IconsResetFocus();
     Play_qualityIndexReset();
     Play_qualityDisplay();
-    Main_textContent("stream_live_time", STR_SINCE + Play_streamLiveAt(Play_created) + STR_AGO);
+    Main_textContent("stream_live_time", STR_SINCE + Play_streamLiveAt(Play_created));
     Main_textContent("stream_watching_time", STR_WATCHING + Play_timeMs(Play_oldcurrentTime));
     Play_clock();
     Play_CleanHideExit();

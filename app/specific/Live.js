@@ -152,7 +152,7 @@ function Live_loadDataSuccess(responseText) {
                     [stream.preview.template.replace("{width}x{height}", Main_VideoSize),
                         Main_is_playlist(JSON.stringify(stream.stream_type)) + stream.channel.display_name,
                         stream.channel.status, stream.game,
-                        STR_SINCE + Play_streamLiveAt(stream.created_at) + STR_AGO + ', ' + STR_FOR + Main_addCommas(stream.viewers) + STR_VIEWER,
+                        STR_SINCE + Play_streamLiveAt(stream.created_at) + ' ' + STR_FOR + Main_addCommas(stream.viewers) + STR_VIEWER,
                         Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language)
                     ]));
             }
@@ -286,7 +286,7 @@ function Live_loadDataSuccessReplace(responseText) {
             Main_replaceVideo(Live_emptyCellVector[i], [stream.channel.name, id], [stream.preview.template.replace("{width}x{height}", Main_VideoSize),
                 Main_is_playlist(JSON.stringify(stream.stream_type)) + stream.channel.display_name,
                 stream.channel.status, stream.game,
-                STR_SINCE + Play_streamLiveAt(stream.created_at) + STR_AGO + ', ' + STR_FOR +
+                STR_SINCE + Play_streamLiveAt(stream.created_at) + ' ' + STR_FOR +
                 Main_addCommas(stream.viewers) + STR_VIEWER,
                 Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language)
             ], Live_ids);

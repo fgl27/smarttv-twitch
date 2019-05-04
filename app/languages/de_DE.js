@@ -27,7 +27,6 @@ function de_DELang() {
     //STR_FOR = " | ";
     STR_WATCHING = "Dabei seit ";
     STR_SINCE = "Dauer ";
-    //STR_AGO = "";
     STR_AGAME = "Spiel";
     STR_PLACEHOLDER_SEARCH = "Suchbegriff eingeben";
     STR_PLACEHOLDER_OAUTH = "Auth-Key eingeben";
@@ -184,7 +183,7 @@ function de_DELang() {
     STR_STREAM_END = "Verlassen in ";
     STR_STREAM_END_EXIT = '(Return) zum Verlassen';
     STR_FEATURED = 'Featured';
-    STR_CREATED_AT = "Erstellt am ";
+    STR_CREATED_AT = "Erstellt ";
     STR_OPEN_BROADCAST = "Übertragung wiedergeben";
     STR_NO_BROADCAST = "Keine Übertragung";
     STR_NO_BROADCAST_WARNING = "Keine frühere Übertragung zum Clip verfügbar. ";

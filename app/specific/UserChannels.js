@@ -15,6 +15,11 @@ var UserChannels_OldUserName = '';
 var UserChannels_itemsCountCheck = false;
 var UserChannels_FirstLoad = false;
 
+var UserChannels_itemsCountOffset = 0;
+var UserChannels_idObject = {};
+var UserChannels_emptyCellVector = [];
+var UserChannels_MaxOffset = 0;
+
 var UserChannels_ids = ['uc_thumbdiv', 'uc_img', 'uc_infodiv', 'uc_displayname', 'uc_cell', 'ucempty_', 'user_channels_scroll'];
 //Variable initialization end
 
@@ -51,6 +56,10 @@ function UserChannels_StartLoad() {
     Main_empty('stream_table_user_channels');
     UserChannels_loadChannelOffsset = 0;
     UserChannels_itemsCount = 0;
+    UserChannels_idObject = {};
+    UserChannels_emptyCellVector = [];
+    UserChannels_itemsCountOffset = 0;
+    UserChannels_MaxOffset = 0;
     UserChannels_cursorX = 0;
     UserChannels_cursorY = 0;
     UserChannels_dataEnded = false;
@@ -70,26 +79,18 @@ function UserChannels_loadDataPrepare() {
 }
 
 function UserChannels_loadChannels() {
-    var xmlHttp = new XMLHttpRequest();
+    var offset = UserChannels_itemsCount + UserChannels_itemsCountOffset;
+    if (offset && offset > (UserChannels_MaxOffset - 1)) {
+        offset = UserChannels_MaxOffset - Main_ItemsLimitChannel;
+        UserChannels_dataEnded = true;
+    }
 
-    xmlHttp.open("GET", 'https://api.twitch.tv/kraken/users/' + encodeURIComponent(AddUser_UsernameArray[Main_values.Users_Position].id) + '/follows/channels?limit=100&offset=' +
-        UserChannels_loadChannelOffsset + '&sortby=created_at&' + Math.round(Math.random() * 1e7), true);
-    xmlHttp.timeout = UserChannels_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
-    xmlHttp.ontimeout = function() {};
+    var theUrl = 'https://api.twitch.tv/kraken/users/' +
+        encodeURIComponent(AddUser_UsernameArray[Main_values.Users_Position].id) +
+        '/follows/channels?limit=' + Main_ItemsLimitChannel + '&offset=' +
+        offset + '&sortby=login&direction=asc';
 
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) {
-                UserChannels_loadChannelLive(xmlHttp.responseText);
-                return;
-            } else {
-                UserChannels_loadDataError();
-            }
-        }
-    };
-    xmlHttp.send(null);
+    BasexmlHttpGet(theUrl, UserChannels_loadingDataTimeout, 2, null, UserChannels_loadDataSuccess, UserChannels_loadDataError, false);
 }
 
 function UserChannels_loadDataError() {
@@ -110,39 +111,14 @@ function UserChannels_loadDataError() {
     }
 }
 
-function UserChannels_loadChannelLive(responseText) {
-    var response = JSON.parse(responseText).follows,
-        response_items = response.length;
-
-    if (response_items) { // response_items here is not always 99 because banned channels, so check until it is 0
-        var ChannelTemp = '',
-            x = 0;
-
-        for (x; x < response_items; x++) {
-            ChannelTemp = response[x].channel.name + ',' + response[x].channel._id + ',' +
-                response[x].channel.logo + ',' + response[x].channel.display_name;
-            if (UserChannels_List.indexOf(ChannelTemp) === -1) UserChannels_List.push(ChannelTemp);
-        }
-
-        UserChannels_loadChannelOffsset += response_items;
-        UserChannels_loadDataPrepare();
-        UserChannels_loadChannels();
-    } else { // end
-        UserChannels_List.sort(function(a, b) {
-            return a.toLowerCase().localeCompare(b.toLowerCase());
-        });
-        UserChannels_loadDataSuccess();
-    }
-}
-
-function UserChannels_loadDataSuccess() {
-    var response_items = Main_ItemsLimitChannel;
-    var offset_itemsCount = UserChannels_itemsCount;
-    var rest = UserChannels_List.length - offset_itemsCount;
-    if (rest < response_items) response_items = rest;
+function UserChannels_loadDataSuccess(responseText) {
+    var response = JSON.parse(responseText);
+    var response_items = response.follows.length;
+    UserChannels_MaxOffset = parseInt(response._total);
 
     if (response_items < Main_ItemsLimitChannel) UserChannels_dataEnded = true;
 
+    var offset_itemsCount = UserChannels_itemsCount;
     UserChannels_itemsCount += response_items;
 
     UserChannels_emptyContent = !UserChannels_itemsCount;
@@ -150,26 +126,36 @@ function UserChannels_loadDataSuccess() {
     var response_rows = response_items / Main_ColoumnsCountChannel;
     if (response_items % Main_ColoumnsCountChannel > 0) response_rows++;
 
-    var coloumn_id, row_id, row,
-        cursor = offset_itemsCount;
+    var coloumn_id, row_id, row, channels, id,
+        cursor = 0,
+        doc = document.getElementById('stream_table_user_channels');
 
     for (var i = 0; i < response_rows; i++) {
         row_id = offset_itemsCount / Main_ColoumnsCountChannel + i;
         row = document.createElement('tr');
 
-        for (coloumn_id = 0; coloumn_id < Main_ColoumnsCountChannel && cursor < UserChannels_List.length; coloumn_id++, cursor++) {
-            row.appendChild(UserChannels_createCell(row_id, row_id + '_' + coloumn_id,
-                UserChannels_List[cursor].split(",")));
+        for (coloumn_id = 0; coloumn_id < Main_ColoumnsCountChannel && cursor < response_items; coloumn_id++, cursor++) {
+            channels = response.follows[cursor].channel;
+            id = channels._id;
+            if (UserChannels_idObject[id]) coloumn_id--;
+            else {
+                UserChannels_idObject[id] = 1;
+                row.appendChild(UserChannels_createCell(row_id, row_id + '_' + coloumn_id, [channels.name, id, channels.logo, channels.display_name]));
+            }
+
         }
+
         for (coloumn_id; coloumn_id < Main_ColoumnsCountChannel; coloumn_id++) {
             if (UserChannels_dataEnded && !UserChannels_itemsCountCheck) {
                 UserChannels_itemsCountCheck = true;
                 UserChannels_itemsCount = (row_id * Main_ColoumnsCountChannel) + coloumn_id;
             }
             row.appendChild(Main_createEmptyCell(UserChannels_ids[5] + row_id + '_' + coloumn_id));
+            UserChannels_emptyCellVector.push(UserChannels_ids[5] + row_id + '_' + coloumn_id);
         }
-        document.getElementById('stream_table_user_channels').appendChild(row);
+        doc.appendChild(row);
     }
+
     UserChannels_loadDataSuccessFinish();
 }
 
@@ -191,10 +177,85 @@ function UserChannels_loadDataSuccessFinish() {
             }
             Main_ShowElement(UserChannels_ids[6]);
             UserChannels_FirstLoad = false;
-        } else Main_imgVectorLoad(IMG_404_LOGO);
+        } else {
+            Main_imgVectorLoad(IMG_404_LOGO);
+            if (UserChannels_emptyCellVector.length > 0 && !UserChannels_dataEnded) {
+                UserChannels_loadDataPrepare();
+                UserChannels_loadDataReplace();
+                return;
+            } else {
+                UserChannels_addFocus(true);
+                UserChannels_emptyCellVector = [];
+            }
+        }
         UserChannels_loadingData = false;
     });
 }
+
+function UserChannels_loadDataReplace() {
+    Main_SetItemsLimitReplace(UserChannels_emptyCellVector.length);
+
+    var offset = UserChannels_itemsCount + UserChannels_itemsCountOffset;
+    if (offset && offset > (UserChannels_MaxOffset - 1)) {
+        offset = UserChannels_MaxOffset - Main_ItemsLimitReplace;
+        UserChannels_dataEnded = true;
+    }
+
+    var theUrl = 'https://api.twitch.tv/kraken/users/' +
+        encodeURIComponent(AddUser_UsernameArray[Main_values.Users_Position].id) +
+        '/follows/channels?limit=' + Main_ItemsLimitReplace + '&offset=' +
+        UserChannels_loadChannelOffsset + '&sortby=login&direction=asc';
+
+    BasexmlHttpGet(theUrl, UserChannels_loadingDataTimeout, 2, null, UserChannels_loadDataSuccessReplace, UserChannels_loadDataErrorReplace);
+}
+
+function UserChannels_loadDataErrorReplace() {
+    UserChannels_loadingDataTry++;
+    if (UserChannels_loadingDataTry < UserChannels_loadingDataTryMax) {
+        UserChannels_loadingDataTimeout += 500;
+        UserChannels_loadDataReplace();
+    } else {
+        UserChannels_dataEnded = true;
+        UserChannels_itemsCount -= UserChannels_emptyCellVector.length;
+        UserChannels_emptyCellVector = [];
+        UserChannels_loadDataSuccessFinish();
+    }
+}
+
+function UserChannels_loadDataSuccessReplace(responseText) {
+    var response = JSON.parse(responseText),
+        response_items = response.follows.length,
+        channels, id, i = 0,
+        cursor = 0,
+        tempVector = [];
+
+    UserChannels_MaxOffset = parseInt(response._total);
+
+    if (response_items < Main_ItemsLimitReplace) UserChannels_dataEnded = true;
+
+    for (i; i < UserChannels_emptyCellVector.length && cursor < response_items; i++, cursor++) {
+        channels = response.follows[cursor].channel;
+        id = channels._id;
+        if (UserChannels_idObject[id]) i--;
+        else {
+            UserChannels_idObject[id] = 1;
+            Main_replaceChannel(UserChannels_emptyCellVector[i], [channels.name, id, channels.logo, channels.display_name], UserChannels_ids);
+
+            tempVector.push(i);
+        }
+    }
+
+    for (i = tempVector.length - 1; i > -1; i--) UserChannels_emptyCellVector.splice(tempVector[i], 1);
+
+    UserChannels_itemsCountOffset += cursor;
+    if (UserChannels_dataEnded) {
+        UserChannels_itemsCount -= UserChannels_emptyCellVector.length;
+        UserChannels_emptyCellVector = [];
+    }
+
+    UserChannels_loadDataSuccessFinish();
+}
+
 
 function UserChannels_addFocus() {
     Main_addFocusChannel(UserChannels_cursorY, UserChannels_cursorX, UserChannels_ids, Main_ColoumnsCountChannel, UserChannels_itemsCount);

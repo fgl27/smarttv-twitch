@@ -357,7 +357,7 @@ function Play_updateStreamInfoStart() {
                     else Main_textContent("stream_info_name", Main_values.Play_selectedChannelDisplayname);
 
                     Main_values.Play_selectedChannel_id = response.stream.channel._id;
-                    Main_innerHTML("stream_info_title", twemoji.parse(response.stream.channel.status));
+                    Main_innerHTML("stream_info_title", twemoji.parse(response.stream.channel.status, false, true));
                     Main_values.Play_gameSelected = response.stream.game;
                     Play_Lang = ' [' + (response.stream.channel.broadcaster_language).toUpperCase() + ']';
                     Main_textContent("stream_info_game", STR_PLAYING + Main_values.Play_gameSelected + STR_FOR +
@@ -404,7 +404,7 @@ function Play_updateStreamInfo() {
                 Play_updateStreamInfoErrorTry = 0;
                 var response = JSON.parse(xmlHttp.responseText);
                 if (response.stream !== null) {
-                    Main_innerHTML("stream_info_title", twemoji.parse(response.stream.channel.status));
+                    Main_innerHTML("stream_info_title", twemoji.parse(response.stream.channel.status, false, true));
                     Main_values.Play_gameSelected = response.stream.game;
                     Main_textContent("stream_info_game", STR_PLAYING + Main_values.Play_gameSelected + STR_FOR +
                         Main_addCommas(response.stream.viewers) + ' ' + STR_VIEWER + Play_Lang);

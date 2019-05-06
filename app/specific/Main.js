@@ -372,6 +372,14 @@ function Main_textContent(div, value) {
     document.getElementById(div).textContent = value;
 }
 
+function Main_replaceClassEmoji(div) {
+    var emojiel = document.getElementById(div).getElementsByClassName("emoji");
+    if (emojiel) {
+        for (var i = 0; i < emojiel.length; i++)
+            emojiel[i].classList.add('emoticon');
+    }
+}
+
 function Main_showLoadDialog() {
     Main_YRst(-1);
     Main_ShowElement('dialog_loading');

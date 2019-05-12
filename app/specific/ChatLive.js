@@ -181,7 +181,8 @@ function ChatLive_loadChatRequest() {
         }
     };
 
-    ChatLive_CheckId = window.setTimeout(ChatLive_Check, 5000);
+    //ChatLive_CheckId = window.setTimeout(ChatLive_Check, 5000);
+    console.log('chat start');
 }
 
 function ChatLive_Check() {

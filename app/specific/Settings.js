@@ -2,8 +2,8 @@
 var Settings_cursorY = 0;
 var Settings_value = {
     "general_lang": { //general_lang
-        "values": ["English [EN]", "Deutsch [DE]", "Italiano [IT]", "Português - Brasil [PT-BR]"],
-        "set_values": ["en_US", "de_DE", "it_IT", "pt_BR"],
+        "values": ["English [EN]", "Deutsch [DE]", "Español [ES]", "Italiano [IT]", "Português - Brasil [PT-BR]", "Русский [RU]"],
+        "set_values": ["en_US", "de_DE", "es_ES", "it_IT", "pt_BR", "ru_RU"],
         "defaultValue": 1
     },
     "restor_playback": { //restor_playback
@@ -350,16 +350,20 @@ function Settings_SetDefault(position) {
 function Settings_CheckLang(lang) {
     if (lang.indexOf('en_') !== -1) Settings_value.general_lang.defaultValue = 0;
     else if (lang.indexOf('de_') !== -1) Settings_value.general_lang.defaultValue = 1;
-    else if (lang.indexOf('it_') !== -1) Settings_value.general_lang.defaultValue = 2;
-    else if (lang.indexOf('pt_') !== -1) Settings_value.general_lang.defaultValue = 3;
+    else if (lang.indexOf('es_') !== -1) Settings_value.general_lang.defaultValue = 2;
+    else if (lang.indexOf('it_') !== -1) Settings_value.general_lang.defaultValue = 3;
+    else if (lang.indexOf('pt_') !== -1) Settings_value.general_lang.defaultValue = 4;
+    else if (lang.indexOf('ru_') !== -1) Settings_value.general_lang.defaultValue = 5;
 }
 
 function Settings_SetLang(lang) {
     //Always reset the language, as some string may be missing on some languages
     en_USLang();
 
-    if (lang.indexOf('it_') !== -1) it_ITLang();
-    else if (lang.indexOf('pt_') !== -1) pt_BRLang();
+    if (lang.indexOf('pt_') !== -1) pt_BRLang();
+    else if (lang.indexOf('it_') !== -1) it_ITLang();
+    else if (lang.indexOf('ru_') !== -1) ru_RULang();
+    else if (lang.indexOf('es_') !== -1) es_ESLang();
     else if (lang.indexOf('de_') !== -1) de_DELang();
 
     DefaultLang();

@@ -3,7 +3,7 @@ function es_ESLang() {
     Main_IsDayFirst = true;
 
     // this is the size of side pannel a ajust may be needed here so it can fit all words in the horizontal axis
-    document.getElementById("side_panel").style.width = "17%";
+    document.getElementById("side_panel").style.width = "18%";
 
     //Bellow are variable to translate
     STR_REFRESH = "Actualizar y volver arriba";
@@ -153,7 +153,7 @@ function es_ESLang() {
     STR_FALLOWING = " Siguiendo";
     STR_FALLOW = " Seguir";
     STR_IS_SUB_NOOAUTH = " Y no posee una clave de autenticación para que la aplicación compruebe su estado de suscripción";
-    STR_IS_SUB_NOT_SUB = " Y no es suscriptor de este canal"; 
+    STR_IS_SUB_NOT_SUB = " Y no es suscriptor de este canal";
     STR_IS_SUB_IS_SUB = " Usted es suscriptor de este canal pero la aplicación falló al autenticar. Contacte el desarrollador en Acerca de";
     STR_OAUTH_FAIL = "Falló la autenticación con la clave provista, revísela e inténtelo de nuevo";
     STR_OAUTH_FAIL_USER = "La clave añadida no pertenece al usuario ";

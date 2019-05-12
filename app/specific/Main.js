@@ -200,6 +200,8 @@ function Main_loadTranslations(device) {
 
             if (lang.indexOf('pt_') !== -1) pt_BRLang();
             else if (lang.indexOf('it_') !== -1) it_ITLang();
+            else if (lang.indexOf('ru_') !== -1) ru_RULang();
+            else if (lang.indexOf('es_') !== -1) es_ESLang();
             else if (lang.indexOf('de_') !== -1) de_DELang();
 
             console.log("language is " + lang);
@@ -948,7 +950,7 @@ function Main_addFocusChannel(y, x, idArray, ColoumnsCount, itemsCount) {
                 Main_ScrollTable(idArray[6],
                     (document.getElementById(idArray[4] + y + '_' + x).offsetTop * -1) + 450);
 
-        } else Main_ScrollTable(idArray[6], 100);
+        } else Main_ScrollTable(idArray[6], 80);
 
     } else Main_handleKeyUp();
 }
@@ -958,7 +960,7 @@ function Main_addFocusVideo(y, x, idArray, ColoumnsCount, itemsCount) {
     Main_CounterDialog(x, y, ColoumnsCount, itemsCount);
     if (Main_YchangeAddFocus(y)) {
 
-        if (!y) Main_ScrollTable(idArray[10], 100);
+        if (!y) Main_ScrollTable(idArray[10], 80);
         else if (Main_ThumbNull((y + 1), 0, idArray[0])) {
             Main_ScrollTable(idArray[10],
                 (document.getElementById(idArray[8] + y + '_' + x).offsetTop * -1) + 358);

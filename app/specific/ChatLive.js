@@ -142,7 +142,9 @@ function ChatLive_loadChat() {
 
 function ChatLive_loadChatRequest() {
 
-    ChatLive_socket = new WebSocket('wss://irc-ws.chat.twitch.tv');
+    ChatLive_socket = new ReconnectingWebSocket('wss://irc-ws.chat.twitch.tv', 'irc', {
+        reconnectInterval: 3000
+    });
 
     ChatLive_socket.onopen = function() {
         ChatLive_socket.send('PASS blah\r\n');

@@ -26,7 +26,7 @@ function es_ESLang() {
     STR_PLAYING = "Jugando ";
     STR_FOR = " para ";
     STR_WATCHING = "Tiempo de visualización ";
-    STR_SINCE = "Desde las ";
+    STR_SINCE = "Desde hace ";
     STR_AGAME = "Un juego";
     STR_PLACEHOLDER_SEARCH = "Escriba su búsqueda...";
     STR_PLACEHOLDER_OAUTH = "Escriba su clave de autenticación...";
@@ -45,7 +45,7 @@ function es_ESLang() {
     STR_PAST_HIGHL = " Destacado";
     STR_CLIPS = " Clips";
     STR_CONTENT = " Contenido";
-    STR_STREAM_ON = "Emitió ";
+    STR_STREAM_ON = "Emitido el ";
     STR_DURATION = "Duración ";
     STR_VIEWS = " Visualizaciones";
     STR_VIEWER = " Espectadores";
@@ -137,15 +137,15 @@ function es_ESLang() {
     STR_UPDATE_MAIN_1 = "Hay una actualización disponible, y la aplicación no puede actualizar por si misma esta versión ";
     STR_UPDATE_MAIN_2 = "Cambios significativos:";
     STR_UPDATE_MAIN_3 = "Mejora del funcionamiento de la aplicación en segundo plano";
-    STR_OAUTH_IN = "Añadir una clave de autenticación permite a la aplicación acceder emisiones pasadas disponibles solo para suscriptores para los canales a los que esté suscrito el usuario introducido. Introduzca la clave de autenticación para el usuario ";
+    STR_OAUTH_IN = "Añadir una clave de autenticación permite a la aplicación acceder a emisiones pasadas disponibles solo para suscriptores para los canales a los que esté suscrito el usuario introducido. Introduzca la clave de autenticación para el usuario ";
     STR_OAUTH_EXPLAIN1 = " debajo, siguiendo estos pasos:";
     STR_OAUTH_EXPLAIN2 = "Acceda a link_link (usando un ordenador o un dispositivo móvil)";
     STR_OAUTH_EXPLAIN3 = "Haga click en \"Authorize\". Le llevará a la página principal de autenticación de Twitch.TV";
     STR_OAUTH_EXPLAIN4 = "Acceda a Twitch.TV usando el usuario al que intenta añadir la clave";
     STR_OAUTH_EXPLAIN5 = "Haga click en Autorizar en la página de Twitch.TV si está de acuerdo con los permisos solicitados";
     STR_OAUTH_EXPLAIN6 = "La página se actualizará y mostrará una clave, compuesta de letras minúsculas y números.";
-    STR_USER_CODE = " Añada clave de autenticación";
-    STR_USER_CODE_OK = "Clave añadida satisfactoriamente";
+    STR_USER_CODE = " Añadir clave de autenticación";
+    STR_USER_CODE_OK = "Clave añadida";
     STR_KEY_BAD = "Prueba de clave fallida, necesita añadir una nueva";
     STR_KEY_OK = "Prueba de clave satisfactoria";
     STR_OAUTH_WRONG = "Intenta añadir una clave para el usuario ";
@@ -183,7 +183,7 @@ function es_ESLang() {
     STR_STREAM_END = "saliendo en ";
     STR_STREAM_END_EXIT = 'presione "Volver" para salir';
     STR_FEATURED = 'Destacados';
-    STR_CREATED_AT = "Creado ";
+    STR_CREATED_AT = "Creado el ";
     STR_OPEN_BROADCAST = "Abrir la emisión";
     STR_NO_BROADCAST = "Sin emisión";
     STR_NO_BROADCAST_WARNING = "No existe emisión pasada para este clip";

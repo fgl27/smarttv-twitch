@@ -141,8 +141,11 @@ function ChatLive_loadChat() {
 }
 
 function ChatLive_loadChatRequest() {
+    //Tizen lower then 2.4 has issues with wss (websocket network error unacceptable tls certificate)
+    var url = 'ws://irc-ws.chat.twitch.tv';
+    if (Main_TizenVersion) url = 'wss://irc-ws.chat.twitch.tv';
 
-    ChatLive_socket = new ReconnectingWebSocket('wss://irc-ws.chat.twitch.tv', 'irc', {
+    ChatLive_socket = new ReconnectingWebSocket(url, 'irc', {
         reconnectInterval: 3000
     });
 

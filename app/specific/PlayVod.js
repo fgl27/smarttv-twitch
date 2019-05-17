@@ -94,6 +94,7 @@ function PlayVod_Start() {
         Main_textContent("stream_live_icon", ChannelVod_createdAt);
 
         Main_replaceClassEmoji('stream_info_game');
+        Main_replaceClassEmoji('stream_info_title');
     }
 
     if (PlayVod_VodIds['#' + Main_values.ChannelVod_vodId] && !Main_values.vodOffset) {

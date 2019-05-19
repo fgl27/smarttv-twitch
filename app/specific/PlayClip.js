@@ -254,6 +254,7 @@ function PlayClip_onPlayer() {
 
     Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_PLAY", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayClip_Buffer);
     Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_RESUME", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayClip_Buffer);
+    Play_SetFullScreen(Play_isFullScreen);
     Play_avplay.setListener(PlayClip_listener);
 
     Play_avplay.prepareAsync(function() { //successCallback

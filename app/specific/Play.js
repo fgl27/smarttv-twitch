@@ -672,6 +672,7 @@ function Play_onPlayer() {
     //    Play_4K_ModeEnable = true;
     //}
 
+    Play_SetFullScreen(Play_isFullScreen);
     Play_avplay.setListener(Play_listener);
     Play_offsettime = Play_oldcurrentTime;
 

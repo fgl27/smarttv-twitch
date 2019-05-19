@@ -14,14 +14,6 @@
   font-style: normal;
 }
 
-/*Only Tags and some etc as BabelStoneHan is very big and can break max table size*/
-@font-face {
-  font-family: 'BabelStoneHan';
-  src: url('fonts/BabelStoneHan.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
 @font-face {
   font-family: 'Jomolhari';
   src: url('fonts/Jomolhari.woff') format('woff');

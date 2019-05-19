@@ -492,7 +492,7 @@ function PlayVod_onPlayer() {
     Play_showBufferDialog();
 
     if (!Main_isReleased) {
-        console.log('PlayClip_onPlayer:', 'date: ' + (new Date()));
+        console.log('PlayVod_onPlayer:', 'date: ' + (new Date()));
         console.log('PlayVod_onPlayer:', '\n' + '\n"' + PlayVod_playingUrl + '"\n');
     }
 

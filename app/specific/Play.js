@@ -458,7 +458,7 @@ function Play_loadDataRequest() {
             (AddUser_UserIsSet() && AddUser_UsernameArray[Main_values.Users_Position].access_token ? '&oauth_token=' +
                 AddUser_UsernameArray[Main_values.Users_Position].access_token : '');
     } else {
-    console.log(Play_tokenResponse.token);
+        console.log(Play_tokenResponse.token);
         console.log(Play_tokenResponse.sig);
         theUrl = 'https://usher.ttvnw.net/api/channel/hls/' + Main_values.Play_selectedChannel +
             '.m3u8?&token=' + encodeURIComponent(Play_tokenResponse.token) + '&sig=' + Play_tokenResponse.sig +

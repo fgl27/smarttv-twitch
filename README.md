@@ -75,6 +75,10 @@ Installation instructions:
 Installation guide **Tizen Studio** (tested on Linux Ubuntu 16 and up, windows 10 64 bits and macOS Mojave 10.14.4)
 ==============
 
+## Help and workarounds
+
+There is a issue section on this github page [smarttv-twitch/issues](https://github.com/fgl27/smarttv-twitch/issues) on this there is a few already open issues if you have a problem with the bellow steps check there to see if any of the already opened issues have the proper help for you, if not [open a new issue](https://github.com/fgl27/smarttv-twitch/issues/new/choose)
+
 ## Account and Downloads
 
 * Create a Samsung account if you don't have one, and set it up as a developer account [SAMSUNG DEVELOPERS](http://developer.samsung.com/home.do)

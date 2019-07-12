@@ -137,8 +137,8 @@ function en_USLang() {
     STR_UPDATE_MAIN_1 = "A update is available, and the app can't self update this version ";
     STR_UPDATE_MAIN_2 = "Major changes:";
     STR_UPDATE_MAIN_3 = "Improves how the app runs in the background";
-    STR_OAUTH_IN = "Adding a authentication key allows the app to fallow and access subscribed only past broadcast (for channel you are Sub to and block VOD access to none subscribers) for the chosen user, enter the authentication key for user ";
-    STR_OAUTH_EXPLAIN1 = " below, fallowing this steps:";
+    STR_OAUTH_IN = "Adding a authentication key allows the app to follow and access subscribed only past broadcast (for channel you are Sub to and block VOD access to none subscribers) for the chosen user, enter the authentication key for user ";
+    STR_OAUTH_EXPLAIN1 = " below, following these steps:";
     STR_OAUTH_EXPLAIN2 = "Access the site link_link (using a computer or a smart phone)";
     STR_OAUTH_EXPLAIN3 = "Click on the \"Authorize\" button it will take you to main Twitch.TV authentication site";
     STR_OAUTH_EXPLAIN4 = "Login to Twitch.TV using the user name you are trying to add a key for";
@@ -158,14 +158,14 @@ function en_USLang() {
     STR_OAUTH_FAIL = "Fail authentication check with the provider key, please check and try again";
     STR_OAUTH_FAIL_USER = "The added key doesn't belong to the user ";
     STR_NOKEY = "No user";
-    STR_NOKEY_WARN = "Set a user and a authentication key to be able to fallow/unfollow";
+    STR_NOKEY_WARN = "Set a user and a authentication key to be able to follow/unfollow";
     STR_RESET = "Restart the";
     STR_CLIP = " Clip";
     STR_CHANNEL_CONT = "Channel content";
     STR_NET_DOWN = "Network is disconnect, the application can't work without INTERNET";
     STR_NET_UP = "Network connection reestablished";
     STR_FALLOWERS = " Followers";
-    STR_CANT_FALLOW = ", Can\'t fallow or unfallow ";
+    STR_CANT_FALLOW = ", Can\'t follow or unfollow ";
     STR_GAME_CONT = "Game content";
     STR_YES = "Yes";
     STR_REMOVE_USER = "Are you sure you want to remove the user ";
@@ -205,7 +205,7 @@ function en_USLang() {
     STR_CHAT_END = "Chat: The Chat has ended!";
     STR_TIME = ": Most recent";
     STR_VIWES = ": Most views";
-    STR_NOKEY_VIDEO_WARN = "Set a authentication key to be able to see fallowed videos";
+    STR_NOKEY_VIDEO_WARN = "Set a authentication key to be able to see followed videos";
     STR_SWITCH_TYPE = "Switch Type (Most recent or views)";
     STR_ENABLE = "Enable";
     STR_DISABLE = "Disable";

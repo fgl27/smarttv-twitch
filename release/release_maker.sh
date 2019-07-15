@@ -235,11 +235,11 @@ cd - &> /dev/null || exit;
 
 # Compress using cleancss
 if [ "$cancrass" == 1 ]; then
-	crass "$temp_maker_folder"master.css > "$temp_maker_folder"master.css
+	crass "$temp_maker_folder"master.css > "$temp_maker_folder"2master.css
 	crass release/githubio/css/font-awesome.css > release/githubio/css/font-awesome.min.css
 fi;
 # Copy master.css to its place, it's the css content of index.html
-cp -rf "$temp_maker_folder"master.css release/githubio/css/master.css
+cp -rf "$temp_maker_folder"2master.css release/githubio/css/master.css
 
 cp -rf index_release.html release/index.html 
 rm -rf index_release.html

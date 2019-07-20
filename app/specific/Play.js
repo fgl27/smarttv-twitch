@@ -460,7 +460,7 @@ function Play_loadDataRequest() {
     } else {
         theUrl = 'https://usher.ttvnw.net/api/channel/hls/' + Main_values.Play_selectedChannel +
             '.m3u8?&token=' + encodeURIComponent(Play_tokenResponse.token) + '&sig=' + Play_tokenResponse.sig +
-            '&allow_audio_only=true&reassignments_supported=true&allow_source=true&fast_bread=true';
+            '&reassignments_supported=true&allow_source=true&fast_bread=true';
     }
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Play_loadingDataTimeout;

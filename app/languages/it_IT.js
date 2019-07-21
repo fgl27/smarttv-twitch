@@ -222,5 +222,5 @@ function it_ITLang() {
     STR_NO_GAME = "Nessun Gioco";
     STR_JUMP_BUFFER_WARNING = "Non è possibile saltare durante un buffering";
     STR_CHAT_DISABLE = "La chat è disabilitata, utilizzare il tasto Verde o B per abilitare";
-	STR_CONTENT_LANG_SUMARRY = "Premi enter per cambiare ";												   
+    STR_CONTENT_LANG_SUMARRY = "Premi enter per cambiare ";
 }

@@ -388,7 +388,8 @@ function Screens_loadDataSuccessFinish() {
                     }, 2000);
                     Screens_loadDataSuccessFinishEnd();
                 });
-            } else if (Main_GoBefore !== 1) {
+            } else if (Main_GoBefore !== Main_Live && Main_GoBefore !== Main_addUser &&
+                Main_GoBefore !== Main_Search && Main_GoBefore !== Main_addCode) {
                 Main_HideElement(inUseObj.ids[10]);
                 Main_ready(function() {
                     Main_ExitCurrent(Main_values.Main_Go);

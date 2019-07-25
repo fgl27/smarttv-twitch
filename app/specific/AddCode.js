@@ -3,22 +3,128 @@ var AddCode_loadingDataTry = 0;
 var AddCode_loadingDataTryMax = 5;
 var AddCode_loadingDataTimeout = 10000;
 var AddCode_Code = 0;
+var AddCode_loadingData = false;
+var AddCode_keyBoardOn = false;
 var AddCode_IsFallowing = false;
 var AddCode_IsSub = false;
 var AddCode_PlayRequest = false;
 var AddCode_Channel_id = '';
 
-var AddCode_redirect_uri = 'https://fgl27.github.io/SmartTwitchTV/release/index.min.html';
-var AddCode_client_secret = "elsu5d09k0xomu7cggx3qg5ybdwu7g";
+var AddCode_redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githubio/login/twitch.html';
+var AddCode_client_secret = "zhd1wr8lxyz9snzo48rfb70r7vtod6";
 var AddCode_UrlToken = 'https://id.twitch.tv/oauth2/token?';
 //Variable initialization end
 
-function AddCode_CheckNewCode(code) {
-    Main_values.Users_Position = Main_values.Users_AddcodePosition;
-    AddCode_Code = code;
-    AddCode_TimeoutReset10();
-    Main_showLoadDialog();
-    AddCode_requestTokens();
+function AddCode_init() {
+    AddCode_loadingData = false;
+    Main_values.Main_Go = Main_addCode;
+    Main_AddClass('top_bar_user', 'icon_center_focus');
+    Main_HideWarningDialog();
+    Main_AddCodeInput.placeholder = STR_PLACEHOLDER_OAUTH;
+    Main_ShowElement('oauth_scroll');
+    Main_innerHTML("oauth_text", STR_OAUTH_IN + AddUser_UsernameArray[Main_values.Users_Position].name + STR_OAUTH_EXPLAIN);
+    AddCode_inputFocus();
+}
+
+function AddCode_exit() {
+    AddCode_RemoveinputFocus(false);
+    document.body.removeEventListener("keydown", AddCode_handleKeyDown);
+    Main_RemoveClass('top_bar_user', 'icon_center_focus');
+    Main_HideElement('oauth_scroll');
+}
+
+function AddCode_handleKeyDown(event) {
+    if (AddCode_loadingData || AddCode_keyBoardOn) return;
+
+    switch (event.keyCode) {
+        case KEY_RETURN:
+            if (Main_isControlsDialogShown()) Main_HideControlsDialog();
+            else if (Main_isAboutDialogShown()) Main_HideAboutDialog();
+            else {
+                Main_values.Main_Go = Main_Users;
+                AddCode_exit();
+                Main_SwitchScreen();
+            }
+            break;
+        case KEY_PLAY:
+        case KEY_PAUSE:
+        case KEY_PLAYPAUSE:
+        case KEY_ENTER:
+            AddCode_inputFocus();
+            break;
+        default:
+            break;
+    }
+}
+
+function AddCode_inputFocus() {
+    document.body.removeEventListener("keydown", AddCode_handleKeyDown);
+    document.body.addEventListener("keydown", AddCode_KeyboardEvent, false);
+    Main_AddCodeInput.placeholder = STR_PLACEHOLDER_OAUTH;
+    Main_AddCodeInput.focus();
+    AddCode_keyBoardOn = true;
+}
+
+function AddCode_RemoveinputFocus(EnaKeydown) {
+    Main_AddCodeInput.blur();
+    AddCode_removeEventListener();
+    document.body.removeEventListener("keydown", AddCode_KeyboardEvent);
+    Main_AddCodeInput.placeholder = STR_PLACEHOLDER_PRESS + STR_PLACEHOLDER_OAUTH;
+
+    if (EnaKeydown) document.body.addEventListener("keydown", AddCode_handleKeyDown, false);
+    window.setTimeout(function() {
+        AddCode_keyBoardOn = false;
+    }, 250);
+}
+
+function AddCode_removeEventListener() {
+    if (Main_AddCodeInput !== null) {
+        var elClone = Main_AddCodeInput.cloneNode(true);
+        Main_AddCodeInput.parentNode.replaceChild(elClone, Main_AddCodeInput);
+        Main_AddCodeInput = document.getElementById("oauth_input");
+    }
+}
+
+function AddCode_KeyboardEvent(event) {
+    if (AddCode_loadingData) return;
+
+    switch (event.keyCode) {
+        case KEY_RETURN:
+            if (Main_isAboutDialogShown()) Main_HideAboutDialog();
+            else if (Main_isControlsDialogShown()) Main_HideControlsDialog();
+            else {
+                Main_values.Main_Go = Main_Users;
+                AddCode_exit();
+                Main_SwitchScreen();
+            }
+            break;
+        case KEY_KEYBOARD_DELETE_ALL:
+            Main_AddCodeInput.value = '';
+            event.preventDefault();
+            break;
+        case KEY_KEYBOARD_DONE:
+        case KEY_KEYBOARD_CANCEL:
+        case KEY_DOWN:
+            if (Main_AddCodeInput.value !== '' && Main_AddCodeInput.value !== null) {
+                AddCode_Code = Main_AddCodeInput.value;
+                AddCode_TimeoutReset10();
+                Main_HideElement('oauth_scroll');
+                Main_showLoadDialog();
+                AddCode_requestTokens();
+            }
+            AddCode_RemoveinputFocus(true);
+            break;
+        case KEY_KEYBOARD_BACKSPACE:
+            Main_AddCodeInput.value = Main_AddCodeInput.value.slice(0, -1);
+            event.preventDefault();
+            break;
+        case KEY_KEYBOARD_SPACE:
+            Main_AddCodeInput.value += ' ';
+            event.preventDefault();
+            break;
+        default:
+            break;
+    }
 }
 
 function AddCode_refreshTokens(position, tryes, callbackFunc, callbackFuncNOK) {
@@ -39,7 +145,7 @@ function AddCode_refreshTokens(position, tryes, callbackFunc, callbackFuncNOK) {
                 AddCode_refreshTokensSucess(xmlHttp.responseText, position, callbackFunc);
             } else {
                 if (JSON.parse(xmlHttp.responseText).message.indexOf('Invalid refresh token') !== -1) {
-                    AddCode_requestTokensFailRunning();
+                    AddCode_requestTokensFailRunning(position);
                     if (callbackFuncNOK) callbackFuncNOK();
                 } else AddCode_refreshTokensError(position, tryes, callbackFunc, callbackFuncNOK);
             }
@@ -63,7 +169,7 @@ function AddCode_refreshTokensSucess(responseText, position, callbackFunc) {
         AddUser_UsernameArray[position].refresh_token = response.refresh_token;
 
         AddUser_SaveUserArray();
-    } else AddCode_requestTokensFailRunning();
+    } else AddCode_requestTokensFailRunning(position);
 
     if (callbackFunc) callbackFunc();
 }
@@ -99,8 +205,6 @@ function AddCode_requestTokens() {
     };
 
     xmlHttp.send(null);
-
-    //BasehttpPost(theUrl, AddCode_loadingDataTimeout, 0, null, AddCode_requestTokensSucess, AddCode_requestTokensError, false);
 }
 
 function AddCode_requestTokensError() {
@@ -117,22 +221,24 @@ function AddCode_requestTokensFail() {
     window.setTimeout(function() {
         Main_HideWarningDialog();
         Main_newUsercode = 0;
-        Main_SaveValues();
-        Main_values.Main_Go = Main_Users;
-        window.location = AddCode_redirect_uri;
+        Main_HideWarningDialog();
+        Main_ShowElement('oauth_scroll');
+        AddCode_inputFocus();
+        AddCode_loadingData = false;
+
     }, 4000);
     AddUser_UsernameArray[Main_values.Users_Position].access_token = 0;
     AddUser_UsernameArray[Main_values.Users_Position].refresh_token = 0;
     AddUser_SaveUserArray();
 }
 
-function AddCode_requestTokensFailRunning() {
+function AddCode_requestTokensFailRunning(position) {
     //Token fail remove it and warn
     Users_status = false;
     Main_HideLoadDialog();
     Main_showWarningDialog(STR_OAUTH_FAIL);
-    AddUser_UsernameArray[Main_values.Users_Position].access_token = 0;
-    AddUser_UsernameArray[Main_values.Users_Position].refresh_token = 0;
+    AddUser_UsernameArray[position].access_token = 0;
+    AddUser_UsernameArray[position].refresh_token = 0;
     AddUser_SaveUserArray();
     Main_SaveValues();
     window.setTimeout(Main_HideWarningDialog, 4000);
@@ -165,25 +271,23 @@ function AddCode_CheckOauthTokenSucess(response) {
         Main_values.Main_Go = Main_Users;
         Main_SaveValues();
         Main_showWarningDialog(STR_USER_CODE_OK);
-        if (Main_IsNotBrowser) {
-            //TODO remove the try after android app update has be releaased for some time
-            try {
-                Android.clearCookie();
-            } catch (e) {}
-        }
         window.setTimeout(function() {
-            window.location = AddCode_redirect_uri;
+            Main_HideLoadDialog();
+            AddCode_exit();
+            Users_status = false;
+            Users_init();
+            AddCode_loadingData = false;
+            Main_AddCodeInput.value = '';
         }, 3000);
     } else {
+        Main_HideLoadDialog();
         AddUser_UsernameArray[Main_values.Users_Position].access_token = 0;
         AddUser_UsernameArray[Main_values.Users_Position].refresh_token = 0;
         Main_showWarningDialog(STR_OAUTH_FAIL_USER + AddUser_UsernameArray[Main_values.Users_Position].name);
         window.setTimeout(function() {
             Main_HideWarningDialog();
-            Main_newUsercode = 0;
-            Main_SaveValues();
-            Main_values.Main_Go = Main_Users;
-            window.location = AddCode_redirect_uri;
+            Main_ShowElement('oauth_scroll');
+            AddCode_inputFocus();
         }, 4000);
     }
     return;
@@ -488,7 +592,7 @@ function AddCode_CheckTokenSuccess(responseText, position) {
         AddCode_TimeoutReset10();
         AddCode_refreshTokens(position, 0, null, null);
     } else {
-        if (!AddCode_TokensCheckScope(token.token.authorization.scopes)) AddCode_requestTokensFailRunning();
+        if (!AddCode_TokensCheckScope(token.token.authorization.scopes)) AddCode_requestTokensFailRunning(position);
     }
 }
 

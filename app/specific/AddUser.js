@@ -99,6 +99,7 @@ function AddUser_KeyboardEvent(event) {
             break;
         case KEY_KEYBOARD_DONE:
         case KEY_KEYBOARD_CANCEL:
+        case KEY_DOWN:
             if (Main_AddUserInput.value !== '' && Main_AddUserInput.value !== null) {
 
                 AddUser_Username = Main_AddUserInput.value;
@@ -168,8 +169,11 @@ function AddUser_RestoreUsers() {
     AddUser_UsernameArray = Main_getItemJson('AddUser_UsernameArray', []);
     if (AddUser_UsernameArray.length > 0) {
         //Check and refresh all tokens at start
-        for (var i = 0; i < AddUser_UsernameArray.length; i++)
+        for (var i = 0; i < AddUser_UsernameArray.length; i++) {
+            console.log(AddUser_UsernameArray[i].name);
+            console.log(AddUser_UsernameArray[i].access_token);
             if (AddUser_UsernameArray[i].access_token) AddCode_CheckTokenStart(i);
+        }
     }
 }
 

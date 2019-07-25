@@ -26,6 +26,7 @@ var Main_AGameVod = 19;
 var Main_AGameClip = 20;
 var Main_Featured = 21;
 var Main_UserVod = 22;
+var Main_addCode = 23;
 
 var Main_GoBefore = '';
 var Main_values = {
@@ -76,6 +77,7 @@ var Main_IsDayFirst = false;
 var Main_ScrollbarElement;
 var Main_SearchInput;
 var Main_AddUserInput;
+var Main_AddCodeInput;
 var Main_SetTopOpacityId;
 var Main_updateclockId;
 var Main_ContentLang = "";
@@ -168,14 +170,6 @@ function Main_loadTranslations(language) {
         }
         Main_showLoadDialog();
 
-        if (Main_IsNotBrowser) {
-            //TODO remove the try some day after the app update has be live for some time
-            try {
-                Main_vp9supported = Android.misCodecSupported();
-            } catch (e) {
-                Main_vp9supported = false;
-            }
-        }
 
         Settings_SetDefautls();
         en_USLang();
@@ -196,8 +190,6 @@ function Main_loadTranslations(language) {
 
         console.log("language is " + language);
         DefaultLang();
-
-        if (window.location.href.indexOf('code') !== -1) processCode(window.location.href);
 
         Main_initWindows();
     });
@@ -238,6 +230,7 @@ function Main_initWindows() {
 
         Main_SearchInput = document.getElementById("search_input");
         Main_AddUserInput = document.getElementById("user_input");
+        Main_AddCodeInput = document.getElementById("oauth_input");
 
         document.addEventListener('visibilitychange', Main_Resume, false);
         Main_updateclockId = window.setInterval(Main_updateclock, 60000);
@@ -555,6 +548,7 @@ var Main_Switchobj = {
 };
 
 Main_Switchobj[Main_Users] = Users_init;
+Main_Switchobj[Main_addCode] = AddCode_init;
 Main_Switchobj[Main_ChannelContent] = ChannelContent_init;
 
 Main_Switchobj[Main_SearchChannels] = function() {

@@ -11,14 +11,7 @@ var Users_loadingData = true;
 //Variable initialization end
 
 function Users_init() {
-    if (Main_newUsercode) {
-        Main_HideElement('topbar');
-        Main_ready(function() {
-            Users_exit();
-            AddCode_CheckNewCode(Main_newUsercode);
-        });
-        return;
-    } else if (!AddUser_IsUserSet()) {
+    if (!AddUser_IsUserSet()) {
         Main_values.Main_Go = Main_Live;
         Users_exit();
         Main_SwitchScreen();
@@ -185,7 +178,7 @@ function Users_keyEnter() {
         return;
     }
 
-    if (Users_cursorX !== 6 && Users_cursorX !== 7) {
+    if (Users_cursorX !== 6) {
         Main_HideElement(Users_ids[5]);
         document.body.removeEventListener("keydown", Users_handleKeyDown);
         document.getElementById("screens_holder").style.top = "0";
@@ -213,8 +206,7 @@ function Users_keyEnter() {
                 AddUser_init();
             } else AddUser_UserMakeOne(Users_cursorY);
         } else if (Users_cursorX === 6) Users_showRemoveDialog();
-        else if (Users_cursorX === 7 && !AddUser_UsernameArray[Main_values.Users_Position].access_token)
-            Users_showRemoveDialog();
+        else if (Users_cursorX === 7 && !AddUser_UsernameArray[Main_values.Users_Position].access_token) AddCode_init();
     });
 }
 
@@ -364,22 +356,6 @@ function Users_handleKeyDown(event) {
                         document.body.removeEventListener("keydown", Users_handleKeyDown);
                         Users_exit();
                         AddUser_removeUser(Users_cursorY);
-                    }
-                } else {
-                    temp_RemoveCursor = Users_RemoveCursor;
-                    Users_HideRemoveDialog();
-                    if (temp_RemoveCursor) {
-                        Main_values.Users_AddcodePosition = Main_values.Users_Position;
-                        Main_SaveValues();
-                        var baseUrlCode = 'https://id.twitch.tv/oauth2/authorize?';
-                        var type_code = 'code';
-                        var client_id = Main_clientId;
-                        var redirect_uri = AddCode_redirect_uri;
-                        var scope = 'user_read+user_follows_edit+user_subscriptions';
-                        var force_verify = 'true';
-                        var url = baseUrlCode + 'response_type=' + type_code + '&client_id=' + encodeURIComponent(client_id) +
-                            '&redirect_uri=' + redirect_uri + '&scope=' + scope + '&force_verify=' + force_verify;
-                        window.location = url;
                     }
                 }
             } else Users_keyEnter();

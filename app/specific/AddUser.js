@@ -20,13 +20,13 @@ function AddUser_init() {
 function AddUser_exit() {
     AddUser_RemoveinputFocus(false);
     document.body.removeEventListener("keydown", AddUser_handleKeyDown);
+    document.body.removeEventListener("keydown", AddUser_KeyboardEvent);
     Main_RemoveClass('top_bar_user', 'icon_center_focus');
     Main_HideElement('add_user_scroll');
 }
 
 function AddUser_handleKeyDown(event) {
-    if (AddUser_loadingData || AddUser_keyBoardOn) return;
-
+    if (AddUser_loadingData || AddUser_keyBoardOn || Main_values.Main_Go !== Main_addUser) return;
     switch (event.keyCode) {
         case KEY_RETURN:
             if (Main_isAboutDialogShown()) Main_HideAboutDialog();
@@ -38,37 +38,11 @@ function AddUser_handleKeyDown(event) {
                 Main_SwitchScreen();
             }
             break;
-        case KEY_CHANNELUP:
-            Main_values.Main_Go = Main_Featured;
-            AddUser_exit();
-            Main_SwitchScreen();
-            break;
-        case KEY_CHANNELDOWN:
-            Main_values.Main_Go = Main_Live;
-            AddUser_exit();
-            Main_SwitchScreen();
-            break;
         case KEY_PLAY:
         case KEY_PAUSE:
         case KEY_PLAYPAUSE:
         case KEY_ENTER:
             AddUser_inputFocus();
-            break;
-        case KEY_RED:
-            Main_SidePannelStart(AddUser_handleKeyDown);
-            break;
-        case KEY_GREEN:
-            AddUser_exit();
-            Main_GoLive();
-            break;
-        case KEY_YELLOW:
-            Main_showControlsDialog();
-            break;
-        case KEY_BLUE:
-            Main_values.Main_BeforeSearch = Main_values.Main_Go;
-            Main_values.Main_Go = Main_Search;
-            AddUser_exit();
-            Main_SwitchScreen();
             break;
         default:
             break;
@@ -99,13 +73,11 @@ function AddUser_RemoveinputFocus(EnaKeydown) {
     Main_AddUserInput.placeholder = STR_PLACEHOLDER_PRESS + STR_PLACEHOLDER_USER;
 
     if (EnaKeydown) document.body.addEventListener("keydown", AddUser_handleKeyDown, false);
-    window.setTimeout(function() {
-        AddUser_keyBoardOn = false;
-    }, 250);
+    AddUser_keyBoardOn = false;
 }
 
 function AddUser_KeyboardEvent(event) {
-    if (AddUser_loadingData) return;
+    if (AddUser_loadingData || Main_values.Main_Go !== Main_addUser) return;
 
     switch (event.keyCode) {
         case KEY_RETURN:
@@ -122,11 +94,10 @@ function AddUser_KeyboardEvent(event) {
             Main_AddUserInput.value = '';
             break;
         case KEY_KEYBOARD_DONE:
-        case KEY_KEYBOARD_CANCEL:
+        case KEY_DOWN:
             if (Main_AddUserInput.value !== '' && Main_AddUserInput.value !== null) {
 
-                if (!Main_isReleased && !AddUser_UserIsSet()) AddUser_Username = 'testtwitch27';
-                else AddUser_Username = Main_AddUserInput.value;
+                AddUser_Username = Main_AddUserInput.value;
 
                 if (!AddUser_UserCodeExist(AddUser_Username)) {
                     AddUser_loadingDataTry = 0;
@@ -143,8 +114,7 @@ function AddUser_KeyboardEvent(event) {
                         AddUser_inputFocus();
                     }, 1500);
                 }
-            }
-            AddUser_RemoveinputFocus(true);
+            } else AddUser_inputFocus();
             break;
         case KEY_KEYBOARD_BACKSPACE:
             Main_AddUserInput.value = Main_AddUserInput.value.slice(0, -1);
@@ -158,31 +128,17 @@ function AddUser_KeyboardEvent(event) {
 }
 
 function AddUser_loadDataRequest() {
-    var xmlHttp = new XMLHttpRequest();
+    var theUrl = 'https://api.twitch.tv/kraken/users?login=' + encodeURIComponent(AddUser_Username);
 
-    xmlHttp.open("GET", 'https://api.twitch.tv/kraken/users?login=' + encodeURIComponent(AddUser_Username), true);
-    xmlHttp.timeout = AddUser_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
-    xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
+    BasehttpGet(theUrl, AddUser_loadingDataTimeout, 2, null, AddUser_loadDataRequestSuccess, AddUser_loadDataError);
+}
 
-    xmlHttp.ontimeout = function() {};
-
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) {
-                if (JSON.parse(xmlHttp.responseText)._total) {
-                    Main_AddUserInput.value = '';
-                    document.body.removeEventListener("keydown", AddUser_handleKeyDown);
-                    AddUser_SaveNewUser(xmlHttp.responseText);
-                } else AddUser_loadDataNoUser();
-                return;
-            } else {
-                AddUser_loadDataError();
-            }
-        }
-    };
-
-    xmlHttp.send(null);
+function AddUser_loadDataRequestSuccess(response) {
+    if (JSON.parse(response)._total) {
+        Main_AddUserInput.value = '';
+        document.body.removeEventListener("keydown", AddUser_handleKeyDown);
+        AddUser_SaveNewUser(response);
+    } else AddUser_loadDataNoUser();
 }
 
 function AddUser_loadDataError() {
@@ -210,22 +166,6 @@ function AddUser_RestoreUsers() {
         for (var i = 0; i < AddUser_UsernameArray.length; i++)
             if (AddUser_UsernameArray[i].access_token) AddCode_CheckTokenStart(i);
     }
-
-    Main_TizenVersion = parseFloat(tizen.systeminfo.getCapability("http://tizen.org/feature/platform.version")) >= 2.4;
-
-    if (Main_TizenVersion) {
-        SmartHub_SetNoUserPreviewData();
-        window.addEventListener('appcontrol', SmartHub_EventListener, false);
-
-        window.setTimeout(function() {
-
-            if (AddUser_UsernameArray.length > 0) {
-                window.clearInterval(Main_SmartHubId);
-                SmartHub_StartInterval();
-                document.addEventListener('visibilitychange', Main_ResumeSmarthub, false);
-            } else SmartHub_Start();
-        }, 10000);
-    }
 }
 
 function AddUser_UserIsSet() {
@@ -246,13 +186,6 @@ function AddUser_SaveNewUser(responseText) {
     AddUser_exit();
     Users_init();
     AddUser_loadingData = false;
-
-    if (Main_TizenVersion && AddUser_UsernameArray.length === 1) {
-        window.clearInterval(Main_SmartHubId);
-        document.removeEventListener('visibilitychange', Main_ResumeSmarthub);
-        document.addEventListener('visibilitychange', Main_ResumeSmarthub, false);
-        SmartHub_StartInterval();
-    }
 }
 
 function AddUser_removeUser(Position) {
@@ -265,11 +198,7 @@ function AddUser_removeUser(Position) {
     if (AddUser_UsernameArray.length > 0) {
         Users_status = false;
         Users_init();
-        if (Main_TizenVersion && !Position) SmartHub_Start();
-    } else {
-        AddUser_init();
-        if (Main_TizenVersion) SmartHub_Start();
-    }
+    } else AddUser_init();
 
     // reset localStorage usernames
     AddUser_SaveUserArray();
@@ -285,7 +214,8 @@ function AddUser_UserMakeOne(Position) {
     AddUser_UsernameArray[Position] = AddUser_Username;
     Users_status = false;
     Users_init();
-    if (Main_TizenVersion) SmartHub_Start();
+    AddUser_SaveUserArray();
+    Main_values.Users_Position = 0;
 }
 
 function AddUser_UserCodeExist(user) {

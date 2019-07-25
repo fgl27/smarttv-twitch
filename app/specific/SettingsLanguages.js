@@ -150,7 +150,8 @@ function Languages_init() {
 function Languages_exit() {
     document.body.removeEventListener("keydown", Languages_handleKeyDown);
     document.body.addEventListener("keydown", Settings_handleKeyDown, false);
-    document.getElementById('settings_scroll').style.top = (screen.height * 0.095) + "px";
+    Settings_ScrollTable();
+    //document.getElementById('settings_scroll').style.top = (screen.height * 0.085) + "px";
     Main_ShowElement('settings_main');
     Main_HideElement('settings_lang');
     Main_textContent('top_bar_featured', STR_FEATURED);
@@ -246,12 +247,9 @@ function Languages_RemoveinputFocus() {
 }
 
 function Languages_ScrollTable() {
-    var position = screen.height * 0.11; //slove
 
-    if (Languages_cursorY > 6)
-        position += document.getElementById(Languages_value_keys[Languages_cursorY - 6]).offsetTop * -1;
-
-    if (Languages_cursorY < 19) document.getElementById('settings_scroll').style.top = position + "px";
+    document.getElementById('settings_scroll').scrollTop =
+        (Languages_cursorY > 7) ? document.getElementById(Languages_value_keys[Languages_cursorY - 7]).offsetTop : 0;
 }
 
 function Languages_ChangeSettigs(position) {

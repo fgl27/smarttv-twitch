@@ -3,7 +3,6 @@ var ChannelContent_cursorY = 0;
 var ChannelContent_cursorX = 0;
 var ChannelContent_dataEnded = false;
 var ChannelContent_itemsCount = 0;
-var ChannelContent_loadingData = false;
 var ChannelContent_loadingDataTry = 0;
 var ChannelContent_loadingDataTryMax = 5;
 var ChannelContent_loadingDataTimeout = 3500;
@@ -18,17 +17,18 @@ var ChannelContent_responseText = null;
 var ChannelContent_selectedChannelViews = '';
 var ChannelContent_selectedChannelFallower = '';
 var ChannelContent_description = '';
-var ChannelContent_thumbnail = '';
-var ChannelContent_thumbnail_fallow = '';
 var ChannelContent_ChannelValue = {};
+var ChannelContent_ChannelValueIsset = false;
+var ChannelContent_offline_image = null;
+var ChannelContent_profile_banner = '';
 //Variable initialization end
 
 function ChannelContent_init() {
+    Main_values.Main_CenterLablesVectorPos = 1;
     Main_values.Main_Go = Main_ChannelContent;
-    if (!Main_values.Search_isSearching && Main_values.Main_selectedChannel_id) ChannelContent_RestoreChannelValue();
+    if (ChannelContent_ChannelValueIsset && !Main_values.Search_isSearching && Main_values.Main_selectedChannel_id) ChannelContent_RestoreChannelValue();
     if (ChannelContent_lastselectedChannel !== Main_values.Main_selectedChannel) ChannelContent_status = false;
     Main_cleanTopLabel();
-    Main_values.Main_selectedChannelDisplayname = Main_values.Main_selectedChannelDisplayname.replace(STR_NOT_LIVE, '');
     Main_textContent('top_bar_user', Main_values.Main_selectedChannelDisplayname);
     Main_textContent('top_bar_game', STR_CHANNEL_CONT);
     document.body.addEventListener("keydown", ChannelContent_handleKeyDown, false);
@@ -37,6 +37,7 @@ function ChannelContent_init() {
         Main_YRst(ChannelContent_cursorY);
         Main_ShowElement(ChannelContent_ids[10]);
         ChannelContent_checkUser();
+        ChannelContent_addFocus();
         Main_SaveValues();
     } else ChannelContent_StartLoad();
 }
@@ -48,14 +49,14 @@ function ChannelContent_exit() {
 }
 
 function ChannelContent_StartLoad() {
+    Main_empty('stream_table_channel_content');
     Main_HideElement(ChannelContent_ids[10]);
+    ChannelContent_offline_image = null;
     Main_showLoadDialog();
     Main_HideWarningDialog();
     ChannelContent_lastselectedChannel = Main_values.Main_selectedChannel;
     ChannelContent_status = false;
     ChannelContent_skipImg = false;
-    Main_empty('stream_table_channel_content');
-    ChannelContent_thumbnail = '';
     ChannelContent_itemsCountOffset = 0;
     ChannelContent_itemsCount = 0;
     ChannelContent_cursorX = 0;
@@ -67,43 +68,30 @@ function ChannelContent_StartLoad() {
 }
 
 function ChannelContent_loadDataPrepare() {
-    ChannelContent_loadingData = true;
+    Main_FirstLoad = true;
     ChannelContent_loadingDataTry = 0;
     ChannelContent_loadingDataTimeout = 3500;
 }
 
 function ChannelContent_loadDataRequest() {
-    var xmlHttp = new XMLHttpRequest();
+    var theUrl = 'https://api.twitch.tv/kraken/streams/' + encodeURIComponent(ChannelContent_TargetId !== undefined ? ChannelContent_TargetId : Main_values.Main_selectedChannel_id);
 
-    xmlHttp.open("GET", 'https://api.twitch.tv/kraken/streams/' + encodeURIComponent(ChannelContent_TargetId !== undefined ? ChannelContent_TargetId : Main_values.Main_selectedChannel_id) + '?' + Math.round(Math.random() * 1e7), true);
-    xmlHttp.timeout = ChannelContent_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
-    xmlHttp.ontimeout = function() {};
+    BasehttpGet(theUrl, ChannelContent_loadingDataTimeout, 2, null, ChannelContent_loadDataRequestSuccess, ChannelContent_loadDataError);
+}
 
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) {
-                if (JSON.parse(xmlHttp.responseText).stream !== null) {
-                    ChannelContent_responseText = xmlHttp.responseText;
-                    ChannelContent_loadDataPrepare();
-                    ChannelContent_GetStreamerInfo();
-                } else if (!ChannelContent_TargetId) {
-                    ChannelContent_loadDataPrepare();
-                    ChannelContent_loadDataCheckHost();
-                } else {
-                    ChannelContent_responseText = null;
-                    ChannelContent_loadDataPrepare();
-                    ChannelContent_GetStreamerInfo();
-                }
-                return;
-            } else {
-                ChannelContent_loadDataError();
-            }
-        }
-    };
-
-    xmlHttp.send(null);
+function ChannelContent_loadDataRequestSuccess(response) {
+    if (JSON.parse(response).stream !== null) {
+        ChannelContent_responseText = response;
+        ChannelContent_loadDataPrepare();
+        ChannelContent_GetStreamerInfo();
+    } else if (!ChannelContent_TargetId) {
+        ChannelContent_loadDataPrepare();
+        ChannelContent_loadDataCheckHost();
+    } else {
+        ChannelContent_responseText = null;
+        ChannelContent_loadDataPrepare();
+        ChannelContent_GetStreamerInfo();
+    }
 }
 
 function ChannelContent_loadDataError() {
@@ -119,22 +107,9 @@ function ChannelContent_loadDataError() {
 }
 
 function ChannelContent_loadDataCheckHost() {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", 'https://tmi.twitch.tv/hosts?include_logins=1&host=' + encodeURIComponent(Main_values.Main_selectedChannel_id) + '&' + Math.round(Math.random() * 1e7), true);
-    xmlHttp.timeout = ChannelContent_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
-    xmlHttp.ontimeout = function() {};
+    var theUrl = 'https://tmi.twitch.tv/hosts?include_logins=1&host=' + encodeURIComponent(Main_values.Main_selectedChannel_id);
 
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) {
-                ChannelContent_CheckHost(xmlHttp.responseText);
-                return;
-            } else ChannelContent_loadDataCheckHostError();
-        }
-    };
-
-    xmlHttp.send(null);
+    BasehttpGet(theUrl, ChannelContent_loadingDataTimeout, 1, null, ChannelContent_CheckHost, ChannelContent_loadDataCheckHostError, true);
 }
 
 function ChannelContent_loadDataCheckHostError() {
@@ -163,31 +138,22 @@ function ChannelContent_CheckHost(responseText) {
 }
 
 function ChannelContent_GetStreamerInfo() {
-    var xmlHttp = new XMLHttpRequest();
+    var theUrl = 'https://api.twitch.tv/kraken/channels/' + Main_values.Main_selectedChannel_id;
 
-    xmlHttp.open("GET", 'https://api.twitch.tv/kraken/channels/' + Main_values.Main_selectedChannel_id, true);
-    xmlHttp.timeout = PlayVod_loadingInfoDataTimeout;
-    xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
-    xmlHttp.ontimeout = function() {};
+    BasehttpGet(theUrl, PlayVod_loadingInfoDataTimeout, 2, null, ChannelContent_GetStreamerInfoSuccess, ChannelContent_GetStreamerInfoError);
+}
 
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) {
-                var channel = JSON.parse(xmlHttp.responseText);
-                ChannelContent_selectedChannelViews = channel.views;
-                ChannelContent_selectedChannelFallower = channel.followers;
-                ChannelContent_description = channel.description;
-                Main_values.Main_selectedChannelLogo = channel.logo;
-                ChannelContent_loadDataSuccess();
-                return;
-            } else {
-                ChannelContent_GetStreamerInfoError();
-            }
-        }
-    };
-
-    xmlHttp.send(null);
+function ChannelContent_GetStreamerInfoSuccess(responseText) {
+    var channel = JSON.parse(responseText);
+    ChannelContent_offline_image = channel.video_banner;
+    ChannelContent_offline_image = ChannelContent_offline_image ? ChannelContent_offline_image.replace("1920x1080", Main_VideoSize) : ChannelContent_offline_image;
+    ChannelContent_profile_banner = channel.profile_banner;
+    ChannelContent_selectedChannelViews = channel.views;
+    ChannelContent_selectedChannelFallower = channel.followers;
+    ChannelContent_description = channel.description;
+    Main_values.Main_selectedChannelLogo = channel.logo;
+    ChannelContent_loadDataSuccess();
+    return;
 }
 
 function ChannelContent_GetStreamerInfoError() {
@@ -196,6 +162,8 @@ function ChannelContent_GetStreamerInfoError() {
         ChannelContent_loadingDataTimeout += 500;
         ChannelContent_GetStreamerInfo();
     } else {
+        ChannelContent_offline_image = null;
+        ChannelContent_profile_banner = IMG_404_BANNER;
         ChannelContent_selectedChannelViews = '';
         ChannelContent_selectedChannelFallower = '';
         ChannelContent_description = '';
@@ -204,17 +172,18 @@ function ChannelContent_GetStreamerInfoError() {
     }
 }
 
+//TODO improve te looks of this screen
 function ChannelContent_loadDataSuccess() {
     var row = document.createElement('tr'),
-        tbody = document.createElement('tbody'),
-        coloumn_id = 0;
+        coloumn_id = 0,
+        doc = document.getElementById("stream_table_channel_content");
 
     Main_td = document.createElement('tr');
-    Main_td.className = 'follower_header';
-    Main_td.innerHTML = '<div class="follower_header">' + twemoji.parse(ChannelContent_description) + '</div>';
-
-    document.getElementById("stream_table_channel_content").appendChild(tbody);
-    document.getElementById("stream_table_channel_content").appendChild(Main_td);
+    Main_td.className = 'follower_banner';
+    Main_td.innerHTML = '<div id="' + ChannelContent_ids[0] + 'x_0" class="follower_banner"><img id="' +
+        ChannelContent_ids[1] + 'x_0" alt="" class="stream_img_banner" src="' + ChannelContent_profile_banner +
+        '" onerror="this.onerror=null;this.src=\'' + IMG_404_BANNER + '\'"></div>';
+    doc.appendChild(Main_td);
 
     if (ChannelContent_responseText !== null) {
         var response = JSON.parse(ChannelContent_responseText);
@@ -222,13 +191,13 @@ function ChannelContent_loadDataSuccess() {
             var hosting = ChannelContent_TargetId !== undefined ? Main_values.Main_selectedChannelDisplayname +
                 STR_USER_HOSTING : '';
             var stream = response.stream;
-            row.appendChild(ChannelContent_createCell('0_' + coloumn_id, stream.channel.name, stream.preview.template,
+            row.appendChild(ChannelContent_createCell('0_' + coloumn_id, stream.channel.name, stream.channel._id, stream.preview.template,
                 twemoji.parse(stream.channel.status), stream.game,
-                Main_is_playlist(JSON.stringify(stream.stream_type)) +
                 hosting + stream.channel.display_name,
                 STR_SINCE + Play_streamLiveAt(stream.created_at) + ' ' + STR_FOR +
                 Main_addCommas(stream.viewers) + STR_VIEWER,
-                Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language)));
+                Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language),
+                Main_is_rerun(stream.stream_type)));
             coloumn_id++;
         } else ChannelContent_skipImg = true;
     } else ChannelContent_skipImg = true;
@@ -244,35 +213,53 @@ function ChannelContent_loadDataSuccess() {
         row.appendChild(Main_createEmptyCell(ChannelContent_ids[9] + '0_' + coloumn_id));
     }
 
-    document.getElementById("stream_table_channel_content").appendChild(row);
+    doc.appendChild(row);
 
     row = document.createElement('tr');
+
     row.appendChild(ChannelContent_createFallow('1_0',
         Main_values.Main_selectedChannelDisplayname, Main_values.Main_selectedChannelDisplayname, Main_values.Main_selectedChannelLogo));
-    document.getElementById("stream_table_channel_content").appendChild(row);
+
+    Main_td = document.createElement('td');
+    Main_td.setAttribute('id', 'stream_cell_x_x');
+    Main_td.className = 'stream_cell';
+    Main_td.innerHTML = '<div id="' + ChannelContent_ids[0] +
+        'x_x" class="stream_thumbnail_video" ><div id="' +
+        ChannelContent_ids[4] + 'x_x" class="stream_channel_info">' +
+        twemoji.parse(ChannelContent_description) + '</div></div>';
+    row.appendChild(Main_td);
+
+    doc.appendChild(row);
 
     ChannelContent_loadDataSuccessFinish();
 }
 
 //TODO revise this functions there is too many
-function ChannelContent_createCell(id, channel_name, preview_thumbnail, stream_title, stream_game, channel_display_name, viwers, quality) {
-    ChannelContent_thumbnail = preview_thumbnail.replace("{width}x{height}", Main_VideoSize);
+function ChannelContent_createCell(id, channel_name, channel_id, preview_thumbnail, stream_title, stream_game, channel_display_name, viwers, quality, rerun) {
+
+    var icon = 'circle';
+    var color = (ChannelContent_TargetId !== undefined ? '#FED000' : 'red');
+    if (rerun) {
+        color = '#FFFFFF';
+        icon = 'refresh';
+    }
 
     Main_td = document.createElement('td');
     Main_td.setAttribute('id', ChannelContent_ids[8] + id);
-    Main_td.setAttribute(Main_DataAttribute, channel_name);
+    Main_td.setAttribute(Main_DataAttribute, JSON.stringify([channel_name, channel_id, rerun]));
+
     Main_td.className = 'stream_cell';
     Main_td.innerHTML = '<div id="' + ChannelContent_ids[0] + id + '" class="stream_thumbnail_video" >' +
-        '<img id="' + ChannelContent_ids[1] + id + '" class="stream_img"></div>' +
+        '<img id="' + ChannelContent_ids[1] + id + '" alt="" class="stream_img"src="' + preview_thumbnail.replace("{width}x{height}", Main_VideoSize) + Main_randomimg +
+        '" onerror="this.onerror=null;this.src=\'' + IMG_404_VIDEO + '\'"></div>' +
         '<div id="' + ChannelContent_ids[2] + id + '" class="stream_text">' +
         '<div id="' + ChannelContent_ids[3] + id + '" class="stream_channel" style="width: 66%; display: inline-block;">' +
-        '<i class="icon-circle" style="color: ' +
-        (ChannelContent_TargetId !== undefined ? '#FED000' : 'red') + '; font-size: 90%; aria-hidden="true"></i> ' + STR_SPACE +
-        channel_display_name + '</div>' +
+        '<i class="icon-' + icon + ' live_icon" style="color: ' + color + ';"></i> ' + channel_display_name + '</div>' +
         '<div id="' + ChannelContent_ids[7] + id + '"class="stream_info" style="width:33%; float: right; text-align: right; display: inline-block;">' +
         quality + '</div>' +
         '<div id="' + ChannelContent_ids[4] + id + '"class="stream_info">' + stream_title + '</div>' +
-        '<div id="' + ChannelContent_ids[5] + id + '"class="stream_info">' + STR_PLAYING + stream_game + '</div>' +
+        '<div id="' + ChannelContent_ids[5] + id + '"class="stream_info">' +
+        (stream_game !== "" ? STR_PLAYING + stream_game : "") + '</div>' +
         '<div id="' + ChannelContent_ids[6] + id + '"class="stream_info">' + viwers + '</div>' + '</div>';
 
     return Main_td;
@@ -280,8 +267,7 @@ function ChannelContent_createCell(id, channel_name, preview_thumbnail, stream_t
 
 function ChannelContent_createChannelCell(id, user_name, stream_type, icons) {
     Main_td = document.createElement('td');
-    Main_td.setAttribute('id', ChannelContent_ids[8] + id);
-    Main_td.setAttribute(Main_DataAttribute, user_name);
+    Main_td.setAttribute('id', 'channel_' + id);
     Main_td.className = 'stream_cell';
     Main_td.innerHTML = '<div id="' + ChannelContent_ids[0] + id + '" class="stream_thumbnail_video" ><div id="' +
         ChannelContent_ids[1] + id +
@@ -294,15 +280,14 @@ function ChannelContent_createChannelCell(id, user_name, stream_type, icons) {
 }
 
 function ChannelContent_createFallow(id, user_name, stream_type, preview_thumbnail) {
-    ChannelContent_thumbnail_fallow = preview_thumbnail;
     Main_td = document.createElement('td');
-    Main_td.setAttribute('id', ChannelContent_ids[8] + id);
-    Main_td.setAttribute(Main_DataAttribute, user_name);
+    Main_td.setAttribute('id', 'fallow_' + id);
     Main_td.className = 'stream_cell';
     Main_td.innerHTML = '<div id="' + ChannelContent_ids[0] + id +
         '" class="stream_thumbnail_video" ><div id="schannel_cont_heart" style="position: absolute; top: 5%; left: 6%;"></div><img id="' +
-        ChannelContent_ids[1] + id + '" class="stream_img_fallow"></div>' +
-        '<div id="' + ChannelContent_ids[2] + id + '" class="stream_text">' +
+        ChannelContent_ids[1] + id + '" alt="" class="stream_img_fallow"src="' + preview_thumbnail +
+        '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'"></div>' +
+        '<div id="' + ChannelContent_ids[2] + id + '" class="stream_text_channel">' +
         '<div id="' + ChannelContent_ids[3] + id + '" class="stream_channel">' + stream_type + '</div>' +
         '<div id="' + ChannelContent_ids[5] + id + '"class="stream_info">' + Main_addCommas(ChannelContent_selectedChannelViews) +
         STR_VIEWS + '</div>' +
@@ -314,31 +299,25 @@ function ChannelContent_createFallow(id, user_name, stream_type, preview_thumbna
 
 function ChannelContent_setFallow() {
     if (AddCode_IsFallowing) {
-        Main_innerHTML("schannel_cont_heart", '<i class="icon-heart" style="color: #00b300; font-size: 1200%; text-shadow: #FFFFFF 0 0 10px, #FFFFFF 0 0 10px, #FFFFFF 0 0 8px;"></i>');
+        Main_innerHTML("schannel_cont_heart", '<i class="icon-heart" style="color: #00b300; font-size: 600%; text-shadow: #FFFFFF 0 0 10px, #FFFFFF 0 0 10px, #FFFFFF 0 0 8px;"></i>');
         Main_textContent(ChannelContent_ids[3] + "1_0", Main_values.Main_selectedChannelDisplayname + STR_FALLOWING);
     } else {
-        Main_innerHTML("schannel_cont_heart", '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 1200%; text-shadow: #000000 0 0 10px, #000000 0 0 10px, #000000 0 0 8px;"></i>');
+        Main_innerHTML("schannel_cont_heart", '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 600%; text-shadow: #000000 0 0 10px, #000000 0 0 10px, #000000 0 0 8px;"></i>');
         if (AddUser_UserIsSet()) Main_textContent(ChannelContent_ids[3] + "1_0", Main_values.Main_selectedChannelDisplayname + STR_FALLOW);
         else Main_textContent(ChannelContent_ids[3] + "1_0", Main_values.Main_selectedChannelDisplayname + STR_CANT_FALLOW);
     }
 }
 
 function ChannelContent_loadDataSuccessFinish() {
-    Main_ready(function() {
-        if (!ChannelContent_status) {
-            Main_HideLoadDialog();
-            ChannelContent_status = true;
-            if (ChannelContent_thumbnail !== '')
-                Main_loadImg(document.getElementById(ChannelContent_ids[1] + '0_0'),
-                    ChannelContent_thumbnail, IMG_404_VIDEO);
-            Main_loadImg(document.getElementById(ChannelContent_ids[1] + '1_0'), ChannelContent_thumbnail_fallow, IMG_404_LOGO);
-            ChannelContent_addFocus();
-            Main_SaveValues();
-            Main_ShowElement(ChannelContent_ids[10]);
-        }
-        ChannelContent_checkUser();
-        ChannelContent_loadingData = false;
-    });
+    if (!ChannelContent_status) {
+        ChannelContent_status = true;
+        ChannelContent_addFocus();
+        Main_SaveValues();
+        Main_ShowElement(ChannelContent_ids[10]);
+        Main_HideLoadDialog();
+    }
+    ChannelContent_checkUser();
+    Main_FirstLoad = false;
 }
 
 function ChannelContent_checkUser() {
@@ -356,6 +335,8 @@ function ChannelContent_checkUser() {
 function ChannelContent_addFocus() {
     Main_AddClass(ChannelContent_ids[0] +
         ChannelContent_cursorY + '_' + (!ChannelContent_cursorY ? ChannelContent_cursorX : 0), Main_classThumb);
+    if (Main_CenterLablesInUse) ChannelContent_removeFocus();
+    Main_handleKeyUp();
 }
 
 function ChannelContent_removeFocus() {
@@ -379,8 +360,11 @@ function ChannelContent_keyEnter() {
         var value = (!ChannelContent_skipImg ? 0 : 1);
         if (ChannelContent_cursorX === (0 - value)) {
 
-            Main_values.Play_selectedChannel = document.getElementById(ChannelContent_ids[8] + ChannelContent_cursorY +
-                '_' + ChannelContent_cursorX).getAttribute(Main_DataAttribute);
+            Main_values.Play_selectedChannel = JSON.parse(document.getElementById(ChannelContent_ids[8] + ChannelContent_cursorY +
+                '_' + ChannelContent_cursorX).getAttribute(Main_DataAttribute));
+
+            Main_values.IsRerun = Main_values.Play_selectedChannel[2];
+            Main_values.Play_selectedChannel = Main_values.Play_selectedChannel[0];
 
             Main_values.Play_selectedChannelDisplayname = document.getElementById(ChannelContent_ids[3] + ChannelContent_cursorY +
                 '_' + ChannelContent_cursorX).textContent;
@@ -392,13 +376,18 @@ function ChannelContent_keyEnter() {
                 Main_values.Play_selectedChannel_id = ChannelContent_TargetId;
             } else Main_values.Play_selectedChannel_id = Main_values.Main_selectedChannel_id;
 
-            Main_values.Play_gameSelected = document.getElementById(ChannelContent_ids[5] + ChannelContent_cursorY + '_' + ChannelContent_cursorX).textContent.split(STR_PLAYING)[1];
+            var playing = document.getElementById(ChannelContent_ids[5] + ChannelContent_cursorY + '_' + ChannelContent_cursorX).textContent;
+            Main_values.Play_gameSelected = playing.indexOf(STR_PLAYING) !== -1 ? playing.split(STR_PLAYING)[1] : "";
 
-            Main_openStream();
-        } else if (ChannelContent_cursorX === (1 - value)) ChannelVod_init();
-        else if (ChannelContent_cursorX === (2 - value)) {
+            Main_ready(Main_openStream);
+        } else if (ChannelContent_cursorX === (1 - value)) {
+            Main_ready(function() {
+                inUseObj = ChannelVod;
+                Screens_init();
+            });
+        } else if (ChannelContent_cursorX === (2 - value)) {
             inUseObj = ChannelClip;
-            Screens_init();
+            Main_ready(Screens_init);
         }
     }
 }
@@ -422,10 +411,11 @@ function ChannelContent_RestoreChannelValue() {
     ChannelContent_UserChannels = ChannelContent_ChannelValue.ChannelContent_UserChannels;
     Main_values.Main_BeforeChannel = Main_values.Main_BeforeChannel;
     ChannelContent_ChannelValue = {};
+    ChannelContent_ChannelValueIsset = false;
 }
 
 function ChannelContent_handleKeyDown(event) {
-    if (ChannelContent_loadingData || Main_CantClick()) return;
+    if (Main_FirstLoad || Main_CantClick()) return;
     else Main_keyClickDelayStart();
 
     switch (event.keyCode) {
@@ -433,15 +423,16 @@ function ChannelContent_handleKeyDown(event) {
             if (Main_isControlsDialogShown()) Main_HideControlsDialog();
             else if (Main_isAboutDialogShown()) Main_HideAboutDialog();
             else {
-                Main_values.Main_Go = Main_values.Main_BeforeChannel;
-                Main_values.Main_BeforeChannel = Main_Live;
-                ChannelContent_exit();
-                Main_values.Main_selectedChannel_id = '';
-                Main_SwitchScreen();
+                ChannelContent_removeFocus();
+                Main_CenterLablesStart(ChannelContent_handleKeyDown);
             }
+            Sidepannel_RestoreScreen();
             break;
         case KEY_LEFT:
-            if (!ChannelContent_cursorY) {
+            if (!ChannelContent_cursorX) {
+                ChannelContent_removeFocus();
+                Sidepannel_Start(ChannelContent_handleKeyDown, true);
+            } else if (!ChannelContent_cursorY) {
                 ChannelContent_removeFocus();
                 ChannelContent_cursorX--;
                 if (ChannelContent_cursorX < 0) ChannelContent_cursorX = (!ChannelContent_skipImg ? 2 : 1);
@@ -457,39 +448,27 @@ function ChannelContent_handleKeyDown(event) {
             }
             break;
         case KEY_UP:
-        case KEY_DOWN:
-            ChannelContent_removeFocus();
-            ChannelContent_cursorY = !ChannelContent_cursorY ? 1 : 0;
-            ChannelContent_addFocus();
+            if (!ChannelContent_cursorY) {
+                ChannelContent_removeFocus();
+                Main_CenterLablesStart(ChannelContent_handleKeyDown);
+            } else {
+                ChannelContent_removeFocus();
+                ChannelContent_cursorY = 0;
+                ChannelContent_addFocus();
+            }
             break;
-        case KEY_INFO:
-        case KEY_CHANNELGUIDE:
-            ChannelContent_StartLoad();
+        case KEY_DOWN:
+            if (!ChannelContent_cursorY) {
+                ChannelContent_removeFocus();
+                ChannelContent_cursorY = 1;
+                ChannelContent_addFocus();
+            }
             break;
         case KEY_PLAY:
         case KEY_PAUSE:
         case KEY_PLAYPAUSE:
         case KEY_ENTER:
             ChannelContent_keyEnter();
-            break;
-        case KEY_RED:
-            Main_SidePannelStart(ChannelContent_handleKeyDown);
-            break;
-        case KEY_GREEN:
-            ChannelContent_exit();
-            Main_GoLive();
-            break;
-        case KEY_YELLOW:
-            Main_showControlsDialog();
-            break;
-        case KEY_BLUE:
-            if (!Main_values.Search_isSearching) {
-                ChannelContent_SetChannelValue();
-                Main_values.Main_BeforeSearch = Main_ChannelContent;
-            }
-            Main_values.Main_Go = Main_Search;
-            ChannelContent_exit();
-            Main_SwitchScreen();
             break;
         default:
             break;

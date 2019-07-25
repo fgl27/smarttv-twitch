@@ -23,7 +23,7 @@ var ChatLive_selectedChannel;
 
 function ChatLive_Init() { // jshint ignore:line
     ChatLive_Clear();
-    if (Main_values.Play_ChatForceDisable) {
+    if (!Main_values.Play_ChatForceDisable) {
         Chat_Disable();
         return;
     }
@@ -71,7 +71,7 @@ function ChatLive_loadBadgesChannelError(id, callbackSucess) {
     ChatLive_loadingDataTry++;
     if (ChatLive_loadingDataTry < ChatLive_loadingDataTryMax) ChatLive_loadBadgesChannelRequest(id, callbackSucess);
     else {
-        ChatLive_loadBadgesChannelId = window.setTimeout(function() {
+        if (ChatLive_Id === id) ChatLive_loadBadgesChannelId = window.setTimeout(function() {
             ChatLive_loadBadgesChannelRequest(id, callbackSucess);
         }, 500);
     }
@@ -208,11 +208,8 @@ function ChatLive_loadChat() {
 }
 
 function ChatLive_loadChatRequest() {
-    //Tizen lower then 2.4 has issues with wss (websocket network error unacceptable tls certificate)
-    var url = 'ws://irc-ws.chat.twitch.tv';
-    if (Main_TizenVersion) url = 'wss://irc-ws.chat.twitch.tv';
 
-    ChatLive_socket = new ReconnectingWebSocket(url, 'irc', {
+    ChatLive_socket = new ReconnectingWebSocket('wss://irc-ws.chat.twitch.tv', 'irc', {
         reconnectInterval: 3000
     });
 
@@ -319,7 +316,7 @@ function ChatLive_loadChatSuccess(message) {
 
     ChatLive_LineAdd(div);
 }
-//    var tokenizedMessage = [message];
+
 function ChatLive_extraMessageTokenize(tokenizedMessage) {
 
     for (var i = 0; i < tokenizedMessage.length; i++) {

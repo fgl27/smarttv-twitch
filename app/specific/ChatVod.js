@@ -25,8 +25,9 @@ function Chat_Preinit() {
 }
 
 function Chat_Init() {
+    console.log(Main_values.Play_ChatForceDisable);
     Chat_Clear();
-    if (Main_values.Play_ChatForceDisable) {
+    if (!Main_Android || !Main_values.Play_ChatForceDisable) {
         Chat_Disable();
         return;
     }
@@ -49,20 +50,7 @@ function Chat_loadBadgesGlobal() {
 
 function Chat_loadBadgesGlobalRequest() {
     var theUrl = 'https://badges.twitch.tv/v1/badges/global/display';
-    var xmlHttp = new XMLHttpRequest();
-
-    xmlHttp.open("GET", theUrl, true);
-    xmlHttp.timeout = 10000;
-    xmlHttp.ontimeout = function() {};
-
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) Chat_loadBadgesGlobalSuccess(xmlHttp.responseText);
-            else Chat_loadBadgesGlobalError();
-        }
-    };
-
-    xmlHttp.send(null);
+    BasexmlHttpGet(theUrl, 10000, 0, null, Chat_loadBadgesGlobalSuccess, Chat_loadBadgesGlobalError, false);
 }
 
 function Chat_loadBadgesGlobalError() {
@@ -88,20 +76,7 @@ function Chat_loadEmotes() {
 
 function Chat_loadEmotesRequest() {
     var theUrl = 'https://api.betterttv.net/2/emotes';
-    var xmlHttp = new XMLHttpRequest();
-
-    xmlHttp.open("GET", theUrl, true);
-    xmlHttp.timeout = 10000;
-    xmlHttp.ontimeout = function() {};
-
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) Chat_loadEmotesSuccess(xmlHttp.responseText);
-            else Chat_loadEmotesError();
-        }
-    };
-
-    xmlHttp.send(null);
+    BasexmlHttpGet(theUrl, 10000, 0, null, Chat_loadEmotesSuccess, Chat_loadEmotesError, false);
 }
 
 function Chat_loadEmotesError() {
@@ -225,7 +200,7 @@ function Chat_loadChatSuccess(responseText, id) {
         //Add mesage
         div += '<span class="message">';
         mmessage.fragments.forEach(function(fragments) {
-            if (fragments.hasOwnProperty('emoticon')) div += '<img class="emoticon" src="https://static-cdn.jtvnw.net/emoticons/v1/' + fragments.emoticon.emoticon_id + '/1.0" srcset="https://static-cdn.jtvnw.net/emoticons/v1/' + fragments.emoticon.emoticon_id + '/2.0 2x, https://static-cdn.jtvnw.net/emoticons/v1/' + fragments.emoticon.emoticon_id + '/3.0 4x">';
+            if (fragments.hasOwnProperty('emoticon')) div += '<img class="emoticon" alt="" src="https://static-cdn.jtvnw.net/emoticons/v1/' + fragments.emoticon.emoticon_id + '/1.0" srcset="https://static-cdn.jtvnw.net/emoticons/v1/' + fragments.emoticon.emoticon_id + '/2.0 2x, https://static-cdn.jtvnw.net/emoticons/v1/' + fragments.emoticon.emoticon_id + '/3.0 4x">';
             else div += ChatLive_extraMessageTokenize([fragments.text]);
         });
 
@@ -254,7 +229,7 @@ function Chat_MessageVectorNext(message, time) {
 }
 
 function Chat_Play(id) {
-    if (!Chat_hasEnded && Chat_Id === id) {
+    if (!Chat_hasEnded && Chat_Id === id && Main_values.Play_ChatForceDisable) {
         Chat_addlinesId = window.setInterval(function() {
             Main_Addline(id);
             Chat_div.scrollTop = Chat_div.scrollHeight;
@@ -287,7 +262,7 @@ function Main_Addline(id) {
     var elem;
     if (Chat_Position < (Chat_Messages.length - 1)) {
         for (var i = Chat_Position; i < Chat_Messages.length; i++, Chat_Position++) {
-            if (Chat_Messages[i].time < (PlayVod_currentTime / 1000)) {
+            if (Chat_Messages[i].time < (ChannelVod_vodOffset + (Android.gettime() / 1000))) {
                 elem = document.createElement('div');
                 elem.className = 'chat_line';
                 elem.innerHTML = Chat_Messages[i].message;
@@ -379,14 +354,16 @@ function Chat_NoVod() {
 
 function Chat_Disable() {
     Chat_Clear();
-    Main_ShowElement('chat_box');
     Chat_SingleLine(STR_CHAT_DISABLE);
+    Main_ready(function() {
+        Chat_div.scrollTop = Chat_div.scrollHeight;
+    });
 }
 
 function Chat_SingleLine(Line) {
     var div = '&nbsp;';
     div += '<span class="message">';
-    div += STR_BR + STR_BR + STR_BR + STR_BR + STR_BR + STR_BR + STR_BR + STR_BR + STR_BR + STR_BR;
+    div += STR_BR + STR_BR + STR_BR + STR_BR + STR_BR + STR_BR;
     div += Line;
     div += '</span>';
 

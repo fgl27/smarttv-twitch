@@ -6,10 +6,10 @@ var Search_keyBoardOn = false;
 
 function Search_init() {
     Main_HideWarningDialog();
-    Main_IconLoad('label_refresh', 'icon-arrow-circle-left', STR_GOBACK);
+    Main_HideElement('label_refresh');
+    Main_IconLoad('label_side_panel', 'icon-arrow-circle-left', STR_GOBACK);
     Main_textContent('top_bar_user', STR_SEARCH);
     document.getElementById("top_lables").style.marginLeft = '14%';
-    document.getElementById('label_switch').style.display = 'none';
     document.getElementById('top_bar_live').style.display = 'none';
     document.getElementById('top_bar_featured').style.display = 'none';
     document.getElementById('top_bar_game').style.display = 'none';
@@ -32,8 +32,8 @@ function Search_exit() {
     document.getElementById("top_lables").style.marginLeft = '18.5%';
     Main_textContent('top_bar_user', STR_USER);
     Main_RemoveClass('top_bar_user', 'icon_center_focus');
-    Main_IconLoad('label_refresh', 'icon-refresh', STR_REFRESH + STR_GUIDE);
-    document.getElementById('label_switch').style.display = 'block';
+    Main_IconLoad('label_side_panel', 'icon-ellipsis', STR_SIDE_PANEL);
+    Main_ShowElement('label_refresh');
     document.getElementById('top_bar_live').style.display = 'inline-block';
     document.getElementById('top_bar_featured').style.display = 'inline-block';
     document.getElementById('top_bar_game').style.display = 'inline-block';
@@ -45,9 +45,18 @@ function Search_exit() {
 
 function Search_loadData() {
     Search_exit();
-    if (!Search_cursorX) SearchChannels_init();
-    else if (Search_cursorX === 1) SearchGames_init();
-    else if (Search_cursorX === 2) SearchLive_init();
+    Main_ready(function() {
+        if (!Search_cursorX) {
+            inUseObj = SearchChannels;
+            Screens_init();
+        } else if (Search_cursorX === 1) {
+            inUseObj = SearchGames;
+            Screens_init();
+        } else if (Search_cursorX === 2) {
+            inUseObj = SearchLive;
+            Screens_init();
+        }
+    });
 }
 
 function Search_refreshInputFocusTools() {
@@ -106,17 +115,6 @@ function Search_handleKeyDown(event) {
                 Search_inputFocus();
             }
             break;
-        case KEY_INFO:
-        case KEY_CHANNELGUIDE:
-            break;
-        case KEY_CHANNELUP:
-            Search_exit();
-            Main_SwitchScreen();
-            break;
-        case KEY_CHANNELDOWN:
-            Search_exit();
-            Main_SwitchScreen();
-            break;
         case KEY_PLAY:
         case KEY_PAUSE:
         case KEY_PLAYPAUSE:
@@ -134,18 +132,6 @@ function Search_handleKeyDown(event) {
                     }, 1000);
                 }
             }
-            break;
-        case KEY_RED:
-            Main_SidePannelStart(Search_handleKeyDown);
-            break;
-        case KEY_GREEN:
-            Search_exit();
-            Main_GoLive();
-            break;
-        case KEY_YELLOW:
-            Main_showControlsDialog();
-            break;
-        case KEY_BLUE:
             break;
         default:
             break;
@@ -167,9 +153,7 @@ function Search_RemoveinputFocus(EnaKeydown) {
     Main_SearchInput.placeholder = STR_PLACEHOLDER_PRESS + STR_PLACEHOLDER_SEARCH;
 
     if (EnaKeydown) document.body.addEventListener("keydown", Search_handleKeyDown, false);
-    window.setTimeout(function() {
-        Search_keyBoardOn = false;
-    }, 500);
+    Search_keyBoardOn = false;
 }
 
 function Search_removeEventListener() {
@@ -194,7 +178,7 @@ function Search_KeyboardEvent(event) {
             Main_SearchInput.value = '';
             break;
         case KEY_KEYBOARD_DONE:
-        case KEY_KEYBOARD_CANCEL:
+        case KEY_DOWN:
             Search_RemoveinputFocus(true);
             Search_cursorY = 1;
             Search_refreshInputFocusTools();

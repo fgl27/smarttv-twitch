@@ -12,7 +12,7 @@ var KEY_RIGHT = 39;
 var KEY_DOWN = 40;
 var KEY_ENTER = 13;
 
-var KEY_RETURN = 49; //49 or 10009
+var KEY_RETURN = 10009;
 
 var KEY_KEYBOARD_BACKSPACE = 8; // http://developer.samsung.com/tv/develop/guides/user-interaction/keyboardime
 var KEY_KEYBOARD_DONE = 65376;
@@ -47,4 +47,6 @@ if (istizen) {
     tizen.tvinputdevice.registerKey("ColorF3Blue");
     tizen.tvinputdevice.registerKey("Guide");
     tizen.tvinputdevice.registerKey("Info");
+} else {
+    KEY_RETURN = 49;
 }

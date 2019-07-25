@@ -73,7 +73,11 @@ function AddUser_RemoveinputFocus(EnaKeydown) {
     Main_AddUserInput.placeholder = STR_PLACEHOLDER_PRESS + STR_PLACEHOLDER_USER;
 
     if (EnaKeydown) document.body.addEventListener("keydown", AddUser_handleKeyDown, false);
-    AddUser_keyBoardOn = false;
+    window.setTimeout(function() {
+        Main_ready(function() {
+            AddUser_keyBoardOn = false;
+        });
+    }, 250);
 }
 
 function AddUser_KeyboardEvent(event) {
@@ -94,7 +98,7 @@ function AddUser_KeyboardEvent(event) {
             Main_AddUserInput.value = '';
             break;
         case KEY_KEYBOARD_DONE:
-        case KEY_DOWN:
+        case KEY_KEYBOARD_CANCEL:
             if (Main_AddUserInput.value !== '' && Main_AddUserInput.value !== null) {
 
                 AddUser_Username = Main_AddUserInput.value;
@@ -114,7 +118,8 @@ function AddUser_KeyboardEvent(event) {
                         AddUser_inputFocus();
                     }, 1500);
                 }
-            } else AddUser_inputFocus();
+            }
+            AddUser_RemoveinputFocus(true);
             break;
         case KEY_KEYBOARD_BACKSPACE:
             Main_AddUserInput.value = Main_AddUserInput.value.slice(0, -1);

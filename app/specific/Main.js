@@ -153,8 +153,10 @@ function Main_loadTranslations(language) {
 
     Main_ready(function() {
         try {
-            Main_IsNotBrowser = Android.getAndroid();
-            Main_IsNotBrowserVersion = Android.getversion();
+            Main_IsNotBrowser = tizen !== null;
+            console.log('Main_IsNotBrowser tizen = ' + Main_IsNotBrowser);
+            Main_IsNotBrowser = false;
+            Main_IsNotBrowserVersion = 1;
         } catch (e) {
             Main_IsNotBrowserVersion = '1.0.0';
             Main_IsNotBrowser = 0;

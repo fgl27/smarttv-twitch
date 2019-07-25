@@ -77,7 +77,7 @@ function AddUser_RemoveinputFocus(EnaKeydown) {
         Main_ready(function() {
             AddUser_keyBoardOn = false;
         });
-    }, 250);
+    }, 500);
 }
 
 function AddUser_KeyboardEvent(event) {

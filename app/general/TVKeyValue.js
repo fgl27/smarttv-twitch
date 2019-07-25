@@ -25,3 +25,18 @@ var KEY_YELLOW = 405;
 var KEY_BLUE = 406;
 var KEY_KEYBOARD_CANCEL = 65385;
 var KEY_INFO = 457;
+
+if (tizen !== null) {
+    //Registering all used keys
+    tizen.tvinputdevice.registerKey("ChannelUp");
+    tizen.tvinputdevice.registerKey("ChannelDown");
+    tizen.tvinputdevice.registerKey("MediaPlayPause");
+    tizen.tvinputdevice.registerKey("MediaPlay");
+    tizen.tvinputdevice.registerKey("MediaPause");
+    tizen.tvinputdevice.registerKey("ColorF0Red");
+    tizen.tvinputdevice.registerKey("ColorF1Green");
+    tizen.tvinputdevice.registerKey("ColorF2Yellow");
+    tizen.tvinputdevice.registerKey("ColorF3Blue");
+    tizen.tvinputdevice.registerKey("Guide");
+    tizen.tvinputdevice.registerKey("Info");
+}

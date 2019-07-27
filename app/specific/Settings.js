@@ -33,10 +33,6 @@ var Settings_value = {
         "values": ["very-low", "low", "normal", "high", "very-high"],
         "defaultValue": 3
     },
-    "default_quality": { //default player quality Auto or source
-        "values": ["Auto", "source"],
-        "defaultValue": 1
-    },
     "clock_offset": { //clock_offset
         "values": Settings_GenerateClock(),
         "defaultValue": 49
@@ -159,13 +155,6 @@ function Settings_SetSettings() {
     // Player settings title
     div += Settings_DivTitle('play', STR_SETTINGS_PLAYER);
 
-    //Player restore playback
-    key = "default_quality";
-    Settings_value_keys.push(key);
-    Settings_value[key].values = [STR_AUTO, STR_SOURCE];
-
-    div += Settings_DivOptionWithSummary(key, STR_DEF_QUALITY, STR_DEF_QUALITY_SUMARRY);
-
     // Chat size
     key = "end_dialog_counter";
     Settings_value_keys.push(key);
@@ -265,11 +254,6 @@ function Settings_SetStrings() {
     key = "thumb_quality";
     Settings_DivOptionChangeLang(key, STR_THUMB_RESOLUTION, STR_THUMB_RESOLUTION_SUMARRY);
     Settings_value[key].values = [STR_VERY_LOW, STR_LOW, STR_NORMAL, STR_HIGH, STR_VERY_HIGH];
-
-    //Player restore
-    key = "default_quality";
-    Settings_DivOptionChangeLang(key, STR_DEF_QUALITY, STR_DEF_QUALITY_SUMARRY);
-    Settings_value[key].values = [STR_AUTO, STR_SOURCE];
 
     // Chat size
     key = "end_dialog_counter";
@@ -375,7 +359,6 @@ function Settings_SetDefault(position) {
     else if (position === "buffer_vod") Settings_SetBuffers(2);
     else if (position === "buffer_clip") Settings_SetBuffers(3);
     else if (position === "end_dialog_counter") Play_EndSettingsCounter = Settings_Obj_default("end_dialog_counter");
-    else if (position === "default_quality") Play_SetQuality();
     else if (position === "thumb_quality") Main_SetThumb();
     else if (position === "clock_offset") {
         Settings_SetClock();

@@ -268,6 +268,7 @@ function PlayVod_ResumeAfterOnline() {
 }
 
 function PlayVod_SaveOffset() {
+    //Prevent setting it to 0 before it was used
     if (!Main_values.vodOffset) {
         Main_values.vodOffset = parseInt(PlayVod_currentTime / 1000);
         Main_SaveValues();

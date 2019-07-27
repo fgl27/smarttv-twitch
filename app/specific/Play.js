@@ -788,7 +788,7 @@ function Play_onPlayer() {
 }
 
 function Play_loadChat() {
-    if (!Main_values.Play_ChatForceDisable) {
+    if (Main_values.Play_ChatForceDisable) {
         Chat_Disable();
         return;
     }
@@ -1779,7 +1779,7 @@ function Play_handleKeyDown(e) {
                 else if (Play_isPanelShown()) {
                     Play_clearHidePanel();
                     if (PlayVod_PanelY === 1) {
-                        if (Main_values.Play_ChatForceDisable && Play_isNotplaying()) Play_loadChat();
+                        if (!Main_values.Play_ChatForceDisable && Play_isNotplaying()) Play_loadChat();
                         if (!Play_isEndDialogVisible()) Play_KeyPause(1);
                     } else Play_BottomOptionsPressed(1);
                     Play_setHidePanel();
@@ -2159,7 +2159,7 @@ function Play_MakeControls() {
         },
         setLable: function() {
             Main_textContent('extra_button_' + this.position, '(' +
-                (!Main_values.Play_ChatForceDisable ? STR_YES : STR_NO) + ')');
+                (Main_values.Play_ChatForceDisable ? STR_YES : STR_NO) + ')');
         },
     };
 }

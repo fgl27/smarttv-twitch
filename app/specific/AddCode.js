@@ -452,38 +452,7 @@ function AddCode_TimeoutReset10() {
 
 function AddCode_RequestCheckSub() {
     var theUrl = 'https://api.twitch.tv/kraken/users/' + AddUser_UsernameArray[Main_values.Users_Position].id + '/subscriptions/' + AddCode_Channel_id;
-    var xmlHttp;
-    if (Main_IsNotBrowser) {
-
-        xmlHttp = Android.mreadUrl(theUrl, AddCode_loadingDataTimeout, 3, AddUser_UsernameArray[Main_values.Users_Position].access_token);
-
-        if (xmlHttp) xmlHttp = JSON.parse(xmlHttp);
-        else {
-            AddCode_RequestCheckSubError();
-            return;
-        }
-
-        if (xmlHttp.status === 200) {
-            AddCode_IsSub = true;
-            PlayVod_isSub();
-        } else if (xmlHttp.status === 422) {
-            AddCode_IsSub = false;
-            PlayVod_NotSub();
-        } else if (xmlHttp.status === 404) {
-            if ((JSON.parse(xmlHttp.responseText).error + '').indexOf('Not Found') !== -1) {
-                AddCode_IsSub = false;
-                PlayVod_NotSub();
-                return;
-            } else AddCode_RequestCheckSubError();
-        } else if (xmlHttp.status === 401 || xmlHttp.status === 403) {
-            AddCode_refreshTokens(Main_values.Users_Position, 0, AddCode_CheckSub, AddCode_RequestCheckSubfail);
-        } else {
-            AddCode_RequestCheckSubError();
-        }
-
-    } else {
-
-        xmlHttp = new XMLHttpRequest();
+    var xmlHttp = new XMLHttpRequest();
 
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = AddCode_loadingDataTimeout;
@@ -515,7 +484,7 @@ function AddCode_RequestCheckSub() {
         };
 
         xmlHttp.send(null);
-    }
+
 }
 
 function AddCode_RequestCheckSubError() {
@@ -540,30 +509,7 @@ function AddCode_CheckToken(position, tryes) {
     var theUrl = 'https://api.twitch.tv/kraken?oauth_token=' +
         AddUser_UsernameArray[position].access_token;
 
-    var xmlHttp;
-
-    if (Main_IsNotBrowser) {
-
-        xmlHttp = Android.mreadUrl(theUrl, 3500, 0, null);
-
-        if (xmlHttp) xmlHttp = JSON.parse(xmlHttp);
-        else {
-            AddCode_CheckTokenError(position, tryes);
-            return;
-        }
-
-        if (xmlHttp.status === 200) {
-            AddCode_CheckTokenSuccess(xmlHttp.responseText, position);
-        } else if (xmlHttp.status === 400) { //token expired
-            AddCode_TimeoutReset10();
-            AddCode_refreshTokens(position, 0, null, null);
-        } else {
-            AddCode_CheckTokenError(position, tryes);
-        }
-
-    } else {
-
-        xmlHttp = new XMLHttpRequest();
+    var xmlHttp = new XMLHttpRequest();
 
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = 10000;
@@ -583,7 +529,6 @@ function AddCode_CheckToken(position, tryes) {
         };
 
         xmlHttp.send(null);
-    }
 }
 
 function AddCode_CheckTokenSuccess(responseText, position) {

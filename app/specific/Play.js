@@ -441,35 +441,7 @@ function Play_loadDataRequest() {
             (Main_vp9supported ? '&preferred_codecs=vp09' : '');
     }
 
-    var xmlHttp;
-    if (Main_IsNotBrowser) {
-
-        xmlHttp = Android.mreadUrl(theUrl, Play_loadingDataTimeout, 1, null);
-        if (xmlHttp) xmlHttp = JSON.parse(xmlHttp);
-        else {
-            Play_loadDataError();
-            return;
-        }
-        if (xmlHttp.status === 200) {
-            Play_loadingDataTry = 0;
-            if (Play_isOn) {
-                if (!state) {
-                    try {
-                        Android.SetAuto(theUrl);
-                    } catch (e) {}
-                }
-                Play_loadDataSuccess(xmlHttp.responseText);
-            }
-        } else if (xmlHttp.status === 403) { //forbidden access
-            Play_ForbiddenLive();
-        } else if (xmlHttp.status === 404) { //off line
-            Play_CheckHostStart();
-        } else {
-            Play_loadDataError();
-        }
-
-    } else {
-        xmlHttp = new XMLHttpRequest();
+    var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = Play_loadingDataTimeout;
         xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
@@ -497,7 +469,6 @@ function Play_loadDataRequest() {
         };
 
         xmlHttp.send(null);
-    }
 }
 
 function Play_loadDataErrorLog(xmlHttp) {

@@ -57,7 +57,7 @@ var Main_values = {
     "gameSelectedOld": null,
     "Games_return": false,
     "Search_isSearching": false,
-    "Play_ChatForceDisable": false,
+    "Play_ChatForceDisable": true,
     "Never_run": true,
     "Main_CenterLablesVectorPos": 0,
     "Chat_font_size": 3,
@@ -156,8 +156,7 @@ function Main_loadTranslations(language) {
         try {
             Main_IsNotBrowser = tizen !== null;
             console.log('Main_IsNotBrowser tizen = ' + Main_IsNotBrowser);
-            Main_IsNotBrowser = false;
-            Main_IsNotBrowserVersion = 1;
+            Main_IsNotBrowserVersion = '1.0.0';
         } catch (e) {
             Main_IsNotBrowserVersion = '1.0.0';
             Main_IsNotBrowser = 0;
@@ -223,7 +222,6 @@ function Main_initWindows() {
 
         Play_MakeControls();
         Play_SetControls();
-        Play_SetFullScreen(Play_isFullScreen);
 
         PlayVod_RestoreVodIds();
 
@@ -363,13 +361,11 @@ function Main_replaceClassEmoji(div) {
 
 function Main_showLoadDialog() {
     Main_YRst(-1);
-    if (Main_IsNotBrowser) Android.mshowLoading(true);
-    else Main_ShowElement('dialog_loading');
+    Main_ShowElement('dialog_loading');
 }
 
 function Main_HideLoadDialog() {
-    if (Main_IsNotBrowser) Android.mshowLoading(false);
-    else Main_HideElement('dialog_loading');
+    Main_HideElement('dialog_loading');
 }
 
 function Main_clearExitDialog() {
@@ -1005,8 +1001,8 @@ function Main_ExitDialog(event) {
             if (!Main_IsNotBrowser || !Main_ExitCursor) Main_HideExitDialog();
             else if (Main_ExitCursor === 1) {
                 Main_HideExitDialog();
-                Android.mclose(false);
-            } else if (Main_ExitCursor === 2) Android.mclose(true);
+                //Android.mclose(false);
+            } // else if (Main_ExitCursor === 2) Android.mclose(true);
             break;
         default:
             break;

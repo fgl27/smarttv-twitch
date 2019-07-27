@@ -454,36 +454,36 @@ function AddCode_RequestCheckSub() {
     var theUrl = 'https://api.twitch.tv/kraken/users/' + AddUser_UsernameArray[Main_values.Users_Position].id + '/subscriptions/' + AddCode_Channel_id;
     var xmlHttp = new XMLHttpRequest();
 
-        xmlHttp.open("GET", theUrl, true);
-        xmlHttp.timeout = AddCode_loadingDataTimeout;
-        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
-        xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
-        xmlHttp.setRequestHeader('Authorization', 'OAuth ' + AddUser_UsernameArray[Main_values.Users_Position].access_token);
-        xmlHttp.ontimeout = function() {};
+    xmlHttp.open("GET", theUrl, true);
+    xmlHttp.timeout = AddCode_loadingDataTimeout;
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
+    xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
+    xmlHttp.setRequestHeader('Authorization', 'OAuth ' + AddUser_UsernameArray[Main_values.Users_Position].access_token);
+    xmlHttp.ontimeout = function() {};
 
-        xmlHttp.onreadystatechange = function() {
-            if (xmlHttp.readyState === 4) {
-                if (xmlHttp.status === 200) { //success yes user is a SUB
-                    AddCode_IsSub = true;
-                    PlayVod_isSub();
-                } else if (xmlHttp.status === 422) { //channel does not have a subscription program
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) { //success yes user is a SUB
+                AddCode_IsSub = true;
+                PlayVod_isSub();
+            } else if (xmlHttp.status === 422) { //channel does not have a subscription program
+                AddCode_IsSub = false;
+                PlayVod_NotSub();
+            } else if (xmlHttp.status === 404) { //success no user is not a sub
+                if ((JSON.parse(xmlHttp.responseText).error + '').indexOf('Not Found') !== -1) {
                     AddCode_IsSub = false;
                     PlayVod_NotSub();
-                } else if (xmlHttp.status === 404) { //success no user is not a sub
-                    if ((JSON.parse(xmlHttp.responseText).error + '').indexOf('Not Found') !== -1) {
-                        AddCode_IsSub = false;
-                        PlayVod_NotSub();
-                        return;
-                    } else AddCode_RequestCheckSubError();
-                } else if (xmlHttp.status === 401 || xmlHttp.status === 403) { //token expired
-                    AddCode_refreshTokens(Main_values.Users_Position, 0, AddCode_CheckSub, AddCode_RequestCheckSubfail);
-                } else { // internet error
-                    AddCode_RequestCheckSubError();
-                }
+                    return;
+                } else AddCode_RequestCheckSubError();
+            } else if (xmlHttp.status === 401 || xmlHttp.status === 403) { //token expired
+                AddCode_refreshTokens(Main_values.Users_Position, 0, AddCode_CheckSub, AddCode_RequestCheckSubfail);
+            } else { // internet error
+                AddCode_RequestCheckSubError();
             }
-        };
+        }
+    };
 
-        xmlHttp.send(null);
+    xmlHttp.send(null);
 
 }
 
@@ -511,24 +511,24 @@ function AddCode_CheckToken(position, tryes) {
 
     var xmlHttp = new XMLHttpRequest();
 
-        xmlHttp.open("GET", theUrl, true);
-        xmlHttp.timeout = 10000;
-        xmlHttp.ontimeout = function() {};
+    xmlHttp.open("GET", theUrl, true);
+    xmlHttp.timeout = 10000;
+    xmlHttp.ontimeout = function() {};
 
-        xmlHttp.onreadystatechange = function() {
-            if (xmlHttp.readyState === 4) {
-                if (xmlHttp.status === 200) {
-                    AddCode_CheckTokenSuccess(xmlHttp.responseText, position);
-                } else if (xmlHttp.status === 400) { //token expired
-                    AddCode_TimeoutReset10();
-                    AddCode_refreshTokens(position, 0, null, null);
-                } else {
-                    AddCode_CheckTokenError(position, tryes);
-                }
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) {
+                AddCode_CheckTokenSuccess(xmlHttp.responseText, position);
+            } else if (xmlHttp.status === 400) { //token expired
+                AddCode_TimeoutReset10();
+                AddCode_refreshTokens(position, 0, null, null);
+            } else {
+                AddCode_CheckTokenError(position, tryes);
             }
-        };
+        }
+    };
 
-        xmlHttp.send(null);
+    xmlHttp.send(null);
 }
 
 function AddCode_CheckTokenSuccess(responseText, position) {

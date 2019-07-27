@@ -119,7 +119,6 @@ function PlayClip_loadDataError() {
 
 function PlayClip_QualityGenerate(response) {
     PlayClip_qualities = [];
-    Play_qualitiesAuto = [];
 
     response = JSON.parse(response).quality_options;
 
@@ -130,13 +129,11 @@ function PlayClip_QualityGenerate(response) {
                 'id': response[i].quality + 'p' + PlayClip_FrameRate(response[i].frame_rate) + ' | source | mp4',
                 'url': response[i].source
             });
-            Play_qualitiesAuto.push(response[i].source);
         } else {
             PlayClip_qualities.push({
                 'id': response[i].quality + 'p' + PlayClip_FrameRate(response[i].frame_rate) + ' | mp4',
                 'url': response[i].source
             });
-            Play_qualitiesAuto.push(response[i].source);
         }
     }
 
@@ -170,8 +167,8 @@ function PlayClip_qualityChanged() {
     PlayClip_state = PlayClip_STATE_PLAYING;
     PlayClip_SetHtmlQuality('stream_quality');
 
-    if (Main_IsNotBrowser && PlayClip_isOn) Android.startVideoOffset(PlayClip_playingUrl, 3,
-        PlayClip_replay ? -1 : Android.gettime());
+    //    if (Main_IsNotBrowser && PlayClip_isOn) Android.startVideoOffset(PlayClip_playingUrl, 3,
+    //        PlayClip_replay ? -1 : Android.gettime());
     PlayClip_replay = false;
     PlayClip_onPlayer();
 }
@@ -200,12 +197,12 @@ function PlayClip_Resume() {
 }
 
 function PlayClip_PlayerCheck() {
-    if (Main_IsNotBrowser) PlayClip_currentTime = Android.gettime();
+    //    if (Main_IsNotBrowser) PlayClip_currentTime = Android.gettime();
 
     //The player can bug and not stop playing when it ends after a video has be pause
     if ((PlayClip_currentTime / 1000) > PlayClip_DurationSeconds) {
         //Make sure playWhenReady is false to avoid false calls on java onPlayerStateChanged
-        if (Main_IsNotBrowser) Android.play(false);
+        //if (Main_IsNotBrowser) Android.play(false);
         Play_PannelEndStart(3);
     }
 
@@ -264,9 +261,8 @@ function PlayClip_shutdownStream() {
 function PlayClip_PreshutdownStream() {
     PlayClip_hidePanel();
     PlayClip_qualities = [];
-    Play_qualitiesAuto = [];
     window.clearInterval(PlayClip_streamCheckId);
-    if (Main_IsNotBrowser) Android.stopVideo(3);
+    //if (Main_IsNotBrowser) Android.stopVideo(3);
     PlayClip_isOn = false;
     Chat_Clear();
     Play_ClearPlayer();
@@ -358,7 +354,7 @@ function PlayClip_hidePanel() {
     Play_clearHidePanel();
     PlayClip_quality = PlayClip_qualityPlaying;
     document.getElementById("scene_channel_panel").style.opacity = "0";
-    if (Main_IsNotBrowser) PlayVod_ProgresBarrUpdate((Android.gettime() / 1000), PlayClip_DurationSeconds, true);
+    //if (Main_IsNotBrowser) PlayVod_ProgresBarrUpdate((Android.gettime() / 1000), PlayClip_DurationSeconds, true);
     Main_innerHTML('progress_bar_jump_to', STR_SPACE);
     document.getElementById('progress_bar_steps').style.display = 'none';
     window.clearInterval(PlayVod_RefreshProgressBarrID);
@@ -372,7 +368,6 @@ function PlayClip_showPanel() {
     Play_CleanHideExit();
     PlayVod_IconsBottonResetFocus();
     PlayClip_qualityIndexReset();
-    Play_ResetSpeed();
     PlayClip_qualityDisplay();
     document.getElementById("scene_channel_panel").style.opacity = "1";
     Play_clearHidePanel();
@@ -380,7 +375,7 @@ function PlayClip_showPanel() {
 }
 
 function PlayClip_RefreshProgressBarr() {
-    if (Main_IsNotBrowser) PlayVod_ProgresBarrUpdate((Android.gettime() / 1000), PlayClip_DurationSeconds, !PlayVod_IsJumping);
+    //if (Main_IsNotBrowser) PlayVod_ProgresBarrUpdate((Android.gettime() / 1000), PlayClip_DurationSeconds, !PlayVod_IsJumping);
 }
 
 function PlayClip_qualityIndexReset() {
@@ -401,20 +396,20 @@ function PlayClip_getQualitiesCount() {
 
 function PlayClip_qualityDisplay() {
     if (PlayClip_getQualitiesCount() === 1) {
-        document.getElementById("control_arrow_up_" + 6).style.opacity = "0";
-        document.getElementById("control_arrow_down" + 6).style.opacity = "0";
+        document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "0";
+        document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "0";
     } else if (!PlayClip_qualityIndex) {
-        document.getElementById("control_arrow_up_" + 6).style.opacity = "0.2";
-        document.getElementById("control_arrow_down" + 6).style.opacity = "1";
+        document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "0.2";
+        document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "1";
     } else if (PlayClip_qualityIndex === PlayClip_getQualitiesCount() - 1) {
-        document.getElementById("control_arrow_up_" + 6).style.opacity = "1";
-        document.getElementById("control_arrow_down" + 6).style.opacity = "0.2";
+        document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "1";
+        document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "0.2";
     } else {
-        document.getElementById("control_arrow_up_" + 6).style.opacity = "1";
-        document.getElementById("control_arrow_down" + 6).style.opacity = "1";
+        document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "1";
+        document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "1";
     }
 
-    PlayClip_SetHtmlQuality('controls_name_' + 6);
+    PlayClip_SetHtmlQuality('controls_name_' + Play_controlsQuality);
 }
 
 function PlayClip_SetHtmlQuality(element) {

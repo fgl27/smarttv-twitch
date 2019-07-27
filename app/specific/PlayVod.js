@@ -247,9 +247,9 @@ function PlayVod_Resume() {
             Play_ResumeAfterOnlineCounter = 0;
 
             //Get the time from android as it can save it more reliably
-            try {
-                Main_values.vodOffset = Android.getsavedtime() / 1000;
-            } catch (e) {}
+            //try {
+            //    Main_values.vodOffset = Android.getsavedtime() / 1000;
+            //} catch (e) {}
             if (navigator.onLine) PlayVod_ResumeAfterOnline();
 
             else Play_ResumeAfterOnlineId = window.setInterval(PlayVod_ResumeAfterOnline, 100);
@@ -270,7 +270,7 @@ function PlayVod_ResumeAfterOnline() {
 }
 
 function PlayVod_SaveOffset() {
-    Main_values.vodOffset = Main_IsNotBrowser ? (parseInt(Android.gettime() / 1000)) : 0;
+    //Main_values.vodOffset = Main_IsNotBrowser ? (parseInt(Android.gettime() / 1000)) : 0;
     Main_SaveValues();
     Main_values.vodOffset = 0;
 }
@@ -294,11 +294,11 @@ function PlayVod_loadDataRequest() {
             '.m3u8?&nauth=' + encodeURIComponent(PlayVod_tokenResponse.token) + '&nauthsig=' + PlayVod_tokenResponse.sig +
             '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true' +
             (Main_vp9supported ? '&preferred_codecs=vp09' : '');
-        if (Main_IsNotBrowser) {
-            try {
-                Android.SetAuto(theUrl);
-            } catch (e) {}
-        }
+        //        if (Main_IsNotBrowser) {
+        //            try {
+        //                Android.SetAuto(theUrl);
+        //            } catch (e) {}
+        //        }
     }
 
     BasexmlHttpGet(theUrl, Play_loadingDataTimeout, 1, null, PlayVod_loadDataSuccess, PlayVod_loadDataError);
@@ -420,9 +420,9 @@ function PlayVod_onPlayer() {
             Chat_Init();
             PlayVod_onPlayerStartPlay(Main_values.vodOffset * 1000);
             Main_values.vodOffset = 0;
-        } else {
-            PlayVod_onPlayerStartPlay(Android.gettime());
-        }
+        } // else {
+        //    PlayVod_onPlayerStartPlay(Android.gettime());
+        //}
     }
 
     PlayVod_replay = false;
@@ -439,16 +439,17 @@ function PlayVod_onPlayer() {
 }
 
 function PlayVod_onPlayerStartPlay(time) {
+    time = time;
     if (PlayVod_isOn) {
-        if (PlayVod_quality.indexOf("Auto") !== -1) {
-            try {
-                Android.StartAuto(2, PlayVod_replay ? -1 : time);
-            } catch (e) {
-                Android.startVideoOffset(PlayVod_playingUrl, 2, PlayVod_replay ? -1 : time);
-            }
+        //        if (PlayVod_quality.indexOf("Auto") !== -1) {
+        //            try {
+        //                Android.StartAuto(2, PlayVod_replay ? -1 : time);
+        //            } catch (e) {
+        //                Android.startVideoOffset(PlayVod_playingUrl, 2, PlayVod_replay ? -1 : time);
+        //            }
 
-        } else
-            Android.startVideoOffset(PlayVod_playingUrl, 2, PlayVod_replay ? -1 : time);
+        //        } else
+        //            Android.startVideoOffset(PlayVod_playingUrl, 2, PlayVod_replay ? -1 : time);
     }
 }
 
@@ -459,12 +460,12 @@ function PlayVod_UpdateDuration(duration) {
 }
 
 function PlayVod_PlayerCheck() {
-    if (Main_IsNotBrowser) PlayVod_currentTime = Android.gettime();
+    //if (Main_IsNotBrowser) PlayVod_currentTime = Android.gettime();
 
     //The player can bug and not stop playing when it ends after a video has be pause
     if ((PlayVod_currentTime / 1000) > ChannelVod_DurationSeconds) {
         //Make sure playWhenReady is false to avoid false calls on java onPlayerStateChanged
-        if (Main_IsNotBrowser) Android.play(false);
+        //if (Main_IsNotBrowser) Android.play(false);
         Play_PannelEndStart(2);
     }
 
@@ -514,7 +515,6 @@ function PlayVod_DropOneQuality(ConnectionDrop) {
 function PlayVod_shutdownStream() {
     if (PlayVod_isOn) {
         PlayVod_qualities = [];
-        Play_qualitiesAuto = [];
         PlayVod_PreshutdownStream(true);
         Play_exitMain();
     }
@@ -522,7 +522,7 @@ function PlayVod_shutdownStream() {
 
 function PlayVod_PreshutdownStream(saveOffset) {
     if (saveOffset) PlayVod_SaveVodIds();
-    if (Main_IsNotBrowser) Android.stopVideo(2);
+    //if (Main_IsNotBrowser) Android.stopVideo(2);
     PlayVod_isOn = false;
     window.clearInterval(PlayVod_SaveOffsetId);
     window.clearInterval(PlayVod_updateStreamInfId);
@@ -548,7 +548,7 @@ function PlayVod_hidePanel() {
     PlayVod_addToJump = 0;
     Play_clearHidePanel();
     document.getElementById("scene_channel_panel").style.opacity = "0";
-    if (Main_IsNotBrowser) PlayVod_ProgresBarrUpdate((Android.gettime() / 1000), ChannelVod_DurationSeconds, true);
+    //if (Main_IsNotBrowser) PlayVod_ProgresBarrUpdate((Android.gettime() / 1000), ChannelVod_DurationSeconds, true);
     Main_innerHTML('progress_bar_jump_to', STR_SPACE);
     document.getElementById('progress_bar_steps').style.display = 'none';
     PlayVod_quality = PlayVod_qualityPlaying;
@@ -567,23 +567,22 @@ function PlayVod_showPanel(autoHide) {
         PlayVod_qualityDisplay();
         if (PlayVod_qualityPlaying.indexOf("Auto") === -1) PlayVod_SetHtmlQuality('stream_quality', true);
         Play_clearHidePanel();
-        Play_ResetSpeed();
         PlayVod_setHidePanel();
     }
     document.getElementById("scene_channel_panel").style.opacity = "1";
 }
 
 function PlayVod_RefreshProgressBarr(show) {
-    if (Main_IsNotBrowser) PlayVod_ProgresBarrUpdate((Android.gettime() / 1000), ChannelVod_DurationSeconds, !PlayVod_IsJumping);
+    //if (Main_IsNotBrowser) PlayVod_ProgresBarrUpdate((Android.gettime() / 1000), ChannelVod_DurationSeconds, !PlayVod_IsJumping);
 
     if (PlayVod_qualityPlaying.indexOf("Auto") !== -1 && show) {
         try {
-            var value = null;
-            try {
-                value = Android.getVideoQuality();
-            } catch (e) {}
-            if (value !== null) Play_getVideoQuality(value);
-            else PlayVod_SetHtmlQuality('stream_quality', true);
+            //var value = null;
+            //            try {
+            //                value = Android.getVideoQuality();
+            //            } catch (e) {}
+            //if (value !== null) Play_getVideoQuality(value);
+            //else PlayVod_SetHtmlQuality('stream_quality', true);
         } catch (e) {
             PlayVod_SetHtmlQuality('stream_quality', true);
 
@@ -651,20 +650,20 @@ function PlayVod_qualityIndexReset() {
 
 function PlayVod_qualityDisplay() {
     if (PlayVod_getQualitiesCount() === 1) {
-        document.getElementById("control_arrow_up_" + 6).style.opacity = "0";
-        document.getElementById("control_arrow_down" + 6).style.opacity = "0";
+        document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "0";
+        document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "0";
     } else if (!PlayVod_qualityIndex) {
-        document.getElementById("control_arrow_up_" + 6).style.opacity = "0.2";
-        document.getElementById("control_arrow_down" + 6).style.opacity = "1";
+        document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "0.2";
+        document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "1";
     } else if (PlayVod_qualityIndex === PlayVod_getQualitiesCount() - 1) {
-        document.getElementById("control_arrow_up_" + 6).style.opacity = "1";
-        document.getElementById("control_arrow_down" + 6).style.opacity = "0.2";
+        document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "1";
+        document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "0.2";
     } else {
-        document.getElementById("control_arrow_up_" + 6).style.opacity = "1";
-        document.getElementById("control_arrow_down" + 6).style.opacity = "1";
+        document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "1";
+        document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "1";
     }
 
-    PlayVod_SetHtmlQuality('controls_name_' + 6);
+    PlayVod_SetHtmlQuality('controls_name_' + Play_controlsQuality);
 }
 
 function PlayVod_SetHtmlQuality(element) {
@@ -700,22 +699,22 @@ function PlayVod_jump() {
         if (PlayVod_isOn) {
             if (Main_IsNotBrowser) {
                 if (PlayVod_quality.indexOf("Auto") !== -1) {
-                    try {
-                        Android.StartAuto(2,
-                            (PlayVod_TimeToJump > 0) ? (PlayVod_TimeToJump * 1000) : -1);
-                    } catch (e) {
-                        Android.startVideoOffset(PlayVod_playingUrl, 2,
-                            (PlayVod_TimeToJump > 0) ? (PlayVod_TimeToJump * 1000) : -1);
-                    }
-                } else Android.startVideoOffset(PlayVod_playingUrl, 2,
-                    (PlayVod_TimeToJump > 0) ? (PlayVod_TimeToJump * 1000) : -1);
+                    //try {
+                    //    Android.StartAuto(2,
+                    //        (PlayVod_TimeToJump > 0) ? (PlayVod_TimeToJump * 1000) : -1);
+                    //} catch (e) {
+                    //   Android.startVideoOffset(PlayVod_playingUrl, 2,
+                    //        (PlayVod_TimeToJump > 0) ? (PlayVod_TimeToJump * 1000) : -1);
+                    //}
+                } // else Android.startVideoOffset(PlayVod_playingUrl, 2,
+                //   (PlayVod_TimeToJump > 0) ? (PlayVod_TimeToJump * 1000) : -1);
                 Chat_offset = PlayVod_TimeToJump;
             }
 
         } else {
             Chat_offset = ChannelVod_vodOffset;
-            if (Main_IsNotBrowser) Android.startVideoOffset(PlayClip_playingUrl, 3,
-                (PlayVod_TimeToJump > 0) ? (PlayVod_TimeToJump * 1000) : -1);
+            //if (Main_IsNotBrowser) Android.startVideoOffset(PlayClip_playingUrl, 3,
+            //   (PlayVod_TimeToJump > 0) ? (PlayVod_TimeToJump * 1000) : -1);
         }
 
         if (PlayClip_HasVOD) Chat_Init();
@@ -750,7 +749,7 @@ function PlayVod_jumpTime() {
 }
 
 function PlayVod_jumpStart(multiplier, duration_seconds) {
-    var currentTime = Main_IsNotBrowser ? (Android.gettime() / 1000) : 0;
+    var currentTime = 0; //Main_IsNotBrowser ? (Android.gettime() / 1000) : 0;
 
     window.clearTimeout(PlayVod_SizeClearID);
     PlayVod_IsJumping = true;
@@ -783,7 +782,7 @@ function PlayVod_jumpStart(multiplier, duration_seconds) {
 }
 
 function PlayVod_SaveVodIds() {
-    var time = Main_IsNotBrowser ? (parseInt(Android.gettime() / 1000)) : 0;
+    var time = 0; //Main_IsNotBrowser ? (parseInt(Android.gettime() / 1000)) : 0;
 
     var vod_id = '#' + Main_values.ChannelVod_vodId; // prevent only numeric key, that makes the obj be shorted
 

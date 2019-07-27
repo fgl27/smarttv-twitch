@@ -370,23 +370,15 @@ function Settings_SetBuffers(whocall) {
     //TODO remove the try after android app update has be releaased for some time
     try {
         if (!whocall) {
-            Play_Buffer = Settings_Obj_values("buffer_live") * 1000;
-            PlayVod_Buffer = Settings_Obj_values("buffer_vod") * 1000;
-            PlayClip_Buffer = Settings_Obj_values("buffer_clip") * 1000;
-            if (Main_IsNotBrowser) {
-                Android.SetBuffer(1, Play_Buffer);
-                Android.SetBuffer(2, PlayVod_Buffer);
-                Android.SetBuffer(3, PlayClip_Buffer);
-            }
+            Play_Buffer = Settings_Obj_values("buffer_live");
+            PlayVod_Buffer = Settings_Obj_values("buffer_vod");
+            PlayClip_Buffer = Settings_Obj_values("buffer_clip");
         } else if (whocall === 1) {
-            Play_Buffer = Settings_Obj_values("buffer_live") * 1000;
-            if (Main_IsNotBrowser) Android.SetBuffer(1, Play_Buffer);
+            Play_Buffer = Settings_Obj_values("buffer_live");
         } else if (whocall === 2) {
-            PlayVod_Buffer = Settings_Obj_values("buffer_vod") * 1000;
-            if (Main_IsNotBrowser) Android.SetBuffer(2, PlayVod_Buffer);
+            PlayVod_Buffer = Settings_Obj_values("buffer_vod");
         } else if (whocall === 3) {
-            PlayClip_Buffer = Settings_Obj_values("buffer_clip") * 1000;
-            if (Main_IsNotBrowser) Android.SetBuffer(3, PlayClip_Buffer);
+            PlayClip_Buffer = Settings_Obj_values("buffer_clip");
         }
     } catch (e) {}
 }

@@ -262,7 +262,7 @@ function Main_Addline(id) {
     var elem;
     if (Chat_Position < (Chat_Messages.length - 1)) {
         for (var i = Chat_Position; i < Chat_Messages.length; i++, Chat_Position++) {
-            if (Chat_Messages[i].time < (ChannelVod_vodOffset + (Android.gettime() / 1000))) {
+            if (Chat_Messages[i].time < (PlayVod_currentTime / 1000)) {
                 elem = document.createElement('div');
                 elem.className = 'chat_line';
                 elem.innerHTML = Chat_Messages[i].message;

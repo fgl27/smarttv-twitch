@@ -654,6 +654,12 @@ function Screens_handleKeyDown(event) {
         case KEY_ENTER:
             inUseObj.key_play();
             break;
+        case KEY_GREEN:
+            if (!Main_isReleased) {
+                Main_PrintUnicode('Reloading');
+                window.location.reload(true);
+            }
+            break;
         default:
             break;
     }

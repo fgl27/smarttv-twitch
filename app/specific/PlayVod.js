@@ -503,9 +503,7 @@ function PlayVod_onPlayer() {
             Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
             if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
         });
-    }
 
-    if (Main_IsNotBrowser) {
         PlayVod_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = 3 + (PlayVod_Buffer * 2);
         PlayVod_PlayerCheckQualityChanged = false;
@@ -529,6 +527,7 @@ function PlayVod_PlayerCheck() {
             else if (PlayVod_PlayerCheckCounter > 1) Play_CheckConnection(PlayVod_PlayerCheckCounter, 2, PlayVod_DropOneQuality);
             else {
                 PlayVod_qualityDisplay();
+                if (Main_IsNotBrowser && !Main_values.vodOffset) Main_values.vodOffset = Play_avplay.getCurrentTime() / 1000;
                 PlayVod_qualityChanged();
                 PlayVod_PlayerCheckRun = true;
             }
@@ -564,7 +563,7 @@ function PlayVod_DropOneQuality(ConnectionDrop) {
 
     PlayVod_PlayerCheckCounter = 0;
     PlayVod_qualityDisplay();
-    if (Main_IsNotBrowser) Main_values.vodOffset = Play_avplay.getCurrentTime() / 1000;
+    if (Main_IsNotBrowser && !Main_values.vodOffset) Main_values.vodOffset = Play_avplay.getCurrentTime() / 1000;
     PlayVod_qualityChanged();
     PlayVod_PlayerCheckRun = true;
 }

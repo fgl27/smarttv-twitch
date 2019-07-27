@@ -149,7 +149,7 @@ function Main_Debug() { // jshint ignore:line
 
 function Main_loadTranslations(language) {
     // Fix scaling on tizen
-    document.querySelector("meta[name=viewport]").setAttribute('content', 'width=1920, initial-scale=1.975, maximum-scale=3.0, minimum-scale=0.86');
+    document.querySelector("meta[name=viewport]").setAttribute('content', 'width=1920, initial-scale=1.975');
     Main_Checktylesheet();
 
     Main_ready(function() {

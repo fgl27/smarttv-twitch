@@ -777,8 +777,7 @@ function Play_onPlayer() {
             Play_loadChat();
             if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
         });
-    }
-    if (Main_IsNotBrowser) {
+
         Play_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = 1 + (Play_Buffer * 2);
         Play_PlayerCheckQualityChanged = false;
@@ -1202,8 +1201,12 @@ function Play_KeyPause(PlayVodClip) {
         }
 
         if (Main_IsNotBrowser) {
-            webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_OFF);
-            Play_avplay.play();
+            try {
+                webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_OFF);
+                Play_avplay.play();
+            } catch (e) {
+                console.log('Play_avplay.pause: ' + e);
+            }
         }
     } else {
         window.clearInterval(Play_streamCheckId);
@@ -1214,8 +1217,12 @@ function Play_KeyPause(PlayVodClip) {
 
         Play_showPauseDialog();
         if (Main_IsNotBrowser) {
-            webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_ON);
-            Play_avplay.pause();
+            try {
+                webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_ON);
+                Play_avplay.pause();
+            } catch (e) {
+                console.log('Play_avplay.pause: ' + e);
+            }
         }
     }
 }
@@ -1907,11 +1914,12 @@ function Play_MakeControls() {
                 Play_hidePanel();
             } else if (PlayVodClip === 2) {
                 PlayVod_PlayerCheckQualityChanged = false;
-                if (Main_IsNotBrowser) Main_values.vodOffset = Play_avplay.getCurrentTime() / 1000;
+                if (Main_IsNotBrowser && !Main_values.vodOffset) Main_values.vodOffset = Play_avplay.getCurrentTime() / 1000;
                 PlayVod_qualityChanged();
                 PlayVod_hidePanel();
             } else if (PlayVodClip === 3) {
                 PlayClip_PlayerCheckQualityChanged = false;
+                if (Main_IsNotBrowser && !PlayClip_offsettime) PlayClip_offsettime = Play_avplay.getCurrentTime();
                 PlayClip_qualityChanged();
                 PlayClip_hidePanel();
             }

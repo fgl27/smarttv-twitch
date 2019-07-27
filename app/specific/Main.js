@@ -57,7 +57,7 @@ var Main_values = {
     "gameSelectedOld": null,
     "Games_return": false,
     "Search_isSearching": false,
-    "Play_ChatForceDisable": true,
+    "Play_ChatForceDisable": false,
     "Never_run": true,
     "Main_CenterLablesVectorPos": 0,
     "Chat_font_size": 3,

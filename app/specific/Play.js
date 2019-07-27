@@ -229,7 +229,7 @@ function Play_SetFullScreen(isfull) {
         Play_ChatPositions = 0;
         Play_showChat();
         Play_ChatEnable = true;
-        Play_ChatSizeValue = 4;
+        Play_ChatSizeValue = 3;
         Play_ChatPositionConvert(true);
         Play_ChatSize(false);
         if (Chat_div) Chat_div.scrollTop = Chat_div.scrollHeight;
@@ -732,18 +732,6 @@ function Play_SetHtmlQuality(element) {
     quality_string += Play_quality.indexOf('Auto') === -1 ? Play_qualities[Play_qualityIndex].band + Play_qualities[Play_qualityIndex].codec : "";
 
     Main_textContent(element, quality_string);
-}
-
-function Play_onPlayer() {
-
-
-    if (Main_IsNotBrowser) {
-        Play_PlayerCheckCount = 0;
-        Play_PlayerCheckTimer = 1 + ((Play_Buffer / 1000) * 2);
-        Play_PlayerCheckQualityChanged = false;
-        window.clearInterval(Play_streamCheckId);
-        Play_streamCheckId = window.setInterval(Play_PlayerCheck, Play_PlayerCheckInterval);
-    }
 }
 
 function Play_onPlayer() {

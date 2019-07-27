@@ -301,7 +301,7 @@ function PlayVod_loadDataRequest() {
         }
     }
 
-    BasehttpGet(theUrl, Play_loadingDataTimeout, 1, null, PlayVod_loadDataSuccess, PlayVod_loadDataError, false);
+    BasexmlHttpGet(theUrl, Play_loadingDataTimeout, 1, null, PlayVod_loadDataSuccess, PlayVod_loadDataError);
 }
 
 function PlayVod_loadDataError() {

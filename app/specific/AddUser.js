@@ -136,7 +136,7 @@ function AddUser_KeyboardEvent(event) {
 function AddUser_loadDataRequest() {
     var theUrl = 'https://api.twitch.tv/kraken/users?login=' + encodeURIComponent(AddUser_Username);
 
-    BasehttpGet(theUrl, AddUser_loadingDataTimeout, 2, null, AddUser_loadDataRequestSuccess, AddUser_loadDataError);
+    BasexmlHttpGet(theUrl, AddUser_loadingDataTimeout, 2, null, AddUser_loadDataRequestSuccess, AddUser_loadDataError);
 }
 
 function AddUser_loadDataRequestSuccess(response) {
@@ -169,11 +169,8 @@ function AddUser_RestoreUsers() {
     AddUser_UsernameArray = Main_getItemJson('AddUser_UsernameArray', []);
     if (AddUser_UsernameArray.length > 0) {
         //Check and refresh all tokens at start
-        for (var i = 0; i < AddUser_UsernameArray.length; i++) {
-            console.log(AddUser_UsernameArray[i].name);
-            console.log(AddUser_UsernameArray[i].access_token);
+        for (var i = 0; i < AddUser_UsernameArray.length; i++)
             if (AddUser_UsernameArray[i].access_token) AddCode_CheckTokenStart(i);
-        }
     }
 }
 

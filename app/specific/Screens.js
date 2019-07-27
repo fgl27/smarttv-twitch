@@ -142,10 +142,7 @@ function Screens_loadDataPrepare() {
 
 function Screens_loadDataRequest() {
     inUseObj.set_url();
-    if (Main_IsNotBrowser && !inUseObj.itemsCount)
-        BaseAndroidhttpGet(inUseObj.url, inUseObj.loadingDataTimeout, inUseObj.HeaderQuatity, inUseObj.token, Screens_concatenate, Screens_loadDataError);
-    else
-        BasexmlHttpGet(inUseObj.url, inUseObj.loadingDataTimeout, inUseObj.HeaderQuatity, inUseObj.token, Screens_concatenate, Screens_loadDataError, false);
+    BasexmlHttpGet(inUseObj.url, inUseObj.loadingDataTimeout, inUseObj.HeaderQuatity, inUseObj.token, Screens_concatenate, Screens_loadDataError);
 }
 
 function Screens_loadDataError() {

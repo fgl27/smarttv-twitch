@@ -120,7 +120,6 @@ var Main_IsNotBrowserVersion = '';
 var Main_ClockOffset = 0;
 var Main_IsNotBrowser = 0;
 var Main_randomimg = '?' + Math.random();
-var proxyurl = "https://cors-anywhere.herokuapp.com/";
 var Main_updateUserFeedId;
 var Main_vp9supported = false;
 
@@ -1250,48 +1249,10 @@ function Main_PrintUnicode(string) { // jshint ignore:line
         console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
 }
 
-function processCode(pageUrl) {
-    console.log("processCode");
-    var code = '';
-    code = pageUrl.match(/code=(\w+)/);
-    if (code) {
-        code = code[1];
-        console.log('if code ' + code);
-        Main_newUsercode = code;
-    } else {
-        console.log('else code ' + code);
-        Main_newUsercode = 0;
-    }
-}
-
-//Basic XMLHttpRequest thatonly returns error or 200 status
-function BasehttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, useProxy) {
-    if (Main_IsNotBrowser) BaseAndroidhttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError);
-    else BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, useProxy);
-}
-
-function BaseAndroidhttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
-    var xmlHttp = Android.mreadUrl(theUrl, Timeout, HeaderQuatity, access_token);
-
-    if (xmlHttp) xmlHttp = JSON.parse(xmlHttp);
-    else {
-        calbackError();
-        return;
-    }
-
-    if (xmlHttp.status === 200) {
-        callbackSucess(xmlHttp.responseText);
-    } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired
-        AddCode_refreshTokens(Main_values.Users_Position, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
-    } else {
-        calbackError();
-    }
-}
-
-function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, useProxy) {
+function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
     var xmlHttp = new XMLHttpRequest();
 
-    xmlHttp.open("GET", (useProxy ? proxyurl : '') + theUrl, true);
+    xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Timeout;
 
     if (HeaderQuatity > 0) xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
@@ -1306,58 +1267,8 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
         if (xmlHttp.readyState === 4) {
             if (xmlHttp.status === 200) {
                 callbackSucess(xmlHttp.responseText);
-            } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired
+            } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
                 AddCode_refreshTokens(Main_values.Users_Position, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
-            } else {
-                calbackError();
-            }
-        }
-    };
-
-    xmlHttp.send(null);
-}
-
-//Duplicated (BasehttpPost === BasehttpGet minus the post part ) as the android side may not be there and is not needed yet
-function BasehttpPost(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, useProxy) { // jshint ignore:line
-    if (Main_IsNotBrowser) BasexmlHttpPost(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError);
-    else BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, useProxy);
-}
-
-function BasexmlHttpPost(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
-    var xmlHttp = Android.mreadUrl(theUrl, Timeout, HeaderQuatity, access_token, true);
-
-    if (xmlHttp) xmlHttp = JSON.parse(xmlHttp);
-    else {
-        calbackError();
-        return;
-    }
-
-    if (xmlHttp.status === 200) {
-        callbackSucess(xmlHttp.responseText);
-    } else {
-        calbackError();
-    }
-}
-
-function BasexmlHttpPost(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, useProxy) {
-    var xmlHttp = new XMLHttpRequest();
-
-    xmlHttp.open("POST", (useProxy ? proxyurl : '') + theUrl, true);
-    xmlHttp.timeout = Timeout;
-
-    if (HeaderQuatity > 0) xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
-    //Header TWITHCV5 to load all screens and some stream info
-    if (HeaderQuatity > 1) xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
-    //Header to access User VOD screen
-    if (HeaderQuatity > 2) xmlHttp.setRequestHeader(Main_Authorization, access_token);
-
-    xmlHttp.ontimeout = function() {};
-
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) {
-                callbackSucess(xmlHttp.responseText);
-                return;
             } else {
                 calbackError();
             }

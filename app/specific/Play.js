@@ -992,7 +992,7 @@ function Play_ClearPlay() {
 }
 
 function Play_hideFallow() {
-    Play_controls[Play_controlsFallow].setLable(STR_SPACE + STR_NOKEY);
+    Play_controls[Play_controlsFallow].setLable(STR_NOKEY);
     AddCode_IsFallowing = false;
 }
 
@@ -1083,17 +1083,14 @@ function Play_hidePanel() {
     Play_clearHidePanel();
     document.getElementById("scene_channel_panel").style.opacity = "0";
     Play_quality = Play_qualityPlaying;
-    window.clearInterval(PlayVod_RefreshProgressBarrID);
 }
 
 function Play_showPanel() {
     PlayVod_IconsBottonResetFocus();
-    //Play_IconsResetFocus();
     Play_qualityIndexReset();
     Play_qualityDisplay();
     Play_SetHtmlQuality('stream_quality', true);
     Main_textContent("stream_watching_time", STR_WATCHING + Play_timeMs(Play_oldcurrentTime));
-    window.clearInterval(PlayVod_RefreshProgressBarrID);
     Play_clock();
     Play_CleanHideExit();
     document.getElementById("scene_channel_panel").style.opacity = "1";
@@ -1624,13 +1621,6 @@ function Play_CheckHost(responseText) {
     Play_PlayEndStart(1);
 }
 
-function Play_UpdateDuration(mwhocall, duration) { // jshint ignore:line
-    if (duration > 0) {
-        if (mwhocall === 2) PlayVod_UpdateDuration(duration);
-        else if (mwhocall === 3) PlayClip_UpdateDuration(duration);
-    }
-}
-
 function Play_setFallow() {
     Play_controls[Play_controlsFallow].setLable(AddCode_IsFallowing ? STR_FALLOWING : STR_FALLOW, AddCode_IsFallowing);
 }
@@ -1917,6 +1907,7 @@ function Play_MakeControls() {
                 Play_hidePanel();
             } else if (PlayVodClip === 2) {
                 PlayVod_PlayerCheckQualityChanged = false;
+                if (Main_IsNotBrowser) Main_values.vodOffset = Play_avplay.getCurrentTime() / 1000;
                 PlayVod_qualityChanged();
                 PlayVod_hidePanel();
             } else if (PlayVodClip === 3) {

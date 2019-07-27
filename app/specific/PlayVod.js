@@ -47,9 +47,10 @@ var PlayVod_TimeToJump = 0;
 var PlayVod_replay = false;
 var PlayVod_jumpTimers = [0, 10, 30, 60, 120, 300, 600, 900, 1200, 1800];
 
-var PlayVod_RefreshProgressBarrID;
 var PlayVod_SaveOffsetId;
 var PlayVod_WasSubChekd = false;
+
+var PlayVod_bufferingcomplete = false;
 //Variable initialization end
 
 function PlayVod_Start() {
@@ -233,6 +234,11 @@ function PlayVod_Resume() {
         } else {
             PlayVod_SaveOffset();
             PlayVod_SaveVodIds();
+            Chat_Pause();
+            if (Main_IsNotBrowser) {
+                Play_avplay.pause();
+                Main_values.vodOffset = Play_avplay.getCurrentTime() / 1000;
+            }
             Play_ClearPlayer();
             window.clearInterval(PlayVod_streamCheckId);
             window.clearInterval(PlayVod_SaveOffsetId);
@@ -243,15 +249,7 @@ function PlayVod_Resume() {
         if (PlayVod_isOn) {
             Play_showBufferDialog();
             Play_ResumeAfterOnlineCounter = 0;
-
-            Play_ResumeAfterOnlineCounter = 0;
-
-            //Get the time from android as it can save it more reliably
-            //try {
-            //    Main_values.vodOffset = Android.getsavedtime() / 1000;
-            //} catch (e) {}
             if (navigator.onLine) PlayVod_ResumeAfterOnline();
-
             else Play_ResumeAfterOnlineId = window.setInterval(PlayVod_ResumeAfterOnline, 100);
 
             Play_EndSet(2);
@@ -270,9 +268,11 @@ function PlayVod_ResumeAfterOnline() {
 }
 
 function PlayVod_SaveOffset() {
-    //Main_values.vodOffset = Main_IsNotBrowser ? (parseInt(Android.gettime() / 1000)) : 0;
-    Main_SaveValues();
-    Main_values.vodOffset = 0;
+    if (!Main_values.vodOffset) {
+        Main_values.vodOffset = parseInt(PlayVod_currentTime / 1000);
+        Main_SaveValues();
+        Main_values.vodOffset = 0;
+    }
 }
 
 
@@ -294,11 +294,6 @@ function PlayVod_loadDataRequest() {
             '.m3u8?&nauth=' + encodeURIComponent(PlayVod_tokenResponse.token) + '&nauthsig=' + PlayVod_tokenResponse.sig +
             '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true' +
             (Main_vp9supported ? '&preferred_codecs=vp09' : '');
-        //        if (Main_IsNotBrowser) {
-        //            try {
-        //                Android.SetAuto(theUrl);
-        //            } catch (e) {}
-        //        }
     }
 
     BasexmlHttpGet(theUrl, Play_loadingDataTimeout, 1, null, PlayVod_loadDataSuccess, PlayVod_loadDataError);
@@ -411,65 +406,115 @@ function PlayVod_qualityChanged() {
     PlayVod_onPlayer();
 }
 
-function PlayVod_onPlayer() {
-    if (Main_isDebug) console.log('PlayVod_onPlayer:', '\n' + '\n"' + PlayVod_playingUrl + '"\n');
+var PlayVod_listener = {
+    onbufferingstart: function() {
+        Play_showBufferDialog();
+        PlayVod_bufferingcomplete = false;
+        PlayVod_PlayerCheckCount = 0;
+        Play_PlayerCheckTimer = PlayVod_Buffer;
+        PlayVod_PlayerCheckQualityChanged = true;
+        if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + (new Date()));
+    },
+    onbufferingcomplete: function() {
+        Play_HideBufferDialog();
+        PlayVod_bufferingcomplete = true;
+        Main_empty('dialog_buffer_play_percentage');
+        // reset the values after using
+        PlayVod_SaveOffset();
+        PlayVod_PlayerCheckCount = 0;
+        Play_PlayerCheckTimer = PlayVod_Buffer;
+        PlayVod_PlayerCheckQualityChanged = true;
+        if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + (new Date()));
+    },
+    onbufferingprogress: function(percent) {
+        if (percent < 5) PlayVod_PlayerCheckCount = 0;
 
-    if (Main_IsNotBrowser) {
-        if (Main_values.vodOffset) {
-            Chat_offset = Main_values.vodOffset;
-            Chat_Init();
-            PlayVod_onPlayerStartPlay(Main_values.vodOffset * 1000);
+        Play_PlayerCheckTimer = PlayVod_Buffer;
+        PlayVod_PlayerCheckQualityChanged = true;
+        //percent has a -2 offset and goes up to 98
+        if (percent < 98) {
+            Play_BufferPercentage = percent;
+            Main_textContent("dialog_buffer_play_percentage", percent + 3);
+            if (!Play_BufferDialogVisible()) Play_showBufferDialog();
+        } else {
+            Play_BufferPercentage = 0;
+            Play_HideBufferDialog();
+            Play_bufferingcomplete = true;
+            Main_empty('dialog_buffer_play_percentage');
+            // reset the values after using
             Main_values.vodOffset = 0;
-        } // else {
-        //    PlayVod_onPlayerStartPlay(Android.gettime());
-        //}
+            if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + (new Date()));
+        }
+    },
+    oncurrentplaytime: function(currentTime) {
+        if (PlayVod_currentTime !== currentTime) PlayVod_updateCurrentTime(currentTime);
+    },
+    onstreamcompleted: function() {
+        Play_PannelEndStart(2);
+    },
+    onerror: function(eventType) {
+        if (!Main_isReleased) console.log('onerror:', 'date: ' + (new Date()) + ' eventType: ' + eventType);
+        if (eventType === "PLAYER_ERROR_CONNECTION_FAILED" || eventType === "PLAYER_ERROR_INVALID_URI")
+            Play_PannelEndStart(2);
+    }
+};
+
+function PlayVod_onPlayer() {
+    Play_showBufferDialog();
+
+    if (!Main_isReleased) {
+        console.log('PlayVod_onPlayer:', 'date: ' + (new Date()));
+        console.log('PlayVod_onPlayer:', '\n' + '\n"' + PlayVod_playingUrl + '"\n');
     }
 
-    PlayVod_replay = false;
-    if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-    Play_SetFullScreen(Play_isFullScreen);
+    if (Main_IsNotBrowser) {
+        try {
+            Play_avplay.stop();
+            Play_avplay.close();
+            Play_avplay.open(PlayVod_playingUrl);
+        } catch (e) {
+            console.log('PlayVod_onPlayer open ' + e);
+        }
+
+        if (Main_values.vodOffset > ChannelVod_DurationSeconds) Main_values.vodOffset = 0;
+
+        if (Main_values.vodOffset && !PlayVod_replay) {
+            Chat_offset = Main_values.vodOffset;
+            Chat_Init();
+            Play_avplay.seekTo(Main_values.vodOffset * 1000);
+        }
+        PlayVod_replay = false;
+
+        Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_PLAY", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayVod_Buffer);
+        Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_RESUME", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayVod_Buffer);
+        Play_SetFullScreen(Play_isFullScreen);
+        Play_avplay.setListener(PlayVod_listener);
+
+        Play_avplay.prepareAsync(function() { //successCallback
+            Play_avplay.play();
+            ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;
+            Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
+            if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+        }, function() { //errorCallback
+            Play_avplay.prepare();
+            Play_avplay.play();
+            ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;
+            Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
+            if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+        });
+    }
 
     if (Main_IsNotBrowser) {
         PlayVod_PlayerCheckCount = 0;
-        Play_PlayerCheckTimer = 3 + ((PlayVod_Buffer / 1000) * 2);
+        Play_PlayerCheckTimer = 3 + (PlayVod_Buffer * 2);
         PlayVod_PlayerCheckQualityChanged = false;
         window.clearInterval(PlayVod_streamCheckId);
         PlayVod_streamCheckId = window.setInterval(PlayVod_PlayerCheck, Play_PlayerCheckInterval);
     }
 }
 
-function PlayVod_onPlayerStartPlay(time) {
-    time = time;
-    if (PlayVod_isOn) {
-        //        if (PlayVod_quality.indexOf("Auto") !== -1) {
-        //            try {
-        //                Android.StartAuto(2, PlayVod_replay ? -1 : time);
-        //            } catch (e) {
-        //                Android.startVideoOffset(PlayVod_playingUrl, 2, PlayVod_replay ? -1 : time);
-        //            }
-
-        //        } else
-        //            Android.startVideoOffset(PlayVod_playingUrl, 2, PlayVod_replay ? -1 : time);
-    }
-}
-
-function PlayVod_UpdateDuration(duration) {
-    ChannelVod_DurationSeconds = duration / 1000;
-    Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
-    PlayVod_RefreshProgressBarr();
-}
-
 function PlayVod_PlayerCheck() {
-    //if (Main_IsNotBrowser) PlayVod_currentTime = Android.gettime();
-
-    //The player can bug and not stop playing when it ends after a video has be pause
-    if ((PlayVod_currentTime / 1000) > ChannelVod_DurationSeconds) {
-        //Make sure playWhenReady is false to avoid false calls on java onPlayerStateChanged
-        //if (Main_IsNotBrowser) Android.play(false);
-        Play_PannelEndStart(2);
-    }
-
-    if (PlayVod_isOn && PlayVod_PlayerTime === PlayVod_currentTime && !Play_isNotplaying()) {
+    if (PlayVod_isOn && PlayVod_PlayerTime === PlayVod_currentTime && Play_isIdleOrPlaying()) {
         PlayVod_PlayerCheckCount++;
         if (PlayVod_PlayerCheckCount > Play_PlayerCheckTimer) {
 
@@ -497,6 +542,16 @@ function PlayVod_PlayerCheck() {
     PlayVod_PlayerTime = PlayVod_currentTime;
 }
 
+function PlayVod_updateCurrentTime(currentTime) {
+    PlayVod_currentTime = currentTime;
+
+    if (!Play_IsWarning && Play_WarningDialogVisible()) Play_HideWarningDialog();
+    if (PlayVod_bufferingcomplete && Play_BufferDialogVisible()) Play_HideBufferDialog();
+
+    if (Play_isPanelShown() && !Play_BufferDialogVisible())
+        PlayVod_ProgresBarrUpdate((PlayVod_currentTime / 1000), ChannelVod_DurationSeconds, !PlayVod_IsJumping);
+}
+
 function PlayVod_DropOneQuality(ConnectionDrop) {
     if (!ConnectionDrop) {
         if (PlayVod_qualityIndex < PlayVod_getQualitiesCount() - 1) PlayVod_qualityIndex++;
@@ -508,6 +563,7 @@ function PlayVod_DropOneQuality(ConnectionDrop) {
 
     PlayVod_PlayerCheckCounter = 0;
     PlayVod_qualityDisplay();
+    if (Main_IsNotBrowser) Main_values.vodOffset = Play_avplay.getCurrentTime() / 1000;
     PlayVod_qualityChanged();
     PlayVod_PlayerCheckRun = true;
 }
@@ -522,7 +578,7 @@ function PlayVod_shutdownStream() {
 
 function PlayVod_PreshutdownStream(saveOffset) {
     if (saveOffset) PlayVod_SaveVodIds();
-    //if (Main_IsNotBrowser) Android.stopVideo(2);
+    if (Main_IsNotBrowser) Play_offPlayer();
     PlayVod_isOn = false;
     window.clearInterval(PlayVod_SaveOffsetId);
     window.clearInterval(PlayVod_updateStreamInfId);
@@ -548,46 +604,25 @@ function PlayVod_hidePanel() {
     PlayVod_addToJump = 0;
     Play_clearHidePanel();
     document.getElementById("scene_channel_panel").style.opacity = "0";
-    //if (Main_IsNotBrowser) PlayVod_ProgresBarrUpdate((Android.gettime() / 1000), ChannelVod_DurationSeconds, true);
+    PlayVod_ProgresBarrUpdate((PlayVod_currentTime / 1000), ChannelVod_DurationSeconds, true);
     Main_innerHTML('progress_bar_jump_to', STR_SPACE);
     document.getElementById('progress_bar_steps').style.display = 'none';
     PlayVod_quality = PlayVod_qualityPlaying;
-    window.clearInterval(PlayVod_RefreshProgressBarrID);
 }
 
 function PlayVod_showPanel(autoHide) {
-    PlayVod_RefreshProgressBarr(autoHide);
+    PlayVod_ProgresBarrUpdate((PlayVod_currentTime / 1000), ChannelVod_DurationSeconds, true);
     Play_clock();
     Play_CleanHideExit();
-    window.clearInterval(PlayVod_RefreshProgressBarrID);
-    PlayVod_RefreshProgressBarrID = window.setInterval(PlayVod_RefreshProgressBarr, 1000);
     if (autoHide) {
         PlayVod_IconsBottonResetFocus();
         PlayVod_qualityIndexReset();
         PlayVod_qualityDisplay();
-        if (PlayVod_qualityPlaying.indexOf("Auto") === -1) PlayVod_SetHtmlQuality('stream_quality', true);
+        PlayVod_SetHtmlQuality('stream_quality', true);
         Play_clearHidePanel();
         PlayVod_setHidePanel();
     }
     document.getElementById("scene_channel_panel").style.opacity = "1";
-}
-
-function PlayVod_RefreshProgressBarr(show) {
-    //if (Main_IsNotBrowser) PlayVod_ProgresBarrUpdate((Android.gettime() / 1000), ChannelVod_DurationSeconds, !PlayVod_IsJumping);
-
-    if (PlayVod_qualityPlaying.indexOf("Auto") !== -1 && show) {
-        try {
-            //var value = null;
-            //            try {
-            //                value = Android.getVideoQuality();
-            //            } catch (e) {}
-            //if (value !== null) Play_getVideoQuality(value);
-            //else PlayVod_SetHtmlQuality('stream_quality', true);
-        } catch (e) {
-            PlayVod_SetHtmlQuality('stream_quality', true);
-
-        }
-    }
 }
 
 function PlayVod_IconsBottonResetFocus() {
@@ -691,33 +726,29 @@ function PlayVod_ProgresBarrUpdate(current_time_seconds, duration_seconds, updat
 
 function PlayVod_jump() {
     Play_clearPause();
-    if (!Play_isEndDialogVisible()) {
+    if (!Play_isEndDialogVisible() && Main_IsNotBrowser) {
+        if (Play_isIdleOrPlaying()) Play_avplay.pause();
 
         PlayVod_PlayerCheckQualityChanged = false;
         PlayClip_PlayerCheckQualityChanged = false;
 
-        if (PlayVod_isOn) {
-            if (Main_IsNotBrowser) {
-                if (PlayVod_quality.indexOf("Auto") !== -1) {
-                    //try {
-                    //    Android.StartAuto(2,
-                    //        (PlayVod_TimeToJump > 0) ? (PlayVod_TimeToJump * 1000) : -1);
-                    //} catch (e) {
-                    //   Android.startVideoOffset(PlayVod_playingUrl, 2,
-                    //        (PlayVod_TimeToJump > 0) ? (PlayVod_TimeToJump * 1000) : -1);
-                    //}
-                } // else Android.startVideoOffset(PlayVod_playingUrl, 2,
-                //   (PlayVod_TimeToJump > 0) ? (PlayVod_TimeToJump * 1000) : -1);
-                Chat_offset = PlayVod_TimeToJump;
-            }
-
-        } else {
-            Chat_offset = ChannelVod_vodOffset;
-            //if (Main_IsNotBrowser) Android.startVideoOffset(PlayClip_playingUrl, 3,
-            //   (PlayVod_TimeToJump > 0) ? (PlayVod_TimeToJump * 1000) : -1);
+        try {
+            Play_avplay.seekTo((PlayVod_TimeToJump > 0) ? (PlayVod_TimeToJump * 1000) : 0);
+        } catch (e) {
+            Play_HideWarningDialog();
+            console.log('PlayVod_jump ' + e);
         }
 
+        //Save in case we crash or something related
+        PlayVod_currentTime = PlayVod_TimeToJump * 1000;
+        PlayVod_SaveVodIds();
+
+        if (PlayVod_isOn) Chat_offset = PlayVod_TimeToJump;
+        else Chat_offset = ChannelVod_vodOffset;
+
         if (PlayClip_HasVOD) Chat_Init();
+        if (!Play_isIdleOrPlaying()) Play_avplay.play();
+
     }
     Main_innerHTML('progress_bar_jump_to', STR_SPACE);
     document.getElementById('progress_bar_steps').style.display = 'none';
@@ -749,7 +780,7 @@ function PlayVod_jumpTime() {
 }
 
 function PlayVod_jumpStart(multiplier, duration_seconds) {
-    var currentTime = 0; //Main_IsNotBrowser ? (Android.gettime() / 1000) : 0;
+    var currentTime = Main_IsNotBrowser ? (Play_avplay.getCurrentTime() / 1000) : 0;
 
     window.clearTimeout(PlayVod_SizeClearID);
     PlayVod_IsJumping = true;
@@ -782,7 +813,7 @@ function PlayVod_jumpStart(multiplier, duration_seconds) {
 }
 
 function PlayVod_SaveVodIds() {
-    var time = 0; //Main_IsNotBrowser ? (parseInt(Android.gettime() / 1000)) : 0;
+    var time = PlayVod_currentTime / 1000;
 
     var vod_id = '#' + Main_values.ChannelVod_vodId; // prevent only numeric key, that makes the obj be shorted
 

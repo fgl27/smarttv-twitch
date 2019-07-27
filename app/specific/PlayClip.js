@@ -186,12 +186,6 @@ function PlayClip_onPlayer() {
     }
 }
 
-function PlayClip_UpdateDuration(duration) {
-    PlayClip_DurationSeconds = duration / 1000;
-    Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
-    PlayClip_RefreshProgressBarr();
-}
-
 function PlayClip_Resume() {
     if (document.hidden) PlayClip_shutdownStream();
 }
@@ -357,14 +351,11 @@ function PlayClip_hidePanel() {
     //if (Main_IsNotBrowser) PlayVod_ProgresBarrUpdate((Android.gettime() / 1000), PlayClip_DurationSeconds, true);
     Main_innerHTML('progress_bar_jump_to', STR_SPACE);
     document.getElementById('progress_bar_steps').style.display = 'none';
-    window.clearInterval(PlayVod_RefreshProgressBarrID);
 }
 
 function PlayClip_showPanel() {
     PlayClip_RefreshProgressBarr();
     Play_clock();
-    window.clearInterval(PlayVod_RefreshProgressBarrID);
-    PlayVod_RefreshProgressBarrID = window.setInterval(PlayClip_RefreshProgressBarr, 1000);
     Play_CleanHideExit();
     PlayVod_IconsBottonResetFocus();
     PlayClip_qualityIndexReset();

@@ -727,19 +727,30 @@ function PlayVod_ProgresBarrUpdate(current_time_seconds, duration_seconds, updat
 }
 
 function PlayVod_jump() {
+    if (Play_BufferDialogVisible()) {
+        Play_IsWarning = true;
+        Play_showWarningDialog(STR_JUMP_BUFFER_WARNING);
+        window.setTimeout(function() {
+            Play_IsWarning = false;
+            Play_HideWarningDialog();
+        }, 1000);
+        return;
+    }
+
     Play_clearPause();
     if (!Play_isEndDialogVisible() && Main_IsNotBrowser) {
         if (Play_isIdleOrPlaying()) Play_avplay.pause();
-
-        PlayVod_PlayerCheckQualityChanged = false;
-        PlayClip_PlayerCheckQualityChanged = false;
 
         try {
             Play_avplay.seekTo((PlayVod_TimeToJump > 0) ? (PlayVod_TimeToJump * 1000) : 0);
         } catch (e) {
             Play_HideWarningDialog();
             console.log('PlayVod_jump ' + e);
+            return;
         }
+
+        PlayVod_PlayerCheckQualityChanged = false;
+        PlayClip_PlayerCheckQualityChanged = false;
 
         //Save in case we crash or something related
         PlayVod_currentTime = PlayVod_TimeToJump * 1000;

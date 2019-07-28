@@ -1181,9 +1181,20 @@ function Play_hideChatBackgroundDialog() {
 }
 
 function Play_KeyPause(PlayVodClip) {
-    if (Play_isNotplaying()) {
-        Play_clearPause();
+    if (Play_BufferDialogVisible()) return;
 
+    if (Play_isNotplaying()) {
+        if (Main_IsNotBrowser) {
+            try {
+                webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_OFF);
+                Play_avplay.play();
+            } catch (e) {
+                console.log('Play_avplay.pause: ' + e);
+                return;
+            }
+        }
+
+        Play_clearPause();
         Main_innerHTML('pause_button', '<div style="transform: translateY(10%);"><i class="pause_button3d icon-pause"></i> </div>');
 
         if (PlayVodClip === 1) {
@@ -1199,16 +1210,17 @@ function Play_KeyPause(PlayVodClip) {
             window.clearInterval(PlayClip_streamCheckId);
             PlayClip_streamCheckId = window.setInterval(PlayClip_PlayerCheck, Play_PlayerCheckInterval);
         }
-
+    } else {
         if (Main_IsNotBrowser) {
             try {
-                webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_OFF);
-                Play_avplay.play();
+                webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_ON);
+                Play_avplay.pause();
             } catch (e) {
                 console.log('Play_avplay.pause: ' + e);
+                return;
             }
         }
-    } else {
+
         window.clearInterval(Play_streamCheckId);
         window.clearInterval(PlayVod_streamCheckId);
         window.clearInterval(PlayClip_streamCheckId);
@@ -1216,14 +1228,6 @@ function Play_KeyPause(PlayVodClip) {
         Main_innerHTML('pause_button', '<div style="transform: translateY(10%);"><i class="pause_button3d icon-play-1"></i> </div>');
 
         Play_showPauseDialog();
-        if (Main_IsNotBrowser) {
-            try {
-                webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_ON);
-                Play_avplay.pause();
-            } catch (e) {
-                console.log('Play_avplay.pause: ' + e);
-            }
-        }
     }
 }
 

@@ -199,6 +199,7 @@ function en_USLang() {
     STR_SETTINGS_GENERAL = "General related";
     STR_SETTINGS_LANG = "Language";
     STR_LOADING_CHAT = "Chat: Connecting to chat server.." + STR_BR + "Chat: Connected." + STR_BR + "Chat: Joined channel ";
+    STR_LOADING_CHAT_DELAY = "Chat: Delayed by ";
     STR_VOD_HISTORY = "Play from the start or from where you stop watching last time?";
     STR_FROM = "From:" + STR_BR;
     STR_FROM_START = STR_FROM + "Start";
@@ -214,6 +215,8 @@ function en_USLang() {
     STR_RESTORE_PLAYBACK_SUMARRY = "When changing apps, the app may be closed by the system to free memory. In this case the app saves what it was playing and restores the playback when reopened";
     STR_CHAT_FONT = "Chat font size";
     STR_CHAT_FONT_SUMARRY = "Change the chat lines font size, applies to text and emotes";
+    STR_CHAT_DELAY = "Chat delay";
+    STR_CHAT_DELAY_SUMMARY = "Delay the chat by this many seconds";
     STR_VIDEOS_ANIMATION = "Videos animated thumbnails";
     STR_SIDE_PANEL = "Side panel";
     STR_SIZE = "Size ";

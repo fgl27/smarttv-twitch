@@ -26,6 +26,10 @@ var Settings_value = {
         "values": ["85%", "100%", "130%", "160%"],
         "defaultValue": 2
     },
+    "chat_live_delay": { // chat_live_delay
+        "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+        "defaultValue": 0
+    },
     "videos_animation": { //videos_animation
         "values": ["off", "on"],
         "defaultValue": 2
@@ -174,6 +178,12 @@ function Settings_SetSettings() {
 
     div += Settings_DivOptionWithSummary(key, STR_CHAT_FONT, STR_CHAT_FONT_SUMARRY);
 
+    // Chat size
+    key = "chat_live_delay";
+    Settings_value_keys.push(key);
+
+    div += Settings_DivOptionWithSummary(key, STR_CHAT_DELAY, STR_CHAT_DELAY_SUMMARY);
+
     Main_innerHTML("settings_main", div);
     Settings_positions_length = Settings_value_keys.length;
     Languages_SetSettings();
@@ -247,6 +257,10 @@ function Settings_SetStrings() {
     //Player chat font size
     key = "chat_font_size";
     Settings_DivOptionChangeLang(key, STR_CHAT_FONT, STR_CHAT_FONT_SUMARRY);
+
+    //Player chat delay
+    key = "chat_live_delay";
+    Settings_DivOptionChangeLang(key, STR_CHAT_DELAY, STR_CHAT_DELAY_SUMMARY);
 
     // Videos
     key = "videos_animation";
@@ -341,6 +355,7 @@ function Settings_SetDefault(position) {
     else if (position === "buffer_vod") PlayVod_Buffer = Settings_Obj_values("buffer_vod");
     else if (position === "buffer_clip") PlayClip_Buffer = Settings_Obj_values("buffer_clip");
     else if (position === "chat_font_size") Play_SetChatFont();
+    else if (position === "chat_live_delay") ChatLive_Delay = Settings_Obj_values("chat_live_delay");
     else if (position === "clock_offset") {
         Settings_SetClock();
         Main_updateclock();

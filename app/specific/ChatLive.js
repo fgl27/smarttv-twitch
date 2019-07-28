@@ -9,6 +9,7 @@ var ChatLive_socket = null;
 var ChatLive_loaded = false;
 var ChatLive_CheckId;
 var ChatLive_FixId;
+var ChatLive_Delay = 0;
 var ChatLive_LineAddCounter = 0;
 var extraEmotesDone = {
     bbtv: {},
@@ -242,6 +243,11 @@ function ChatLive_loadChatRequest() {
                 var div = '&nbsp;<span class="message">' + STR_BR + STR_LOADING_CHAT +
                     Main_values.Play_selectedChannelDisplayname + ' ' + STR_LIVE + '</span>';
                 ChatLive_LineAdd(div);
+
+                if (ChatLive_Delay) {
+                  var delayDiv = '&nbsp;<span class="message">' + STR_BR + STR_LOADING_CHAT_DELAY + ChatLive_Delay + STR_SECONDS + '</span>';
+                  ChatLive_LineAdd(delayDiv);
+                }
                 break;
             case "PRIVMSG":
                 ChatLive_loadChatSuccess(message);
@@ -317,7 +323,16 @@ function ChatLive_loadChatSuccess(message) {
 
     div += '<span class="message">' + ChatLive_extraMessageTokenize(emoticonize(mmessage, emotes)) + '</span>';
 
-    ChatLive_LineAdd(div);
+    if (!ChatLive_Delay) {
+        ChatLive_LineAdd(div);
+    } else {
+        var id = ChatLive_Id;
+        setTimeout(function() {
+            if (id == ChatLive_Id) {
+              ChatLive_LineAdd(div);
+            }
+        }, ChatLive_Delay * 1000);
+    }
 }
 //    var tokenizedMessage = [message];
 function ChatLive_extraMessageTokenize(tokenizedMessage) {

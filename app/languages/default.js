@@ -80,9 +80,6 @@ function DefaultLang() {
         STR_DOT + STR_ABOUT_INFO_11 + STR_BR +
         STR_DOT + STR_ABOUT_INFO_12 + STR_BR +
         STR_DOT + STR_ABOUT_INFO_13 + STR_BR +
-        STR_ABOUT_INFO_15 + STR_BR +
-        STR_DOT + STR_ABOUT_INFO_16 + STR_BR +
-        STR_DOT + STR_ABOUT_INFO_17 + STR_BR +
         STR_DIV_TITLE + STR_CLOSE_THIS + '</div></div>';
 
     STR_OAUTH_EXPLAIN = STR_OAUTH_EXPLAIN1 + STR_BR +

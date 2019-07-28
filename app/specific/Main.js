@@ -60,7 +60,7 @@ var Main_values = {
     "Play_ChatForceDisable": false,
     "Never_run": true,
     "Main_CenterLablesVectorPos": 0,
-    "Chat_font_size": 3,
+    "Chat_font_size": 2,
     "ChatBackground": 10,
     "IsRerun": false,
 };
@@ -112,10 +112,10 @@ var Main_TwithcV5Json = 'application/vnd.twitchtv.v5+json';
 var Main_classThumb = 'stream_thumbnail_focused';
 var Main_DataAttribute = 'data_attribute';
 
-var Main_stringVersion = '1.0';
-var Main_stringVersion_Min = '.35';
+var Main_version = 401;
+var Main_stringVersion_Min = '4.0.1';
 var Main_minversion = '072419';
-var Main_versionTag = Main_stringVersion + Main_stringVersion_Min + '-' + Main_minversion;
+var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
 var Main_IsNotBrowserVersion = '';
 var Main_ClockOffset = 0;
 var Main_IsNotBrowser = 0;
@@ -148,8 +148,6 @@ function Main_Debug() { // jshint ignore:line
 }
 
 function Main_loadTranslations(language) {
-    // Fix scaling on tizen
-    document.querySelector("meta[name=viewport]").setAttribute('content', 'width=1920, initial-scale=1.975');
     Main_Checktylesheet();
 
     Main_ready(function() {
@@ -722,19 +720,39 @@ function Main_videoCreatedAt(time) { //time in '2017-10-27T13:27:27Z'
 }
 
 function Main_checkVersion() {
-    //TODO remove the try after android app update has be releaased for some time
     if (Main_IsNotBrowser) {
-        Main_versionTag = "Android: " + Main_IsNotBrowserVersion + ' Web: ' + Main_minversion;
-        if (Main_needUpdate(Main_IsNotBrowserVersion)) Main_ShowElement('label_update');
+        var Appversion = null,
+            TizenVersion = null,
+            fw = null,
+            value = 0,
+            Main_tvModel,
+            Main_currentVersion;
+
+        try {
+            Appversion = tizen.application.getAppInfo().version;
+            // Retrieving Platform Information https://developer.samsung.com/tv/develop/guides/fundamentals/retrieving-platform-information
+            TizenVersion = tizen.systeminfo.getCapability("http://tizen.org/feature/platform.version");
+            fw = webapis.productinfo.getFirmware();
+            Main_tvModel = webapis.productinfo.getModel();
+            console.log('App version: ' + Main_minversion);
+        } catch (e) {}
+
+        if (Appversion !== null && TizenVersion !== null && Main_tvModel !== null && fw !== null) {
+            Main_currentVersion = Appversion;
+
+            Main_versionTag = 'APP ' + STR_VERSION + Appversion + '.' + (Main_isReleased ? Main_minversion : '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-weight: bold;">TEST</div>') + STR_BR + 'Tizen ' + STR_VERSION +
+                TizenVersion + STR_SPACE + STR_SPACE + '|' + STR_SPACE + STR_SPACE + 'TV: ' + Main_tvModel + STR_SPACE + STR_SPACE + '|' +
+                STR_SPACE + STR_SPACE + 'FW: ' + fw + STR_BR;
+            Appversion = Appversion.split(".");
+            value = parseInt(Appversion[0] + Appversion[1] + Appversion[2]);
+            Main_innerHTML("dialog_about_text", STR_ABOUT_INFO_HEADER + Main_versionTag + STR_ABOUT_INFO_0);
+
+            if (!Main_isReleased) console.log('Tizen ' + STR_VERSION + TizenVersion + ' | ' +
+                'TV: ' + Main_tvModel + ' | ' + 'FW: ' + fw);
+
+            if (value < Main_version) Main_ShowElement('label_update');
+        }
     }
-
-    Main_innerHTML("dialog_about_text", STR_ABOUT_INFO_HEADER + STR_VERSION + Main_versionTag + STR_ABOUT_INFO_0);
-}
-
-function Main_needUpdate(version) {
-    version = version.split(".");
-    return (parseFloat(version[0] + '.' + version[1]) < parseFloat(Main_stringVersion)) ||
-        (parseInt(version[2]) < parseInt(Main_stringVersion_Min.split(".")[1]));
 }
 
 function Main_empty(el) {

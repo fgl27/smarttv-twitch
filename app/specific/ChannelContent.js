@@ -107,7 +107,7 @@ function ChannelContent_loadDataError() {
 }
 
 function ChannelContent_loadDataCheckHost() {
-    var theUrl = 'https://tmi.twitch.tv/hosts?include_logins=1&host=' + encodeURIComponent(Main_values.Main_selectedChannel_id);
+    var theUrl = (!Main_IsNotBrowser ? proxyurl : '' ) + 'https://tmi.twitch.tv/hosts?include_logins=1&host=' + encodeURIComponent(Main_values.Main_selectedChannel_id);
 
     BasexmlHttpGet(theUrl, ChannelContent_loadingDataTimeout, 1, null, ChannelContent_CheckHost, ChannelContent_loadDataCheckHostError);
 }

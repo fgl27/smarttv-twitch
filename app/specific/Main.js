@@ -120,6 +120,7 @@ var Main_IsNotBrowserVersion = '';
 var Main_ClockOffset = 0;
 var Main_IsNotBrowser = 0;
 var Main_randomimg = '?' + Math.random();
+var proxyurl = "https://cors-anywhere.herokuapp.com/";
 var Main_updateUserFeedId;
 var Main_vp9supported = false;
 

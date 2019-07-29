@@ -1599,7 +1599,7 @@ function Play_CheckIdError() {
 }
 
 function Play_loadDataCheckHost() {
-    BasexmlHttpGet('https://tmi.twitch.tv/hosts?include_logins=1&host=' +
+    BasexmlHttpGet((!Main_IsNotBrowser ? proxyurl : '' ) + 'https://tmi.twitch.tv/hosts?include_logins=1&host=' +
         encodeURIComponent(Main_values.Play_selectedChannel_id),
         Play_loadingDataTimeout, 1, null, Play_CheckHost, Play_loadDataCheckHostError);
 }

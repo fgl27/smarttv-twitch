@@ -985,7 +985,7 @@ function ScreensObj_InitAGameClip() {
 
 var Base_Game_obj = {
     HeaderQuatity: 2,
-    ThumbSize: 19.35,
+    ThumbSize: 19,
     visiblerows: 3,
     ItemsReloadLimit: Main_ItemsReloadLimitGame,
     ItemsLimit: Main_ItemsLimitGame,
@@ -1054,7 +1054,7 @@ function ScreensObj_InitGame() {
     }, Base_obj);
 
     Game = Screens_assign(Game, Base_Game_obj);
-    Game.set_ThumbSize();
+    Game.ThumbCssText = 'width: ' + Game.ThumbSize + '%; display: inline-block; padding: 6px;';
 }
 
 function ScreensObj_InitUserGames() {
@@ -1094,7 +1094,7 @@ function ScreensObj_InitUserGames() {
     }, Base_obj);
 
     UserGames = Screens_assign(UserGames, Base_Game_obj);
-    UserGames.set_ThumbSize();
+    UserGames.ThumbCssText = 'width: ' + UserGames.ThumbSize + '%; display: inline-block; padding: 6px;';
 }
 
 function ScreensObj_InitSearchGames() {
@@ -1130,6 +1130,7 @@ function ScreensObj_InitSearchGames() {
     SearchGames = Screens_assign(SearchGames, Base_Game_obj);
     SearchGames.set_ThumbSize();
     SearchGames.ItemsLimit = 100;
+    Game.ThumbCssText = 'width: ' + Game.ThumbSize + '%; display: inline-block; padding: 6px;';
 }
 
 var Base_Channel_obj = {

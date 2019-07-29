@@ -514,7 +514,7 @@ function Screens_addFocusVideo(y, x, idArray, forceScroll) {
 
         if (!y) Main_ScrollTable(idArray[10], screen.height * 0.07);
         else if (Main_ThumbNull((y + 1), 0, idArray[0])) Main_ScrollTable(idArray[10],
-            (document.getElementById(idArray[8] + (y - 1) + '_' + x).offsetTop * -1) - 10);
+            (document.getElementById(idArray[8] + (y - 1) + '_' + x).offsetTop * -1) + 10);
 
     } else Main_handleKeyUp();
 }
@@ -537,13 +537,13 @@ function Screens_addFocusGame(y, x, idArray, forceScroll) {
 
         if (inUseObj.posY < (inUseObj.Cells.length - 1) || forceScroll) {
             Main_ScrollTable((idArray[10] ? idArray[10] : idArray[7]),
-                (document.getElementById(idArray[5] + y + '_' + x).offsetTop * -1) + screen.height * 0.025);
+                (document.getElementById(idArray[5] + y + '_' + x).offsetTop * -1) + screen.height * 0.041);
         }
 
     } else if ((inUseObj.Cells.length - 1) === y && (Main_ThumbNull(y - 1, x, idArray[0]))) {
 
         Main_ScrollTable((idArray[10] ? idArray[10] : idArray[7]),
-            (document.getElementById(idArray[5] + (y - 1) + '_' + x).offsetTop * -1) + screen.height * 0.025);
+            (document.getElementById(idArray[5] + (y - 1) + '_' + x).offsetTop * -1) + screen.height * 0.041);
     } else Main_handleKeyUp();
 }
 

@@ -105,7 +105,7 @@ function PlayClip_loadData() {
 }
 
 function PlayClip_loadDataRequest() {
-    var theUrl = (!Main_IsNotBrowser ? proxyurl : '' ) + 'https://clips.twitch.tv/api/v2/clips/' + ChannelClip_playUrl + '/status';
+    var theUrl = (!Main_IsNotBrowser ? proxyurl : '') + 'https://clips.twitch.tv/api/v2/clips/' + ChannelClip_playUrl + '/status';
 
     BasexmlHttpGet(theUrl, PlayClip_loadingDataTimeout, 1, null, PlayClip_QualityGenerate, PlayClip_loadDataError, true);
 }

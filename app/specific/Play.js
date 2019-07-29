@@ -1054,23 +1054,6 @@ function Play_clearPauseStart() {
 function Play_clearPause() {
     Play_clearPauseEnd();
     Play_clearPauseStart();
-    Main_HideElement('play_dialog_simple_pause');
-}
-
-function Play_showPauseDialog() {
-    Play_HideBufferDialog();
-    if (!Play_isNotplaying()) Play_clearPause();
-    else if (!Play_isShowPauseDialogOn()) {
-        Main_ShowElement('play_dialog_simple_pause');
-        Play_pauseEndID = window.setTimeout(Play_showPauseDialog, 1500);
-    } else {
-        Main_HideElement('play_dialog_simple_pause');
-        Play_pauseStartID = window.setTimeout(Play_showPauseDialog, 8000); // time in ms
-    }
-}
-
-function Play_isShowPauseDialogOn() {
-    return Main_isElementShowing('play_dialog_simple_pause');
 }
 
 function Play_isPanelShown() {
@@ -1226,8 +1209,6 @@ function Play_KeyPause(PlayVodClip) {
         window.clearInterval(PlayClip_streamCheckId);
 
         Main_innerHTML('pause_button', '<div style="transform: translateY(10%);"><i class="pause_button3d icon-play-1"></i> </div>');
-
-        Play_showPauseDialog();
     }
 }
 

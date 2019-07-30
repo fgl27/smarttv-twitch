@@ -123,7 +123,7 @@ var Main_randomimg = '?' + Math.random();
 var proxyurl = "https://cors-anywhere.herokuapp.com/";
 var Main_updateUserFeedId;
 var Main_vp9supported = false;
-
+var lazyLoadInstance;
 //Variable initialization end
 
 // this function will be called only once the first time the app startup
@@ -194,6 +194,10 @@ function Main_loadTranslations(language) {
 }
 
 function Main_initWindows() {
+    lazyLoadInstance = new LazyLoad({
+        elements_selector: ".lazy"
+    });
+
     Screens_InitScreens();
     Main_SetStringsMain(true);
 

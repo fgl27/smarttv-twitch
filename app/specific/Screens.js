@@ -695,6 +695,7 @@ function Screens_handleKeyDown(event) {
         case KEY_PG_UP:
             Screens_SwitchScreen(event);
             break;
+        case KEY_INFO:
         case KEY_REFRESH:
             Main_ReloadScreen();
             break;

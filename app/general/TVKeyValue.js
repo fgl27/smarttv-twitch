@@ -1,7 +1,4 @@
 // more keys at http://developer.samsung.com/tv/develop/guides/user-interaction/remote-control/
-var KEY_CHANNELUP = 427;
-var KEY_CHANNELDOWN = 428;
-var KEY_CHANNELGUIDE = 458;
 var KEY_PAUSE = 19;
 var KEY_PLAY = 415;
 var KEY_PLAYPAUSE = 10252;
@@ -12,6 +9,10 @@ var KEY_RIGHT = 39;
 var KEY_DOWN = 40;
 var KEY_ENTER = 13;
 
+var KEY_PG_DOWN = 428; //KEY_CHANNELUP
+var KEY_PG_UP = 427; //KEY_CHANNELDOWN
+var KEY_REFRESH = 458; //KEY_CHANNELGUIDE
+var KEY_INFO = 457;
 var KEY_RETURN = 10009;
 
 var KEY_KEYBOARD_BACKSPACE = 8; // http://developer.samsung.com/tv/develop/guides/user-interaction/keyboardime
@@ -24,7 +25,6 @@ var KEY_GREEN = 404;
 var KEY_YELLOW = 405;
 var KEY_BLUE = 406;
 var KEY_KEYBOARD_CANCEL = 65385;
-var KEY_INFO = 457;
 
 var istizen = false;
 
@@ -49,4 +49,7 @@ if (istizen) {
     tizen.tvinputdevice.registerKey("Info");
 } else {
     KEY_RETURN = 49;
+    KEY_PG_DOWN = 34;
+    KEY_PG_UP = 33;
+    KEY_REFRESH = 50; //key #2
 }

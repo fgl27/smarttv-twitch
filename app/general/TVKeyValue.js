@@ -52,4 +52,7 @@ if (istizen) {
     KEY_PG_DOWN = 34;
     KEY_PG_UP = 33;
     KEY_REFRESH = 50; //key #2
+    KEY_PAUSE = 127;
+    KEY_PLAY = 126;
+    KEY_PLAYPAUSE = 179;
 }

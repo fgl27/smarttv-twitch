@@ -544,7 +544,6 @@ var Main_Switchobj = {
 };
 
 Main_Switchobj[Main_Users] = Users_init;
-Main_Switchobj[Main_addCode] = AddCode_init;
 Main_Switchobj[Main_ChannelContent] = ChannelContent_init;
 
 Main_Switchobj[Main_SearchChannels] = function() {

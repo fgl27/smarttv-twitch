@@ -1100,6 +1100,28 @@ function PlayVod_handleKeyDown(e) {
                 Play_BottomUpDown(2, -1);
                 Play_Panelcounter = Play_controlsDefault;
                 break;
+            case KEY_MEDIAREWIND:
+                if (!Play_isPanelShown()) {
+                    PlayVod_showPanel(true);
+                    PlayVod_PanelY = 0;
+                    PlayVod_IconsBottonFocus();
+                }
+                Play_clearHidePanel();
+                PlayVod_jumpStart(-1, ChannelVod_DurationSeconds);
+                PlayVod_ProgressBaroffset = 2500;
+                PlayVod_setHidePanel();
+                break;
+            case KEY_MEDIAFASTFORWARD:
+                if (!Play_isPanelShown()) {
+                    PlayVod_showPanel(true);
+                    PlayVod_PanelY = 0;
+                    PlayVod_IconsBottonFocus();
+                }
+                Play_clearHidePanel();
+                PlayVod_jumpStart(1, ChannelVod_DurationSeconds);
+                PlayVod_ProgressBaroffset = 2500;
+                PlayVod_setHidePanel();
+                break;
             case KEY_STOP:
                 Play_hideChat();
                 PlayVod_shutdownStream();

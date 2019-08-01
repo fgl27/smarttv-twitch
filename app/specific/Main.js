@@ -1022,8 +1022,8 @@ function Main_ExitDialog(event) {
             if (!Main_IsNotBrowser || !Main_ExitCursor) Main_HideExitDialog();
             else if (Main_ExitCursor === 1) {
                 Main_HideExitDialog();
-                //Android.mclose(false);
-            } // else if (Main_ExitCursor === 2) Android.mclose(true);
+                tizen.application.getCurrentApplication().hide();
+            } else if (Main_ExitCursor === 2) tizen.application.getCurrentApplication().exit();
             break;
         default:
             break;

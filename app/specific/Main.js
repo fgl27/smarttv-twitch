@@ -152,6 +152,9 @@ function Main_loadTranslations(language) {
     Main_Checktylesheet();
 
     Main_ready(function() {
+        if (Main_isReleased) document.body.innerHTML = STR_BODY;
+
+        Main_ready(function() {
         try {
             Main_IsNotBrowser = tizen !== null;
             console.log('Main_IsNotBrowser tizen = ' + Main_IsNotBrowser);
@@ -189,6 +192,7 @@ function Main_loadTranslations(language) {
         DefaultLang();
 
         Main_initWindows();
+  });
     });
 
 }

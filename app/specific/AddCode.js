@@ -18,6 +18,7 @@ var AddCode_UrlToken = 'https://id.twitch.tv/oauth2/token?';
 function AddCode_init() {
     AddCode_loadingData = false;
     Main_values.Main_Go = Main_addCode;
+    Main_CounterDialogRst();
     Main_AddClass('top_bar_user', 'icon_center_focus');
     Main_HideWarningDialog();
     Main_AddCodeInput.placeholder = STR_PLACEHOLDER_OAUTH;

@@ -122,7 +122,7 @@ var Main_IsNotBrowser = 0;
 var Main_randomimg = '?' + Math.random();
 var proxyurl = "https://cors-anywhere.herokuapp.com/";
 var Main_updateUserFeedId;
-var Main_vp9supported = false;
+var Main_vp9supported = false;//TODO check tizen support
 var lazyLoadInstance;
 //Variable initialization end
 

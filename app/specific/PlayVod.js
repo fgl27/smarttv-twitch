@@ -1100,6 +1100,10 @@ function PlayVod_handleKeyDown(e) {
                 Play_BottomUpDown(2, -1);
                 Play_Panelcounter = Play_controlsDefault;
                 break;
+            case KEY_STOP:
+                Play_hideChat();
+                Play_shutdownStream();
+                break;
             default:
                 break;
         }

@@ -63,11 +63,11 @@ if (istizen) {
     KEY_PLAYPAUSE = 179;
 
     KEY_RED = 65; //key A
-    KEY_GREEN = 66;//key B
-    KEY_YELLOW = 67;//key C
-    KEY_BLUE = 68;//key D
+    KEY_GREEN = 66; //key B
+    KEY_YELLOW = 67; //key C
+    KEY_BLUE = 68; //key D
 
-    KEY_STOP = 73;//key I
-    KEY_MEDIAREWIND = 79;//key O
-    KEY_MEDIAFASTFORWARD = 80;//key P
+    KEY_STOP = 73; //key I
+    KEY_MEDIAREWIND = 79; //key O
+    KEY_MEDIAFASTFORWARD = 80; //key P
 }

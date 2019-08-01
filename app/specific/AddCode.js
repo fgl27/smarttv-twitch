@@ -176,6 +176,7 @@ function AddCode_refreshTokensSucess(responseText, position, callbackFunc) {
 }
 
 //Check if has all scopes, in canse they change
+// TODO revise when a key is first added
 function AddCode_TokensCheckScope(scope) {
     if (scope.indexOf("user_read") === -1) return false;
     if (scope.indexOf("user_follows_edit") === -1) return false;

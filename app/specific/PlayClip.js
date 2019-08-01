@@ -714,7 +714,7 @@ function PlayClip_handleKeyDown(e) {
                 break;
             case KEY_STOP:
                 Play_hideChat();
-                Play_shutdownStream();
+                PlayClip_shutdownStream();
                 break;
             default:
                 break;

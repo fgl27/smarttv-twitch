@@ -1102,7 +1102,7 @@ function PlayVod_handleKeyDown(e) {
                 break;
             case KEY_STOP:
                 Play_hideChat();
-                Play_shutdownStream();
+                PlayVod_shutdownStream();
                 break;
             default:
                 break;

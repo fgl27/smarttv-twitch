@@ -56,7 +56,6 @@ var Play_PlayerCheckCounter = 0;
 var Play_PlayerCheckQualityChanged = false;
 var Play_PlayerCheckRun = false;
 var Play_Playing = false;
-var Play_Panelcounter = 6;
 var Play_IsWarning = false;
 var Play_LoadLogoSucess = false;
 var Play_loadingInfoDataTimeout = 10000;
@@ -1214,7 +1213,7 @@ function Play_KeyPause(PlayVodClip) {
 
 function Play_IconsResetFocus() {
     Play_IconsRemoveFocus();
-    Play_Panelcounter = 6;
+    Play_Panelcounter = Play_controlsDefault;
     Play_IconsAddFocus();
 }
 
@@ -1695,14 +1694,7 @@ function Play_handleKeyDown(e) {
                         UserLiveFeed_FeedAddFocus();
                     }
                 } else if (Play_isFullScreen && !Play_isPanelShown() && !Play_isEndDialogVisible()) {
-                    if (!Play_isChatShown() && !Play_isEndDialogVisible()) {
-                        Play_showChat();
-                        Play_ChatEnable = true;
-                    } else {
-                        Play_hideChat();
-                        Play_ChatEnable = false;
-                    }
-                    Main_setItem('ChatEnable', Play_ChatEnable ? 'true' : 'false');
+                    Play_controls[Play_controlsChat].enterKey(1);
                 } else if (Play_isPanelShown()) {
                     Play_clearHidePanel();
                     if (PlayVod_PanelY === 2) Play_BottomLeftRigt(1, 1);
@@ -1788,6 +1780,19 @@ function Play_handleKeyDown(e) {
             case KEY_PLAYPAUSE:
                 if (!Play_isEndDialogVisible()) Play_KeyPause(1);
                 break;
+            case KEY_REFRESH:
+                Play_controls[Play_controlsChat].enterKey(1);
+                break;
+            case KEY_PG_UP:
+                Play_Panelcounter = Play_controlsChatPos;
+                Play_BottomUpDown(1, 1);
+                Play_Panelcounter = Play_controlsDefault;
+                break;
+            case KEY_PG_DOWN:
+                Play_Panelcounter = Play_controlsChatPos;
+                Play_BottomUpDown(1, -1);
+                Play_Panelcounter = Play_controlsDefault;
+                break;
             default:
                 break;
         }
@@ -1810,6 +1815,9 @@ var Play_controlsChatSize = 9;
 var Play_controlsChatBright = 10;
 var Play_controlsChatFont = 11;
 var Play_controlsChatForceDis = 12;
+
+var Play_controlsDefault = Play_controlsChat;
+var Play_Panelcounter = Play_controlsDefault;
 
 function Play_MakeControls() {
 

@@ -2,6 +2,9 @@
 var KEY_PAUSE = 19;
 var KEY_PLAY = 415;
 var KEY_PLAYPAUSE = 10252;
+var KEY_STOP = 413;
+var KEY_MEDIAREWIND = 412;
+var KEY_MEDIAFASTFORWARD = 417;
 
 var KEY_LEFT = 37;
 var KEY_UP = 38;
@@ -38,6 +41,9 @@ if (istizen) {
     //Registering all used keys
     tizen.tvinputdevice.registerKey("ChannelUp");
     tizen.tvinputdevice.registerKey("ChannelDown");
+    tizen.tvinputdevice.registerKey("MediaRewind");
+    tizen.tvinputdevice.registerKey("MediaFastForward");
+    tizen.tvinputdevice.registerKey("MediaStop");
     tizen.tvinputdevice.registerKey("MediaPlayPause");
     tizen.tvinputdevice.registerKey("MediaPlay");
     tizen.tvinputdevice.registerKey("MediaPause");
@@ -60,4 +66,8 @@ if (istizen) {
     KEY_GREEN = 66;
     KEY_YELLOW = 67;
     KEY_BLUE = 68;
+
+    KEY_STOP = 413;
+    KEY_MEDIAREWIND = 412;
+    KEY_MEDIAFASTFORWARD = 417;
 }

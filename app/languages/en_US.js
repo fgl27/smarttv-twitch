@@ -129,7 +129,7 @@ function en_USLang() {
     STR_CONTROLS_PLAY_12 = "Start a search: open information panel, navigate using use Directional pad (left/right) to \"Search\" and press enter";
     STR_CONTROLS_PLAY_14 = "Chat and video (Side by side): Color button red (A)";
     STR_F_DISABLE_CHAT = "Chat force disable";
-    STR_UPDATE_AVAILABLE = "Update available, check github release";
+    STR_UPDATE_AVAILABLE = "Update available, check: github";
     STR_OAUTH_IN = 'Adding a key allows the app to access live user content faster, follow/unfollow channels/games and access subscribed only past broadcast (for channel you are Sub to and block VOD access to none subscribers) <br> <br> In doubt access this link https://github.com/fgl27/SmartTwitchTV#authentication <br><br> add key for: ';
     STR_OAUTH_EXPLAIN1 = " below, fallowing this steps:";
     STR_OAUTH_EXPLAIN2 = "Access the site link_link (using a computer or a smart phone)";

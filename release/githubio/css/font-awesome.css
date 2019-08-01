@@ -1,8 +1,15 @@
 @charset "UTF-8";
 
 @font-face {
-  font-family: 'Sans';
+  font-family: 'Roboto';
   src:url('fonts/Roboto-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto-Bold';
+  src:url('fonts/Roboto-Bold.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -47,10 +54,9 @@
   font: normal normal normal 14px/1 "icons";
   font-size: inherit;
   text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
 }
 .fa-spin {
-  animation: fa-spin 2s infinite linear;
+  animation: fa-spin 1s infinite linear;
 }
 @keyframes fa-spin {
   0% {
@@ -157,9 +163,6 @@
 .icon-history:before {
   content: "\67";
 }
-.icon-star:before {
-  content: "\79";
-}
 .icon-ellipsis:before {
   content: "\42";
 }
@@ -174,4 +177,52 @@
 }
 .icon-ellipsis-h:before {
   content: "\66";
+}
+.icon-arrow-circle-right:before {
+  content: "\6e";
+}
+.icon-next:before {
+  content: "\79";
+}
+.icon-back:before {
+  content: "\46";
+}
+.icon-star:before {
+  content: "\47";
+}
+.icon-speedometer:before {
+  content: "\48";
+}
+.icon-chat:before {
+  content: "\49";
+}
+.icon-squares:before {
+  content: "\4a";
+}
+.icon-chat-stop:before {
+  content: "\4b";
+}
+.icon-chat-brig:before {
+  content: "\4f";
+}
+.icon-chat-pos:before {
+  content: "\50";
+}
+.icon-chat-size:before {
+  content: "\51";
+}
+.icon-chat-font:before {
+  content: "\52";
+}
+.icon-chat-delay:before {
+  content: "\4c";
+}
+.icon-resize-up:before {
+  content: "\53";
+}
+.icon-resize-down:before {
+  content: "\54";
+}
+.icon-buffer:before {
+  content: "\55";
 }

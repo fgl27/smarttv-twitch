@@ -7,7 +7,8 @@ function en_USLang() {
     //document.getElementById("side_panel").style.width = "25%";
 
     //Below are variables to translate
-    STR_KEY_UP_DOWN = " (PG Up/Down)";
+    STR_KEY_UP_DOWN = " (CH Up/Down)";
+    STR_GUIDE = " (Guide or Info)";
     STR_REFRESH = "Refresh";
     STR_SEARCH = "Search";
     STR_SETTINGS = "Settings";
@@ -120,7 +121,7 @@ function en_USLang() {
     STR_CONTROLS_PLAY_4 = "Show user live channels feed: D-pad up";
     STR_CONTROLS_PLAY_5 = "Change video quality: Open information panel, , navigate using use Directional pad (left/right), then use Directional pad (up/down) to choose the new quality after press Enter key to confirm the change";
     STR_CONTROLS_PLAY_6 = "Force refresh a video (in case it freezes): Change video quality to the same";
-    STR_CONTROLS_PLAY_7 = "Show or hide the Chat : D-pad right or key 2";
+    STR_CONTROLS_PLAY_7 = "Show or hide the Chat : D-pad right or key" + STR_GUIDE;
     STR_CONTROLS_PLAY_8 = "Change Chat position : D-pad left or " + STR_KEY_UP_DOWN;
     STR_CONTROLS_PLAY_9 = "Change Chat size : D-pad down";
     STR_CONTROLS_PLAY_10 = "Change Chat background brightness: Change in side panel settings";
@@ -165,7 +166,7 @@ function en_USLang() {
     STR_PLACEHOLDER_PRESS_UP = "Press Up to ";
     STR_FALLOW_GAMES = "Followed Games";
     STR_USER_GAMES_CHANGE = "Change between";
-    STR_GUIDE = " Back key then Enter or key 2";
+    STR_GUIDE = " Back key then Enter or key " + STR_GUIDE;
     STR_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
     STR_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     STR_STARTED = "Started ";

@@ -404,7 +404,11 @@ function Screens_loadDataSuccessFinish() {
                 });
             } else {
                 Main_ready(function() {
-                    if (Main_values.Never_run) Main_showControlsDialog();
+                    if (Main_values.Never_run) {
+                        Main_showControlsDialog();
+                        document.body.removeEventListener("keydown", Screens_handleKeyDown);
+                        document.body.addEventListener("keydown", Screens_handleKeyControls, false);
+                    }
                     Main_values.Never_run = false;
                     Screens_addFocus(true);
                     Main_SaveValues();
@@ -420,6 +424,22 @@ function Screens_loadDataSuccessFinish() {
         }
     } else {
         Main_CounterDialog(inUseObj.posX, inUseObj.posY, inUseObj.ColoumnsCount, inUseObj.itemsCount);
+    }
+}
+
+function Screens_handleKeyControls(event) {
+console.log('Screens_handleKeyControls');
+    switch (event.keyCode) {
+        case KEY_ENTER:
+        case KEY_RETURN:
+            Main_HideControlsDialog();
+            Main_HideAboutDialog();
+            document.body.addEventListener("keydown", Screens_handleKeyDown, false);
+            document.body.removeEventListener("keydown", Screens_handleKeyControls);
+            Screens_addFocus(true);
+            break;
+        default:
+            break;
     }
 }
 
@@ -641,6 +661,7 @@ function Screens_KeyLeftRight(y, x) {
 }
 
 function Screens_handleKeyDown(event) {
+console.log('Screens_handleKeyDown');
     if (inUseObj.FirstLoad || Main_CantClick()) return;
     else Main_keyClickDelayStart();
 

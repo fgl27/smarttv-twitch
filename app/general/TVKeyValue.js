@@ -55,4 +55,9 @@ if (istizen) {
     KEY_PAUSE = 127;
     KEY_PLAY = 126;
     KEY_PLAYPAUSE = 179;
+
+    KEY_RED = 65;
+    KEY_GREEN = 66;
+    KEY_YELLOW = 67;
+    KEY_BLUE = 68;
 }

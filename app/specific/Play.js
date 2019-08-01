@@ -1782,6 +1782,7 @@ function Play_handleKeyDown(e) {
             case KEY_PLAYPAUSE:
                 if (!Play_isEndDialogVisible()) Play_KeyPause(1);
                 break;
+            case KEY_INFO:
             case KEY_REFRESH:
                 Play_controls[Play_controlsChat].enterKey(1);
                 break;

@@ -1083,6 +1083,7 @@ function PlayVod_handleKeyDown(e) {
                 }
                 if (!Play_isEndDialogVisible()) Play_KeyPause(2);
                 break;
+            case KEY_INFO:
             case KEY_REFRESH:
                 Play_controls[Play_controlsChat].enterKey(2);
                 break;

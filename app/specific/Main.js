@@ -1124,6 +1124,7 @@ function Main_CenterLables(event) {
             Main_SwitchScreenAction();
             break;
         case KEY_ENTER:
+        case KEY_INFO:
         case KEY_REFRESH:
             Main_ReloadScreen();
             break;

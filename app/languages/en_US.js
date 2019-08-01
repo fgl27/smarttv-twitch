@@ -113,10 +113,6 @@ function en_USLang() {
     STR_ABOUT_INFO_13 = "JSHint - A Static Code Analysis Tool for JavaScript (https://github.com/jshint/jshint)";
 
     STR_ABOUT_INFO_14 = "Web:";
-    STR_ABOUT_INFO_15 = "Android:";
-    STR_ABOUT_INFO_16 = "Google: Leanback v17 (https://developer.android.com/reference/android/support/v17/leanback/package-summary)";
-    STR_ABOUT_INFO_17 = "Google: ExoPlayer (https://github.com/google/ExoPlayer)";
-
     STR_CONTROLS_PLAY_1 = "Show information panel: Press enter key or D-pad keys if chat and live channel feed is not showing";
     STR_CONTROLS_PLAY_2 = "Close the video: press back key twice";
     STR_CONTROLS_PLAY_3 = "Play/Pause a video: open information panel and click on pause symbol";
@@ -131,7 +127,7 @@ function en_USLang() {
     STR_CONTROLS_PLAY_12 = "Start a search: open information panel, navigate using use Directional pad (left/right) to \"Search\" and press enter";
     STR_CONTROLS_PLAY_14 = "Chat and video (Side by side): Color button red (A)";
     STR_F_DISABLE_CHAT = "Chat force disable";
-    STR_UPDATE_AVAILABLE = "Update available, check google play store";
+    STR_UPDATE_AVAILABLE = "Update available, check github release";
     STR_OAUTH_IN = 'Adding a key allows the app to access live user content faster, follow/unfollow channels/games and access subscribed only past broadcast (for channel you are Sub to and block VOD access to none subscribers) <br> <br> In doubt access this link https://github.com/fgl27/SmartTwitchTV#authentication <br><br> add key for: ';
     STR_OAUTH_EXPLAIN1 = " below, fallowing this steps:";
     STR_OAUTH_EXPLAIN2 = "Access the site link_link (using a computer or a smart phone)";

@@ -122,7 +122,7 @@ var Main_IsNotBrowser = 0;
 var Main_randomimg = '?' + Math.random();
 var proxyurl = "https://cors-anywhere.herokuapp.com/";
 var Main_updateUserFeedId;
-var Main_vp9supported = false;//TODO check tizen support
+var Main_vp9supported = false; //TODO check tizen support
 var lazyLoadInstance;
 //Variable initialization end
 
@@ -155,44 +155,44 @@ function Main_loadTranslations(language) {
         if (Main_isReleased) document.body.innerHTML = STR_BODY;
 
         Main_ready(function() {
-        try {
-            Main_IsNotBrowser = tizen !== null;
-            console.log('Main_IsNotBrowser tizen = ' + Main_IsNotBrowser);
-            Main_IsNotBrowserVersion = '1.0.0';
-        } catch (e) {
-            Main_IsNotBrowserVersion = '1.0.0';
-            Main_IsNotBrowser = 0;
-            document.body.style.backgroundColor = "rgba(0, 0, 0, 1)";
-            Main_isDebug = true;
-            console.log('Main_isReleased: ' + Main_isReleased);
-            console.log('Main_isDebug: ' + Main_isDebug);
-            console.log('Main_isBrowser: ' + !Main_IsNotBrowser);
-        }
-        Main_showLoadDialog();
+            try {
+                Main_IsNotBrowser = tizen !== null;
+                console.log('Main_IsNotBrowser tizen = ' + Main_IsNotBrowser);
+                Main_IsNotBrowserVersion = '1.0.0';
+            } catch (e) {
+                Main_IsNotBrowserVersion = '1.0.0';
+                Main_IsNotBrowser = 0;
+                document.body.style.backgroundColor = "rgba(0, 0, 0, 1)";
+                Main_isDebug = true;
+                console.log('Main_isReleased: ' + Main_isReleased);
+                console.log('Main_isDebug: ' + Main_isDebug);
+                console.log('Main_isBrowser: ' + !Main_IsNotBrowser);
+            }
+            Main_showLoadDialog();
 
 
-        Settings_SetDefautls();
-        en_USLang();
-        Languages_SetDefautls();
+            Settings_SetDefautls();
+            en_USLang();
+            Languages_SetDefautls();
 
-        // Language is set as (LANGUAGE)_(REGION) in (ISO 639-1)_(ISO 3166-1 alpha-2) eg.; pt_BR Brazil, en_US USA
-        // https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
-        // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+            // Language is set as (LANGUAGE)_(REGION) in (ISO 639-1)_(ISO 3166-1 alpha-2) eg.; pt_BR Brazil, en_US USA
+            // https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+            // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 
-        //var lang = language,
-        //    Savedlang = Main_getItemInt('user_language', 0);
+            //var lang = language,
+            //    Savedlang = Main_getItemInt('user_language', 0);
 
-        //if (Savedlang) lang = Settings_Obj_set_values("general_lang");
-        //else Settings_CheckLang(lang);
+            //if (Savedlang) lang = Settings_Obj_set_values("general_lang");
+            //else Settings_CheckLang(lang);
 
-        //if (lang.indexOf('pt_') !== -1) pt_BRLang();
-        //else if (lang.indexOf('it_') !== -1) it_ITLang();
+            //if (lang.indexOf('pt_') !== -1) pt_BRLang();
+            //else if (lang.indexOf('it_') !== -1) it_ITLang();
 
-        console.log("language is " + language);
-        DefaultLang();
+            console.log("language is " + language);
+            DefaultLang();
 
-        Main_initWindows();
-  });
+            Main_initWindows();
+        });
     });
 
 }

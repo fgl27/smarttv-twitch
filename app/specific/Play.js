@@ -173,7 +173,6 @@ function Play_PreStart() {
     Play_ChatBackground = (Main_values.ChatBackground * 0.05).toFixed(2);
     Play_ChatDelayPosition = Main_getItemInt('Play_ChatDelayPosition', 0);
 
-    if (Main_IsNotBrowser) Play_SetAvPlayGlobal();
     Play_ClearPlayer();
     Play_ChatSize(false);
     Play_ChatBackgroundChange(false);

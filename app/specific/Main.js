@@ -227,6 +227,7 @@ function Main_initWindows() {
 
         Play_MakeControls();
         Play_SetControls();
+        if (Main_IsNotBrowser) Play_SetAvPlayGlobal();
 
         PlayVod_RestoreVodIds();
 

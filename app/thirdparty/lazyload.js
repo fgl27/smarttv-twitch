@@ -8,7 +8,7 @@
     var supportsIntersectionObserver = runningOnBrowser && "IntersectionObserver" in window;
     var supportsClassList = runningOnBrowser && "classList" in document.createElement("p");
     var defaultSettings = {
-        elements_selector: ".lazy",
+        elements_selector: "img",
         container: isBot || runningOnBrowser ? document : null,
         threshold: 300,
         thresholds: null,

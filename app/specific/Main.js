@@ -869,6 +869,7 @@ function Main_OpenClip(id, idsArray, handleKeyDownFunction) {
 
     ChannelClip_playUrl = ChannelClip_playUrl[0];
 
+
     ChannelClip_createdAt = document.getElementById(idsArray[4] + id).textContent;
     ChannelClip_views = document.getElementById(idsArray[6] + id).textContent;
 

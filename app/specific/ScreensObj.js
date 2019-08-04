@@ -83,6 +83,7 @@ var Base_obj = {
         document.body.removeEventListener("keydown", Screens_handleKeyDown);
     },
     concatenate: function(responseText) {
+    console.log(responseText);
         if (this.data) {
             responseText = JSON.parse(responseText);
 

@@ -144,6 +144,7 @@ function ChannelContent_GetStreamerInfo() {
 }
 
 function ChannelContent_GetStreamerInfoSuccess(responseText) {
+    console.log(responseText);
     var channel = JSON.parse(responseText);
     ChannelContent_offline_image = channel.video_banner;
     ChannelContent_offline_image = ChannelContent_offline_image ? ChannelContent_offline_image.replace("1920x1080", Main_VideoSize) : ChannelContent_offline_image;
@@ -152,6 +153,8 @@ function ChannelContent_GetStreamerInfoSuccess(responseText) {
     ChannelContent_selectedChannelFallower = channel.followers;
     ChannelContent_description = channel.description;
     Main_values.Main_selectedChannelLogo = channel.logo;
+    Main_values.Main_selectedChannelPartner = channel.partner;
+
     ChannelContent_loadDataSuccess();
     return;
 }

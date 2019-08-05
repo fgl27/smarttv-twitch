@@ -1282,17 +1282,22 @@ function Main_PrintUnicode(string) { // jshint ignore:line
         console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
 }
 
+var Main_Headers = [
+    [Main_clientIdHeader, Main_clientId],
+    [Main_AcceptHeader, Main_TwithcV5Json],
+    [Main_Authorization, null]
+];
+
 function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
     var xmlHttp = new XMLHttpRequest();
 
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Timeout;
 
-    if (HeaderQuatity > 0) xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
-    //Header TWITHCV5 to load all screens and some stream info
-    if (HeaderQuatity > 1) xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
-    //Header to access User VOD screen
-    if (HeaderQuatity > 2) xmlHttp.setRequestHeader(Main_Authorization, access_token);
+    Main_Headers[2][1] = access_token;
+
+    for (var i = 0; i < HeaderQuatity; i++)
+        xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
 
     xmlHttp.ontimeout = function() {};
 

@@ -473,7 +473,7 @@ function AddCode_RequestCheckSub() {
         if (xmlHttp.readyState === 4) AddCode_RequestCheckSubreadyState(xmlHttp);
     };
 
-   xmlHttp.send(null);
+    xmlHttp.send(null);
 }
 
 function AddCode_RequestCheckSubreadyState(xmlHttp) {

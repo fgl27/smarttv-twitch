@@ -105,7 +105,7 @@ function PlayClip_Start() {
 function PlayClip_GetStreamerInfo() {
     var theUrl = 'https://api.twitch.tv/kraken/channels/' + Main_values.Main_selectedChannel_id;
 
-    BasehttpGet(theUrl, 10000, 2, null, PlayClip_GetStreamerInfoSuccess, PlayClip_GetStreamerInfoSuccessError);
+    BasexmlHttpGet(theUrl, 10000, 2, null, PlayClip_GetStreamerInfoSuccess, PlayClip_GetStreamerInfoSuccessError);
 }
 
 function PlayClip_GetStreamerInfoSuccessError() {

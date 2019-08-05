@@ -309,7 +309,7 @@ function ChannelContent_setFallow() {
         if (AddUser_UserIsSet()) Main_innerHTML(ChannelContent_ids[3] + "1_0", partnerIcon + STR_FALLOW);
         else Main_innerHTML(ChannelContent_ids[3] + "1_0", partnerIcon + STR_CANT_FALLOW);
     }
-
+}
 
 function ChannelContent_loadDataSuccessFinish() {
     if (!ChannelContent_status) {

@@ -1002,10 +1002,6 @@ function Play_HideBufferDialog() {
     Main_HideElement('dialog_buffer_play');
 }
 
-function Play_HideBufferDialog() {
-    Main_HideElement('dialog_buffer_play');
-}
-
 function Play_BufferDialogVisible() {
     return Main_isElementShowing('dialog_buffer_play');
 }

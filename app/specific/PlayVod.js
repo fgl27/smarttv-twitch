@@ -929,11 +929,6 @@ function PlayVod_handleKeyDown(e) {
                         Play_FeedPos--;
                         UserLiveFeed_FeedAddFocus();
                     }
-                } else if (Play_isFullScreen && !Play_isPanelShown() && Play_isChatShown()) {
-                    Play_ChatPositions++;
-                    Play_ChatPosition();
-                    Play_controls[Play_controlsChatPos].defaultValue = Play_ChatPositions;
-                    Play_controls[Play_controlsChatPos].setLable();
                 } else if (Play_isPanelShown() && !Play_isVodDialogShown()) {
                     Play_clearHidePanel();
                     if (PlayVod_PanelY === 2) Play_BottomLeftRigt(2, -1);

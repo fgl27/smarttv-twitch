@@ -1663,11 +1663,6 @@ function Play_handleKeyDown(e) {
                         Play_FeedPos--;
                         UserLiveFeed_FeedAddFocus();
                     }
-                } else if (Play_isFullScreen && !Play_isPanelShown() && Play_isChatShown()) {
-                    Play_ChatPositions++;
-                    Play_ChatPosition();
-                    Play_controls[Play_controlsChatPos].defaultValue = Play_ChatPositions;
-                    Play_controls[Play_controlsChatPos].setLable();
                 } else if (Play_isPanelShown()) {
                     Play_clearHidePanel();
                     if (PlayVod_PanelY === 2) Play_BottomLeftRigt(1, -1);
@@ -1689,8 +1684,6 @@ function Play_handleKeyDown(e) {
                         Play_FeedPos++;
                         UserLiveFeed_FeedAddFocus();
                     }
-                } else if (Play_isFullScreen && !Play_isPanelShown() && !Play_isEndDialogVisible()) {
-                    Play_controls[Play_controlsChat].enterKey(1);
                 } else if (Play_isPanelShown()) {
                     Play_clearHidePanel();
                     if (PlayVod_PanelY === 2) Play_BottomLeftRigt(1, 1);

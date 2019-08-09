@@ -321,7 +321,6 @@ function Play_Start() {
     document.addEventListener('visibilitychange', Play_Resume, false);
     Play_updateStreamInfoStart();
     Play_loadData();
-    document.body.removeEventListener("keyup", Main_handleKeyUp);
     Play_streamInfoTimerId = window.setInterval(Play_updateStreamInfo, 60000);
 }
 
@@ -1438,7 +1437,6 @@ function Play_OpenSearch(PlayVodClip) {
     Main_ShowElement('scene1');
     Main_HideElement('scene2');
     Main_updateclock();
-    document.body.addEventListener("keyup", Main_handleKeyUp, false);
     Main_OpenSearch();
 }
 

@@ -471,17 +471,17 @@ function PlayVod_onPlayer() {
         Play_SetFullScreen(Play_isFullScreen);
         Play_avplay.setListener(PlayVod_listener);
 
-//        Play_avplay.prepareAsync(function() { //successCallback
-//            Play_avplay.play();
-//            ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;
-//            Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
-//            if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-//        }, function() { //errorCallback
-            Play_avplay.prepare();
-            Play_avplay.play();
-            ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;
-            Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
-            if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+        //        Play_avplay.prepareAsync(function() { //successCallback
+        //            Play_avplay.play();
+        //            ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;
+        //            Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
+        //            if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+        //        }, function() { //errorCallback
+        Play_avplay.prepare();
+        Play_avplay.play();
+        ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;
+        Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
+        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
         //});
 
         PlayVod_PlayerCheckCount = 0;

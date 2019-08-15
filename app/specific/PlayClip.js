@@ -279,18 +279,18 @@ function PlayClip_onPlayer() {
         Play_SetFullScreen(Play_isFullScreen);
         Play_avplay.setListener(PlayClip_listener);
 
-        Play_avplay.prepareAsync(function() { //successCallback
-            Play_avplay.play();
-            PlayClip_DurationSeconds = Play_avplay.getDuration() / 1000;
-            Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
-            if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-        }, function() { //errorCallback
+//        Play_avplay.prepareAsync(function() { //successCallback
+//            Play_avplay.play();
+//            PlayClip_DurationSeconds = Play_avplay.getDuration() / 1000;
+//            Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
+//            if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+//        }, function() { //errorCallback
             Play_avplay.prepare();
             Play_avplay.play();
             PlayClip_DurationSeconds = Play_avplay.getDuration() / 1000;
             Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
             if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-        });
+        //});
 
 
         PlayClip_PlayerCheckCount = 0;

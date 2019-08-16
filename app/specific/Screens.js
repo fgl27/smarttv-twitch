@@ -368,8 +368,8 @@ function Screens_loadDataSuccessFinish() {
         }
         inUseObj.FirstLoad = false;
         //TODO improve this check
-        if (Main_FirstRun && inUseObj.status && Settings_value.restor_playback.defaultValue) {
-            if (Main_values.Play_WasPlaying) {
+        if (Main_FirstRun) {
+            if (Settings_value.restor_playback.defaultValue && Main_values.Play_WasPlaying && inUseObj.status) {
 
                 Main_ExitCurrent(Main_values.Main_Go);
                 Main_values.Main_Go = Main_GoBefore;
@@ -406,6 +406,11 @@ function Screens_loadDataSuccessFinish() {
                 });
             } else {
                 Main_ready(function() {
+                    //Values that need to be reset to prevent app odd behavier
+                    Main_values.Search_isSearching = false;
+                    Main_values.Main_BeforeChannelisSet = false;
+                    Main_values.Main_BeforeAgameisSet = false;
+
                     if (Main_values.Never_run) {
                         Main_showControlsDialog();
                         document.body.removeEventListener("keydown", Screens_handleKeyDown);
@@ -418,11 +423,9 @@ function Screens_loadDataSuccessFinish() {
                 });
             }
         } else {
-            //Main_ready(function() {
             Screens_addFocus(true);
             Main_SaveValues();
             Screens_loadDataSuccessFinishEnd();
-            //});
         }
     } else {
         Main_CounterDialog(inUseObj.posX, inUseObj.posY, inUseObj.ColoumnsCount, inUseObj.itemsCount);

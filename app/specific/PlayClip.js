@@ -245,6 +245,7 @@ function PlayClip_qualityChanged() {
     PlayClip_SetHtmlQuality('stream_quality');
 
     PlayClip_replay = false;
+    Play_onPlayerCounter = 0;
     PlayClip_onPlayer();
 }
 
@@ -279,25 +280,34 @@ function PlayClip_onPlayer() {
         Play_SetFullScreen(Play_isFullScreen);
         Play_avplay.setListener(PlayClip_listener);
 
-        //        Play_avplay.prepareAsync(function() { //successCallback
-        //            Play_avplay.play();
-        //            PlayClip_DurationSeconds = Play_avplay.getDuration() / 1000;
-        //            Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
-        //            if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-        //        }, function() { //errorCallback
-        Play_avplay.prepare();
-        Play_avplay.play();
-        PlayClip_DurationSeconds = Play_avplay.getDuration() / 1000;
-        Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
-        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-        //});
+        Play_avplay.prepareAsync(function() { //successCallback
+
+            if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip OK:', 'date: ' + (new Date()));
+
+            Play_avplay.play();
+            PlayClip_DurationSeconds = Play_avplay.getDuration() / 1000;
+            Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
+            if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+
+            PlayClip_PlayerCheckCount = 0;
+            Play_PlayerCheckTimer = 1 + (PlayClip_Buffer * 2);
+            PlayClip_PlayerCheckQualityChanged = false;
+            window.clearInterval(PlayClip_streamCheckId);
+            PlayClip_streamCheckId = window.setInterval(PlayClip_PlayerCheck, Play_PlayerCheckInterval);
+
+        }, function() { //errorCallback
+
+            if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip NOK:', 'date: ' + (new Date()));
+            Play_onPlayerCounter++;
+            if (Play_onPlayerCounter < 5) PlayClip_onPlayer();
+            else {
+                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip fail too mutch exit:', 'date: ' + (new Date()));
+                Play_EndStart(false, 3);
+            }
+
+        });
 
 
-        PlayClip_PlayerCheckCount = 0;
-        Play_PlayerCheckTimer = 1 + (PlayClip_Buffer * 2);
-        PlayClip_PlayerCheckQualityChanged = false;
-        window.clearInterval(PlayClip_streamCheckId);
-        PlayClip_streamCheckId = window.setInterval(PlayClip_PlayerCheck, Play_PlayerCheckInterval);
     }
 }
 

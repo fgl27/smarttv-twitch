@@ -16,6 +16,7 @@ var Play_FeedOldUserName = '';
 var Play_FeedPos = 0;
 var Play_Buffer = 2000;
 var Play_CurrentSpeed = 3;
+var Play_onPlayerCounter = 0;
 
 var Play_STATE_LOADING_TOKEN = 0;
 var Play_STATE_LOADING_PLAYLIST = 1;
@@ -661,6 +662,7 @@ function Play_qualityChanged() {
 
     Play_BufferPercentage = 0;
     Main_empty('dialog_buffer_play_percentage');
+    Play_onPlayerCounter = 0;
     if (Play_isOn) Play_onPlayer();
 }
 
@@ -763,24 +765,31 @@ function Play_onPlayer() {
         Play_offsettime = Play_oldcurrentTime;
 
         //Use prepareAsync as prepare() only can freeze up the app
-        //        Play_avplay.prepareAsync(function() { //successCallback
-        //            Play_avplay.play();
-        //            Play_Playing = true;
-        //            Play_loadChat();
-        //            if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-        //        }, function() { //errorCallback
-        Play_avplay.prepare();
-        Play_avplay.play();
-        Play_Playing = true;
-        Play_loadChat();
-        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-        //});
+        Play_avplay.prepareAsync(function() { //successCallback
 
-        Play_PlayerCheckCount = 0;
-        Play_PlayerCheckTimer = 1 + (Play_Buffer * 2);
-        Play_PlayerCheckQualityChanged = false;
-        window.clearInterval(Play_streamCheckId);
-        Play_streamCheckId = window.setInterval(Play_PlayerCheck, Play_PlayerCheckInterval);
+            if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live OK:', 'date: ' + (new Date()));
+
+            Play_avplay.play();
+            Play_Playing = true;
+            Play_loadChat();
+            if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+
+            Play_PlayerCheckCount = 0;
+            Play_PlayerCheckTimer = 1 + (Play_Buffer * 2);
+            Play_PlayerCheckQualityChanged = false;
+            window.clearInterval(Play_streamCheckId);
+            Play_streamCheckId = window.setInterval(Play_PlayerCheck, Play_PlayerCheckInterval);
+
+        }, function() { //errorCallback
+            if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live NOK:', 'date: ' + (new Date()));
+            Play_onPlayerCounter++;
+            if (Play_onPlayerCounter < 5) Play_onPlayer();
+            else {
+                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live fail too mutch exit:', 'date: ' + (new Date()));
+                Play_EndStart(false, 1);
+            }
+        });
+
     }
 }
 

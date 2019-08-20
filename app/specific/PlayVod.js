@@ -384,6 +384,7 @@ function PlayVod_qualityChanged() {
 
     PlayVod_qualityPlaying = PlayVod_quality;
     PlayVod_SetHtmlQuality('stream_quality', true);
+    Play_onPlayerCounter = 0;
     PlayVod_onPlayer();
 }
 
@@ -471,24 +472,32 @@ function PlayVod_onPlayer() {
         Play_SetFullScreen(Play_isFullScreen);
         Play_avplay.setListener(PlayVod_listener);
 
-        //        Play_avplay.prepareAsync(function() { //successCallback
-        //            Play_avplay.play();
-        //            ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;
-        //            Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
-        //            if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-        //        }, function() { //errorCallback
-        Play_avplay.prepare();
-        Play_avplay.play();
-        ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;
-        Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
-        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-        //});
+        Play_avplay.prepareAsync(function() { //successCallback
+            if (!Main_isReleased) console.log('Play_avplay.prepareAsync Vod OK:', 'date: ' + (new Date()));
+            Play_avplay.play();
+            ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;
+            Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
+            if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
 
-        PlayVod_PlayerCheckCount = 0;
-        Play_PlayerCheckTimer = 3 + (PlayVod_Buffer * 2);
-        PlayVod_PlayerCheckQualityChanged = false;
-        window.clearInterval(PlayVod_streamCheckId);
-        PlayVod_streamCheckId = window.setInterval(PlayVod_PlayerCheck, Play_PlayerCheckInterval);
+            PlayVod_PlayerCheckCount = 0;
+            Play_PlayerCheckTimer = 3 + (PlayVod_Buffer * 2);
+            PlayVod_PlayerCheckQualityChanged = false;
+            window.clearInterval(PlayVod_streamCheckId);
+            PlayVod_streamCheckId = window.setInterval(PlayVod_PlayerCheck, Play_PlayerCheckInterval);
+
+        }, function() { //errorCallback
+
+            if (!Main_isReleased) console.log('Play_avplay.prepareAsync Vod NOK:', 'date: ' + (new Date()));
+            Play_onPlayerCounter++;
+            if (Play_onPlayerCounter < 5) PlayVod_onPlayer();
+            else {
+                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Vod fail too mutch exit:', 'date: ' + (new Date()));
+                Play_EndStart(false, 2);
+            }
+
+        });
+
+
     }
 }
 

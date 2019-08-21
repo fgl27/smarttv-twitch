@@ -196,9 +196,6 @@
 .icon-chat:before {
   content: "\49";
 }
-.icon-squares:before {
-  content: "\4a";
-}
 .icon-chat-stop:before {
   content: "\4b";
 }
@@ -231,4 +228,10 @@
 }
 .icon-sound:before {
   content: "\4e";
+}
+.icon-pp:before {
+  content: "\56";
+}
+.icon-user:before {
+  content: "\4a";
 }

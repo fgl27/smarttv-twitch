@@ -760,7 +760,6 @@ function Play_onPlayer() {
         //    Play_4K_ModeEnable = true;
         //}
 
-        Play_avplay.seekTo(24 * 1000);
         Play_SetFullScreen(Play_isFullScreen);
         Play_avplay.setListener(Play_listener);
         Play_offsettime = Play_oldcurrentTime;
@@ -914,7 +913,6 @@ function Play_timeS(time) {
 
 function Play_timeMs(time) {
     if (time < 0 && !Play_offsettimeMinus) Play_offsettimeMinus = time * -1;
-
     time += Play_offsettimeMinus;
 
     return Play_timeS(parseInt(time / 1000));

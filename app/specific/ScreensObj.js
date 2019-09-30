@@ -178,7 +178,7 @@ var Base_Vod_obj = {
                 [cell.preview.template.replace("{width}x{height}", Main_VideoSize),
                     cell.channel.display_name, STR_STREAM_ON + Main_videoCreatedAt(cell.created_at),
                     twemoji.parse(cell.title) + STR_BR + (cell.game !== "" && cell.game !== null ? STR_STARTED + STR_PLAYING + cell.game : ""), Main_addCommas(cell.views) + STR_VIEWS,
-                    Main_videoqualitylang(cell.resolutions.chunked.slice(-4), (parseInt(cell.fps.chunked) || 0), cell.channel.broadcaster_language),
+                    cell.resolutions.chunked ? Main_videoqualitylang(cell.resolutions.chunked.slice(-4), (parseInt(cell.fps.chunked) || 0), cell.channel.broadcaster_language) : '',
                     STR_DURATION + Play_timeS(cell.length), cell.animated_preview_url
                 ]));
 
@@ -326,7 +326,7 @@ function ScreensObj_InitChannelVod() {
                 [thumbnail.replace("{width}x{height}", Main_VideoSize),
                     cell.channel.display_name, STR_STREAM_ON + Main_videoCreatedAt(cell.created_at),
                     twemoji.parse(cell.title) + STR_BR + (cell.game !== "" && cell.game !== null ? STR_STARTED + STR_PLAYING + cell.game : ""), Main_addCommas(cell.views) + STR_VIEWS,
-                    Main_videoqualitylang(cell.resolutions.chunked.slice(-4), (parseInt(cell.fps.chunked) || 0), cell.channel.broadcaster_language),
+                    cell.resolutions.chunked ? Main_videoqualitylang(cell.resolutions.chunked.slice(-4), (parseInt(cell.fps.chunked) || 0), cell.channel.broadcaster_language) : '',
                     STR_DURATION + Play_timeS(cell.length), cell.animated_preview_url
                 ]));
 

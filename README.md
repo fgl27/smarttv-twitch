@@ -6,7 +6,7 @@ This is an application for Samsung Smart TVs, allowing a user to watch Twitch.tv
 The application fully supports all 4k and 1080p Samsung TVs released in 2016 or later. For TVs released in 2015 or earlier, the SmartHub menu is different from the images below and may not fully support all Twitch Live Streams and some VoD streams.
 ![Live](https://fgl27.github.io/smarttv-twitch/screenshot/smarthub.jpeg)
 
-Full support for all 2015 TVs is not possible as the TV firmware doesn't support it, Samsung doesn't seem to care and may have removed the featuring intentionally (as the features simply stopped working), a discussion about it was done in an issue from a repository that is no longer available, the final answer from Samsung can be read here [Samsung final answer about 2015 TV](https://fgl27.github.io/smarttv-twitch/screenshot/etc/samsung_final.png) it summarize what happened from their side.
+Full support for all 2015 TVs is not possible as the TV firmware doesn't support it, Samsung doesn't seem to care and may have removed the features intentionally (as the features simply stopped working), a discussion about it was done in an issue from a repository that is no longer available, the final answer from Samsung can be read here [Samsung final answer about 2015 TV](https://fgl27.github.io/smarttv-twitch/screenshot/etc/samsung_final.png) it summarizes what happened from their side.
 
 In doubt [open a issue](https://github.com/fgl27/smarttv-twitch/issues/new/choose)
 
@@ -25,7 +25,7 @@ The original fork is https://github.com/nikitakatchik/smarttv-twitch
 
 I have started this project because the above Repos of the app did not fully support my TV model, it had many bugs and the app did not have all Twitch.TV features like a more complete users interface (for VoD, clips, basic Channel offline content, Chat, etc.) it also didn't fully support the latest version of Samsung smart remote.
 
-So I started this new repo, kept the original name and commit history, worked a long time writing this new application basically from scratch, focusing on performance and all available Twitch.TV features, with the help of some users reporting bugs and making featuring request, I added many features and worked to resolve all the bugs. Today the application is very feature-rich, can be easily used to watch all available Twitch.TV content and give the user a lot of extra options. It is known that the application can always be improved, new featuring and improvements are always in the works, mostly to give a better experience and more options to the user, but as of today, there is only one main developer working on this project. The process is slow but feel free to report bugs and make requests! In order to do that, use the [open an issue option of this repo](https://github.com/fgl27/smarttv-twitch/issues/new/choose).
+So I started this new repo, kept the original name and commit history, worked a long time writing this new application basically from scratch, focusing on performance and all available Twitch.TV features, with the help of some users reporting bugs and making features request, I added many features and worked to resolve all the bugs. Today the application is very feature-rich, can be easily used to watch all available Twitch.TV content and give the user a lot of extra options. It is known that the application can always be improved, new features and improvements are always in the works, mostly to give a better experience and more options to the user, but as of today, there is only one main developer working on this project. The process is slow but feel free to report bugs and make requests! In order to do that, use the [open an issue option of this repo](https://github.com/fgl27/smarttv-twitch/issues/new/choose).
 
 Project Dependencies
 ==============
@@ -39,7 +39,7 @@ Project Dependencies
 * [Samsung WebApi API - this module defines the functionalities that are provides as the Samsung TV for Tizen Platform Product API](http://developer.samsung.com/tv/develop/api-references/samsung-product-api-references/webapi-api)
 
 ## [How the application looks](https://github.com/fgl27/smarttv-twitch/tree/master/screenshot)
-The application never stops receiving updates the bellow images can be outdated
+The application never stops receiving updates so the below images could be outdated
 ![Live](https://fgl27.github.io/smarttv-twitch/screenshot/animated.gif)
 
 Twitch.TV authentication key
@@ -59,7 +59,7 @@ The Application is tested with the above remotes (Any Samsung remote that has th
 
 The key **INFO** is also mapped in the app with the same functions as the **GUIDE** key, as some remotes may not have one of those.
 
-## Bellow are the on-screen controls
+## Below are the on-screen controls
 ### To access the controls from any screen press key A or on smart remote press the 4 color buttons (color) after Directional pad up for red A key and chose controls. If you are playing a stream, use the C yellow key to directly open the controls
 
 
@@ -123,7 +123,7 @@ There is a issue section on this github page [smarttv-twitch/issues](https://git
 * Second tab **(Extension SDK)** under **TV Extensions-5.0** (or wherever X.X TV version there is) install **Web app. Development**, install **Samsung Certificate Extension** and under **TV Extension Tools** install **Web app. Tools** (on Linux it may request you to use apt-get to install missing dependencies)
 * After everything finishes installing as you close the package manager it will ask if you want to open the **Tizen Studio** - click YES to open it. On windows it may ask you to give firewall permission for Tizen.
 
-### Bellow imgs showing the installed packages (the one with a delete option are installed)
+### Images below show the installed packages (the one with a delete option are installed)
 ![SDK_installation_1](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_1.png)
 ![SDK_installation_2](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_2.png)
 ![SDK_installation_3](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_3.png)
@@ -142,7 +142,7 @@ There is a issue section on this github page [smarttv-twitch/issues](https://git
 
 ## Generate a certificate:
 
-* back to **Tizen Studio** > Tools > Certificate Manager > + > select/click **Tizen** > create a new author.. next > setup name password etc... next > Use the default Tizen... Finish > **Success** click OK
+* **Tizen Studio** > Tools > Certificate Manager > + > select/click **Tizen** > create a new author.. next > setup name password etc... next > Use the default Tizen... Finish > **Success** click OK
 * Select the certificate it must have a **"V"** on the front of it (that means you have selected it) close the Certificate Manager
 
 ![certificate](https://fgl27.github.io/smarttv-twitch/screenshot/install/certificate.png)

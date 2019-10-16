@@ -1042,7 +1042,8 @@ function ScreensObj_InitGame() {
         base_url: 'https://api.twitch.tv/kraken/games/top?limit=' + Main_ItemsLimitMax,
         set_url: function() {
             if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
-            this.url = this.base_url + '&offset=' + this.offset;
+            this.url = this.base_url + (this.offset ? '&offset=' + this.offset : '');
+            //this.url = this.base_url + '&offset=' + this.offset;
         },
         label_init: function() {
             Main_values.Main_CenterLablesVectorPos = 3;

@@ -139,13 +139,11 @@ var Languages_positions_length = 0;
 //Variable initialization end
 
 function Languages_init() {
-    Main_UnSetTopOpacity();
     document.body.removeEventListener("keydown", Settings_handleKeyDown);
     Main_HideElement('settings_main');
     Main_ShowElement('settings_lang');
     Languages_HideShowAll();
-    Main_textContent('top_bar_featured', STR_SETTINGS_LANG);
-    document.getElementById('top_bar_featured').style.display = 'inline-block';
+    ScreensObj_SetTopLable(STR_SETTINGS + STR_SPACE + STR_CONTENT_LANG);
     document.body.addEventListener("keydown", Languages_handleKeyDown, false);
     Languages_cursorY = 0;
     Languages_inputFocus(Languages_cursorY);
@@ -156,11 +154,8 @@ function Languages_exit() {
     document.body.removeEventListener("keydown", Languages_handleKeyDown);
     document.body.addEventListener("keydown", Settings_handleKeyDown, false);
     Settings_ScrollTable();
-    //document.getElementById('settings_scroll').style.top = (screen.height * 0.085) + "px";
     Main_ShowElement('settings_main');
     Main_HideElement('settings_lang');
-    Main_textContent('top_bar_featured', STR_FEATURED);
-    document.getElementById('top_bar_featured').style.display = 'none';
     Languages_RemoveinputFocus();
     Languages_SetLang();
     Languages_ResetLang();
@@ -171,7 +166,7 @@ function Languages_ResetLang() {
         Languages_Selected = STR_LANG_ALL;
         Languages_value.All.defaultValue = 1;
         Languages_ChangeSettigs(0);
-        Main_AddClass(Languages_value_keys[0], 'strokedextraminired');
+        Main_AddClass(Languages_value_keys[0], 'red_text');
         Languages_HideShowAll();
     }
     Settings_DivOptionChangeLang('content_lang', STR_CONTENT_LANG, Languages_Selected);
@@ -207,7 +202,7 @@ function Languages_DivOptionNoSummary(key, string) {
     return '<div id="' + key + '_div" class="settings_div"><div id="' +
         key + '_name" class="settings_name">' + string + '</div>' +
         '<div class="settings_arraw_div"><div id="' + key + 'arrow_left" class="left"></div></div>' +
-        '<div id="' + key + '" class="' + (Languages_Obj_default(key) ? 'strokedextraminired ' : '') + 'strokedextramini settings_value">' + Languages_Obj_values(key) + '</div>' +
+        '<div id="' + key + '" class="' + (Languages_Obj_default(key) ? 'red_text ' : '') + 'strokedeline settings_value">' + Languages_Obj_values(key) + '</div>' +
         '<div class="settings_arraw_div"><div id="' + key + 'arrow_right" class="right"></div></div></div>';
 }
 
@@ -301,7 +296,7 @@ function Languages_handleKeyDown(event) {
             if (Languages_Obj_default(key) > 0) {
                 Languages_value[key].defaultValue -= 1;
                 Languages_ChangeSettigs(Languages_cursorY);
-                Main_RemoveClass(Languages_value_keys[Languages_cursorY], 'strokedextraminired');
+                Main_RemoveClass(Languages_value_keys[Languages_cursorY], 'red_text');
                 if (key.indexOf('All') !== -1) Languages_HideShowAll();
             }
             break;
@@ -310,7 +305,7 @@ function Languages_handleKeyDown(event) {
             if (Languages_Obj_default(key) < Languages_Obj_length(key)) {
                 Languages_value[key].defaultValue += 1;
                 Languages_ChangeSettigs(Languages_cursorY);
-                Main_AddClass(Languages_value_keys[Languages_cursorY], 'strokedextraminired');
+                Main_AddClass(Languages_value_keys[Languages_cursorY], 'red_text');
                 if (key.indexOf('All') !== -1) Languages_HideShowAll();
             }
             break;

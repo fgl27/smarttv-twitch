@@ -1068,13 +1068,12 @@ function ScreensObj_InitGame() {
                     this.itemsCount++;
                     this.idObject[cell.id] = 1;
 
-                    this.row.appendChild(
-                        Screens_createCellGame(
-                            this.row_id + '_' + this.coloumn_id,
-                            this.ids, [cell.box_art_url.replace("{width}x{height}", Main_GameSize),
-                            cell.name,
-                            ''
-                        ]));
+                    this.row.appendChild(Screens_createCellGame(this.row_id,
+                        this.coloumn_id,
+                        this.ids,
+                        cell.box_art_url.replace("{width}x{height}", Main_GameSize),
+                        cell.name,
+                        ''));
 
                     this.coloumn_id++;
                 }

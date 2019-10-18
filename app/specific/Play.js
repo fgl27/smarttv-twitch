@@ -786,7 +786,7 @@ function Play_onPlayer() {
             }
         });
 
-    }
+    } else Play_loadChat();
 }
 
 function Play_loadChat() {

@@ -106,6 +106,7 @@ function Screens_StartLoad() {
     Main_empty(inUseObj.table);
     Main_HideWarningDialog();
     inUseObj.cursor = null;
+    inUseObj.after = '';
     inUseObj.status = false;
     inUseObj.row = document.createElement('div');
     inUseObj.MaxOffset = 0;

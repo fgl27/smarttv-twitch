@@ -7,8 +7,8 @@ function en_USLang() {
     //document.getElementById("side_panel").style.width = "25%";
 
     //Below are variables to translate
-    STR_KEY_UP_DOWN = " (PG Up/Down)";
-    STR_GUIDE_EXTRA = STR_SPACE + "or key 2";
+    STR_KEY_UP_DOWN = " (CH Up/Down)";
+    STR_GUIDE = " (Guide or Info)";
     STR_REFRESH = "Refresh";
     STR_SEARCH = "Search";
     STR_SETTINGS = "Settings";
@@ -115,9 +115,6 @@ function en_USLang() {
     STR_ABOUT_INFO_13 = "JSHint - A Static Code Analysis Tool for JavaScript (https://github.com/jshint/jshint)";
 
     STR_ABOUT_INFO_14 = "Web:";
-    STR_ABOUT_INFO_15 = "Android:";
-    STR_ABOUT_INFO_16 = "Google: Leanback v17 (https://developer.android.com/reference/android/support/v17/leanback/package-summary)";
-    STR_ABOUT_INFO_17 = "Google: ExoPlayer (https://github.com/google/ExoPlayer)";
 
     STR_CONTROLS_PLAY_0 = STR_SPACE + "or in player bottom controls";
     STR_CONTROLS_PLAY_1 = "Show information panel: Press enter key or D-pad keys if chat and live channel feed is not showing";
@@ -309,4 +306,10 @@ function en_USLang() {
     STR_A_Z = "Alphabetical A - Z";
     STR_Z_A = "Alphabetical Z - A";
     STR_APP_ANIMATIONS = "Enable app animations";
+    STR_OAUTH_EXPLAIN1 = " below, fallowing this steps:";
+    STR_OAUTH_EXPLAIN2 = "Access the site link_link (using a computer or a smart phone)";
+    STR_OAUTH_EXPLAIN3 = "Click the \"Authorize\" button which will take you to main Twitch.TV authentication site";
+    STR_OAUTH_EXPLAIN4 = "Login to Twitch.TV using the username you are trying to add a key for";
+    STR_OAUTH_EXPLAIN5 = "Click on Authorize button of Twitch.TV site if you agree with the requested permissions";
+    STR_OAUTH_EXPLAIN6 = "The web page will update and show a key code, the key only has lowercase letters and numbers.";
 }

@@ -129,7 +129,7 @@ function AddUser_KeyboardEvent(event) {
 function AddUser_loadDataRequest() {
     var theUrl = 'https://api.twitch.tv/kraken/users?login=' + encodeURIComponent(AddUser_Username);
 
-    BasehttpGet(theUrl, AddUser_loadingDataTimeout, 2, null, AddUser_loadDataRequestSuccess, AddUser_loadDataError);
+    BasexmlHttpGet(theUrl, AddUser_loadingDataTimeout, 2, null, AddUser_loadDataRequestSuccess, AddUser_loadDataError);
 }
 
 function AddUser_loadDataRequestSuccess(response) {

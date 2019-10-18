@@ -98,7 +98,7 @@ var Main_ItemsLimitChannel = 48;
 var Main_ColoumnsCountChannel = 6;
 var Main_ItemsReloadLimitChannel = Math.floor((Main_ItemsLimitChannel / Main_ColoumnsCountChannel) / Main_ReloadLimitOffsetVideos);
 
-var Main_clientId = "5seja5ptej058mxqy7gh5tcudjqtm9";
+var Main_clientId = "ypvnuqrh98wqz1sr0ov3fgfu4jh1yx";
 var Main_clientIdHeader = 'Client-ID';
 var Main_AcceptHeader = 'Accept';
 var Main_Authorization = 'Authorization';
@@ -108,18 +108,17 @@ var Main_TwithcV5Json = 'application/vnd.twitchtv.v5+json';
 var Main_classThumb = 'stream_thumbnail_focused';
 var Main_DataAttribute = 'data_attribute';
 
-var Main_stringVersion = '2.0';
-var Main_stringVersion_Min = '.80';
-var Main_minversion = '101719';
-var Main_versionTag = Main_stringVersion + Main_stringVersion_Min + '-' + Main_minversion;
+var Main_version = 401;
+var Main_stringVersion_Min = '4.0.1';
+var Main_minversion = '101819';
+var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
 var Main_IsNotBrowserVersion = '';
 var Main_ClockOffset = 0;
 var Main_IsNotBrowser = 0;
 var Main_randomimg = '?' + Math.random();
 var proxyurl = "https://cors-anywhere.herokuapp.com/";
 var Main_updateUserFeedId;
-var Main_vp9supported = false;
-var Main_SupportsAvc1High = false;
+var Main_vp9supported = false; //TODO check tizen support
 //Variable initialization end
 
 // this function will be called only once the first time the app startup
@@ -139,79 +138,59 @@ function Main_loadTranslations(language) {
     Main_Checktylesheet();
 
     Main_ready(function() {
-        try {
-            Main_IsNotBrowser = Android.getAndroid();
-            Main_IsNotBrowserVersion = Android.getversion();
-        } catch (e) {
-            Main_IsNotBrowserVersion = '1.0.0';
-            Main_IsNotBrowser = 0;
-            document.body.style.backgroundColor = "rgba(0, 0, 0, 1)";
-            Main_isDebug = true;
-            console.log('Main_isReleased: ' + Main_isReleased);
-            console.log('Main_isDebug: ' + Main_isDebug);
-            console.log('Main_isBrowser: ' + !Main_IsNotBrowser);
-            //If we add the class on the android app for some reason it prevents input from release the focus
-            Main_AddClass('scenefeed', 'feed_screen_input');
-        }
-        Main_showLoadDialog();
+        if (Main_isReleased) document.body.innerHTML = STR_BODY;
 
-        if (Main_IsNotBrowser) Main_vp9supported = Android.misCodecSupported();
+        Main_ready(function() {
+            try {
+                Main_IsNotBrowser = tizen !== null;
+                console.log('Main_IsNotBrowser tizen = ' + Main_IsNotBrowser);
+                Main_IsNotBrowserVersion = '1.0.0';
+            } catch (e) {
+                Main_IsNotBrowserVersion = '1.0.0';
+                Main_IsNotBrowser = 0;
+                document.body.style.backgroundColor = "rgba(0, 0, 0, 1)";
+                Main_isDebug = true;
+                console.log('Main_isReleased: ' + Main_isReleased);
+                console.log('Main_isDebug: ' + Main_isDebug);
+                console.log('Main_isBrowser: ' + !Main_IsNotBrowser);
+            }
+            Main_showLoadDialog();
 
-        Settings_SetDefautls();
-        calculateFontSize();
-        en_USLang();
-        Languages_SetDefautls();
 
-        // Language is set as (LANGUAGE)_(REGION) in (ISO 639-1)_(ISO 3166-1 alpha-2) eg.; pt_BR Brazil, en_US USA
-        // https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
-        // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+            Settings_SetDefautls();
+            calculateFontSize();
+            en_USLang();
+            Languages_SetDefautls();
 
-        //var lang = language,
-        //    Savedlang = Main_getItemInt('user_language', 0);
+            // Language is set as (LANGUAGE)_(REGION) in (ISO 639-1)_(ISO 3166-1 alpha-2) eg.; pt_BR Brazil, en_US USA
+            // https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+            // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 
-        //if (Savedlang) lang = Settings_Obj_set_values("general_lang");
-        //else Settings_CheckLang(lang);
+            //var lang = language,
+            //    Savedlang = Main_getItemInt('user_language', 0);
 
-        //if (lang.indexOf('pt_') !== -1) pt_BRLang();
-        //else if (lang.indexOf('it_') !== -1) it_ITLang();
+            //if (Savedlang) lang = Settings_Obj_set_values("general_lang");
+            //else Settings_CheckLang(lang);
 
-        console.log("language is " + language);
-        DefaultLang();
+            //if (lang.indexOf('pt_') !== -1) pt_BRLang();
+            //else if (lang.indexOf('it_') !== -1) it_ITLang();
 
-        if (window.location.href.indexOf('code') !== -1) processCode(window.location.href);
+            console.log("language is " + language);
+            DefaultLang();
 
-        Main_SearchInput = document.getElementById("search_input");
-        Main_AddUserInput = document.getElementById("user_input");
+            Main_SearchInput = document.getElementById("search_input");
+            Main_AddUserInput = document.getElementById("user_input");
 
-        AddUser_RestoreUsers();
-        //Allow page to proper load/resize and users 0 be restored before Main_initWindows
-        window.setTimeout(Main_initWindows, 500);
+            AddUser_RestoreUsers();
+            //Allow page to proper load/resize and users 0 be restored before Main_initWindows
+            window.setTimeout(Main_initWindows, 500);
+        });
     });
 
 }
 
 function Main_initWindows() {
     Main_RestoreValues();
-
-    var device = null;
-    try {
-        device = Android.getDevice();
-    } catch (e) {}
-
-    if (!Main_values.DeviceBitrateCheck && device !== null) {
-        Main_values.DeviceBitrateCheck = true;
-        //Some devices are very slow and need small bitrate when in picture in picture shield doesn't.
-        if (device.toLowerCase().indexOf('shield android tv') !== -1) {
-            Settings_value.bitrate_min.defaultValue = 0;
-            Main_setItem('bitrate_min', 1);
-            Android.SetSmallPlayerBandwidth(0);
-        }
-    }
-
-    //Check for High Level 5.2 video/mp4; codecs="avc1.640034" as some devices don't support it
-    try {
-        Main_SupportsAvc1High = Android.misAVC52Supported();
-    } catch (e) {}
 
     Main_SetStringsMain(true);
 
@@ -371,13 +350,11 @@ function Main_replaceClassEmoji(div) {
 
 function Main_showLoadDialog() {
     Main_YRst(-1);
-    if (Main_IsNotBrowser) Android.mshowLoading(true);
-    else Main_ShowElement('dialog_loading');
+    Main_ShowElement('dialog_loading');
 }
 
 function Main_HideLoadDialog() {
-    if (Main_IsNotBrowser) Android.mshowLoading(false);
-    else Main_HideElement('dialog_loading');
+    Main_HideElement('dialog_loading');
 }
 
 function Main_clearExitDialog() {
@@ -693,15 +670,39 @@ function Main_videoCreatedAt(time) { //time in '2017-10-27T13:27:27Z'
 
 function Main_checkVersion() {
     if (Main_IsNotBrowser) {
-        var device = '';
-        try {
-            device = Android.getDevice();
-        } catch (e) {}
-        Main_versionTag = "Android: " + Main_IsNotBrowserVersion + ' Web: ' + Main_minversion + ' Device: ' + device;
-        if (Main_needUpdate(Main_IsNotBrowserVersion)) Main_ShowElement('label_update');
-    }
+        var Appversion = null,
+            TizenVersion = null,
+            fw = null,
+            value = 0,
+            Main_tvModel,
+            Main_currentVersion;
 
-    Main_innerHTML("dialog_about_text", STR_ABOUT_INFO_HEADER + STR_VERSION + Main_versionTag + STR_ABOUT_INFO_0);
+        try {
+            Appversion = tizen.application.getAppInfo().version;
+            // Retrieving Platform Information https://developer.samsung.com/tv/develop/guides/fundamentals/retrieving-platform-information
+            TizenVersion = tizen.systeminfo.getCapability("http://tizen.org/feature/platform.version");
+            fw = webapis.productinfo.getFirmware();
+            Main_tvModel = webapis.productinfo.getModel();
+            console.log('App version: ' + Main_minversion);
+        } catch (e) {}
+
+        if (Appversion !== null && TizenVersion !== null && Main_tvModel !== null && fw !== null) {
+            Main_currentVersion = Appversion;
+
+            Main_versionTag = 'APP ' + STR_VERSION + Appversion + '.' + Main_minversion +
+                (Main_isReleased ? '' : '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-weight: bold;"> TEST</div>') + STR_BR + 'Tizen ' + STR_VERSION +
+                TizenVersion + STR_SPACE + STR_SPACE + '|' + STR_SPACE + STR_SPACE + 'TV: ' + Main_tvModel + STR_SPACE + STR_SPACE + '|' +
+                STR_SPACE + STR_SPACE + 'FW: ' + fw + STR_BR;
+            Appversion = Appversion.split(".");
+            value = parseInt(Appversion[0] + Appversion[1] + Appversion[2]);
+            Main_innerHTML("dialog_about_text", STR_ABOUT_INFO_HEADER + Main_versionTag + STR_ABOUT_INFO_0);
+
+            if (!Main_isReleased) console.log('Tizen ' + STR_VERSION + TizenVersion + ' | ' +
+                'TV: ' + Main_tvModel + ' | ' + 'FW: ' + fw);
+
+            if (value < Main_version) Main_ShowElement('label_update');
+        }
+    }
 }
 
 function Main_needUpdate(version) {
@@ -977,8 +978,8 @@ function Main_ExitDialog(event) {
             if (!Main_IsNotBrowser || !Main_ExitCursor) Main_HideExitDialog();
             else if (Main_ExitCursor === 1) {
                 Main_HideExitDialog();
-                Android.mclose(false);
-            } else if (Main_ExitCursor === 2) Android.mclose(true);
+                tizen.application.getCurrentApplication().hide();
+            } else if (Main_ExitCursor === 2) tizen.application.getCurrentApplication().exit();
             break;
         default:
             break;
@@ -1050,57 +1051,16 @@ function Main_PrintUnicode(string) { // jshint ignore:line
         console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
 }
 
-function processCode(pageUrl) {
-    console.log("processCode");
-    var code = '';
-    code = pageUrl.match(/code=(\w+)/);
-    if (code) {
-        code = code[1];
-        console.log('if code ' + code);
-        Main_newUsercode = code;
-    } else {
-        console.log('else code ' + code);
-        Main_newUsercode = 0;
-    }
-}
-
-//Basic XMLHttpRequest thatonly returns error or 200 status
-function BasehttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, useProxy) {
-    if (Main_IsNotBrowser) BaseAndroidhttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError);
-    else BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, useProxy);
-}
-
-function BaseAndroidhttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
-    var xmlHttp = Android.mreadUrl(theUrl, Timeout, HeaderQuatity, access_token);
-
-    if (xmlHttp) xmlHttp = JSON.parse(xmlHttp);
-    else {
-        calbackError();
-        return;
-    }
-
-    if (xmlHttp.status === 200) {
-        callbackSucess(xmlHttp.responseText);
-    } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired
-        AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
-    } else if (xmlHttp.status === 410 && inUseObj.screen === Main_games) {
-        inUseObj.setHelix();
-        BaseAndroidhttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError);
-    } else {
-        calbackError();
-    }
-}
-
 var Main_Headers = [
     [Main_clientIdHeader, Main_clientId],
     [Main_AcceptHeader, Main_TwithcV5Json],
     [Main_Authorization, null]
 ];
 
-function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, useProxy) {
+function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
     var xmlHttp = new XMLHttpRequest();
 
-    xmlHttp.open("GET", (useProxy ? proxyurl : '') + theUrl, true);
+    xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Timeout;
 
     Main_Headers[2][1] = access_token;
@@ -1114,11 +1074,11 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
         if (xmlHttp.readyState === 4) {
             if (xmlHttp.status === 200) {
                 callbackSucess(xmlHttp.responseText);
-            } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired
-                AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
+            } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
+                AddCode_refreshTokens(Main_values.Users_Position, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
             } else if (xmlHttp.status === 410 && inUseObj.screen === Main_games) {
                 inUseObj.setHelix();
-                BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, useProxy);
+                BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError);
             } else {
                 calbackError();
             }

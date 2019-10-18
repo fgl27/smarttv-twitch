@@ -90,7 +90,7 @@ function ChannelContent_loadDataPrepare() {
 function ChannelContent_loadDataRequest() {
     var theUrl = 'https://api.twitch.tv/kraken/streams/' + encodeURIComponent(ChannelContent_TargetId !== undefined ? ChannelContent_TargetId : Main_values.Main_selectedChannel_id);
 
-    BasehttpGet(theUrl, ChannelContent_loadingDataTimeout, 2, null, ChannelContent_loadDataRequestSuccess, ChannelContent_loadDataError);
+    BasexmlHttpGet(theUrl, ChannelContent_loadingDataTimeout, 2, null, ChannelContent_loadDataRequestSuccess, ChannelContent_loadDataError);
 }
 
 function ChannelContent_loadDataRequestSuccess(response) {
@@ -123,7 +123,7 @@ function ChannelContent_loadDataError() {
 function ChannelContent_loadDataCheckHost() {
     var theUrl = 'https://tmi.twitch.tv/hosts?include_logins=1&host=' + encodeURIComponent(Main_values.Main_selectedChannel_id);
 
-    BasehttpGet(theUrl, ChannelContent_loadingDataTimeout, 1, null, ChannelContent_CheckHost, ChannelContent_loadDataCheckHostError, true);
+    BasexmlHttpGet(theUrl, ChannelContent_loadingDataTimeout, 1, null, ChannelContent_CheckHost, ChannelContent_loadDataCheckHostError, true);
 }
 
 function ChannelContent_loadDataCheckHostError() {
@@ -154,7 +154,7 @@ function ChannelContent_CheckHost(responseText) {
 function ChannelContent_GetStreamerInfo() {
     var theUrl = 'https://api.twitch.tv/kraken/channels/' + Main_values.Main_selectedChannel_id;
 
-    BasehttpGet(theUrl, PlayVod_loadingInfoDataTimeout, 2, null, ChannelContent_GetStreamerInfoSuccess, ChannelContent_GetStreamerInfoError);
+    BasexmlHttpGet(theUrl, PlayVod_loadingInfoDataTimeout, 2, null, ChannelContent_GetStreamerInfoSuccess, ChannelContent_GetStreamerInfoError);
 }
 
 function ChannelContent_GetStreamerInfoSuccess(responseText) {

@@ -248,10 +248,10 @@ function UserLiveFeed_loadDataSuccess(responseText) {
             doc.appendChild(UserLiveFeed_CreatFeed(i,
                 [stream.channel.name, id, Main_is_rerun(stream.stream_type)],
                 [stream.preview.template.replace("{width}x{height}", Main_VideoSize),
-                stream.channel.display_name,
-                stream.game,
-                Main_addCommas(stream.viewers),
-                stream.channel.status
+                    stream.channel.display_name,
+                    stream.game,
+                    Main_addCommas(stream.viewers),
+                    stream.channel.status
                 ]));
 
             if (UserSidePannel_LastPos !== null && UserSidePannel_LastPos === stream.channel.name) Sidepannel_PosFeed = i;
@@ -259,17 +259,17 @@ function UserLiveFeed_loadDataSuccess(responseText) {
             docside.appendChild(UserLiveFeed_CreatSideFeed(i,
                 [stream.channel.name, id, Main_is_rerun(stream.stream_type)],
                 [stream.channel.name, id, stream.preview.template.replace("{width}x{height}", Main_SidePannelSize),
-                stream.channel.display_name,
-                stream.channel.status, stream.game,
-                STR_SINCE + Play_streamLiveAt(stream.created_at) + ' ' +
-                STR_FOR + Main_addCommas(stream.viewers) + STR_SPACE + STR_VIEWER,
-                Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language),
-                Main_is_rerun(stream.stream_type), stream.channel.partner
+                    stream.channel.display_name,
+                    stream.channel.status, stream.game,
+                    STR_SINCE + Play_streamLiveAt(stream.created_at) + ' ' +
+                    STR_FOR + Main_addCommas(stream.viewers) + STR_SPACE + STR_VIEWER,
+                    Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language),
+                    Main_is_rerun(stream.stream_type), stream.channel.partner
                 ],
                 [stream.channel.logo,
-                stream.channel.display_name,
-                stream.channel.display_name,
-                stream.game, Main_addCommas(stream.viewers)
+                    stream.channel.display_name,
+                    stream.channel.display_name,
+                    stream.game, Main_addCommas(stream.viewers)
                 ]));
         }
     }

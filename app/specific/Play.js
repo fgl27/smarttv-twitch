@@ -487,7 +487,7 @@ function Play_loadDataRequest() {
         theUrl = 'https://usher.ttvnw.net/api/channel/hls/' + Main_values.Play_selectedChannel +
             '.m3u8?&token=' + encodeURIComponent(Play_tokenResponse.token) + '&sig=' + Play_tokenResponse.sig +
             '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true&fast_bread=true' +
-            (Main_vp9supported ? '&preferred_codecs=vp09' : '');
+            (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
     }
 
     var xmlHttp = new XMLHttpRequest();
@@ -1716,7 +1716,7 @@ function Play_handleKeyDown(e) {
                     Play_setHidePanel();
                 } else if (!UserLiveFeed_isFeedShow() && AddUser_UserIsSet()) UserLiveFeed_ShowFeed();
                 else if (Play_isEndDialogVisible()) Play_EndTextClear();
-                else if (UserLiveFeed_isFeedShow()) UserLiveFeed_FeedRefreshFocus();
+                else if (UserLiveFeed_isFeedShow()) UserLiveFeed_FeedRefresh();
                 break;
             case KEY_DOWN:
                 if (Play_isPanelShown()) {

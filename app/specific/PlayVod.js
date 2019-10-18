@@ -274,7 +274,7 @@ function PlayVod_loadDataRequest() {
         theUrl = 'https://usher.ttvnw.net/vod/' + Main_values.ChannelVod_vodId +
             '.m3u8?&nauth=' + encodeURIComponent(PlayVod_tokenResponse.token) + '&nauthsig=' + PlayVod_tokenResponse.sig +
             '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true' +
-            (Main_vp9supported ? '&preferred_codecs=vp09' : '');
+            (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
     }
 
     BasexmlHttpGet(theUrl, Play_loadingDataTimeout, 1, null, PlayVod_loadDataSuccess, PlayVod_loadDataError);
@@ -1014,7 +1014,7 @@ function PlayVod_handleKeyDown(e) {
                     } else Play_BottomUpDown(2, 1);
                     PlayVod_setHidePanel();
                 } else if (!UserLiveFeed_isFeedShow()) UserLiveFeed_ShowFeed();
-                else if (UserLiveFeed_isFeedShow()) UserLiveFeed_FeedRefreshFocus();
+                else if (UserLiveFeed_isFeedShow()) UserLiveFeed_FeedRefresh();
                 else if (!Play_isVodDialogShown()) PlayVod_showPanel(true);
                 break;
             case KEY_DOWN:

@@ -705,11 +705,11 @@ function Main_checkVersion() {
     }
 }
 
-function Main_needUpdate(version) {
-    version = version.split(".");
-    return (parseFloat(version[0] + '.' + version[1]) < parseFloat(Main_stringVersion)) ||
-        (parseInt(version[2]) < parseInt(Main_stringVersion_Min.split(".")[1]));
-}
+//function Main_needUpdate(version) {
+//    version = version.split(".");
+//    return (parseFloat(version[0] + '.' + version[1]) < parseFloat(Main_stringVersion)) ||
+//        (parseInt(version[2]) < parseInt(Main_stringVersion_Min.split(".")[1]));
+//}
 
 function Main_empty(el) {
     el = document.getElementById(el);

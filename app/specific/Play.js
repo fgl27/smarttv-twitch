@@ -1118,7 +1118,6 @@ function Play_ChatSize(showDialog) {
     Play_chat_container.style.height = Play_ChatSizeVal[Play_ChatSizeValue].containerHeight + '%';
     document.getElementById("play_chat_dialog").style.marginTop = Play_ChatSizeVal[Play_ChatSizeValue].dialogTop + '%';
     Play_ChatPosition();
-    ChatLive_ChatFixPosition();
 
     if (showDialog) Play_showChatBackgroundDialog(STR_SIZE + Play_ChatSizeVal[Play_ChatSizeValue].percentage);
 

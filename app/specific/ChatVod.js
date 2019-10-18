@@ -12,19 +12,15 @@ var Chat_offset = 0;
 var Chat_title = '';
 var defaultColors = ["fe2424", "fc5a24", "ff9020", "fEc723", "ffff1d", "bfff00", "c3ff12", "56fe1d", "1eff1e", "16ff51", "00ff80", "00ffbf", "00ffff", "1dc6ff", "158aff", "3367ff", "ff4dff", "ff4ad2", "ff62b1", "ff4272"];
 var defaultColorsLength = defaultColors.length;
-var Chat_div = [];
+var Chat_div;
 var Chat_Position = 0;
 var Chat_hasEnded = false;
 var Chat_Id = 0;
-var Chat_CleanMax = 60;
 var Chat_loadBadgesChannelId;
 //Variable initialization end
 
 function Chat_Preinit() {
-    Chat_div[0] = document.getElementById('chat_box');
-    Chat_div[1] = document.getElementById('chat_box2');
-    ChatLive_LineAddCounter[0] = 0;
-    ChatLive_LineAddCounter[1] = 0;
+    Chat_div = document.getElementById('chat_box');
     Chat_loadBadgesGlobal();
 }
 
@@ -38,9 +34,9 @@ function Chat_Init() {
 
     Main_ready(function() {
         Chat_Id = (new Date()).getTime();
-        ChatLive_selectedChannel_id[0] = Main_values.Main_selectedChannel_id;
-        ChatLive_selectedChannel[0] = Main_values.Main_selectedChannel;
-        ChatLive_loadBadgesChannel(Chat_Id, Chat_loadBadgesChannelSuccess, 0);
+        ChatLive_selectedChannel_id = Main_values.Main_selectedChannel_id;
+        ChatLive_selectedChannel = Main_values.Main_selectedChannel;
+        ChatLive_loadBadgesChannel(Chat_Id, Chat_loadBadgesChannelSuccess);
     });
 }
 
@@ -115,19 +111,19 @@ function Chat_loadEmotesSuccessffz(data) {
     Chat_LoadGlobal = true;
 }
 
-function Chat_loadBadgesTransform(responseText, chat_number) {
+function Chat_loadBadgesTransform(responseText) {
     transformBadges(JSON.parse(responseText).badge_sets).forEach(function(badge) {
         badge.versions.forEach(function(version) {
-            tagCSS(badge.type + chat_number, version.type, version.image_url_4x, Chat_div[chat_number]);
+            tagCSS(badge.type, version.type, version.image_url_4x, Chat_div);
         });
     });
 }
 
 function Chat_loadBadgesChannelSuccess(responseText, id) {
-    Chat_loadBadgesTransform(responseText, 0);
+    Chat_loadBadgesTransform(responseText);
 
-    ChatLive_loadEmotesChannel(0);
-    ChatLive_loadEmotesChannelffz(0);
+    ChatLive_loadEmotesChannel();
+    ChatLive_loadEmotesChannelffz();
     if (Chat_Id === id) Chat_loadChat(id);
 }
 
@@ -193,7 +189,7 @@ function Chat_loadChatSuccess(responseText, id) {
         //Add badges
         if (mmessage.hasOwnProperty('user_badges')) {
             mmessage.user_badges.forEach(function(badges) {
-                div += '<span class="' + badges._id + (badges._id.indexOf('subscriber') !== -1 ? "0-" : "-") + badges.version + ' tag"></span>';
+                div += '<span class="' + badges._id + '-' + badges.version + ' tag"></span>';
             });
         }
 
@@ -203,7 +199,7 @@ function Chat_loadChatSuccess(responseText, id) {
         //Add mesage
         div += '<span class="message">';
         mmessage.fragments.forEach(function(fragments) {
-            if (fragments.hasOwnProperty('emoticon')) div += '<img class="emoticon" alt="" src="https://static-cdn.jtvnw.net/emoticons/v1/' + fragments.emoticon.emoticon_id + '/2.0">';
+            if (fragments.hasOwnProperty('emoticon')) div += '<img class="emoticon" alt="" src="https://static-cdn.jtvnw.net/emoticons/v1/' + fragments.emoticon.emoticon_id + '/1.0" srcset="https://static-cdn.jtvnw.net/emoticons/v1/' + fragments.emoticon.emoticon_id + '/2.0 2x, https://static-cdn.jtvnw.net/emoticons/v1/' + fragments.emoticon.emoticon_id + '/3.0 4x">';
             else div += ChatLive_extraMessageTokenize([fragments.text]);
         });
 
@@ -233,9 +229,9 @@ function Chat_MessageVectorNext(message, time) {
 
 function Chat_Play(id) {
     if (!Chat_hasEnded && Chat_Id === id && !Main_values.Play_ChatForceDisable) {
-        Main_Addline(id);
         Chat_addlinesId = window.setInterval(function() {
             Main_Addline(id);
+            Chat_div.scrollTop = Chat_div.scrollHeight;
         }, 1000);
     }
 }
@@ -254,7 +250,6 @@ function Chat_Clear() {
     Chat_Pause();
     Chat_Id = 0;
     Main_empty('chat_box');
-    Main_empty('chat_box2');
     Chat_hasEnded = false;
     Chat_next = null;
     Chat_Messages = [];
@@ -266,12 +261,12 @@ function Main_Addline(id) {
     var elem;
     if (Chat_Position < (Chat_Messages.length - 1)) {
         for (var i = Chat_Position; i < Chat_Messages.length; i++, Chat_Position++) {
-            if (Chat_Messages[i].time < (ChannelVod_vodOffset + (Android.gettime() / 1000))) {
+            if (Chat_Messages[i].time < (PlayVod_currentTime / 1000)) {
                 elem = document.createElement('div');
                 elem.className = 'chat_line';
                 elem.innerHTML = Chat_Messages[i].message;
 
-                Chat_div[0].appendChild(elem);
+                Chat_div.appendChild(elem);
             } else {
                 break;
             }
@@ -285,7 +280,7 @@ function Main_Addline(id) {
             Chat_MessagesNext = [];
 
             if (Chat_Id === id) Chat_loadChatNext(id);
-            Chat_Clean(0);
+            Chat_Clean();
         } else { //Chat has eneded
             var div = '&nbsp;';
             div += '<span class="message">';
@@ -296,9 +291,16 @@ function Main_Addline(id) {
             elem.className = 'chat_line';
             elem.innerHTML = div;
 
-            Chat_div[0].appendChild(elem);
+            Chat_div.appendChild(elem);
 
             Chat_hasEnded = true;
+            Chat_div.scrollTop = Chat_div.scrollHeight;
+
+            //keep refreshing in case user changes chat size
+            window.clearInterval(Chat_addlinesId);
+            Chat_addlinesId = window.setInterval(function() {
+                Chat_div.scrollTop = Chat_div.scrollHeight;
+            }, 1000);
         }
     }
 }
@@ -352,11 +354,15 @@ function Chat_NoVod() {
 function Chat_Disable() {
     Chat_Clear();
     Chat_SingleLine(STR_CHAT_DISABLE);
+    Main_ready(function() {
+        Chat_div.scrollTop = Chat_div.scrollHeight;
+    });
 }
 
 function Chat_SingleLine(Line) {
     var div = '&nbsp;';
     div += '<span class="message">';
+    div += STR_BR + STR_BR + STR_BR + STR_BR + STR_BR + STR_BR;
     div += Line;
     div += '</span>';
 
@@ -364,16 +370,16 @@ function Chat_SingleLine(Line) {
     elem.className = 'chat_line';
     elem.innerHTML = div;
 
-    Chat_div[0].appendChild(elem);
-    Chat_div[1].appendChild(elem.cloneNode(true));
+    Chat_div.appendChild(elem);
 }
 
-function Chat_Clean(chat_number) {
+function Chat_Clean() {
     //delete old lines out of view
-    var linesToDelete = Chat_div[chat_number].getElementsByClassName("chat_line");
-    if ((linesToDelete.length - Chat_CleanMax) > 0) {
-        for (var i = 0; i < (linesToDelete.length - Chat_CleanMax); i++) {
-            Chat_div[chat_number].removeChild(linesToDelete[0]);
+    var linesToDelete = document.getElementsByClassName("chat_line");
+    if ((linesToDelete.length - 100) > 0) {
+        for (var i = 0; i < (linesToDelete.length - 100); i++) {
+            linesToDelete[0].parentNode.removeChild(linesToDelete[0]);
         }
     }
+    ChatLive_ChatFixPosition();
 }

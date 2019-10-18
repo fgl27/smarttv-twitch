@@ -72,7 +72,11 @@ function AddUser_RemoveinputFocus(EnaKeydown) {
     Main_AddUserInput.placeholder = STR_PLACEHOLDER_PRESS + STR_PLACEHOLDER_USER;
 
     if (EnaKeydown) document.body.addEventListener("keydown", AddUser_handleKeyDown, false);
-    AddUser_keyBoardOn = false;
+    window.setTimeout(function() {
+        Main_ready(function() {
+            AddUser_keyBoardOn = false;
+        });
+    }, 500);
 }
 
 function AddUser_KeyboardEvent(event) {
@@ -114,7 +118,8 @@ function AddUser_KeyboardEvent(event) {
                         AddUser_inputFocus();
                     }, 1500);
                 }
-            } else AddUser_inputFocus();
+            }
+            AddUser_RemoveinputFocus(true);
             break;
         case KEY_KEYBOARD_BACKSPACE:
             Main_AddUserInput.value = Main_AddUserInput.value.slice(0, -1);

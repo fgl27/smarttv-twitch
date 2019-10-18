@@ -1732,598 +1732,600 @@
 </head>
 
 <body>
-    <!-- bodystart this is here so release_maker can work don't remove-->
-    <div id="scene1" class="screen_size" style="background-color: rgba(0, 0, 0, 1);">
-        <div id="dialog_loading" class="screens dialogs hide" style="z-index:98; margin-top: 50vh; overflow: visible;">
-            <div class="loading">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-        </div>
-        <div id="main_remove_dialog" class="screens hide" style="z-index: 100; background: rgba(0, 0, 0, 0.75);">
-            <div class="dialog_exit" style="width: 75%; margin-left: 12.5%;">
-                <div id="main_dialog_remove" class="exit_text"></div>
-                <div style="text-align: center; margin-bottom: 4%;">
-                    <div id="remove_cancel" class="button_dialog_focused button_dialog" style="margin-left: 0%;"></div>
-                    <div id="remove_yes" class="button_dialog"></div>
+    <div id="body_container" style="margin: 0px auto;">
+        <!-- bodystart this is here so release_maker can work don't remove-->
+        <div id="scene1" class="screen_size" style="background-color: rgba(0, 0, 0, 1);">
+            <div id="dialog_loading" class="screens dialogs hide" style="z-index:98; margin-top: 50vh; overflow: visible;">
+                <div class="loading">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
                 </div>
             </div>
-        </div>
-        <div id="main_dialog_user" class="screens hide" style="z-index: 100; background: rgba(0, 0, 0, 0.75);">
-            <div class="dialog_exit" style="width: 80%; margin-left: 10%;">
-                <div id="main_dialog_user_text" class="exit_text"></div>
-                <div style="text-align: center; margin-bottom: 4%;">
-                    <div id="main_dialog_user_first" class="button_dialog_focused button_dialog" style="margin-left: 0%;"></div>
-                    <div id="main_dialog_user_key" class="button_dialog" style="width: 35%;"></div>
-                    <div id="main_dialog_user_remove" class="button_dialog" style="width: 22%;"></div>
-                </div>
-            </div>
-        </div>
-        <div id="main_dialog_exit" class="screens hide" style="z-index: 100; background: rgba(0, 0, 0, 0.75);">
-            <div class="dialog_exit">
-                <div id="main_dialog_exit_text" class="exit_text"></div>
-                <div style="text-align: center; margin-bottom: 4%;">
-                    <div id="exit_app_cancel" class="button_dialog_focused button_dialog" style="margin-left: 0%;">
-                    </div>
-                    <div id="exit_app_minimize" class="button_dialog"></div>
-                    <div id="exit_app_close" class="button_dialog"></div>
-                </div>
-            </div>
-        </div>
-        <div id="dialog_period" class="screens hide" style="z-index: 100; background: rgba(0, 0, 0, 0.75);">
-            <div class="dialog_period">
-                <div id="dialog_period_text" class="exit_text"></div>
-                <div style="text-align: center; margin-bottom: 4%;">
-                    <div id="dialog_period_1" class="button_dialog" style="margin-left: 0%;"></div>
-                    <div id="dialog_period_2" class="button_dialog"></div>
-                    <div id="dialog_period_3" class="button_dialog"></div>
-                    <div id="dialog_period_4" class="button_dialog"></div>
-                </div>
-            </div>
-        </div>
-        <div id="dialog_OffSet" class="screens hide" style="z-index: 100; background: rgba(0, 0, 0, 0.75);">
-            <div class="dialog_period">
-                <div id="dialog_OffSet_text" class="exit_text"></div>
-                <div id="dialog_OffSet_text_summary" class="exit_text"></div>
-                <div style="text-align: center; margin-bottom: 4%; color:#FFFFFF; font-size:200%;">
-                    <div class="settings_arraw_div">
-                        <div id="dialog_OffSet_left" class="left" style="opacity: 1;"></div>
-                    </div>
-                    <div id="dialog_OffSet_val" class="strokedeline settings_value settings_value_focus"></div>
-                    <div class="settings_arraw_div">
-                        <div id="dialog_OffSet_right" class="right" style="opacity: 1;"></div>
+            <div id="main_remove_dialog" class="screens hide" style="z-index: 100; background: rgba(0, 0, 0, 0.75);">
+                <div class="dialog_exit" style="width: 75%; margin-left: 12.5%;">
+                    <div id="main_dialog_remove" class="exit_text"></div>
+                    <div style="text-align: center; margin-bottom: 4%;">
+                        <div id="remove_cancel" class="button_dialog_focused button_dialog" style="margin-left: 0%;"></div>
+                        <div id="remove_yes" class="button_dialog"></div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div id="dialog_warning" class="strokedeline dialogs hide" style="z-index:100; margin-top: 31%; width: 60%; margin-left: 20%;">
-            <div id="dialog_warning_text" class="strokedeline" style="font-size: 150%; "></div>
-        </div>
-        <div id="dialog_about" class="screens hide" style="z-index: 200; background: rgba(0, 0, 0, 0.75);">
-            <div class="about_dialogs" style="width: 95%; margin-left: 2.5%;">
-                <div id="dialog_about_text" class="about_text"></div>
-            </div>
-        </div>
-        <div id="dialog_controls" class="screens hide" style="z-index: 200; background: rgba(0, 0, 0, 0.75);">
-            <div class="about_dialogs" style="width: 85%; margin-left: 7.5%;">
-                <div id="dialog_controls_text" class="controls_text"></div>
-            </div>
-        </div>
-        <div id="dialog_counter" style="position: absolute; z-index:101; width: 100%; bottom: 0;">
-            <div style="float: right; width: auto; height: auto; background: linear-gradient(to top, black, rgba(0, 0, 0, 0.75));">
-                <div id="dialog_counter_text" class="counter_class"></div>
-            </div>
-        </div>
-        <div id="screens_holder" class="screens">
-            <!-- Channel screens-->
-            <div id="UserChannels_scroll" class="screen_holder_channel hide">
-                <div id="stream_table_user_channels" class="streams_div" style="margin-left: 6.5%;"></div>
-            </div>
-            <div id="SearchChannels_scroll" class="screen_holder_channel hide">
-                <div id="stream_table_search_channel" class="streams_div"></div>
-            </div>
-            <div id="channel_content_scroll" class="screen_holder hide">
-                <div id="stream_table_channel_content" class="streams_div">
-                    <div>
-                        <div id="channel_content_celly_0" class="stream_cell_period">
-                            <div id="channel_content_thumbdivy_0" class="stream_thumbnail_channel_vod">
-                                <div id="channel_content_titley_0" class="stream_channel_fallow_game"></div>
-                            </div>
-                        </div>
-                        <div id="channel_content_celly_1" class="stream_cell_period">
-                            <div id="channel_content_thumbdivy_1" class="stream_thumbnail_channel_vod">
-                                <div id="channel_content_titley_1" class="stream_channel_fallow_game"></div>
-                            </div>
-                        </div>
-                        <div id="channel_content_celly_2" class="stream_cell_period">
-                            <div id="channel_content_thumbdivy_2" class="stream_thumbnail_channel_vod">
-                                <div id="channel_content_titley_2" class="stream_channel_fallow_game"></div>
-                            </div>
-                        </div>
+            <div id="main_dialog_user" class="screens hide" style="z-index: 100; background: rgba(0, 0, 0, 0.75);">
+                <div class="dialog_exit" style="width: 80%; margin-left: 10%;">
+                    <div id="main_dialog_user_text" class="exit_text"></div>
+                    <div style="text-align: center; margin-bottom: 4%;">
+                        <div id="main_dialog_user_first" class="button_dialog_focused button_dialog" style="margin-left: 0%;"></div>
+                        <div id="main_dialog_user_key" class="button_dialog" style="width: 35%;"></div>
+                        <div id="main_dialog_user_remove" class="button_dialog" style="width: 22%;"></div>
                     </div>
-                    <div id="channel_content_row0">
-                        <div class="stream_thumbnail_live_holder">
-                            <div class="stream_thumbnail_live">
-                                <div id="channel_content_thumbdiv0_1" class="stream_thumbnail_live_img"></div>
-                            </div>
-                        </div>
-                        <div id="channel_content_cell0_1" class="stream_thumbnail_live_holder">
-                            <div id="channel_content_thumbdiv0_0" class="stream_thumbnail_live">
-                            </div>
-                        </div>
-                        <div class="stream_thumbnail_live_holder" style="padding-right: 0; padding-left: 0;">
-                            <div class="stream_thumbnail_live">
-                                <div id="channel_content_infodiv0_1" class="stream_thumbnail_live_text_holder channel_about"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="channel_content_img0_1"></div>
                 </div>
             </div>
+            <div id="main_dialog_exit" class="screens hide" style="z-index: 100; background: rgba(0, 0, 0, 0.75);">
+                <div class="dialog_exit">
+                    <div id="main_dialog_exit_text" class="exit_text"></div>
+                    <div style="text-align: center; margin-bottom: 4%;">
+                        <div id="exit_app_cancel" class="button_dialog_focused button_dialog" style="margin-left: 0%;">
+                        </div>
+                        <div id="exit_app_minimize" class="button_dialog"></div>
+                        <div id="exit_app_close" class="button_dialog"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="dialog_period" class="screens hide" style="z-index: 100; background: rgba(0, 0, 0, 0.75);">
+                <div class="dialog_period">
+                    <div id="dialog_period_text" class="exit_text"></div>
+                    <div style="text-align: center; margin-bottom: 4%;">
+                        <div id="dialog_period_1" class="button_dialog" style="margin-left: 0%;"></div>
+                        <div id="dialog_period_2" class="button_dialog"></div>
+                        <div id="dialog_period_3" class="button_dialog"></div>
+                        <div id="dialog_period_4" class="button_dialog"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="dialog_OffSet" class="screens hide" style="z-index: 100; background: rgba(0, 0, 0, 0.75);">
+                <div class="dialog_period">
+                    <div id="dialog_OffSet_text" class="exit_text"></div>
+                    <div id="dialog_OffSet_text_summary" class="exit_text"></div>
+                    <div style="text-align: center; margin-bottom: 4%; color:#FFFFFF; font-size:200%;">
+                        <div class="settings_arraw_div">
+                            <div id="dialog_OffSet_left" class="left" style="opacity: 1;"></div>
+                        </div>
+                        <div id="dialog_OffSet_val" class="strokedeline settings_value settings_value_focus"></div>
+                        <div class="settings_arraw_div">
+                            <div id="dialog_OffSet_right" class="right" style="opacity: 1;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="dialog_warning" class="strokedeline dialogs hide" style="z-index:100; margin-top: 31%; width: 60%; margin-left: 20%;">
+                <div id="dialog_warning_text" class="strokedeline" style="font-size: 150%; "></div>
+            </div>
+            <div id="dialog_about" class="screens hide" style="z-index: 200; background: rgba(0, 0, 0, 0.75);">
+                <div class="about_dialogs" style="width: 95%; margin-left: 2.5%;">
+                    <div id="dialog_about_text" class="about_text"></div>
+                </div>
+            </div>
+            <div id="dialog_controls" class="screens hide" style="z-index: 200; background: rgba(0, 0, 0, 0.75);">
+                <div class="about_dialogs" style="width: 85%; margin-left: 7.5%;">
+                    <div id="dialog_controls_text" class="controls_text"></div>
+                </div>
+            </div>
+            <div id="dialog_counter" style="position: absolute; z-index:101; width: 100%; bottom: 0;">
+                <div style="float: right; width: auto; height: auto; background: linear-gradient(to top, black, rgba(0, 0, 0, 0.75));">
+                    <div id="dialog_counter_text" class="counter_class"></div>
+                </div>
+            </div>
+            <div id="screens_holder" class="screens">
+                <!-- Channel screens-->
+                <div id="UserChannels_scroll" class="screen_holder_channel hide">
+                    <div id="stream_table_user_channels" class="streams_div" style="margin-left: 6.5%;"></div>
+                </div>
+                <div id="SearchChannels_scroll" class="screen_holder_channel hide">
+                    <div id="stream_table_search_channel" class="streams_div"></div>
+                </div>
+                <div id="channel_content_scroll" class="screen_holder hide">
+                    <div id="stream_table_channel_content" class="streams_div">
+                        <div>
+                            <div id="channel_content_celly_0" class="stream_cell_period">
+                                <div id="channel_content_thumbdivy_0" class="stream_thumbnail_channel_vod">
+                                    <div id="channel_content_titley_0" class="stream_channel_fallow_game"></div>
+                                </div>
+                            </div>
+                            <div id="channel_content_celly_1" class="stream_cell_period">
+                                <div id="channel_content_thumbdivy_1" class="stream_thumbnail_channel_vod">
+                                    <div id="channel_content_titley_1" class="stream_channel_fallow_game"></div>
+                                </div>
+                            </div>
+                            <div id="channel_content_celly_2" class="stream_cell_period">
+                                <div id="channel_content_thumbdivy_2" class="stream_thumbnail_channel_vod">
+                                    <div id="channel_content_titley_2" class="stream_channel_fallow_game"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="channel_content_row0">
+                            <div class="stream_thumbnail_live_holder">
+                                <div class="stream_thumbnail_live">
+                                    <div id="channel_content_thumbdiv0_1" class="stream_thumbnail_live_img"></div>
+                                </div>
+                            </div>
+                            <div id="channel_content_cell0_1" class="stream_thumbnail_live_holder">
+                                <div id="channel_content_thumbdiv0_0" class="stream_thumbnail_live">
+                                </div>
+                            </div>
+                            <div class="stream_thumbnail_live_holder" style="padding-right: 0; padding-left: 0;">
+                                <div class="stream_thumbnail_live">
+                                    <div id="channel_content_infodiv0_1" class="stream_thumbnail_live_text_holder channel_about"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="channel_content_img0_1"></div>
+                    </div>
+                </div>
 
-            <!-- Clip screens-->
-            <div id="Clip_scroll" class="screen_holder_switch hide">
-                <div id="stream_table_clip" class="streams_div"></div>
-            </div>
-            <div id="ChannelClip_scroll" class="screen_holder_switch hide">
-                <div id="stream_table_channel_clip" class="streams_div"></div>
-            </div>
-            <div id="AGameClip_scroll" class="screen_holder_switch hide">
-                <div id="stream_table_a_game_clip" class="streams_div"></div>
-            </div>
+                <!-- Clip screens-->
+                <div id="Clip_scroll" class="screen_holder_switch hide">
+                    <div id="stream_table_clip" class="streams_div"></div>
+                </div>
+                <div id="ChannelClip_scroll" class="screen_holder_switch hide">
+                    <div id="stream_table_channel_clip" class="streams_div"></div>
+                </div>
+                <div id="AGameClip_scroll" class="screen_holder_switch hide">
+                    <div id="stream_table_a_game_clip" class="streams_div"></div>
+                </div>
 
-            <!-- Etc screens-->
-            <div id="user_scroll" class="screen_holder_user hide">
-                <div id="stream_table_user" class="streams_div"></div>
-            </div>
-            <div id="settings_holder" class="settings_holder hide">
-                <div id="settings_scroll" class="screen_holder_settings">
-                    <div id="settings_main" class="settings_main">
-                        <!-- Settings_SetSettings()-->
-                    </div>
-                    <div id="settings_lang" class="settings_main hide">
-                        <!-- Settings_SetLang()-->
+                <!-- Etc screens-->
+                <div id="user_scroll" class="screen_holder_user hide">
+                    <div id="stream_table_user" class="streams_div"></div>
+                </div>
+                <div id="settings_holder" class="settings_holder hide">
+                    <div id="settings_scroll" class="screen_holder_settings">
+                        <div id="settings_main" class="settings_main">
+                            <!-- Settings_SetSettings()-->
+                        </div>
+                        <div id="settings_lang" class="settings_main hide">
+                            <!-- Settings_SetLang()-->
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Games screens-->
-            <div id="Game_scroll" class="screen_holder_games hide">
-                <div id="stream_table_games" class="streams_game_div"></div>
-            </div>
-            <div id="UserGames_scroll" class="screen_holder_games hide">
-                <div id="stream_table_user_games" class="streams_game_div"></div>
-            </div>
-            <div id="SearchGames_scroll" class="screen_holder_games hide">
-                <div id="stream_table_search_game" class="streams_game_div"></div>
-            </div>
+                <!-- Games screens-->
+                <div id="Game_scroll" class="screen_holder_games hide">
+                    <div id="stream_table_games" class="streams_game_div"></div>
+                </div>
+                <div id="UserGames_scroll" class="screen_holder_games hide">
+                    <div id="stream_table_user_games" class="streams_game_div"></div>
+                </div>
+                <div id="SearchGames_scroll" class="screen_holder_games hide">
+                    <div id="stream_table_search_game" class="streams_game_div"></div>
+                </div>
 
-            <!-- Input screens-->
-            <div id="add_user_scroll" class="screen_holder hide">
-                <div id="add_user" class="input_text_box">
-                    <input id="user_input" class="input_class" type="text" placeholder="" />
+                <!-- Input screens-->
+                <div id="add_user_scroll" class="screen_holder hide">
+                    <div id="add_user" class="input_text_box">
+                        <input id="user_input" class="input_class" type="text" placeholder="" />
+                    </div>
                 </div>
-            </div>
-            <div id="oauth_scroll" class="screen_holder hide">
-                <div id="oauth" class="input_text_box" style="margin-top: 0;">
-                    <div id="oauth_text" class="class_bold" style="color: #FFFFFF; font-size: 100%;"></div>
-                    <input id="oauth_input" class="input_class" type="text" placeholder="" />
+                <div id="oauth_scroll" class="screen_holder hide">
+                    <div id="oauth" class="input_text_box" style="margin-top: 0;">
+                        <div id="oauth_text" class="class_bold" style="color: #FFFFFF; font-size: 100%;"></div>
+                        <input id="oauth_input" class="input_class" type="text" placeholder="" />
+                    </div>
                 </div>
-            </div>
-            <div id="search_scroll" class="screen_holder hide">
-                <div id="search" class="input_text_box" style="margin-top: 10%;">
-                    <input id="search_input" class="input_class" type="text" placeholder="" />
-                    <div id="chanel_button" class="button_search"></div>
-                    <div id="game_button" class="button_search"></div>
-                    <div id="live_button" class="button_search"></div>
+                <div id="search_scroll" class="screen_holder hide">
+                    <div id="search" class="input_text_box" style="margin-top: 10%;">
+                        <input id="search_input" class="input_class" type="text" placeholder="" />
+                        <div id="chanel_button" class="button_search"></div>
+                        <div id="game_button" class="button_search"></div>
+                        <div id="live_button" class="button_search"></div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Live screens-->
-            <div id="Live_scroll" class="screen_holder hide">
-                <div id="stream_table_live" class="streams_div"></div>
-            </div>
-            <div id="Featured_scroll" class="screen_holder hide">
-                <div id="stream_table_featured" class="streams_div"></div>
-            </div>
-            <div id="UserHost_scroll" class="screen_holder hide">
-                <div id="stream_table_user_host" class="streams_div"></div>
-            </div>
-            <div id="UserLive_scroll" class="screen_holder hide">
-                <div id="stream_table_user_live" class="streams_div"></div>
-            </div>
-            <div id="AGame_scroll" class="screen_holder_switch hide">
-                <div id="stream_table_a_game" class="streams_div"></div>
-            </div>
-            <div id="SearchLive_scroll" class="screen_holder hide">
-                <div id="stream_table_search_live" class="streams_div"></div>
-            </div>
+                <!-- Live screens-->
+                <div id="Live_scroll" class="screen_holder hide">
+                    <div id="stream_table_live" class="streams_div"></div>
+                </div>
+                <div id="Featured_scroll" class="screen_holder hide">
+                    <div id="stream_table_featured" class="streams_div"></div>
+                </div>
+                <div id="UserHost_scroll" class="screen_holder hide">
+                    <div id="stream_table_user_host" class="streams_div"></div>
+                </div>
+                <div id="UserLive_scroll" class="screen_holder hide">
+                    <div id="stream_table_user_live" class="streams_div"></div>
+                </div>
+                <div id="AGame_scroll" class="screen_holder_switch hide">
+                    <div id="stream_table_a_game" class="streams_div"></div>
+                </div>
+                <div id="SearchLive_scroll" class="screen_holder hide">
+                    <div id="stream_table_search_live" class="streams_div"></div>
+                </div>
 
-            <!-- Vod screens-->
-            <div id="Vod_scroll" class="screen_holder_switch hide">
-                <div id="stream_table_vod" class="streams_div"></div>
-            </div>
-            <div id="AGameVod_scroll" class="screen_holder_switch hide">
-                <div id="stream_table_a_game_vod" class="streams_div"></div>
-            </div>
-            <div id="ChannelVod_scroll" class="screen_holder_switch hide">
-                <div id="stream_table_channel_vod" class="streams_div"></div>
-            </div>
-            <div id="UserVod_scroll" class="screen_holder_switch hide">
-                <div id="stream_table_user_vod" class="streams_div"></div>
-            </div>
-        </div>
-        <div id="topbar" class="topbar hide">
-            <div class="top_clock">
-                <div id="label_clock" class="icon_top_label" style="text-align: right;"></div>
-            </div>
-            <div id="controls_div" class="controls_div">
-                <div id="label_update" class="icon_top_label hide"></div>
-                <div id="label_refresh" class="icon_top_label"></div>
-                <div id="label_side_panel" class="icon_top_label hide"></div>
-            </div>
-            <div id="top_lable" class="top_lable">
-            </div>
-        </div>
-        <div id="side_panel_new_holder" class="hide">
-            <div id="side_panel_movel" class="side_panel_movel side_panel_border side_panel_background_color">
-                <div class="side_panel_fix_top">
-                    <div class="side_panel_movel_top_text">
-                        <div class="side_panel_icons">
-                            <i class="icon icon-arrow-left"></i>
-                        </div>&nbsp;
-                        <span id="side_panel_movel_top_text"></span>
-                    </div>
-                    <!-- Empty div are added to fill up the container and make the layout perfect align-->
-                    <div class="side_panel_new_icons_text_holder">
-                    </div>
-                    <div id="side_panel_movel_new_0" class="side_panel_new_icons_text_holder" style="height: 1.9em;">
-                    </div>
-                    <div class="side_panel_new_icons_text_holder">
-                    </div>
+                <!-- Vod screens-->
+                <div id="Vod_scroll" class="screen_holder_switch hide">
+                    <div id="stream_table_vod" class="streams_div"></div>
                 </div>
-                <div class="side_panel_fix_top_2">
-                    <div class="side_panel_new_icons_text_holder">
-                    </div>
-                    <div id="side_panel_movel_new_1" class="side_panel_new_icons_text_holder">
-                    </div>
-                    <div class="side_panel_new_icons_text_holder">
-                    </div>
+                <div id="AGameVod_scroll" class="screen_holder_switch hide">
+                    <div id="stream_table_a_game_vod" class="streams_div"></div>
                 </div>
-                <div id="side_panel_movel_center" class="side_panel_fix_center">
-                    <div id="side_panel_movel_user_text_holder" class="side_panel_movel_user_text hide">
-                        <span id="side_panel_movel_user_text"></span>
-                    </div>
-                    <div id="side_panel_movel_new_2" class="side_panel_new_icons_text_holder">
-                    </div>
-                    <div id="side_panel_movel_new_3" class="side_panel_new_icons_text_holder">
-                    </div>
-                    <div id="side_panel_movel_new_4" class="side_panel_new_icons_text_holder">
-                    </div>
-                    <div id="side_panel_movel_new_5" class="side_panel_new_icons_text_holder">
-                    </div>
-                    <div id="side_panel_movel_new_6" class="side_panel_new_icons_text_holder">
-                    </div>
-                    <div id="side_panel_movel_new_7" class="side_panel_new_icons_text_holder">
-                    </div>
-                    <div id="side_panel_movel_new_8" class="side_panel_new_icons_text_holder hide">
-                    </div>
+                <div id="ChannelVod_scroll" class="screen_holder_switch hide">
+                    <div id="stream_table_channel_vod" class="streams_div"></div>
                 </div>
-                <div id="side_panel_movel_bottom" class="side_panel_fix_bottom">
-                    <div class="side_panel_movel_bottom_holder">
-                        <div class="side_panel_movel_bottom_text">
-                            <div id="side_panel_movel_new_9">
+                <div id="UserVod_scroll" class="screen_holder_switch hide">
+                    <div id="stream_table_user_vod" class="streams_div"></div>
+                </div>
+            </div>
+            <div id="topbar" class="topbar hide">
+                <div class="top_clock">
+                    <div id="label_clock" class="icon_top_label" style="text-align: right;"></div>
+                </div>
+                <div id="controls_div" class="controls_div">
+                    <div id="label_update" class="icon_top_label hide"></div>
+                    <div id="label_refresh" class="icon_top_label"></div>
+                    <div id="label_side_panel" class="icon_top_label hide"></div>
+                </div>
+                <div id="top_lable" class="top_lable">
+                </div>
+            </div>
+            <div id="side_panel_new_holder" class="hide">
+                <div id="side_panel_movel" class="side_panel_movel side_panel_border side_panel_background_color">
+                    <div class="side_panel_fix_top">
+                        <div class="side_panel_movel_top_text">
+                            <div class="side_panel_icons">
+                                <i class="icon icon-arrow-left"></i>
+                            </div>&nbsp;
+                            <span id="side_panel_movel_top_text"></span>
+                        </div>
+                        <!-- Empty div are added to fill up the container and make the layout perfect align-->
+                        <div class="side_panel_new_icons_text_holder">
+                        </div>
+                        <div id="side_panel_movel_new_0" class="side_panel_new_icons_text_holder" style="height: 1.9em;">
+                        </div>
+                        <div class="side_panel_new_icons_text_holder">
+                        </div>
+                    </div>
+                    <div class="side_panel_fix_top_2">
+                        <div class="side_panel_new_icons_text_holder">
+                        </div>
+                        <div id="side_panel_movel_new_1" class="side_panel_new_icons_text_holder">
+                        </div>
+                        <div class="side_panel_new_icons_text_holder">
+                        </div>
+                    </div>
+                    <div id="side_panel_movel_center" class="side_panel_fix_center">
+                        <div id="side_panel_movel_user_text_holder" class="side_panel_movel_user_text hide">
+                            <span id="side_panel_movel_user_text"></span>
+                        </div>
+                        <div id="side_panel_movel_new_2" class="side_panel_new_icons_text_holder">
+                        </div>
+                        <div id="side_panel_movel_new_3" class="side_panel_new_icons_text_holder">
+                        </div>
+                        <div id="side_panel_movel_new_4" class="side_panel_new_icons_text_holder">
+                        </div>
+                        <div id="side_panel_movel_new_5" class="side_panel_new_icons_text_holder">
+                        </div>
+                        <div id="side_panel_movel_new_6" class="side_panel_new_icons_text_holder">
+                        </div>
+                        <div id="side_panel_movel_new_7" class="side_panel_new_icons_text_holder">
+                        </div>
+                        <div id="side_panel_movel_new_8" class="side_panel_new_icons_text_holder hide">
+                        </div>
+                    </div>
+                    <div id="side_panel_movel_bottom" class="side_panel_fix_bottom">
+                        <div class="side_panel_movel_bottom_holder">
+                            <div class="side_panel_movel_bottom_text">
+                                <div id="side_panel_movel_new_9">
+                                </div>
+                            </div>
+                            <div class="side_panel_movel_bottom_text">
+                                <div id="side_panel_movel_new_10">
+                                </div>
+                            </div>
+                            <div class="side_panel_movel_bottom_text">
+                                <div id="side_panel_movel_new_11">
+                                </div>
+                            </div>
+                            <div class="side_panel_movel_bottom_text">
+                                <div id="side_panel_movel_new_12">
+                                </div>
                             </div>
                         </div>
-                        <div class="side_panel_movel_bottom_text">
-                            <div id="side_panel_movel_new_10">
+                    </div>
+                </div>
+                <div id="side_panel_fix" class="side_panel_fix">
+                    <div class="side_panel_fix_top" style="background-color: #000000;">
+                        <!-- Empty div are added to fill up the container and make the layout perfect align-->
+                        <div class="side_panel_new_icons">
+                        </div>
+                        <div id="side_panel_new_0" class="side_panel_new_icons">
+                            <div id="side_panel_new_0_img">
                             </div>
                         </div>
-                        <div class="side_panel_movel_bottom_text">
-                            <div id="side_panel_movel_new_11">
-                            </div>
+                        <div class="side_panel_new_icons">
                         </div>
-                        <div class="side_panel_movel_bottom_text">
-                            <div id="side_panel_movel_new_12">
-                            </div>
+                    </div>
+                    <div class="side_panel_fix_top_2">
+                        <div class="side_panel_new_icons">
+                        </div>
+                        <div id="side_panel_new_1" class="side_panel_new_icons">
+                            <i class="icon icon-search side_panel_new_icons_pad"></i>
+                        </div>
+                        <div class="side_panel_new_icons">
+                        </div>
+                    </div>
+                    <div id="side_panel_fix_center" class="side_panel_fix_center" style="background-color: #000000;">
+                        <div id="side_panel_new_2" class="side_panel_new_icons">
+                            <i class="icon icon-arrow-left side_panel_new_icons_pad"></i>
+                        </div>
+                        <div id="side_panel_new_3" class="side_panel_new_icons">
+                            <i class="icon icon-play side_panel_new_icons_pad"></i>
+                        </div>
+                        <div id="side_panel_new_4" class="side_panel_new_icons">
+                            <i class="icon icon-users side_panel_new_icons_pad"></i>
+                        </div>
+                        <div id="side_panel_new_5" class="side_panel_new_icons">
+                            <i class="icon icon-star side_panel_new_icons_pad"></i>
+                        </div>
+                        <div id="side_panel_new_6" class="side_panel_new_icons">
+                            <i class="icon icon-gamepad side_panel_new_icons_pad"></i>
+                        </div>
+                        <div id="side_panel_new_7" class="side_panel_new_icons">
+                            <i class="icon icon-movie-play side_panel_new_icons_pad"></i>
+                        </div>
+                        <div id="side_panel_new_8" class="side_panel_new_icons">
+                            <i class="icon icon-movie side_panel_new_icons_pad"></i>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="side_panel_fix" class="side_panel_fix">
-                <div class="side_panel_fix_top" style="background-color: #000000;">
-                    <!-- Empty div are added to fill up the container and make the layout perfect align-->
-                    <div class="side_panel_new_icons">
-                    </div>
-                    <div id="side_panel_new_0" class="side_panel_new_icons">
-                        <div id="side_panel_new_0_img">
-                        </div>
-                    </div>
-                    <div class="side_panel_new_icons">
-                    </div>
-                </div>
-                <div class="side_panel_fix_top_2">
-                    <div class="side_panel_new_icons">
-                    </div>
-                    <div id="side_panel_new_1" class="side_panel_new_icons">
-                        <i class="icon icon-search side_panel_new_icons_pad"></i>
-                    </div>
-                    <div class="side_panel_new_icons">
-                    </div>
-                </div>
-                <div id="side_panel_fix_center" class="side_panel_fix_center" style="background-color: #000000;">
-                    <div id="side_panel_new_2" class="side_panel_new_icons">
-                        <i class="icon icon-arrow-left side_panel_new_icons_pad"></i>
-                    </div>
-                    <div id="side_panel_new_3" class="side_panel_new_icons">
-                        <i class="icon icon-play side_panel_new_icons_pad"></i>
-                    </div>
-                    <div id="side_panel_new_4" class="side_panel_new_icons">
-                        <i class="icon icon-users side_panel_new_icons_pad"></i>
-                    </div>
-                    <div id="side_panel_new_5" class="side_panel_new_icons">
-                        <i class="icon icon-star side_panel_new_icons_pad"></i>
-                    </div>
-                    <div id="side_panel_new_6" class="side_panel_new_icons">
-                        <i class="icon icon-gamepad side_panel_new_icons_pad"></i>
-                    </div>
-                    <div id="side_panel_new_7" class="side_panel_new_icons">
-                        <i class="icon icon-movie-play side_panel_new_icons_pad"></i>
-                    </div>
-                    <div id="side_panel_new_8" class="side_panel_new_icons">
-                        <i class="icon icon-movie side_panel_new_icons_pad"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Simple way to see center of screen
+            <!-- Simple way to see center of screen
         <div class="center">
             <p>Test Text</p>
         </div>-->
-    </div>
-    <div id="scene2" class="screen_size hide">
-        <div id="chat_container" class="chat_container hide">
-            <div id="chat_inner_container" class="chat_size_default">
-                <div class="chat_box_holder">
-                    <div>
-                        <div id="chat_box" class="chat_box"></div>
-                    </div>
-                </div>
-                <div id="play_chat_dialog" style="position: absolute; text-align: center; width: 100%; margin-top: 50%;">
-                    <div id="play_chat_dialog_text" class="strokedeline" style="display: inline-block; font-size: 100%; color: #FFFFFF;">
-                    </div>
-                </div>
-            </div>
         </div>
-        <div id="chat_container2" class="chat_container2 hide">
-            <div id="chat_inner_container2" class="chat_size_default">
-                <div class="chat_box_holder">
-                    <div>
-                        <div id="chat_box2" class="chat_box"></div>
+        <div id="scene2" class="screen_size hide">
+            <div id="chat_container" class="chat_container hide">
+                <div id="chat_inner_container" class="chat_size_default">
+                    <div class="chat_box_holder">
+                        <div>
+                            <div id="chat_box" class="chat_box"></div>
+                        </div>
+                    </div>
+                    <div id="play_chat_dialog" style="position: absolute; text-align: center; width: 100%; margin-top: 50%;">
+                        <div id="play_chat_dialog_text" class="strokedeline" style="display: inline-block; font-size: 100%; color: #FFFFFF;">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div id="chat_container2_name" class="chat_container2_name hide">
-            <div id="chat_container2_sound_icon" class="chat_container2_name_text">
-                <i class="icon-sound-off strokicon"></i>
-            </div>
-            <div id="chat_container2_name_text" class="strokedeline chat_container2_name_text" style="transform: translateY(-7%);"></div>
-            <div class="chat_container2_name_text">
-                <i class="icon-arrow-right strokicon"></i>
-            </div>
-        </div>
-        <div id="chat_container_name" class="chat_container_name hide">
-            <div class="chat_container2_name_text">
-                <i class="icon-arrow-left strokicon"></i>
-            </div>
-            <div id="chat_container_name_text" class="strokedeline chat_container2_name_text" style="transform: translateY(-7%);"></div>
-            <div id="chat_container_sound_icon" class="chat_container2_name_text">
-                <i class="icon-sound strokicon"></i>
-            </div>
-        </div>
-        <div id="scene_channel_panel" class="screen_size scene_channel_panel">
-            <div class="playerinfo">
-                <img id="stream_info_icon" style="padding-left: 1%; padding-top: 1%; padding-bottom: 1%; display: inline-block; width: 9.5%;" alt="" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
-                <div id="stream_clock" class="playclock"></div>
-                <div class="playmaininfo">
-                    <div id="stream_info_name" class="class_bold" style="font-size: 160%; margin-bottom: 0.2em;"></div>
-                    <div id="stream_info_title"></div>
-                    <div id="stream_info_game"></div>
-                    <div id="stream_live_time" style="display: inline-block; width:auto;"></div>
-                    <div id="stream_live_viewers" style="display: inline-block; width:auto;"></div>
-                    <div id="stream_watching_time" class="playsideinfotext"></div>
+            <div id="chat_container2" class="chat_container2 hide">
+                <div id="chat_inner_container2" class="chat_size_default">
+                    <div class="chat_box_holder">
+                        <div>
+                            <div id="chat_box2" class="chat_box"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div id="controls_holder" class="controls_holder">
+            <div id="chat_container2_name" class="chat_container2_name hide">
+                <div id="chat_container2_sound_icon" class="chat_container2_name_text">
+                    <i class="icon-sound-off strokicon"></i>
+                </div>
+                <div id="chat_container2_name_text" class="strokedeline chat_container2_name_text" style="transform: translateY(-7%);"></div>
+                <div class="chat_container2_name_text">
+                    <i class="icon-arrow-right strokicon"></i>
+                </div>
             </div>
-            <div id="progress_pause_holder" class="progress_pause_holder">
-                <div id="progress_bar_div" class="progress_bar_div">
-                    <div id="progress_bar_jump_to" class="progress_bar_jump strokedeline" style="transform: translateY(-25%);"></div>
-                    <div>
-                        <div style="width: 100%; position: relative; transform: translateY(-50%);">
-                            <div id="progress_bar_current_time" class="progress_bar_timer strokedeline"></div>
-                            <div id="progress_bar" class="progress_bar_holder">
-                                <div class="progress_bar">
-                                    <div id="inner_progress_bar" class="inner_progress_bar"></div>
+            <div id="chat_container_name" class="chat_container_name hide">
+                <div class="chat_container2_name_text">
+                    <i class="icon-arrow-left strokicon"></i>
+                </div>
+                <div id="chat_container_name_text" class="strokedeline chat_container2_name_text" style="transform: translateY(-7%);"></div>
+                <div id="chat_container_sound_icon" class="chat_container2_name_text">
+                    <i class="icon-sound strokicon"></i>
+                </div>
+            </div>
+            <div id="scene_channel_panel" class="screen_size scene_channel_panel">
+                <div class="playerinfo">
+                    <img id="stream_info_icon" style="padding-left: 1%; padding-top: 1%; padding-bottom: 1%; display: inline-block; width: 9.5%;" alt="" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+                    <div id="stream_clock" class="playclock"></div>
+                    <div class="playmaininfo">
+                        <div id="stream_info_name" class="class_bold" style="font-size: 160%; margin-bottom: 0.2em;"></div>
+                        <div id="stream_info_title"></div>
+                        <div id="stream_info_game"></div>
+                        <div id="stream_live_time" style="display: inline-block; width:auto;"></div>
+                        <div id="stream_live_viewers" style="display: inline-block; width:auto;"></div>
+                        <div id="stream_watching_time" class="playsideinfotext"></div>
+                    </div>
+                </div>
+                <div id="controls_holder" class="controls_holder">
+                </div>
+                <div id="progress_pause_holder" class="progress_pause_holder">
+                    <div id="progress_bar_div" class="progress_bar_div">
+                        <div id="progress_bar_jump_to" class="progress_bar_jump strokedeline" style="transform: translateY(-25%);"></div>
+                        <div>
+                            <div style="width: 100%; position: relative; transform: translateY(-50%);">
+                                <div id="progress_bar_current_time" class="progress_bar_timer strokedeline"></div>
+                                <div id="progress_bar" class="progress_bar_holder">
+                                    <div class="progress_bar">
+                                        <div id="inner_progress_bar" class="inner_progress_bar"></div>
+                                    </div>
+                                </div>
+                                <div id="progress_bar_duration" class="progress_bar_timer strokedeline"></div>
+                            </div>
+                        </div>
+                        <div id="progress_bar_steps" class="progress_bar_jump strokedeline" style="position: relative; top: 35%; transform: translateY(-110%);"></div>
+                    </div>
+                    <div id="pause_next_div" class="pause_next_div">
+                        <div style="width: 44%; display: inline-block; text-align: right;">
+                            <div id="back_button" class="next_button" style="opacity: 0;">
+                                <div id="back_button_text" class="next_text">
+                                    <div id="back_button_text_name" class="next_channel strokedeline" style="text-align: right;"></div>
+                                    <div id="back_button_text_title" class="next_info strokedeline" style="text-align: right;"></div>
+                                </div>
+                                <i class="pause_button3d icon-back"></i>
+                            </div>
+                        </div>
+                        <div style="width: 5%; display: inline-block; text-align: center; margin-left: 0.5ch; margin-right: 0.5ch;">
+                            <div id="pause_button" class="pause_button" style="width: 90%; padding-top: 0.375em; padding-bottom: 0.375em;">
+                                <div>
+                                    <i class="pause_button3d icon-pause"></i>
                                 </div>
                             </div>
-                            <div id="progress_bar_duration" class="progress_bar_timer strokedeline"></div>
                         </div>
-                    </div>
-                    <div id="progress_bar_steps" class="progress_bar_jump strokedeline" style="position: relative; top: 35%; transform: translateY(-110%);"></div>
-                </div>
-                <div id="pause_next_div" class="pause_next_div">
-                    <div style="width: 44%; display: inline-block; text-align: right;">
-                        <div id="back_button" class="next_button" style="opacity: 0;">
-                            <div id="back_button_text" class="next_text">
-                                <div id="back_button_text_name" class="next_channel strokedeline" style="text-align: right;"></div>
-                                <div id="back_button_text_title" class="next_info strokedeline" style="text-align: right;"></div>
-                            </div>
-                            <i class="pause_button3d icon-back"></i>
-                        </div>
-                    </div>
-                    <div style="width: 5%; display: inline-block; text-align: center; margin-left: 0.5ch; margin-right: 0.5ch;">
-                        <div id="pause_button" class="pause_button" style="width: 90%; padding-top: 0.375em; padding-bottom: 0.375em;">
-                            <div>
-                                <i class="pause_button3d icon-pause"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="width: 44%; display: inline-block; text-align: left;">
-                        <div id="next_button" class="next_button" style="opacity: 0;">
-                            <i class="pause_button3d icon-next"></i>
-                            <div id="next_button_text" class="next_text">
-                                <div id="next_button_text_name" class="next_channel strokedeline"></div>
-                                <div id="next_button_text_title" class="next_info strokedeline"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="playsideinfo" class="playsideinfo hide">
-            <div id="stream_quality" class="playsideinfostatus"></div>
-            <div id="stream_status" class="playsideinfostatus"></div>
-        </div>
-        <div id="scene2_dialogs" style="display:flex; position: absolute; width: 100%; height : 100%; z-index: 2;">
-            <div id="dialog_vod_start" class="dialogs hide" style="z-index:3; font-size: 150%; height: 75%; margin-top: 25%;">
-                <div id="dialog_vod_text" class="strokedeline" style="font-size: 140%; padding-bottom: 2%;">
-                </div>
-                <!-- from saved-->
-                <div id="dialog_vod_0" class="dialog_end_icons_start dialog_end_icons_focus">
-                    <i class="icon-history strokicon" style="font-size: 225%;"></i>
-                    <div id="dialog_vod_saved_text" class="strokedeline"></div>
-                </div>
-                <!-- from start-->
-                <div id="dialog_vod_1" class="dialog_end_icons_start">
-                    <i class="icon-play strokicon" style="font-size: 225%;"></i>
-                    <div id="dialog_vod_start_text" class="strokedeline"></div>
-                </div>
-            </div>
-            <div id="dialog_end_stream" class="dialogs hide" style="z-index:4; font-size: 150%; height: 100%; background-color: rgba(0, 0, 0, 0.8);">
-                <div id="dialog_end_stream_text" class="strokedeline" style="margin-top: 29%; font-size: 150%; padding-bottom: 2%;">
-                </div>
-                <!-- next-->
-                <div id="dialog_end_-1" class="dialog_end_icons hide">
-                    <i class="icon-next strokicon" style="font-size: 225%;"></i>
-                    <div id="dialog_end_next_text" class="strokedeline"></div>
-                    <div style="font-size: 80%;">
-                        <div id="end_next_button_text_name" class="next_channel strokedeline"></div>
-                        <div id="end_next_button_text_title" class="next_info strokedeline"></div>
-                    </div>
-                </div>
-                <!-- replay-->
-                <div id="dialog_end_0" class="dialog_end_icons dialog_end_icons_focus">
-                    <i class="icon-refresh strokicon" style="font-size: 225%;"></i>
-                    <div id="dialog_end_replay_text" class="strokedeline"></div>
-                </div>
-                <!-- open vod-->
-                <div id="dialog_end_1" class="dialog_end_icons">
-                    <i class="icon-play strokicon" style="font-size: 225%;"></i>
-                    <div id="dialog_end_vod_text" class="strokedeline"></div>
-                </div>
-                <!-- channel content-->
-                <div id="dialog_end_2" class="dialog_end_icons">
-                    <i class="icon-filmstrip strokicon" style="font-size: 225%;"></i>
-                    <div id="dialog_end_channel_text" class="strokedeline"></div>
-                </div>
-                <!-- game content-->
-                <div id="dialog_end_3" class="dialog_end_icons">
-                    <i class="icon-gamepad strokicon" style="font-size: 225%;"></i>
-                    <div id="dialog_end_game_text" class="strokedeline"></div>
-                </div>
-            </div>
-            <div id="dialog_loading_play" class="screen_size dialogs hide" style="z-index:98; margin-top: 50vh; overflow: visible;">
-                <div class="loading">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            </div>
-            <div id="play_dialog_exit" class="dialogs hide" style="z-index:6; margin-top: 21%;">
-                <div id="play_dialog_exit_text" class="strokedelinebig" style="font-size: 250%;"></div>
-            </div>
-            <div id="dialog_warning_play" class="dialogs hide" style="z-index:7; margin-top: 16%;">
-                <div id="dialog_warning_play_text" class="strokedelinebig" style="font-size: 125%;"></div>
-            </div>
-        </div>
-    </div>
-    <div id="scenefeed" class="feed_screen">
-        <div id="user_feed_notify" class="user_feed_notify user_feed_notify_hide" style="margin-top: -20%;">
-            <div id="user_feed_notify_content" class="side_panel_not">
-                <div id="user_feed_notify_main" class="class_bold" style="text-align: center;"></div>
-                <div>
-                    <div id="user_feed_notify_img_holder" class="side_panel_iner_div1"></div>
-                    <div class="notification_holder">
-                        <div id="user_feed_notify_name" class="notification_title"></div>
-                        <div id="user_feed_notify_title" class="notification_game"></div>
-                        <div id="user_feed_notify_game" class="notification_game"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="user_feed" class="user_feed user_feed_hide">
-            <div id="icon_feed_refresh" class="icon_feed_refresh">
-            </div>
-            <div id="dialog_loading_feed" class="dialogs_feed hide" style="margin-top: 5.5%; overflow: visible;">
-                <div class="loading">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            </div>
-            <div id="user_feed_scroll" class="user_feed_scroll user_feed_scroll_ani">
-            </div>
-        </div>
-        <div id="side_panel_feed_thumb" class="side_panel_feed_thumb hide">
-            <div class="stream_thumbnail_clip"><img id="feed_thumb_img" class="stream_img_side" alt="" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="></div>
-            <div style="width: 96%; height: 20%; bottom:0; color: #FFFFFF; font-size: 110%; padding: 1%;">
-                <div id="feed_thum_name" class="side_panel_feed_thumb_text class_bold" style="width: 75%; display: inline-block; font-size: 110%;"></div>
-                <div id="feed_thum_quality" class="side_panel_feed_thumb_text" style="width: 24%; float: right; text-align: right;"></div>
-                <div id="feed_thum_title" class="side_panel_feed_thumb_text"></div>
-                <div id="feed_thum_game" class="side_panel_feed_thumb_text"></div>
-                <div id="feed_thum_views" class="side_panel_feed_thumb_text"></div>
-            </div>
-        </div>
-        <div id="side_panel" class="side_panel side_panel_border side_panel_background_color side_panel_hide" style="margin-left: -31.5%;">
-            <div id="side_panel_new" style="width: 100%; position: absolute;">
-                <div id="side_panel_feed_holder" style="width: 94%; margin-left: 6%;">
-                    <div id="dialog_loading_side_feed" class="side_panel_dialog hide">
-                        <div class="loading">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                    <div id="side_panel_row_0">
-                        <div id="side_panel_cell0_0" style="width: 100%; display: inline-block; padding: 1%;">
-                            <div id="side_panel_thumbdiv0_0" class="side_panel_div">
-                                <div id="side_panel_feed_1" class="side_panel_feed_top">
-                                    <div class="side_panel_icons">
-                                        <i class="icon icon-arrow-right"></i>
-                                    </div>&nbsp;
-                                    <span id="side_panel_feed_settings"></span>
-                                </div>
-                                <div id="side_panel_feed_2" class="side_panel_feed_top">
-                                    <div class="side_panel_icons">
-                                        <i class="icon icon-arrow-left"></i>
-                                    </div>&nbsp;
-                                    <span id="side_panel_feed_refresh"></span>
+                        <div style="width: 44%; display: inline-block; text-align: left;">
+                            <div id="next_button" class="next_button" style="opacity: 0;">
+                                <i class="pause_button3d icon-next"></i>
+                                <div id="next_button_text" class="next_text">
+                                    <div id="next_button_text_name" class="next_channel strokedeline"></div>
+                                    <div id="next_button_text_title" class="next_info strokedeline"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="side_panel_new_row_1" style="overflow: hidden; width: 94%; position: absolute;">
-                        <div id="side_panel_holder" class="side_panel_holder_ani">
+                </div>
+            </div>
+            <div id="playsideinfo" class="playsideinfo hide">
+                <div id="stream_quality" class="playsideinfostatus"></div>
+                <div id="stream_status" class="playsideinfostatus"></div>
+            </div>
+            <div id="scene2_dialogs" style="display:flex; position: absolute; width: 100%; height : 100%; z-index: 2;">
+                <div id="dialog_vod_start" class="dialogs hide" style="z-index:3; font-size: 150%; height: 75%; margin-top: 25%;">
+                    <div id="dialog_vod_text" class="strokedeline" style="font-size: 140%; padding-bottom: 2%;">
+                    </div>
+                    <!-- from saved-->
+                    <div id="dialog_vod_0" class="dialog_end_icons_start dialog_end_icons_focus">
+                        <i class="icon-history strokicon" style="font-size: 225%;"></i>
+                        <div id="dialog_vod_saved_text" class="strokedeline"></div>
+                    </div>
+                    <!-- from start-->
+                    <div id="dialog_vod_1" class="dialog_end_icons_start">
+                        <i class="icon-play strokicon" style="font-size: 225%;"></i>
+                        <div id="dialog_vod_start_text" class="strokedeline"></div>
+                    </div>
+                </div>
+                <div id="dialog_end_stream" class="dialogs hide" style="z-index:4; font-size: 150%; height: 100%; background-color: rgba(0, 0, 0, 0.8);">
+                    <div id="dialog_end_stream_text" class="strokedeline" style="margin-top: 29%; font-size: 150%; padding-bottom: 2%;">
+                    </div>
+                    <!-- next-->
+                    <div id="dialog_end_-1" class="dialog_end_icons hide">
+                        <i class="icon-next strokicon" style="font-size: 225%;"></i>
+                        <div id="dialog_end_next_text" class="strokedeline"></div>
+                        <div style="font-size: 80%;">
+                            <div id="end_next_button_text_name" class="next_channel strokedeline"></div>
+                            <div id="end_next_button_text_title" class="next_info strokedeline"></div>
                         </div>
-                        <div id="side_panel_warn" class="side_panel_feed_top" style="display: none;">
-                            <span id="side_panel_warn_text"></span>
+                    </div>
+                    <!-- replay-->
+                    <div id="dialog_end_0" class="dialog_end_icons dialog_end_icons_focus">
+                        <i class="icon-refresh strokicon" style="font-size: 225%;"></i>
+                        <div id="dialog_end_replay_text" class="strokedeline"></div>
+                    </div>
+                    <!-- open vod-->
+                    <div id="dialog_end_1" class="dialog_end_icons">
+                        <i class="icon-play strokicon" style="font-size: 225%;"></i>
+                        <div id="dialog_end_vod_text" class="strokedeline"></div>
+                    </div>
+                    <!-- channel content-->
+                    <div id="dialog_end_2" class="dialog_end_icons">
+                        <i class="icon-filmstrip strokicon" style="font-size: 225%;"></i>
+                        <div id="dialog_end_channel_text" class="strokedeline"></div>
+                    </div>
+                    <!-- game content-->
+                    <div id="dialog_end_3" class="dialog_end_icons">
+                        <i class="icon-gamepad strokicon" style="font-size: 225%;"></i>
+                        <div id="dialog_end_game_text" class="strokedeline"></div>
+                    </div>
+                </div>
+                <div id="dialog_loading_play" class="screen_size dialogs hide" style="z-index:98; margin-top: 50vh; overflow: visible;">
+                    <div class="loading">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+                <div id="play_dialog_exit" class="dialogs hide" style="z-index:6; margin-top: 21%;">
+                    <div id="play_dialog_exit_text" class="strokedelinebig" style="font-size: 250%;"></div>
+                </div>
+                <div id="dialog_warning_play" class="dialogs hide" style="z-index:7; margin-top: 16%;">
+                    <div id="dialog_warning_play_text" class="strokedelinebig" style="font-size: 125%;"></div>
+                </div>
+            </div>
+        </div>
+        <div id="scenefeed" class="feed_screen">
+            <div id="user_feed_notify" class="user_feed_notify user_feed_notify_hide" style="margin-top: -20%;">
+                <div id="user_feed_notify_content" class="side_panel_not">
+                    <div id="user_feed_notify_main" class="class_bold" style="text-align: center;"></div>
+                    <div>
+                        <div id="user_feed_notify_img_holder" class="side_panel_iner_div1"></div>
+                        <div class="notification_holder">
+                            <div id="user_feed_notify_name" class="notification_title"></div>
+                            <div id="user_feed_notify_title" class="notification_game"></div>
+                            <div id="user_feed_notify_game" class="notification_game"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="user_feed" class="user_feed user_feed_hide">
+                <div id="icon_feed_refresh" class="icon_feed_refresh">
+                </div>
+                <div id="dialog_loading_feed" class="dialogs_feed hide" style="margin-top: 5.5%; overflow: visible;">
+                    <div class="loading">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+                <div id="user_feed_scroll" class="user_feed_scroll user_feed_scroll_ani">
+                </div>
+            </div>
+            <div id="side_panel_feed_thumb" class="side_panel_feed_thumb hide">
+                <div class="stream_thumbnail_clip"><img id="feed_thumb_img" class="stream_img_side" alt="" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="></div>
+                <div style="width: 96%; height: 20%; bottom:0; color: #FFFFFF; font-size: 110%; padding: 1%;">
+                    <div id="feed_thum_name" class="side_panel_feed_thumb_text class_bold" style="width: 75%; display: inline-block; font-size: 110%;"></div>
+                    <div id="feed_thum_quality" class="side_panel_feed_thumb_text" style="width: 24%; float: right; text-align: right;"></div>
+                    <div id="feed_thum_title" class="side_panel_feed_thumb_text"></div>
+                    <div id="feed_thum_game" class="side_panel_feed_thumb_text"></div>
+                    <div id="feed_thum_views" class="side_panel_feed_thumb_text"></div>
+                </div>
+            </div>
+            <div id="side_panel" class="side_panel side_panel_border side_panel_background_color side_panel_hide" style="margin-left: -31.5%;">
+                <div id="side_panel_new" style="width: 100%; position: absolute;">
+                    <div id="side_panel_feed_holder" style="width: 94%; margin-left: 6%;">
+                        <div id="dialog_loading_side_feed" class="side_panel_dialog hide">
+                            <div class="loading">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </div>
+                        <div id="side_panel_row_0">
+                            <div id="side_panel_cell0_0" style="width: 100%; display: inline-block; padding: 1%;">
+                                <div id="side_panel_thumbdiv0_0" class="side_panel_div">
+                                    <div id="side_panel_feed_1" class="side_panel_feed_top">
+                                        <div class="side_panel_icons">
+                                            <i class="icon icon-arrow-right"></i>
+                                        </div>&nbsp;
+                                        <span id="side_panel_feed_settings"></span>
+                                    </div>
+                                    <div id="side_panel_feed_2" class="side_panel_feed_top">
+                                        <div class="side_panel_icons">
+                                            <i class="icon icon-arrow-left"></i>
+                                        </div>&nbsp;
+                                        <span id="side_panel_feed_refresh"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="side_panel_new_row_1" style="overflow: hidden; width: 94%; position: absolute;">
+                            <div id="side_panel_holder" class="side_panel_holder_ani">
+                            </div>
+                            <div id="side_panel_warn" class="side_panel_feed_top" style="display: none;">
+                                <span id="side_panel_warn_text"></span>
+                            </div>
                         </div>
                     </div>
                 </div>

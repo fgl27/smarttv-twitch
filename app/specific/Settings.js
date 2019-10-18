@@ -15,7 +15,7 @@ var Settings_value = {
     },
     "app_animations": { //app_animations
         "values": ["no", "yes"],
-        "defaultValue": 2
+        "defaultValue": 1
     },
     "show_screen_counter": { //show_screen_counter
         "values": ["no", "yes"],
@@ -483,7 +483,8 @@ function Settings_SetBuffers(whocall) {
 }
 
 function Settings_SetAnimations() {
-    var classes = ['screen_holder',
+    var i, array,
+        classes = ['screen_holder',
             'screen_holder_channel',
             'screen_holder_switch',
             'screen_holder_user',
@@ -506,21 +507,17 @@ function Settings_SetAnimations() {
 
     classes.forEach(
         function(classe) {
-            Array.from(document.getElementsByClassName(classe)).forEach(
-                function(ele) {
-                    ele.style.transition = mtransition;
-                }
-            );
+            array = document.getElementsByClassName(classe);
+            for (i = 0; i < array.length; i++)
+                array[i].style.transition = mtransition;
         }
     );
 
     UserLiveFeed_FeedRemoveFocus();
 
-    Array.from(document.getElementsByClassName(Main_classThumb)).forEach(
-        function(ele) {
-            ele.classList.remove(Main_classThumb);
-        }
-    );
+    array = document.getElementsByClassName(Main_classThumb);
+    for (i = 0; i < array.length; i++)
+        array[i].classList.remove(Main_classThumb);
 
     Main_classThumb = animate ? 'stream_thumbnail_focused' : 'stream_thumbnail_focused_no_ani';
     UserLiveFeed_FocusClass = animate ? 'feed_thumbnail_focused' : 'feed_thumbnail_focused_no_ani';

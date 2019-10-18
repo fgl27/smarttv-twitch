@@ -45,7 +45,6 @@ function PlayClip_Start() {
     Main_textContent("stream_info_name", Main_values.Main_selectedChannelDisplayname);
     Main_innerHTML("stream_info_title", ChannelClip_title);
     Main_innerHTML("stream_info_game", ChannelClip_game + ' ' + ChannelClip_views + ' ' + ChannelClip_language);
-    Main_textContent("stream_live_icon", ChannelClip_createdAt);
     Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
     Play_DefaultjumpTimers = PlayClip_jumpTimers;
     PlayVod_jumpSteps(Play_DefaultjumpTimers[1]);
@@ -152,7 +151,6 @@ var PlayClip_listener = {
     onbufferingcomplete: function() {
         Play_HideBufferDialog();
         PlayClip_bufferingcomplete = true;
-        Main_empty('dialog_buffer_play_percentage');
         // reset the values after using
         PlayClip_offsettime = 0;
         PlayClip_PlayerCheckCount = 0;
@@ -169,13 +167,11 @@ var PlayClip_listener = {
         //percent has a -2 offset and goes up to 98
         if (percent < 98) {
             Play_BufferPercentage = percent;
-            Main_textContent("dialog_buffer_play_percentage", percent + 3);
             if (!Play_BufferDialogVisible()) Play_showBufferDialog();
         } else {
             Play_BufferPercentage = 0;
             Play_HideBufferDialog();
             Play_bufferingcomplete = true;
-            Main_empty('dialog_buffer_play_percentage');
             // reset the values after using
             PlayClip_offsettime = 0;
             if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + (new Date()));

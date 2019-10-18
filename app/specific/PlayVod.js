@@ -89,7 +89,6 @@ function PlayVod_Start() {
         PlayVod_updateStreamerInfoValues();
         Main_innerHTML("stream_info_title", '');
         Main_innerHTML("stream_info_game", ChannelVod_views + ' [' + (ChannelVod_language).toUpperCase() + ']');
-        Main_textContent("stream_live_icon", ChannelVod_createdAt);
 
         Main_replaceClassEmoji('stream_info_game');
     }
@@ -400,7 +399,6 @@ var PlayVod_listener = {
     onbufferingcomplete: function() {
         Play_HideBufferDialog();
         PlayVod_bufferingcomplete = true;
-        Main_empty('dialog_buffer_play_percentage');
         // reset the values after using
         PlayVod_SaveOffset();
         PlayVod_PlayerCheckCount = 0;
@@ -416,13 +414,11 @@ var PlayVod_listener = {
         //percent has a -2 offset and goes up to 98
         if (percent < 98) {
             Play_BufferPercentage = percent;
-            Main_textContent("dialog_buffer_play_percentage", percent + 3);
             if (!Play_BufferDialogVisible()) Play_showBufferDialog();
         } else {
             Play_BufferPercentage = 0;
             Play_HideBufferDialog();
             Play_bufferingcomplete = true;
-            Main_empty('dialog_buffer_play_percentage');
             // reset the values after using
             Main_values.vodOffset = 0;
             if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + (new Date()));

@@ -267,8 +267,6 @@ function Play_SetChatFont() {
 function Play_Start() {
     Play_showBufferDialog();
 
-    Main_innerHTML("stream_live_icon", (Main_values.IsRerun ? STR_NOT_LIVE : STR_LIVE).toUpperCase());
-
     Main_empty('stream_info_title');
     Play_LoadLogoSucess = false;
     PlayClip_HasVOD = true;
@@ -402,17 +400,18 @@ function Play_partnerIcon(name, partner, islive) {
 function Play_updateStreamInfoStartValues(response) {
     response = JSON.parse(response);
     if (response.stream !== null) {
-        Play_partnerIcon(Play_isHost ? Main_values.Play_DisplaynameHost : Main_values.Play_selectedChannelDisplayname, response.stream.channel.partner, true);
-
         Main_values.IsRerun = Main_is_rerun(response.stream.stream_type);
-        Main_innerHTML("stream_live_icon", (Main_values.IsRerun ? STR_NOT_LIVE : STR_LIVE).toUpperCase());
 
-        Main_values.Play_selectedChannel_id = response.stream.channel._id;
         Main_innerHTML("stream_info_title", twemoji.parse(response.stream.channel.status, false, true));
         Main_values.Play_gameSelected = response.stream.game;
         Play_Lang = ' [' + (response.stream.channel.broadcaster_language).toUpperCase() + ']';
-        var playing = (Main_values.Play_gameSelected !== "" ? STR_PLAYING + Main_values.Play_gameSelected + STR_FOR : "");
-        Main_textContent("stream_info_game", playing + Main_addCommas(response.stream.viewers) + ' ' + STR_VIEWER + Play_Lang);
+
+        Play_partnerIcon(Play_isHost ? Main_values.Play_DisplaynameHost : Main_values.Play_selectedChannelDisplayname, response.stream.channel.partner, true, Play_Lang);
+
+        var playing = (Main_values.Play_gameSelected !== "" ? STR_PLAYING + Main_values.Play_gameSelected : "");
+        Main_textContent("stream_info_game", playing);
+
+        Main_innerHTML("stream_live_viewers", STR_SPACE + STR_FOR + Main_addCommas(response.stream.viewers) + STR_SPACE + STR_VIEWER);
         Main_values.Play_selectedChannelLogo = response.stream.channel.logo;
         Play_LoadLogoSucess = true;
         Play_LoadLogo(document.getElementById('stream_info_icon'), Main_values.Play_selectedChannelLogo);
@@ -662,7 +661,6 @@ function Play_qualityChanged() {
     if (Main_isDebug) console.log('Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
 
     Play_BufferPercentage = 0;
-    Main_empty('dialog_buffer_play_percentage');
     Play_onPlayerCounter = 0;
     if (Play_isOn) Play_onPlayer();
 }
@@ -682,7 +680,6 @@ var Play_listener = {
         Play_HideBufferDialog();
         Play_bufferingcomplete = true;
         Play_RestoreFromResume = false;
-        Main_empty('dialog_buffer_play_percentage');
         Play_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = Play_Buffer;
         Play_PlayerCheckQualityChanged = true;
@@ -695,13 +692,11 @@ var Play_listener = {
         //percent has a -2 offset and goes up to 98
         if (percent < 98) {
             Play_BufferPercentage = percent;
-            Main_textContent("dialog_buffer_play_percentage", percent + 3);
             if (!Play_BufferDialogVisible()) Play_showBufferDialog();
         } else {
             Play_BufferPercentage = 0;
             Play_HideBufferDialog();
             Play_bufferingcomplete = true;
-            Main_empty('dialog_buffer_play_percentage');
             if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + (new Date()));
         }
         Play_RestoreFromResume = false;
@@ -1004,15 +999,15 @@ function Play_hideFallow() {
 }
 
 function Play_showBufferDialog() {
-    Main_ShowElement('dialog_buffer_play');
+    Main_ShowElement('dialog_loading_play');
 }
 
 function Play_HideBufferDialog() {
-    Main_HideElement('dialog_buffer_play');
+    Main_HideElement('dialog_loading_play');
 }
 
 function Play_BufferDialogVisible() {
-    return Main_isElementShowing('dialog_buffer_play');
+    return Main_isElementShowing('dialog_loading_play');
 }
 
 function Play_showWarningDialog(text) {

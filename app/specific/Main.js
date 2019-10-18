@@ -1312,6 +1312,9 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
                 callbackSucess(xmlHttp.responseText);
             } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
                 AddCode_refreshTokens(Main_values.Users_Position, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
+            } else if (xmlHttp.status === 410 && inUseObj.screen === Main_games) {
+                inUseObj.setHelix();
+                BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError);
             } else {
                 calbackError();
             }

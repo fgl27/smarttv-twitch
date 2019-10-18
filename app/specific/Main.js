@@ -75,6 +75,7 @@ var Main_ExitDialogID = null;
 var Main_IsDayFirst = false;
 var Main_SearchInput;
 var Main_AddUserInput;
+var Main_AddCodeInput;
 var Main_updateclockId;
 var Main_ContentLang = "";
 var Main_Periods = [];
@@ -180,6 +181,7 @@ function Main_loadTranslations(language) {
 
             Main_SearchInput = document.getElementById("search_input");
             Main_AddUserInput = document.getElementById("user_input");
+            Main_AddCodeInput = document.getElementById("oauth_input");
 
             AddUser_RestoreUsers();
             //Allow page to proper load/resize and users 0 be restored before Main_initWindows
@@ -215,7 +217,7 @@ function Main_initWindows() {
 
         Play_MakeControls();
         Play_SetControls();
-        Play_SetFullScreen(Play_isFullScreen);
+        if (Main_IsNotBrowser) Play_SetAvPlayGlobal();
 
         PlayVod_RestoreVodIds();
 
@@ -1075,7 +1077,7 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
             if (xmlHttp.status === 200) {
                 callbackSucess(xmlHttp.responseText);
             } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
-                AddCode_refreshTokens(Main_values.Users_Position, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
+                AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
             } else if (xmlHttp.status === 410 && inUseObj.screen === Main_games) {
                 inUseObj.setHelix();
                 BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError);

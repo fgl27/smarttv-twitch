@@ -93,6 +93,7 @@ function AddUser_KeyboardEvent(event) {
             Main_AddUserInput.value = '';
             break;
         case KEY_KEYBOARD_DONE:
+        case KEY_KEYBOARD_CANCEL:
         case KEY_DOWN:
             if (Main_AddUserInput.value !== '' && Main_AddUserInput.value !== null) {
 
@@ -300,7 +301,6 @@ function AddUser_UserMakeOne(Position) {
     Users_status = false;
     AddUser_UpdateSidepanel();
     Users_init();
-    Main_values.Users_Position = 0;
 }
 
 function AddUser_UserCodeExist(user) {

@@ -4,6 +4,7 @@ var Play_ChatPositionConvertBefore = Play_ChatPositions;
 var Play_PlayerPanelOffset = -5;
 var Play_ChatBackground = 0.55;
 var Play_ChatSizeValue = 2;
+var Play_SingleClickExit = 0;
 var Play_PanelHideID = null;
 var Play_quality = "source";
 var Play_qualityPlaying = Play_quality;
@@ -481,8 +482,8 @@ function Play_loadDataRequest() {
 
     if (Play_state === Play_STATE_LOADING_TOKEN) {
         theUrl = 'https://api.twitch.tv/api/channels/' + Main_values.Play_selectedChannel + '/access_token?platform=_' +
-            (AddUser_UserIsSet() && AddUser_UsernameArray[Main_values.Users_Position].access_token ? '&oauth_token=' +
-                AddUser_UsernameArray[Main_values.Users_Position].access_token : '');
+            (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token ? '&oauth_token=' +
+                AddUser_UsernameArray[0].access_token : '');
     } else {
         theUrl = 'https://usher.ttvnw.net/api/channel/hls/' + Main_values.Play_selectedChannel +
             '.m3u8?&token=' + encodeURIComponent(Play_tokenResponse.token) + '&sig=' + Play_tokenResponse.sig +
@@ -1476,7 +1477,7 @@ function Play_OpenGame(PlayVodClip) {
 }
 
 function Play_FallowUnfallow() {
-    if (AddUser_UserIsSet() && AddUser_UsernameArray[Main_values.Users_Position].access_token) {
+    if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
         if (AddCode_IsFallowing) AddCode_UnFallow();
         else AddCode_Fallow();
     } else {
@@ -1619,7 +1620,7 @@ function Play_setFallow() {
 }
 
 function Play_KeyReturn(is_vod) {
-    if (Play_isEndDialogVisible() && !Play_ExitDialogVisible()) {
+    if (Play_isEndDialogVisible() && !Play_ExitDialogVisible() && !Play_SingleClickExit) {
         Play_EndTextClear();
         Play_showExitDialog();
     } else if (UserLiveFeed_isFeedShow()) UserLiveFeed_Hide();
@@ -1631,7 +1632,7 @@ function Play_KeyReturn(is_vod) {
             Play_HideVodDialog();
             PlayVod_PreshutdownStream(false);
             Play_exitMain();
-        } else if (Play_ExitDialogVisible()) {
+        } else if (Play_ExitDialogVisible() || Play_SingleClickExit) {
             Play_CleanHideExit();
             Play_hideChat();
             if (is_vod) PlayVod_shutdownStream();
@@ -1649,7 +1650,7 @@ function Play_handleKeyDown(e) {
     if (Play_state !== Play_STATE_PLAYING) {
         switch (e.keyCode) {
             case KEY_RETURN:
-                if (Play_ExitDialogVisible()) {
+                if (Play_ExitDialogVisible() || Play_SingleClickExit) {
                     Play_CleanHideExit();
                     Play_hideChat();
                     Play_shutdownStream();

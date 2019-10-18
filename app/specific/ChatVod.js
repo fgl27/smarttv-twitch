@@ -376,10 +376,9 @@ function Chat_SingleLine(Line) {
 function Chat_Clean() {
     //delete old lines out of view
     var linesToDelete = document.getElementsByClassName("chat_line");
-    if ((linesToDelete.length - 100) > 0) {
-        for (var i = 0; i < (linesToDelete.length - 100); i++) {
+    if ((linesToDelete.length - Chat_CleanMax) > 0) {
+        for (var i = 0; i < (linesToDelete.length - Chat_CleanMax); i++) {
             linesToDelete[0].parentNode.removeChild(linesToDelete[0]);
         }
     }
-    ChatLive_ChatFixPosition();
 }

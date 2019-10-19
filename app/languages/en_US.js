@@ -8,7 +8,7 @@ function en_USLang() {
 
     //Below are variables to translate
     STR_KEY_UP_DOWN = " (CH Up/Down)";
-    STR_GUIDE = " (Guide or Info)";
+    STR_GUIDE = " Hold enter or press Guide or Info";
     STR_REFRESH = "Refresh";
     STR_SEARCH = "Search";
     STR_SETTINGS = "Settings";
@@ -162,7 +162,6 @@ function en_USLang() {
     STR_PLACEHOLDER_PRESS_UP = "Press Up to ";
     STR_FALLOW_GAMES = "Followed Games";
     STR_USER_GAMES_CHANGE = "Change between";
-    STR_GUIDE = " Hold enter";
     STR_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
     STR_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     STR_STARTED = "Started ";

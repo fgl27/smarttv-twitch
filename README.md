@@ -46,6 +46,7 @@ Twitch.TV authentication key
 ===============
 
 ![Add_key](https://fgl27.github.io/smarttv-twitch/screenshot/Add_key.png)
+![Add_key](https://fgl27.github.io/smarttv-twitch/screenshot/Add_key2.png)
 
 The user can add a authentication key if you have the twitch password for that user (aka you are it).
 That key will be used to access twitch content for that account, when accessing twitch authentication site it will show:
@@ -89,11 +90,9 @@ The key **INFO** is also mapped in the app with the same functions as the **GUID
 ### To access the controls from any screen press key A or on smart remote press the 4 color buttons (color) after Directional pad up for red A key and chose controls. If you are playing a stream, use the C yellow key to directly open the controls
 
 
-## Main controls
-![Main](https://fgl27.github.io/smarttv-twitch/screenshot/controls_main_simple.png)
+## Controls
+![Main](https://fgl27.github.io/smarttv-twitch/screenshot/controls.png)
 ==============
-## Player controls
-![Players](https://fgl27.github.io/smarttv-twitch/screenshot/controls_play_simple.png)
 
 Installation instructions:
 ==============

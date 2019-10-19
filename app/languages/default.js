@@ -38,20 +38,20 @@ function DefaultLang() {
         STR_DOT + STR_CONTROLS_PLAY_5 + STR_BR +
         STR_DOT + STR_CONTROLS_PLAY_6 + STR_BR + STR_BR +
 
-//        STR_DIV_TITLE + STR_PICTURE_PICTURE + '</div>' +
-//        STR_DIV_MIDLE_LEFT +
-//        STR_DOT + STR_PICTURE_CONTROLS1 + STR_BR +
-//        STR_DOT + STR_PICTURE_CONTROLS12 + STR_BR +
-//        STR_DOT + STR_PICTURE_CONTROLS2 + STR_BR +
-//        STR_DOT + STR_PICTURE_CONTROLS3 + STR_BR +
-//        STR_DOT + STR_PICTURE_CONTROLS4 + STR_BR +
-//        STR_DOT + STR_PICTURE_CONTROLS5 + STR_BR +
-//        STR_DOT + STR_PICTURE_CONTROLS6 + STR_BR +
-//        STR_DOT + STR_PICTURE_CONTROLS7 + STR_BR +
-//        STR_DOT + STR_PICTURE_CONTROLS8 + STR_BR +
-//        STR_DOT + STR_PICTURE_CONTROLS9 + STR_BR +
-//        STR_DOT + STR_PICTURE_CONTROLS10 + STR_BR +
-//        STR_DOT + STR_PICTURE_CONTROLS11 + STR_BR +
+        //        STR_DIV_TITLE + STR_PICTURE_PICTURE + '</div>' +
+        //        STR_DIV_MIDLE_LEFT +
+        //        STR_DOT + STR_PICTURE_CONTROLS1 + STR_BR +
+        //        STR_DOT + STR_PICTURE_CONTROLS12 + STR_BR +
+        //        STR_DOT + STR_PICTURE_CONTROLS2 + STR_BR +
+        //        STR_DOT + STR_PICTURE_CONTROLS3 + STR_BR +
+        //        STR_DOT + STR_PICTURE_CONTROLS4 + STR_BR +
+        //        STR_DOT + STR_PICTURE_CONTROLS5 + STR_BR +
+        //        STR_DOT + STR_PICTURE_CONTROLS6 + STR_BR +
+        //        STR_DOT + STR_PICTURE_CONTROLS7 + STR_BR +
+        //        STR_DOT + STR_PICTURE_CONTROLS8 + STR_BR +
+        //        STR_DOT + STR_PICTURE_CONTROLS9 + STR_BR +
+        //        STR_DOT + STR_PICTURE_CONTROLS10 + STR_BR +
+        //        STR_DOT + STR_PICTURE_CONTROLS11 + STR_BR +
 
         STR_DIV_TITLE + STR_CHAT + ':</div>' +
         STR_DIV_MIDLE_LEFT +

@@ -229,9 +229,9 @@ function Chat_MessageVectorNext(message, time) {
 
 function Chat_Play(id) {
     if (!Chat_hasEnded && Chat_Id === id && !Main_values.Play_ChatForceDisable) {
+        Main_Addline(id);
         Chat_addlinesId = window.setInterval(function() {
             Main_Addline(id);
-            Chat_div.scrollTop = Chat_div.scrollHeight;
         }, 1000);
     }
 }
@@ -294,13 +294,6 @@ function Main_Addline(id) {
             Chat_div.appendChild(elem);
 
             Chat_hasEnded = true;
-            Chat_div.scrollTop = Chat_div.scrollHeight;
-
-            //keep refreshing in case user changes chat size
-            window.clearInterval(Chat_addlinesId);
-            Chat_addlinesId = window.setInterval(function() {
-                Chat_div.scrollTop = Chat_div.scrollHeight;
-            }, 1000);
         }
     }
 }
@@ -354,15 +347,11 @@ function Chat_NoVod() {
 function Chat_Disable() {
     Chat_Clear();
     Chat_SingleLine(STR_CHAT_DISABLE);
-    Main_ready(function() {
-        Chat_div.scrollTop = Chat_div.scrollHeight;
-    });
 }
 
 function Chat_SingleLine(Line) {
     var div = '&nbsp;';
     div += '<span class="message">';
-    div += STR_BR + STR_BR + STR_BR + STR_BR + STR_BR + STR_BR;
     div += Line;
     div += '</span>';
 

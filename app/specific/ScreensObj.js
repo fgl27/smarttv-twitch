@@ -81,7 +81,7 @@ var Base_obj = {
             Screens_BasicExit(Main_values.Main_Go);
             Main_SwitchScreenAction();
         } else if ((this.screen === Main_SearchLive || this.screen === Main_SearchGames ||
-                this.screen === Main_SearchChannels) && !goSidepanel) {
+            this.screen === Main_SearchChannels) && !goSidepanel) {
             if (Main_values.Main_Go === Main_values.Main_BeforeSearch) Main_values.Main_Go = Main_Live;
             else Main_values.Main_Go = Main_values.Main_BeforeSearch;
             Main_values.Search_isSearching = false;
@@ -172,22 +172,22 @@ var Base_Vod_obj = {
                 Screens_createCellVod(
                     this.row_id + '_' + this.coloumn_id,
                     this.ids, [thubnail.replace("{width}x{height}", Main_VideoSize),
-                        cell.channel.display_name,
-                        STR_STREAM_ON + Main_videoCreatedAt(cell.created_at),
-                        twemoji.parse(cell.title) + STR_BR + (cell.game !== "" && cell.game !== null ? STR_STARTED + STR_PLAYING + cell.game : ""),
-                        Main_addCommas(cell.views) + STR_VIEWS,
-                        cell.resolutions.chunked ? Main_videoqualitylang(cell.resolutions.chunked.slice(-4), (parseInt(cell.fps.chunked) || 0), cell.channel.broadcaster_language) : '',
-                        cell.length,
-                        cell.animated_preview_url,
-                        cell._id,
-                        cell.channel.broadcaster_language,
-                        cell.game,
-                        cell.channel.name,
-                        cell.increment_view_count_url,
-                        cell.channel._id,
-                        cell.channel.logo,
-                        cell.channel.partner
-                    ]));
+                    cell.channel.display_name,
+                    STR_STREAM_ON + Main_videoCreatedAt(cell.created_at),
+                    twemoji.parse(cell.title) + STR_BR + (cell.game !== "" && cell.game !== null ? STR_STARTED + STR_PLAYING + cell.game : ""),
+                    Main_addCommas(cell.views) + STR_VIEWS,
+                    cell.resolutions.chunked ? Main_videoqualitylang(cell.resolutions.chunked.slice(-4), (parseInt(cell.fps.chunked) || 0), cell.channel.broadcaster_language) : '',
+                    cell.length,
+                    cell.animated_preview_url,
+                    cell._id,
+                    cell.channel.broadcaster_language,
+                    cell.game,
+                    cell.channel.name,
+                    cell.increment_view_count_url,
+                    cell.channel._id,
+                    cell.channel.logo,
+                    cell.channel.partner
+                ]));
 
             this.coloumn_id++;
         }
@@ -201,6 +201,8 @@ function ScreensObj_InitVod() {
     Vod = Screens_assign({
         periodMaxPos: 4,
         HeaderQuatity: 2,
+        key_pgUp: Main_Clip,
+        key_pgDown: Main_games,
         object: 'vods',
         ids: Screens_ScreenIds('Vod'),
         table: 'stream_table_vod',
@@ -263,6 +265,7 @@ function ScreensObj_InitChannelVod() {
     ChannelVod = Screens_assign({
         periodMaxPos: 2,
         HeaderQuatity: 2,
+        key_pgUp: Main_ChannelClip,
         object: 'videos',
         ids: Screens_ScreenIds('ChannelVod'),
         table: 'stream_table_channel_vod',
@@ -360,6 +363,8 @@ function ScreensObj_InitAGameVod() {
         periodMaxPos: 4,
         HeaderQuatity: 2,
         object: 'vods',
+        key_pgUp: Main_Vod,
+        key_pgDown: Main_Featured,
         ids: Screens_ScreenIds('AGameVod'),
         table: 'stream_table_a_game_vod',
         screen: Main_AGameVod,
@@ -423,6 +428,8 @@ function ScreensObj_InitUserVod() {
         periodMaxPos: 2,
         HeaderQuatity: 3,
         object: 'videos',
+        key_pgUp: Main_UserChannels,
+        key_pgDown: Main_usergames,
         ids: Screens_ScreenIds('UserVod'),
         table: 'stream_table_user_vod',
         screen: Main_UserVod,
@@ -473,6 +480,7 @@ function ScreensObj_InitUserVod() {
         },
         label_init: function() {
             this.SetPeriod();
+            Sidepannel_SetTopOpacity(this.screen);
         },
         SetPeriod: function() {
             Main_setItem('UserVod_periodPos', this.periodPos);
@@ -512,12 +520,12 @@ var Base_Live_obj = {
             this.row.appendChild(
                 Screens_createCellLive(
                     this.row_id + '_' + this.coloumn_id, [cell.channel.name, cell.channel._id, Main_is_rerun(cell.stream_type)], this.ids, [cell.preview.template.replace("{width}x{height}", Main_VideoSize),
-                        cell.channel.display_name,
-                        cell.channel.status, cell.game,
-                        STR_SINCE + Play_streamLiveAt(cell.created_at) + STR_SPACE + STR_FOR + Main_addCommas(cell.viewers) +
-                        STR_SPACE + STR_VIEWER,
-                        Main_videoqualitylang(cell.video_height, cell.average_fps, cell.channel.broadcaster_language)
-                    ]));
+                    cell.channel.display_name,
+                    cell.channel.status, cell.game,
+                    STR_SINCE + Play_streamLiveAt(cell.created_at) + STR_SPACE + STR_FOR + Main_addCommas(cell.viewers) +
+                    STR_SPACE + STR_VIEWER,
+                    Main_videoqualitylang(cell.video_height, cell.average_fps, cell.channel.broadcaster_language)
+                ]));
 
             this.coloumn_id++;
         }
@@ -532,6 +540,8 @@ function ScreensObj_InitLive() {
         table: 'stream_table_live',
         screen: Main_Live,
         object: 'streams',
+        key_pgUp: Main_Featured,
+        key_pgDown: Main_Clip,
         base_url: 'https://api.twitch.tv/kraken/streams?limit=' + Main_ItemsLimitMax,
         set_url: function() {
             if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
@@ -600,6 +610,8 @@ function ScreensObj_InitUserLive() {
         table: 'stream_table_user_live',
         screen: Main_UserLive,
         object: 'streams',
+        key_pgUp: Main_UserHost,
+        key_pgDown: Main_UserChannels,
         base_url: 'https://api.twitch.tv/kraken/streams/',
         loadChannelOffsset: 0,
         followerChannels: '',
@@ -696,6 +708,8 @@ function ScreensObj_InitUserHost() {
         table: 'stream_table_user_host',
         screen: Main_UserHost,
         object: 'hosts',
+        key_pgUp: Main_usergames,
+        key_pgDown: Main_UserLive,
         base_url: 'https://api.twitch.tv/api/users/',
         set_url: function() {
             if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
@@ -724,11 +738,11 @@ function ScreensObj_InitUserHost() {
             this.row.appendChild(
                 Screens_createCellLive(
                     this.row_id + '_' + this.coloumn_id, [cell.target.channel.name, cell.target._id, false], this.ids, [cell.target.preview_urls.template.replace("{width}x{height}", Main_VideoSize),
-                        cell.display_name + STR_USER_HOSTING + cell.target.channel.display_name,
-                        cell.target.title, cell.target.meta_game,
-                        STR_FOR.charAt(0).toUpperCase() + STR_FOR.slice(1) +
-                        Main_addCommas(cell.target.viewers) + STR_SPACE + STR_VIEWER, ''
-                    ]));
+                    cell.display_name + STR_USER_HOSTING + cell.target.channel.display_name,
+                    cell.target.title, cell.target.meta_game,
+                    STR_FOR.charAt(0).toUpperCase() + STR_FOR.slice(1) +
+                    Main_addCommas(cell.target.viewers) + STR_SPACE + STR_VIEWER, ''
+                ]));
 
             this.coloumn_id++;
         }
@@ -742,6 +756,8 @@ function ScreensObj_InitAGame() {
         table: 'stream_table_a_game',
         screen: Main_aGame,
         object: 'streams',
+        key_pgUp: Main_Vod,
+        key_pgDown: Main_Featured,
         base_url: 'https://api.twitch.tv/kraken/streams?game=',
         set_url: function() {
             if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
@@ -795,6 +811,8 @@ function ScreensObj_InitFeatured() {
         ids: Screens_ScreenIds('Featured'),
         table: 'stream_table_featured',
         screen: Main_Featured,
+        key_pgUp: Main_games,
+        key_pgDown: Main_Live,
         base_url: 'https://api.twitch.tv/kraken/streams/featured?limit=' + Main_ItemsLimitMax,
         set_url: function() {
             this.url = this.base_url + '&offset=' + this.offset +
@@ -886,20 +904,20 @@ var Base_Clip_obj = {
                 Screens_createCellClip(
                     this.row_id + '_' + this.coloumn_id,
                     this.ids, [cell.slug,
-                        cell.duration,
-                        cell.game,
-                        cell.broadcaster.name,
-                        cell.broadcaster.display_name,
-                        cell.broadcaster.logo.replace("150x150", "300x300"),
-                        cell.broadcaster.id,
-                        (cell.vod !== null ? cell.vod.id : null),
-                        (cell.vod !== null ? cell.vod.offset : null),
-                        twemoji.parse(cell.title),
-                        '[' + cell.language.toUpperCase() + ']',
-                        STR_CREATED_AT + Main_videoCreatedAt(cell.created_at),
-                        Main_addCommas(cell.views) + STR_VIEWS,
-                        cell.thumbnails.medium
-                    ]));
+                    cell.duration,
+                    cell.game,
+                    cell.broadcaster.name,
+                    cell.broadcaster.display_name,
+                    cell.broadcaster.logo.replace("150x150", "300x300"),
+                    cell.broadcaster.id,
+                    (cell.vod !== null ? cell.vod.id : null),
+                    (cell.vod !== null ? cell.vod.offset : null),
+                    twemoji.parse(cell.title),
+                    '[' + cell.language.toUpperCase() + ']',
+                    STR_CREATED_AT + Main_videoCreatedAt(cell.created_at),
+                    Main_addCommas(cell.views) + STR_VIEWS,
+                    cell.thumbnails.medium
+                ]));
 
             this.coloumn_id++;
         }
@@ -911,6 +929,8 @@ function ScreensObj_InitClip() {
         ids: Screens_ScreenIds('Clip'),
         table: 'stream_table_clip',
         screen: Main_Clip,
+        key_pgUp: Main_Live,
+        key_pgDown: Main_Vod,
         periodPos: Main_getItemInt('Clip_periodPos', 2),
         base_url: 'https://api.twitch.tv/kraken/clips/top?limit=' + Main_ItemsLimitMax,
         set_url: function() {
@@ -942,6 +962,7 @@ function ScreensObj_InitChannelClip() {
         ids: Screens_ScreenIds('ChannelClip'),
         table: 'stream_table_channel_clip',
         screen: Main_ChannelClip,
+        key_pgDown: Main_ChannelVod,
         periodPos: Main_getItemInt('ChannelClip_periodPos', 2),
         base_url: 'https://api.twitch.tv/kraken/clips/top?channel=',
         set_url: function() {
@@ -975,6 +996,8 @@ function ScreensObj_InitAGameClip() {
         ids: Screens_ScreenIds('AGameClip'),
         table: 'stream_table_a_game_clip',
         screen: Main_AGameClip,
+        key_pgUp: Main_Vod,
+        key_pgDown: Main_Featured,
         periodPos: Main_getItemInt('AGameClip_periodPos', 2),
         base_url: 'https://api.twitch.tv/kraken/clips/top?game=',
         set_url: function() {
@@ -1045,10 +1068,10 @@ var Base_Game_obj = {
                 Screens_createCellGame(
                     this.row_id + '_' + this.coloumn_id,
                     this.ids, [game.box.template.replace("{width}x{height}", Main_GameSize),
-                        game.name,
-                        hasLive ? Main_addCommas(cell.channels) + STR_SPACE + STR_CHANNELS + STR_BR + STR_FOR +
+                    game.name,
+                    hasLive ? Main_addCommas(cell.channels) + STR_SPACE + STR_CHANNELS + STR_BR + STR_FOR +
                         Main_addCommas(cell.viewers) + STR_SPACE + STR_VIEWER : ''
-                    ]));
+                ]));
 
             this.coloumn_id++;
         }
@@ -1060,6 +1083,8 @@ function ScreensObj_InitGame() {
         ids: Screens_ScreenIds('Game'),
         table: 'stream_table_games',
         screen: Main_games,
+        key_pgUp: Main_Vod,
+        key_pgDown: Main_Featured,
         object: 'top',
         useHelix: false,
         base_url: 'https://api.twitch.tv/kraken/games/top?limit=' + Main_ItemsLimitMax,
@@ -1089,9 +1114,9 @@ function ScreensObj_InitGame() {
                         Screens_createCellGame(
                             this.row_id + '_' + this.coloumn_id,
                             this.ids, [cell.box_art_url.replace("{width}x{height}", Main_GameSize),
-                                cell.name,
-                                ''
-                            ]));
+                            cell.name,
+                            ''
+                        ]));
 
                     this.coloumn_id++;
                 }
@@ -1108,6 +1133,8 @@ function ScreensObj_InitUserGames() {
         ids: Screens_ScreenIds('UserGames'),
         table: 'stream_table_user_games',
         screen: Main_usergames,
+        key_pgUp: Main_UserVod,
+        key_pgDown: Main_UserHost,
         isLive: Main_getItemBool('user_Games_live', true),
         OldUserName: '',
         object: 'follows',
@@ -1217,6 +1244,8 @@ function ScreensObj_InitUserChannels() {
         table: 'stream_table_user_channels',
         screen: Main_UserChannels,
         object: 'follows',
+        key_pgUp: Main_UserLive,
+        key_pgDown: Main_UserVod,
         base_url: 'https://api.twitch.tv/kraken/users/',
         set_url: function() {
             if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
@@ -1335,6 +1364,7 @@ function ScreensObj_TopLableUserInit() {
     inUseObj.OldUserName = AddUser_UsernameArray[0].name;
 
     Sidepannel_SetUserLables();
+    Sidepannel_SetTopOpacity(inUseObj.screen);
 }
 
 function ScreensObj_SetTopLable(text, small_text) {

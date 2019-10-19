@@ -782,7 +782,7 @@ function Play_SetHtmlQuality(element) {
     if (Play_quality.indexOf('source') !== -1) quality_string = Play_quality.replace("source", STR_SOURCE);
     else quality_string = Play_quality;
 
-    quality_string += Play_quality.indexOf('Auto') === -1 ? Play_qualities[Play_qualityIndex].band + Play_qualities[Play_qualityIndex].codec : "";
+    quality_string += Play_qualities[Play_qualityIndex].band + Play_qualities[Play_qualityIndex].codec;
 
     Main_textContent(element, quality_string);
 }
@@ -1138,9 +1138,19 @@ function Play_showPanel() {
     Play_RefreshWatchingtime();
     Play_clock();
     Play_CleanHideExit();
-    document.getElementById("scene_channel_panel").style.opacity = "1";
+    Play_ForceShowPannel()
     Play_clearHidePanel();
     Play_setHidePanel();
+}
+
+function Play_ForceShowPannel() {
+    document.getElementById("scene_channel_panel").style.opacity = "1";
+    Main_ShowElement('playsideinfo');
+}
+
+function Play_ForceHidePannel() {
+    document.getElementById("scene_channel_panel").style.opacity = "0";
+    Main_HideElement('playsideinfo');
 }
 
 function Play_RefreshWatchingtime() {
@@ -2348,10 +2358,6 @@ function Play_IconsRemoveFocus() {
     document.getElementById('controls_button_text_' + Play_Panelcounter).style.opacity = "0";
     //in case chat is disable and the warning is showing because some chat option was selected
     document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = "0";
-}
-
-function Play_ForceHidePannel() {
-    document.getElementById("scene_channel_panel").style.opacity = "0";
 }
 
 function Play_KeyChatSizeChage() {

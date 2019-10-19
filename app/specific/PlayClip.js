@@ -507,7 +507,7 @@ function PlayClip_showPanel() {
     PlayVod_IconsBottonResetFocus();
     PlayClip_qualityIndexReset();
     PlayClip_qualityDisplay();
-    document.getElementById("scene_channel_panel").style.opacity = "1";
+    Play_ForceShowPannel();
     Play_clearHidePanel();
     PlayClip_setHidePanel();
 }

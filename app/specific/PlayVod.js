@@ -318,12 +318,6 @@ function PlayVod_loadDataError() {
 //Browsers crash trying to get the streams link
 function PlayVod_loadDataSuccessFake() {
     PlayVod_qualities = [{
-            'id': 'Auto',
-            'band': 0,
-            'codec': 'avc',
-            'url': 'https://auto'
-        },
-        {
             'id': '1080p60 | source ',
             'band': '| 10.00Mbps',
             'codec': ' | avc',
@@ -655,7 +649,7 @@ function PlayVod_showPanel(autoHide) {
         Play_clearHidePanel();
         PlayVod_setHidePanel();
     }
-    document.getElementById("scene_channel_panel").style.opacity = "1";
+    Play_ForceShowPannel();
 }
 
 function PlayVod_IconsBottonResetFocus() {
@@ -743,7 +737,7 @@ function PlayVod_SetHtmlQuality(element) {
     if (PlayVod_quality.indexOf('source') !== -1) quality_string = PlayVod_quality.replace("source", STR_SOURCE);
     else quality_string = PlayVod_quality;
 
-    quality_string += PlayVod_quality.indexOf('Auto') === -1 ? PlayVod_qualities[PlayVod_qualityIndex].band + PlayVod_qualities[PlayVod_qualityIndex].codec : "";
+    quality_string += PlayVod_qualities[PlayVod_qualityIndex].band + PlayVod_qualities[PlayVod_qualityIndex].codec;
 
     Main_textContent(element, quality_string);
 }

@@ -91,29 +91,14 @@
   -webkit-font-smoothing: antialiased;
 }
 
-.icon-settings:before {
-  content: "\61";
-}
-.icon-switch:before {
-  content: "\62";
-}
-.icon-circle-o-notch:before {
-  content: "\63";
-}
 .icon-circle:before {
   content: "\64";
-}
-.icon-question-circle:before {
-  content: "\65";
 }
 .icon-search:before {
   content: "\68";
 }
-.icon-arrow-circle-left:before {
+.icon-arrow-left:before {
   content: "\69";
-}
-.icon-info-circle:before {
-  content: "\6a";
 }
 .icon-heart-o:before {
   content: "\6b";
@@ -136,17 +121,8 @@
 .icon-refresh:before {
   content: "\73";
 }
-.icon-play:before {
-  content: "\72";
-}
-.icon-user-times:before {
-  content: "\77";
-}
 .icon-user-plus:before {
   content: "\78";
-}
-.icon-key:before {
-  content: "\74";
 }
 .icon-users:before {
   content: "\75";
@@ -163,22 +139,10 @@
 .icon-history:before {
   content: "\67";
 }
-.icon-ellipsis:before {
-  content: "\42";
-}
-.icon-trash:before {
-  content: "\43";
-}
-.icon-exit:before {
-  content: "\44";
-}
 .icon-play-1:before {
   content: "\45";
 }
-.icon-ellipsis-h:before {
-  content: "\66";
-}
-.icon-arrow-circle-right:before {
+.icon-arrow-right:before {
   content: "\6e";
 }
 .icon-next:before {
@@ -186,9 +150,6 @@
 }
 .icon-back:before {
   content: "\46";
-}
-.icon-star:before {
-  content: "\47";
 }
 .icon-speedometer:before {
   content: "\48";
@@ -220,9 +181,6 @@
 .icon-resize-down:before {
   content: "\54";
 }
-.icon-buffer:before {
-  content: "\55";
-}
 .icon-sound-off:before {
   content: "\4d";
 }
@@ -234,4 +192,13 @@
 }
 .icon-user:before {
   content: "\4a";
+}
+.icon-offset:before {
+  content: "\57";
+}
+.icon-star:before {
+  content: "\61";
+}
+.icon-play:before {
+  content: "\62";
 }

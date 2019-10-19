@@ -1138,7 +1138,7 @@ function Play_showPanel() {
     Play_RefreshWatchingtime();
     Play_clock();
     Play_CleanHideExit();
-    Play_ForceShowPannel()
+    Play_ForceShowPannel();
     Play_clearHidePanel();
     Play_setHidePanel();
 }

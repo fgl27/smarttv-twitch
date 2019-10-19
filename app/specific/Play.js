@@ -21,7 +21,7 @@ var Play_FeedPos = 0;
 var Play_Buffer = 2000;
 var Play_CurrentSpeed = 3;
 var Play_onPlayerCounter = 0;
-var Play_TizenVersion;
+var Play_TizenVersion = 2.4;
 
 var Play_STATE_LOADING_TOKEN = 0;
 var Play_STATE_LOADING_PLAYLIST = 1;
@@ -179,6 +179,7 @@ function Play_PreStart() {
         avplay.setAttribute('style', 'width:100%; height:100%; position: absolute;');
         document.getElementById('scene2').appendChild(avplay);
         Play_avplay = (window.tizen && window.webapis.avplay) || {};
+        Play_TizenVersion = tizen.systeminfo.getCapability("http://tizen.org/feature/platform.version");
     }
 
     Play_chat_container = document.getElementById("chat_container");
@@ -191,8 +192,6 @@ function Play_PreStart() {
     Play_ChatBackground = (Main_values.ChatBackground * 0.05).toFixed(2);
     Play_ChatDelayPosition = Main_getItemInt('Play_ChatDelayPosition', 0);
     Play_LowLatency = Main_getItemBool('Play_LowLatency', false);
-
-    Play_TizenVersion = tizen.systeminfo.getCapability("http://tizen.org/feature/platform.version");
 
     //"GET_LIVE_DURATION" is available since Tizen version 2.4.
     //That is used to get a Play_LowLatency scenario

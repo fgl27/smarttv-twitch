@@ -1001,7 +1001,6 @@ function Play_PreshutdownStream(closePlayer) {
     if (closePlayer) Play_isOn = false;
     UserLiveFeed_Hide();
 
-
     Play_ClearPlay(closePlayer);
     Play_ClearPlayer();
     Main_values.Play_selectedChannel_id = '';
@@ -1747,6 +1746,7 @@ function Play_SavePlayData() {
 
 function Play_RestorePlayData() {
     Play_HideBufferDialog();
+    Play_bufferingcomplete = true;
     Play_state = Play_STATE_PLAYING;
 
     Play_IsWarning = true;
@@ -1875,6 +1875,7 @@ function Play_handleKeyDown(e) {
                     else if (Main_values.Play_selectedChannel !== JSON.parse(doc.getAttribute(Main_DataAttribute))[0]) {
                         Play_SavePlayData();
                         Play_PreshutdownStream(false);
+                        Play_bufferingcomplete = false;
 
                         Main_values.Play_isHost = false;
                         Play_UserLiveFeedPressed = true;

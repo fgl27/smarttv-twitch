@@ -7,6 +7,7 @@ var Play_ChatSizeValue = 2;
 var Play_SingleClickExit = 0;
 var Play_MaxChatSizeValue = 4;
 var Play_LowLatency = false;
+var Play_CanLowLatency = true;
 var Play_PanelHideID = null;
 var Play_quality = "source";
 var Play_qualityPlaying = Play_quality;
@@ -20,6 +21,7 @@ var Play_FeedPos = 0;
 var Play_Buffer = 2000;
 var Play_CurrentSpeed = 3;
 var Play_onPlayerCounter = 0;
+var Play_TizenVersion;
 
 var Play_STATE_LOADING_TOKEN = 0;
 var Play_STATE_LOADING_PLAYLIST = 1;
@@ -190,6 +192,15 @@ function Play_PreStart() {
     Play_ChatDelayPosition = Main_getItemInt('Play_ChatDelayPosition', 0);
     Play_LowLatency = Main_getItemBool('Play_LowLatency', false);
 
+    Play_TizenVersion = tizen.systeminfo.getCapability("http://tizen.org/feature/platform.version");
+
+    //"GET_LIVE_DURATION" is available since Tizen version 2.4.
+    //That is used to get a Play_LowLatency scenario
+    if (parseFloat(Play_TizenVersion) < 2.4) {
+        Play_LowLatency = false;
+        Play_CanLowLatency = false;
+    }
+
     Play_ClearPlayer();
     Play_ChatSize(false);
     Play_ChatBackgroundChange(false);
@@ -297,7 +308,7 @@ function Play_Start() {
     //Chat delay
     document.getElementById('controls_' + Play_controlsChatDelay).style.display = '';
 
-    document.getElementById('controls_' + Play_controlsLowLatency).style.display = '';
+    document.getElementById('controls_' + Play_controlsLowLatency).style.display = Play_CanLowLatency ? '' : 'none';
 
     Play_CurrentSpeed = 3;
     UserLiveFeed_SetFeedPicText();
@@ -821,6 +832,8 @@ function Play_onPlayer() {
         Play_avplay.prepareAsync(function() { //successCallback
 
             if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live OK:', 'date: ' + (new Date()));
+
+            if (Play_LowLatency) Play_avplay.seekTo(Play_avplay.getStreamingProperty("GET_LIVE_DURATION").split('|')[1] - 3000);
 
             Play_avplay.play();
             Play_Playing = true;

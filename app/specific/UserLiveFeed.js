@@ -276,14 +276,14 @@ function UserLiveFeed_loadDataSuccess(responseText) {
 
     UserLiveFeed_WasLiveidObject[AddUser_UsernameArray[0].name] = JSON.parse(JSON.stringify(UserLiveFeed_idObject));
 
-    doc.appendChild(UserLiveFeed_CreatFeed(i++,
-        ['ashlynn', 35618666, false],
-        ["https://static-cdn.jtvnw.net/ttv-static/404_preview-640x360.jpg",
-            'teste_name',
-            'game',
-            '1000',
-            'title'
-        ]));
+//    doc.appendChild(UserLiveFeed_CreatFeed(i++,
+//        ['ashlynn', 35618666, false],
+//        ["https://static-cdn.jtvnw.net/ttv-static/404_preview-640x360.jpg",
+//            'teste_name',
+//            'game',
+//            '1000',
+//            'title'
+//        ]));
 
     UserLiveFeed_loadDataSuccessFinish();
 }

@@ -46,8 +46,35 @@ Twitch.TV authentication key
 ===============
 
 ![Add_key](https://fgl27.github.io/smarttv-twitch/screenshot/Add_key.png)
+![Add_key](https://fgl27.github.io/smarttv-twitch/screenshot/Add_key2.png)
 
-After setting up a user on the application, you can add a Twitch.TV authentication key to be able to follow/unfollow and access sub-only past broadcasts (for channels you are subscribed to that block VoD access to non-subscribers) as shown in the screenshot above. The key is generated on the page below. The page receives a key after you use it to request one with the official Twitch.TV web site. The link below is the same that you would see on the application screen.
+The user can add a authentication key if you have the twitch password for that user (aka you are it).
+That key will be used to access twitch content for that account, when accessing twitch authentication site it will show:
+
+	Samsung TV app
+	wants to access your account
+	
+	Clicking Authorize below will allow Samsung TV app to:
+	* Manage your followed channels
+	* View your email address
+	* View your paid subscriptions
+
+It of the permission has a reason:
+
+**Manage your followed channels:**
+
+* fallow or unfallow streamers or games for that user.<br>
+
+**View your email address:**
+
+* Email will not be read, this permission has other uses, it allows to access user live channels in a faster way, the app can load user live without this but it can be really lag if you fallow too many streamers. 
+* Let twitch know you are watching a stream/video (allows you to received a free sub in a random gifted sub for example) and show some target content as in featuring screen you will see the order in relation to yours twitch fallow content.<br>
+
+**View your paid subscriptions:**
+
+* Allows to access subscribed only past broadcast and highlight (vod) for the user that you have added the key, as some streamers block those content for subscribers only this is needed.<br>
+
+The key is generated on the page below. The page receives a key after you use it to request one with the official Twitch.TV web site. The link below is the same that you would see on the application screen.
 
 ## [Twitch.TV app for Samsung TV authorization request page](http://tiny.cc/twitchkeycode)
 
@@ -63,11 +90,9 @@ The key **INFO** is also mapped in the app with the same functions as the **GUID
 ### To access the controls from any screen press key A or on smart remote press the 4 color buttons (color) after Directional pad up for red A key and chose controls. If you are playing a stream, use the C yellow key to directly open the controls
 
 
-## Main controls
-![Main](https://fgl27.github.io/smarttv-twitch/screenshot/controls_main_simple.png)
+## Controls
+![Main](https://fgl27.github.io/smarttv-twitch/screenshot/controls.png)
 ==============
-## Player controls
-![Players](https://fgl27.github.io/smarttv-twitch/screenshot/controls_play_simple.png)
 
 Installation instructions:
 ==============

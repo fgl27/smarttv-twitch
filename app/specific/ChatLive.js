@@ -4,6 +4,7 @@ var ChatLive_loadingDataTryMax = 10;
 var ChatLive_loadEmotesChannelId;
 var ChatLive_hasEnded = false;
 var ChatLive_Id = 0;
+var Chat_CleanMax = 60;
 var ChatLive_loadBadgesChannelId;
 var ChatLive_socket = null;
 var ChatLive_loaded = false;
@@ -170,7 +171,7 @@ function ChatLive_loadEmotesbbtv(data) {
         extraEmotes[emote.code] = {
             code: emote.code,
             id: emote.id,
-            '3x': 'https:' + data.urlTemplate.replace('{{id}}', emote.id).replace('{{image}}', '3x')
+            '2x': 'https:' + data.urlTemplate.replace('{{id}}', emote.id).replace('{{image}}', '2x')
         };
     });
 }
@@ -194,7 +195,7 @@ function ChatLive_loadEmotesffz(data) {
                 extraEmotes[emoticon.name] = {
                     code: emoticon.name,
                     id: emoticon.id,
-                    '3x': 'https:' + (emoticon.urls[4] || (emoticon.urls[2] || emoticon.urls[1].replace(/1$/, '2')))
+                    '2x': 'https:' + (emoticon.urls[2] || emoticon.urls[1].replace(/1$/, '2'))
                 };
 
             });
@@ -265,7 +266,7 @@ function ChatLive_Check() {
     if (!ChatLive_loaded) {
         ChatLive_socket.close(1000);
         ChatLive_loadChat();
-    } else ChatLive_FixId = window.setInterval(ChatLive_ChatFixPosition, 1000);
+    }
 }
 
 function ChatLive_CheckClear() {
@@ -352,16 +353,11 @@ function ChatLive_LineAdd(message) {
     elem.innerHTML = message;
 
     Chat_div.appendChild(elem);
-    ChatLive_ChatFixPosition();
     ChatLive_LineAddCounter++;
-    if (ChatLive_LineAddCounter > 100) {
+    if (ChatLive_LineAddCounter > Chat_CleanMax) {
         ChatLive_LineAddCounter = 0;
         Chat_Clean();
     }
-}
-
-function ChatLive_ChatFixPosition() {
-    Chat_div.scrollTop = Chat_div.scrollHeight;
 }
 
 function ChatLive_ClearIds() {

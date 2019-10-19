@@ -61,7 +61,7 @@ function PlayVod_Start() {
     Main_textContent("stream_watching_time", '');
     Main_textContent('progress_bar_current_time', Play_timeS(0));
     Chat_title = STR_PAST_BROA + '.';
-    Main_innerHTML('pause_button', '<div style="transform: translateY(10%);"><i class="pause_button3d icon-pause"></i> </div>');
+    Main_innerHTML('pause_button', '<div ><i class="pause_button3d icon-pause"></i> </div>');
     Main_HideElement('progress_pause_holder');
     Main_ShowElement('progress_bar_div');
 
@@ -69,6 +69,9 @@ function PlayVod_Start() {
     document.getElementById('controls_' + Play_controlsOpenVod).style.display = 'none';
     //Chat delay
     document.getElementById('controls_' + Play_controlsChatDelay).style.display = 'none';
+
+    document.getElementById('controls_' + Play_controlsLowLatency).style.display = 'none';
+
     Play_CurrentSpeed = 3;
     Play_IconsResetFocus();
 
@@ -82,16 +85,18 @@ function PlayVod_Start() {
     PlayClip_HideShowNext(0, 0);
     PlayClip_HideShowNext(1, 0);
 
-    if (Main_values.vodOffset) { // this is a vod comming from a clip or from restore playback
+    if (Main_values.vodOffset) { // this is a vod coming from a clip or from restore playback
         PlayVod_PrepareLoad();
         PlayVod_updateVodInfo();
     } else {
         PlayVod_updateStreamerInfoValues();
-        Main_innerHTML("stream_info_title", '');
-        Main_innerHTML("stream_info_game", ChannelVod_views + ' [' + (ChannelVod_language).toUpperCase() + ']');
-        Main_textContent("stream_live_icon", ChannelVod_createdAt);
+        Main_innerHTML("stream_info_title", ChannelVod_title);
+        Main_textContent("stream_info_game", '');
+        Main_innerHTML("stream_live_time", ChannelVod_createdAt + ',' + STR_SPACE + ChannelVod_views);
+        Main_textContent("stream_live_viewers", '');
+        Main_textContent("stream_watching_time", '');
 
-        Main_replaceClassEmoji('stream_info_game');
+        Main_replaceClassEmoji('stream_info_title');
     }
 
     if (PlayVod_VodIds['#' + Main_values.ChannelVod_vodId] && !Main_values.vodOffset) {
@@ -133,6 +138,7 @@ function PlayVod_PosStart() {
     PlayVod_WasSubChekd = false;
     PlayVod_loadData();
     Play_EndSet(2);
+    document.body.removeEventListener("keyup", Main_handleKeyUp);
 }
 
 function PlayVod_PrepareLoad() {
@@ -143,7 +149,8 @@ function PlayVod_PrepareLoad() {
 
 function PlayVod_updateStreamerInfoValues() {
     Play_LoadLogo(document.getElementById('stream_info_icon'), Main_values.Main_selectedChannelLogo);
-    Play_partnerIcon(Main_values.Main_selectedChannelDisplayname, Main_values.Main_selectedChannelPartner);
+    Play_partnerIcon(Main_values.Main_selectedChannelDisplayname, Main_values.Main_selectedChannelPartner, false, ' [' + (ChannelVod_language).toUpperCase() + ']');
+
 
     //The chat init will happens after user click on vod dialog
     if (!PlayVod_VodIds['#' + Main_values.ChannelVod_vodId]) Chat_Init();
@@ -175,12 +182,16 @@ function PlayVod_updateVodInfoPannel(response) {
     //if (response.muted_segments) console.log(response.muted_segments);
 
     Main_values.Main_selectedChannelPartner = response.channel.partner;
-    Play_partnerIcon(Main_values.Main_selectedChannelDisplayname, Main_values.Main_selectedChannelPartner);
+    Play_partnerIcon(Main_values.Main_selectedChannelDisplayname, Main_values.Main_selectedChannelPartner, false,
+        '[' + (response.channel.broadcaster_language).toUpperCase() + ']');
 
     Main_innerHTML("stream_info_title", twemoji.parse(response.title, false, true));
-    Main_innerHTML("stream_info_game", (response.game !== "" && response.game !== null ? STR_STARTED + STR_PLAYING + response.game : "") +
-        ' ' + Main_addCommas(response.views) + STR_VIEWS + ' [' + (response.channel.broadcaster_language).toUpperCase() + ']');
-    Main_textContent("stream_live_icon", STR_STREAM_ON + Main_videoCreatedAt(response.created_at));
+    Main_innerHTML("stream_info_game", (response.game !== "" && response.game !== null ? STR_STARTED + STR_PLAYING +
+        response.game : ""));
+
+    Main_innerHTML("stream_live_time", STR_STREAM_ON + Main_videoCreatedAt(response.created_at) + ',' + STR_SPACE + Main_addCommas(response.views) + STR_VIEWS);
+    Main_textContent("stream_live_viewers", '');
+    Main_textContent("stream_watching_time", '');
 
     ChannelVod_DurationSeconds = parseInt(response.length);
     Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
@@ -268,13 +279,13 @@ function PlayVod_loadDataRequest() {
 
     if (PlayVod_state === Play_STATE_LOADING_TOKEN) {
         theUrl = 'https://api.twitch.tv/api/vods/' + Main_values.ChannelVod_vodId + '/access_token?platform=_' +
-            (AddUser_UserIsSet() && AddUser_UsernameArray[Main_values.Users_Position].access_token ? '&oauth_token=' +
-                AddUser_UsernameArray[Main_values.Users_Position].access_token : '');
+            (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token ? '&oauth_token=' +
+                AddUser_UsernameArray[0].access_token : '');
     } else {
         theUrl = 'https://usher.ttvnw.net/vod/' + Main_values.ChannelVod_vodId +
             '.m3u8?&nauth=' + encodeURIComponent(PlayVod_tokenResponse.token) + '&nauthsig=' + PlayVod_tokenResponse.sig +
             '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true' +
-            (Main_vp9supported ? '&preferred_codecs=vp09' : '');
+            (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
     }
 
     BasexmlHttpGet(theUrl, Play_loadingDataTimeout, 1, null, PlayVod_loadDataSuccess, PlayVod_loadDataError);
@@ -307,10 +318,36 @@ function PlayVod_loadDataError() {
 //Browsers crash trying to get the streams link
 function PlayVod_loadDataSuccessFake() {
     PlayVod_qualities = [{
-        'id': '1080p60(Source)',
-        'band': '(10.00Mbps)',
-        'url': 'http://fake'
-    }];
+            'id': '1080p60 | source ',
+            'band': '| 10.00Mbps',
+            'codec': ' | avc',
+            'url': 'https://souce'
+        },
+        {
+            'id': '720p60',
+            'band': ' | 5.00Mbps',
+            'codec': ' | avc',
+            'url': 'https://720p60'
+        },
+        {
+            'id': '720p',
+            'band': ' | 2.50Mbps',
+            'codec': ' | avc',
+            'url': 'https://720'
+        },
+        {
+            'id': '480p',
+            'band': ' | 2.50Mbps',
+            'codec': ' | avc',
+            'url': 'https://480'
+        },
+        {
+            'id': '320p',
+            'band': ' | 2.50Mbps',
+            'codec': ' | avc',
+            'url': 'https://320'
+        },
+    ];
     PlayVod_state = Play_STATE_PLAYING;
     if (PlayVod_isOn) PlayVod_qualityChanged();
 }
@@ -329,7 +366,7 @@ function PlayVod_loadDataSuccess(responseText) {
 }
 
 function PlayVod_loadDataCheckSub() {
-    if (AddUser_UserIsSet() && AddUser_UsernameArray[Main_values.Users_Position].access_token) {
+    if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
         AddCode_Channel_id = Main_values.Main_selectedChannel_id;
         AddCode_CheckSub();
     } else {
@@ -370,7 +407,7 @@ function PlayVod_qualityChanged() {
     window.clearInterval(PlayVod_streamCheckId);
     PlayVod_qualityIndex = 0;
     PlayVod_playingUrl = PlayVod_qualities[0].url;
-    if (PlayVod_quality.indexOf("source") !== -1) PlayVod_quality = "source";
+
     for (var i = 0; i < PlayVod_getQualitiesCount(); i++) {
         if (PlayVod_qualities[i].id === PlayVod_quality) {
             PlayVod_qualityIndex = i;
@@ -382,7 +419,9 @@ function PlayVod_qualityChanged() {
         }
     }
 
+    PlayVod_quality = PlayVod_qualities[PlayVod_qualityIndex].id;
     PlayVod_qualityPlaying = PlayVod_quality;
+
     PlayVod_SetHtmlQuality('stream_quality', true);
     Play_onPlayerCounter = 0;
     PlayVod_onPlayer();
@@ -400,7 +439,6 @@ var PlayVod_listener = {
     onbufferingcomplete: function() {
         Play_HideBufferDialog();
         PlayVod_bufferingcomplete = true;
-        Main_empty('dialog_buffer_play_percentage');
         // reset the values after using
         PlayVod_SaveOffset();
         PlayVod_PlayerCheckCount = 0;
@@ -416,13 +454,11 @@ var PlayVod_listener = {
         //percent has a -2 offset and goes up to 98
         if (percent < 98) {
             Play_BufferPercentage = percent;
-            Main_textContent("dialog_buffer_play_percentage", percent + 3);
             if (!Play_BufferDialogVisible()) Play_showBufferDialog();
         } else {
             Play_BufferPercentage = 0;
             Play_HideBufferDialog();
             Play_bufferingcomplete = true;
-            Main_empty('dialog_buffer_play_percentage');
             // reset the values after using
             Main_values.vodOffset = 0;
             if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + (new Date()));
@@ -594,7 +630,7 @@ function PlayVod_hidePanel() {
     PlayVod_IsJumping = false;
     PlayVod_addToJump = 0;
     Play_clearHidePanel();
-    document.getElementById("scene_channel_panel").style.opacity = "0";
+    Play_ForceHidePannel();
     PlayVod_ProgresBarrUpdate((PlayVod_currentTime / 1000), ChannelVod_DurationSeconds, true);
     Main_innerHTML('progress_bar_jump_to', STR_SPACE);
     document.getElementById('progress_bar_steps').style.display = 'none';
@@ -613,7 +649,7 @@ function PlayVod_showPanel(autoHide) {
         Play_clearHidePanel();
         PlayVod_setHidePanel();
     }
-    document.getElementById("scene_channel_panel").style.opacity = "1";
+    Play_ForceShowPannel();
 }
 
 function PlayVod_IconsBottonResetFocus() {
@@ -693,7 +729,7 @@ function PlayVod_qualityDisplay() {
 }
 
 function PlayVod_SetHtmlQuality(element) {
-    if (!PlayVod_qualities[PlayVod_qualityIndex].hasOwnProperty('id')) return;
+    if (!PlayVod_qualities[PlayVod_qualityIndex] || !PlayVod_qualities[PlayVod_qualityIndex].hasOwnProperty('id')) return;
 
     PlayVod_quality = PlayVod_qualities[PlayVod_qualityIndex].id;
 
@@ -701,7 +737,7 @@ function PlayVod_SetHtmlQuality(element) {
     if (PlayVod_quality.indexOf('source') !== -1) quality_string = PlayVod_quality.replace("source", STR_SOURCE);
     else quality_string = PlayVod_quality;
 
-    quality_string += PlayVod_quality.indexOf('Auto') === -1 ? PlayVod_qualities[PlayVod_qualityIndex].band + PlayVod_qualities[PlayVod_qualityIndex].codec : "";
+    quality_string += PlayVod_qualities[PlayVod_qualityIndex].band + PlayVod_qualities[PlayVod_qualityIndex].codec;
 
     Main_textContent(element, quality_string);
 }
@@ -754,7 +790,7 @@ function PlayVod_jump() {
     }
     Main_innerHTML('progress_bar_jump_to', STR_SPACE);
     document.getElementById('progress_bar_steps').style.display = 'none';
-    Main_innerHTML('pause_button', '<div style="transform: translateY(10%);"><i class="pause_button3d icon-pause"></i> </div>');
+    Main_innerHTML('pause_button', '<div ><i class="pause_button3d icon-pause"></i> </div>');
     PlayVod_jumpCount = 0;
     PlayVod_IsJumping = false;
     PlayVod_addToJump = 0;
@@ -918,7 +954,7 @@ function PlayVod_handleKeyDown(e) {
     if (PlayVod_state !== Play_STATE_PLAYING && !Play_isVodDialogShown()) {
         switch (e.keyCode) {
             case KEY_RETURN:
-                if (Play_ExitDialogVisible()) {
+                if (Play_ExitDialogVisible() || Play_SingleClickExit) {
                     Play_CleanHideExit();
                     PlayVod_shutdownStream();
                 } else {
@@ -1014,7 +1050,7 @@ function PlayVod_handleKeyDown(e) {
                     } else Play_BottomUpDown(2, 1);
                     PlayVod_setHidePanel();
                 } else if (!UserLiveFeed_isFeedShow()) UserLiveFeed_ShowFeed();
-                else if (UserLiveFeed_isFeedShow()) UserLiveFeed_FeedRefreshFocus();
+                else if (UserLiveFeed_isFeedShow()) UserLiveFeed_FeedRefresh();
                 else if (!Play_isVodDialogShown()) PlayVod_showPanel(true);
                 break;
             case KEY_DOWN:
@@ -1028,15 +1064,7 @@ function PlayVod_handleKeyDown(e) {
                     PlayVod_setHidePanel();
                 } else if (UserLiveFeed_isFeedShow()) UserLiveFeed_Hide();
                 else if (Play_isFullScreen && Play_isChatShown()) {
-                    Play_ChatSizeValue++;
-                    if (Play_ChatSizeValue > 3) {
-                        Play_ChatSizeValue = 0;
-                        Play_ChatPositionConvert(false);
-                    } else if (Play_ChatSizeValue === 3) Play_ChatPositionConvert(true);
-                    Play_ChatSize(true);
-                    Play_controls[Play_controlsChatSize].defaultValue = Play_ChatSizeValue;
-                    Play_controls[Play_controlsChatSize].bottomArrows();
-                    Play_controls[Play_controlsChatSize].setLable();
+                    Play_KeyChatSizeChage();
                 } else if (!Play_isVodDialogShown()) PlayVod_showPanel(true);
                 break;
             case KEY_ENTER:

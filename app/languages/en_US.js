@@ -117,14 +117,14 @@ function en_USLang() {
     STR_ABOUT_INFO_14 = "Web:";
 
     STR_CONTROLS_PLAY_0 = STR_SPACE + "or in player bottom controls";
-    STR_CONTROLS_PLAY_1 = "Show information panel: Press enter key or D-pad keys if chat and live channel feed is not showing";
+    STR_CONTROLS_PLAY_1 = "Show information panel: Press enter key or D-pad keys if live channel feed is not showing";
     STR_CONTROLS_PLAY_2 = "Close the video: press back key twice";
     STR_CONTROLS_PLAY_3 = "Play/Pause a video: open information panel and click on pause symbol";
     STR_CONTROLS_PLAY_4 = "Show user live channels feed: D-pad up";
     STR_CONTROLS_PLAY_5 = "Change video quality: use the player bottom controls Quality";
     STR_CONTROLS_PLAY_6 = "Force refresh a video (in case it freezes): Change video quality to the same";
-    STR_CONTROLS_PLAY_7 = "Show or hide the Chat : D-pad right" + STR_GUIDE_EXTRA + STR_CONTROLS_PLAY_0;
-    STR_CONTROLS_PLAY_8 = "Change Chat position : D-pad left or " + STR_KEY_UP_DOWN + STR_CONTROLS_PLAY_0;
+    STR_CONTROLS_PLAY_7 = "Show or hide the Chat : Guide or Info" + STR_CONTROLS_PLAY_0;
+    STR_CONTROLS_PLAY_8 = "Change Chat position : " + STR_KEY_UP_DOWN + STR_CONTROLS_PLAY_0;
     STR_CONTROLS_PLAY_9 = "Change Chat size : D-pad down" + STR_CONTROLS_PLAY_0;
     STR_CONTROLS_PLAY_10 = "Change Chat background brightness: change in player bottom controls";
     STR_CONTROLS_PLAY_11 = "Force refresh the Chat in Live streams (in case it freezes or doesn\'t load): use the player bottom controls Chat force disable (click twice)";

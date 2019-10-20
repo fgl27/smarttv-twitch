@@ -516,11 +516,15 @@ function Settings_SetAnimations() {
     UserLiveFeed_FeedRemoveFocus();
 
     array = document.getElementsByClassName(Main_classThumb);
-    Array.prototype.forEach.call(array,
-        function(el) {
-            el.classList.remove(Main_classThumb);
-        }
-    );
+
+    try {
+        //Array.prototype maybe not supported by all TVs
+        Array.prototype.forEach.call(array,
+            function(el) {
+                el.classList.remove(Main_classThumb);
+            }
+        );
+    } catch (e) {}
 
     Main_classThumb = animate ? 'stream_thumbnail_focused' : 'stream_thumbnail_focused_no_ani';
     UserLiveFeed_FocusClass = animate ? 'feed_thumbnail_focused' : 'feed_thumbnail_focused_no_ani';

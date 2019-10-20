@@ -594,41 +594,41 @@ function Play_ForbiddenLive() {
 //Browsers crash trying to get the streams link
 function Play_loadDataSuccessFake() {
     Play_qualities = [{
-            'id': 'Auto',
-            'band': 0,
-            'codec': 'avc',
-            'url': 'https://auto'
-        },
-        {
-            'id': '1080p60 | source ',
-            'band': '| 10.00Mbps',
-            'codec': ' | avc',
-            'url': 'https://souce'
-        },
-        {
-            'id': '720p60',
-            'band': ' | 5.00Mbps',
-            'codec': ' | avc',
-            'url': 'https://720p60'
-        },
-        {
-            'id': '720p',
-            'band': ' | 2.50Mbps',
-            'codec': ' | avc',
-            'url': 'https://720'
-        },
-        {
-            'id': '480p',
-            'band': ' | 2.50Mbps',
-            'codec': ' | avc',
-            'url': 'https://480'
-        },
-        {
-            'id': '320p',
-            'band': ' | 2.50Mbps',
-            'codec': ' | avc',
-            'url': 'https://320'
-        },
+        'id': 'Auto',
+        'band': 0,
+        'codec': 'avc',
+        'url': 'https://auto'
+    },
+    {
+        'id': '1080p60 | source ',
+        'band': '| 10.00Mbps',
+        'codec': ' | avc',
+        'url': 'https://souce'
+    },
+    {
+        'id': '720p60',
+        'band': ' | 5.00Mbps',
+        'codec': ' | avc',
+        'url': 'https://720p60'
+    },
+    {
+        'id': '720p',
+        'band': ' | 2.50Mbps',
+        'codec': ' | avc',
+        'url': 'https://720'
+    },
+    {
+        'id': '480p',
+        'band': ' | 2.50Mbps',
+        'codec': ' | avc',
+        'url': 'https://480'
+    },
+    {
+        'id': '320p',
+        'band': ' | 2.50Mbps',
+        'codec': ' | avc',
+        'url': 'https://320'
+    },
     ];
     Play_state = Play_STATE_PLAYING;
     if (Play_isOn) Play_qualityChanged();
@@ -832,7 +832,10 @@ function Play_onPlayer() {
 
             if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live OK:', 'date: ' + (new Date()));
 
-            if (Play_LowLatency) Play_avplay.seekTo(Play_avplay.getStreamingProperty("GET_LIVE_DURATION").split('|')[1] - 3000);
+            try {
+                //GET_LIVE_DURATION not supported by all TVs
+                if (Play_LowLatency) Play_avplay.seekTo(Play_avplay.getStreamingProperty("GET_LIVE_DURATION").split('|')[1] - 3000);
+            } catch (e) {}
 
             Play_avplay.play();
             Play_Playing = true;

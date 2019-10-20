@@ -2362,7 +2362,6 @@ function Play_IconsAddFocus() {
     Main_AddClass('controls_button_' + Play_Panelcounter, 'progress_bar_div_focus');
     document.getElementById('controls_button_text_' + Play_Panelcounter).style.opacity = "1";
 
-    //TODO improve hardcoded 7
     if (Play_controls[Play_Panelcounter].isChat && (!Play_isChatShown() || !Play_isFullScreen))
         document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = "1";
     else if (Play_Panelcounter !== Play_controlsChat && !Play_controls[Play_Panelcounter].isChat)
@@ -2375,6 +2374,7 @@ function Play_IconsRemoveFocus() {
     //in case chat is disable and the warning is showing because some chat option was selected
     document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = "0";
 }
+
 
 function Play_KeyChatSizeChage() {
     Play_ChatSizeValue++;

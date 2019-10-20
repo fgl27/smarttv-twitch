@@ -46,18 +46,18 @@ function Screens_InitScreens() {
 //TODO cleanup not used when finished migrate all
 function Screens_ScreenIds(base) {
     return [base + '_thumbdiv',
-        base + '_img',
-        base + '_infodiv',
-        base + '_title',
-        base + '_createdon',
-        base + '_game',
-        base + '_viewers',
-        base + '_duration',
-        base + '_cell',
+    base + '_img',
+    base + '_infodiv',
+    base + '_title',
+    base + '_createdon',
+    base + '_game',
+    base + '_viewers',
+    base + '_duration',
+    base + '_cell',
         'cpempty_',
-        base + '_scroll',
-        base + '_lang',
-        base + '_row'
+    base + '_scroll',
+    base + '_lang',
+    base + '_row'
     ];
 }
 
@@ -787,12 +787,16 @@ function Screens_handleKeyDown(event) {
 
     switch (event.keyCode) {
         case KEY_PG_DOWN:
-            if (!inUseObj.loadingData && inUseObj.key_pgDown)
+            if (!inUseObj.loadingData && inUseObj.key_pgDown) {
+                Screens_RemoveAllFocus();
                 Sidepannel_Go(inUseObj.key_pgDown);
+            }
             break;
         case KEY_PG_UP:
-            if (!inUseObj.loadingData && inUseObj.key_pgUp)
+            if (!inUseObj.loadingData && inUseObj.key_pgUp) {
+                Screens_RemoveAllFocus();
                 Sidepannel_Go(inUseObj.key_pgUp);
+            }
             break;
         case KEY_RETURN:
             if (!inUseObj.loadingData) inUseObj.key_exit();

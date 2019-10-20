@@ -516,8 +516,11 @@ function Settings_SetAnimations() {
     UserLiveFeed_FeedRemoveFocus();
 
     array = document.getElementsByClassName(Main_classThumb);
-    for (i = 0; i < array.length; i++)
-        array[i].classList.remove(Main_classThumb);
+    Array.prototype.forEach.call(array,
+        function(el) {
+            el.classList.remove(Main_classThumb);
+        }
+    );
 
     Main_classThumb = animate ? 'stream_thumbnail_focused' : 'stream_thumbnail_focused_no_ani';
     UserLiveFeed_FocusClass = animate ? 'feed_thumbnail_focused' : 'feed_thumbnail_focused_no_ani';

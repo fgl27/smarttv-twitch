@@ -1,6 +1,6 @@
 //Variable initialization
 var Main_isReleased = false;
-var Main_isDebug = false;
+var Main_isDebug = true;
 
 var Main_cursorYAddFocus = -1;
 
@@ -137,6 +137,7 @@ function Main_Start() {
 
 function Main_loadTranslations(language) {
     Main_Checktylesheet();
+    Main_isDebug = false;
 
     Main_ready(function() {
         if (Main_isReleased) document.body.innerHTML = STR_BODY;
@@ -875,6 +876,7 @@ function Main_removeFocus(id, idArray) {
 // So in order to check if a css class is loaded one can check it's font-family
 // The simple test here it to remove the <link rel="stylesheet" href="https://werevere"> from index and see if the bellow funtion loads the css for you and vice versa
 function Main_Checktylesheet() {
+    console.log('Main_Checktylesheet');
     var span = document.createElement('span');
 
     span.className = 'fa';
@@ -883,7 +885,7 @@ function Main_Checktylesheet() {
 
     if (window.getComputedStyle(span, null).getPropertyValue('font-family') !== 'icons') {
         if (Main_isDebug) console.log('Main_Checktylesheet reloading');
-        Main_LoadStylesheet('https://fgl27.github.io/SmartTwitchTV/release/githubio/css/icons.min.css');
+        Main_LoadStylesheet('https://fgl27.github.io/smarttv-twitch/release/githubio/css/font-awesome.min.css');
     } else if (Main_isDebug) console.log('Main_Checktylesheet loaded OK');
 
     document.body.removeChild(span);

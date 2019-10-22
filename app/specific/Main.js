@@ -882,13 +882,15 @@ function Main_Checktylesheet() {
     span.style.display = 'none';
     document.body.insertBefore(span, document.body.firstChild);
 
-    if (window.getComputedStyle(span, null).getPropertyValue('font-family') !== 'icons') {
-        if (Main_isDebug) console.log('Main_Checktylesheet reloading');
-        Main_LoadStylesheet('https://fgl27.github.io/smarttv-twitch/release/githubio/css/font-awesome.min.css');
-        Main_LoadStylesheet('https://fgl27.github.io/smarttv-twitch/release/githubio/css/master.css');
-    } else if (Main_isDebug) console.log('Main_Checktylesheet loaded OK');
+    Main_ready(function() {
+        if (window.getComputedStyle(span, null).getPropertyValue('font-family') !== 'icons') {
+            console.log('Main_Checktylesheet reloading');
+            Main_LoadStylesheet('https://fgl27.github.io/smarttv-twitch/release/githubio/css/font-awesome.min.css');
+            Main_LoadStylesheet('https://fgl27.github.io/smarttv-twitch/release/githubio/css/master.css');
+        } else console.log('Main_Checktylesheet loaded OK');
 
-    document.body.removeChild(span);
+        document.body.removeChild(span);
+    });
 }
 
 function Main_LoadStylesheet(path) {

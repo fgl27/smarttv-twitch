@@ -849,6 +849,12 @@ function Screens_handleKeyDown(event) {
         case KEY_REFRESH:
             Main_ReloadScreen();
             break;
+        case KEY_GREEN:
+            if (!Main_isReleased) {
+                Main_PrintUnicode('Reloading');
+                window.location.reload(true);
+            }
+            break;
         default:
             break;
     }

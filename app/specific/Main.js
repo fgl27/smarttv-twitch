@@ -1,6 +1,6 @@
 //Variable initialization
 var Main_isReleased = false;
-var Main_isDebug = true;
+var Main_isDebug = false;
 
 var Main_cursorYAddFocus = -1;
 
@@ -137,7 +137,6 @@ function Main_Start() {
 
 function Main_loadTranslations(language) {
     Main_Checktylesheet();
-    Main_isDebug = false;
 
     Main_ready(function() {
         if (Main_isReleased) document.body.innerHTML = STR_BODY;

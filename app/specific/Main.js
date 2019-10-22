@@ -158,7 +158,6 @@ function Main_loadTranslations(language) {
             }
             Main_showLoadDialog();
 
-
             Settings_SetDefautls();
             calculateFontSize();
             en_USLang();

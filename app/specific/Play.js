@@ -198,6 +198,13 @@ function Play_PreStart() {
     if (parseFloat(Play_TizenVersion) < 2.4) {
         Play_LowLatency = false;
         Play_CanLowLatency = false;
+    } else {
+        try {
+            //reset old no longer used live feed
+            webapis.preview.setPreviewData('{}');
+        } catch (ex) {
+            console.log(ex.message);
+        }
     }
 
     Play_ClearPlayer();

@@ -1179,7 +1179,7 @@ function Play_RefreshWatchingtime() {
         STR_WATCHING + Play_timeMs(Play_oldcurrentTime));
 
     Main_innerHTML("stream_live_time", STR_SINCE +
-        (Play_created.indexOf('00:00') === -1 ? Play_streamLiveAt(Play_created) : '00:00'));
+        (('00:00').indexOf(Play_created) !== -1 ? '00:00' : Play_streamLiveAt(Play_created)));
 }
 
 function Play_clearHidePanel() {

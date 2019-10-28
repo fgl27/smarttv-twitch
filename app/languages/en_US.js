@@ -132,7 +132,7 @@ function en_USLang() {
     STR_CONTROLS_PLAY_14 = "Chat and video (Side by side): Color button red (A)";
     STR_F_DISABLE_CHAT = "Chat force disable";
     STR_UPDATE_AVAILABLE = "Update available, check google play store";
-    STR_OAUTH_IN = 'Adding a key allows the app to access live user content faster, follow/unfollow channels/games and access subscribed only past broadcast (for channel you are Sub to and block VOD access to none subscribers) <br> <br> Add a key is not demanding and can be done at any point later <br> <br> In doubt read this link <br> <br> https://https://github.com/fgl27/smarttv-twitch#twitchtv-authentication-key <br> <br>';
+    STR_OAUTH_IN = 'Adding a key allows the app to access live user content faster, follow/unfollow channels/games and access subscribed only past broadcast (for channel you are Sub to and block VOD access to none subscribers) <br> <br> Add a key is not demanding and can be done at any point later <br> <br> In doubt read this link <br> <br> https://https://github.com/fgl27/smarttv-twitch#twitchtv-authentication-key <br> <br>To add a key for ';
     STR_USER_CODE = "Add Authentication key";
     STR_USER_CODE_OK = "Key added OK";
     STR_KEY_BAD = "Key test failed, new one needs to be added";
@@ -305,7 +305,7 @@ function en_USLang() {
     STR_A_Z = "Alphabetical A - Z";
     STR_Z_A = "Alphabetical Z - A";
     STR_APP_ANIMATIONS = "Enable app animations";
-    STR_OAUTH_EXPLAIN1 = " below, fallowing this steps:";
+    STR_OAUTH_EXPLAIN1 = ", fallow bellow steps:";
     STR_OAUTH_EXPLAIN2 = "Access the site link_link (using a computer or a smart phone)";
     STR_OAUTH_EXPLAIN3 = "Click the \"Authorize\" button which will take you to main Twitch.TV authentication site";
     STR_OAUTH_EXPLAIN4 = "Login to Twitch.TV using the username you are trying to add a key for";

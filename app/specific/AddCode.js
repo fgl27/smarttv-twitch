@@ -22,7 +22,9 @@ function AddCode_init() {
     ScreensObj_SetTopLable(STR_USER_CODE);
     Main_AddCodeInput.placeholder = STR_PLACEHOLDER_OAUTH;
     Main_ShowElement('oauth_scroll');
-    Main_innerHTML("oauth_text", STR_OAUTH_IN + AddUser_UsernameArray[Main_values.Users_AddcodePosition].name + STR_OAUTH_EXPLAIN);
+    Main_innerHTML("oauth_text", STR_OAUTH_IN +
+        '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-family: \'Roboto-Bold\';">' +
+        AddUser_UsernameArray[Main_values.Users_AddcodePosition].name + '</div>' + STR_OAUTH_EXPLAIN);
     AddCode_inputFocus();
 }
 

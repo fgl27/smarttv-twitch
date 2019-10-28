@@ -1052,11 +1052,11 @@ function Play_ClearPlayer() {
     Play_IncrementView = '';
 
     if (Play_qualityIndex === (Play_getQualitiesCount() - 1)) {
-        Play_quality = Play_qualities[1].id;
+        Play_quality = Play_qualities[0].id;
         Play_qualityPlaying = Play_quality;
     }
     if (PlayVod_qualityIndex === (PlayVod_getQualitiesCount() - 1)) {
-        PlayVod_quality = PlayVod_qualities[1].id;
+        PlayVod_quality = PlayVod_qualities[0].id;
         PlayVod_qualityPlaying = PlayVod_quality;
     }
     if (PlayClip_qualityIndex === (PlayClip_getQualitiesCount() - 1)) {

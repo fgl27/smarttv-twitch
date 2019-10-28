@@ -1,7 +1,7 @@
 //Variable initialization
 var inUseObj = {};
 var Screens_clear = false;
-var Screens_KeyEnterID;
+//var Screens_KeyEnterID;
 var Screens_ScrollAnimationTimeout = 350; //Same time as animate_height_transition
 var Screens_ChangeFocusAnimationFinished = true;
 var Screens_ChangeFocusAnimationFast = false;
@@ -769,24 +769,24 @@ function Screens_RemoveAllFocus() {
     }
 }
 
-function Screens_handleKeyUp(e) {
-    if (e.keyCode === KEY_ENTER) {
-        Screens_handleKeyUpClear();
-        if (!Screens_clear) inUseObj.key_play();
-    }
-}
+// function Screens_handleKeyUp(e) {
+//     if (e.keyCode === KEY_ENTER) {
+//         Screens_handleKeyUpClear();
+//         if (!Screens_clear) inUseObj.key_play();
+//     }
+// }
 
-function Screens_handleKeyUpClear() {
-    window.clearTimeout(Screens_KeyEnterID);
-    document.body.removeEventListener("keyup", Screens_handleKeyUp);
-    document.body.addEventListener("keydown", Screens_handleKeyDown, false);
-}
+// function Screens_handleKeyUpClear() {
+//     window.clearTimeout(Screens_KeyEnterID);
+//     document.body.removeEventListener("keyup", Screens_handleKeyUp);
+//     document.body.addEventListener("keydown", Screens_handleKeyDown, false);
+// }
 
-document.body.addEventListener("keyup", Screens_handleKeyUpAnimationFast);
+// document.body.addEventListener("keyup", Screens_handleKeyUpAnimationFast);
 
-function Screens_handleKeyUpAnimationFast() {
-    Screens_ChangeFocusAnimationFast = false;
-}
+// function Screens_handleKeyUpAnimationFast() {
+//     Screens_ChangeFocusAnimationFast = false;
+// }
 
 function Screens_handleKeyDown(event) {
     if (inUseObj.FirstLoad || Main_CantClick()) return;
@@ -844,14 +844,15 @@ function Screens_handleKeyDown(event) {
         case KEY_PLAY:
         case KEY_PAUSE:
         case KEY_PLAYPAUSE:
+        case KEY_ENTER:
             inUseObj.key_play();
             break;
-        case KEY_ENTER:
-            document.body.removeEventListener("keydown", Screens_handleKeyDown, false);
-            document.body.addEventListener("keyup", Screens_handleKeyUp, false);
-            Screens_clear = false;
-            Screens_KeyEnterID = window.setTimeout(Main_ReloadScreen, 400);
-            break;
+        // case KEY_ENTER:
+        //     document.body.removeEventListener("keydown", Screens_handleKeyDown, false);
+        //     document.body.addEventListener("keyup", Screens_handleKeyUp, false);
+        //     Screens_clear = false;
+        //     Screens_KeyEnterID = window.setTimeout(Main_ReloadScreen, 400);
+        //    break;
         case KEY_REFRESH:
             Main_ReloadScreen();
             break;

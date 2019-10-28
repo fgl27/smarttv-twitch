@@ -8,7 +8,7 @@ function en_USLang() {
 
     //Below are variables to translate
     STR_KEY_UP_DOWN = " (CH Up/Down)";
-    STR_GUIDE = " Hold enter or press Guide or Info";
+    STR_GUIDE = " press Guide or Info";
     STR_REFRESH = "Refresh";
     STR_SEARCH = "Search";
     STR_SETTINGS = "Settings";

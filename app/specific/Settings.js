@@ -17,6 +17,10 @@ var Settings_value = {
         "values": ["no", "yes"],
         "defaultValue": 1
     },
+    "enter_refresh": { //enter_refresh
+        "values": ["yes", "no"],
+        "defaultValue": 2
+    },
     "show_screen_counter": { //show_screen_counter
         "values": ["no", "yes"],
         "defaultValue": 2
@@ -175,9 +179,15 @@ function Settings_SetSettings() {
 
     div += Settings_DivOptionNoSummary(key, STR_APP_ANIMATIONS);
 
-    key = "clip_auto_play_next";
+    key = "enter_refresh";
     Settings_value_keys.push(key);
     Settings_value[key].values = [STR_NO, STR_YES];
+
+    div += Settings_DivOptionNoSummary(key, STR_ENTER_REFRESH);
+
+    key = "clip_auto_play_next";
+    Settings_value_keys.push(key);
+    Settings_value[key].values = [STR_YES, STR_NO];
 
     div += Settings_DivOptionNoSummary(key, STR_AUTO_PLAY_NEXT);
 
@@ -356,6 +366,11 @@ function Settings_SetStrings() {
     key = "app_animations";
     Main_textContent(key + '_name', STR_APP_ANIMATIONS);
     Settings_value[key].values = [STR_NO, STR_YES];
+
+    key = "enter_refresh";
+    Main_textContent(key + '_name', STR_ENTER_REFRESH);
+    Settings_value[key].values = [STR_YES, STR_NO];
+
 
     for (key in Settings_value)
         if (Settings_value.hasOwnProperty(key))
@@ -560,7 +575,7 @@ var Settings_CurY = 0;
 
 function Settings_ScrollTable() {
     var doc;
-    if (Settings_CurY < Settings_cursorY && Settings_cursorY === 12) {
+    if (Settings_CurY < Settings_cursorY && Settings_cursorY === 13) {
         doc = document.getElementById('settings_scroll');
         doc.scrollTop = doc.scrollHeight;
         if (Settings_Obj_default("app_animations")) {
@@ -568,7 +583,7 @@ function Settings_ScrollTable() {
             doc.scrollTop = 0;
             scrollTo(doc, position, 450);
         }
-    } else if (Settings_CurY > Settings_cursorY && Settings_cursorY === 11) {
+    } else if (Settings_CurY > Settings_cursorY && Settings_cursorY === 12) {
         doc = document.getElementById('settings_scroll');
         if (Settings_Obj_default("app_animations")) scrollTo(doc, 0, 450);
         else doc.scrollTop = 0;

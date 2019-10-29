@@ -311,4 +311,5 @@ function en_USLang() {
     STR_OAUTH_EXPLAIN4 = "Login to Twitch.TV using the username you are trying to add a key for";
     STR_OAUTH_EXPLAIN5 = "Click on Authorize button of Twitch.TV site if you agree with the requested permissions";
     STR_OAUTH_EXPLAIN6 = "The web page will update and show a key code, the key only has lowercase letters and numbers.";
+    STR_ENTER_REFRESH = "Disable Hold enter to refresh";
 }

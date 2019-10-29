@@ -19,7 +19,7 @@ var Settings_value = {
     },
     "enter_refresh": { //enter_refresh
         "values": ["yes", "no"],
-        "defaultValue": 2
+        "defaultValue": 1
     },
     "show_screen_counter": { //show_screen_counter
         "values": ["no", "yes"],

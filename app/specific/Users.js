@@ -404,6 +404,7 @@ function Users_handleKeyDown(event) {
                 }
             } else Users_keyEnter();
             break;
+        case KEY_INFO:
         case KEY_REFRESH:
             Main_ReloadScreen();
             break;

@@ -472,6 +472,7 @@ function ChannelContent_handleKeyDown(event) {
         //     ChannelContent_clear = false;
         //     ChannelContent_KeyEnterID = window.setTimeout(Main_ReloadScreen, 500);
         //     break;
+        case KEY_INFO:
         case KEY_REFRESH:
             Main_ReloadScreen();
             break;

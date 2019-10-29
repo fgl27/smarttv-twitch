@@ -853,6 +853,7 @@ function Screens_handleKeyDown(event) {
         //     Screens_clear = false;
         //     Screens_KeyEnterID = window.setTimeout(Main_ReloadScreen, 400);
         //    break;
+        case KEY_INFO:
         case KEY_REFRESH:
             Main_ReloadScreen();
             break;

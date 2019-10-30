@@ -129,7 +129,7 @@ function en_USLang() {
     STR_CONTROLS_PLAY_10 = "Change Chat background brightness: change in player bottom controls";
     STR_CONTROLS_PLAY_11 = "Force refresh the Chat in Live streams (in case it freezes or doesn\'t load): use the player bottom controls Chat force disable (click twice)";
     STR_CONTROLS_PLAY_12 = "Start a search: open information panel, navigate using use Directional pad (left/right) to \"Search\" and press enter";
-    STR_CONTROLS_PLAY_13 = "All media keys are supported (play, pause, stop, next track, fast forward and etc)";
+    STR_CONTROLS_PLAY_13 = "All media keys are supported (play, pause, stop, next track, fast forward, etc...)";
     STR_CONTROLS_PLAY_14 = "Chat and video (Side by side): Color button red (A)";
     STR_F_DISABLE_CHAT = "Chat force disable";
     STR_UPDATE_AVAILABLE = "Update available, check google play store";

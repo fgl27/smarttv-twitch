@@ -2,7 +2,7 @@
 <tproject xmlns="http://www.tizen.org/tproject">
     <platforms>
         <platform>
-            <name>tv-samsung-public-2.4</name>
+            <name>tv-samsung-5.0</name>
         </platform>
     </platforms>
     <package>

@@ -127,8 +127,8 @@ There is a issue section on this github page [smarttv-twitch/issues](https://git
 
 #
 * Install Java SDK, I install this app with **Open JDK java 8** on windows go to [Java SE Development Kit 8 Downloads
-](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) download the latest version of jdk when this was tested it was "jdk-8u152-windows-x64.exe" for 64bit windows or "jdk-8u152-windows-i586.exe 32bits
-", on linux terminal commands below
+](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) download the latest version of jdk when this was tested it was "jdk-8uXXX-windows-x64.exe" for 64bit windows or "jdk-8uXXX-windows-i586.exe 32bits
+" (last know tested was "jdk-8u152-windows-x64.exe" any above that must work always try the latest version **but make sure is Java 8**), on Linux terminal commands below
 #
 
 	sudo add-apt-repository ppa:openjdk-r/ppa
@@ -146,6 +146,8 @@ There is a issue section on this github page [smarttv-twitch/issues](https://git
 * After everything finishes installing as you close the package manager it will ask if you want to open the **Tizen Studio** - click YES to open it. On windows it may ask you to give firewall permission for Tizen.
 
 ### Images below show the installed packages (the one with a delete option are installed)
+Tizen is always changing those are the packages was available but on updates from Samsung they may became deprecated and now show, proceed with the installation process even if packages aren't available for you, report a issue if the application doesn't installs.<br>
+
 ![SDK_installation_1](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_1.png)
 ![SDK_installation_2](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_2.png)
 ![SDK_installation_3](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_3.png)

@@ -190,7 +190,7 @@ Tizen is always changing those are the packages was available but on updates fro
 
 ## Setup the application:
 
-* **[Download and extract the release_4.0.1_V3.zip file Click here, this is the application recipe file](https://github.com/fgl27/smarttv-twitch/releases/download/4.0.1_V3/4.0.1_V3.zip)**
+* **[Download and extract the release_4.0.1_V4.zip file Click here, this is the application recipe file](https://github.com/fgl27/smarttv-twitch/releases/download/4.0.1_V4/4.0.1_V4.zip)**
 
 ![install_app1](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app1.png)
 

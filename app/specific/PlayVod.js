@@ -288,7 +288,8 @@ function PlayVod_loadDataRequest() {
             (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
     }
 
-    BasexmlHttpGet(theUrl, Play_loadingDataTimeout, 1, null, PlayVod_loadDataSuccess, PlayVod_loadDataError);
+    BasexmlHttpGet(theUrl, Play_loadingDataTimeout, 
+        PlayVod_state === Play_STATE_LOADING_TOKEN ? 2 : 1, null, PlayVod_loadDataSuccess, PlayVod_loadDataError);
 }
 
 function PlayVod_loadDataError() {
@@ -318,35 +319,35 @@ function PlayVod_loadDataError() {
 //Browsers crash trying to get the streams link
 function PlayVod_loadDataSuccessFake() {
     PlayVod_qualities = [{
-            'id': '1080p60 | source ',
-            'band': '| 10.00Mbps',
-            'codec': ' | avc',
-            'url': 'https://souce'
-        },
-        {
-            'id': '720p60',
-            'band': ' | 5.00Mbps',
-            'codec': ' | avc',
-            'url': 'https://720p60'
-        },
-        {
-            'id': '720p',
-            'band': ' | 2.50Mbps',
-            'codec': ' | avc',
-            'url': 'https://720'
-        },
-        {
-            'id': '480p',
-            'band': ' | 2.50Mbps',
-            'codec': ' | avc',
-            'url': 'https://480'
-        },
-        {
-            'id': '320p',
-            'band': ' | 2.50Mbps',
-            'codec': ' | avc',
-            'url': 'https://320'
-        },
+        'id': '1080p60 | source ',
+        'band': '| 10.00Mbps',
+        'codec': ' | avc',
+        'url': 'https://souce'
+    },
+    {
+        'id': '720p60',
+        'band': ' | 5.00Mbps',
+        'codec': ' | avc',
+        'url': 'https://720p60'
+    },
+    {
+        'id': '720p',
+        'band': ' | 2.50Mbps',
+        'codec': ' | avc',
+        'url': 'https://720'
+    },
+    {
+        'id': '480p',
+        'band': ' | 2.50Mbps',
+        'codec': ' | avc',
+        'url': 'https://480'
+    },
+    {
+        'id': '320p',
+        'band': ' | 2.50Mbps',
+        'codec': ' | avc',
+        'url': 'https://320'
+    },
     ];
     PlayVod_state = Play_STATE_PLAYING;
     if (PlayVod_isOn) PlayVod_qualityChanged();

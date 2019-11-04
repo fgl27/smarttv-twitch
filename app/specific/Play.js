@@ -526,7 +526,8 @@ function Play_loadDataRequest() {
     var theUrl;
 
     if (Play_state === Play_STATE_LOADING_TOKEN) {
-        theUrl = 'https://api.twitch.tv/api/channels/' + Main_values.Play_selectedChannel + '/access_token?platform=_' +
+        theUrl = 'https://api.twitch.tv/api/channels/' + Main_values.Play_selectedChannel +
+         '/access_token?platform=_' +
             (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token ? '&oauth_token=' +
                 AddUser_UsernameArray[0].access_token : '');
     } else {
@@ -540,6 +541,8 @@ function Play_loadDataRequest() {
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Play_loadingDataTimeout;
     xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
+    if (Play_state === Play_STATE_LOADING_TOKEN)
+        xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
 
     xmlHttp.ontimeout = function() {};
 

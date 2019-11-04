@@ -527,7 +527,7 @@ function Play_loadDataRequest() {
 
     if (Play_state === Play_STATE_LOADING_TOKEN) {
         theUrl = 'https://api.twitch.tv/api/channels/' + Main_values.Play_selectedChannel +
-         '/access_token?platform=_' +
+            '/access_token?platform=_' +
             (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token ? '&oauth_token=' +
                 AddUser_UsernameArray[0].access_token : '');
     } else {
@@ -998,6 +998,21 @@ function Play_timeMs(time) {
 
 function Play_streamLiveAt(time) { //time in '2017-10-27T13:27:27Z'
     return Play_timeMs((new Date().getTime()) - (new Date(time).getTime()));
+}
+
+function Play_timeDay(time) {
+    var minutes, hours, days;
+
+    time = Math.floor(parseInt(time / 1000) / 60);
+    minutes = time % 60;
+
+    time = Math.floor(time / 60);
+    hours = time % 24;
+
+    days = Math.floor(time / 24);
+
+    //final time 0m or 23h 59m or 1d 23h 59m
+    return (days ? days + 'd ' : '') + (hours ? hours + 'h ' : '') + minutes + "m";
 }
 
 function Play_shutdownStream() {

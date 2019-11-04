@@ -82,6 +82,7 @@ var Main_Periods = [];
 var Main_addFocusVideoOffset = 0;
 var Main_FirstRun = true;
 var Main_FirstLoad = false;
+var Main_RunningTime = 0;
 
 //The values of thumbnail and related for it screen type
 var Main_ReloadLimitOffsetGames = 1.35;
@@ -250,7 +251,9 @@ function Main_SetStringsMain(isStarting) {
     Main_textContent("dialog_end_vod_text", STR_OPEN_BROADCAST);
     Main_textContent("dialog_end_channel_text", STR_CHANNEL_CONT);
     Main_textContent("dialog_end_game_text", STR_GAME_CONT);
-    Main_innerHTML("dialog_about_text", STR_ABOUT_INFO_HEADER + STR_ABOUT_INFO_0);
+    Main_innerHTML("dialog_about_text", STR_ABOUT_INFO_HEADER +
+        '<div id="about_runningtime"></div>' + STR_ABOUT_INFO_0);
+
     Main_Periods = [STR_CLIP_DAY, STR_CLIP_WEEK, STR_CLIP_MONTH, STR_CLIP_ALL];
 
     if (isStarting) Settings_SetSettings();
@@ -405,8 +408,13 @@ function Main_HideWarningDialog() {
     Main_HideElement('dialog_warning');
 }
 
+function Main_AboutDialogUpdateTime() {
+    Main_innerHTML('about_runningtime', STR_RUNNINGTIME + STR_SPACE + Play_timeDay(Date.now() - Main_RunningTime));
+}
+
 function Main_showAboutDialog() {
     Main_HideControlsDialog();
+    Main_AboutDialogUpdateTime();
     Main_ShowElement('dialog_about');
 }
 
@@ -693,7 +701,9 @@ function Main_checkVersion() {
                 STR_SPACE + STR_SPACE + 'FW: ' + fw + STR_BR;
             Appversion = Appversion.split(".");
             value = parseInt(Appversion[0] + Appversion[1] + Appversion[2]);
-            Main_innerHTML("dialog_about_text", STR_ABOUT_INFO_HEADER + Main_versionTag + STR_ABOUT_INFO_0);
+
+            Main_innerHTML("dialog_about_text", STR_ABOUT_INFO_HEADER + Main_versionTag +
+                '<div id="about_runningtime"></div>' + STR_ABOUT_INFO_0);
 
             if (!Main_isReleased) console.log('Tizen ' + STR_VERSION + TizenVersion + ' | ' +
                 'TV: ' + Main_tvModel + ' | ' + 'FW: ' + fw);
@@ -701,6 +711,7 @@ function Main_checkVersion() {
             if (value < Main_version) Main_ShowElement('label_update');
         }
     }
+    Main_RunningTime = Date.now();
 }
 
 //function Main_needUpdate(version) {
@@ -938,6 +949,7 @@ function Main_getclock() {
 function Main_updateclock() {
     if (!document.hidden) {
         Main_textContent('label_clock', Main_getclock());
+        if (Main_RunningTime) Main_AboutDialogUpdateTime();
         Main_randomimg = '?' + Math.random();
     }
 }

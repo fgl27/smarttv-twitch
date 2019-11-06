@@ -313,4 +313,5 @@ function en_USLang() {
     STR_OAUTH_EXPLAIN6 = "The web page will update and show a key code, the key only has lowercase letters and numbers.";
     STR_ENTER_REFRESH = "Disable Hold enter to refresh";
     STR_RUNNINGTIME = "App running for:";
+    STR_410_ERROR = "Unable to get stream link issue";
 }

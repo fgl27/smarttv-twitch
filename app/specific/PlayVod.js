@@ -275,9 +275,10 @@ function PlayVod_loadData() {
 }
 
 function PlayVod_loadDataRequest() {
-    var theUrl;
+    var theUrl,
+        state = PlayVod_state === Play_STATE_LOADING_TOKEN;
 
-    if (PlayVod_state === Play_STATE_LOADING_TOKEN) {
+    if (state) {
         theUrl = 'https://api.twitch.tv/api/vods/' + Main_values.ChannelVod_vodId + '/access_token?platform=_' +
             (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token ? '&oauth_token=' +
                 AddUser_UsernameArray[0].access_token : '');
@@ -288,8 +289,37 @@ function PlayVod_loadDataRequest() {
             (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
     }
 
-    BasexmlHttpGet(theUrl, Play_loadingDataTimeout, 
-        PlayVod_state === Play_STATE_LOADING_TOKEN ? 2 : 1, null, PlayVod_loadDataSuccess, PlayVod_loadDataError);
+    // BasexmlHttpGet(theUrl, Play_loadingDataTimeout, 
+    //     PlayVod_state === Play_STATE_LOADING_TOKEN ? 2 : 1, null, PlayVod_loadDataSuccess, PlayVod_loadDataError);
+
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", theUrl, true);
+    xmlHttp.timeout = Play_loadingDataTimeout;
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
+    if (state)
+        xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
+
+    xmlHttp.ontimeout = function() {};
+
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) PlayVod_loadDataSuccess(xmlHttp.responseText);
+            else if (xmlHttp.status === 410) {
+                //410 = api v3 is gone use v5 bug
+                PlayVod_410Error();
+            } else PlayVod_loadDataError();
+        }
+    };
+
+    xmlHttp.send(null);
+}
+
+function PlayVod_410Error() {
+    Play_HideBufferDialog();
+    Play_showWarningDialog(STR_410_ERROR);
+    window.setTimeout(function() {
+        if (PlayVod_isOn) PlayVod_shutdownStream();
+    }, 3000);
 }
 
 function PlayVod_loadDataError() {

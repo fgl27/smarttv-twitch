@@ -552,16 +552,13 @@ function Play_loadDataRequest() {
             if (xmlHttp.status === 200) {
                 Play_loadingDataTry = 0;
                 if (Play_isOn) Play_loadDataSuccess(xmlHttp.responseText);
-            } else if (xmlHttp.status === 403) { //forbidden access
+            } else if (xmlHttp.status === 403 || xmlHttp.status === 404 ||
+                xmlHttp.status === 410) { //forbidden access
+                //404 = off line
+                //403 = forbidden access
+                //410 = api v3 is gone use v5 bug
                 Play_loadDataErrorLog(xmlHttp);
-                if (Play_selectedChannel_id_Old !== null) Play_RestorePlayData();
-                else if (Main_IsNotBrowser) Play_ForbiddenLive();
-                else Play_loadDataSuccessFake();
-            } else if (xmlHttp.status === 404) { //off line
-                Play_loadDataErrorLog(xmlHttp);
-                if (Play_selectedChannel_id_Old !== null) Play_RestorePlayData();
-                else if (Main_IsNotBrowser) Play_CheckHostStart();
-                else Play_loadDataSuccessFake();
+                Play_loadDataErrorFinish(xmlHttp.status === 410, xmlHttp.status === 403);
             } else {
                 Play_loadDataErrorLog(xmlHttp);
                 Play_loadDataError();
@@ -587,11 +584,17 @@ function Play_loadDataError() {
             if (Play_RestoreFromResume) window.setTimeout(Play_loadDataRequest, 500);
             else Play_loadDataRequest();
         } else {
-            if (Play_selectedChannel_id_Old !== null) Play_RestorePlayData();
-            else if (Main_IsNotBrowser) Play_CheckHostStart();
+            if (Main_IsNotBrowser) Play_loadDataErrorFinish();
             else Play_loadDataSuccessFake();
         }
     }
+}
+
+function Play_loadDataErrorFinish(error_410, Isforbiden) {
+    if (Play_selectedChannel_id_Old !== null) Play_RestorePlayData(error_410);
+    else if (Isforbiden) Play_ForbiddenLive();
+    else Play_CheckHostStart(error_410);
+
 }
 
 function Play_ForbiddenLive() {
@@ -1674,9 +1677,11 @@ function Play_PlayEndStart(PlayVodClip) {
     Play_showEndDialog();
 }
 
-function Play_CheckHostStart() {
+function Play_CheckHostStart(error_410) {
     if (Main_IsNotBrowser)
         webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_OFF);
+
+    if (error_410) Play_showWarningDialog(STR_410_ERROR);
 
     Play_showBufferDialog();
     Play_state = -1;
@@ -1787,13 +1792,16 @@ function Play_SavePlayData() {
     Play_gameSelected_Old = Main_values.Play_gameSelected;
 }
 
-function Play_RestorePlayData() {
+function Play_RestorePlayData(error_410) {
     Play_HideBufferDialog();
     Play_bufferingcomplete = true;
     Play_state = Play_STATE_PLAYING;
 
     Play_IsWarning = true;
-    Play_showWarningDialog(Main_values.Play_selectedChannelDisplayname + ' ' + STR_LIVE + STR_IS_OFFLINE);
+
+    Play_showWarningDialog(error_410 ? STR_410_ERROR :
+        Main_values.Play_selectedChannelDisplayname + ' ' + STR_LIVE + STR_IS_OFFLINE);
+
     window.setTimeout(function() {
         Play_HideWarningDialog();
         Play_IsWarning = false;

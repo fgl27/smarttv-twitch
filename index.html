@@ -24,7 +24,8 @@
     <link rel="preconnect" href="https://usher.ttvnw.net">
     <link rel="stylesheet" href="https://fgl27.github.io/smarttv-twitch/release/githubio/css/font-awesome.min.css">
     <title>SmartTV Twitch</title>
-    <link rel='shortcut icon' type='image/x-icon' href="https://fgl27.github.io/SmartTwitchTV/release/githubio/images/favicon.ico" />
+    <link rel='shortcut icon' type='image/x-icon'
+        href="https://fgl27.github.io/SmartTwitchTV/release/githubio/images/favicon.ico" />
     <style>
         body {
             background-color: #000000;
@@ -201,7 +202,7 @@
 
         div.stream_thumbnail_player_feed {
             /* height / width * 100% of Main.VideoSize*/
-            padding-bottom: 86%;
+            padding-bottom: 84.5%;
             background-repeat: no-repeat;
             background: #000000;
             color: #FFFFFF;
@@ -247,7 +248,7 @@
 
         div.stream_thumbnail_live {
             /* height / width * 100% of Main.VideoSize*/
-            padding-bottom: 82%;
+            padding-bottom: 80.5%;
             background-color: #000000;
             color: #FFFFFF;
         }
@@ -330,8 +331,20 @@
             margin-top: 0.1em;
         }
 
+        div.stream_thumbnail_live_text_holder {
+            height: 12.5vh;
+        }
+
+        .stream_spam_text_holder {
+            display: inline-block;
+            width: 100%;
+            top: 50%;
+            position: relative;
+            transform: translateY(-50%);
+        }
+
         div.stream_thumbnail_game_text_holder {
-            bottom: 0;
+            height: 6.5vh;
         }
 
         div.stream_thumbnail_channel_text_holder {
@@ -404,7 +417,7 @@
 
         .stream_info_live_title {
             word-wrap: break-word;
-            max-height: 2.35em;
+            max-height: 2.4em;
             font-size: 72%;
             overflow: hidden;
             white-space: normal;
@@ -487,6 +500,7 @@
             left: 0;
             padding: 0.5%;
             font-size: 90%;
+            height: 9.5vh;
         }
 
         div.stream_text_channel {
@@ -835,6 +849,15 @@
             color: #FFFFFF;
         }
 
+        div.side_panel_feed_thumb_text_holder {
+            width: 98%;
+            height: 24%;
+            bottom: 0;
+            color: #FFFFFF;
+            font-size: 110%;
+            padding: 1%;
+        }
+
         div.side_panel_feed_thumb_text {
             overflow: hidden;
             white-space: nowrap;
@@ -853,7 +876,7 @@
             box-sizing: border-box;
             position: absolute;
             width: 60%;
-            height: 83%;
+            height: 82%;
             top: 16%;
             left: 32%;
             background-color: #000000;
@@ -1759,7 +1782,8 @@
     <!-- bodystart this is here so release_maker can work don't remove-->
     <div id="body_container" style="margin: 0px auto;">
         <div id="scene1" class="screen_size" style="background-color: rgba(0, 0, 0, 1);">
-            <div id="dialog_loading" class="screens dialogs hide" style="z-index:98; margin-top: 50vh; overflow: visible;">
+            <div id="dialog_loading" class="screens dialogs hide"
+                style="z-index:98; margin-top: 50vh; overflow: visible;">
                 <div class="loading">
                     <div></div>
                     <div></div>
@@ -1771,7 +1795,8 @@
                 <div class="dialog_exit" style="width: 75%; margin-left: 12.5%;">
                     <div id="main_dialog_remove" class="exit_text"></div>
                     <div style="text-align: center; margin-bottom: 4%;">
-                        <div id="remove_cancel" class="button_dialog_focused button_dialog" style="margin-left: 0%;"></div>
+                        <div id="remove_cancel" class="button_dialog_focused button_dialog" style="margin-left: 0%;">
+                        </div>
                         <div id="remove_yes" class="button_dialog"></div>
                     </div>
                 </div>
@@ -1780,7 +1805,8 @@
                 <div class="dialog_exit" style="width: 80%; margin-left: 10%;">
                     <div id="main_dialog_user_text" class="exit_text"></div>
                     <div style="text-align: center; margin-bottom: 4%;">
-                        <div id="main_dialog_user_first" class="button_dialog_focused button_dialog" style="margin-left: 0%;"></div>
+                        <div id="main_dialog_user_first" class="button_dialog_focused button_dialog"
+                            style="margin-left: 0%;"></div>
                         <div id="main_dialog_user_key" class="button_dialog" style="width: 35%;"></div>
                         <div id="main_dialog_user_remove" class="button_dialog" style="width: 22%;"></div>
                     </div>
@@ -1823,7 +1849,8 @@
                     </div>
                 </div>
             </div>
-            <div id="dialog_warning" class="strokedeline dialogs hide" style="z-index:100; margin-top: 31%; width: 60%; margin-left: 20%;">
+            <div id="dialog_warning" class="strokedeline dialogs hide"
+                style="z-index:100; margin-top: 31%; width: 60%; margin-left: 20%;">
                 <div id="dialog_warning_text" class="strokedeline" style="font-size: 150%; "></div>
             </div>
             <div id="dialog_about" class="screens hide" style="z-index: 200; background: rgba(0, 0, 0, 0.75);">
@@ -1837,7 +1864,8 @@
                 </div>
             </div>
             <div id="dialog_counter" style="position: absolute; z-index:101; width: 100%; bottom: 0;">
-                <div style="float: right; width: auto; height: auto; background: linear-gradient(to top, black, rgba(0, 0, 0, 0.75));">
+                <div
+                    style="float: right; width: auto; height: auto; background: linear-gradient(to top, black, rgba(0, 0, 0, 0.75));">
                     <div id="dialog_counter_text" class="counter_class"></div>
                 </div>
             </div>
@@ -1880,7 +1908,8 @@
                             </div>
                             <div class="stream_thumbnail_live_holder" style="padding-right: 0; padding-left: 0;">
                                 <div class="stream_thumbnail_live">
-                                    <div id="channel_content_infodiv0_1" class="stream_thumbnail_live_text_holder channel_about"></div>
+                                    <div id="channel_content_infodiv0_1"
+                                        class="stream_thumbnail_live_text_holder channel_about"></div>
                                 </div>
                             </div>
                         </div>
@@ -2004,7 +2033,8 @@
                         <!-- Empty div are added to fill up the container and make the layout perfect align-->
                         <div class="side_panel_new_icons_text_holder">
                         </div>
-                        <div id="side_panel_movel_new_0" class="side_panel_new_icons_text_holder" style="height: 1.9em;">
+                        <div id="side_panel_movel_new_0" class="side_panel_new_icons_text_holder"
+                            style="height: 1.9em;">
                         </div>
                         <div class="side_panel_new_icons_text_holder">
                         </div>
@@ -2101,7 +2131,8 @@
                             <i class="icon icon-movie side_panel_new_icons_pad"></i>
                         </div>
                     </div>
-                    <div id="side_panel_fix_botton" class="side_panel_fix_bottom" style="width: 30%; background-color: #000000;">
+                    <div id="side_panel_fix_botton" class="side_panel_fix_bottom"
+                        style="width: 30%; background-color: #000000;">
                     </div>
                 </div>
             </div>
@@ -2118,8 +2149,10 @@
                             <div id="chat_box" class="chat_box"></div>
                         </div>
                     </div>
-                    <div id="play_chat_dialog" style="position: absolute; text-align: center; width: 100%; margin-top: 50%;">
-                        <div id="play_chat_dialog_text" class="strokedeline" style="display: inline-block; font-size: 100%; color: #FFFFFF;">
+                    <div id="play_chat_dialog"
+                        style="position: absolute; text-align: center; width: 100%; margin-top: 50%;">
+                        <div id="play_chat_dialog_text" class="strokedeline"
+                            style="display: inline-block; font-size: 100%; color: #FFFFFF;">
                         </div>
                     </div>
                 </div>
@@ -2153,10 +2186,13 @@
             </div>-->
             <div id="scene_channel_panel" class="screen_size scene_channel_panel">
                 <div class="playerinfo">
-                    <img id="stream_info_icon" style="padding-left: 1%; padding-top: 1%; padding-bottom: 1%; display: inline-block; width: 9.5%;" alt="" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+                    <img id="stream_info_icon"
+                        style="padding-left: 1%; padding-top: 1%; padding-bottom: 1%; display: inline-block; width: 9.5%;"
+                        alt="" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
                     <div id="stream_clock" class="playclock"></div>
                     <div class="playmaininfo">
-                        <div id="stream_info_name" class="class_bold" style="font-size: 160%; margin-bottom: 0.2em;"></div>
+                        <div id="stream_info_name" class="class_bold" style="font-size: 160%; margin-bottom: 0.2em;">
+                        </div>
                         <div id="stream_info_title"></div>
                         <div id="stream_info_game"></div>
                         <div id="stream_live_time" style="display: inline-block; width:auto;"></div>
@@ -2168,7 +2204,8 @@
                 </div>
                 <div id="progress_pause_holder" class="progress_pause_holder">
                     <div id="progress_bar_div" class="progress_bar_div">
-                        <div id="progress_bar_jump_to" class="progress_bar_jump strokedeline" style="transform: translateY(-25%);"></div>
+                        <div id="progress_bar_jump_to" class="progress_bar_jump strokedeline"
+                            style="transform: translateY(-25%);"></div>
                         <div>
                             <div style="width: 100%; position: relative; transform: translateY(-50%);">
                                 <div id="progress_bar_current_time" class="progress_bar_timer strokedeline"></div>
@@ -2180,20 +2217,25 @@
                                 <div id="progress_bar_duration" class="progress_bar_timer strokedeline"></div>
                             </div>
                         </div>
-                        <div id="progress_bar_steps" class="progress_bar_jump strokedeline" style="position: relative; top: 35%; transform: translateY(-110%);"></div>
+                        <div id="progress_bar_steps" class="progress_bar_jump strokedeline"
+                            style="position: relative; top: 35%; transform: translateY(-110%);"></div>
                     </div>
                     <div id="pause_next_div" class="pause_next_div">
                         <div style="width: 44%; display: inline-block; text-align: right;">
                             <div id="back_button" class="next_button" style="opacity: 0;">
                                 <div id="back_button_text" class="next_text">
-                                    <div id="back_button_text_name" class="next_channel strokedeline" style="text-align: right;"></div>
-                                    <div id="back_button_text_title" class="next_info strokedeline" style="text-align: right;"></div>
+                                    <div id="back_button_text_name" class="next_channel strokedeline"
+                                        style="text-align: right;"></div>
+                                    <div id="back_button_text_title" class="next_info strokedeline"
+                                        style="text-align: right;"></div>
                                 </div>
                                 <i class="pause_button3d icon-back"></i>
                             </div>
                         </div>
-                        <div style="width: 5%; display: inline-block; text-align: center; margin-left: 0.5ch; margin-right: 0.5ch;">
-                            <div id="pause_button" class="pause_button" style="width: 90%; padding-top: 0.375em; padding-bottom: 0.375em;">
+                        <div
+                            style="width: 5%; display: inline-block; text-align: center; margin-left: 0.5ch; margin-right: 0.5ch;">
+                            <div id="pause_button" class="pause_button"
+                                style="width: 90%; padding-top: 0.375em; padding-bottom: 0.375em;">
                                 <div>
                                     <i class="pause_button3d icon-pause"></i>
                                 </div>
@@ -2216,7 +2258,8 @@
                 <div id="stream_status" class="playsideinfostatus"></div>
             </div>
             <div id="scene2_dialogs" style="display:flex; position: absolute; width: 100%; height : 100%; z-index: 2;">
-                <div id="dialog_vod_start" class="dialogs hide" style="z-index:3; font-size: 150%; height: 75%; margin-top: 25%;">
+                <div id="dialog_vod_start" class="dialogs hide"
+                    style="z-index:3; font-size: 150%; height: 75%; margin-top: 25%;">
                     <div id="dialog_vod_text" class="strokedeline" style="font-size: 140%; padding-bottom: 2%;">
                     </div>
                     <!-- from saved-->
@@ -2230,8 +2273,10 @@
                         <div id="dialog_vod_start_text" class="strokedeline"></div>
                     </div>
                 </div>
-                <div id="dialog_end_stream" class="dialogs hide" style="z-index:4; font-size: 150%; height: 100%; background-color: rgba(0, 0, 0, 0.8);">
-                    <div id="dialog_end_stream_text" class="strokedeline" style="margin-top: 29%; font-size: 150%; padding-bottom: 2%;">
+                <div id="dialog_end_stream" class="dialogs hide"
+                    style="z-index:4; font-size: 150%; height: 100%; background-color: rgba(0, 0, 0, 0.8);">
+                    <div id="dialog_end_stream_text" class="strokedeline"
+                        style="margin-top: 29%; font-size: 150%; padding-bottom: 2%;">
                     </div>
                     <!-- next-->
                     <div id="dialog_end_-1" class="dialog_end_icons hide">
@@ -2263,7 +2308,8 @@
                         <div id="dialog_end_game_text" class="strokedeline"></div>
                     </div>
                 </div>
-                <div id="dialog_loading_play" class="screen_size dialogs hide" style="z-index:98; margin-top: 50vh; overflow: visible;">
+                <div id="dialog_loading_play" class="screen_size dialogs hide"
+                    style="z-index:98; margin-top: 50vh; overflow: visible;">
                     <div class="loading">
                         <div></div>
                         <div></div>
@@ -2308,16 +2354,22 @@
                 </div>
             </div>
             <div id="side_panel_feed_thumb" class="side_panel_feed_thumb hide">
-                <div class="stream_thumbnail_clip"><img id="feed_thumb_img" class="stream_img_side" alt="" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="></div>
-                <div style="width: 96%; height: 20%; bottom:0; color: #FFFFFF; font-size: 110%; padding: 1%;">
-                    <div id="feed_thum_name" class="side_panel_feed_thumb_text class_bold" style="width: 75%; display: inline-block; font-size: 110%;"></div>
-                    <div id="feed_thum_quality" class="side_panel_feed_thumb_text" style="width: 24%; float: right; text-align: right;"></div>
-                    <div id="feed_thum_title" class="side_panel_feed_thumb_title_text"></div>
-                    <div id="feed_thum_game" class="side_panel_feed_thumb_text"></div>
-                    <div id="feed_thum_views" class="side_panel_feed_thumb_text"></div>
+                <div class="stream_thumbnail_clip"><img id="feed_thumb_img" class="stream_img_side" alt=""
+                        src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="></div>
+                <div class="side_panel_feed_thumb_text_holder">
+                    <span class="stream_spam_text_holder">
+                        <div id="feed_thum_name" class="side_panel_feed_thumb_text class_bold"
+                            style="width: 75%; display: inline-block; font-size: 110%;"></div>
+                        <div id="feed_thum_quality" class="side_panel_feed_thumb_text"
+                            style="width: 24%; float: right; text-align: right;"></div>
+                        <div id="feed_thum_title" class="side_panel_feed_thumb_title_text"></div>
+                        <div id="feed_thum_game" class="side_panel_feed_thumb_text"></div>
+                        <div id="feed_thum_views" class="side_panel_feed_thumb_text"></div>
+                    </span>
                 </div>
             </div>
-            <div id="side_panel" class="side_panel side_panel_border side_panel_background_color side_panel_hide" style="margin-left: -31.5%;">
+            <div id="side_panel" class="side_panel side_panel_border side_panel_background_color side_panel_hide"
+                style="margin-left: -31.5%;">
                 <div id="side_panel_new" style="width: 100%; position: absolute;">
                     <div id="side_panel_feed_holder" style="width: 94%; margin-left: 6%;">
                         <div id="dialog_loading_side_feed" class="side_panel_dialog hide">

@@ -528,7 +528,7 @@ function Play_loadDataRequest() {
 
     if (Play_state === Play_STATE_LOADING_TOKEN) {
         theUrl = 'https://api.twitch.tv/api/channels/' + Main_values.Play_selectedChannel +
-            '/access_token?platform=_' +
+            '/access_token?platform=_' + Main_TwithcV5Flag +
             (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token ? '&oauth_token=' +
                 AddUser_UsernameArray[0].access_token : '');
     } else {

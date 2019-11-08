@@ -280,7 +280,7 @@ function PlayVod_loadDataRequest() {
 
     if (state) {
         theUrl = 'https://api.twitch.tv/api/vods/' + Main_values.ChannelVod_vodId + '/access_token?platform=_' +
-            Main_TwithcV5Flag + (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token ? '&oauth_token=' +
+            (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token && !Play_410ERROR ? '&oauth_token=' +
                 AddUser_UsernameArray[0].access_token : '');
     } else {
         theUrl = 'https://usher.ttvnw.net/vod/' + Main_values.ChannelVod_vodId +
@@ -292,19 +292,19 @@ function PlayVod_loadDataRequest() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Play_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
-    if (state)
-        xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Play_410ERROR ? Main_BackupclientId : Main_clientId);
 
     xmlHttp.ontimeout = function() {};
 
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) PlayVod_loadDataSuccess(xmlHttp.responseText);
-            else if (xmlHttp.status === 410) {
-                //410 = api v3 is gone use v5 bug
-                PlayVod_410Error();
-            } else PlayVod_loadDataError();
+            if (xmlHttp.status === 200) {
+                PlayVod_loadDataSuccess(xmlHttp.responseText);
+                Play_410ERROR = false;
+            } else {
+                if (xmlHttp.status === 410) Play_410ERROR = true;
+                PlayVod_loadDataError();
+            }
         }
     };
 

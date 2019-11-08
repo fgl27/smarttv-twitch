@@ -523,13 +523,14 @@ function Play_loadData() {
     Play_loadDataRequest();
 }
 
+var Play_410ERROR = false;
 function Play_loadDataRequest() {
     var theUrl;
 
     if (Play_state === Play_STATE_LOADING_TOKEN) {
         theUrl = 'https://api.twitch.tv/api/channels/' + Main_values.Play_selectedChannel +
-            '/access_token?platform=_' + Main_TwithcV5Flag +
-            (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token ? '&oauth_token=' +
+            '/access_token?platform=_' +
+            (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token && !Play_410ERROR ? '&oauth_token=' +
                 AddUser_UsernameArray[0].access_token : '');
     } else {
         theUrl = 'https://usher.ttvnw.net/api/channel/hls/' + Main_values.Play_selectedChannel +
@@ -541,9 +542,7 @@ function Play_loadDataRequest() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Play_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
-    if (Play_state === Play_STATE_LOADING_TOKEN)
-        xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Play_410ERROR ? Main_BackupclientId : Main_clientId);
 
     xmlHttp.ontimeout = function() {};
 
@@ -552,14 +551,15 @@ function Play_loadDataRequest() {
             if (xmlHttp.status === 200) {
                 Play_loadingDataTry = 0;
                 if (Play_isOn) Play_loadDataSuccess(xmlHttp.responseText);
-            } else if (xmlHttp.status === 403 || xmlHttp.status === 404 ||
-                xmlHttp.status === 410) { //forbidden access
+                Play_410ERROR = false;
+            } else if (xmlHttp.status === 403 || xmlHttp.status === 404) { //forbidden access
                 //404 = off line
                 //403 = forbidden access
                 //410 = api v3 is gone use v5 bug
                 Play_loadDataErrorLog(xmlHttp);
                 Play_loadDataErrorFinish(xmlHttp.status === 410, xmlHttp.status === 403);
             } else {
+                if (xmlHttp.status === 410) Play_410ERROR = true;
                 Play_loadDataErrorLog(xmlHttp);
                 Play_loadDataError();
             }

@@ -311,14 +311,6 @@ function PlayVod_loadDataRequest() {
     xmlHttp.send(null);
 }
 
-function PlayVod_410Error() {
-    Play_HideBufferDialog();
-    Play_showWarningDialog(STR_410_ERROR);
-    window.setTimeout(function() {
-        if (PlayVod_isOn) PlayVod_shutdownStream();
-    }, 3000);
-}
-
 function PlayVod_loadDataError() {
     if (PlayVod_isOn) {
         var mjson;

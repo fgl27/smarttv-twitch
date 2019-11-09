@@ -1681,7 +1681,10 @@ function Play_CheckHostStart(error_410) {
     if (Main_IsNotBrowser)
         webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_OFF);
 
-    if (error_410) Play_showWarningDialog(STR_410_ERROR);
+    if (error_410) {
+        Play_IsWarning = true;
+        Play_showWarningDialog(STR_410_ERROR);
+    }
 
     Play_showBufferDialog();
     Play_state = -1;

@@ -104,7 +104,7 @@ There is a issue section on this github page [smarttv-twitch/issues](https://git
 ## Account and Downloads
 
 * Create a Samsung account if you don't have one, and set it up as a developer account [SAMSUNG DEVELOPERS](http://developer.samsung.com/home.do)
-* Log in with the developer account on the TV, open the application "APPS", press the key sequence 12345 in the remote, a new window will pop, enter your computer LAN IP address (The computer you plan to use to install this app) and make sure you click "On" to enable the developer mode, after pressing OK, reboot the TV by unplugging from power and plug back on. [Click here to read SAMSUNG Guide Connecting the TV and SDK](http://developer.samsung.com/tv/develop/getting-started/using-sdk/tv-device)
+* Log in with the developer account on the TV, open the application **"APPS"**, press the key sequence 12345 in the remote, a new window will pop, enter your computer LAN IP address (The computer IP that you plan to use to install this app) and make sure you click **"On"** to enable the **developer mode**, after pressing OK, reboot the TV by unplugging from power and plug back on. **[Click here to read SAMSUNG Guide Connecting the TV and SDK](http://developer.samsung.com/tv/develop/getting-started/using-sdk/tv-device)**
 * [Download and install **Tizen Studio**](https://developer.tizen.org/development/tizen-studio/download)
 
 ## Installation Tizen and Java SDK
@@ -141,14 +141,13 @@ There is a issue section on this github page [smarttv-twitch/issues](https://git
 ## Tizen Package Manager(Installing the tools)
 
 * Open **Tizen Package Manager** to start installing the bellow (some may already be installed by default)
-* Main tab **(Main SDK)** Install **5.0 TV**(or wherever X.X TV version there is) and **Tizen SDK tools**,  **(on Linux it may request you to use apt-get to install missing dependencies)**
+* Main tab **(Main SDK)** Install **Tizen SDK tools**,  **(on Linux it may request you to use apt-get to install missing dependencies)**
 * Second tab **(Extension SDK)** under **TV Extensions-5.0** (or wherever X.X TV version there is) install **Web app. Development**, install **Samsung Certificate Extension** and under **TV Extension Tools** install **Web app. Tools** (on Linux it may request you to use apt-get to install missing dependencies)
 * After everything finishes installing as you close the package manager it will ask if you want to open the **Tizen Studio** - click YES to open it. On windows it may ask you to give firewall permission for Tizen.
 
 ### Images below show the installed packages (the one with a delete option are installed)
-Tizen is always changing those are the packages was available but on updates from Samsung they may became deprecated and now show, proceed with the installation process even if packages aren't available for you, report a issue if the application doesn't installs.<br>
+Tizen is always changing those are the packages that was available on making this tutorial, but on updates from Samsung they may became deprecated and now show, proceed with the installation process even if packages aren't available for you, report a issue if the application doesn't installs but make sure you go to all steps at least once again after a problem just revise it all before reporting.<br>
 
-![SDK_installation_1](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_1.png)
 ![SDK_installation_2](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_2.png)
 ![SDK_installation_3](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_3.png)
 ![SDK_installation_4](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_4.png)
@@ -163,6 +162,9 @@ Tizen is always changing those are the packages was available but on updates fro
 ![device_manager](https://fgl27.github.io/smarttv-twitch/screenshot/install/device_manager.png)
 * After having the TV IP showing in the screen, click in to connect, when connect you see something like the bellow
 ![device_manager](https://fgl27.github.io/smarttv-twitch/screenshot/install/device_manager2.png)
+
+If you have a problem on connectiong refer back to **[Account and Downloads:](https://github.com/fgl27/smarttv-twitch#account-and-downloads)**, without properly enabling **developer mode** on the TV this will fail.
+
 
 ## Generate a certificate:
 
@@ -206,7 +208,7 @@ Tizen is always changing those are the packages was available but on updates fro
 * Back on **Tizen Studio**, left click on the folder symbol with **AnyName-X.0** on the left corner under project explorer, just to select the folder (**AnyName-X.0** is the default name given when you created a project in the last step; if you used a different name, click on that)
 * Top menu > **File** > Import > General > File System ... next > Browse.. to find the extracted folder from the release_X_X_X.zip ... > click Select All, mark Overwrite existing ... > Finish
 * Wait for it to load
-* The name of the folder **AnyName-X.0** changes to **AnyName-something-public-2.4**
+* The name of the folder **AnyName-X.0** changes to **AnyName-tv-samsung-X.0**
 
 ![install_app7](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app7.png)
 ![install_app8_1](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app8_1.png)
@@ -216,7 +218,7 @@ Tizen is always changing those are the packages was available but on updates fro
 
 ## Install the application:
 
-* Click on that folder **AnyName-public-2.4** left click, then right click > Run as > **1 Tizen Web Application**, the installation will start
+* Click on that folder **AnyName-tv-samsung-X.0** left click, then right click > Run as > **1 Tizen Web Application**, the installation will start
 * If everything goes OK, the app will be opened in a few seconds on the TV, and you can start using it
 
 ![install_app10](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app10.png)

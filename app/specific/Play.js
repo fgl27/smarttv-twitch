@@ -533,10 +533,18 @@ function Play_loadDataRequest() {
             (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token && !Play_410ERROR ? '&oauth_token=' +
                 AddUser_UsernameArray[0].access_token : '');
     } else {
+        if (!Play_tokenResponse.hasOwnProperty('token') || !Play_tokenResponse.hasOwnProperty('sig')) {
+            Play_410ERROR = true;
+            Play_loadDataError();
+            return;
+        }
+
         theUrl = 'https://usher.ttvnw.net/api/channel/hls/' + Main_values.Play_selectedChannel +
             '.m3u8?&token=' + encodeURIComponent(Play_tokenResponse.token) + '&sig=' + Play_tokenResponse.sig +
             '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true&fast_bread=true' +
             (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
+
+        Play_410ERROR = false;
     }
 
     var xmlHttp = new XMLHttpRequest();

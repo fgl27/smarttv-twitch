@@ -115,7 +115,7 @@ var Main_DataAttribute = 'data_attribute';
 
 var Main_version = 401;
 var Main_stringVersion_Min = '4.0.1';
-var Main_minversion = '110619';
+var Main_minversion = '111119';
 var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
 var Main_IsNotBrowserVersion = '';
 var Main_ClockOffset = 0;

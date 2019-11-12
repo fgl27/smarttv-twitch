@@ -498,11 +498,10 @@ function AddCode_FallowGame() {
 }
 
 function AddCode_RequestFallowGame() {
-    var theUrl = 'https://api.twitch.tv/api/users/' + AddUser_UsernameArray[0].name +
-        '/follows/games/' + encodeURIComponent(Main_values.Main_gameSelected) +
-        '?oauth_token=' + AddUser_UsernameArray[0].access_token + Main_TwithcV5Flag;
+    var theUrl = 'https://api.twitch.tv/kraken/users/' + AddUser_UsernameArray[0].id + '/follows/games/' +
+        Main_values.Main_gameSelected_id + Main_TwithcV5Flag_I;
 
-    AddCode_BasexmlHttpGet(theUrl, 'PUT', 2, null, AddCode_RequestFallowGameReady);
+    AddCode_BasexmlHttpGet(theUrl, 'PUT', 3, Main_OAuth + AddUser_UsernameArray[0].access_token, AddCode_RequestFallowGameReady);
 }
 
 function AddCode_RequestFallowGameReady(xmlHttp) {
@@ -554,6 +553,10 @@ function AddCode_UnFallowGameRequestReady(xmlHttp) {
 function AddCode_UnFallowGameRequestError() {
     AddCode_loadingDataTry++;
     if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) AddCode_RequestUnFallowGame();
+    else {
+        Main_showWarningDialog(STR_410_FEATURING);
+        window.setTimeout(Main_HideWarningDialog, 2000);
+    }
 }
 
 function AddCode_CheckFallowGame() {
@@ -565,7 +568,7 @@ function AddCode_RequestCheckFallowGame() {
     var theUrl = 'https://api.twitch.tv/api/users/' + AddUser_UsernameArray[0].name + '/follows/games/' +
         encodeURIComponent(Main_values.Main_gameSelected) + Main_TwithcV5Flag_I;
 
-    AddCode_BasexmlHttpGet(theUrl, 'GET', 2, null, AddCode_CheckFallowGameReady);
+    AddCode_BasexmlHttpGetBack(theUrl, 'GET', 2, null, AddCode_CheckFallowGameReady);
 }
 
 function AddCode_CheckFallowGameReady(xmlHttp) {
@@ -604,6 +607,26 @@ function AddCode_BasexmlHttpGet(theUrl, type, HeaderQuatity, access_token, callb
 
     for (var i = 0; i < HeaderQuatity; i++)
         xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
+
+    xmlHttp.ontimeout = function() {};
+
+    xmlHttp.onreadystatechange = function() {
+        callbackready(xmlHttp);
+    };
+
+    xmlHttp.send(null);
+}
+
+function AddCode_BasexmlHttpGetBack(theUrl, type, HeaderQuatity, access_token, callbackready) {
+    var xmlHttp = new XMLHttpRequest();
+
+    xmlHttp.open(type, theUrl, true);
+    xmlHttp.timeout = AddCode_loadingDataTimeout;
+
+    Main_Headers_Back[2][1] = access_token;
+
+    for (var i = 0; i < HeaderQuatity; i++)
+        xmlHttp.setRequestHeader(Main_Headers_Back[i][0], Main_Headers_Back[i][1]);
 
     xmlHttp.ontimeout = function() {};
 

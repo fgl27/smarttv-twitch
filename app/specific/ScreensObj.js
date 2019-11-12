@@ -715,6 +715,7 @@ function ScreensObj_InitUserHost() {
         table: 'stream_table_user_host',
         screen: Main_UserHost,
         object: 'hosts',
+        use_hls: true,
         key_pgDown: Main_usergames,
         key_pgUp: Main_UserLive,
         base_url: 'https://api.twitch.tv/api/users/',
@@ -1156,6 +1157,7 @@ function ScreensObj_InitUserGames() {
         isLive: Main_getItemBool('user_Games_live', true),
         OldUserName: '',
         object: 'follows',
+        use_hls: true,
         base_url: 'https://api.twitch.tv/api/users/',
         set_url: function() {
             if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
@@ -1172,8 +1174,6 @@ function ScreensObj_InitUserGames() {
             Screens_StartLoad();
 
             Main_setItem('user_Games_live', this.isLive ? 'true' : 'false');
-            if (Users_status) Users_resetGameCell();
-
         },
         label_init: function() {
             ScreensObj_TopLableUserInit();

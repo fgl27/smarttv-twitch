@@ -314,4 +314,5 @@ function en_USLang() {
     STR_ENTER_REFRESH = "Disable Hold enter to refresh";
     STR_RUNNINGTIME = "App running for:";
     STR_410_ERROR = "Unable to get stream link issue";
+    STR_410_FEATURING = "Third party app lost this featuring";
 }

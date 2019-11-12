@@ -1073,6 +1073,12 @@ var Main_Headers = [
     [Main_Authorization, null]
 ];
 
+var Main_Headers_Back = [
+    [Main_clientIdHeader, Main_BackupclientId],
+    [Main_AcceptHeader, Main_TwithcV5Json],
+    [Main_Authorization, null]
+];
+
 function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
     var xmlHttp = new XMLHttpRequest();
 
@@ -1083,6 +1089,36 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
 
     for (var i = 0; i < HeaderQuatity; i++)
         xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
+
+    xmlHttp.ontimeout = function() {};
+
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) {
+                callbackSucess(xmlHttp.responseText);
+            } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
+                AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
+            } else if (xmlHttp.status === 410 && inUseObj.screen === Main_games) {
+                inUseObj.setHelix();
+            } else {
+                calbackError();
+            }
+        }
+    };
+
+    xmlHttp.send(null);
+}
+
+function BasexmlHttpGetBack(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
+    var xmlHttp = new XMLHttpRequest();
+
+    xmlHttp.open("GET", theUrl, true);
+    xmlHttp.timeout = Timeout;
+
+    Main_Headers_Back[2][1] = access_token;
+
+    for (var i = 0; i < HeaderQuatity; i++)
+        xmlHttp.setRequestHeader(Main_Headers_Back[i][0], Main_Headers_Back[i][1]);
 
     xmlHttp.ontimeout = function() {};
 

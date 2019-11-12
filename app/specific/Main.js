@@ -68,6 +68,7 @@ var Main_values = {
     "DeviceBitrateCheck": false,
 };
 
+var Main_Force = "4mv6wki5h1ko";
 var Main_LastClickFinish = true;
 var Main_addFocusFinish = true;
 var Main_newUsercode = 0;
@@ -84,6 +85,7 @@ var Main_addFocusVideoOffset = 0;
 var Main_FirstRun = true;
 var Main_FirstLoad = false;
 var Main_RunningTime = 0;
+var Main_Hash = "ncx6brgo";
 
 //The values of thumbnail and related for it screen type
 var Main_ReloadLimitOffsetGames = 1.35;
@@ -102,7 +104,6 @@ var Main_ColoumnsCountChannel = 6;
 var Main_ItemsReloadLimitChannel = Math.floor((Main_ItemsLimitChannel / Main_ColoumnsCountChannel) / Main_ReloadLimitOffsetVideos);
 
 var Main_clientId = "ypvnuqrh98wqz1sr0ov3fgfu4jh1yx";
-var Main_BackupclientId = "kimne78kx3ncx6brgo4mv6wki5h1ko";
 var Main_clientIdHeader = 'Client-ID';
 var Main_AcceptHeader = 'Accept';
 var Main_Authorization = 'Authorization';
@@ -125,6 +126,7 @@ var Main_randomimg = '?' + Math.random();
 var proxyurl = "https://cors-anywhere.herokuapp.com/";
 var Main_updateUserFeedId;
 var Main_vp9supported = false; //TODO check tizen support
+var Main_Fix = "kimne78kx3";
 //Variable initialization end
 
 // this function will be called only once the first time the app startup
@@ -1074,12 +1076,6 @@ var Main_Headers = [
     [Main_Authorization, null]
 ];
 
-var Main_Headers_Back = [
-    [Main_clientIdHeader, Main_BackupclientId],
-    [Main_AcceptHeader, Main_TwithcV5Json],
-    [Main_Authorization, null]
-];
-
 function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
     var xmlHttp = new XMLHttpRequest();
 
@@ -1109,6 +1105,12 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
 
     xmlHttp.send(null);
 }
+
+var Main_Headers_Back = [
+    [Main_clientIdHeader, Main_Fix + Main_Hash + Main_Force],
+    [Main_AcceptHeader, Main_TwithcV5Json],
+    [Main_Authorization, null]
+];
 
 function BasexmlHttpGetBack(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
     var xmlHttp = new XMLHttpRequest();

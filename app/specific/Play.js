@@ -535,6 +535,7 @@ function Play_loadDataRequest() {
     } else {
         if (!Play_tokenResponse.hasOwnProperty('token') || !Play_tokenResponse.hasOwnProperty('sig')) {
             Play_410ERROR = true;
+            if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
             Play_loadDataError();
             return;
         }
@@ -567,7 +568,10 @@ function Play_loadDataRequest() {
                 Play_loadDataErrorLog(xmlHttp);
                 Play_loadDataErrorFinish(xmlHttp.status === 410, xmlHttp.status === 403);
             } else {
-                if (xmlHttp.status === 410) Play_410ERROR = true;
+                if (xmlHttp.status === 410) {
+                    Play_410ERROR = true;
+                    if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                }
                 Play_loadDataErrorLog(xmlHttp);
                 Play_loadDataError();
             }

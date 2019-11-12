@@ -285,6 +285,7 @@ function PlayVod_loadDataRequest() {
     } else {
         if (!PlayVod_tokenResponse.hasOwnProperty('token') || !PlayVod_tokenResponse.hasOwnProperty('sig')) {
             Play_410ERROR = true;
+            if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
             PlayVod_loadDataError();
             return;
         }
@@ -310,7 +311,10 @@ function PlayVod_loadDataRequest() {
                 PlayVod_loadDataSuccess(xmlHttp.responseText);
                 Play_410ERROR = false;
             } else {
-                if (xmlHttp.status === 410) Play_410ERROR = true;
+                if (xmlHttp.status === 410) {
+                    Play_410ERROR = true;
+                    if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                }
                 PlayVod_loadDataError();
             }
         }

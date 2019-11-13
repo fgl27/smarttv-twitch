@@ -192,9 +192,7 @@ If you have a problem on connectiong refer back to **[Account and Downloads:](ht
 
 ## Setup the application:
 
-* **[Download and extract the release_4.0.1_V4.zip file Click here, this is the application recipe file](https://github.com/fgl27/smarttv-twitch/releases/download/4.0.1_V4/4.0.1_V4.zip)**
-
-![install_app1](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app1.png)
+* **[Download and extract the release_4.0.1_V4.zip file Click here, this is the application recipe file](https://github.com/fgl27/smarttv-twitch/releases/download/4.0.1_V4/release_4_0_1_V4.zip)**
 
 * Making the app, Top menu > File > New > Tizen Project > click twice in **Template** > click twice in **TV** > click twice in **Web Application** > click twice in **Basic Project** > chose a project name any name ....click finish
 

@@ -18,11 +18,15 @@ Steps to reproduce the behavior:
 A clear and concise description of what you expected to happen.
 
 **Screenshots**
-If applicable not demanding, add screenshots/picture to help explain your problem.
+Whenever you can add screenshots/picture to help explain/show your problem.
 
 **Operation system (if is a installation problem):**
- - OS: Android
- - Version [e.g. 9, 8.1, etc...]
+ - OS: Windows, Linux or ...
+ - Version [e.g. 10, 18.4, etc...]
+
+**Device:**
+ - TV Model: UN40KU6000H, EH5000 or ...
+ - Os version [e.g. Tizen 2.3, Tizen 2.4, Tizen 5...]
 
 **Additional context**
 Add any other context about the problem here.

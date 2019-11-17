@@ -181,13 +181,13 @@ function PlayClip_loadDataError() {
 
 function PlayClip_loadDataSuccessFake() {
     PlayClip_qualities = [{
-            'id': 'Auto',
-            'url': ''
-        },
-        {
-            'id': '1080p60 | source | mp4',
-            'url': 'https://fake'
-        },
+        'id': 'Auto',
+        'url': ''
+    },
+    {
+        'id': '1080p60 | source | mp4',
+        'url': 'https://fake'
+    },
     ];
     PlayClip_state = PlayClip_STATE_PLAYING;
     PlayClip_qualityChanged();
@@ -441,7 +441,7 @@ function PlayClip_PreshutdownStream() {
     PlayClip_isOn = false;
     Chat_Clear();
     Play_ClearPlayer();
-    UserLiveFeed_Hide();
+    UserLiveFeed_Hide(true);
     document.body.removeEventListener("keydown", PlayClip_handleKeyDown);
     document.removeEventListener('visibilitychange', PlayClip_Resume);
     ChannelVod_vodOffset = 0;
@@ -615,7 +615,7 @@ function PlayClip_OpenVod() {
 }
 
 function PlayClip_OpenLiveStream() {
-    PlayClip_PreshutdownStream(true);
+    PlayClip_PreshutdownStream();
     Main_OpenLiveStream(Play_FeedPos, UserLiveFeed_ids, PlayClip_handleKeyDown);
 }
 

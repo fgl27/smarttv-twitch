@@ -725,6 +725,7 @@ function Play_loadDataErrorFinish(error_410, Isforbiden) {
             Play_HideWarningDialog();
         }, 2000);
         Play_RestorePlayDataValues();
+        Main_values.Play_WasPlaying = 0;
         Main_SaveValues();
     } else if (Play_selectedChannel_id_Old !== null) Play_RestorePlayData(error_410);
     else if (Isforbiden) Play_ForbiddenLive();
@@ -1531,6 +1532,8 @@ function Play_showEndDialog() {
     Play_EndFocus = true;
     UserLiveFeed_PreventHide = true;
     UserLiveFeed_ShowFeed(true);
+    Main_values.Play_WasPlaying = 0;
+    Main_SaveValues();
 }
 
 function Play_HideEndDialog() {

@@ -1006,6 +1006,7 @@ function PlayVod_OpenLiveStream() {
 function PlayVod_handleKeyDown(e) {
     if (PlayVod_state !== Play_STATE_PLAYING && !Play_isVodDialogShown()) {
         switch (e.keyCode) {
+            case KEY_RETURN_Q:
             case KEY_RETURN:
                 if (Play_ExitDialogVisible() || Play_SingleClickExit) {
                     Play_CleanHideExit();
@@ -1151,6 +1152,7 @@ function PlayVod_handleKeyDown(e) {
                 } else if (UserLiveFeed_isFeedShow()) Play_CheckIfIsLiveStart(PlayVod_OpenLiveStream);
                 else PlayVod_showPanel(true);
                 break;
+            case KEY_RETURN_Q:
             case KEY_RETURN:
                 Play_KeyReturn(true);
                 break;

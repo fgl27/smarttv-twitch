@@ -2069,6 +2069,7 @@ function Play_handleKeyDown(e) {
     if (Play_state !== Play_STATE_PLAYING) {
         switch (e.keyCode) {
             case KEY_RETURN_Q:
+            case KEY_KEYBOARD_BACKSPACE:
             case KEY_RETURN:
                 if (Play_ExitDialogVisible() || Play_SingleClickExit) {
                     Play_CleanHideExit();
@@ -2190,6 +2191,7 @@ function Play_handleKeyDown(e) {
                 } else Play_showPanel();
                 break;
             case KEY_RETURN_Q:
+            case KEY_KEYBOARD_BACKSPACE:
             case KEY_RETURN:
                 Play_KeyReturn(false);
                 break;

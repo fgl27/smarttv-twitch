@@ -503,7 +503,6 @@ function Settings_SetAnimations() {
             'screen_holder_channel',
             'screen_holder_switch',
             'screen_holder_user',
-            'screen_holder_user',
             'screen_holder_games',
             'animate_height_transition_channel',
             'animate_height_transition_games',
@@ -629,6 +628,7 @@ function Settings_handleKeyDown(event) {
     var key;
     switch (event.keyCode) {
         case KEY_RETURN_Q:
+        case KEY_KEYBOARD_BACKSPACE:
         case KEY_RETURN:
             if (Main_isAboutDialogShown()) Main_HideAboutDialog();
             else if (Main_isControlsDialogShown()) Main_HideControlsDialog();

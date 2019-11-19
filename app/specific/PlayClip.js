@@ -623,6 +623,7 @@ function PlayClip_handleKeyDown(e) {
     if (PlayClip_state !== PlayClip_STATE_PLAYING) {
         switch (e.keyCode) {
             case KEY_RETURN_Q:
+            case KEY_KEYBOARD_BACKSPACE:
             case KEY_RETURN:
                 if (Play_ExitDialogVisible() || Play_SingleClickExit) {
                     Play_CleanHideExit();
@@ -765,6 +766,7 @@ function PlayClip_handleKeyDown(e) {
                 else PlayClip_showPanel();
                 break;
             case KEY_RETURN_Q:
+            case KEY_KEYBOARD_BACKSPACE:
             case KEY_RETURN:
                 if (Play_isEndDialogVisible()) Play_EndTextClear();
 

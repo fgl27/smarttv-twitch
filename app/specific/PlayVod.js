@@ -1007,6 +1007,7 @@ function PlayVod_handleKeyDown(e) {
     if (PlayVod_state !== Play_STATE_PLAYING && !Play_isVodDialogShown()) {
         switch (e.keyCode) {
             case KEY_RETURN_Q:
+            case KEY_KEYBOARD_BACKSPACE:
             case KEY_RETURN:
                 if (Play_ExitDialogVisible() || Play_SingleClickExit) {
                     Play_CleanHideExit();
@@ -1153,6 +1154,7 @@ function PlayVod_handleKeyDown(e) {
                 else PlayVod_showPanel(true);
                 break;
             case KEY_RETURN_Q:
+            case KEY_KEYBOARD_BACKSPACE:
             case KEY_RETURN:
                 Play_KeyReturn(true);
                 break;

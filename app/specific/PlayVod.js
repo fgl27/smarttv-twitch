@@ -138,10 +138,12 @@ function PlayVod_PosStart() {
     Play_jumping = false;
     PlayVod_isOn = true;
     PlayVod_WasSubChekd = false;
-    PlayVod_loadData();
 
     if (!PlayVod_replay) PlayVod_loadData();
-    else PlayVod_qualityChanged();
+    else {
+        PlayVod_state = Play_STATE_PLAYING;
+        PlayVod_qualityChanged();
+    }
 
     Play_EndSet(2);
     document.body.removeEventListener("keyup", Main_handleKeyUp);

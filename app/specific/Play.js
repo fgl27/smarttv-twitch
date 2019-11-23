@@ -636,9 +636,7 @@ function Play_loadDataRequest() {
 
     if (Play_state === Play_STATE_LOADING_TOKEN) {
         theUrl = 'https://api.twitch.tv/api/channels/' + Main_values.Play_selectedChannel +
-            '/access_token?platform=_' +
-            (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token && !Play_410ERROR ? '&oauth_token=' +
-                AddUser_UsernameArray[0].access_token : '');
+            '/access_token?platform=_';
     } else {
         if (!Play_tokenResponse.hasOwnProperty('token') || !Play_tokenResponse.hasOwnProperty('sig')) {
             Play_410ERROR = true;
@@ -658,7 +656,7 @@ function Play_loadDataRequest() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Play_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Play_410ERROR ? Main_Headers_Back[0][1] : Main_clientId);
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Back[0][1]);
 
     xmlHttp.ontimeout = function() {};
 

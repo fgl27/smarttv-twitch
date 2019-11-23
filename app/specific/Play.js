@@ -377,32 +377,61 @@ function Play_Warn(text) { // jshint ignore:line
     Play_showWarningDialog(text);
 }
 
+var Play_CheckIfIsLiveStartCounter = 0;
+var Play_CheckIfIsLiveStartChannel = 0;
+var Play_CheckIfIsLiveStartCallback = 0;
+
 function Play_CheckIfIsLiveStart(callback) {
     if (Main_ThumbOpenIsNull(Play_FeedPos, UserLiveFeed_ids[0])) return;
     Play_showBufferDialog();
 
+    Play_CheckIfIsLiveStartCounter = 0;
+    Play_CheckIfIsLiveStartCallback = callback;
+    Play_CheckIfIsLiveStartChannel = JSON.parse(document.getElementById(UserLiveFeed_ids[8] + Play_FeedPos).getAttribute(Main_DataAttribute))[0];
+
     Play_Temp_selectedChannelDisplayname = document.getElementById(UserLiveFeed_ids[3] + Play_FeedPos).textContent;
 
-    Play_CheckIfIsLive(
-        JSON.parse(document.getElementById(UserLiveFeed_ids[8] + Play_FeedPos).getAttribute(Main_DataAttribute))[0],
-        callback);
+    Play_CheckIfIsLive();
 }
 
 
-function Play_CheckIfIsLive(Channel, callback) {
-    var theUrl = 'https://api.twitch.tv/api/channels/' + Channel + '/access_token';
+function Play_CheckIfIsLive() {
+    var theUrl = 'https://api.twitch.tv/api/channels/' + Play_CheckIfIsLiveStartChannel + '/access_token';
 
-    var xmlHttp;
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", theUrl, true);
+    xmlHttp.timeout = Play_loadingDataTimeout;
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Back[0][1]);
 
-    try {
-        xmlHttp = Android.mreadUrlHLS(theUrl);
-    } catch (e) {}
+    xmlHttp.ontimeout = function() {};
 
-    if (xmlHttp) Play_CheckIfIsLiveLink(JSON.parse(xmlHttp), Channel, callback);
-    else Play_CheckIfIsLiveLinkError();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) {
+
+		    Play_tokenResponse = JSON.parse(xmlHttp.responseText);
+
+		    if (!Play_tokenResponse.hasOwnProperty('token') || !Play_tokenResponse.hasOwnProperty('sig')) Play_CheckIfIsLiveError();
+		    else {
+		        Play_CheckIfIsLiveStartCounter = 0;
+		        Play_CheckIfIsLiveLink();
+		    }
+
+            } else Play_CheckIfIsLiveError();
+        }
+    };
+
+    xmlHttp.send(null);
 }
 
-function Play_CheckIfIsLiveLinkError() {
+function Play_CheckIfIsLiveError() {
+    if (Play_CheckIfIsLiveStartCounter < 3) {
+        Play_CheckIfIsLiveStartCounter++;
+        Play_CheckIfIsLive();
+    } else Play_CheckIfIsLiveWarn();
+}
+
+function Play_CheckIfIsLiveWarn() {
     Play_HideBufferDialog();
     Play_showWarningDialog(Play_Temp_selectedChannelDisplayname + ' ' + STR_LIVE + STR_IS_OFFLINE);
 
@@ -411,40 +440,34 @@ function Play_CheckIfIsLiveLinkError() {
     }, 2000);
 }
 
-function Play_CheckIfIsLiveLink(xmlHttp, Channel, callback) {
-    var theUrl;
-
-    if (xmlHttp.status === 200) {
-        Play_tokenResponse = JSON.parse(xmlHttp.responseText);
-        if (!Play_tokenResponse.hasOwnProperty('token') || !Play_tokenResponse.hasOwnProperty('sig')) {
-            Play_CheckIfIsLiveLinkError();
-            return;
-        }
-
-        theUrl = 'https://usher.ttvnw.net/api/channel/hls/' + Channel +
-            '.m3u8?&token=' + encodeURIComponent(Play_tokenResponse.token) + '&sig=' + Play_tokenResponse.sig +
-            '&reassignments_supported=true&playlist_include_framerate=true' +
-            (Play_SupportsSource ? "&allow_source=true" : '') + '&p=' + Main_RandomInt();
-
-    } else {
-        Play_CheckIfIsLiveLinkError();
-        return;
-    }
-
-    try {
-        xmlHttp = Android.mreadUrl(theUrl, Play_loadingDataTimeout, 0, null);
-    } catch (e) {}
-
-    if (xmlHttp) xmlHttp = JSON.parse(xmlHttp);
-    else {
-        Play_CheckIfIsLiveLinkError();
-        return;
-    }
-
-    if (xmlHttp.status === 200) callback();
-    else Play_CheckIfIsLiveLinkError();
+function Play_CheckIfIsLiveLinkError() {
+    if (Play_CheckIfIsLiveStartCounter < 3) {
+        Play_CheckIfIsLiveStartCounter++;
+        Play_CheckIfIsLiveLink();
+    } else Play_CheckIfIsLiveWarn();
 }
 
+function Play_CheckIfIsLiveLink() {
+    var theUrl = 'https://usher.ttvnw.net/api/channel/hls/' + Play_CheckIfIsLiveStartChannel +
+        '.m3u8?&token=' + encodeURIComponent(Play_tokenResponse.token) + '&sig=' + Play_tokenResponse.sig +
+        '&reassignments_supported=true&playlist_include_framerate=true&allow_source=true&p=' + Main_RandomInt();
+
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", theUrl, true);
+    xmlHttp.timeout = Play_loadingDataTimeout;
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Back[0][1]);
+
+    xmlHttp.ontimeout = function() {};
+
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) Play_CheckIfIsLiveStartCallback();
+            else Play_CheckIfIsLiveLinkError();
+        }
+    };
+
+    xmlHttp.send(null);
+}
 
 function Play_CheckResume() { // jshint ignore:line
     if (Play_isOn) Play_Resume();
@@ -1946,14 +1969,7 @@ function Play_KeyReturn(is_vod) {
 }
 
 function Play_handleKeyUp(e) {
-    if (e.keyCode === KEY_ENTER) {
-        Play_handleKeyUpClear();
-        if (!PlayExtra_clear) {
-            var doc = document.getElementById(UserLiveFeed_ids[8] + Play_FeedPos);
-            if (doc === null) UserLiveFeed_ResetFeedId();
-            else Play_OpenLiveFeed(true, doc);
-        }
-    } else if (e.keyCode === KEY_UP) {
+    if (e.keyCode === KEY_UP) {
         Play_handleKeyUpEndClear();
         if (!Play_EndUpclear) Play_EndDialogUpDown();
     }
@@ -1961,8 +1977,7 @@ function Play_handleKeyUp(e) {
 
 function Play_OpenLiveFeed(ResetFeed, doc) {
     var selectedChannel = JSON.parse(doc.getAttribute(Main_DataAttribute))[0];
-    if (Main_values.Play_selectedChannel !== selectedChannel &&
-        PlayExtra_selectedChannel !== selectedChannel) {
+    if (Main_values.Play_selectedChannel !== selectedChannel) {
         Play_SavePlayData();
         Play_PreshutdownStream(false);
 
@@ -2036,7 +2051,6 @@ function Play_RestorePlayDataValues() {
     Main_values.Play_DisplaynameHost = Play_DisplaynameHost_Old;
     Main_values.Play_selectedChannelDisplayname = Play_selectedChannelDisplayname_Old;
     Main_values.Play_gameSelected = Play_gameSelected_Old;
-    Play_SupportsSource = Play_SupportsSource_Old;
 }
 
 function Play_handleKeyDown(e) {
@@ -2134,10 +2148,11 @@ function Play_handleKeyDown(e) {
                 }
                 break;
             case KEY_ENTER:
+                var doc;
                 if (Play_isEndDialogVisible()) {
                     if (Play_EndFocus) Play_EndDialogPressed(1);
                     else {
-                        var doc = document.getElementById(UserLiveFeed_ids[8] + Play_FeedPos);
+                        doc = document.getElementById(UserLiveFeed_ids[8] + Play_FeedPos);
                         if (doc !== null) {
                             Play_EndDialogEnter = 1;
                             Play_EndUpclearCalback = Play_handleKeyDown;
@@ -2153,18 +2168,12 @@ function Play_handleKeyDown(e) {
                     } else Play_BottomOptionsPressed(1);
                     Play_setHidePanel();
                 } else if (UserLiveFeed_isFeedShow()) {
-                    var doc = document.getElementById(UserLiveFeed_ids[8] + Play_FeedPos);
-                    if (doc === null) UserLiveFeed_ResetFeedId();
-                    else if (Main_values.Play_selectedChannel !== JSON.parse(doc.getAttribute(Main_DataAttribute))[0]) {
-                        Play_SavePlayData();
-                        Play_PreshutdownStream(false);
-                        Play_bufferingcomplete = false;
-
-                        Main_values.Play_isHost = false;
-                        Play_UserLiveFeedPressed = true;
-
-                        Main_OpenLiveStream(Play_FeedPos, UserLiveFeed_ids, Play_handleKeyDown);
-                    } else UserLiveFeed_ResetFeedId();
+                    doc = document.getElementById(UserLiveFeed_ids[8] + Play_FeedPos);
+                    if (doc !== null) {
+                        Play_EndDialogEnter = 1;
+                        Play_EndUpclearCalback = Play_handleKeyDown;
+                        Play_OpenLiveFeed(false, doc);
+                    }
                 } else Play_showPanel();
                 break;
             case KEY_RETURN:

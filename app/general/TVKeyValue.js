@@ -40,20 +40,23 @@ try {
 
 if (istizen) {
     //Registering all used keys
-    tizen.tvinputdevice.registerKey("ChannelUp");
-    tizen.tvinputdevice.registerKey("ChannelDown");
-    tizen.tvinputdevice.registerKey("MediaRewind");
-    tizen.tvinputdevice.registerKey("MediaFastForward");
-    tizen.tvinputdevice.registerKey("MediaStop");
-    tizen.tvinputdevice.registerKey("MediaPlayPause");
-    tizen.tvinputdevice.registerKey("MediaPlay");
-    tizen.tvinputdevice.registerKey("MediaPause");
-    tizen.tvinputdevice.registerKey("ColorF0Red");
-    tizen.tvinputdevice.registerKey("ColorF1Green");
-    tizen.tvinputdevice.registerKey("ColorF2Yellow");
-    tizen.tvinputdevice.registerKey("ColorF3Blue");
-    tizen.tvinputdevice.registerKey("Guide");
-    tizen.tvinputdevice.registerKey("Info");
+    var TV_Keys = ['ChannelUp',
+        'ChannelDown',
+        'MediaRewind',
+        'MediaFastForward',
+        'MediaStop',
+        'MediaPlayPause',
+        'MediaPlay',
+        'MediaPause',
+        'ColorF0Red',
+        'ColorF1Green',
+        'ColorF2Yellow',
+        'ColorF3Blue',
+        'Guide',
+        'Info'];
+
+    for (var key in TV_Keys) regKey(TV_Keys[key]);
+
 } else {
     KEY_RETURN = 49;
     KEY_PG_DOWN = 34;
@@ -71,4 +74,14 @@ if (istizen) {
     KEY_STOP = 73; //key I
     KEY_MEDIAREWIND = 79; //key O
     KEY_MEDIAFASTFORWARD = 80; //key P
+}
+
+function regKey(key) {
+    try {
+        console.log('Registering key ' + key);
+        tizen.tvinputdevice.registerKey(key);
+    } catch (e) {
+        console.log('Registering key ' + key + ' error');
+        console.log(e);
+    }
 }

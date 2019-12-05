@@ -207,6 +207,7 @@ function Main_initWindows() {
     Main_GoBefore = Main_values.Main_Go;
 
     Main_ready(function() {
+        console.log('TVKeyValue_regKey started');
         for (var key in TV_Keys) TVKeyValue_regKey(TV_Keys[key]);
 
         Chat_Preinit();

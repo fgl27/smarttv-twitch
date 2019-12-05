@@ -66,7 +66,6 @@ function TVKeyValue_fixKey() {
 
 function TVKeyValue_regKey(key) {
     try {
-        console.log('Registering key ' + key);
         tizen.tvinputdevice.registerKey(key);
     } catch (e) {
         console.log('Registering key ' + key + ' error');

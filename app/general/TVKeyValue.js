@@ -30,34 +30,22 @@ var KEY_YELLOW = 405;
 var KEY_BLUE = 406;
 var KEY_KEYBOARD_CANCEL = 65385;
 
-var istizen = false;
+var TV_Keys = ['ChannelUp',
+    'ChannelDown',
+    'MediaRewind',
+    'MediaFastForward',
+    'MediaStop',
+    'MediaPlayPause',
+    'MediaPlay',
+    'MediaPause',
+    'ColorF0Red',
+    'ColorF1Green',
+    'ColorF2Yellow',
+    'ColorF3Blue',
+    'Guide',
+    'Info'];
 
-try {
-    istizen = tizen !== null;
-} catch (e) {
-
-}
-
-if (istizen) {
-    //Registering all used keys
-    var TV_Keys = ['ChannelUp',
-        'ChannelDown',
-        'MediaRewind',
-        'MediaFastForward',
-        'MediaStop',
-        'MediaPlayPause',
-        'MediaPlay',
-        'MediaPause',
-        'ColorF0Red',
-        'ColorF1Green',
-        'ColorF2Yellow',
-        'ColorF3Blue',
-        'Guide',
-        'Info'];
-
-    for (var key in TV_Keys) regKey(TV_Keys[key]);
-
-} else {
+function TVKeyValue_fixKey() {
     KEY_RETURN = 49;
     KEY_PG_DOWN = 34;
     KEY_PG_UP = 33;
@@ -76,7 +64,7 @@ if (istizen) {
     KEY_MEDIAFASTFORWARD = 80; //key P
 }
 
-function regKey(key) {
+function TVKeyValue_regKey(key) {
     try {
         console.log('Registering key ' + key);
         tizen.tvinputdevice.registerKey(key);

@@ -162,6 +162,7 @@ function Main_loadTranslations(language) {
                 console.log('Main_isReleased: ' + Main_isReleased);
                 console.log('Main_isDebug: ' + Main_isDebug);
                 console.log('Main_isBrowser: ' + !Main_IsNotBrowser);
+                TVKeyValue_fixKey();
             }
             Main_showLoadDialog();
 
@@ -206,6 +207,8 @@ function Main_initWindows() {
     Main_GoBefore = Main_values.Main_Go;
 
     Main_ready(function() {
+        for (var key in TV_Keys) TVKeyValue_regKey(TV_Keys[key]);
+
         Chat_Preinit();
         Play_PreStart();
 

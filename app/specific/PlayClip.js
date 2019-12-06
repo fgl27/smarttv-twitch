@@ -161,13 +161,12 @@ function PlayClip_loadData() {
 }
 
 function PlayClip_loadDataRequest() {
-    //var theUrl = (!Main_IsNotBrowser ? proxyurl : '') + 'https://clips.twitch.tv/api/v2/clips/' + ChannelClip_playUrl + '/status';
+    var theUrl = (!Main_IsNotBrowser ? proxyurl : '') + 'https://clips.twitch.tv/api/v2/clips/' + ChannelClip_playUrl + '/status';
 
-    //BasexmlHttpGet(theUrl, PlayClip_loadingDataTimeout, 1, null, PlayClip_QualityGenerate, PlayClip_loadDataError, true);
-    PlayClip_QualityGenerate();
+    BasexmlHttpGet(theUrl, PlayClip_loadingDataTimeout, 1, null, PlayClip_QualityGenerate, PlayClip_loadDataError, true);
 }
 
-function PlayClip_loadDataError() {// jshint ignore:line
+function PlayClip_loadDataError() {
     PlayClip_loadingDataTry++;
     if (PlayClip_loadingDataTry < PlayClip_loadingDataTryMax) {
         PlayClip_loadingDataTimeout += 250;
@@ -245,35 +244,31 @@ var PlayClip_listener = {
     }
 };
 
-function PlayClip_QualityGenerate() {
+function PlayClip_QualityGenerate(response) {
     PlayClip_qualities = [];
-    PlayClip_qualities.push({
-        'id': 'source | mp4',
-        'url': ChannelClip_playUrl
-    });
 
-//    response = JSON.parse(response).quality_options;
+    response = JSON.parse(response).quality_options;
 
-//    for (var i = 0; i < response.length; i++) {
+    for (var i = 0; i < response.length; i++) {
 
-//        if (!PlayClip_qualities.length) {
-//            PlayClip_qualities.push({
-//                'id': response[i].quality + 'p' + PlayClip_FrameRate(response[i].frame_rate) + ' | source | mp4',
-//                'url': response[i].source
-//            });
-//        } else {
-//            PlayClip_qualities.push({
-//                'id': response[i].quality + 'p' + PlayClip_FrameRate(response[i].frame_rate) + ' | mp4',
-//                'url': response[i].source
-//            });
-//        }
-//    }
+        if (!PlayClip_qualities.length) {
+            PlayClip_qualities.push({
+                'id': response[i].quality + 'p' + PlayClip_FrameRate(response[i].frame_rate) + ' | source | mp4',
+                'url': response[i].source
+            });
+        } else {
+            PlayClip_qualities.push({
+                'id': response[i].quality + 'p' + PlayClip_FrameRate(response[i].frame_rate) + ' | mp4',
+                'url': response[i].source
+            });
+        }
+    }
 
     PlayClip_state = PlayClip_STATE_PLAYING;
     PlayClip_qualityChanged();
 }
 
-function PlayClip_FrameRate(value) {// jshint ignore:line
+function PlayClip_FrameRate(value) {
     if (value > 40) return 60;
     else return '';
 }

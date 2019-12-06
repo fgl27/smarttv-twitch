@@ -1611,7 +1611,6 @@ function Play_EndTextClear() {
 }
 
 function Play_EndDialogPressed(PlayVodClip) {
-
     var canhide = true;
     if (Play_Endcounter === -1 && PlayClip_HasNext) PlayClip_PlayNext();
     else if (!Play_Endcounter) {
@@ -1662,10 +1661,10 @@ function Play_EndDialogPressed(PlayVodClip) {
             if (!PlayClip_HasVOD) canhide = false;
         }
     } else if (Play_Endcounter === 2) Play_OpenChannel(PlayVodClip);
-    else if (Play_Endcounter === 3) Play_OpenGame(PlayVodClip);
-
-    if (Play_Endcounter !== 1)
-        if (Play_Endcounter === 3 && Main_values.Play_gameSelected === '') canhide = false;
+    else if (Play_Endcounter === 3) {
+        Play_OpenGame(PlayVodClip);
+        if (Main_values.Play_gameSelected === '') canhide = false;
+    }
 
     if (canhide) {
         Play_HideEndDialog();

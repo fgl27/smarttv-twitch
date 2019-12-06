@@ -9,7 +9,7 @@ var PlayClip_isOn = false;
 var PlayClip_replay = false;
 var PlayClip_loadingDataTry = 0;
 var PlayClip_loadingDataTimeout = 2000;
-var PlayClip_loadingDataTryMax = 5;
+var PlayClip_loadingDataTryMax = 3;
 var PlayClip_quality = 'source';
 var PlayClip_qualityPlaying = PlayClip_quality;
 var PlayClip_qualityIndex = 0;
@@ -163,7 +163,34 @@ function PlayClip_loadData() {
 function PlayClip_loadDataRequest() {
     var theUrl = (!Main_IsNotBrowser ? proxyurl : '') + 'https://clips.twitch.tv/api/v2/clips/' + ChannelClip_playUrl + '/status';
 
-    BasexmlHttpGet(theUrl, PlayClip_loadingDataTimeout, 1, null, PlayClip_QualityGenerate, PlayClip_loadDataError, true);
+    var xmlHttp = new XMLHttpRequest();
+
+    xmlHttp.open("GET", theUrl, true);
+    xmlHttp.timeout = PlayClip_loadingDataTimeout;
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
+
+    xmlHttp.ontimeout = function() {};
+
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) {
+                PlayClip_QualityGenerate(xmlHttp.responseText);
+            } else if (xmlHttp.status === 410) {
+                PlayClip_qualities = [];
+                PlayClip_qualities.push({
+                    'id': 'source | mp4',
+                    'url': ChannelClip_playUrl2
+                });
+
+                PlayClip_state = PlayClip_STATE_PLAYING;
+                PlayClip_qualityChanged();
+            } else {
+                PlayClip_loadDataError();
+            }
+        }
+    };
+
+    xmlHttp.send(null);
 }
 
 function PlayClip_loadDataError() {

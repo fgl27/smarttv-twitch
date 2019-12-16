@@ -166,13 +166,14 @@ function PlayClip_loadData() {
 }
 
 function PlayClip_loadDataRequest() {
-    var theUrl = (!Main_IsNotBrowser ? proxyurl : '') + 'https://clips.twitch.tv/api/v2/clips/' + ChannelClip_playUrl + '/status';
+    var theUrl = 'https://gql.twitch.tv/gql';
 
     var xmlHttp = new XMLHttpRequest();
 
-    xmlHttp.open("GET", theUrl, true);
+    xmlHttp.open("POST", theUrl, true);
     xmlHttp.timeout = PlayClip_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Back[0][1]);
+    xmlHttp.setRequestHeader('Content-Type', 'application/json');
 
     xmlHttp.ontimeout = function() {};
 
@@ -192,7 +193,11 @@ function PlayClip_loadDataRequest() {
         }
     };
 
-    xmlHttp.send(null);
+    //    xmlHttp.send('{"query":"\\n query getClipStatus($slug:ID!) {\\n clip(slug: $slug) {\\n videoQualities {\\n frameRate\\n quality\\n sourceURL\\n }\\n }\\n }\\n","variables":{"slug":"' + 
+    //    ChannelClip_playUrl +'"}}');
+
+    xmlHttp.send('{"query":"\\n {\\n clip(slug: \\"' + ChannelClip_playUrl +
+        '\\") {\\n videoQualities {\\n frameRate\\n quality\\n sourceURL\\n }\\n }\\n }\\n"}');
 }
 
 function PlayClip_loadDataSuccess410() {
@@ -287,20 +292,23 @@ var PlayClip_listener = {
 function PlayClip_QualityGenerate(response) {
     PlayClip_qualities = [];
 
-    response = JSON.parse(response).quality_options;
+    response = JSON.parse(response).data.clip;
 
-    for (var i = 0; i < response.length; i++) {
+    if (response) {
+        response = response.videoQualities;
+        for (var i = 0; i < response.length; i++) {
 
-        if (!PlayClip_qualities.length) {
-            PlayClip_qualities.push({
-                'id': response[i].quality + 'p' + PlayClip_FrameRate(response[i].frame_rate) + ' | source | mp4',
-                'url': response[i].source
-            });
-        } else {
-            PlayClip_qualities.push({
-                'id': response[i].quality + 'p' + PlayClip_FrameRate(response[i].frame_rate) + ' | mp4',
-                'url': response[i].source
-            });
+            if (!PlayClip_qualities.length) {
+                PlayClip_qualities.push({
+                    'id': response[i].quality + 'p' + PlayClip_FrameRate(response[i].frameRate) + ' | source | mp4',
+                    'url': response[i].sourceURL
+                });
+            } else {
+                PlayClip_qualities.push({
+                    'id': response[i].quality + 'p' + PlayClip_FrameRate(response[i].frameRate) + ' | mp4',
+                    'url': response[i].sourceURL
+                });
+            }
         }
     }
 

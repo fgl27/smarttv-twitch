@@ -103,6 +103,7 @@ var Main_ItemsLimitChannel = 48;
 var Main_ColoumnsCountChannel = 6;
 var Main_ItemsReloadLimitChannel = Math.floor((Main_ItemsLimitChannel / Main_ColoumnsCountChannel) / Main_ReloadLimitOffsetVideos);
 
+var Main_kraken_api = 'https://api.twitch.tv/kraken/';
 var Main_clientId = "ypvnuqrh98wqz1sr0ov3fgfu4jh1yx";
 var Main_clientIdHeader = 'Client-ID';
 var Main_AcceptHeader = 'Accept';

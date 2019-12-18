@@ -888,7 +888,7 @@ function Play_qualityChanged() {
     Play_SetHtmlQuality('stream_quality', true);
 
     Play_state = Play_STATE_PLAYING;
-    if (Main_isDebug) console.log('Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
+    if (Main_isDebug) console.log('Play_qualityChanged before Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
 
     Play_BufferPercentage = 0;
     Play_onPlayerCounter = 0;
@@ -990,6 +990,8 @@ function Play_onPlayer() {
         Play_SetFullScreen(Play_isFullScreen);
         Play_avplay.setListener(Play_listener);
         Play_offsettime = Play_oldcurrentTime;
+
+        if (!Main_isReleased) console.log('Before Play_avplay.prepareAsync:', 'date: ' + (new Date()));
 
         //Use prepareAsync as prepare() only can freeze up the app
         Play_avplay.prepareAsync(function() { //successCallback

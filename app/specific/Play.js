@@ -489,6 +489,7 @@ function Play_Resume() {
         } else {
             Play_ClearPlayer();
             Play_offPlayer();
+            UserLiveFeed_Hide(true);
             Play_Playing = false;
             ChatLive_Clear();
             window.clearInterval(Play_streamInfoTimerId);

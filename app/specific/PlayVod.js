@@ -248,6 +248,7 @@ function PlayVod_Resume() {
                 Main_values.vodOffset = Play_avplay.getCurrentTime() / 1000;
             }
             Play_ClearPlayer();
+            UserLiveFeed_Hide(true);
             window.clearInterval(PlayVod_streamCheckId);
             window.clearInterval(PlayVod_SaveOffsetId);
         }

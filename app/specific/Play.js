@@ -1048,7 +1048,7 @@ function Play_PlayerCheck() {
             if (!navigator.onLine) Play_EndStart(false, 1);
             else if (Play_PlayerCheckCounter > 1) Play_CheckConnection(Play_PlayerCheckCounter, 1, Play_DropOneQuality);
             else {
-                Play_qualityDisplay();
+                Play_qualityDisplay(Play_getQualitiesCount, Play_qualityIndex, Play_SetHtmlQuality);
                 Play_qualityChanged();
                 Play_PlayerCheckRun = true;
             }
@@ -1083,7 +1083,7 @@ function Play_DropOneQuality(ConnectionDrop) {
     }
 
     Play_PlayerCheckCounter = 0;
-    Play_qualityDisplay();
+    Play_qualityDisplay(Play_getQualitiesCount, Play_qualityIndex, Play_SetHtmlQuality);
     Play_qualityChanged();
     Play_PlayerCheckRun = true;
 }
@@ -1340,7 +1340,7 @@ function Play_hidePanel() {
 function Play_showPanel() {
     PlayVod_IconsBottonResetFocus();
     Play_qualityIndexReset();
-    Play_qualityDisplay();
+    Play_qualityDisplay(Play_getQualitiesCount, Play_qualityIndex, Play_SetHtmlQuality);
     Play_SetHtmlQuality('stream_quality', true);
     Play_RefreshWatchingtime();
     Play_clock();
@@ -1811,23 +1811,34 @@ function Play_FallowUnfallow() {
     }
 }
 
-//TODO improve this position base
-function Play_qualityDisplay() {
-    if (Play_getQualitiesCount() === 1) {
-        document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "0";
-        document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "0";
-    } else if (!Play_qualityIndex) {
-        document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "0.2";
-        document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "1";
-    } else if (Play_qualityIndex === Play_getQualitiesCount() - 1) {
-        document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "1";
-        document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "0.2";
+function Play_qualityDisplay(getQualitiesCount, qualityIndex, callback) {
+    var doc_up = document.getElementById("control_arrow_up_" + Play_controlsQuality),
+        doc_down = document.getElementById("control_arrow_down" + Play_controlsQuality);
+
+    if (getQualitiesCount() === 1) {
+        doc_up.classList.add('hide');
+        doc_down.classList.add('hide');
+    } else if (!qualityIndex) {
+        doc_up.classList.remove('hide');
+        doc_down.classList.remove('hide');
+
+        doc_up.style.opacity = "0.2";
+        doc_down.style.opacity = "1";
+    } else if (qualityIndex === getQualitiesCount() - 1) {
+        doc_up.classList.remove('hide');
+        doc_down.classList.remove('hide');
+
+        doc_up.style.opacity = "1";
+        doc_down.style.opacity = "0.2";
     } else {
-        document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "1";
-        document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "1";
+        doc_up.classList.remove('hide');
+        doc_down.classList.remove('hide');
+
+        doc_up.style.opacity = "1";
+        doc_down.style.opacity = "1";
     }
 
-    Play_SetHtmlQuality('controls_name_' + Play_controlsQuality);
+    callback('controls_name_' + Play_controlsQuality);
 }
 
 function Play_qualityIndexReset() {
@@ -2385,7 +2396,7 @@ function Play_MakeControls() {
                 else if (Play_qualityIndex < 0)
                     Play_qualityIndex = 0;
 
-                Play_qualityDisplay();
+                Play_qualityDisplay(Play_getQualitiesCount, Play_qualityIndex, Play_SetHtmlQuality);
             } else if (PlayVodClip === 2) {
                 //TODO fix this reversed logic
                 PlayVod_qualityIndex += adder * -1;
@@ -2395,7 +2406,7 @@ function Play_MakeControls() {
                 else if (PlayVod_qualityIndex < 0)
                     PlayVod_qualityIndex = 0;
 
-                PlayVod_qualityDisplay();
+                Play_qualityDisplay(PlayVod_getQualitiesCount, PlayVod_qualityIndex, PlayVod_SetHtmlQuality);
             } else if (PlayVodClip === 3) {
                 //TODO fix this reversed logic
                 PlayClip_qualityIndex += adder * -1;
@@ -2405,7 +2416,8 @@ function Play_MakeControls() {
                 else if (PlayClip_qualityIndex < 0)
                     PlayClip_qualityIndex = 0;
 
-                PlayClip_qualityDisplay();
+                Play_qualityDisplay(PlayClip_getQualitiesCount, PlayClip_qualityIndex, PlayClip_SetHtmlQuality);
+
             }
 
         },
@@ -2746,18 +2758,30 @@ function Play_BottomLeftRigt(PlayVodClip, adder) {
 }
 
 function Play_BottomArrows(position) {
+    var doc_up = document.getElementById("control_arrow_up_" + position),
+        doc_down = document.getElementById("control_arrow_down" + position);
+
     if (Play_controls[position].values.length === 1) {
-        document.getElementById("control_arrow_up_" + position).style.opacity = "0";
-        document.getElementById("control_arrow_down" + position).style.opacity = "0";
+        doc_up.classList.add('hide');
+        doc_down.classList.add('hide');
     } else if (!Play_controls[position].defaultValue) {
-        document.getElementById("control_arrow_up_" + position).style.opacity = "1";
-        document.getElementById("control_arrow_down" + position).style.opacity = "0.2";
+        doc_up.classList.remove('hide');
+        doc_down.classList.remove('hide');
+
+        doc_up.style.opacity = "1";
+        doc_down.style.opacity = "0.2";
     } else if (Play_controls[position].defaultValue === (Play_controls[position].values.length - 1)) {
-        document.getElementById("control_arrow_up_" + position).style.opacity = "0.2";
-        document.getElementById("control_arrow_down" + position).style.opacity = "1";
+        doc_up.classList.remove('hide');
+        doc_down.classList.remove('hide');
+
+        doc_up.style.opacity = "0.2";
+        doc_down.style.opacity = "1";
     } else {
-        document.getElementById("control_arrow_up_" + position).style.opacity = "1";
-        document.getElementById("control_arrow_down" + position).style.opacity = "1";
+        doc_up.classList.remove('hide');
+        doc_down.classList.remove('hide');
+
+        doc_up.style.opacity = "1";
+        doc_down.style.opacity = "1";
     }
 
     Main_textContent('controls_name_' + position, Play_controls[position].values[Play_controls[position].defaultValue]);

@@ -374,9 +374,10 @@ function Play_Start() {
     Play_streamInfoTimerId = window.setInterval(Play_updateStreamInfo, 60000);
 }
 
-function Play_Warn(text) { // jshint ignore:line
-    Play_showWarningDialog(text);
-}
+// To Force a warn, not used regularly so keep commented out
+//function Play_Warn(text) {
+//    Play_showWarningDialog(text);
+//}
 
 var Play_CheckIfIsLiveStartCounter = 0;
 var Play_CheckIfIsLiveStartChannel = 0;
@@ -470,14 +471,14 @@ function Play_CheckIfIsLiveLink() {
     xmlHttp.send(null);
 }
 
-function Play_CheckResume() { // jshint ignore:line
-    if (Play_isOn) Play_Resume();
-    if (PlayVod_isOn) PlayVod_Resume();
-    if (PlayClip_isOn) {
-        PlayClip_shutdownStream();
-        window.clearInterval(PlayClip_streamCheckId);
-    }
-}
+//function Play_CheckResume() {
+//    if (Play_isOn) Play_Resume();
+//    if (PlayVod_isOn) PlayVod_Resume();
+//    if (PlayClip_isOn) {
+//        PlayClip_shutdownStream();
+//        window.clearInterval(PlayClip_streamCheckId);
+//    }
+//}
 
 function Play_Resume() {
     if (document.hidden) {
@@ -860,7 +861,7 @@ function Play_extractStreamDeclarations(input) {
 
     var myRegexp = /#EXT-X-MEDIA:(.)*\n#EXT-X-STREAM-INF:(.)*\n(.)*/g;
     var marray;
-    while (marray = myRegexp.exec(input)) result.push(marray[0]); // jshint ignore:line 
+    while ((marray = myRegexp.exec(input))) result.push(marray[0]);
 
     return result;
 }

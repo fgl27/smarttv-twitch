@@ -134,14 +134,16 @@ js_comp_ugf() {
 }
 
 js_jshint() {
-        array=( "$@" );
+	array=( "$@" );
 	for i in "${array[@]}"; do
 		cd "$i" || exit;
 		for x in *.js; do
-			cat "$x" >> "$mainfolder"/release/master.js &
+			cat "$x" >> "$mainfolder"/release/master.js
 		done
 		cd - &> /dev/null || exit;
 	done
+
+	echo "$master_end" >> "$mainfolder"/release/master.js;
 
 	jsh_check="$(jshint "$mainfolder"/release/master.js)";
 	if [ ! -z "$jsh_check" ]; then
@@ -151,8 +153,13 @@ js_jshint() {
 		exit;
 	else
 		echo -e "${bldblu}	JSHint Test finished no errors or warnings found"
+		cp -rf "$mainfolder"/release/master.js "$mainfolder"/release/githubio/js/master_uncompressed.js;
+		js-beautify -q "$mainfolder"/release/githubio/js/master_uncompressed.js -o "$mainfolder"/release/githubio/js/master_uncompressed.js
 	fi;
 }
+
+master_start=$(echo "$a" | sed '/APISTART/,/APIMID/!d;/APIMID/d;/APISTART/d' release/api.js);
+master_end=$(echo "$a" | sed '/APICENTER/,/APIEND/!d;/APIEND/d;/APICENTER/d' release/api.js);
 
 echo -e "\\n${bldred}####################################\\n#				   #";
 echo -e "#				   #\\n#	${bldcya}Starting Release maker${bldred}	   #\\n#				   #";
@@ -160,7 +167,8 @@ echo -e "#				   #\\n####################################\\n";
 
 if [ "$canjshint" == 1 ]; then
 	echo -e "${bldgrn}JSHint Test started...\\n";
-	echo -e '/* jshint undef: true, unused: true, node: true, browser: true */\n/*globals tizen, webapis, STR_BODY, ReconnectingWebSocket, punycode */' > "$mainfolder"/release/master.js;
+	echo -e '/* jshint undef: true, unused: true, node: true, browser: true */\n/*globals tizen, webapis, STR_BODY, ReconnectingWebSocket, punycode, smartTwitchTV */' > "$mainfolder"/release/master.js;
+	echo "$master_start" >> "$mainfolder"/release/master.js;
 	js_jshint "${js_folders[@]}";
 fi;
 
@@ -192,7 +200,8 @@ sed_comp "${html_file[@]}";
 
 # Include STR_BODY to release/master, STR_BODY has the content of index.html body
 cp -rf "$temp_maker_folder"config.xml release/config.xml
-echo "var STR_BODY='""$(cat "$temp_maker_folder"index.html)""';" > release/master.js;
+echo "$master_start" > release/master.js;
+echo "var STR_BODY='""$(cat "$temp_maker_folder"index.html)""';" >> release/master.js;
 
 if [ "$canuglifyjs" == 1 ]; then
 	js_comp_ugf "${js_folders[@]}";
@@ -226,8 +235,9 @@ cd release/ || exit
 
 # Run uglifyjs one more time with "toplevel" enable, only here as if run before js files don't work, the result is around 10% compression improve
 if [ "$canuglifyjs" == 1 ]; then
+	echo "$master_end" >> master.js;
 	echo -e "${bldblu}	uglifyjs  master.js";
-	uglifyjs master.js -c -o master.js;
+	uglifyjs master.js -c -m toplevel -o master.js;
 fi;
 
 echo -e "\\n${bldgrn}Compression done\\n";

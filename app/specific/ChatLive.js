@@ -22,7 +22,7 @@ var ChatLive_selectedChannel;
 
 //Variable initialization end
 
-function ChatLive_Init() { // jshint ignore:line
+function ChatLive_Init() {
     ChatLive_Clear();
     if (Main_values.Play_ChatForceDisable) {
         Chat_Disable();

@@ -131,7 +131,7 @@ var Main_Fix = "kimne78kx3";
 //Variable initialization end
 
 // this function will be called only once the first time the app startup
-Main_Start();
+if (!Main_isReleased) Main_Start();
 
 function Main_Start() {
     if (document.readyState === "loading") {
@@ -147,7 +147,8 @@ function Main_loadTranslations(language) {
     Main_Checktylesheet();
 
     Main_ready(function() {
-        if (Main_isReleased) document.body.innerHTML = STR_BODY;
+        // var STR_BODY is defined by the release_maker script
+        if (Main_isReleased) document.body.innerHTML = STR_BODY; // jshint ignore:line
 
         Main_ready(function() {
             try {
@@ -1074,7 +1075,7 @@ function Main_getItemBool(item, default_value) {
 // use http://www.fileformat.info/info/unicode/char/16EB/index.html
 // Replace "16EB" with is the char ᛫ by the result of "string.charCodeAt(i).toString(16).toUpperCase()"
 // To see supported fonts and etc info about the unknown char
-function Main_PrintUnicode(string) { // jshint ignore:line
+function Main_PrintUnicode(string) {
     console.log(string);
     for (var i = 0; i < string.length; i++)
         console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
@@ -1151,55 +1152,6 @@ function BasexmlHttpGetBack(theUrl, Timeout, HeaderQuatity, access_token, callba
 
     xmlHttp.send(null);
 }
-
-//Duplicated (BasehttpPost === BasehttpGet minus the post part ) as the android side may not be there and is not needed yet
-//function BasehttpPost(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, useProxy) { // jshint ignore:line
-//    if (Main_IsNotBrowser) BasexmlHttpPost(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError);
-//    else BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, useProxy);
-//}
-
-//function BasexmlHttpPost(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
-//    var xmlHttp = Android.mreadUrl(theUrl, Timeout, HeaderQuatity, access_token, true);
-
-//    if (xmlHttp) xmlHttp = JSON.parse(xmlHttp);
-//    else {
-//        calbackError();
-//        return;
-//    }
-
-//    if (xmlHttp.status === 200) {
-//        callbackSucess(xmlHttp.responseText);
-//    } else {
-//        calbackError();
-//    }
-//}
-
-//function BasexmlHttpPost(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, useProxy) {
-//    var xmlHttp = new XMLHttpRequest();
-
-//    xmlHttp.open("POST", (useProxy ? proxyurl : '') + theUrl, true);
-//    xmlHttp.timeout = Timeout;
-
-//    Main_Headers[2][1] = access_token;
-
-//    for (var i = 0; i < HeaderQuatity; i++)
-//       xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
-
-//    xmlHttp.ontimeout = function() {};
-
-//    xmlHttp.onreadystatechange = function() {
-//        if (xmlHttp.readyState === 4) {
-//            if (xmlHttp.status === 200) {
-//                callbackSucess(xmlHttp.responseText);
-//                return;
-//            } else {
-//                calbackError();
-//            }
-//        }
-//    };
-
-//    xmlHttp.send(null);
-//}
 
 var Main_VideoSizeAll = ["384x216", "512x288", "640x360", "896x504", "1280x720"];
 var Main_GameSizeAll = ["179x250", "272x380", "340x475", "476x665", "773x1080"];

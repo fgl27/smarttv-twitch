@@ -15,7 +15,6 @@ var PlayClip_qualityPlaying = PlayClip_quality;
 var PlayClip_qualityIndex = 0;
 var PlayClip_qualities = [];
 var PlayClip_playingUrl = '';
-var PlayClip_replay = false;
 var PlayClip_currentTime = 0;
 var PlayClip_offsettime = 0;
 var PlayClip_state = 0;

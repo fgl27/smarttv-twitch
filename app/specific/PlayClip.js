@@ -203,7 +203,7 @@ function PlayClip_loadDataRequest() {
 function PlayClip_loadDataSuccess410() {
     PlayClip_qualities = [];
     PlayClip_qualities.push({
-        'id': 'source | mp4',
+        'id': 'Auto | mp4',
         'url': ChannelClip_playUrl2
     });
 
@@ -292,10 +292,10 @@ var PlayClip_listener = {
 function PlayClip_QualityGenerate(response) {
     PlayClip_qualities = [];
 
-    response = JSON.parse(response).data.clip;
+    response = JSON.parse(response);
 
-    if (response) {
-        response = response.videoQualities;
+    if (response && response.hasOwnProperty('data') && response.data.hasOwnProperty('clip')) {
+        response = response.data.clip.videoQualities;
         for (var i = 0; i < response.length; i++) {
 
             if (!PlayClip_qualities.length) {

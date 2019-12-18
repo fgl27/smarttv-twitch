@@ -5660,6 +5660,7 @@
             } else {
                 Play_ClearPlayer();
                 Play_offPlayer();
+                UserLiveFeed_Hide(true);
                 Play_Playing = false;
                 ChatLive_Clear();
                 window.clearInterval(Play_streamInfoTimerId);
@@ -6060,7 +6061,7 @@
         Play_SetHtmlQuality('stream_quality', true);
 
         Play_state = Play_STATE_PLAYING;
-        if (Main_isDebug) console.log('Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
+        if (Main_isDebug) console.log('Play_qualityChanged before Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
 
         Play_BufferPercentage = 0;
         Play_onPlayerCounter = 0;
@@ -6162,6 +6163,8 @@
             Play_SetFullScreen(Play_isFullScreen);
             Play_avplay.setListener(Play_listener);
             Play_offsettime = Play_oldcurrentTime;
+
+            if (!Main_isReleased) console.log('Before Play_avplay.prepareAsync:', 'date: ' + (new Date()));
 
             //Use prepareAsync as prepare() only can freeze up the app
             Play_avplay.prepareAsync(function() { //successCallback
@@ -8238,6 +8241,7 @@
                     Main_values.vodOffset = Play_avplay.getCurrentTime() / 1000;
                 }
                 Play_ClearPlayer();
+                UserLiveFeed_Hide(true);
                 window.clearInterval(PlayVod_streamCheckId);
                 window.clearInterval(PlayVod_SaveOffsetId);
             }

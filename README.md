@@ -112,18 +112,27 @@ There is a issue section on this github page [smarttv-twitch/issues](https://git
 * I used the **Tizen Studio 2.4 with IDE installer** (Any version above that must work well), download the 32/64 bit according to your CPU architecture. On windows it is a .exe file around 480MB - just install it like any other .exe file. On Linux, the file is an executable binary 480Mb in size. To run it, first give the file permission to execute - properties >  permission > Execute... mark, then just drag the file to a terminal window and click enter, **On Linux it may ask you to use apt-get to install missing dependencies below are the one asked by Tizen Studio 2.4 last time I installed it**
 #
 
-	sudo apt-get install libwebkitgtk-1.0-0 rpm2cpio expect python2.7 ruby libwebkitgtk-1.0-0 libpng12-0
+	sudo apt-get install libwebkitgtk-1.0-0 rpm2cpio cpio expect python2.7 ruby libpng12-0 libcanberra-gtk-module libcanberra-gtk3-module gettext bridge-utils
+
 
 **If you get a error** "Package libpng12-0 is not available... etc..." do the bellow, if no error skip to **"Install Java SDK"**
 
-	sudo apt-get install libwebkitgtk-1.0-0 rpm2cpio expect python2.7 ruby libwebkitgtk-1.0-0
-	wget "http://security.ubuntu.com/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb"
-	sudo dpkg -i "libpng12-0_1.2.54-1ubuntu1.1_amd64.deb"
+    sudo add-apt-repository ppa:linuxuprising/libpng12
+    sudo apt update
+    sudo apt install libpng12-0
+
+	sudo apt-get install libwebkitgtk-1.0-0 rpm2cpio expect python2.7 ruby gettext bridge-utils
 
 **If you get a error** "Package libwebkitgtk-1 is not available... etc..." do the bellow, if no error skip to **"Install Java SDK"**
 
-	wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/w/webkitgtk/libjavascriptcoregtk-1.0-0_2.4.11-4_amd64.deb; sudo dpkg -i libjavascriptcoregtk-1.0-0_2.4.11-4_amd64.deb; sudo apt install -f
-	wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/w/webkitgtk/libwebkitgtk-1.0-0_2.4.11-4_amd64.deb; sudo dpkg -i libwebkitgtk-1.0-0_2.4.11-4_amd64.deb; sudo apt install -f"
+	wget http://archive.ubuntu.com/ubuntu/pool/main/i/icu/libicu60_60.2-3ubuntu3_amd64.deb; sudo dpkg -i libicu60_60.2-3ubuntu3_amd64.deb; sudo apt install -fy
+
+	wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/w/webkitgtk/libjavascriptcoregtk-1.0-0_2.4.11-4_amd64.deb; sudo dpkg -i libjavascriptcoregtk-1.0-0_2.4.11-4_amd64.deb; sudo apt install -fy
+
+	wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/w/webkitgtk/libwebkitgtk-1.0-0_2.4.11-4_amd64.deb; sudo dpkg -i libwebkitgtk-1.0-0_2.4.11-4_amd64.deb; sudo apt install -fy
+
+
+	sudo apt-get install rpm2cpio cpio expect python2.7 ruby gettext bridge-utils
 
 #
 * Install Java SDK, I install this app with **Open JDK java 8** on windows go to [Java SE Development Kit 8 Downloads

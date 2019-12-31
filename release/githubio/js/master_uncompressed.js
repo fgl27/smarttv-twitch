@@ -2102,7 +2102,7 @@
 
         var ishosting = ChannelContent_TargetId !== undefined;
 
-        document.getElementById('channel_content_cell0_1').setAttribute(Main_DataAttribute, JSON.stringify([channel_name, channel_id, rerun]));
+        document.getElementById('channel_content_cell0_1').setAttribute(Main_DataAttribute, JSON.stringify([channel_name, channel_id, rerun, channel_display_name]));
 
         Main_innerHTML("channel_content_thumbdiv0_0", '<div class="stream_thumbnail_live_img"><img class="stream_img" alt="" src="' + preview_thumbnail.replace("{width}x{height}", Main_VideoSize) + Main_randomimg +
             '" onerror="this.onerror=null;this.src=\'' + IMG_404_VIDEO +
@@ -2210,9 +2210,9 @@
             Main_values.Play_selectedChannel = JSON.parse(document.getElementById('channel_content_cell0_1').getAttribute(Main_DataAttribute));
 
             Main_values.IsRerun = Main_values.Play_selectedChannel[2];
-            Main_values.Play_selectedChannel = Main_values.Play_selectedChannel[0];
+            Main_values.Play_selectedChannelDisplayname = Main_values.Play_selectedChannel[3];
 
-            Main_values.Play_selectedChannelDisplayname = document.getElementById('channel_content_cell0_3').textContent;
+            Main_values.Play_selectedChannel = Main_values.Play_selectedChannel[0];
 
             if (Main_values.Play_selectedChannelDisplayname.indexOf(STR_USER_HOSTING) !== -1) {
                 Main_values.Play_isHost = true;

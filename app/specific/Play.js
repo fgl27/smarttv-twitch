@@ -632,7 +632,7 @@ function Play_loadData() {
     Play_loadDataRequest();
 }
 
-var Play_410ERROR = false;
+var Play_410ERROR = true;
 function Play_loadDataRequest() {
     var theUrl;
 
@@ -652,7 +652,7 @@ function Play_loadDataRequest() {
             '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true&fast_bread=true' +
             (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
 
-        Play_410ERROR = false;
+        //Play_410ERROR = false;
     }
 
     var xmlHttp = new XMLHttpRequest();
@@ -667,7 +667,7 @@ function Play_loadDataRequest() {
             if (xmlHttp.status === 200) {
                 Play_loadingDataTry = 0;
                 if (Play_isOn) Play_loadDataSuccess(xmlHttp.responseText);
-                Play_410ERROR = false;
+                //Play_410ERROR = false;
             } else if (xmlHttp.status === 403 || xmlHttp.status === 404) { //forbidden access
                 //404 = off line
                 //403 = forbidden access

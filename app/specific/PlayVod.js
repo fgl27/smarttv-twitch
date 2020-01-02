@@ -313,7 +313,7 @@ function PlayVod_loadDataRequest() {
             '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true' +
             (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
 
-        Play_410ERROR = false;
+        //Play_410ERROR = false;
     }
 
     var xmlHttp = new XMLHttpRequest();
@@ -327,7 +327,7 @@ function PlayVod_loadDataRequest() {
         if (xmlHttp.readyState === 4) {
             if (xmlHttp.status === 200) {
                 PlayVod_loadDataSuccess(xmlHttp.responseText);
-                Play_410ERROR = false;
+                //Play_410ERROR = false;
             } else {
                 if (xmlHttp.status === 410) {
                     Play_410ERROR = true;

@@ -17,6 +17,7 @@ var Chat_Position = 0;
 var Chat_hasEnded = false;
 var Chat_Id = 0;
 var Chat_loadBadgesChannelId;
+var Chat_JustStarted = true;
 //Variable initialization end
 
 function Chat_Preinit() {
@@ -25,6 +26,7 @@ function Chat_Preinit() {
 }
 
 function Chat_Init() {
+    Chat_JustStarted = true;
     Chat_Clear();
     if (!Main_IsNotBrowser || Main_values.Play_ChatForceDisable) {
         Chat_Disable();
@@ -160,6 +162,7 @@ function Chat_loadChatError(id) {
     if (Chat_Id === id) {
         if (Chat_loadingDataTry < Chat_loadingDataTryMax) Chat_loadChatRequest(id);
         else {
+            window.clearTimeout(Chat_loadChatId);
             Chat_loadChatId = window.setTimeout(function() {
                 Chat_loadChatRequest(id);
             }, 2500);
@@ -207,6 +210,7 @@ function Chat_loadChatSuccess(responseText, id) {
         else if (Chat_next !== undefined) Chat_MessageVectorNext(div, comments.content_offset_seconds);
     });
     if (null_next && Chat_Id === id) {
+        Chat_JustStarted = false;
         Chat_Play(id);
         if (Chat_next !== undefined) Chat_loadChatNext(id); //if (Chat_next === undefined) chat has ended
     }
@@ -227,8 +231,9 @@ function Chat_MessageVectorNext(message, time) {
 }
 
 function Chat_Play(id) {
-    if (!Chat_hasEnded && Chat_Id === id && !Main_values.Play_ChatForceDisable) {
+    if (!Chat_JustStarted && !Chat_hasEnded && Chat_Id === id && !Main_values.Play_ChatForceDisable) {
         Main_Addline(id);
+        window.clearInterval(Chat_addlinesId);
         Chat_addlinesId = window.setInterval(function() {
             Main_Addline(id);
         }, 1000);
@@ -236,20 +241,18 @@ function Chat_Play(id) {
 }
 
 function Chat_Pause() {
-    if (!Chat_hasEnded) {
-        window.clearTimeout(Chat_loadBadgesChannelId);
-        window.clearTimeout(Chat_loadChatId);
-        window.clearTimeout(Chat_loadChatNextId);
-        window.clearInterval(Chat_addlinesId);
-    }
+    window.clearTimeout(Chat_loadBadgesChannelId);
+    window.clearTimeout(Chat_loadChatId);
+    window.clearTimeout(Chat_loadChatNextId);
+    window.clearInterval(Chat_addlinesId);
 }
 
 function Chat_Clear() {
+    Chat_hasEnded = false;
     // on exit cleanup the div
     Chat_Pause();
     Chat_Id = 0;
     Main_empty('chat_box');
-    Chat_hasEnded = false;
     Chat_next = null;
     Chat_Messages = [];
     Chat_MessagesNext = [];
@@ -257,9 +260,9 @@ function Chat_Clear() {
 }
 
 function Main_Addline(id) {
-    var elem;
+    var elem, i;
     if (Chat_Position < (Chat_Messages.length - 1)) {
-        for (var i = Chat_Position; i < Chat_Messages.length; i++ , Chat_Position++) {
+        for (i = Chat_Position; i < Chat_Messages.length; i++ , Chat_Position++) {
             if (Chat_Messages[i].time < (PlayVod_currentTime / 1000)) {
                 elem = document.createElement('div');
                 elem.className = 'chat_line';
@@ -273,7 +276,12 @@ function Main_Addline(id) {
     } else {
         Chat_Pause();
         if (Chat_next !== undefined) {
-            Chat_Messages = Chat_MessagesNext.slice();
+            Chat_Messages = [];
+            //slice may crash RangeError: Maximum call stack size exceeded
+            for (i = 0; i < Chat_MessagesNext.length; i++) {
+                Chat_Messages.push(Chat_MessagesNext[i]);
+            }
+
             Chat_Position = 0;
             Chat_Play(id);
             Chat_MessagesNext = [];
@@ -331,6 +339,7 @@ function Chat_loadChatNextError(id) {
     if (Chat_Id === id) {
         if (Chat_loadingDataTry < Chat_loadingDataTryMax) Chat_loadChatNextRequest(id);
         else {
+            window.clearTimeout(Chat_loadChatNextId);
             Chat_loadChatNextId = window.setTimeout(function() {
                 Chat_loadChatNextRequest(id);
             }, 2500);

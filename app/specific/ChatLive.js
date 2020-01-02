@@ -1,7 +1,6 @@
 //Variable initialization
 var ChatLive_loadingDataTry = 0;
 var ChatLive_loadingDataTryMax = 10;
-var ChatLive_loadEmotesChannelId;
 var ChatLive_hasEnded = false;
 var ChatLive_Id = 0;
 var Chat_CleanMax = 60;
@@ -9,7 +8,6 @@ var ChatLive_loadBadgesChannelId;
 var ChatLive_socket = null;
 var ChatLive_loaded = false;
 var ChatLive_CheckId;
-var ChatLive_FixId;
 var ChatLive_LineAddCounter = 0;
 var extraEmotesDone = {
     bbtv: {},
@@ -72,9 +70,12 @@ function ChatLive_loadBadgesChannelError(id, callbackSucess) {
     ChatLive_loadingDataTry++;
     if (ChatLive_loadingDataTry < ChatLive_loadingDataTryMax) ChatLive_loadBadgesChannelRequest(id, callbackSucess);
     else {
-        if (ChatLive_Id === id) ChatLive_loadBadgesChannelId = window.setTimeout(function() {
-            ChatLive_loadBadgesChannelRequest(id, callbackSucess);
-        }, 500);
+        if (ChatLive_Id === id) {
+            window.clearTimeout(ChatLive_loadBadgesChannelId);
+            ChatLive_loadBadgesChannelId = window.setTimeout(function() {
+                ChatLive_loadBadgesChannelRequest(id, callbackSucess);
+            }, 500);
+        }
     }
 }
 
@@ -363,8 +364,6 @@ function ChatLive_LineAdd(message) {
 function ChatLive_ClearIds() {
     ChatLive_CheckClear();
     window.clearTimeout(ChatLive_loadBadgesChannelId);
-    window.clearTimeout(ChatLive_loadEmotesChannelId);
-    window.clearInterval(ChatLive_FixId);
 }
 
 function ChatLive_Clear() {

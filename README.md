@@ -20,7 +20,7 @@ About this fork
 I initially forked this from https://github.com/CazuzaCzz/smarttv-twitch/commits/tizen
 The original fork is https://github.com/nikitakatchik/smarttv-twitch
 
-I have started this project because the above Repos of the app did not fully support my TV model, it had many bugs and the app did not have all Twitch.TV features like a more complete users interface (for VoD, clips, basic Channel offline content, Chat, etc.) it also didn't fully support the latest version of Samsung smart remote.
+I have started this project because the above Repos of the app did not fully support my TV model, it had many bugs and the app did not have all Twitch.TV features like a more complete users interface (for VOD, clips, basic Channel offline content, Chat, etc.) it also didn't fully support the latest version of Samsung smart remote.
 
 So I started this new repo, kept the original name and commit history, worked a long time writing this new application basically from scratch, focusing on performance and all available Twitch.TV features, with the help of some users reporting bugs and making features request, I added many features and worked to resolve all the bugs. Today the application is very feature-rich, can be easily used to watch all available Twitch.TV content and give the user a lot of extra options. It is known that the application can always be improved, new features and improvements are always in the works, mostly to give a better experience and more options to the user, but as of today, there is only one main developer working on this project. The process is slow but feel free to report bugs and make requests! In order to do that, use the [open an issue option of this repo](https://github.com/fgl27/smarttv-twitch/issues/new/choose).
 
@@ -104,8 +104,28 @@ There is a issue section on this github page [smarttv-twitch/issues](https://git
 ## Account and Downloads
 
 * Create a Samsung account if you don't have one, and set it up as a developer account [SAMSUNG DEVELOPERS](http://developer.samsung.com/home.do)
-* Log in with the developer account on the TV, open the application **"APPS"**, press the key sequence 12345 in the remote, a new window will pop, enter your computer LAN IP address (The computer IP that you plan to use to install this app) and make sure you click **"On"** to enable the **developer mode**, after pressing OK, reboot the TV by unplugging from power and plug back on. **[Click here to read SAMSUNG Guide Connecting the TV and SDK](http://developer.samsung.com/tv/develop/getting-started/using-sdk/tv-device)**
+* Log in with the developer account on the TV, open the application **"APPS"**, press the key sequence 12345 in the remote, a new window will pop, enter yours computer Local IP address (The computer IP that you plan to use to install this app see bellow help about it) and make sure you click **"On"** to enable the **developer mode**, after pressing OK, reboot the TV by unplugging from power and plug back on. **[Click here to read SAMSUNG Guide Connecting the TV and SDK](http://developer.samsung.com/tv/develop/getting-started/using-sdk/tv-device)**
 * [Download and install **Tizen Studio**](https://developer.tizen.org/development/tizen-studio/download)
+
+## How to get the IP
+Linux terminal command:
+
+	hostname –I
+
+Result
+![ip_1](https://fgl27.github.io/smarttv-twitch/screenshot/etc/ubuntu_ip.png)
+
+Windows terminal command:
+
+	ipconfig
+
+Result
+![ip_2](https://fgl27.github.io/smarttv-twitch/screenshot/etc/windows_ip.png)
+
+Mac System Preferences > Network.<br>
+
+Result<br>
+![ip_3](https://fgl27.github.io/smarttv-twitch/screenshot/etc/mac_ip.jpg)
 
 ## Installation Tizen and Java SDK
 
@@ -172,7 +192,7 @@ Tizen is always changing those are the packages that was available on making thi
 * After having the TV IP showing in the screen, click in to connect, when connect you see something like the bellow
 ![device_manager](https://fgl27.github.io/smarttv-twitch/screenshot/install/device_manager2.png)
 
-If you have a problem on connectiong refer back to **[Account and Downloads:](https://github.com/fgl27/smarttv-twitch#account-and-downloads)**, without properly enabling **developer mode** on the TV this will fail.
+If you have a problem on connecting refer back to **[Account and Downloads:](https://github.com/fgl27/smarttv-twitch#account-and-downloads)**, without properly enabling **developer mode** on the TV this will fail.
 
 
 ## Generate a certificate:

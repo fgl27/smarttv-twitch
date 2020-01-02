@@ -2350,7 +2350,6 @@
     //Variable initialization
     var ChatLive_loadingDataTry = 0;
     var ChatLive_loadingDataTryMax = 10;
-    var ChatLive_loadEmotesChannelId;
     var ChatLive_hasEnded = false;
     var ChatLive_Id = 0;
     var Chat_CleanMax = 60;
@@ -2358,7 +2357,6 @@
     var ChatLive_socket = null;
     var ChatLive_loaded = false;
     var ChatLive_CheckId;
-    var ChatLive_FixId;
     var ChatLive_LineAddCounter = 0;
     var extraEmotesDone = {
         bbtv: {},
@@ -2421,9 +2419,12 @@
         ChatLive_loadingDataTry++;
         if (ChatLive_loadingDataTry < ChatLive_loadingDataTryMax) ChatLive_loadBadgesChannelRequest(id, callbackSucess);
         else {
-            if (ChatLive_Id === id) ChatLive_loadBadgesChannelId = window.setTimeout(function() {
-                ChatLive_loadBadgesChannelRequest(id, callbackSucess);
-            }, 500);
+            if (ChatLive_Id === id) {
+                window.clearTimeout(ChatLive_loadBadgesChannelId);
+                ChatLive_loadBadgesChannelId = window.setTimeout(function() {
+                    ChatLive_loadBadgesChannelRequest(id, callbackSucess);
+                }, 500);
+            }
         }
     }
 
@@ -2712,8 +2713,6 @@
     function ChatLive_ClearIds() {
         ChatLive_CheckClear();
         window.clearTimeout(ChatLive_loadBadgesChannelId);
-        window.clearTimeout(ChatLive_loadEmotesChannelId);
-        window.clearInterval(ChatLive_FixId);
     }
 
     function ChatLive_Clear() {
@@ -2743,6 +2742,7 @@
     var Chat_hasEnded = false;
     var Chat_Id = 0;
     var Chat_loadBadgesChannelId;
+    var Chat_JustStarted = true;
     //Variable initialization end
 
     function Chat_Preinit() {
@@ -2751,6 +2751,7 @@
     }
 
     function Chat_Init() {
+        Chat_JustStarted = true;
         Chat_Clear();
         if (!Main_IsNotBrowser || Main_values.Play_ChatForceDisable) {
             Chat_Disable();
@@ -2886,6 +2887,7 @@
         if (Chat_Id === id) {
             if (Chat_loadingDataTry < Chat_loadingDataTryMax) Chat_loadChatRequest(id);
             else {
+                window.clearTimeout(Chat_loadChatId);
                 Chat_loadChatId = window.setTimeout(function() {
                     Chat_loadChatRequest(id);
                 }, 2500);
@@ -2933,6 +2935,7 @@
             else if (Chat_next !== undefined) Chat_MessageVectorNext(div, comments.content_offset_seconds);
         });
         if (null_next && Chat_Id === id) {
+            Chat_JustStarted = false;
             Chat_Play(id);
             if (Chat_next !== undefined) Chat_loadChatNext(id); //if (Chat_next === undefined) chat has ended
         }
@@ -2953,8 +2956,9 @@
     }
 
     function Chat_Play(id) {
-        if (!Chat_hasEnded && Chat_Id === id && !Main_values.Play_ChatForceDisable) {
+        if (!Chat_JustStarted && !Chat_hasEnded && Chat_Id === id && !Main_values.Play_ChatForceDisable) {
             Main_Addline(id);
+            window.clearInterval(Chat_addlinesId);
             Chat_addlinesId = window.setInterval(function() {
                 Main_Addline(id);
             }, 1000);
@@ -2962,20 +2966,18 @@
     }
 
     function Chat_Pause() {
-        if (!Chat_hasEnded) {
-            window.clearTimeout(Chat_loadBadgesChannelId);
-            window.clearTimeout(Chat_loadChatId);
-            window.clearTimeout(Chat_loadChatNextId);
-            window.clearInterval(Chat_addlinesId);
-        }
+        window.clearTimeout(Chat_loadBadgesChannelId);
+        window.clearTimeout(Chat_loadChatId);
+        window.clearTimeout(Chat_loadChatNextId);
+        window.clearInterval(Chat_addlinesId);
     }
 
     function Chat_Clear() {
+        Chat_hasEnded = false;
         // on exit cleanup the div
         Chat_Pause();
         Chat_Id = 0;
         Main_empty('chat_box');
-        Chat_hasEnded = false;
         Chat_next = null;
         Chat_Messages = [];
         Chat_MessagesNext = [];
@@ -2983,9 +2985,9 @@
     }
 
     function Main_Addline(id) {
-        var elem;
+        var elem, i;
         if (Chat_Position < (Chat_Messages.length - 1)) {
-            for (var i = Chat_Position; i < Chat_Messages.length; i++, Chat_Position++) {
+            for (i = Chat_Position; i < Chat_Messages.length; i++, Chat_Position++) {
                 if (Chat_Messages[i].time < (PlayVod_currentTime / 1000)) {
                     elem = document.createElement('div');
                     elem.className = 'chat_line';
@@ -2999,7 +3001,12 @@
         } else {
             Chat_Pause();
             if (Chat_next !== undefined) {
-                Chat_Messages = Chat_MessagesNext.slice();
+                Chat_Messages = [];
+                //slice may crash RangeError: Maximum call stack size exceeded
+                for (i = 0; i < Chat_MessagesNext.length; i++) {
+                    Chat_Messages.push(Chat_MessagesNext[i]);
+                }
+
                 Chat_Position = 0;
                 Chat_Play(id);
                 Chat_MessagesNext = [];
@@ -3057,6 +3064,7 @@
         if (Chat_Id === id) {
             if (Chat_loadingDataTry < Chat_loadingDataTryMax) Chat_loadChatNextRequest(id);
             else {
+                window.clearTimeout(Chat_loadChatNextId);
                 Chat_loadChatNextId = window.setTimeout(function() {
                     Chat_loadChatNextRequest(id);
                 }, 2500);
@@ -3095,7 +3103,8 @@
                 linesToDelete[0].parentNode.removeChild(linesToDelete[0]);
             }
         }
-    } //Variable initialization
+    }
+    //Variable initialization
     var Main_isReleased = false;
     var Main_isDebug = false;
 
@@ -5803,7 +5812,7 @@
         Play_loadDataRequest();
     }
 
-    var Play_410ERROR = false;
+    var Play_410ERROR = true;
 
     function Play_loadDataRequest() {
         var theUrl;
@@ -5824,7 +5833,7 @@
                 '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true&fast_bread=true' +
                 (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
 
-            Play_410ERROR = false;
+            //Play_410ERROR = false;
         }
 
         var xmlHttp = new XMLHttpRequest();
@@ -5839,7 +5848,7 @@
                 if (xmlHttp.status === 200) {
                     Play_loadingDataTry = 0;
                     if (Play_isOn) Play_loadDataSuccess(xmlHttp.responseText);
-                    Play_410ERROR = false;
+                    //Play_410ERROR = false;
                 } else if (xmlHttp.status === 403 || xmlHttp.status === 404) { //forbidden access
                     //404 = off line
                     //403 = forbidden access
@@ -8306,7 +8315,7 @@
                 '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true' +
                 (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
 
-            Play_410ERROR = false;
+            //Play_410ERROR = false;
         }
 
         var xmlHttp = new XMLHttpRequest();
@@ -8320,7 +8329,7 @@
             if (xmlHttp.readyState === 4) {
                 if (xmlHttp.status === 200) {
                     PlayVod_loadDataSuccess(xmlHttp.responseText);
-                    Play_410ERROR = false;
+                    //Play_410ERROR = false;
                 } else {
                     if (xmlHttp.status === 410) {
                         Play_410ERROR = true;

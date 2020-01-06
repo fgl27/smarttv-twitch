@@ -223,7 +223,7 @@ If you have a problem on connecting refer back to **[Account and Downloads:](htt
 
 * **[Download and extract the release_4.0.1_V4.zip file Click here, this is the application recipe file](https://github.com/fgl27/smarttv-twitch/releases/download/4.0.1_V4/release_4_0_1_V4.zip)**
 
-* Making the app, Top menu > File > New > Tizen Project > click twice in **Template** > click twice in **TV** > click twice in **Web Application** > click twice in **Basic Project** > chose a project name any name ....click finish
+* Making the app, Top menu > File > New > Tizen Project > click twice in **Template** > click twice in **TV** > click twice in **Web Application** > click twice in **Empty** > chose a project name "anyname" (avoid special character and spaces) ....click finish
 
 ![install_app2](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app2.png)
 ![install_app3](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app3.png)

@@ -2360,9 +2360,11 @@
     var ChatLive_LineAddCounter = 0;
     var extraEmotesDone = {
         bbtv: {},
-        ffz: {}
+        ffz: {},
+        cheers: {}
     };
     var extraEmotes = {};
+    var cheers = {};
 
     var ChatLive_selectedChannel_id;
     var ChatLive_selectedChannel;
@@ -2379,13 +2381,10 @@
 
         ChatLive_loaded = false;
 
-        Main_ready(function() {
-            ChatLive_Id = (new Date()).getTime();
-            ChatLive_selectedChannel_id = Main_values.Play_selectedChannel_id;
-            ChatLive_selectedChannel = Main_values.Play_selectedChannel;
-            ChatLive_loadBadgesChannel(ChatLive_Id, ChatLive_loadBadgesChannelSuccess);
-        });
-
+        ChatLive_Id = (new Date()).getTime();
+        ChatLive_selectedChannel_id = Main_values.Play_selectedChannel_id;
+        ChatLive_selectedChannel = Main_values.Play_selectedChannel;
+        ChatLive_loadBadgesChannel(ChatLive_Id, ChatLive_loadBadgesChannelSuccess);
     }
 
     function ChatLive_loadBadgesChannel(id, callbackSucess) {
@@ -2432,6 +2431,7 @@
         Chat_loadBadgesTransform(responseText);
 
         ChatLive_loadEmotesChannel();
+        ChatLive_loadCheersChannel();
         ChatLive_loadEmotesChannelffz();
         if (ChatLive_Id === id) ChatLive_loadChat();
     }
@@ -2474,6 +2474,52 @@
     function ChatLive_loadEmotesChannelSuccess(data) {
         ChatLive_loadEmotesbbtv(JSON.parse(data));
         extraEmotesDone.bbtv[ChatLive_selectedChannel_id] = 1;
+    }
+
+    function ChatLive_loadCheersChannel() {
+        if (!extraEmotesDone.cheers[ChatLive_selectedChannel_id]) {
+            ChatLive_loadingDataTry = 0;
+            ChatLive_loadCheersChannelRequest();
+        }
+    }
+
+    function ChatLive_loadCheersChannelRequest() {
+        var theUrl = 'https://api.twitch.tv/v5/bits/actions?channel_id=' + encodeURIComponent(ChatLive_selectedChannel_id);
+        var xmlHttp = new XMLHttpRequest();
+
+        xmlHttp.open("GET", theUrl, true);
+        xmlHttp.timeout = 10000;
+        xmlHttp.ontimeout = function() {};
+        xmlHttp.setRequestHeader(Main_Headers[0][0], Main_Headers[0][1]);
+
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState === 4) {
+                if (xmlHttp.status === 200) {
+                    ChatLive_loadCheersChannelSuccess(JSON.parse(xmlHttp.responseText));
+                } else {
+                    ChatLive_loadCheersChannelError();
+                }
+            }
+        };
+
+        xmlHttp.send(null);
+    }
+
+    function ChatLive_loadCheersChannelError() {
+        ChatLive_loadingDataTry++;
+        if (ChatLive_loadingDataTry < ChatLive_loadingDataTryMax) ChatLive_loadCheersChannelRequest();
+    }
+
+    function ChatLive_loadCheersChannelSuccess(data) {
+        cheers[ChatLive_selectedChannel_id] = {};
+        data.actions.forEach(function(action) {
+            cheers[ChatLive_selectedChannel_id][action.prefix] = {};
+            action.tiers.forEach(function(tier) {
+                cheers[ChatLive_selectedChannel_id][action.prefix][tier.min_bits] = tier.images.light.animated['4'];
+            });
+        });
+
+        extraEmotesDone.cheers[ChatLive_selectedChannel_id] = 1;
     }
 
     function ChatLive_loadEmotesChannelffz() {
@@ -2521,7 +2567,7 @@
             extraEmotes[emote.code] = {
                 code: emote.code,
                 id: emote.id,
-                '2x': 'https:' + data.urlTemplate.replace('{{id}}', emote.id).replace('{{image}}', '2x')
+                '4x': 'https:' + data.urlTemplate.replace('{{id}}', emote.id).replace('{{image}}', '3x')
             };
         });
     }
@@ -2545,7 +2591,7 @@
                     extraEmotes[emoticon.name] = {
                         code: emoticon.name,
                         id: emoticon.id,
-                        '2x': 'https:' + (emoticon.urls[2] || emoticon.urls[1].replace(/1$/, '2'))
+                        '4x': 'https:' + (emoticon.urls[4] || emoticon.urls[2] || emoticon.urls[1])
                     };
 
                 });
@@ -2673,7 +2719,11 @@
             }
         }
 
-        div += '<span class="message">' + ChatLive_extraMessageTokenize(emoticonize(mmessage, emotes)) + '</span>';
+        div += '<span class="message">' +
+            ChatLive_extraMessageTokenize(
+                emoticonize(mmessage, emotes),
+                (tags.hasOwnProperty('bits') && cheers.hasOwnProperty(ChatLive_selectedChannel_id))
+            ) + '</span>';
 
         if (!Play_ChatDelayPosition) ChatLive_LineAdd(div);
         else {
@@ -2684,11 +2734,11 @@
         }
     }
 
-    function ChatLive_extraMessageTokenize(tokenizedMessage) {
+    function ChatLive_extraMessageTokenize(tokenizedMessage, tags) {
 
         for (var i = 0; i < tokenizedMessage.length; i++) {
             if (typeof tokenizedMessage[i] === 'string') {
-                tokenizedMessage[i] = extraMessageTokenize(tokenizedMessage[i]);
+                tokenizedMessage[i] = extraMessageTokenize(tokenizedMessage[i], tags);
             } else {
                 tokenizedMessage[i] = tokenizedMessage[i][0];
             }
@@ -2759,12 +2809,10 @@
         }
         if (!Chat_LoadGlobal) Chat_loadBadgesGlobal();
 
-        Main_ready(function() {
-            Chat_Id = (new Date()).getTime();
-            ChatLive_selectedChannel_id = Main_values.Main_selectedChannel_id;
-            ChatLive_selectedChannel = Main_values.Main_selectedChannel;
-            ChatLive_loadBadgesChannel(Chat_Id, Chat_loadBadgesChannelSuccess);
-        });
+        Chat_Id = (new Date()).getTime();
+        ChatLive_selectedChannel_id = Main_values.Main_selectedChannel_id;
+        ChatLive_selectedChannel = Main_values.Main_selectedChannel;
+        ChatLive_loadBadgesChannel(Chat_Id, Chat_loadBadgesChannelSuccess);
     }
 
     function Chat_loadBadgesGlobal() {
@@ -2850,6 +2898,7 @@
         Chat_loadBadgesTransform(responseText);
 
         ChatLive_loadEmotesChannel();
+        ChatLive_loadCheersChannel();
         ChatLive_loadEmotesChannelffz();
         if (Chat_Id === id) Chat_loadChat(id);
     }
@@ -2926,8 +2975,12 @@
             //Add mesage
             div += '<span class="message">';
             mmessage.fragments.forEach(function(fragments) {
-                if (fragments.hasOwnProperty('emoticon')) div += '<img class="emoticon" alt="" src="https://static-cdn.jtvnw.net/emoticons/v1/' + fragments.emoticon.emoticon_id + '/1.0" srcset="https://static-cdn.jtvnw.net/emoticons/v1/' + fragments.emoticon.emoticon_id + '/2.0 2x, https://static-cdn.jtvnw.net/emoticons/v1/' + fragments.emoticon.emoticon_id + '/3.0 4x">';
-                else div += ChatLive_extraMessageTokenize([fragments.text]);
+                if (fragments.hasOwnProperty('emoticon')) div += emoteTemplate(emoteURL(fragments.emoticon.emoticon_id));
+                else div +=
+                    ChatLive_extraMessageTokenize(
+                        [fragments.text],
+                        (mmessage.hasOwnProperty('bits_spent') && cheers.hasOwnProperty(ChatLive_selectedChannel_id))
+                    );
             });
 
             div += '</span>';
@@ -3224,7 +3277,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = '121819';
+    var Main_minversion = '011120';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
     var Main_ClockOffset = 0;
@@ -10024,6 +10077,7 @@
         } else if (inUseObj.posY < 0) {
             Screens_removeFocusFallow();
             inUseObj.posY = 0;
+            inUseObj.posX = 0;
         }
     }
 
@@ -14434,8 +14488,7 @@
             for (var i = 0; i < rawTags.length; i++) {
                 // Tags delimited by an equals sign are key=value tags.
                 // If there's no equals, we assign the tag a value of true.
-                var tag = rawTags[i];
-                var pair = tag.split('=');
+                var pair = rawTags[i].split('=');
                 message.tags[pair[0]] = pair[1] || true;
             }
 
@@ -14535,37 +14588,76 @@
     }
 
     function extraEmoteTemplate(emote) {
-        return '<img class="emoticon" alt="" src="' + emote['2x'] + '"/>';
+        return '<img class="emoticon" alt="" src="' + emote['4x'] + '"/>';
     }
 
-    function emoteTemplate(id) {
-        return '<img class="emoticon" alt="" src="https://static-cdn.jtvnw.net/emoticons/v1/' + id + '/2.0"/>';
+    function emoteURL(id) {
+        return 'https://static-cdn.jtvnw.net/emoticons/v1/' + id + '/3.0'; //emotes 3.0 === 4.0
     }
 
+    function emoteTemplate(url) {
+        return '<img class="emoticon" alt="" src="' + url + '"/>';
+    }
 
     function mescape(message) {
         return message.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
-    function extraMessageTokenize(message) {
-        var tokenizedString = message.split(' ');
+    function extraMessageTokenize(message, bits) {
+        var tokenizedString = message.split(' '),
+            emote,
+            cheer;
 
         for (var i = 0; i < tokenizedString.length; i++) {
             message = tokenizedString[i];
 
-            var test = message.replace(/(^[~!@#$%\^&\*\(\)]+|[~!@#$%\^&\*\(\)]+$)/g, '');
-            var emote = extraEmotes[test] || extraEmotes[message];
+            cheer = bits ? findCheerInToken(message) : 0;
 
-            if (emote) {
-                message = extraEmoticonize(message, emote);
-            } else {
-                message = mescape(message);
+            if (cheer) {
+                tokenizedString[i] = emoteTemplate(cheer);
+                continue;
             }
 
-            tokenizedString[i] = message;
+            emote = extraEmotes[message.replace(/(^[~!@#$%\^&\*\(\)]+|[~!@#$%\^&\*\(\)]+$)/g, '')] || extraEmotes[message];
+
+            tokenizedString[i] = emote ? extraEmoticonize(message, emote) : mescape(message);
         }
 
         return tokenizedString.join(' ');
+    }
+
+    function findCheerInToken(message) {
+        var cheerPrefixes = Object.keys(cheers[ChatLive_selectedChannel_id]),
+            tokenLower = message.toLowerCase(),
+            index = -1;
+
+        for (var i = 0; i < cheerPrefixes.length; i++) {
+
+            //Try  case sensitive first as some prefixes start the same, but some users type without carrying about case
+            if (message.indexOf(cheerPrefixes[i]) !== -1)
+                return getCheer(cheerPrefixes[i], parseInt(message.substr(cheerPrefixes[i].length), 10));
+
+            //Try  case insensitive after
+            if (tokenLower.indexOf(cheerPrefixes[i].toLowerCase()) !== -1) index = i;
+        }
+
+        return ((index > -1) ?
+            getCheer(cheerPrefixes[index], parseInt(tokenLower.substr(cheerPrefixes[index].toLowerCase().length), 10)) :
+            null);
+    }
+
+    function getCheer(prefix, amount) {
+        var amounts = cheers[ChatLive_selectedChannel_id][prefix],
+            amountsArray = Object.keys(amounts)
+            .sort(function(a, b) {
+                return parseInt(b, 10) - parseInt(a, 10);
+            });
+
+        for (var i = 0; i < amountsArray.length; i++)
+            if (amount >= parseInt(amountsArray[i], 10)) return amounts[amountsArray[i]];
+
+        //Fail safe
+        return amounts[amountsArray[0]];
     }
 
     function emoticonize(message, emotes) {
@@ -14603,7 +14695,7 @@
             tokenizedMessage.unshift(punycode.ucs2.encode(message.slice(replacement.last + 1)));
 
             // Unshift the emote HTML (but not as a string to allow us to process links and escape html still)
-            tokenizedMessage.unshift([emoteTemplate(replacement.id)]);
+            tokenizedMessage.unshift([emoteTemplate(emoteURL(replacement.id))]);
 
             // Splice the unparsed piece of the message
             message = message.slice(0, replacement.first);
@@ -14634,7 +14726,8 @@
         style.innerHTML = '.' + type + '-' + version + ' { background-image: url("' + url.replace('http:', 'https:') + '"); }';
         if (doc) doc.appendChild(style);
         else document.head.appendChild(style);
-    } /*! https://mths.be/punycode v1.4.1 by @mathias */
+    }
+    /*! https://mths.be/punycode v1.4.1 by @mathias */
 
     // https://cdnjs.cloudflare.com/ajax/libs/punycode/1.4.1/punycode.js
     // https://cdnjs.com/libraries/punycode
@@ -15262,7 +15355,7 @@
                 timeoutInterval: 3000,
 
                 /** The maximum number of reconnection attempts to make. Unlimited if null. */
-                maxReconnectAttempts: null,
+                maxReconnectAttempts: 50,
 
                 /** The binary type, possible values 'blob' or 'arraybuffer', default 'blob'. */
                 binaryType: 'blob'
@@ -15312,21 +15405,36 @@
 
             // Wire up "on*" properties as event handlers
 
-            eventTarget.addEventListener('open', function(event) {
-                self.onopen(event);
-            });
-            eventTarget.addEventListener('close', function(event) {
-                self.onclose(event);
-            });
-            eventTarget.addEventListener('connecting', function(event) {
-                self.onconnecting(event);
-            });
-            eventTarget.addEventListener('message', function(event) {
-                self.onmessage(event);
-            });
-            eventTarget.addEventListener('error', function(event) {
-                self.onerror(event);
-            });
+            eventTarget.addEventListener('open',
+                function(event) {
+                    self.onopen(event);
+                }
+            );
+            eventTarget.addEventListener('close',
+                function(event) {
+                    self.onclose(event);
+                }
+            );
+            eventTarget.addEventListener('connecting',
+                function(event) {
+                    self.onconnecting(event);
+                }
+            );
+            eventTarget.addEventListener('message',
+                function(event) {
+                    self.onmessage(event);
+                }
+            );
+            eventTarget.addEventListener('error',
+                function(event) {
+                    self.onerror(event);
+                });
+            eventTarget.addEventListener('maxAttemptsExceed',
+                function(event) {
+                    self.onmaxattemptsexceed(event);
+                }
+            );
+
 
             // Expose the API required by EventTarget
 
@@ -15352,14 +15460,14 @@
             }
 
             this.open = function(reconnectAttempt) {
+                if (reconnectAttempt && this.reconnectAttempts > this.maxReconnectAttempts) {
+                    return;
+                }
+
                 ws = new WebSocket(self.url, protocols || []);
                 ws.binaryType = this.binaryType;
 
-                if (reconnectAttempt) {
-                    if (this.maxReconnectAttempts && this.reconnectAttempts > this.maxReconnectAttempts) {
-                        return;
-                    }
-                } else {
+                if (!reconnectAttempt) {
                     eventTarget.dispatchEvent(generateEvent('connecting'));
                     this.reconnectAttempts = 0;
                 }
@@ -15495,6 +15603,8 @@
         ReconnectingWebSocket.prototype.onmessage = function() {};
         /** An event listener to be called when an error occurs. */
         ReconnectingWebSocket.prototype.onerror = function() {};
+        /** An event listener to be called when connecting attempts exceeded */
+        ReconnectingWebSocket.prototype.onmaxattemptsexceed = function() {};
 
         /**
          * Whether all instances of ReconnectingWebSocket should log debug messages.
@@ -15637,7 +15747,7 @@
 
             // RegExp based on emoji's official Unicode standards
             // http://www.unicode.org/Public/UNIDATA/EmojiSources.txt
-            re = /(?:\ud83d[\udc68\udc69])(?:\ud83c[\udffb-\udfff])?\u200d(?:\u2695\ufe0f|\u2696\ufe0f|\u2708\ufe0f|\ud83c[\udf3e\udf73\udf93\udfa4\udfa8\udfeb\udfed]|\ud83d[\udcbb\udcbc\udd27\udd2c\ude80\ude92]|\ud83e[\uddb0-\uddb3])|(?:\ud83c[\udfcb\udfcc]|\ud83d[\udd74\udd75]|\u26f9)((?:\ud83c[\udffb-\udfff]|\ufe0f)\u200d[\u2640\u2642]\ufe0f)|(?:\ud83c[\udfc3\udfc4\udfca]|\ud83d[\udc6e\udc71\udc73\udc77\udc81\udc82\udc86\udc87\ude45-\ude47\ude4b\ude4d\ude4e\udea3\udeb4-\udeb6]|\ud83e[\udd26\udd35\udd37-\udd39\udd3d\udd3e\uddb8\uddb9\uddd6-\udddd])(?:\ud83c[\udffb-\udfff])?\u200d[\u2640\u2642]\ufe0f|(?:\ud83d\udc68\u200d\u2764\ufe0f\u200d\ud83d\udc8b\u200d\ud83d\udc68|\ud83d\udc68\u200d\ud83d\udc68\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc68\u200d\ud83d\udc68\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\u2764\ufe0f\u200d\ud83d\udc8b\u200d\ud83d[\udc68\udc69]|\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\u2764\ufe0f\u200d\ud83d\udc68|\ud83d\udc68\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc68\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\ud83d\udc68\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\u2764\ufe0f\u200d\ud83d[\udc68\udc69]|\ud83d\udc69\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d[\udc66\udc67]|\ud83c\udff3\ufe0f\u200d\ud83c\udf08|\ud83c\udff4\u200d\u2620\ufe0f|\ud83d\udc41\u200d\ud83d\udde8|\ud83d\udc68\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\ud83d[\udc66\udc67]|\ud83d\udc6f\u200d\u2640\ufe0f|\ud83d\udc6f\u200d\u2642\ufe0f|\ud83e\udd3c\u200d\u2640\ufe0f|\ud83e\udd3c\u200d\u2642\ufe0f|\ud83e\uddde\u200d\u2640\ufe0f|\ud83e\uddde\u200d\u2642\ufe0f|\ud83e\udddf\u200d\u2640\ufe0f|\ud83e\udddf\u200d\u2642\ufe0f)|[\u0023\u002a\u0030-\u0039]\ufe0f?\u20e3|(?:[\u00a9\u00ae\u2122\u265f]\ufe0f)|(?:\ud83c[\udc04\udd70\udd71\udd7e\udd7f\ude02\ude1a\ude2f\ude37\udf21\udf24-\udf2c\udf36\udf7d\udf96\udf97\udf99-\udf9b\udf9e\udf9f\udfcd\udfce\udfd4-\udfdf\udff3\udff5\udff7]|\ud83d[\udc3f\udc41\udcfd\udd49\udd4a\udd6f\udd70\udd73\udd76-\udd79\udd87\udd8a-\udd8d\udda5\udda8\uddb1\uddb2\uddbc\uddc2-\uddc4\uddd1-\uddd3\udddc-\uddde\udde1\udde3\udde8\uddef\uddf3\uddfa\udecb\udecd-\udecf\udee0-\udee5\udee9\udef0\udef3]|[\u203c\u2049\u2139\u2194-\u2199\u21a9\u21aa\u231a\u231b\u2328\u23cf\u23ed-\u23ef\u23f1\u23f2\u23f8-\u23fa\u24c2\u25aa\u25ab\u25b6\u25c0\u25fb-\u25fe\u2600-\u2604\u260e\u2611\u2614\u2615\u2618\u2620\u2622\u2623\u2626\u262a\u262e\u262f\u2638-\u263a\u2640\u2642\u2648-\u2653\u2660\u2663\u2665\u2666\u2668\u267b\u267f\u2692-\u2697\u2699\u269b\u269c\u26a0\u26a1\u26aa\u26ab\u26b0\u26b1\u26bd\u26be\u26c4\u26c5\u26c8\u26cf\u26d1\u26d3\u26d4\u26e9\u26ea\u26f0-\u26f5\u26f8\u26fa\u26fd\u2702\u2708\u2709\u270f\u2712\u2714\u2716\u271d\u2721\u2733\u2734\u2744\u2747\u2757\u2763\u2764\u27a1\u2934\u2935\u2b05-\u2b07\u2b1b\u2b1c\u2b50\u2b55\u3030\u303d\u3297\u3299])(?:\ufe0f|(?!\ufe0e))|(?:(?:\ud83c[\udfcb\udfcc]|\ud83d[\udd74\udd75\udd90]|[\u261d\u26f7\u26f9\u270c\u270d])(?:\ufe0f|(?!\ufe0e))|(?:\ud83c[\udf85\udfc2-\udfc4\udfc7\udfca]|\ud83d[\udc42\udc43\udc46-\udc50\udc66-\udc69\udc6e\udc70-\udc78\udc7c\udc81-\udc83\udc85-\udc87\udcaa\udd7a\udd95\udd96\ude45-\ude47\ude4b-\ude4f\udea3\udeb4-\udeb6\udec0\udecc]|\ud83e[\udd18-\udd1c\udd1e\udd1f\udd26\udd30-\udd39\udd3d\udd3e\uddb5\uddb6\uddb8\uddb9\uddd1-\udddd]|[\u270a\u270b]))(?:\ud83c[\udffb-\udfff])?|(?:\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f|\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc73\udb40\udc63\udb40\udc74\udb40\udc7f|\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc77\udb40\udc6c\udb40\udc73\udb40\udc7f|\ud83c\udde6\ud83c[\udde8-\uddec\uddee\uddf1\uddf2\uddf4\uddf6-\uddfa\uddfc\uddfd\uddff]|\ud83c\udde7\ud83c[\udde6\udde7\udde9-\uddef\uddf1-\uddf4\uddf6-\uddf9\uddfb\uddfc\uddfe\uddff]|\ud83c\udde8\ud83c[\udde6\udde8\udde9\uddeb-\uddee\uddf0-\uddf5\uddf7\uddfa-\uddff]|\ud83c\udde9\ud83c[\uddea\uddec\uddef\uddf0\uddf2\uddf4\uddff]|\ud83c\uddea\ud83c[\udde6\udde8\uddea\uddec\udded\uddf7-\uddfa]|\ud83c\uddeb\ud83c[\uddee-\uddf0\uddf2\uddf4\uddf7]|\ud83c\uddec\ud83c[\udde6\udde7\udde9-\uddee\uddf1-\uddf3\uddf5-\uddfa\uddfc\uddfe]|\ud83c\udded\ud83c[\uddf0\uddf2\uddf3\uddf7\uddf9\uddfa]|\ud83c\uddee\ud83c[\udde8-\uddea\uddf1-\uddf4\uddf6-\uddf9]|\ud83c\uddef\ud83c[\uddea\uddf2\uddf4\uddf5]|\ud83c\uddf0\ud83c[\uddea\uddec-\uddee\uddf2\uddf3\uddf5\uddf7\uddfc\uddfe\uddff]|\ud83c\uddf1\ud83c[\udde6-\udde8\uddee\uddf0\uddf7-\uddfb\uddfe]|\ud83c\uddf2\ud83c[\udde6\udde8-\udded\uddf0-\uddff]|\ud83c\uddf3\ud83c[\udde6\udde8\uddea-\uddec\uddee\uddf1\uddf4\uddf5\uddf7\uddfa\uddff]|\ud83c\uddf4\ud83c\uddf2|\ud83c\uddf5\ud83c[\udde6\uddea-\udded\uddf0-\uddf3\uddf7-\uddf9\uddfc\uddfe]|\ud83c\uddf6\ud83c\udde6|\ud83c\uddf7\ud83c[\uddea\uddf4\uddf8\uddfa\uddfc]|\ud83c\uddf8\ud83c[\udde6-\uddea\uddec-\uddf4\uddf7-\uddf9\uddfb\uddfd-\uddff]|\ud83c\uddf9\ud83c[\udde6\udde8\udde9\uddeb-\udded\uddef-\uddf4\uddf7\uddf9\uddfb\uddfc\uddff]|\ud83c\uddfa\ud83c[\udde6\uddec\uddf2\uddf3\uddf8\uddfe\uddff]|\ud83c\uddfb\ud83c[\udde6\udde8\uddea\uddec\uddee\uddf3\uddfa]|\ud83c\uddfc\ud83c[\uddeb\uddf8]|\ud83c\uddfd\ud83c\uddf0|\ud83c\uddfe\ud83c[\uddea\uddf9]|\ud83c\uddff\ud83c[\udde6\uddf2\uddfc]|\ud83c[\udccf\udd8e\udd91-\udd9a\udde6-\uddff\ude01\ude32-\ude36\ude38-\ude3a\ude50\ude51\udf00-\udf20\udf2d-\udf35\udf37-\udf7c\udf7e-\udf84\udf86-\udf93\udfa0-\udfc1\udfc5\udfc6\udfc8\udfc9\udfcf-\udfd3\udfe0-\udff0\udff4\udff8-\udfff]|\ud83d[\udc00-\udc3e\udc40\udc44\udc45\udc51-\udc65\udc6a-\udc6d\udc6f\udc79-\udc7b\udc7d-\udc80\udc84\udc88-\udca9\udcab-\udcfc\udcff-\udd3d\udd4b-\udd4e\udd50-\udd67\udda4\uddfb-\ude44\ude48-\ude4a\ude80-\udea2\udea4-\udeb3\udeb7-\udebf\udec1-\udec5\uded0-\uded2\udeeb\udeec\udef4-\udef9]|\ud83e[\udd10-\udd17\udd1d\udd20-\udd25\udd27-\udd2f\udd3a\udd3c\udd40-\udd45\udd47-\udd70\udd73-\udd76\udd7a\udd7c-\udda2\uddb4\uddb7\uddc0-\uddc2\uddd0\uddde-\uddff]|[\u23e9-\u23ec\u23f0\u23f3\u267e\u26ce\u2705\u2728\u274c\u274e\u2753-\u2755\u2795-\u2797\u27b0\u27bf\ue50a])|\ufe0f/g,
+            re = /(?:\ud83d\udc68\ud83c\udffb\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffc-\udfff]|\ud83d\udc68\ud83c\udffc\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb\udffd-\udfff]|\ud83d\udc68\ud83c\udffd\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb\udffc\udffe\udfff]|\ud83d\udc68\ud83c\udffe\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb-\udffd\udfff]|\ud83d\udc68\ud83c\udfff\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb-\udffe]|\ud83d\udc69\ud83c\udffb\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffc-\udfff]|\ud83d\udc69\ud83c\udffb\u200d\ud83e\udd1d\u200d\ud83d\udc69\ud83c[\udffc-\udfff]|\ud83d\udc69\ud83c\udffc\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb\udffd-\udfff]|\ud83d\udc69\ud83c\udffc\u200d\ud83e\udd1d\u200d\ud83d\udc69\ud83c[\udffb\udffd-\udfff]|\ud83d\udc69\ud83c\udffd\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb\udffc\udffe\udfff]|\ud83d\udc69\ud83c\udffd\u200d\ud83e\udd1d\u200d\ud83d\udc69\ud83c[\udffb\udffc\udffe\udfff]|\ud83d\udc69\ud83c\udffe\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb-\udffd\udfff]|\ud83d\udc69\ud83c\udffe\u200d\ud83e\udd1d\u200d\ud83d\udc69\ud83c[\udffb-\udffd\udfff]|\ud83d\udc69\ud83c\udfff\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb-\udffe]|\ud83d\udc69\ud83c\udfff\u200d\ud83e\udd1d\u200d\ud83d\udc69\ud83c[\udffb-\udffe]|\ud83e\uddd1\ud83c\udffb\u200d\ud83e\udd1d\u200d\ud83e\uddd1\ud83c[\udffb-\udfff]|\ud83e\uddd1\ud83c\udffc\u200d\ud83e\udd1d\u200d\ud83e\uddd1\ud83c[\udffb-\udfff]|\ud83e\uddd1\ud83c\udffd\u200d\ud83e\udd1d\u200d\ud83e\uddd1\ud83c[\udffb-\udfff]|\ud83e\uddd1\ud83c\udffe\u200d\ud83e\udd1d\u200d\ud83e\uddd1\ud83c[\udffb-\udfff]|\ud83e\uddd1\ud83c\udfff\u200d\ud83e\udd1d\u200d\ud83e\uddd1\ud83c[\udffb-\udfff]|\ud83e\uddd1\u200d\ud83e\udd1d\u200d\ud83e\uddd1|\ud83d\udc6b\ud83c[\udffb-\udfff]|\ud83d\udc6c\ud83c[\udffb-\udfff]|\ud83d\udc6d\ud83c[\udffb-\udfff]|\ud83d[\udc6b-\udc6d])|(?:\ud83d[\udc68\udc69])(?:\ud83c[\udffb-\udfff])?\u200d(?:\u2695\ufe0f|\u2696\ufe0f|\u2708\ufe0f|\ud83c[\udf3e\udf73\udf93\udfa4\udfa8\udfeb\udfed]|\ud83d[\udcbb\udcbc\udd27\udd2c\ude80\ude92]|\ud83e[\uddaf-\uddb3\uddbc\uddbd])|(?:\ud83c[\udfcb\udfcc]|\ud83d[\udd74\udd75]|\u26f9)((?:\ud83c[\udffb-\udfff]|\ufe0f)\u200d[\u2640\u2642]\ufe0f)|(?:\ud83c[\udfc3\udfc4\udfca]|\ud83d[\udc6e\udc71\udc73\udc77\udc81\udc82\udc86\udc87\ude45-\ude47\ude4b\ude4d\ude4e\udea3\udeb4-\udeb6]|\ud83e[\udd26\udd35\udd37-\udd39\udd3d\udd3e\uddb8\uddb9\uddcd-\uddcf\uddd6-\udddd])(?:\ud83c[\udffb-\udfff])?\u200d[\u2640\u2642]\ufe0f|(?:\ud83d\udc68\u200d\u2764\ufe0f\u200d\ud83d\udc8b\u200d\ud83d\udc68|\ud83d\udc68\u200d\ud83d\udc68\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc68\u200d\ud83d\udc68\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\u2764\ufe0f\u200d\ud83d\udc8b\u200d\ud83d[\udc68\udc69]|\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\u2764\ufe0f\u200d\ud83d\udc68|\ud83d\udc68\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc68\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\ud83d\udc68\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\u2764\ufe0f\u200d\ud83d[\udc68\udc69]|\ud83d\udc69\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d[\udc66\udc67]|\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f|\ud83c\udff3\ufe0f\u200d\ud83c\udf08|\ud83c\udff4\u200d\u2620\ufe0f|\ud83d\udc15\u200d\ud83e\uddba|\ud83d\udc41\u200d\ud83d\udde8|\ud83d\udc68\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\ud83d[\udc66\udc67]|\ud83d\udc6f\u200d\u2640\ufe0f|\ud83d\udc6f\u200d\u2642\ufe0f|\ud83e\udd3c\u200d\u2640\ufe0f|\ud83e\udd3c\u200d\u2642\ufe0f|\ud83e\uddde\u200d\u2640\ufe0f|\ud83e\uddde\u200d\u2642\ufe0f|\ud83e\udddf\u200d\u2640\ufe0f|\ud83e\udddf\u200d\u2642\ufe0f)|[#*0-9]\ufe0f?\u20e3|(?:[©®\u2122\u265f]\ufe0f)|(?:\ud83c[\udc04\udd70\udd71\udd7e\udd7f\ude02\ude1a\ude2f\ude37\udf21\udf24-\udf2c\udf36\udf7d\udf96\udf97\udf99-\udf9b\udf9e\udf9f\udfcd\udfce\udfd4-\udfdf\udff3\udff5\udff7]|\ud83d[\udc3f\udc41\udcfd\udd49\udd4a\udd6f\udd70\udd73\udd76-\udd79\udd87\udd8a-\udd8d\udda5\udda8\uddb1\uddb2\uddbc\uddc2-\uddc4\uddd1-\uddd3\udddc-\uddde\udde1\udde3\udde8\uddef\uddf3\uddfa\udecb\udecd-\udecf\udee0-\udee5\udee9\udef0\udef3]|[\u203c\u2049\u2139\u2194-\u2199\u21a9\u21aa\u231a\u231b\u2328\u23cf\u23ed-\u23ef\u23f1\u23f2\u23f8-\u23fa\u24c2\u25aa\u25ab\u25b6\u25c0\u25fb-\u25fe\u2600-\u2604\u260e\u2611\u2614\u2615\u2618\u2620\u2622\u2623\u2626\u262a\u262e\u262f\u2638-\u263a\u2640\u2642\u2648-\u2653\u2660\u2663\u2665\u2666\u2668\u267b\u267f\u2692-\u2697\u2699\u269b\u269c\u26a0\u26a1\u26a7\u26aa\u26ab\u26b0\u26b1\u26bd\u26be\u26c4\u26c5\u26c8\u26cf\u26d1\u26d3\u26d4\u26e9\u26ea\u26f0-\u26f5\u26f8\u26fa\u26fd\u2702\u2708\u2709\u270f\u2712\u2714\u2716\u271d\u2721\u2733\u2734\u2744\u2747\u2757\u2763\u2764\u27a1\u2934\u2935\u2b05-\u2b07\u2b1b\u2b1c\u2b50\u2b55\u3030\u303d\u3297\u3299])(?:\ufe0f|(?!\ufe0e))|(?:(?:\ud83c[\udfcb\udfcc]|\ud83d[\udd74\udd75\udd90]|[\u261d\u26f7\u26f9\u270c\u270d])(?:\ufe0f|(?!\ufe0e))|(?:\ud83c[\udf85\udfc2-\udfc4\udfc7\udfca]|\ud83d[\udc42\udc43\udc46-\udc50\udc66-\udc69\udc6e\udc70-\udc78\udc7c\udc81-\udc83\udc85-\udc87\udcaa\udd7a\udd95\udd96\ude45-\ude47\ude4b-\ude4f\udea3\udeb4-\udeb6\udec0\udecc]|\ud83e[\udd0f\udd18-\udd1c\udd1e\udd1f\udd26\udd30-\udd39\udd3d\udd3e\uddb5\uddb6\uddb8\uddb9\uddbb\uddcd-\uddcf\uddd1-\udddd]|[\u270a\u270b]))(?:\ud83c[\udffb-\udfff])?|(?:\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f|\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc73\udb40\udc63\udb40\udc74\udb40\udc7f|\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc77\udb40\udc6c\udb40\udc73\udb40\udc7f|\ud83c\udde6\ud83c[\udde8-\uddec\uddee\uddf1\uddf2\uddf4\uddf6-\uddfa\uddfc\uddfd\uddff]|\ud83c\udde7\ud83c[\udde6\udde7\udde9-\uddef\uddf1-\uddf4\uddf6-\uddf9\uddfb\uddfc\uddfe\uddff]|\ud83c\udde8\ud83c[\udde6\udde8\udde9\uddeb-\uddee\uddf0-\uddf5\uddf7\uddfa-\uddff]|\ud83c\udde9\ud83c[\uddea\uddec\uddef\uddf0\uddf2\uddf4\uddff]|\ud83c\uddea\ud83c[\udde6\udde8\uddea\uddec\udded\uddf7-\uddfa]|\ud83c\uddeb\ud83c[\uddee-\uddf0\uddf2\uddf4\uddf7]|\ud83c\uddec\ud83c[\udde6\udde7\udde9-\uddee\uddf1-\uddf3\uddf5-\uddfa\uddfc\uddfe]|\ud83c\udded\ud83c[\uddf0\uddf2\uddf3\uddf7\uddf9\uddfa]|\ud83c\uddee\ud83c[\udde8-\uddea\uddf1-\uddf4\uddf6-\uddf9]|\ud83c\uddef\ud83c[\uddea\uddf2\uddf4\uddf5]|\ud83c\uddf0\ud83c[\uddea\uddec-\uddee\uddf2\uddf3\uddf5\uddf7\uddfc\uddfe\uddff]|\ud83c\uddf1\ud83c[\udde6-\udde8\uddee\uddf0\uddf7-\uddfb\uddfe]|\ud83c\uddf2\ud83c[\udde6\udde8-\udded\uddf0-\uddff]|\ud83c\uddf3\ud83c[\udde6\udde8\uddea-\uddec\uddee\uddf1\uddf4\uddf5\uddf7\uddfa\uddff]|\ud83c\uddf4\ud83c\uddf2|\ud83c\uddf5\ud83c[\udde6\uddea-\udded\uddf0-\uddf3\uddf7-\uddf9\uddfc\uddfe]|\ud83c\uddf6\ud83c\udde6|\ud83c\uddf7\ud83c[\uddea\uddf4\uddf8\uddfa\uddfc]|\ud83c\uddf8\ud83c[\udde6-\uddea\uddec-\uddf4\uddf7-\uddf9\uddfb\uddfd-\uddff]|\ud83c\uddf9\ud83c[\udde6\udde8\udde9\uddeb-\udded\uddef-\uddf4\uddf7\uddf9\uddfb\uddfc\uddff]|\ud83c\uddfa\ud83c[\udde6\uddec\uddf2\uddf3\uddf8\uddfe\uddff]|\ud83c\uddfb\ud83c[\udde6\udde8\uddea\uddec\uddee\uddf3\uddfa]|\ud83c\uddfc\ud83c[\uddeb\uddf8]|\ud83c\uddfd\ud83c\uddf0|\ud83c\uddfe\ud83c[\uddea\uddf9]|\ud83c\uddff\ud83c[\udde6\uddf2\uddfc]|\ud83c[\udccf\udd8e\udd91-\udd9a\udde6-\uddff\ude01\ude32-\ude36\ude38-\ude3a\ude50\ude51\udf00-\udf20\udf2d-\udf35\udf37-\udf7c\udf7e-\udf84\udf86-\udf93\udfa0-\udfc1\udfc5\udfc6\udfc8\udfc9\udfcf-\udfd3\udfe0-\udff0\udff4\udff8-\udfff]|\ud83d[\udc00-\udc3e\udc40\udc44\udc45\udc51-\udc65\udc6a\udc6f\udc79-\udc7b\udc7d-\udc80\udc84\udc88-\udca9\udcab-\udcfc\udcff-\udd3d\udd4b-\udd4e\udd50-\udd67\udda4\uddfb-\ude44\ude48-\ude4a\ude80-\udea2\udea4-\udeb3\udeb7-\udebf\udec1-\udec5\uded0-\uded2\uded5\udeeb\udeec\udef4-\udefa\udfe0-\udfeb]|\ud83e[\udd0d\udd0e\udd10-\udd17\udd1d\udd20-\udd25\udd27-\udd2f\udd3a\udd3c\udd3f-\udd45\udd47-\udd71\udd73-\udd76\udd7a-\udda2\udda5-\uddaa\uddae-\uddb4\uddb7\uddba\uddbc-\uddca\uddd0\uddde-\uddff\ude70-\ude73\ude78-\ude7a\ude80-\ude82\ude90-\ude95]|[\u23e9-\u23ec\u23f0\u23f3\u267e\u26ce\u2705\u2728\u274c\u274e\u2753-\u2755\u2795-\u2797\u27b0\u27bf\ue50a])|\ufe0f/g,
 
             // avoid runtime RegExp creation for not so smart,
             // not JIT based, and old browsers / engines

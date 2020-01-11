@@ -32,13 +32,10 @@ function ChatLive_Init() {
 
     ChatLive_loaded = false;
 
-    Main_ready(function() {
-        ChatLive_Id = (new Date()).getTime();
-        ChatLive_selectedChannel_id = Main_values.Play_selectedChannel_id;
-        ChatLive_selectedChannel = Main_values.Play_selectedChannel;
-        ChatLive_loadBadgesChannel(ChatLive_Id, ChatLive_loadBadgesChannelSuccess);
-    });
-
+    ChatLive_Id = (new Date()).getTime();
+    ChatLive_selectedChannel_id = Main_values.Play_selectedChannel_id;
+    ChatLive_selectedChannel = Main_values.Play_selectedChannel;
+    ChatLive_loadBadgesChannel(ChatLive_Id, ChatLive_loadBadgesChannelSuccess);
 }
 
 function ChatLive_loadBadgesChannel(id, callbackSucess) {

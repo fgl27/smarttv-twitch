@@ -34,12 +34,10 @@ function Chat_Init() {
     }
     if (!Chat_LoadGlobal) Chat_loadBadgesGlobal();
 
-    Main_ready(function() {
-        Chat_Id = (new Date()).getTime();
-        ChatLive_selectedChannel_id = Main_values.Main_selectedChannel_id;
-        ChatLive_selectedChannel = Main_values.Main_selectedChannel;
-        ChatLive_loadBadgesChannel(Chat_Id, Chat_loadBadgesChannelSuccess);
-    });
+    Chat_Id = (new Date()).getTime();
+    ChatLive_selectedChannel_id = Main_values.Main_selectedChannel_id;
+    ChatLive_selectedChannel = Main_values.Main_selectedChannel;
+    ChatLive_loadBadgesChannel(Chat_Id, Chat_loadBadgesChannelSuccess);
 }
 
 function Chat_loadBadgesGlobal() {
@@ -206,7 +204,7 @@ function Chat_loadChatSuccess(responseText, id) {
             else div +=
                 ChatLive_extraMessageTokenize(
                     [fragments.text],
-                    (mmessage.hasOwnProperty('bits_spent') && cheers.hasOwnProperty(ChatLive_selectedChannel_id[0]))
+                    (mmessage.hasOwnProperty('bits_spent') && cheers.hasOwnProperty(ChatLive_selectedChannel_id))
                 );
         });
 

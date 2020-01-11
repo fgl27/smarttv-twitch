@@ -48,14 +48,14 @@ function findCheerInToken(message) {
         tokenLower = message.toLowerCase(),
         index = -1;
 
-
     for (var i = 0; i < cheerPrefixes.length; i++) {
+
         //Try  case sensitive first as some prefixes start the same, but some users type without carrying about case
-        if (message.startsWith(cheerPrefixes[i]))
+        if (message.indexOf(cheerPrefixes[i]) !== -1)
             return getCheer(cheerPrefixes[i], parseInt(message.substr(cheerPrefixes[i].length), 10));
 
         //Try  case insensitive after
-        if (tokenLower.startsWith(cheerPrefixes[i].toLowerCase())) index = i;
+        if (tokenLower.indexOf(cheerPrefixes[i].toLowerCase()) !== -1) index = i;
     }
 
     return ((index > -1) ?
@@ -64,17 +64,17 @@ function findCheerInToken(message) {
 }
 
 function getCheer(prefix, amount) {
-    var amounts = cheers[ChatLive_selectedChannel_id][prefix];
-
-    return amounts[
-        Object.keys(amounts)
+    var amounts = cheers[ChatLive_selectedChannel_id][prefix],
+        amountsArray = Object.keys(amounts)
             .sort(function(a, b) {
                 return parseInt(b, 10) - parseInt(a, 10);
-            })
-            .find(function(a) {
-                return amount >= a;
-            })
-    ];
+            });
+
+    for (var i = 0; i < amountsArray.length; i++)
+        if (amount >= parseInt(amountsArray[i], 10)) return amounts[amountsArray[i]];
+
+    //Fail safe
+    return amounts[amountsArray[0]];
 }
 
 function emoticonize(message, emotes) {

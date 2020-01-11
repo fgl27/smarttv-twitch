@@ -376,7 +376,7 @@ function ChatLive_loadChatSuccess(message) {
     div += '<span class="message">' +
         ChatLive_extraMessageTokenize(
             emoticonize(mmessage, emotes),
-            (tags.hasOwnProperty('bits') && cheers.hasOwnProperty(ChatLive_selectedChannel_id[chat_number]))
+            (tags.hasOwnProperty('bits') && cheers.hasOwnProperty(ChatLive_selectedChannel_id))
         ) + '</span>';
 
     if (!Play_ChatDelayPosition) ChatLive_LineAdd(div);

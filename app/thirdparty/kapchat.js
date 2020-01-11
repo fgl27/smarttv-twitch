@@ -20,7 +20,7 @@ function mescape(message) {
     return message.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-function extraMessageTokenize(message, chat_number, bits) {
+function extraMessageTokenize(message, bits) {
     var tokenizedString = message.split(' '),
         emote,
         cheer;
@@ -28,7 +28,7 @@ function extraMessageTokenize(message, chat_number, bits) {
     for (var i = 0; i < tokenizedString.length; i++) {
         message = tokenizedString[i];
 
-        cheer = bits ? findCheerInToken(message, chat_number) : 0;
+        cheer = bits ? findCheerInToken(message) : 0;
 
         if (cheer) {
             tokenizedString[i] = emoteTemplate(cheer);
@@ -43,8 +43,8 @@ function extraMessageTokenize(message, chat_number, bits) {
     return tokenizedString.join(' ');
 }
 
-function findCheerInToken(message, chat_number) {
-    var cheerPrefixes = Object.keys(cheers[ChatLive_selectedChannel_id[chat_number]]),
+function findCheerInToken(message) {
+    var cheerPrefixes = Object.keys(cheers[ChatLive_selectedChannel_id]),
         tokenLower = message.toLowerCase(),
         index = -1;
 
@@ -52,19 +52,19 @@ function findCheerInToken(message, chat_number) {
     for (var i = 0; i < cheerPrefixes.length; i++) {
         //Try  case sensitive first as some prefixes start the same, but some users type without carrying about case
         if (message.startsWith(cheerPrefixes[i]))
-            return getCheer(cheerPrefixes[i], parseInt(message.substr(cheerPrefixes[i].length), 10), chat_number);
+            return getCheer(cheerPrefixes[i], parseInt(message.substr(cheerPrefixes[i].length), 10));
 
         //Try  case insensitive after
         if (tokenLower.startsWith(cheerPrefixes[i].toLowerCase())) index = i;
     }
 
     return ((index > -1) ?
-        getCheer(cheerPrefixes[index], parseInt(tokenLower.substr(cheerPrefixes[index].toLowerCase().length), 10), chat_number)
+        getCheer(cheerPrefixes[index], parseInt(tokenLower.substr(cheerPrefixes[index].toLowerCase().length), 10))
         : null);
 }
 
-function getCheer(prefix, amount, chat_number) {
-    var amounts = cheers[ChatLive_selectedChannel_id[chat_number]][prefix];
+function getCheer(prefix, amount) {
+    var amounts = cheers[ChatLive_selectedChannel_id][prefix];
 
     return amounts[
         Object.keys(amounts)

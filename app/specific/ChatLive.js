@@ -11,9 +11,11 @@ var ChatLive_CheckId;
 var ChatLive_LineAddCounter = 0;
 var extraEmotesDone = {
     bbtv: {},
-    ffz: {}
+    ffz: {},
+    cheers: {}
 };
 var extraEmotes = {};
+var cheers = {};
 
 var ChatLive_selectedChannel_id;
 var ChatLive_selectedChannel;
@@ -83,6 +85,7 @@ function ChatLive_loadBadgesChannelSuccess(responseText, id) {
     Chat_loadBadgesTransform(responseText);
 
     ChatLive_loadEmotesChannel();
+    ChatLive_loadCheersChannel();
     ChatLive_loadEmotesChannelffz();
     if (ChatLive_Id === id) ChatLive_loadChat();
 }
@@ -125,6 +128,52 @@ function ChatLive_loadEmotesChannelError() {
 function ChatLive_loadEmotesChannelSuccess(data) {
     ChatLive_loadEmotesbbtv(JSON.parse(data));
     extraEmotesDone.bbtv[ChatLive_selectedChannel_id] = 1;
+}
+
+function ChatLive_loadCheersChannel() {
+    if (!extraEmotesDone.cheers[ChatLive_selectedChannel_id]) {
+        ChatLive_loadingDataTry = 0;
+        ChatLive_loadCheersChannelRequest();
+    }
+}
+
+function ChatLive_loadCheersChannelRequest() {
+    var theUrl = 'https://api.twitch.tv/v5/bits/actions?channel_id=' + encodeURIComponent(ChatLive_selectedChannel_id);
+    var xmlHttp = new XMLHttpRequest();
+
+    xmlHttp.open("GET", theUrl, true);
+    xmlHttp.timeout = 10000;
+    xmlHttp.ontimeout = function() {};
+    xmlHttp.setRequestHeader(Main_Headers[0][0], Main_Headers[0][1]);
+
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) {
+                ChatLive_loadCheersChannelSuccess(JSON.parse(xmlHttp.responseText));
+            } else {
+                ChatLive_loadCheersChannelError();
+            }
+        }
+    };
+
+    xmlHttp.send(null);
+}
+
+function ChatLive_loadCheersChannelError() {
+    ChatLive_loadingDataTry++;
+    if (ChatLive_loadingDataTry < ChatLive_loadingDataTryMax) ChatLive_loadCheersChannelRequest();
+}
+
+function ChatLive_loadCheersChannelSuccess(data) {
+    cheers[ChatLive_selectedChannel_id] = {};
+    data.actions.forEach(function(action) {
+        cheers[ChatLive_selectedChannel_id][action.prefix] = {};
+        action.tiers.forEach(function(tier) {
+            cheers[ChatLive_selectedChannel_id][action.prefix][tier.min_bits] = tier.images.light.animated['2'];
+        });
+    });
+
+    extraEmotesDone.cheers[ChatLive_selectedChannel_id] = 1;
 }
 
 function ChatLive_loadEmotesChannelffz() {
@@ -324,7 +373,7 @@ function ChatLive_loadChatSuccess(message) {
         }
     }
 
-    div += '<span class="message">' + ChatLive_extraMessageTokenize(emoticonize(mmessage, emotes)) + '</span>';
+    div += '<span class="message">' + ChatLive_extraMessageTokenize(emoticonize(mmessage, emotes),  tags.hasOwnProperty('bits')) + '</span>';
 
     if (!Play_ChatDelayPosition) ChatLive_LineAdd(div);
     else {
@@ -335,11 +384,11 @@ function ChatLive_loadChatSuccess(message) {
     }
 }
 
-function ChatLive_extraMessageTokenize(tokenizedMessage) {
+function ChatLive_extraMessageTokenize(tokenizedMessage, tags) {
 
     for (var i = 0; i < tokenizedMessage.length; i++) {
         if (typeof tokenizedMessage[i] === 'string') {
-            tokenizedMessage[i] = extraMessageTokenize(tokenizedMessage[i]);
+            tokenizedMessage[i] = extraMessageTokenize(tokenizedMessage[i], tags);
         } else {
             tokenizedMessage[i] = tokenizedMessage[i][0];
         }

@@ -788,6 +788,7 @@ function Screens_RemoveAllFocus() {
     } else if (inUseObj.posY < 0) {
         Screens_removeFocusFallow();
         inUseObj.posY = 0;
+        inUseObj.posX = 0;
     }
 }
 

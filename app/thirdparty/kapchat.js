@@ -65,13 +65,13 @@ function findCheerInToken(message) {
 
 function getCheer(prefix, amount) {
     var amounts = cheers[ChatLive_selectedChannel_id][prefix],
-        amountsArray = Object.keys(amounts)
-            .sort(function(a, b) {
-                return parseInt(b, 10) - parseInt(a, 10);
-            });
+        amountsArray = Object.keys(amounts),
+        length = amountsArray.length;
 
-    for (var i = 0; i < amountsArray.length; i++)
-        if (amount >= parseInt(amountsArray[i], 10)) return amounts[amountsArray[i]];
+    //Run on reverse order to catch the correct position amountsArray = 1000, 500, 100, 1 ... amount = 250
+    while (length--) {
+        if (amount >= amountsArray[length]) return amounts[amountsArray[length]];
+    }
 
     //Fail safe
     return amounts[amountsArray[0]];

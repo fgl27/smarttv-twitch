@@ -163,12 +163,20 @@ function ChatLive_loadCheersChannelError() {
 
 function ChatLive_loadCheersChannelSuccess(data) {
     cheers[ChatLive_selectedChannel_id] = {};
-    data.actions.forEach(function(action) {
-        cheers[ChatLive_selectedChannel_id][action.prefix] = {};
-        action.tiers.forEach(function(tier) {
-            cheers[ChatLive_selectedChannel_id][action.prefix][tier.min_bits] = tier.images.light.animated['4'];
-        });
-    });
+
+    data.actions.forEach(
+
+        function(action) {
+
+            cheers[ChatLive_selectedChannel_id][action.prefix] = {};
+
+            action.tiers.forEach(
+                function(tier) {
+                    cheers[ChatLive_selectedChannel_id][action.prefix][tier.min_bits] = tier.images.light.animated['4'];
+                }
+            );
+        }
+    );
 
     extraEmotesDone.cheers[ChatLive_selectedChannel_id] = 1;
 }

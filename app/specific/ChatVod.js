@@ -10,7 +10,12 @@ var Chat_loadChatId;
 var Chat_loadChatNextId;
 var Chat_offset = 0;
 var Chat_title = '';
-var defaultColors = ["fe2424", "fc5a24", "ff9020", "fEc723", "ffff1d", "bfff00", "c3ff12", "56fe1d", "1eff1e", "16ff51", "00ff80", "00ffbf", "00ffff", "1dc6ff", "158aff", "3367ff", "ff4dff", "ff4ad2", "ff62b1", "ff4272"];
+var defaultColors = [
+    "#fe2424", "#fc5a24", "#ff9020", "#fEc723", "#ffff1d",
+    "#bfff00", "#c3ff12", "#56fe1d", "#1eff1e", "#16ff51",
+    "#00ff80", "#00ffbf", "#00ffff", "#1dc6ff", "#158aff",
+    "#3367ff", "#ff4dff", "#ff4ad2", "#ff62b1", "#ff4272"
+];
 var defaultColorsLength = defaultColors.length;
 var Chat_div;
 var Chat_Position = 0;
@@ -171,7 +176,9 @@ function Chat_loadChatError(id) {
 
 function Chat_loadChatSuccess(responseText, id) {
     responseText = JSON.parse(responseText);
-    var div, mmessage, null_next = (Chat_next === null);
+    var div,
+        mmessage, null_next = (Chat_next === null),
+        nickColor;
 
     if (null_next) {
         div = '&nbsp;';
@@ -195,7 +202,10 @@ function Chat_loadChatSuccess(responseText, id) {
         }
 
         //Add nick
-        div += '<span class="nick" style="color: #' + defaultColors[(comments.commenter.display_name).charCodeAt(0) % defaultColorsLength] + ';">' + comments.commenter.display_name + '</span>&#58;&nbsp;';
+        nickColor = mmessage.hasOwnProperty('user_color') ? mmessage.user_color :
+            defaultColors[(comments.commenter.display_name).charCodeAt(0) % defaultColorsLength];
+
+        div += '<span style="color: ' + nickColor + ';">' + comments.commenter.display_name + '</span>&#58;&nbsp;';
 
         //Add mesage
         div += '<span class="message">';
@@ -204,7 +214,7 @@ function Chat_loadChatSuccess(responseText, id) {
             else div +=
                 ChatLive_extraMessageTokenize(
                     [fragments.text],
-                    (mmessage.hasOwnProperty('bits_spent') && cheers.hasOwnProperty(ChatLive_selectedChannel_id))
+                    ((mmessage.hasOwnProperty('bits_spent') && cheers.hasOwnProperty(ChatLive_selectedChannel_id)) ? mmessage.bits_spent : 0)
                 );
         });
 

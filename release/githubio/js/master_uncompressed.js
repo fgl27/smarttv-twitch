@@ -2358,6 +2358,8 @@
     var ChatLive_loaded = false;
     var ChatLive_CheckId;
     var ChatLive_LineAddCounter = 0;
+    var ChatLive_Messages = [];
+    var ChatLive_Playing = true;
     var extraEmotesDone = {
         bbtv: {},
         ffz: {},
@@ -2679,7 +2681,9 @@
 
     function ChatLive_loadChatSuccess(message) {
         var div = '',
-            tags = message.tags;
+            tags = message.tags,
+            nick,
+            nickColor;
 
         //Add badges
         if (tags.hasOwnProperty('badges')) {
@@ -2694,9 +2698,11 @@
 
         //Add nick
         if (tags.hasOwnProperty('display-name')) {
-            var nick = tags['display-name'];
-            if (typeof nick === 'string')
-                div += '<span class="nick" style="color: #' + defaultColors[(nick).charCodeAt(0) % defaultColorsLength] + ';">' + nick + '</span>&#58;&nbsp;';
+            nick = tags['display-name'];
+            nickColor = (typeof tags.color !== "boolean") ? tags.color :
+                (defaultColors[(nick).charCodeAt(0) % defaultColorsLength]);
+
+            div += '<span style="color: ' + calculateColorReplacement(nickColor) + ';">' + nick + '</span>&#58;&nbsp;';
         }
 
         //Add message
@@ -2730,7 +2736,7 @@
         div += '<span class="message">' +
             ChatLive_extraMessageTokenize(
                 emoticonize(mmessage, emotes),
-                (tags.hasOwnProperty('bits') && cheers.hasOwnProperty(ChatLive_selectedChannel_id))
+                ((tags.hasOwnProperty('bits') && cheers.hasOwnProperty(ChatLive_selectedChannel_id)) ? parseInt(tags.bits) : 0)
             ) + '</span>';
 
         if (!Play_ChatDelayPosition) ChatLive_LineAdd(div);
@@ -2756,15 +2762,31 @@
     }
 
     function ChatLive_LineAdd(message) {
-        var elem = document.createElement('div');
-        elem.className = 'chat_line';
-        elem.innerHTML = message;
+        if (ChatLive_Playing) {
+            var elem = document.createElement('div');
+            elem.className = 'chat_line';
+            elem.innerHTML = message;
 
-        Chat_div.appendChild(elem);
-        ChatLive_LineAddCounter++;
-        if (ChatLive_LineAddCounter > Chat_CleanMax) {
-            ChatLive_LineAddCounter = 0;
-            Chat_Clean();
+            Chat_div.appendChild(elem);
+            ChatLive_LineAddCounter++;
+            if (ChatLive_LineAddCounter > Chat_CleanMax) {
+                ChatLive_LineAddCounter = 0;
+                Chat_Clean();
+            }
+        } else {
+            ChatLive_Messages.push(message);
+        }
+    }
+
+    function ChatLive_MessagesRunAfterPause() {
+        var i,
+            Temp_Messages = [];
+
+        Temp_Messages = Main_Slice(ChatLive_Messages);
+        ChatLive_Messages = [];
+
+        for (i = 0; i < Temp_Messages.length; i++) {
+            ChatLive_LineAdd(Temp_Messages[i]);
         }
     }
 
@@ -2778,6 +2800,7 @@
         if (ChatLive_socket) ChatLive_socket.close(1000);
         ChatLive_Id = 0;
         Main_empty('chat_box');
+        ChatLive_Messages = [];
         ChatLive_hasEnded = false;
         ChatLive_loaded = false;
     }
@@ -2793,7 +2816,12 @@
     var Chat_loadChatNextId;
     var Chat_offset = 0;
     var Chat_title = '';
-    var defaultColors = ["fe2424", "fc5a24", "ff9020", "fEc723", "ffff1d", "bfff00", "c3ff12", "56fe1d", "1eff1e", "16ff51", "00ff80", "00ffbf", "00ffff", "1dc6ff", "158aff", "3367ff", "ff4dff", "ff4ad2", "ff62b1", "ff4272"];
+    var defaultColors = [
+        "#fe2424", "#fc5a24", "#ff9020", "#fEc723", "#ffff1d",
+        "#bfff00", "#c3ff12", "#56fe1d", "#1eff1e", "#16ff51",
+        "#00ff80", "#00ffbf", "#00ffff", "#1dc6ff", "#158aff",
+        "#3367ff", "#ff4dff", "#ff4ad2", "#ff62b1", "#ff4272"
+    ];
     var defaultColorsLength = defaultColors.length;
     var Chat_div;
     var Chat_Position = 0;
@@ -2954,7 +2982,9 @@
 
     function Chat_loadChatSuccess(responseText, id) {
         responseText = JSON.parse(responseText);
-        var div, mmessage, null_next = (Chat_next === null);
+        var div,
+            mmessage, null_next = (Chat_next === null),
+            nickColor;
 
         if (null_next) {
             div = '&nbsp;';
@@ -2978,7 +3008,10 @@
             }
 
             //Add nick
-            div += '<span class="nick" style="color: #' + defaultColors[(comments.commenter.display_name).charCodeAt(0) % defaultColorsLength] + ';">' + comments.commenter.display_name + '</span>&#58;&nbsp;';
+            nickColor = mmessage.hasOwnProperty('user_color') ? mmessage.user_color :
+                defaultColors[(comments.commenter.display_name).charCodeAt(0) % defaultColorsLength];
+
+            div += '<span style="color: ' + calculateColorReplacement(nickColor) + ';">' + comments.commenter.display_name + '</span>&#58;&nbsp;';
 
             //Add mesage
             div += '<span class="message">';
@@ -2987,7 +3020,7 @@
                 else div +=
                     ChatLive_extraMessageTokenize(
                         [fragments.text],
-                        (mmessage.hasOwnProperty('bits_spent') && cheers.hasOwnProperty(ChatLive_selectedChannel_id))
+                        ((mmessage.hasOwnProperty('bits_spent') && cheers.hasOwnProperty(ChatLive_selectedChannel_id)) ? mmessage.bits_spent : 0)
                     );
             });
 
@@ -3062,11 +3095,8 @@
         } else {
             Chat_Pause();
             if (Chat_next !== undefined) {
-                Chat_Messages = [];
-                //slice may crash RangeError: Maximum call stack size exceeded
-                for (i = 0; i < Chat_MessagesNext.length; i++) {
-                    Chat_Messages.push(Chat_MessagesNext[i]);
-                }
+                //array.slice() may crash RangeError: Maximum call stack size exceeded
+                Chat_Messages = Main_Slice(Chat_MessagesNext);
 
                 Chat_Position = 0;
                 Chat_Play(id);
@@ -3285,7 +3315,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = '011120';
+    var Main_minversion = '011520';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
     var Main_ClockOffset = 0;
@@ -4337,6 +4367,15 @@
         return text.replace(/[^\x00-\x7F]/g, function(match) {
             return '<span style="font-size: 0.8em;">' + match + '</span>';
         });
+    }
+
+    function Main_Slice(arrayTocopy) {
+        var array = [];
+        //slice may crash RangeError: Maximum call stack size exceeded
+        for (var i = 0; i < arrayTocopy.length; i++) {
+            array.push(arrayTocopy[i]);
+        }
+        return array;
     }
     //Variable initialization
     var PlayClip_PlayerTime = 0;
@@ -6049,6 +6088,7 @@
             if (Play_isOn) Play_qualityChanged();
 
             UserLiveFeed_PreventHide = false;
+            ChatLive_Playing = true;
 
         }
     }
@@ -6570,6 +6610,7 @@
     function Play_clearPause() {
         Play_clearPauseEnd();
         Play_clearPauseStart();
+        ChatLive_Playing = true;
     }
 
     function Play_isPanelShown() {
@@ -6709,8 +6750,8 @@
                     return;
                 }
             }
-
             Play_clearPause();
+            ChatLive_MessagesRunAfterPause();
             Main_innerHTML('pause_button', '<div ><i class="pause_button3d icon-pause"></i></div>');
 
             if (PlayVodClip === 1) {
@@ -6736,6 +6777,7 @@
                     return;
                 }
             }
+            ChatLive_Playing = false;
 
             window.clearInterval(Play_streamCheckId);
             window.clearInterval(PlayVod_streamCheckId);
@@ -7427,8 +7469,6 @@
                     } else if (Play_isPanelShown()) {
                         Play_clearHidePanel();
                         if (PlayVod_PanelY === 1) {
-                            //TODO check this if is need
-                            if (!Main_values.Play_ChatForceDisable && Play_isNotplaying()) Play_loadChat();
                             if (!Play_isEndDialogVisible()) Play_KeyPause(1);
                         } else Play_BottomOptionsPressed(1);
                         Play_setHidePanel();
@@ -14631,7 +14671,31 @@
             tokenizedString[i] = emote ? extraEmoticonize(message, emote) : mescape(message);
         }
 
-        return tokenizedString.join(' ');
+        return tokenizedString.join(' ') + (bits ? (' ' + bits + ' bits') : '');
+    }
+
+
+    function calculateColorReplacement(color) {
+        // Modified from http://www.sitepoint.com/javascript-generate-lighter-darker-color/
+        var rgb = "#",
+            brightness = "0.25",
+            c, i;
+
+        if (color === '#000000') return "#2cffa2"; //Black can't be see on a black background
+
+        color = String(color).replace(/[^0-9a-f]/gi, '');
+        if (color.length < 6) {
+            color = color[0] + color[0] + color[1] + color[1] + color[2] + color[2];
+        }
+
+        for (i = 0; i < 3; i++) {
+            c = parseInt(color.substr(i * 2, 2), 16);
+            if (c < 10) c = 10;
+            c = Math.round(Math.min(Math.max(0, c + (c * brightness)), 255)).toString(16);
+            rgb += ("00" + c).substr(c.length);
+        }
+
+        return rgb;
     }
 
     function findCheerInToken(message) {

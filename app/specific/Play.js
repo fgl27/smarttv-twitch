@@ -807,6 +807,7 @@ function Play_loadDataSuccess(responseText) {
         if (Play_isOn) Play_qualityChanged();
 
         UserLiveFeed_PreventHide = false;
+        ChatLive_Playing = true;
 
     }
 }
@@ -1328,6 +1329,7 @@ function Play_clearPauseStart() {
 function Play_clearPause() {
     Play_clearPauseEnd();
     Play_clearPauseStart();
+    ChatLive_Playing = true;
 }
 
 function Play_isPanelShown() {
@@ -1467,8 +1469,8 @@ function Play_KeyPause(PlayVodClip) {
                 return;
             }
         }
-
         Play_clearPause();
+        ChatLive_MessagesRunAfterPause();
         Main_innerHTML('pause_button', '<div ><i class="pause_button3d icon-pause"></i></div>');
 
         if (PlayVodClip === 1) {
@@ -1494,6 +1496,7 @@ function Play_KeyPause(PlayVodClip) {
                 return;
             }
         }
+        ChatLive_Playing = false;
 
         window.clearInterval(Play_streamCheckId);
         window.clearInterval(PlayVod_streamCheckId);
@@ -2185,8 +2188,6 @@ function Play_handleKeyDown(e) {
                 } else if (Play_isPanelShown()) {
                     Play_clearHidePanel();
                     if (PlayVod_PanelY === 1) {
-                        //TODO check this if is need
-                        if (!Main_values.Play_ChatForceDisable && Play_isNotplaying()) Play_loadChat();
                         if (!Play_isEndDialogVisible()) Play_KeyPause(1);
                     } else Play_BottomOptionsPressed(1);
                     Play_setHidePanel();

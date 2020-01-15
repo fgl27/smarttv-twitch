@@ -47,7 +47,7 @@ function extraMessageTokenize(message, bits) {
 function calculateColorReplacement(color) {
     // Modified from http://www.sitepoint.com/javascript-generate-lighter-darker-color/
     var rgb = "#",
-        brightness = "0.5", c, i;
+        brightness = "0.25", c, i;
 
     if (color === '#000000') return "#2cffa2";//Black can't be see on a black background
 

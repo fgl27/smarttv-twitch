@@ -9,6 +9,8 @@ var ChatLive_socket = null;
 var ChatLive_loaded = false;
 var ChatLive_CheckId;
 var ChatLive_LineAddCounter = 0;
+var ChatLive_Messages = [];
+var ChatLive_Playing = true;
 var extraEmotesDone = {
     bbtv: {},
     ffz: {},
@@ -411,15 +413,31 @@ function ChatLive_extraMessageTokenize(tokenizedMessage, tags) {
 }
 
 function ChatLive_LineAdd(message) {
-    var elem = document.createElement('div');
-    elem.className = 'chat_line';
-    elem.innerHTML = message;
+    if (ChatLive_Playing) {
+        var elem = document.createElement('div');
+        elem.className = 'chat_line';
+        elem.innerHTML = message;
 
-    Chat_div.appendChild(elem);
-    ChatLive_LineAddCounter++;
-    if (ChatLive_LineAddCounter > Chat_CleanMax) {
-        ChatLive_LineAddCounter = 0;
-        Chat_Clean();
+        Chat_div.appendChild(elem);
+        ChatLive_LineAddCounter++;
+        if (ChatLive_LineAddCounter > Chat_CleanMax) {
+            ChatLive_LineAddCounter = 0;
+            Chat_Clean();
+        }
+    } else {
+        ChatLive_Messages.push(message);
+    }
+}
+
+function ChatLive_MessagesRunAfterPause() {
+    var i,
+        Temp_Messages = [];
+
+    Temp_Messages = Main_Slice(ChatLive_Messages);
+    ChatLive_Messages = [];
+
+    for (i = 0; i < Temp_Messages.length; i++) {
+        ChatLive_LineAdd(Temp_Messages[i]);
     }
 }
 
@@ -433,6 +451,7 @@ function ChatLive_Clear() {
     if (ChatLive_socket) ChatLive_socket.close(1000);
     ChatLive_Id = 0;
     Main_empty('chat_box');
+    ChatLive_Messages = [];
     ChatLive_hasEnded = false;
     ChatLive_loaded = false;
 }

@@ -1171,3 +1171,12 @@ function Main_ReplaceLargeFont(text) {
         return '<span style="font-size: 0.8em;">' + match + '</span>';
     });
 }
+
+function Main_Slice(arrayTocopy) {
+    var array = [];
+    //slice may crash RangeError: Maximum call stack size exceeded
+    for (var i = 0; i < arrayTocopy.length; i++) {
+        array.push(arrayTocopy[i]);
+    }
+    return array;
+}

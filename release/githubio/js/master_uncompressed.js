@@ -2683,7 +2683,9 @@
         var div = '',
             tags = message.tags,
             nick,
-            nickColor;
+            nickColor,
+            action,
+            emotes = {};
 
         if (!tags || !tags.hasOwnProperty('display-name')) return; //bad formatted message
 
@@ -2698,24 +2700,31 @@
             }
         }
 
-        //Add nick
-        if (tags.hasOwnProperty('display-name')) {
-            nick = tags['display-name'];
-            nickColor = (typeof tags.color !== "boolean") ? tags.color :
-                (defaultColors[(nick).charCodeAt(0) % defaultColorsLength]);
-
-            div += '<span style="color: ' + calculateColorReplacement(nickColor) + ';">' + nick + '</span>&#58;&nbsp;';
-        }
-
         //Add message
         var mmessage = message.params[1];
+        //For some bug on the chat implementation some message comes with the raw message of the next message
+        //Remove the next to fix current... next will be lost as is not correctly formated
+        if (mmessage.indexOf('PRIVMSG') !== -1) mmessage = mmessage.split('@badge-info=')[0];
 
-        if (/^\x01ACTION.*\x01$/.test(mmessage))
+        if (/^\x01ACTION.*\x01$/.test(mmessage)) {
+            action = true;
             mmessage = mmessage.replace(/^\x01ACTION/, '').replace(/\x01$/, '').trim();
+        }
 
-        var emotes = {};
+        //Add nick
+        nick = tags['display-name'];
+        nickColor = (typeof tags.color !== "boolean") ? tags.color :
+            (defaultColors[(nick).charCodeAt(0) % defaultColorsLength]);
 
+        nickColor = 'style="color: ' + calculateColorReplacement(nickColor) + ';"';
+
+        div += '<span ' + (action ? ('class="class_bold" ' + nickColor) : '') +
+            nickColor + '>' + nick + '</span>' +
+            (action ? '' : '&#58;') + '&nbsp;';
+
+        //Add default emotes
         if (tags.hasOwnProperty('emotes')) {
+
             if (typeof tags.emotes === 'string') {
 
                 tags.emotes = tags.emotes.split('/');
@@ -2735,7 +2744,7 @@
             }
         }
 
-        div += '<span class="message">' +
+        div += '<span class="message' + (action ? (' class_bold" ' + nickColor) : '"') + '>' +
             ChatLive_extraMessageTokenize(
                 emoticonize(mmessage, emotes),
                 ((tags.hasOwnProperty('bits') && cheers.hasOwnProperty(ChatLive_selectedChannel_id)) ? parseInt(tags.bits) : 0)
@@ -3013,10 +3022,14 @@
             nickColor = mmessage.hasOwnProperty('user_color') ? mmessage.user_color :
                 defaultColors[(comments.commenter.display_name).charCodeAt(0) % defaultColorsLength];
 
-            div += '<span style="color: ' + calculateColorReplacement(nickColor) + ';">' + comments.commenter.display_name + '</span>&#58;&nbsp;';
+            nickColor = 'style="color: ' + calculateColorReplacement(nickColor) + ';"';
+
+            div += '<span ' + (mmessage.is_action ? ('class="class_bold" ' + nickColor) : '') +
+                nickColor + '>' + comments.commenter.display_name + '</span>' +
+                (mmessage.is_action ? '' : '&#58;') + '&nbsp;';
 
             //Add mesage
-            div += '<span class="message">';
+            div += '<span class="message' + (mmessage.is_action ? (' class_bold" ' + nickColor) : '"') + '>';
             mmessage.fragments.forEach(function(fragments) {
                 if (fragments.hasOwnProperty('emoticon')) div += emoteTemplate(emoteURL(fragments.emoticon.emoticon_id));
                 else div +=
@@ -14737,16 +14750,15 @@
     function emoticonize(message, emotes) {
         if (!emotes) return [message];
 
-        var tokenizedMessage = [];
-
-        var emotesList = Object.keys(emotes);
-
-        var replacements = [];
+        var tokenizedMessage = [],
+            emotesList = Object.keys(emotes),
+            replacements = [],
+            emote, i;
 
         emotesList.forEach(function(id) {
-            var emote = emotes[id];
+            emote = emotes[id];
 
-            for (var i = emote.length - 1; i >= 0; i--) {
+            for (i = emote.length - 1; i >= 0; i--) {
                 replacements.push({
                     id: id,
                     first: emote[i][0],

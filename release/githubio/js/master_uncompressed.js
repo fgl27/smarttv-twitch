@@ -13780,6 +13780,11 @@
                     return b.channel.display_name.toLowerCase().localeCompare(a.channel.display_name.toLowerCase());
                 });
             }
+        } else {
+            response.sort(function(a, b) {
+                return (a.viewers > b.viewers ? -1 :
+                    (a.viewers < b.viewers ? 1 : 0));
+            });
         }
 
         for (i; i < response_items; i++) {

@@ -215,23 +215,36 @@ function UserLiveFeed_loadDataSuccess(responseText) {
         UserLiveFeed_CheckNotifycation = false;
     }
 
-    if (sorting) {
-        if (sorting === 1) {
-            //A-Z
+    var sorting_type1 = Settings_FeedSort[sorting][0],
+        sorting_type2 = Settings_FeedSort[sorting][1],
+        sorting_direction = Settings_FeedSort[sorting][2];
+
+    if (sorting_direction) {
+        //A-Z
+        if (sorting_type1) {
             response.sort(function(a, b) {
-                return a.channel.display_name.toLowerCase().localeCompare(b.channel.display_name.toLowerCase());
+                return (a[sorting_type1][sorting_type2] < b[sorting_type1][sorting_type2] ? -1 :
+                    (a[sorting_type1][sorting_type2] > b[sorting_type1][sorting_type2] ? 1 : 0));
             });
         } else {
-            //Z-A
             response.sort(function(a, b) {
-                return b.channel.display_name.toLowerCase().localeCompare(a.channel.display_name.toLowerCase());
+                return (a[sorting_type2] < b[sorting_type2] ? -1 :
+                    (a[sorting_type2] > b[sorting_type2] ? 1 : 0));
             });
         }
     } else {
-        response.sort(function(a, b) {
-            return (a.viewers > b.viewers ? -1 :
-                (a.viewers < b.viewers ? 1 : 0));
-        });
+        //Z-A
+        if (sorting_type1) {
+            response.sort(function(a, b) {
+                return (a[sorting_type1][sorting_type2] > b[sorting_type1][sorting_type2] ? -1 :
+                    (a[sorting_type1][sorting_type2] < b[sorting_type1][sorting_type2] ? 1 : 0));
+            });
+        } else {
+            response.sort(function(a, b) {
+                return (a[sorting_type2] > b[sorting_type2] ? -1 :
+                    (a[sorting_type2] < b[sorting_type2] ? 1 : 0));
+            });
+        }
     }
 
     for (i; i < response_items; i++) {

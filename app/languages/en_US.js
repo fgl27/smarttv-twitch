@@ -318,4 +318,12 @@ function en_USLang() {
     STR_410_FEATURING = "Third party app are current without access for this featuring.";
     STR_CLICK_UNFALLOW = "(Click to unfallow)";
     STR_CLICK_FALLOW = "(Click to fallow)";
+    STR_NAME_A_Z = "Name A - Z";
+    STR_NAME_Z_A = "Name Z - A";
+    STR_GAME_A_Z = "Game A - Z";
+    STR_GAME_Z_A = "Game Z - A";
+    STR_VIWES_MOST = "Views highest";
+    STR_VIWES_LOWEST = "Views lowest";
+    STR_CREATED_NEWEST = "Created / Uptime newest";
+    STR_CREATED_OLDEST = "Created / Uptime Oldest";
 }

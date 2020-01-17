@@ -26,7 +26,16 @@ var Settings_value = {
         "defaultValue": 2
     },
     "live_feed_sort": { //show_screen_counter
-        "values": ["views", "a-z", "z-a"],
+        "values": [
+            "views_more",
+            "views_less",
+            "name_a-z",
+            "name_z-a",
+            "game_a-z",
+            "game_z-a",
+            "uptime_new",
+            "uptime_old",
+        ],
         "defaultValue": 1
     },
     "live_notification": { //buffer_live
@@ -79,6 +88,17 @@ var Settings_value = {
         "defaultValue": 1
     }
 };
+
+var Settings_FeedSort = [
+    [null, 'viewers', 0],
+    [null, 'viewers', 1],
+    ['channel', 'name', 1],
+    ['channel', 'name', 0],
+    [null, 'game', 1],
+    [null, 'game', 0],
+    [null, 'created_at', 0],
+    [null, 'created_at', 1]
+];
 
 function Settings_GenerateClock() {
     var clock = [],
@@ -143,7 +163,16 @@ function Settings_SetSettings() {
     //live_feed_sort
     key = "live_feed_sort";
     Settings_value_keys.push(key);
-    Settings_value[key].values = [STR_VIEWS, STR_A_Z, STR_Z_A];
+    Settings_value[key].values = [
+        STR_VIWES_MOST,
+        STR_VIWES_LOWEST,
+        STR_NAME_A_Z,
+        STR_NAME_Z_A,
+        STR_GAME_A_Z,
+        STR_GAME_Z_A,
+        STR_CREATED_NEWEST,
+        STR_CREATED_OLDEST
+    ];
 
     div += Settings_DivOptionWithSummary(key, STR_LIVE_FEED_SORT, STR_LIVE_FEED_SORT_SUMMARY);
 
@@ -305,7 +334,16 @@ function Settings_SetStrings() {
     key = "live_feed_sort";
     Settings_DivOptionChangeLang(key, STR_LIVE_FEED_SORT, STR_LIVE_FEED_SORT_SUMMARY);
     Main_textContent(key, Settings_Obj_values(key));
-    Settings_value[key].values = [STR_VIEWS, STR_A_Z, STR_Z_A];
+    Settings_value[key].values = [
+        STR_VIWES_MOST,
+        STR_VIWES_LOWEST,
+        STR_NAME_A_Z,
+        STR_NAME_Z_A,
+        STR_GAME_A_Z,
+        STR_GAME_Z_A,
+        STR_CREATED_NEWEST,
+        STR_CREATED_OLDEST
+    ];
 
     //Player settings
     Main_textContent('setting_title_play', STR_SETTINGS_PLAYER);

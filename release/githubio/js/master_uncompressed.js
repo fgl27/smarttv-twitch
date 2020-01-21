@@ -540,7 +540,7 @@
         STR_ABOUT_INFO_2_SOURCE = "This version of the app is for test in browser only!";
         STR_ABOUT_INFO_3 = "Developer information:";
         STR_ABOUT_INFO_4 = "This is an open source application licensed under the GNU General Public License v3.0, check it on github";
-        STR_ABOUT_INFO_5 = "github.com/fgl27/SmartTwitchTV";
+        STR_ABOUT_INFO_5 = "github.com/fgl27/smarttv-twitch";
         STR_ABOUT_INFO_6 = "This application uses following dependencies:";
         STR_ABOUT_INFO_7 = "Nightdev KapChat - KapChat captures Twitch chat directly into OBS or XSplit (https://www.nightdev.com/kapchat/)";
         STR_ABOUT_INFO_8 = "Fontastic - Create your customized icon fonts in seconds (http://app.fontastic.me)";

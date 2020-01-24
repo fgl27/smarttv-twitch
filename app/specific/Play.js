@@ -552,7 +552,7 @@ function Play_updateStreamInfoStartValues(response) {
 
     response = JSON.parse(response);
     if (response.stream !== null) {
-        Main_values.IsRerun = Main_is_rerun(response.stream.stream_type);
+        Main_values.IsRerun = Main_is_rerun(response.stream.broadcast_platform);
 
         Main_innerHTML("stream_info_title", twemoji.parse(response.stream.channel.status, false, true));
         Main_values.Play_gameSelected = response.stream.game;

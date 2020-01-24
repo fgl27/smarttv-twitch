@@ -525,7 +525,7 @@ var Base_Live_obj = {
             this.row.appendChild(
                 Screens_createCellLive(
                     this.row_id + '_' + this.coloumn_id,
-                    [cell.channel.name, cell.channel._id, Main_is_rerun(cell.stream_type)],
+                    [cell.channel.name, cell.channel._id, Main_is_rerun(cell.broadcast_platform)],
                     this.ids,
                     [cell.preview.template.replace("{width}x{height}", Main_VideoSize),
                     cell.channel.display_name,

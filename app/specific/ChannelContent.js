@@ -226,7 +226,7 @@ function ChannelContent_loadDataSuccess() {
                 STR_SINCE + Play_streamLiveAt(stream.created_at) + STR_SPACE + STR_FOR +
                 Main_addCommas(stream.viewers) + STR_SPACE + STR_VIEWER,
                 Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language),
-                Main_is_rerun(stream.stream_type));
+                Main_is_rerun(stream.broadcast_platform));
 
             ChannelContent_cursorX = 1;
         } else ChannelContent_createCellOffline();

@@ -2104,7 +2104,7 @@
                     STR_SINCE + Play_streamLiveAt(stream.created_at) + STR_SPACE + STR_FOR +
                     Main_addCommas(stream.viewers) + STR_SPACE + STR_VIEWER,
                     Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language),
-                    Main_is_rerun(stream.stream_type));
+                    Main_is_rerun(stream.broadcast_platform));
 
                 ChannelContent_cursorX = 1;
             } else ChannelContent_createCellOffline();
@@ -5862,7 +5862,7 @@
 
         response = JSON.parse(response);
         if (response.stream !== null) {
-            Main_values.IsRerun = Main_is_rerun(response.stream.stream_type);
+            Main_values.IsRerun = Main_is_rerun(response.stream.broadcast_platform);
 
             Main_innerHTML("stream_info_title", twemoji.parse(response.stream.channel.status, false, true));
             Main_values.Play_gameSelected = response.stream.game;
@@ -11006,7 +11006,7 @@
                 this.row.appendChild(
                     Screens_createCellLive(
                         this.row_id + '_' + this.coloumn_id,
-                        [cell.channel.name, cell.channel._id, Main_is_rerun(cell.stream_type)],
+                        [cell.channel.name, cell.channel._id, Main_is_rerun(cell.broadcast_platform)],
                         this.ids,
                         [cell.preview.template.replace("{width}x{height}", Main_VideoSize),
                             cell.channel.display_name,
@@ -13873,7 +13873,7 @@
                         logo: stream.channel.logo,
                         title: Main_ReplaceLargeFont(twemoji.parse(stream.channel.status)),
                         game: stream.game,
-                        rerun: Main_is_rerun(stream.stream_type),
+                        rerun: Main_is_rerun(stream.broadcast_platform),
                     });
                 }
 
@@ -13881,7 +13881,7 @@
                 if (UserLiveFeed_LastPos !== null && UserLiveFeed_LastPos === stream.channel.name) Play_FeedPos = i;
 
                 doc.appendChild(UserLiveFeed_CreatFeed(i,
-                    [stream.channel.name, id, Main_is_rerun(stream.stream_type)],
+                    [stream.channel.name, id, Main_is_rerun(stream.broadcast_platform)],
                     [stream.preview.template.replace("{width}x{height}", Main_VideoSize),
                         stream.channel.display_name,
                         stream.game,
@@ -13892,14 +13892,14 @@
                 if (UserSidePannel_LastPos !== null && UserSidePannel_LastPos === stream.channel.name) Sidepannel_PosFeed = i;
 
                 docside.appendChild(UserLiveFeed_CreatSideFeed(i,
-                    [stream.channel.name, id, Main_is_rerun(stream.stream_type)],
+                    [stream.channel.name, id, Main_is_rerun(stream.broadcast_platform)],
                     [stream.channel.name, id, stream.preview.template.replace("{width}x{height}", Main_SidePannelSize),
                         stream.channel.display_name,
                         stream.channel.status, stream.game,
                         STR_SINCE + Play_streamLiveAt(stream.created_at) + ' ' +
                         STR_FOR + Main_addCommas(stream.viewers) + STR_SPACE + STR_VIEWER,
                         Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language),
-                        Main_is_rerun(stream.stream_type), stream.channel.partner
+                        Main_is_rerun(stream.broadcast_platform), stream.channel.partner
                     ],
                     [stream.channel.logo,
                         stream.channel.display_name,

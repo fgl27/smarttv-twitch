@@ -178,9 +178,12 @@ choco install openjdk8
 
 * Open **Tizen Package Manager** to start installing the bellow (some may already be installed by default)
 * Main tab **(Main SDK)** Install **Tizen SDK tools**,  **(on Linux it may request you to use apt-get to install missing dependencies)**
-https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_2.png
+
+![mainsdk](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_2.png)
 * Second tab **(Extension SDK)** under **TV Extensions-5.0** (or wherever X.X TV version there is) install **Web app. Development**, install **Samsung Certificate Extension** and under **TV Extension Tools** install **Web app. Tools** (on Linux it may request you to use apt-get to install missing dependencies)
-https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_4.png
+
+![extensionsdk](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_4.png)
+
 *Tizen is always changing the packages that are available some packages may became deprecated and not show anymore, proceed with the installation process even if packages aren't available for you, report a issue if the application doesn't install but make sure you go to all steps at least once again after a problem just revise it all before reporting.*
 * After everything finishes installing as you close the package manager it will ask if you want to open the **Tizen Studio** - click YES to open it. On windows it may ask you to give firewall permission for Tizen.
 

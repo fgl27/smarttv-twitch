@@ -119,8 +119,9 @@ There is a issue section on this github page [smarttv-twitch/issues](https://git
 * Open the **"APPS"** application
 * Press the key sequence 12345 on your remote
 * On the new window that appears Click **"On"** to enable the **developer mode**
-* In the IP Address Field enter the local IP address of the computer you have downloaded Tizen Studio To
+* In the IP Address Field enter the local IP address of the computer you have downloaded Tizen Studio o
 
+*If you don't know how to get the local IP of your computer go to the link here* [How to get your IP](https://github.com/fgl27/smarttv-twitch#how-to-get-the-ip)
 
 ## Installing Tizen Studio and Java SDK on Windows 10
 
@@ -254,3 +255,23 @@ If you have a problem on connecting refer back to **[Account and Downloads:](htt
 * This app can update itself 99% of the time, so this installation process will only have to be redone after a major update where the changes cannot be done by the app itself. The app will warn the user if there is a need to update it manually by performing the installation steps again.
 
 ## In doubt [open a issue](https://github.com/fgl27/smarttv-twitch/issues/new/choose)
+
+## How to get the IP
+Linux terminal command:
+
+	hostname –I
+
+Result
+![ip_1](https://fgl27.github.io/smarttv-twitch/screenshot/etc/ubuntu_ip.png)
+
+Windows terminal command:
+
+	ipconfig
+
+Result
+![ip_2](https://fgl27.github.io/smarttv-twitch/screenshot/etc/windows_ip.png)
+
+Mac System Preferences > Network.<br>
+
+Result<br>
+![ip_3](https://fgl27.github.io/smarttv-twitch/screenshot/etc/mac_ip.jpg)

@@ -126,28 +126,33 @@ There is a issue section on this github page [smarttv-twitch/issues](https://git
 ## Installing Tizen Studio and Java SDK on Windows 10
 
 Before installing Tizen Studio you need to have Java 8 SDK installed
-You can install OpenJava JDK 8 with chocolately package manager
+You can install OpenJava JDK 8 with chocolately package manager or download and install the .exe from [Java SE Development Kit 8 Downloads
+](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
-* Open Windows Powershell as Admin and run the following command to setup chocolately package manager
-```
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-```
-* Close and Re-Open Windows Powershell once the installer is complete and then run the following command
-```
-choco install openjdk8
-``` 
-* Run the web-ide_Tizen_Studio_X.X_windows-64.exe installer file you downloaded previously with the default options selected
+### Via chocolately
+Open Windows Powershell as Admin and run the following command to setup chocolately package manager
+
+	Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+Close and Re-Open Windows Powershell once the installer is complete and then run the following command
+
+	choco install openjdk8
+
+Run the web-ide_Tizen_Studio_X.X_windows-64.exe installer file you downloaded previously with the default options selected
 
 ## Installing Tizen Studio and Java SDK on Ubunutu
 
 * I used the **Tizen Studio 2.4 with IDE installer** (Any version above that must work well), download the 32/64 bit according to your CPU architecture.  On Linux, the file is an executable binary 480Mb in size. To run it, first give the file permission to execute - properties >  permission > Execute... mark, then just drag the file to a terminal window and click enter, **On Linux it may ask you to use apt-get to install missing dependencies below are the one asked by Tizen Studio 2.4 last time I installed it**
 #
 
+	sudo apt-get install libwebkitgtk-1.0-0 rpm2cpio cpio expect python2.7 ruby libpng12-0 libcanberra-gtk-module libcanberra-gtk3-module gettext bridge-utils
+
+
 **If you get a error** "Package libpng12-0 is not available... etc..." do the bellow, if no error skip to **"Install Java SDK"**
 
-    sudo add-apt-repository ppa:linuxuprising/libpng12
-    sudo apt update
-    sudo apt install libpng12-0
+	sudo add-apt-repository ppa:linuxuprising/libpng12
+	sudo apt update
+	sudo apt install libpng12-0
 
 	sudo apt-get install libwebkitgtk-1.0-0 rpm2cpio expect python2.7 ruby gettext bridge-utils
 

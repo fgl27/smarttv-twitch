@@ -5,6 +5,8 @@ This is an application for Samsung Smart TVs, allowing a user to watch Twitch.tv
 
 The application fully supports all 4k and 1080p Samsung TVs released in 2016 or later. The app also support TVs released in 2015 or earlier that have Tizen version 2.3 or newer, however for some old TV even running Tizen 2.3 may there be some minor FW issues that affect the app most of those have be fixed, so is expected that they all work if doesn't for you open a issue.
 
+[Installation instructions](https://github.com/fgl27/smarttv-twitch#installation-instructions)
+
 In doubt [open a issue](https://github.com/fgl27/smarttv-twitch/issues/new/choose)
 
 Android TV version
@@ -97,6 +99,9 @@ Installation instructions:
 Installation guide **Tizen Studio for TVs with Tizen 2.3 or newer** (tested on Linux Ubuntu 16 and up, windows 10 64 bits and macOS Mojave 10.14.4)
 ==============
 
+##
+ 
+
 ## Help and workarounds
 
 There is a issue section on this github page [smarttv-twitch/issues](https://github.com/fgl27/smarttv-twitch/issues) on this there is a few already open issues if you have a problem with the bellow steps check there to see if any of the already opened issues have the proper help for you, if not [open a new issue](https://github.com/fgl27/smarttv-twitch/issues/new/choose)
@@ -104,36 +109,39 @@ There is a issue section on this github page [smarttv-twitch/issues](https://git
 ## Account and Downloads
 
 * Create a Samsung account if you don't have one, and set it up as a developer account [SAMSUNG DEVELOPERS](http://developer.samsung.com/home.do)
-* Log in with the developer account on the TV, open the application **"APPS"**, press the key sequence 12345 in the remote, a new window will pop, enter yours computer Local IP address (The computer IP that you plan to use to install this app see bellow help about it) and make sure you click **"On"** to enable the **developer mode**, after pressing OK, reboot the TV by unplugging from power and plug back on. **[Click here to read SAMSUNG Guide Connecting the TV and SDK](http://developer.samsung.com/tv/develop/getting-started/using-sdk/tv-device)**
-* [Download and install **Tizen Studio**](https://developer.tizen.org/development/tizen-studio/download)
 
-## How to get the IP
-Linux terminal command:
+* [Download **Tizen Studio with IDE Installer**](https://developer.tizen.org/development/tizen-studio/download)
 
-	hostname –I
 
-Result
-![ip_1](https://fgl27.github.io/smarttv-twitch/screenshot/etc/ubuntu_ip.png)
+## Set your TV to developer mode
 
-Windows terminal command:
+* Login to your Samsung TV with the Developer Account you just setup
+* Open the **"APPS"** application
+* Press the key sequence 12345 on your remote
+* On the new window that appears Click **"On"** to enable the **developer mode**
+* In the IP Address Field enter the local IP address of the computer you have downloaded Tizen Studio o
 
-	ipconfig
+*If you don't know how to get the local IP of your computer go to the link here* [How to get your IP](https://github.com/fgl27/smarttv-twitch#how-to-get-the-ip)
 
-Result
-![ip_2](https://fgl27.github.io/smarttv-twitch/screenshot/etc/windows_ip.png)
+## Installing Tizen Studio and Java SDK on Windows 10
 
-Mac System Preferences > Network.<br>
+Before installing Tizen Studio you need to have Java 8 SDK installed
+You can install OpenJava JDK 8 with chocolately package manager
 
-Result<br>
-![ip_3](https://fgl27.github.io/smarttv-twitch/screenshot/etc/mac_ip.jpg)
+* Open Windows Powershell as Admin and run the following command to setup chocolately package manager
+```
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+```
+* Close and Re-Open Windows Powershell once the installer is complete and then run the following command
+```
+choco install openjdk8
+``` 
+* Run the web-ide_Tizen_Studio_X.X_windows-64.exe installer file you downloaded previously with the default options selected
 
-## Installation Tizen and Java SDK
+## Installing Tizen Studio and Java SDK on Ubunutu
 
-* I used the **Tizen Studio 2.4 with IDE installer** (Any version above that must work well), download the 32/64 bit according to your CPU architecture. On windows it is a .exe file around 480MB - just install it like any other .exe file. On Linux, the file is an executable binary 480Mb in size. To run it, first give the file permission to execute - properties >  permission > Execute... mark, then just drag the file to a terminal window and click enter, **On Linux it may ask you to use apt-get to install missing dependencies below are the one asked by Tizen Studio 2.4 last time I installed it**
+* I used the **Tizen Studio 2.4 with IDE installer** (Any version above that must work well), download the 32/64 bit according to your CPU architecture.  On Linux, the file is an executable binary 480Mb in size. To run it, first give the file permission to execute - properties >  permission > Execute... mark, then just drag the file to a terminal window and click enter, **On Linux it may ask you to use apt-get to install missing dependencies below are the one asked by Tizen Studio 2.4 last time I installed it**
 #
-
-	sudo apt-get install libwebkitgtk-1.0-0 rpm2cpio cpio expect python2.7 ruby libpng12-0 libcanberra-gtk-module libcanberra-gtk3-module gettext bridge-utils
-
 
 **If you get a error** "Package libpng12-0 is not available... etc..." do the bellow, if no error skip to **"Install Java SDK"**
 
@@ -155,8 +163,7 @@ Result<br>
 	sudo apt-get install rpm2cpio cpio expect python2.7 ruby gettext bridge-utils
 
 #
-* Install Java SDK, I install this app with **Open JDK java 8** on windows go to [Java SE Development Kit 8 Downloads
-](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) download the latest version of jdk when this was tested it was "jdk-8uXXX-windows-x64.exe" for 64bit windows or "jdk-8uXXX-windows-i586.exe 32bits
+* Install Java SDK, I install this app with **Open JDK java 8** 
 " (last know tested was "jdk-8u152-windows-x64.exe" any above that must work always try the latest version **but make sure is Java 8**), on Linux terminal commands below
 #
 
@@ -171,17 +178,14 @@ Result<br>
 
 * Open **Tizen Package Manager** to start installing the bellow (some may already be installed by default)
 * Main tab **(Main SDK)** Install **Tizen SDK tools**,  **(on Linux it may request you to use apt-get to install missing dependencies)**
+
+![mainsdk](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_2.png)
 * Second tab **(Extension SDK)** under **TV Extensions-5.0** (or wherever X.X TV version there is) install **Web app. Development**, install **Samsung Certificate Extension** and under **TV Extension Tools** install **Web app. Tools** (on Linux it may request you to use apt-get to install missing dependencies)
+
+![extensionsdk](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_4.png)
+
+*Tizen is always changing the packages that are available some packages may became deprecated and not show anymore, proceed with the installation process even if packages aren't available for you, report a issue if the application doesn't install but make sure you go to all steps at least once again after a problem just revise it all before reporting.*
 * After everything finishes installing as you close the package manager it will ask if you want to open the **Tizen Studio** - click YES to open it. On windows it may ask you to give firewall permission for Tizen.
-
-### Images below show the installed packages (the one with a delete option are installed)
-Tizen is always changing those are the packages that was available on making this tutorial, but on updates from Samsung they may became deprecated and now show, proceed with the installation process even if packages aren't available for you, report a issue if the application doesn't installs but make sure you go to all steps at least once again after a problem just revise it all before reporting.<br>
-
-![SDK_installation_2](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_2.png)
-![SDK_installation_3](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_3.png)
-![SDK_installation_4](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_4.png)
-
-**Emulator not needed** but they may install automatic.<br>
 
 ## Setting up the build environment:
 
@@ -254,3 +258,23 @@ If you have a problem on connecting refer back to **[Account and Downloads:](htt
 * This app can update itself 99% of the time, so this installation process will only have to be redone after a major update where the changes cannot be done by the app itself. The app will warn the user if there is a need to update it manually by performing the installation steps again.
 
 ## In doubt [open a issue](https://github.com/fgl27/smarttv-twitch/issues/new/choose)
+
+## How to get the IP
+Linux terminal command:
+
+	hostname –I
+
+Result
+![ip_1](https://fgl27.github.io/smarttv-twitch/screenshot/etc/ubuntu_ip.png)
+
+Windows terminal command:
+
+	ipconfig
+
+Result
+![ip_2](https://fgl27.github.io/smarttv-twitch/screenshot/etc/windows_ip.png)
+
+Mac System Preferences > Network.<br>
+
+Result<br>
+![ip_3](https://fgl27.github.io/smarttv-twitch/screenshot/etc/mac_ip.jpg)

@@ -1179,7 +1179,7 @@ function ScreensObj_InitUserGames() {
             if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
             this.url = this.base_url + encodeURIComponent(AddUser_UsernameArray[0].name) + '/follows/games';
 
-            if (this.isLive) this.url += '/live?limit=750';
+            if (this.isLive) this.url += '/live?limit=200';
             else this.url += '?limit=' + Main_ItemsLimitMax + '&offset=' + this.offset;
         },
         key_refresh: function() {

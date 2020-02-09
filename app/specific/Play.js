@@ -1798,6 +1798,7 @@ function Play_OpenGame(PlayVodClip) {
     Main_values.Main_Go = Main_aGame;
 
     Main_values.Main_gameSelected = Main_values.Play_gameSelected;
+    Main_values.Main_gameSelected_id = null;
     Play_hideChat();
     if (PlayVodClip === 1) Play_shutdownStream();
     else if (PlayVodClip === 2) PlayVod_shutdownStream();

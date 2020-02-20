@@ -12834,12 +12834,12 @@
         "English [EN]": {
             "values": ["off", "on"],
             "defaultValue": 1,
-            "set_values": "en,en-gb"
+            "set_values": "en"
         },
         "Español [ES]": {
             "values": ["off", "on"],
             "defaultValue": 1,
-            "set_values": "es,es-mx"
+            "set_values": "es"
         },
         "Français [FR]": {
             "values": ["off", "on"],
@@ -12874,7 +12874,7 @@
         "Português [PT]": {
             "values": ["off", "on"],
             "defaultValue": 1,
-            "set_values": "pt,pt-br"
+            "set_values": "pt"
         },
         "Slovenčina [SK]": {
             "values": ["off", "on"],

@@ -3371,7 +3371,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = '011520';
+    var Main_minversion = '022120';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
     var Main_ClockOffset = 0;
@@ -4433,7 +4433,18 @@
         }
         return array;
     }
-    //Variable initialization
+
+    function Main_A_includes_B(A, B) {
+        return A ? A.indexOf(B) !== -1 : false;
+    }
+
+    // function Main_A_equals_B(A, B) {// jshint ignore:line
+    //     return A === B;
+    // }
+
+    // function Main_A_equals_B_No_Case(A, B) {// jshint ignore:line
+    //     return (A ? A.toLowerCase() : null) === (B ? B.toLowerCase() : null);
+    // }//Variable initialization
     var PlayClip_PlayerTime = 0;
     var PlayClip_streamCheckId = null;
     var PlayClip_PlayerCheckCount = 0;
@@ -11016,7 +11027,12 @@
         img_404: IMG_404_VIDEO,
         setMax: function(tempObj) {
             this.MaxOffset = tempObj._total;
-            if (this.data.length >= this.MaxOffset || typeof this.MaxOffset === 'undefined') this.dataEnded = true;
+
+            if (typeof this.MaxOffset === 'undefined') {
+                if (tempObj[this.object].length < 90) this.dataEnded = true;
+            } else {
+                if (this.data.length >= this.MaxOffset) this.dataEnded = true;
+            }
         },
         empty_str: function() {
             return STR_NO + STR_SPACE + STR_LIVE_CHANNELS;
@@ -11061,7 +11077,9 @@
             key_pgUp: Main_Clip,
             base_url: Main_kraken_api + 'streams?limit=' + Main_ItemsLimitMax,
             set_url: function() {
-                if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+                if ((typeof this.MaxOffset !== 'undefined') &&
+                    this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+
                 this.url = this.base_url + '&offset=' + this.offset +
                     (Main_ContentLang !== "" ? ('&broadcaster_language=' + Main_ContentLang) : '');
             },
@@ -11089,7 +11107,9 @@
             object: 'streams',
             base_url: Main_kraken_api + 'search/streams?limit=' + Main_ItemsLimitMax + '&query=',
             set_url: function() {
-                if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+                if ((typeof this.MaxOffset !== 'undefined') &&
+                    this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+
                 this.url = this.base_url + encodeURIComponent(Main_values.Search_data) +
                     '&offset=' + this.offset;
             },
@@ -11113,11 +11133,11 @@
 
         SearchLive = Screens_assign(SearchLive, Base_Live_obj);
 
-        SearchLive.setMax = function(tempObj) {
-            this.MaxOffset = tempObj._total;
-            if (this.data.length >= this.MaxOffset || typeof this.MaxOffset === 'undefined' ||
-                (this.data.length < Main_ItemsLimitMax)) this.dataEnded = true;
-        };
+        // SearchLive.setMax = function(tempObj) {
+        //     this.MaxOffset = tempObj._total;
+        //     if (this.data.length >= this.MaxOffset || typeof this.MaxOffset === 'undefined' ||
+        //         (this.data.length < Main_ItemsLimitMax)) this.dataEnded = true;
+        // };
     }
 
     function ScreensObj_InitUserLive() {
@@ -11134,7 +11154,8 @@
             followerChannels: '',
             followerChannelsDone: false,
             set_url: function() {
-                if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+                if ((typeof this.MaxOffset !== 'undefined') &&
+                    this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
 
                 if (AddUser_UsernameArray[0].access_token) {
                     //User has added a key
@@ -11289,7 +11310,9 @@
             key_pgUp: Main_Featured,
             base_url: Main_kraken_api + 'streams?game=',
             set_url: function() {
-                if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+                if ((typeof this.MaxOffset !== 'undefined') &&
+                    this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+
                 this.url = this.base_url + encodeURIComponent(Main_values.Main_gameSelected) +
                     '&limit=' + Main_ItemsLimitMax + '&offset=' + this.offset +
                     (Main_ContentLang !== "" ? ('&broadcaster_language=' + Main_ContentLang) : '');
@@ -12988,6 +13011,8 @@
                 if (Languages_Obj_default(key)) Main_ContentLang += ',' + Languages_value[key].set_values;
             }
             Main_ContentLang = Main_ContentLang.slice(1);
+            //the app allowed more then one language but twitch api block it now
+            if (Main_A_includes_B(Main_ContentLang, ',')) Main_ContentLang = "";
         }
         if (Main_ContentLang === "") Languages_Selected = STR_LANG_ALL;
         else Languages_Selected = Main_ContentLang.toUpperCase();
@@ -13062,15 +13087,35 @@
     }
 
     function Languages_ChangeSettigs(position) {
-        var key = Languages_value_keys[position];
+        Languages_ChangeSettigsEnd(position);
+    }
+
+    function Languages_ResetAll() {
+        for (var key in Languages_value) {
+            if (Languages_Obj_default(key)) {
+                Languages_value[key].defaultValue -= 1;
+                Main_setItem(key, Languages_Obj_default(key) + 1);
+                Main_textContent(key, Languages_Obj_values(key));
+                Main_RemoveClass(key, 'red_text');
+            }
+        }
+    }
+
+    function Languages_ChangeSettigsEnd(position) {
+        Languages_ChangeSettigsEndKey(Languages_value_keys[position]);
+    }
+
+    function Languages_ChangeSettigsEndKey(key) {
         Main_setItem(key, Languages_Obj_default(key) + 1);
         Main_textContent(key, Languages_Obj_values(key));
-        Languages_Setarrows(position);
+        Languages_SetarrowsKey(key);
     }
 
     function Languages_Setarrows(position) {
-        var key = Languages_value_keys[position];
+        Languages_SetarrowsKey(Languages_value_keys[position]);
+    }
 
+    function Languages_SetarrowsKey(key) {
         var currentValue = Languages_Obj_default(key);
         var maxValue = Languages_Obj_length(key);
 
@@ -13114,6 +13159,7 @@
             case KEY_RIGHT:
                 key = Languages_value_keys[Languages_cursorY];
                 if (Languages_Obj_default(key) < Languages_Obj_length(key)) {
+                    if (!Main_A_includes_B(key, 'All')) Languages_ResetAll();
                     Languages_value[key].defaultValue += 1;
                     Languages_ChangeSettigs(Languages_cursorY);
                     Main_AddClass(Languages_value_keys[Languages_cursorY], 'red_text');

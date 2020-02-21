@@ -508,7 +508,12 @@ var Base_Live_obj = {
     img_404: IMG_404_VIDEO,
     setMax: function(tempObj) {
         this.MaxOffset = tempObj._total;
-        if (this.data.length >= this.MaxOffset || typeof this.MaxOffset === 'undefined') this.dataEnded = true;
+
+        if (typeof this.MaxOffset === 'undefined') {
+            if (tempObj[this.object].length < 90) this.dataEnded = true;
+        } else {
+            if (this.data.length >= this.MaxOffset) this.dataEnded = true;
+        }
     },
     empty_str: function() {
         return STR_NO + STR_SPACE + STR_LIVE_CHANNELS;
@@ -553,7 +558,9 @@ function ScreensObj_InitLive() {
         key_pgUp: Main_Clip,
         base_url: Main_kraken_api + 'streams?limit=' + Main_ItemsLimitMax,
         set_url: function() {
-            if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+            if ((typeof this.MaxOffset !== 'undefined') &&
+                this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+
             this.url = this.base_url + '&offset=' + this.offset +
                 (Main_ContentLang !== "" ? ('&broadcaster_language=' + Main_ContentLang) : '');
         },
@@ -581,7 +588,9 @@ function ScreensObj_InitSearchLive() {
         object: 'streams',
         base_url: Main_kraken_api + 'search/streams?limit=' + Main_ItemsLimitMax + '&query=',
         set_url: function() {
-            if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+            if ((typeof this.MaxOffset !== 'undefined') &&
+                this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+
             this.url = this.base_url + encodeURIComponent(Main_values.Search_data) +
                 '&offset=' + this.offset;
         },
@@ -605,11 +614,11 @@ function ScreensObj_InitSearchLive() {
 
     SearchLive = Screens_assign(SearchLive, Base_Live_obj);
 
-    SearchLive.setMax = function(tempObj) {
-        this.MaxOffset = tempObj._total;
-        if (this.data.length >= this.MaxOffset || typeof this.MaxOffset === 'undefined' ||
-            (this.data.length < Main_ItemsLimitMax)) this.dataEnded = true;
-    };
+    // SearchLive.setMax = function(tempObj) {
+    //     this.MaxOffset = tempObj._total;
+    //     if (this.data.length >= this.MaxOffset || typeof this.MaxOffset === 'undefined' ||
+    //         (this.data.length < Main_ItemsLimitMax)) this.dataEnded = true;
+    // };
 }
 
 function ScreensObj_InitUserLive() {
@@ -626,7 +635,8 @@ function ScreensObj_InitUserLive() {
         followerChannels: '',
         followerChannelsDone: false,
         set_url: function() {
-            if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+            if ((typeof this.MaxOffset !== 'undefined') &&
+                this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
 
             if (AddUser_UsernameArray[0].access_token) {
                 //User has added a key
@@ -781,7 +791,9 @@ function ScreensObj_InitAGame() {
         key_pgUp: Main_Featured,
         base_url: Main_kraken_api + 'streams?game=',
         set_url: function() {
-            if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+            if ((typeof this.MaxOffset !== 'undefined') &&
+                this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+
             this.url = this.base_url + encodeURIComponent(Main_values.Main_gameSelected) +
                 '&limit=' + Main_ItemsLimitMax + '&offset=' + this.offset +
                 (Main_ContentLang !== "" ? ('&broadcaster_language=' + Main_ContentLang) : '');

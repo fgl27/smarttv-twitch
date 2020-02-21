@@ -1180,3 +1180,15 @@ function Main_Slice(arrayTocopy) {
     }
     return array;
 }
+
+function Main_A_includes_B(A, B) {
+    return A ? A.includes(B) : false;
+}
+
+function Main_A_equals_B(A, B) {// jshint ignore:line
+    return A === B;
+}
+
+function Main_A_equals_B_No_Case(A, B) {// jshint ignore:line
+    return (A ? A.toLowerCase() : null) === (B ? B.toLowerCase() : null);
+}

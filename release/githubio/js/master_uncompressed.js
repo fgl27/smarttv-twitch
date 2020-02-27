@@ -801,7 +801,7 @@
         // Calculate scaled body/divs size.
         scaledWidth = initialWidth * scaleFactor;
 
-        //Set new body width/height recalculated to 16 by 9 and scaled fontSize
+        //Set new body width/height recalculated to 16 by 9 and scaled fontSize 
         doc.style.width = scaledWidth + 'px';
         doc.style.height = currentHeight + 'px';
         document.body.style.fontSize = BodyfontSize + 'px';
@@ -11035,7 +11035,7 @@
                 if (this.data.length >= this.MaxOffset) this.dataEnded = true;
             }
         },
-        set_offset: function() {
+        check_offset: function() {
             if ((this.offset >= 900) ||
                 ((typeof this.MaxOffset !== 'undefined') &&
                     this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset)) this.dataEnded = true;
@@ -11083,7 +11083,7 @@
             key_pgUp: Main_Clip,
             base_url: Main_kraken_api + 'streams?limit=' + Main_ItemsLimitMax,
             set_url: function() {
-                this.set_offset();
+                this.check_offset();
 
                 this.url = this.base_url + '&offset=' + this.offset +
                     (Main_ContentLang !== "" ? ('&broadcaster_language=' + Main_ContentLang) : '');
@@ -11112,7 +11112,7 @@
             object: 'streams',
             base_url: Main_kraken_api + 'search/streams?limit=' + Main_ItemsLimitMax + '&query=',
             set_url: function() {
-                this.set_offset();
+                this.check_offset();
 
                 this.url = this.base_url + encodeURIComponent(Main_values.Search_data) +
                     '&offset=' + this.offset;
@@ -11158,7 +11158,7 @@
             followerChannels: '',
             followerChannelsDone: false,
             set_url: function() {
-                this.set_offset();
+                this.check_offset();
 
                 if (AddUser_UsernameArray[0].access_token) {
                     //User has added a key
@@ -11313,7 +11313,7 @@
             key_pgUp: Main_Featured,
             base_url: Main_kraken_api + 'streams?game=',
             set_url: function() {
-                this.set_offset();
+                this.check_offset();
 
                 this.url = this.base_url + encodeURIComponent(Main_values.Main_gameSelected) +
                     '&limit=' + Main_ItemsLimitMax + '&offset=' + this.offset +
@@ -11369,7 +11369,7 @@
             key_pgUp: Main_Live,
             base_url: Main_kraken_api + 'streams/featured?limit=' + Main_ItemsLimitMax,
             set_url: function() {
-                this.set_offset();
+                this.check_offset();
 
                 this.url = this.base_url + '&offset=' + this.offset +
                     (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token ? '&oauth_token=' +

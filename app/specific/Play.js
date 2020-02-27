@@ -547,8 +547,8 @@ function Play_updateStreamInfoStartValues(response) {
     if (AddUser_UserIsSet()) {
         AddCode_PlayRequest = true;
         AddCode_Channel_id = Main_values.Play_selectedChannel_id;
-        AddCode_CheckFallow();
-    } else Play_hideFallow();
+        AddCode_CheckFollow();
+    } else Play_hideFollow();
 
     response = JSON.parse(response);
     if (response.stream !== null) {
@@ -1206,9 +1206,9 @@ function Play_offPlayer() {
 function Play_exitMain() {
 
     if (AddUser_UserIsSet()) {
-        AddCode_IsFallowing = false;
-        Play_setFallow();
-    } else Play_hideFallow();
+        AddCode_IsFollowing = false;
+        Play_setFollow();
+    } else Play_hideFollow();
 
     UserLiveFeed_PreventHide = false;
     PlayVod_ProgresBarrUpdate(0, 0);
@@ -1269,9 +1269,9 @@ function Play_ClearPlay(clearChat) {
     Play_IsWarning = false;
 }
 
-function Play_hideFallow() {
-    Play_controls[Play_controlsFallow].setLable(STR_NOKEY);
-    AddCode_IsFallowing = false;
+function Play_hideFollow() {
+    Play_controls[Play_controlsFollow].setLable(STR_NOKEY);
+    AddCode_IsFollowing = false;
 }
 
 function Play_showBufferDialog() {
@@ -1754,7 +1754,7 @@ function Play_OpenChannel(PlayVodClip) {
         Main_values.Main_selectedChannel_id = Main_values.Play_selectedChannel_id;
         Main_values.Main_selectedChannel = Main_values.Play_selectedChannel;
         Main_values.Main_selectedChannelDisplayname = Main_values.Play_selectedChannelDisplayname;
-        ChannelContent_UserChannels = AddCode_IsFallowing;
+        ChannelContent_UserChannels = AddCode_IsFollowing;
         Play_hideChat();
         Play_shutdownStream();
     } else if (PlayVodClip === 2) PlayVod_shutdownStream();
@@ -1805,10 +1805,10 @@ function Play_OpenGame(PlayVodClip) {
     else if (PlayVodClip === 3) PlayClip_shutdownStream();
 }
 
-function Play_FallowUnfallow() {
+function Play_FollowUnfollow() {
     if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
-        if (AddCode_IsFallowing) AddCode_UnFallow();
-        else AddCode_Fallow();
+        if (AddCode_IsFollowing) AddCode_UnFollow();
+        else AddCode_Follow();
     } else {
         Play_showWarningDialog(STR_NOKEY_WARN);
         Play_IsWarning = true;
@@ -1960,8 +1960,8 @@ function Play_CheckHost(responseText) {
     Play_PlayEndStart(1);
 }
 
-function Play_setFallow() {
-    Play_controls[Play_controlsFallow].setLable(AddCode_IsFallowing ? STR_FALLOWING : STR_FALLOW, AddCode_IsFallowing);
+function Play_setFollow() {
+    Play_controls[Play_controlsFollow].setLable(AddCode_IsFollowing ? STR_FOLLOWING : STR_FOLLOW, AddCode_IsFollowing);
 }
 
 function Play_KeyReturn(is_vod) {
@@ -2253,7 +2253,7 @@ var Play_controlsSearch = 0;
 var Play_controlsChanelCont = 1;
 var Play_controlsGameCont = 2;
 var Play_controlsOpenVod = 3;
-var Play_controlsFallow = 4;
+var Play_controlsFollow = 4;
 var Play_controlsQuality = 5;
 var Play_controlsLowLatency = 6;
 var Play_controlsChat = 7;
@@ -2334,28 +2334,28 @@ function Play_MakeControls() {
     };
 
 
-    Play_controls[Play_controlsFallow] = { //fallowing
+    Play_controls[Play_controlsFollow] = { //following
         icons: "heart-o",
-        string: STR_FALLOW,
+        string: STR_FOLLOW,
         values: '',
         defaultValue: null,
         opacity: 0,
         enterKey: function(PlayVodClip) {
 
             AddCode_Channel_id = (PlayVodClip === 1 ? Main_values.Play_selectedChannel_id : Main_values.Main_selectedChannel_id);
-            Play_FallowUnfallow();
+            Play_FollowUnfollow();
 
             Play_Resetpanel(PlayVodClip);
         },
-        setLable: function(string, AddCode_IsFallowing) {
+        setLable: function(string, AddCode_IsFollowing) {
             Main_textContent('extra_button_text' + this.position, string);
-            this.setIcon(AddCode_IsFallowing);
-            Main_textContent('extra_button_' + this.position, AddCode_IsFallowing ? STR_CLICK_UNFALLOW : STR_CLICK_FALLOW);
+            this.setIcon(AddCode_IsFollowing);
+            Main_textContent('extra_button_' + this.position, AddCode_IsFollowing ? STR_CLICK_UNFOLLOW : STR_CLICK_FOLLOW);
         },
-        setIcon: function(AddCode_IsFallowing) {
+        setIcon: function(AddCode_IsFollowing) {
             Main_innerHTML('controls_icon_' + this.position, '<i class="pause_button3d icon-' +
-                (AddCode_IsFallowing ? "heart" : "heart-o") +
-                '" style="color: #' + (AddCode_IsFallowing ? "6441a4" : "FFFFFF") + ';" ></i>');
+                (AddCode_IsFollowing ? "heart" : "heart-o") +
+                '" style="color: #' + (AddCode_IsFollowing ? "6441a4" : "FFFFFF") + ';" ></i>');
         },
     };
 

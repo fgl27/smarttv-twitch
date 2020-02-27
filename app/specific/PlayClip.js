@@ -94,8 +94,8 @@ function PlayClip_Start() {
     if (AddUser_UserIsSet()) {
         AddCode_PlayRequest = true;
         AddCode_Channel_id = Main_values.Main_selectedChannel_id;
-        AddCode_CheckFallow();
-    } else Play_hideFallow();
+        AddCode_CheckFollow();
+    } else Play_hideFollow();
 
     document.addEventListener('visibilitychange', PlayClip_Resume, false);
     PlayClip_IsJumping = false;
@@ -192,7 +192,7 @@ function PlayClip_loadDataRequest() {
         }
     };
 
-    //    xmlHttp.send('{"query":"\\n query getClipStatus($slug:ID!) {\\n clip(slug: $slug) {\\n videoQualities {\\n frameRate\\n quality\\n sourceURL\\n }\\n }\\n }\\n","variables":{"slug":"' + 
+    //    xmlHttp.send('{"query":"\\n query getClipStatus($slug:ID!) {\\n clip(slug: $slug) {\\n videoQualities {\\n frameRate\\n quality\\n sourceURL\\n }\\n }\\n }\\n","variables":{"slug":"' +
     //    ChannelClip_playUrl +'"}}');
 
     xmlHttp.send('{"query":"\\n {\\n clip(slug: \\"' + ChannelClip_playUrl +

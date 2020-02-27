@@ -351,7 +351,7 @@ function Screens_createCellLive(id, data, idArray, valuesArray) {
 
 function Screens_loadDataSuccessFinish() {
     if (!inUseObj.status) {
-        if (Main_values.Main_Go === Main_aGame) AGame_Checkfallow();
+        if (Main_values.Main_Go === Main_aGame) AGame_Checkfollow();
 
         if (inUseObj.emptyContent) Main_showWarningDialog(inUseObj.empty_str());
         else {
@@ -469,7 +469,7 @@ function Screens_addFocus(forceScroll) {
         }
     }
     if (inUseObj.posY < 0) {
-        Screens_addFocusFallow();
+        Screens_addFocusFollow();
         //Reset screen position
         document.getElementById(inUseObj.ids[10]).style.top = '';
         if (!inUseObj.emptyContent) Main_CounterDialog(inUseObj.posX, inUseObj.posY + 1, inUseObj.ColoumnsCount, inUseObj.itemsCount);
@@ -709,14 +709,14 @@ function Screens_ChangeFocus(y, x) {
     Screens_addFocus();
 }
 
-function Screens_addFocusFallow() {
+function Screens_addFocusFollow() {
     if (inUseObj.posX > inUseObj.SwitchesIcons.length - 1) inUseObj.posX = 0;
     else if (inUseObj.posX < 0) inUseObj.posX = inUseObj.SwitchesIcons.length - 1;
 
     Main_AddClass(inUseObj.ids[0] + 'y_' + inUseObj.posX, 'stream_switch_focused');
 }
 
-function Screens_removeFocusFallow() {
+function Screens_removeFocusFollow() {
     if (inUseObj.posX > inUseObj.SwitchesIcons.length - 1) inUseObj.posX = 0;
     else if (inUseObj.posX < 0) inUseObj.posX = inUseObj.SwitchesIcons.length - 1;
 
@@ -740,11 +740,11 @@ function Screens_KeyUpDown(y) {
         Screens_ClearAnimation();
         inUseObj.posY = -1;
         if (inUseObj.posX > inUseObj.SwitchesIcons.length - 1) inUseObj.posX = 1;
-        Screens_addFocusFallow();
+        Screens_addFocusFollow();
     } else if (inUseObj.HasSwitches && (inUseObj.posY) === -1 && (Main_ThumbNull(0, inUseObj.posX, inUseObj.ids[0]))) {
         inUseObj.posY = 0;
         Screens_addFocus();
-        Screens_removeFocusFallow();
+        Screens_removeFocusFollow();
     } else {
         for (var i = 0; i < inUseObj.ColoumnsCount; i++) {
             if (Main_ThumbNull((inUseObj.posY + y), (inUseObj.posX - i), inUseObj.ids[0])) {
@@ -765,9 +765,9 @@ function Screens_ClearAnimation() {
 function Screens_KeyLeftRight(y, x) {
     if (inUseObj.HasSwitches && inUseObj.posY === -1) {
         inUseObj.posY = -1;
-        Screens_removeFocusFallow();
+        Screens_removeFocusFollow();
         inUseObj.posX += (!x ? 1 : -1);
-        Screens_addFocusFallow();
+        Screens_addFocusFollow();
     } else if (Main_ThumbNull((inUseObj.posY), (inUseObj.posX + y), inUseObj.ids[0]))
         Screens_ChangeFocus(0, (inUseObj.posX + y));
     else if (Main_ThumbNull((inUseObj.posY + y), x, inUseObj.ids[0]))
@@ -786,7 +786,7 @@ function Screens_RemoveAllFocus() {
     if (Main_ThumbNull(inUseObj.posY, inUseObj.posX, inUseObj.ids[0])) {
         Main_removeFocus(inUseObj.posY + '_' + inUseObj.posX, inUseObj.ids);
     } else if (inUseObj.posY < 0) {
-        Screens_removeFocusFallow();
+        Screens_removeFocusFollow();
         inUseObj.posY = 0;
         inUseObj.posX = 0;
     }
@@ -906,12 +906,12 @@ function AGame_headerOptions() {
         Main_values.Main_OldgameSelected = Main_values.Main_gameSelected;
         AGame_headerOptionsExit();
         Main_SwitchScreenAction();
-    } else AGame_fallow();
+    } else AGame_follow();
 }
 
 function AGame_headerOptionsExit() {
     if (inUseObj.status && inUseObj.posY === -1) {
-        Screens_removeFocusFallow();
+        Screens_removeFocusFollow();
         inUseObj.posY = 0;
         inUseObj.posX = 0;
         Main_AddClass(inUseObj.ids[0] + '0_' + inUseObj.posX, Main_classThumb);
@@ -920,10 +920,10 @@ function AGame_headerOptionsExit() {
     Main_HideElement(inUseObj.ids[10]);
 }
 
-function AGame_fallow() {
+function AGame_follow() {
     if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
-        if (AGame_fallowing) AddCode_UnFallowGame();
-        else AddCode_FallowGame();
+        if (AGame_following) AddCode_UnFollowGame();
+        else AddCode_FollowGame();
     } else {
         Main_showWarningDialog(STR_NOKEY_WARN);
         window.setTimeout(function() {
@@ -933,17 +933,17 @@ function AGame_fallow() {
     }
 }
 
-function AGame_Checkfallow() {
-    if (AddUser_UserIsSet()) AddCode_CheckFallowGame();
+function AGame_Checkfollow() {
+    if (AddUser_UserIsSet()) AddCode_CheckFollowGame();
     else {
-        AGame_fallowing = false;
-        AGame_setFallow();
+        AGame_following = false;
+        AGame_setFollow();
     }
 }
 
-function AGame_setFallow() {
-    if (AGame_fallowing) Main_innerHTML(AGame.ids[3] + "y_2", '<i class="icon-heart" style="color: #6441a4; font-size: 100%;"></i>' + STR_SPACE + STR_SPACE + STR_FALLOWING);
-    else Main_innerHTML(AGame.ids[3] + "y_2", '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + (AddUser_UserIsSet() ? STR_FALLOW : STR_NOKEY));
+function AGame_setFollow() {
+    if (AGame_following) Main_innerHTML(AGame.ids[3] + "y_2", '<i class="icon-heart" style="color: #6441a4; font-size: 100%;"></i>' + STR_SPACE + STR_SPACE + STR_FOLLOWING);
+    else Main_innerHTML(AGame.ids[3] + "y_2", '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + (AddUser_UserIsSet() ? STR_FOLLOW : STR_NOKEY));
 }
 
 var Screens_PeriodDialogID;

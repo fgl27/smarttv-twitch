@@ -140,8 +140,8 @@ function en_USLang() {
     STR_KEY_OK = "Key test return OK";
     STR_OAUTH_WRONG = "You try to add a key for user ";
     STR_OAUTH_WRONG2 = " but this key is for user ";
-    STR_FALLOWING = " Following";
-    STR_FALLOW = " Follow";
+    STR_FOLLOWING = " Following";
+    STR_FOLLOW = " Follow";
     STR_IS_SUB_NOOAUTH = " And you have not set a authentication key the app can\'t check yours sub status.";
     STR_IS_SUB_NOT_SUB = " And you are not a sub of this channel";
     STR_IS_SUB_IS_SUB = " You are a sub of this channel but ";
@@ -155,13 +155,13 @@ function en_USLang() {
     STR_CHANNEL_CONT = "Channel content";
     STR_NET_DOWN = "Network is disconnected, the application can\'t work without INTERNET";
     STR_NET_UP = "Network connection reestablished";
-    STR_FALLOWERS = " Followers";
-    STR_CANT_FALLOW = ", Can\'t fallow or unfallow ";
+    STR_FOLLOWERS = " Followers";
+    STR_CANT_FOLLOW = ", Can\'t follow or unfollow ";
     STR_GAME_CONT = "Game content";
     STR_YES = "Yes";
     STR_REMOVE_USER = "Are you sure you want to remove the user ";
     STR_PLACEHOLDER_PRESS_UP = "Press Up to ";
-    STR_FALLOW_GAMES = "Followed Games";
+    STR_FOLLOW_GAMES = "Followed Games";
     STR_USER_GAMES_CHANGE = "Change between";
     STR_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
     STR_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -306,7 +306,7 @@ function en_USLang() {
     STR_A_Z = "Alphabetical A - Z";
     STR_Z_A = "Alphabetical Z - A";
     STR_APP_ANIMATIONS = "Enable app animations";
-    STR_OAUTH_EXPLAIN1 = ", fallow bellow steps:";
+    STR_OAUTH_EXPLAIN1 = ", follow bellow steps:";
     STR_OAUTH_EXPLAIN2 = "Access the site link_link (using a computer or a smart phone)";
     STR_OAUTH_EXPLAIN3 = "Click the \"Authorize\" button which will take you to main Twitch.TV authentication site";
     STR_OAUTH_EXPLAIN4 = "Login to Twitch.TV using the username you are trying to add a key for";
@@ -316,8 +316,8 @@ function en_USLang() {
     STR_RUNNINGTIME = "App running for:";
     STR_410_ERROR = "Unable to get stream link issue";
     STR_410_FEATURING = "Third party app are current without access for this featuring.";
-    STR_CLICK_UNFALLOW = "(Click to unfallow)";
-    STR_CLICK_FALLOW = "(Click to fallow)";
+    STR_CLICK_UNFOLLOW = "(Click to unfollow)";
+    STR_CLICK_FOLLOW = "(Click to follow)";
     STR_NAME_A_Z = "Name A - Z";
     STR_NAME_Z_A = "Name Z - A";
     STR_GAME_A_Z = "Game A - Z";

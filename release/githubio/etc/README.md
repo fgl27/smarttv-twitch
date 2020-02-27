@@ -1,6 +1,6 @@
 ## How to create a Samsung developer certificate and send to the TV
 
-Open the certificate manager click on the plus "+" icon and fallow the bellow steps
+Open the certificate manager click on the plus "+" icon and follow the bellow steps
 
 * Click on Samsung
 * Select **TV** click next
@@ -13,7 +13,7 @@ Open the certificate manager click on the plus "+" icon and fallow the bellow st
 * Click next
 * Click Finish
 * A OK screen shows click OK now you can exit certificate manager
-* The new certificate must show as selected 
+* The new certificate must show as selected
 
 Open device manager
 * Connect to the TV

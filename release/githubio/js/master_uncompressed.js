@@ -134,8 +134,8 @@
     var STR_KEY_OK;
     var STR_OAUTH_WRONG;
     var STR_OAUTH_WRONG2;
-    var STR_FALLOWING;
-    var STR_FALLOW;
+    var STR_FOLLOWING;
+    var STR_FOLLOW;
     var STR_IS_SUB_NOOAUTH;
     var STR_IS_SUB_NOT_SUB;
     var STR_IS_SUB_IS_SUB;
@@ -147,13 +147,13 @@
     var STR_CHANNEL_CONT;
     var STR_NET_DOWN;
     var STR_NET_UP;
-    var STR_FALLOWERS;
-    var STR_CANT_FALLOW;
+    var STR_FOLLOWERS;
+    var STR_CANT_FOLLOW;
     var STR_GAME_CONT;
     var STR_YES;
     var STR_REMOVE_USER;
     var STR_PLACEHOLDER_PRESS_UP;
-    var STR_FALLOW_GAMES;
+    var STR_FOLLOW_GAMES;
     var STR_USER_GAMES_CHANGE;
     var STR_GUIDE;
     var STR_MONTHS;
@@ -318,8 +318,8 @@
     var STR_RUNNINGTIME;
     var STR_410_ERROR;
     var STR_410_FEATURING;
-    var STR_CLICK_UNFALLOW;
-    var STR_CLICK_FALLOW;
+    var STR_CLICK_UNFOLLOW;
+    var STR_CLICK_FOLLOW;
     var STR_HOLD_UP;
     var STR_NAME_A_Z;
     var STR_NAME_Z_A;
@@ -576,8 +576,8 @@
         STR_KEY_OK = "Key test return OK";
         STR_OAUTH_WRONG = "You try to add a key for user ";
         STR_OAUTH_WRONG2 = " but this key is for user ";
-        STR_FALLOWING = " Following";
-        STR_FALLOW = " Follow";
+        STR_FOLLOWING = " Following";
+        STR_FOLLOW = " Follow";
         STR_IS_SUB_NOOAUTH = " And you have not set a authentication key the app can\'t check yours sub status.";
         STR_IS_SUB_NOT_SUB = " And you are not a sub of this channel";
         STR_IS_SUB_IS_SUB = " You are a sub of this channel but ";
@@ -591,13 +591,13 @@
         STR_CHANNEL_CONT = "Channel content";
         STR_NET_DOWN = "Network is disconnected, the application can\'t work without INTERNET";
         STR_NET_UP = "Network connection reestablished";
-        STR_FALLOWERS = " Followers";
-        STR_CANT_FALLOW = ", Can\'t fallow or unfallow ";
+        STR_FOLLOWERS = " Followers";
+        STR_CANT_FOLLOW = ", Can\'t follow or unfollow ";
         STR_GAME_CONT = "Game content";
         STR_YES = "Yes";
         STR_REMOVE_USER = "Are you sure you want to remove the user ";
         STR_PLACEHOLDER_PRESS_UP = "Press Up to ";
-        STR_FALLOW_GAMES = "Followed Games";
+        STR_FOLLOW_GAMES = "Followed Games";
         STR_USER_GAMES_CHANGE = "Change between";
         STR_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
         STR_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -742,7 +742,7 @@
         STR_A_Z = "Alphabetical A - Z";
         STR_Z_A = "Alphabetical Z - A";
         STR_APP_ANIMATIONS = "Enable app animations";
-        STR_OAUTH_EXPLAIN1 = ", fallow bellow steps:";
+        STR_OAUTH_EXPLAIN1 = ", follow bellow steps:";
         STR_OAUTH_EXPLAIN2 = "Access the site link_link (using a computer or a smart phone)";
         STR_OAUTH_EXPLAIN3 = "Click the \"Authorize\" button which will take you to main Twitch.TV authentication site";
         STR_OAUTH_EXPLAIN4 = "Login to Twitch.TV using the username you are trying to add a key for";
@@ -752,8 +752,8 @@
         STR_RUNNINGTIME = "App running for:";
         STR_410_ERROR = "Unable to get stream link issue";
         STR_410_FEATURING = "Third party app are current without access for this featuring.";
-        STR_CLICK_UNFALLOW = "(Click to unfallow)";
-        STR_CLICK_FALLOW = "(Click to fallow)";
+        STR_CLICK_UNFOLLOW = "(Click to unfollow)";
+        STR_CLICK_FOLLOW = "(Click to follow)";
         STR_NAME_A_Z = "Name A - Z";
         STR_NAME_Z_A = "Name Z - A";
         STR_GAME_A_Z = "Game A - Z";
@@ -801,7 +801,7 @@
         // Calculate scaled body/divs size.
         scaledWidth = initialWidth * scaleFactor;
 
-        //Set new body width/height recalculated to 16 by 9 and scaled fontSize 
+        //Set new body width/height recalculated to 16 by 9 and scaled fontSize
         doc.style.width = scaledWidth + 'px';
         doc.style.height = currentHeight + 'px';
         document.body.style.fontSize = BodyfontSize + 'px';
@@ -894,7 +894,7 @@
     var AddCode_Code = 0;
     var AddCode_loadingData = false;
     var AddCode_keyBoardOn = false;
-    var AddCode_IsFallowing = false;
+    var AddCode_IsFollowing = false;
     var AddCode_IsSub = false;
     var AddCode_PlayRequest = false;
     var AddCode_Channel_id = '';
@@ -1224,116 +1224,116 @@
         if (tryes < AddCode_loadingDataTryMax) AddCode_CheckToken(position, tryes);
     }
 
-    function AddCode_CheckFallow() {
+    function AddCode_CheckFollow() {
         AddCode_loadingDataTry = 0;
-        AddCode_IsFallowing = false;
-        AddCode_RequestCheckFallow();
+        AddCode_IsFollowing = false;
+        AddCode_RequestCheckFollow();
     }
 
-    function AddCode_RequestCheckFallow() {
+    function AddCode_RequestCheckFollow() {
         var theUrl = Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/follows/channels/' + AddCode_Channel_id + Main_TwithcV5Flag_I;
 
-        AddCode_BasexmlHttpGet(theUrl, 'GET', 2, null, AddCode_RequestCheckFallowReady);
+        AddCode_BasexmlHttpGet(theUrl, 'GET', 2, null, AddCode_RequestCheckFollowReady);
     }
 
-    function AddCode_RequestCheckFallowReady(xmlHttp) {
+    function AddCode_RequestCheckFollowReady(xmlHttp) {
         if (xmlHttp.readyState === 4) {
             if (xmlHttp.status === 200) { //yes
-                AddCode_RequestCheckFallowOK();
+                AddCode_RequestCheckFollowOK();
             } else if (xmlHttp.status === 404) { //no
-                AddCode_RequestCheckFallowNOK(xmlHttp.responseText);
+                AddCode_RequestCheckFollowNOK(xmlHttp.responseText);
             } else { // internet error
-                AddCode_RequestCheckFallowError();
+                AddCode_RequestCheckFollowError();
             }
         }
     }
 
-    function AddCode_RequestCheckFallowOK() {
-        AddCode_IsFallowing = true;
-        if (AddCode_PlayRequest) Play_setFallow();
-        else ChannelContent_setFallow();
+    function AddCode_RequestCheckFollowOK() {
+        AddCode_IsFollowing = true;
+        if (AddCode_PlayRequest) Play_setFollow();
+        else ChannelContent_setFollow();
     }
 
-    function AddCode_RequestCheckFallowNOK(response) {
+    function AddCode_RequestCheckFollowNOK(response) {
         response = JSON.parse(response);
         if (response.error) {
             if ((response.error + '').indexOf('Not Found') !== -1) {
-                AddCode_IsFallowing = false;
-                if (AddCode_PlayRequest) Play_setFallow();
-                else ChannelContent_setFallow();
-            } else AddCode_RequestCheckFallowError();
-        } else AddCode_RequestCheckFallowError();
+                AddCode_IsFollowing = false;
+                if (AddCode_PlayRequest) Play_setFollow();
+                else ChannelContent_setFollow();
+            } else AddCode_RequestCheckFollowError();
+        } else AddCode_RequestCheckFollowError();
     }
 
-    function AddCode_RequestCheckFallowError() {
+    function AddCode_RequestCheckFollowError() {
         AddCode_loadingDataTry++;
-        if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) AddCode_RequestCheckFallow();
+        if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) AddCode_RequestCheckFollow();
         else {
-            if (AddCode_PlayRequest) Play_setFallow();
-            else ChannelContent_setFallow();
+            if (AddCode_PlayRequest) Play_setFollow();
+            else ChannelContent_setFollow();
         }
     }
 
-    function AddCode_Fallow() {
+    function AddCode_Follow() {
         AddCode_loadingDataTry = 0;
-        AddCode_FallowRequest();
+        AddCode_FollowRequest();
     }
 
-    function AddCode_FallowRequest() {
+    function AddCode_FollowRequest() {
         var theUrl = Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/follows/channels/' + AddCode_Channel_id + Main_TwithcV5Flag_I;
 
-        AddCode_BasexmlHttpGet(theUrl, 'PUT', 3, Main_OAuth + AddUser_UsernameArray[0].access_token, AddCode_FallowRequestReady);
+        AddCode_BasexmlHttpGet(theUrl, 'PUT', 3, Main_OAuth + AddUser_UsernameArray[0].access_token, AddCode_FollowRequestReady);
     }
 
-    function AddCode_FallowRequestReady(xmlHttp) {
+    function AddCode_FollowRequestReady(xmlHttp) {
         if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) { //success user now is fallowing the channel
-                AddCode_IsFallowing = true;
-                if (AddCode_PlayRequest) Play_setFallow();
-                else ChannelContent_setFallow();
+            if (xmlHttp.status === 200) { //success user now is following the channel
+                AddCode_IsFollowing = true;
+                if (AddCode_PlayRequest) Play_setFollow();
+                else ChannelContent_setFollow();
                 return;
             } else if (xmlHttp.status === 401 || xmlHttp.status === 403) { //token expired
-                AddCode_refreshTokens(0, 0, AddCode_Fallow, null);
+                AddCode_refreshTokens(0, 0, AddCode_Follow, null);
             } else {
-                AddCode_FallowRequestError();
+                AddCode_FollowRequestError();
             }
         }
     }
 
-    function AddCode_FallowRequestError() {
+    function AddCode_FollowRequestError() {
         AddCode_loadingDataTry++;
-        if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) AddCode_FallowRequest();
+        if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) AddCode_FollowRequest();
     }
 
-    function AddCode_UnFallow() {
+    function AddCode_UnFollow() {
         AddCode_loadingDataTry = 0;
-        AddCode_UnFallowRequest();
+        AddCode_UnFollowRequest();
     }
 
-    function AddCode_UnFallowRequest() {
+    function AddCode_UnFollowRequest() {
         var theUrl = Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/follows/channels/' + AddCode_Channel_id + Main_TwithcV5Flag_I;
 
-        AddCode_BasexmlHttpGet(theUrl, 'DELETE', 3, Main_OAuth + AddUser_UsernameArray[0].access_token, AddCode_UnFallowRequestReady);
+        AddCode_BasexmlHttpGet(theUrl, 'DELETE', 3, Main_OAuth + AddUser_UsernameArray[0].access_token, AddCode_UnFollowRequestReady);
     }
 
-    function AddCode_UnFallowRequestReady(xmlHttp) {
+    function AddCode_UnFollowRequestReady(xmlHttp) {
         if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 204) { //success user is now not fallowing the channel
-                AddCode_IsFallowing = false;
-                if (AddCode_PlayRequest) Play_setFallow();
-                else ChannelContent_setFallow();
+            if (xmlHttp.status === 204) { //success user is now not following the channel
+                AddCode_IsFollowing = false;
+                if (AddCode_PlayRequest) Play_setFollow();
+                else ChannelContent_setFollow();
                 return;
             } else if (xmlHttp.status === 401 || xmlHttp.status === 403) { //token expired
-                AddCode_refreshTokens(0, 0, AddCode_UnFallow, null);
+                AddCode_refreshTokens(0, 0, AddCode_UnFollow, null);
             } else {
-                AddCode_UnFallowRequestError();
+                AddCode_UnFollowRequestError();
             }
         }
     }
 
-    function AddCode_UnFallowRequestError() {
+    function AddCode_UnFollowRequestError() {
         AddCode_loadingDataTry++;
-        if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) AddCode_UnFallowRequest();
+        if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) AddCode_UnFollowRequest();
     }
 
     function AddCode_CheckSub() {
@@ -1381,9 +1381,9 @@
         PlayVod_NotSub();
     }
 
-    function AddCode_FallowGame() {
+    function AddCode_FollowGame() {
         AddCode_loadingDataTry = 0;
-        if (Main_values.Main_gameSelected_id) AddCode_RequestFallowGame();
+        if (Main_values.Main_gameSelected_id) AddCode_RequestFollowGame();
         else AddCode_GetGameId();
     }
 
@@ -1396,10 +1396,10 @@
 
     function AddCode_GetGameIdReady(xmlHttp) {
         if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) { //success we now fallow the game
+            if (xmlHttp.status === 200) { //success we now follow the game
                 Main_values.Main_gameSelected_id = JSON.parse(xmlHttp.responseText).data[0].id;
                 AddCode_loadingDataTry = 0;
-                AddCode_RequestFallowGame();
+                AddCode_RequestFollowGame();
                 return;
             } else { // internet error
                 AddCode_GetGameIdError();
@@ -1412,108 +1412,108 @@
         if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) AddCode_GetGameId();
     }
 
-    function AddCode_RequestFallowGame() {
+    function AddCode_RequestFollowGame() {
         var theUrl = Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/follows/games/' +
             Main_values.Main_gameSelected_id + Main_TwithcV5Flag_I;
 
-        AddCode_BasexmlHttpGet(theUrl, 'PUT', 3, Main_OAuth + AddUser_UsernameArray[0].access_token, AddCode_RequestFallowGameReady);
+        AddCode_BasexmlHttpGet(theUrl, 'PUT', 3, Main_OAuth + AddUser_UsernameArray[0].access_token, AddCode_RequestFollowGameReady);
     }
 
-    function AddCode_RequestFallowGameReady(xmlHttp) {
+    function AddCode_RequestFollowGameReady(xmlHttp) {
         if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) { //success we now fallow the game
-                AGame_fallowing = true;
-                AGame_setFallow();
+            if (xmlHttp.status === 200) { //success we now follow the game
+                AGame_following = true;
+                AGame_setFollow();
                 return;
             } else if (xmlHttp.status === 401 || xmlHttp.status === 403) { //token expired
-                AddCode_refreshTokens(0, 0, AddCode_FallowGame, null);
+                AddCode_refreshTokens(0, 0, AddCode_FollowGame, null);
             } else { // internet error
-                AddCode_FallowGameRequestError();
+                AddCode_FollowGameRequestError();
             }
         }
     }
 
-    function AddCode_FallowGameRequestError() {
+    function AddCode_FollowGameRequestError() {
         AddCode_loadingDataTry++;
-        if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) AddCode_RequestFallowGame();
+        if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) AddCode_RequestFollowGame();
     }
 
-    function AddCode_UnFallowGame() {
+    function AddCode_UnFollowGame() {
         AddCode_loadingDataTry = 0;
-        AddCode_RequestUnFallowGame();
+        AddCode_RequestUnFollowGame();
     }
 
-    function AddCode_RequestUnFallowGame() {
+    function AddCode_RequestUnFollowGame() {
         var theUrl = 'https://api.twitch.tv/api/users/' + AddUser_UsernameArray[0].name +
             '/follows/games/' + encodeURIComponent(Main_values.Main_gameSelected) + '?oauth_token=' +
             AddUser_UsernameArray[0].access_token + Main_TwithcV5Flag;
 
-        AddCode_BasexmlHttpGet(theUrl, 'DELETE', 2, null, AddCode_UnFallowGameRequestReady);
+        AddCode_BasexmlHttpGet(theUrl, 'DELETE', 2, null, AddCode_UnFollowGameRequestReady);
     }
 
-    function AddCode_UnFallowGameRequestReady(xmlHttp) {
+    function AddCode_UnFollowGameRequestReady(xmlHttp) {
         if (xmlHttp.readyState === 4) {
 
-            if (xmlHttp.status === 404 || xmlHttp.status === 204) { // success we now unfallow the game
-                if (xmlHttp.status === 204) { // success we now unfallow the game
-                    AGame_fallowing = false;
-                    AGame_setFallow();
+            if (xmlHttp.status === 404 || xmlHttp.status === 204) { // success we now unfollow the game
+                if (xmlHttp.status === 204) { // success we now unfollow the game
+                    AGame_following = false;
+                    AGame_setFollow();
                 } else if (JSON.parse(xmlHttp.responseText).message.indexOf('does not follow') !== -1) {
-                    AGame_fallowing = false;
-                    AGame_setFallow();
-                } else AddCode_UnFallowGameRequestError();
+                    AGame_following = false;
+                    AGame_setFollow();
+                } else AddCode_UnFollowGameRequestError();
             } else if (xmlHttp.status === 401 || xmlHttp.status === 403) { //token expired
-                AddCode_refreshTokens(0, 0, AddCode_UnFallowGame, null);
+                AddCode_refreshTokens(0, 0, AddCode_UnFollowGame, null);
             } else { // internet error
-                AddCode_UnFallowGameRequestError();
+                AddCode_UnFollowGameRequestError();
             }
         }
     }
 
-    function AddCode_UnFallowGameRequestError() {
+    function AddCode_UnFollowGameRequestError() {
         AddCode_loadingDataTry++;
-        if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) AddCode_RequestUnFallowGame();
+        if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) AddCode_RequestUnFollowGame();
         else {
             Main_showWarningDialog(STR_410_FEATURING);
             window.setTimeout(Main_HideWarningDialog, 2000);
         }
     }
 
-    function AddCode_CheckFallowGame() {
+    function AddCode_CheckFollowGame() {
         AddCode_loadingDataTry = 0;
-        AddCode_RequestCheckFallowGame();
+        AddCode_RequestCheckFollowGame();
     }
 
-    function AddCode_RequestCheckFallowGame() {
+    function AddCode_RequestCheckFollowGame() {
         var theUrl = 'https://api.twitch.tv/api/users/' + AddUser_UsernameArray[0].name + '/follows/games/' +
             encodeURIComponent(Main_values.Main_gameSelected) + Main_TwithcV5Flag_I;
 
-        AddCode_BasexmlHttpGetBack(theUrl, 'GET', 2, null, AddCode_CheckFallowGameReady);
+        AddCode_BasexmlHttpGetBack(theUrl, 'GET', 2, null, AddCode_CheckFollowGameReady);
     }
 
-    function AddCode_CheckFallowGameReady(xmlHttp) {
+    function AddCode_CheckFollowGameReady(xmlHttp) {
         if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) { //success yes user fallows
-                AGame_fallowing = true;
-                AGame_setFallow();
+            if (xmlHttp.status === 200) { //success yes user follows
+                AGame_following = true;
+                AGame_setFollow();
                 return;
-            } else if (xmlHttp.status === 404) { //success no user doesnot fallows
-                AGame_fallowing = false;
-                AGame_setFallow();
+            } else if (xmlHttp.status === 404) { //success no user doesnot follows
+                AGame_following = false;
+                AGame_setFollow();
                 return;
             } else { // internet error
-                AddCode_CheckFallowGameError();
+                AddCode_CheckFollowGameError();
                 return;
             }
         }
     }
 
-    function AddCode_CheckFallowGameError() {
+    function AddCode_CheckFollowGameError() {
         AddCode_loadingDataTry++;
-        if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) AddCode_RequestCheckFallowGame();
+        if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) AddCode_RequestCheckFollowGame();
         else {
-            AGame_fallowing = false;
-            AGame_setFallow();
+            AGame_following = false;
+            AGame_setFollow();
         }
     }
 
@@ -1919,7 +1919,7 @@
     var ChannelContent_lastselectedChannel = '';
     var ChannelContent_responseText = null;
     var ChannelContent_selectedChannelViews = '';
-    var ChannelContent_selectedChannelFallower = '';
+    var ChannelContent_selectedChannelFollower = '';
     var ChannelContent_description = '';
     var ChannelContent_ChannelValue = {};
     var ChannelContent_ChannelValueIsset = false;
@@ -1950,7 +1950,7 @@
             Main_YRst(ChannelContent_cursorY);
             Main_ShowElement(ChannelContent_ids[10]);
             ChannelContent_checkUser();
-            ChannelContent_removeAllFallowFocus();
+            ChannelContent_removeAllFollowFocus();
             ChannelContent_addFocus();
             Main_SaveValues();
         } else ChannelContent_StartLoad();
@@ -2069,7 +2069,7 @@
         ChannelContent_offline_image = ChannelContent_offline_image ? ChannelContent_offline_image.replace("1920x1080", Main_VideoSize) : ChannelContent_offline_image;
         ChannelContent_profile_banner = channel.profile_banner;
         ChannelContent_selectedChannelViews = channel.views;
-        ChannelContent_selectedChannelFallower = channel.followers;
+        ChannelContent_selectedChannelFollower = channel.followers;
         ChannelContent_description = channel.description;
         Main_values.Main_selectedChannelLogo = channel.logo;
         Main_values.Main_selectedChannelPartner = channel.partner;
@@ -2086,16 +2086,16 @@
             ChannelContent_offline_image = null;
             ChannelContent_profile_banner = IMG_404_BANNER;
             ChannelContent_selectedChannelViews = '';
-            ChannelContent_selectedChannelFallower = '';
+            ChannelContent_selectedChannelFollower = '';
             ChannelContent_description = '';
             Main_values.Main_selectedChannelLogo = IMG_404_LOGO;
             ChannelContent_loadDataSuccess();
         }
     }
 
-    function ChannelContent_setFallow() {
-        if (AddCode_IsFallowing) Main_innerHTML("channel_content_titley_2", '<i class="icon-heart" style="color: #6441a4; font-size: 100%;"></i>' + STR_SPACE + STR_SPACE + STR_FALLOWING);
-        else Main_innerHTML("channel_content_titley_2", '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + (AddUser_UserIsSet() ? STR_FALLOW : STR_NOKEY));
+    function ChannelContent_setFollow() {
+        if (AddCode_IsFollowing) Main_innerHTML("channel_content_titley_2", '<i class="icon-heart" style="color: #6441a4; font-size: 100%;"></i>' + STR_SPACE + STR_SPACE + STR_FOLLOWING);
+        else Main_innerHTML("channel_content_titley_2", '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + (AddUser_UserIsSet() ? STR_FOLLOW : STR_NOKEY));
     }
 
     function ChannelContent_loadDataSuccess() {
@@ -2110,8 +2110,8 @@
         streamer_bio += ChannelContent_selectedChannelViews !== '' ?
             STR_BR + Main_addCommas(ChannelContent_selectedChannelViews) + STR_VIEWS : '';
 
-        streamer_bio += ChannelContent_selectedChannelFallower !== '' ?
-            STR_BR + Main_addCommas(ChannelContent_selectedChannelFallower) + STR_FALLOWERS : '';
+        streamer_bio += ChannelContent_selectedChannelFollower !== '' ?
+            STR_BR + Main_addCommas(ChannelContent_selectedChannelFollower) + STR_FOLLOWERS : '';
 
         streamer_bio += ChannelContent_description !== '' ?
             STR_BR + STR_BR + STR_ABOUT + ':' + STR_BR + twemoji.parse(ChannelContent_description) : '';
@@ -2182,25 +2182,25 @@
     }
 
     function ChannelContent_checkUser() {
-        if (ChannelContent_UserChannels) ChannelContent_setFallow();
+        if (ChannelContent_UserChannels) ChannelContent_setFollow();
         else if (AddUser_UserIsSet()) {
             AddCode_Channel_id = Main_values.Main_selectedChannel_id;
             AddCode_PlayRequest = false;
-            AddCode_CheckFallow();
+            AddCode_CheckFollow();
         } else {
-            AddCode_IsFallowing = false;
-            ChannelContent_setFallow();
+            AddCode_IsFollowing = false;
+            ChannelContent_setFollow();
         }
     }
 
     function ChannelContent_addFocus() {
         if (ChannelContent_cursorY) Main_AddClass('channel_content_thumbdiv0_0', Main_classThumb);
-        else ChannelContent_addFocusFallow();
+        else ChannelContent_addFocusFollow();
 
         Main_handleKeyUp();
     }
 
-    function ChannelContent_addFocusFallow() {
+    function ChannelContent_addFocusFollow() {
         Main_AddClass('channel_content_thumbdivy_' + ChannelContent_cursorX, 'stream_switch_focused');
     }
 
@@ -2209,7 +2209,7 @@
         else Main_RemoveClass('channel_content_thumbdivy_' + ChannelContent_cursorX, 'stream_switch_focused');
     }
 
-    function ChannelContent_removeAllFallowFocus() {
+    function ChannelContent_removeAllFollowFocus() {
         Main_RemoveClass('channel_content_thumbdivy_0', 'stream_switch_focused');
         Main_RemoveClass('channel_content_thumbdivy_1', 'stream_switch_focused');
         Main_RemoveClass('channel_content_thumbdivy_2', 'stream_switch_focused');
@@ -2237,8 +2237,8 @@
                 if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
                     AddCode_PlayRequest = false;
                     AddCode_Channel_id = Main_values.Main_selectedChannel_id;
-                    if (AddCode_IsFallowing) AddCode_UnFallow();
-                    else AddCode_Fallow();
+                    if (AddCode_IsFollowing) AddCode_UnFollow();
+                    else AddCode_Follow();
                 } else {
                     Main_showWarningDialog(STR_NOKEY_WARN);
                     window.setTimeout(Main_HideWarningDialog, 2000);
@@ -3564,9 +3564,9 @@
         Main_textContent("dialog_vod_text", STR_VOD_HISTORY);
         Main_innerHTML("dialog_vod_start_text", STR_FROM_START);
 
-        Main_innerHTML('channel_content_titley_0', '<i class="icon-movie-play stream_channel_fallow_icon"></i>' + STR_SPACE + STR_SPACE + STR_VIDEOS);
-        Main_innerHTML('channel_content_titley_1', '<i class="icon-movie stream_channel_fallow_icon"></i>' + STR_SPACE + STR_SPACE + STR_CLIPS);
-        Main_innerHTML('channel_content_titley_2', '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + STR_FALLOW);
+        Main_innerHTML('channel_content_titley_0', '<i class="icon-movie-play stream_channel_follow_icon"></i>' + STR_SPACE + STR_SPACE + STR_VIDEOS);
+        Main_innerHTML('channel_content_titley_1', '<i class="icon-movie stream_channel_follow_icon"></i>' + STR_SPACE + STR_SPACE + STR_CLIPS);
+        Main_innerHTML('channel_content_titley_2', '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + STR_FOLLOW);
     }
 
     function Main_IconLoad(lable, icon, string) {
@@ -4541,8 +4541,8 @@
         if (AddUser_UserIsSet()) {
             AddCode_PlayRequest = true;
             AddCode_Channel_id = Main_values.Main_selectedChannel_id;
-            AddCode_CheckFallow();
-        } else Play_hideFallow();
+            AddCode_CheckFollow();
+        } else Play_hideFollow();
 
         document.addEventListener('visibilitychange', PlayClip_Resume, false);
         PlayClip_IsJumping = false;
@@ -4639,7 +4639,7 @@
             }
         };
 
-        //    xmlHttp.send('{"query":"\\n query getClipStatus($slug:ID!) {\\n clip(slug: $slug) {\\n videoQualities {\\n frameRate\\n quality\\n sourceURL\\n }\\n }\\n }\\n","variables":{"slug":"' + 
+        //    xmlHttp.send('{"query":"\\n query getClipStatus($slug:ID!) {\\n clip(slug: $slug) {\\n videoQualities {\\n frameRate\\n quality\\n sourceURL\\n }\\n }\\n }\\n","variables":{"slug":"' +
         //    ChannelClip_playUrl +'"}}');
 
         xmlHttp.send('{"query":"\\n {\\n clip(slug: \\"' + ChannelClip_playUrl +
@@ -5895,8 +5895,8 @@
         if (AddUser_UserIsSet()) {
             AddCode_PlayRequest = true;
             AddCode_Channel_id = Main_values.Play_selectedChannel_id;
-            AddCode_CheckFallow();
-        } else Play_hideFallow();
+            AddCode_CheckFollow();
+        } else Play_hideFollow();
 
         response = JSON.parse(response);
         if (response.stream !== null) {
@@ -6555,9 +6555,9 @@
     function Play_exitMain() {
 
         if (AddUser_UserIsSet()) {
-            AddCode_IsFallowing = false;
-            Play_setFallow();
-        } else Play_hideFallow();
+            AddCode_IsFollowing = false;
+            Play_setFollow();
+        } else Play_hideFollow();
 
         UserLiveFeed_PreventHide = false;
         PlayVod_ProgresBarrUpdate(0, 0);
@@ -6618,9 +6618,9 @@
         Play_IsWarning = false;
     }
 
-    function Play_hideFallow() {
-        Play_controls[Play_controlsFallow].setLable(STR_NOKEY);
-        AddCode_IsFallowing = false;
+    function Play_hideFollow() {
+        Play_controls[Play_controlsFollow].setLable(STR_NOKEY);
+        AddCode_IsFollowing = false;
     }
 
     function Play_showBufferDialog() {
@@ -7103,7 +7103,7 @@
             Main_values.Main_selectedChannel_id = Main_values.Play_selectedChannel_id;
             Main_values.Main_selectedChannel = Main_values.Play_selectedChannel;
             Main_values.Main_selectedChannelDisplayname = Main_values.Play_selectedChannelDisplayname;
-            ChannelContent_UserChannels = AddCode_IsFallowing;
+            ChannelContent_UserChannels = AddCode_IsFollowing;
             Play_hideChat();
             Play_shutdownStream();
         } else if (PlayVodClip === 2) PlayVod_shutdownStream();
@@ -7154,10 +7154,10 @@
         else if (PlayVodClip === 3) PlayClip_shutdownStream();
     }
 
-    function Play_FallowUnfallow() {
+    function Play_FollowUnfollow() {
         if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
-            if (AddCode_IsFallowing) AddCode_UnFallow();
-            else AddCode_Fallow();
+            if (AddCode_IsFollowing) AddCode_UnFollow();
+            else AddCode_Follow();
         } else {
             Play_showWarningDialog(STR_NOKEY_WARN);
             Play_IsWarning = true;
@@ -7309,8 +7309,8 @@
         Play_PlayEndStart(1);
     }
 
-    function Play_setFallow() {
-        Play_controls[Play_controlsFallow].setLable(AddCode_IsFallowing ? STR_FALLOWING : STR_FALLOW, AddCode_IsFallowing);
+    function Play_setFollow() {
+        Play_controls[Play_controlsFollow].setLable(AddCode_IsFollowing ? STR_FOLLOWING : STR_FOLLOW, AddCode_IsFollowing);
     }
 
     function Play_KeyReturn(is_vod) {
@@ -7602,7 +7602,7 @@
     var Play_controlsChanelCont = 1;
     var Play_controlsGameCont = 2;
     var Play_controlsOpenVod = 3;
-    var Play_controlsFallow = 4;
+    var Play_controlsFollow = 4;
     var Play_controlsQuality = 5;
     var Play_controlsLowLatency = 6;
     var Play_controlsChat = 7;
@@ -7683,28 +7683,28 @@
         };
 
 
-        Play_controls[Play_controlsFallow] = { //fallowing
+        Play_controls[Play_controlsFollow] = { //following
             icons: "heart-o",
-            string: STR_FALLOW,
+            string: STR_FOLLOW,
             values: '',
             defaultValue: null,
             opacity: 0,
             enterKey: function(PlayVodClip) {
 
                 AddCode_Channel_id = (PlayVodClip === 1 ? Main_values.Play_selectedChannel_id : Main_values.Main_selectedChannel_id);
-                Play_FallowUnfallow();
+                Play_FollowUnfollow();
 
                 Play_Resetpanel(PlayVodClip);
             },
-            setLable: function(string, AddCode_IsFallowing) {
+            setLable: function(string, AddCode_IsFollowing) {
                 Main_textContent('extra_button_text' + this.position, string);
-                this.setIcon(AddCode_IsFallowing);
-                Main_textContent('extra_button_' + this.position, AddCode_IsFallowing ? STR_CLICK_UNFALLOW : STR_CLICK_FALLOW);
+                this.setIcon(AddCode_IsFollowing);
+                Main_textContent('extra_button_' + this.position, AddCode_IsFollowing ? STR_CLICK_UNFOLLOW : STR_CLICK_FOLLOW);
             },
-            setIcon: function(AddCode_IsFallowing) {
+            setIcon: function(AddCode_IsFollowing) {
                 Main_innerHTML('controls_icon_' + this.position, '<i class="pause_button3d icon-' +
-                    (AddCode_IsFallowing ? "heart" : "heart-o") +
-                    '" style="color: #' + (AddCode_IsFallowing ? "6441a4" : "FFFFFF") + ';" ></i>');
+                    (AddCode_IsFollowing ? "heart" : "heart-o") +
+                    '" style="color: #' + (AddCode_IsFollowing ? "6441a4" : "FFFFFF") + ';" ></i>');
             },
         };
 
@@ -8341,8 +8341,8 @@
         if (AddUser_UserIsSet()) {
             AddCode_Channel_id = Main_values.Main_selectedChannel_id;
             AddCode_PlayRequest = true;
-            AddCode_CheckFallow();
-        } else Play_hideFallow();
+            AddCode_CheckFollow();
+        } else Play_hideFollow();
     }
 
     function PlayVod_updateVodInfo() {
@@ -8396,8 +8396,8 @@
         if (AddUser_UserIsSet()) {
             AddCode_PlayRequest = true;
             AddCode_Channel_id = Main_values.Main_selectedChannel_id;
-            AddCode_CheckFallow();
-        } else Play_hideFallow();
+            AddCode_CheckFollow();
+        } else Play_hideFollow();
 
         //View bot is blocking it
         //new Image().src = response.increment_view_count_url;
@@ -9757,7 +9757,7 @@
 
     function Screens_loadDataSuccessFinish() {
         if (!inUseObj.status) {
-            if (Main_values.Main_Go === Main_aGame) AGame_Checkfallow();
+            if (Main_values.Main_Go === Main_aGame) AGame_Checkfollow();
 
             if (inUseObj.emptyContent) Main_showWarningDialog(inUseObj.empty_str());
             else {
@@ -9875,7 +9875,7 @@
             }
         }
         if (inUseObj.posY < 0) {
-            Screens_addFocusFallow();
+            Screens_addFocusFollow();
             //Reset screen position
             document.getElementById(inUseObj.ids[10]).style.top = '';
             if (!inUseObj.emptyContent) Main_CounterDialog(inUseObj.posX, inUseObj.posY + 1, inUseObj.ColoumnsCount, inUseObj.itemsCount);
@@ -10115,14 +10115,14 @@
         Screens_addFocus();
     }
 
-    function Screens_addFocusFallow() {
+    function Screens_addFocusFollow() {
         if (inUseObj.posX > inUseObj.SwitchesIcons.length - 1) inUseObj.posX = 0;
         else if (inUseObj.posX < 0) inUseObj.posX = inUseObj.SwitchesIcons.length - 1;
 
         Main_AddClass(inUseObj.ids[0] + 'y_' + inUseObj.posX, 'stream_switch_focused');
     }
 
-    function Screens_removeFocusFallow() {
+    function Screens_removeFocusFollow() {
         if (inUseObj.posX > inUseObj.SwitchesIcons.length - 1) inUseObj.posX = 0;
         else if (inUseObj.posX < 0) inUseObj.posX = inUseObj.SwitchesIcons.length - 1;
 
@@ -10146,11 +10146,11 @@
             Screens_ClearAnimation();
             inUseObj.posY = -1;
             if (inUseObj.posX > inUseObj.SwitchesIcons.length - 1) inUseObj.posX = 1;
-            Screens_addFocusFallow();
+            Screens_addFocusFollow();
         } else if (inUseObj.HasSwitches && (inUseObj.posY) === -1 && (Main_ThumbNull(0, inUseObj.posX, inUseObj.ids[0]))) {
             inUseObj.posY = 0;
             Screens_addFocus();
-            Screens_removeFocusFallow();
+            Screens_removeFocusFollow();
         } else {
             for (var i = 0; i < inUseObj.ColoumnsCount; i++) {
                 if (Main_ThumbNull((inUseObj.posY + y), (inUseObj.posX - i), inUseObj.ids[0])) {
@@ -10171,9 +10171,9 @@
     function Screens_KeyLeftRight(y, x) {
         if (inUseObj.HasSwitches && inUseObj.posY === -1) {
             inUseObj.posY = -1;
-            Screens_removeFocusFallow();
+            Screens_removeFocusFollow();
             inUseObj.posX += (!x ? 1 : -1);
-            Screens_addFocusFallow();
+            Screens_addFocusFollow();
         } else if (Main_ThumbNull((inUseObj.posY), (inUseObj.posX + y), inUseObj.ids[0]))
             Screens_ChangeFocus(0, (inUseObj.posX + y));
         else if (Main_ThumbNull((inUseObj.posY + y), x, inUseObj.ids[0]))
@@ -10192,7 +10192,7 @@
         if (Main_ThumbNull(inUseObj.posY, inUseObj.posX, inUseObj.ids[0])) {
             Main_removeFocus(inUseObj.posY + '_' + inUseObj.posX, inUseObj.ids);
         } else if (inUseObj.posY < 0) {
-            Screens_removeFocusFallow();
+            Screens_removeFocusFollow();
             inUseObj.posY = 0;
             inUseObj.posX = 0;
         }
@@ -10312,12 +10312,12 @@
             Main_values.Main_OldgameSelected = Main_values.Main_gameSelected;
             AGame_headerOptionsExit();
             Main_SwitchScreenAction();
-        } else AGame_fallow();
+        } else AGame_follow();
     }
 
     function AGame_headerOptionsExit() {
         if (inUseObj.status && inUseObj.posY === -1) {
-            Screens_removeFocusFallow();
+            Screens_removeFocusFollow();
             inUseObj.posY = 0;
             inUseObj.posX = 0;
             Main_AddClass(inUseObj.ids[0] + '0_' + inUseObj.posX, Main_classThumb);
@@ -10326,10 +10326,10 @@
         Main_HideElement(inUseObj.ids[10]);
     }
 
-    function AGame_fallow() {
+    function AGame_follow() {
         if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
-            if (AGame_fallowing) AddCode_UnFallowGame();
-            else AddCode_FallowGame();
+            if (AGame_following) AddCode_UnFollowGame();
+            else AddCode_FollowGame();
         } else {
             Main_showWarningDialog(STR_NOKEY_WARN);
             window.setTimeout(function() {
@@ -10339,17 +10339,17 @@
         }
     }
 
-    function AGame_Checkfallow() {
-        if (AddUser_UserIsSet()) AddCode_CheckFallowGame();
+    function AGame_Checkfollow() {
+        if (AddUser_UserIsSet()) AddCode_CheckFollowGame();
         else {
-            AGame_fallowing = false;
-            AGame_setFallow();
+            AGame_following = false;
+            AGame_setFollow();
         }
     }
 
-    function AGame_setFallow() {
-        if (AGame_fallowing) Main_innerHTML(AGame.ids[3] + "y_2", '<i class="icon-heart" style="color: #6441a4; font-size: 100%;"></i>' + STR_SPACE + STR_SPACE + STR_FALLOWING);
-        else Main_innerHTML(AGame.ids[3] + "y_2", '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + (AddUser_UserIsSet() ? STR_FALLOW : STR_NOKEY));
+    function AGame_setFollow() {
+        if (AGame_following) Main_innerHTML(AGame.ids[3] + "y_2", '<i class="icon-heart" style="color: #6441a4; font-size: 100%;"></i>' + STR_SPACE + STR_SPACE + STR_FOLLOWING);
+        else Main_innerHTML(AGame.ids[3] + "y_2", '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + (AddUser_UserIsSet() ? STR_FOLLOW : STR_NOKEY));
     }
 
     var Screens_PeriodDialogID;
@@ -10540,7 +10540,7 @@
 
     var Vod_DoAnimateThumb = 1;
 
-    var AGame_fallowing = false;
+    var AGame_following = false;
 
     //Screens
     var Clip;
@@ -10756,16 +10756,16 @@
                 this.TopRowCreated = true;
                 this.row = document.createElement('div');
                 var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_CLIP];
-                var thumbfallow, div, i = 0;
+                var thumbfollow, div, i = 0;
 
                 for (i; i < SwitchesStrings.length; i++) {
-                    thumbfallow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_fallow_icon"></i>' + SwitchesStrings[i];
+                    thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
                     div = document.createElement('div');
                     div.setAttribute('id', this.ids[8] + 'y_' + i);
                     div.className = 'stream_cell_period';
                     div.innerHTML = '<div id="' + this.ids[0] +
                         'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                        'y_' + i + '" class="stream_channel_fallow_game">' + thumbfallow + '</div></div>';
+                        'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
                     this.row.appendChild(div);
                 }
                 document.getElementById(this.table).appendChild(this.row);
@@ -10828,16 +10828,16 @@
                 this.TopRowCreated = true;
                 this.row = document.createElement('div');
                 var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_TYPE, STR_SPACE + STR_SPACE + STR_SWITCH_POS];
-                var thumbfallow, div, i = 0;
+                var thumbfollow, div, i = 0;
 
                 for (i; i < SwitchesStrings.length; i++) {
-                    thumbfallow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_fallow_icon"></i>' + SwitchesStrings[i];
+                    thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
                     div = document.createElement('div');
                     div.setAttribute('id', this.ids[8] + 'y_' + i);
                     div.className = 'stream_cell_period';
                     div.innerHTML = '<div id="' + this.ids[0] +
                         'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                        'y_' + i + '" class="stream_channel_fallow_game">' + thumbfallow + '</div></div>';
+                        'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
                     this.row.appendChild(div);
                 }
                 document.getElementById(this.table).appendChild(this.row);
@@ -10918,16 +10918,16 @@
                 this.TopRowCreated = true;
                 this.row = document.createElement('div');
                 var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_CLIP];
-                var thumbfallow, div, i = 0;
+                var thumbfollow, div, i = 0;
 
                 for (i; i < SwitchesStrings.length; i++) {
-                    thumbfallow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_fallow_icon"></i>' + SwitchesStrings[i];
+                    thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
                     div = document.createElement('div');
                     div.setAttribute('id', this.ids[8] + 'y_' + i);
                     div.className = 'stream_cell_period';
                     div.innerHTML = '<div id="' + this.ids[0] +
                         'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                        'y_' + i + '" class="stream_channel_fallow_game">' + thumbfallow + '</div></div>';
+                        'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
                     this.row.appendChild(div);
                 }
                 document.getElementById(this.table).appendChild(this.row);
@@ -10989,16 +10989,16 @@
                 this.TopRowCreated = true;
                 this.row = document.createElement('div');
                 var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_TYPE];
-                var thumbfallow, div, i = 0;
+                var thumbfollow, div, i = 0;
 
                 for (i; i < SwitchesStrings.length; i++) {
-                    thumbfallow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_fallow_icon"></i>' + SwitchesStrings[i];
+                    thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
                     div = document.createElement('div');
                     div.setAttribute('id', this.ids[8] + 'y_' + i);
                     div.className = 'stream_cell_period';
                     div.innerHTML = '<div id="' + this.ids[0] +
                         'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                        'y_' + i + '" class="stream_channel_fallow_game">' + thumbfallow + '</div></div>';
+                        'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
                     this.row.appendChild(div);
                 }
                 document.getElementById(this.table).appendChild(this.row);
@@ -11171,11 +11171,11 @@
                     this.HeaderQuatity = 2;
                     this.token = null;
                     if (this.followerChannelsDone) {
-                        //User fallowed channels list is done, load live channels
+                        //User followed channels list is done, load live channels
                         this.url = this.base_url + '?channel=' + encodeURIComponent(this.followerChannels) + '&' +
                             'limit=' + Main_ItemsLimitMax + '&offset=' + this.offset + '&stream_type=all';
                     } else {
-                        //User fallowed channels list is not done, load fallowed channels
+                        //User followed channels list is not done, load followed channels
                         this.url = Main_kraken_api + 'users/' +
                             encodeURIComponent(AddUser_UsernameArray[0].id) +
                             '/follows/channels?limit=' + Main_ItemsLimitMax + '&offset=' + this.loadChannelOffsset +
@@ -11196,7 +11196,7 @@
 
         UserLive.concatenate = function(responseText) {
             if (this.token || this.followerChannelsDone) {
-                //User has added a key or fallowed channels list is done, concatenate live channels
+                //User has added a key or followed channels list is done, concatenate live channels
                 if (this.data) {
                     responseText = JSON.parse(responseText);
 
@@ -11230,7 +11230,7 @@
                     response_items = response.length;
 
                 if (response_items) { // response_items here is not always 99 because banned channels, so check until it is 0
-                    //User fallowed channels list is not done, load fallowed channels
+                    //User followed channels list is not done, load followed channels
                     var ChannelTemp = '',
                         x = 0;
 
@@ -11241,7 +11241,7 @@
 
                     this.loadChannelOffsset += response_items;
                 } else { // end
-                    //User fallowed channels list is done, load live channels
+                    //User followed channels list is done, load live channels
                     this.followerChannels = this.followerChannels.slice(0, -1);
                     this.followerChannelsDone = true;
                 }
@@ -11334,17 +11334,17 @@
             addSwitches: function() {
                 this.TopRowCreated = true;
                 this.row = document.createElement('div');
-                var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_VIDEOS, STR_SPACE + STR_SPACE + STR_CLIPS, STR_SPACE + STR_SPACE + STR_FALLOW];
-                var thumbfallow, div, i = 0;
+                var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_VIDEOS, STR_SPACE + STR_SPACE + STR_CLIPS, STR_SPACE + STR_SPACE + STR_FOLLOW];
+                var thumbfollow, div, i = 0;
 
                 for (i; i < SwitchesStrings.length; i++) {
-                    thumbfallow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_fallow_icon"></i>' + SwitchesStrings[i];
+                    thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
                     div = document.createElement('div');
                     div.setAttribute('id', this.ids[8] + 'y_' + i);
                     div.className = 'stream_cell_period';
                     div.innerHTML = '<div id="' + this.ids[0] +
                         'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                        'y_' + i + '" class="stream_channel_fallow_game">' + thumbfallow + '</div></div>';
+                        'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
                     this.row.appendChild(div);
                 }
                 document.getElementById(this.table).appendChild(this.row);
@@ -11418,16 +11418,16 @@
             this.TopRowCreated = true;
             this.row = document.createElement('div');
             var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_CLIP, STR_SPACE + STR_SPACE + STR_PLAY_ALL];
-            var thumbfallow, div, i = 0;
+            var thumbfollow, div, i = 0;
 
             for (i; i < SwitchesStrings.length; i++) {
-                thumbfallow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_fallow_icon"></i>' + SwitchesStrings[i];
+                thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
                 div = document.createElement('div');
                 div.setAttribute('id', this.ids[8] + 'y_' + i);
                 div.className = 'stream_cell_period';
                 div.innerHTML = '<div id="' + this.ids[0] +
                     'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                    'y_' + i + '" class="stream_channel_fallow_game">' + thumbfallow + '</div></div>';
+                    'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
                 this.row.appendChild(div);
             }
             document.getElementById(this.table).appendChild(this.row);
@@ -11442,7 +11442,7 @@
                     if (!this.posX) Screens_PeriodStart();
                     else {
                         PlayClip_All = true;
-                        Screens_removeFocusFallow();
+                        Screens_removeFocusFollow();
                         this.posX = 0;
                         this.posY = 0;
                         Main_OpenClip(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
@@ -11720,7 +11720,7 @@
             key_refresh: function() {
                 this.isLive = !this.isLive;
 
-                ScreensObj_SetTopLable(STR_USER, (this.isLive ? STR_LIVE_GAMES : STR_FALLOW_GAMES));
+                ScreensObj_SetTopLable(STR_USER, (this.isLive ? STR_LIVE_GAMES : STR_FOLLOW_GAMES));
 
                 Screens_StartLoad();
 
@@ -11728,9 +11728,9 @@
             },
             label_init: function() {
                 ScreensObj_TopLableUserInit();
-                Main_IconLoad('label_refresh', 'icon-refresh', STR_USER_GAMES_CHANGE + STR_LIVE_GAMES + '/' + STR_FALLOW_GAMES + ":" + STR_GUIDE);
+                Main_IconLoad('label_refresh', 'icon-refresh', STR_USER_GAMES_CHANGE + STR_LIVE_GAMES + '/' + STR_FOLLOW_GAMES + ":" + STR_GUIDE);
 
-                ScreensObj_SetTopLable(STR_USER, (this.isLive ? STR_LIVE_GAMES : STR_FALLOW_GAMES));
+                ScreensObj_SetTopLable(STR_USER, (this.isLive ? STR_LIVE_GAMES : STR_FOLLOW_GAMES));
             },
             label_exit: function() {
                 Main_IconLoad('label_refresh', 'icon-refresh', STR_REFRESH + ":" + STR_GUIDE);
@@ -11841,7 +11841,7 @@
                 Main_values.Main_BeforeChannel = Main_UserChannels;
                 Main_values.Main_Go = Main_ChannelContent;
                 Main_values.Main_BeforeChannelisSet = true;
-                AddCode_IsFallowing = true;
+                AddCode_IsFollowing = true;
                 ChannelContent_UserChannels = true;
                 Screens_exit();
                 Main_SwitchScreen();
@@ -11896,7 +11896,7 @@
                 Main_values.Main_BeforeChannel = Main_SearchChannels;
                 Main_values.Main_Go = Main_ChannelContent;
                 Main_values.Main_BeforeChannelisSet = true;
-                AddCode_IsFallowing = false;
+                AddCode_IsFollowing = false;
                 ChannelContent_UserChannels = false;
                 Screens_exit();
                 Main_SwitchScreen();
@@ -13298,7 +13298,7 @@
             Main_values.Main_BeforeChannel = Main_values.Main_Go;
             Main_values.Main_Go = Main_ChannelContent;
             Main_values.Main_BeforeChannelisSet = true;
-            AddCode_IsFallowing = false;
+            AddCode_IsFollowing = false;
             ChannelContent_UserChannels = false;
             Main_ExitCurrent(Main_values.Main_BeforeChannel);
             Main_values.My_channel = true;

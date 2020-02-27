@@ -20,7 +20,7 @@ var ChannelVod_game = '';
 
 var Vod_DoAnimateThumb = 1;
 
-var AGame_fallowing = false;
+var AGame_following = false;
 
 //Screens
 var Clip;
@@ -236,16 +236,16 @@ function ScreensObj_InitVod() {
             this.TopRowCreated = true;
             this.row = document.createElement('div');
             var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_CLIP];
-            var thumbfallow, div, i = 0;
+            var thumbfollow, div, i = 0;
 
             for (i; i < SwitchesStrings.length; i++) {
-                thumbfallow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_fallow_icon"></i>' + SwitchesStrings[i];
+                thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
                 div = document.createElement('div');
                 div.setAttribute('id', this.ids[8] + 'y_' + i);
                 div.className = 'stream_cell_period';
                 div.innerHTML = '<div id="' + this.ids[0] +
                     'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                    'y_' + i + '" class="stream_channel_fallow_game">' + thumbfallow + '</div></div>';
+                    'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
                 this.row.appendChild(div);
             }
             document.getElementById(this.table).appendChild(this.row);
@@ -308,16 +308,16 @@ function ScreensObj_InitChannelVod() {
             this.TopRowCreated = true;
             this.row = document.createElement('div');
             var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_TYPE, STR_SPACE + STR_SPACE + STR_SWITCH_POS];
-            var thumbfallow, div, i = 0;
+            var thumbfollow, div, i = 0;
 
             for (i; i < SwitchesStrings.length; i++) {
-                thumbfallow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_fallow_icon"></i>' + SwitchesStrings[i];
+                thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
                 div = document.createElement('div');
                 div.setAttribute('id', this.ids[8] + 'y_' + i);
                 div.className = 'stream_cell_period';
                 div.innerHTML = '<div id="' + this.ids[0] +
                     'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                    'y_' + i + '" class="stream_channel_fallow_game">' + thumbfallow + '</div></div>';
+                    'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
                 this.row.appendChild(div);
             }
             document.getElementById(this.table).appendChild(this.row);
@@ -398,16 +398,16 @@ function ScreensObj_InitAGameVod() {
             this.TopRowCreated = true;
             this.row = document.createElement('div');
             var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_CLIP];
-            var thumbfallow, div, i = 0;
+            var thumbfollow, div, i = 0;
 
             for (i; i < SwitchesStrings.length; i++) {
-                thumbfallow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_fallow_icon"></i>' + SwitchesStrings[i];
+                thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
                 div = document.createElement('div');
                 div.setAttribute('id', this.ids[8] + 'y_' + i);
                 div.className = 'stream_cell_period';
                 div.innerHTML = '<div id="' + this.ids[0] +
                     'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                    'y_' + i + '" class="stream_channel_fallow_game">' + thumbfallow + '</div></div>';
+                    'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
                 this.row.appendChild(div);
             }
             document.getElementById(this.table).appendChild(this.row);
@@ -469,16 +469,16 @@ function ScreensObj_InitUserVod() {
             this.TopRowCreated = true;
             this.row = document.createElement('div');
             var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_TYPE];
-            var thumbfallow, div, i = 0;
+            var thumbfollow, div, i = 0;
 
             for (i; i < SwitchesStrings.length; i++) {
-                thumbfallow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_fallow_icon"></i>' + SwitchesStrings[i];
+                thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
                 div = document.createElement('div');
                 div.setAttribute('id', this.ids[8] + 'y_' + i);
                 div.className = 'stream_cell_period';
                 div.innerHTML = '<div id="' + this.ids[0] +
                     'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                    'y_' + i + '" class="stream_channel_fallow_game">' + thumbfallow + '</div></div>';
+                    'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
                 this.row.appendChild(div);
             }
             document.getElementById(this.table).appendChild(this.row);
@@ -651,11 +651,11 @@ function ScreensObj_InitUserLive() {
                 this.HeaderQuatity = 2;
                 this.token = null;
                 if (this.followerChannelsDone) {
-                    //User fallowed channels list is done, load live channels
+                    //User followed channels list is done, load live channels
                     this.url = this.base_url + '?channel=' + encodeURIComponent(this.followerChannels) + '&' +
                         'limit=' + Main_ItemsLimitMax + '&offset=' + this.offset + '&stream_type=all';
                 } else {
-                    //User fallowed channels list is not done, load fallowed channels
+                    //User followed channels list is not done, load followed channels
                     this.url = Main_kraken_api + 'users/' +
                         encodeURIComponent(AddUser_UsernameArray[0].id) +
                         '/follows/channels?limit=' + Main_ItemsLimitMax + '&offset=' + this.loadChannelOffsset +
@@ -676,7 +676,7 @@ function ScreensObj_InitUserLive() {
 
     UserLive.concatenate = function(responseText) {
         if (this.token || this.followerChannelsDone) {
-            //User has added a key or fallowed channels list is done, concatenate live channels
+            //User has added a key or followed channels list is done, concatenate live channels
             if (this.data) {
                 responseText = JSON.parse(responseText);
 
@@ -710,7 +710,7 @@ function ScreensObj_InitUserLive() {
                 response_items = response.length;
 
             if (response_items) { // response_items here is not always 99 because banned channels, so check until it is 0
-                //User fallowed channels list is not done, load fallowed channels
+                //User followed channels list is not done, load followed channels
                 var ChannelTemp = '',
                     x = 0;
 
@@ -721,7 +721,7 @@ function ScreensObj_InitUserLive() {
 
                 this.loadChannelOffsset += response_items;
             } else { // end
-                //User fallowed channels list is done, load live channels
+                //User followed channels list is done, load live channels
                 this.followerChannels = this.followerChannels.slice(0, -1);
                 this.followerChannelsDone = true;
             }
@@ -814,17 +814,17 @@ function ScreensObj_InitAGame() {
         addSwitches: function() {
             this.TopRowCreated = true;
             this.row = document.createElement('div');
-            var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_VIDEOS, STR_SPACE + STR_SPACE + STR_CLIPS, STR_SPACE + STR_SPACE + STR_FALLOW];
-            var thumbfallow, div, i = 0;
+            var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_VIDEOS, STR_SPACE + STR_SPACE + STR_CLIPS, STR_SPACE + STR_SPACE + STR_FOLLOW];
+            var thumbfollow, div, i = 0;
 
             for (i; i < SwitchesStrings.length; i++) {
-                thumbfallow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_fallow_icon"></i>' + SwitchesStrings[i];
+                thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
                 div = document.createElement('div');
                 div.setAttribute('id', this.ids[8] + 'y_' + i);
                 div.className = 'stream_cell_period';
                 div.innerHTML = '<div id="' + this.ids[0] +
                     'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                    'y_' + i + '" class="stream_channel_fallow_game">' + thumbfallow + '</div></div>';
+                    'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
                 this.row.appendChild(div);
             }
             document.getElementById(this.table).appendChild(this.row);
@@ -898,16 +898,16 @@ var Base_Clip_obj = {
         this.TopRowCreated = true;
         this.row = document.createElement('div');
         var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_CLIP, STR_SPACE + STR_SPACE + STR_PLAY_ALL];
-        var thumbfallow, div, i = 0;
+        var thumbfollow, div, i = 0;
 
         for (i; i < SwitchesStrings.length; i++) {
-            thumbfallow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_fallow_icon"></i>' + SwitchesStrings[i];
+            thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
             div = document.createElement('div');
             div.setAttribute('id', this.ids[8] + 'y_' + i);
             div.className = 'stream_cell_period';
             div.innerHTML = '<div id="' + this.ids[0] +
                 'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                'y_' + i + '" class="stream_channel_fallow_game">' + thumbfallow + '</div></div>';
+                'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
             this.row.appendChild(div);
         }
         document.getElementById(this.table).appendChild(this.row);
@@ -922,7 +922,7 @@ var Base_Clip_obj = {
                 if (!this.posX) Screens_PeriodStart();
                 else {
                     PlayClip_All = true;
-                    Screens_removeFocusFallow();
+                    Screens_removeFocusFollow();
                     this.posX = 0;
                     this.posY = 0;
                     Main_OpenClip(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
@@ -1200,7 +1200,7 @@ function ScreensObj_InitUserGames() {
         key_refresh: function() {
             this.isLive = !this.isLive;
 
-            ScreensObj_SetTopLable(STR_USER, (this.isLive ? STR_LIVE_GAMES : STR_FALLOW_GAMES));
+            ScreensObj_SetTopLable(STR_USER, (this.isLive ? STR_LIVE_GAMES : STR_FOLLOW_GAMES));
 
             Screens_StartLoad();
 
@@ -1208,9 +1208,9 @@ function ScreensObj_InitUserGames() {
         },
         label_init: function() {
             ScreensObj_TopLableUserInit();
-            Main_IconLoad('label_refresh', 'icon-refresh', STR_USER_GAMES_CHANGE + STR_LIVE_GAMES + '/' + STR_FALLOW_GAMES + ":" + STR_GUIDE);
+            Main_IconLoad('label_refresh', 'icon-refresh', STR_USER_GAMES_CHANGE + STR_LIVE_GAMES + '/' + STR_FOLLOW_GAMES + ":" + STR_GUIDE);
 
-            ScreensObj_SetTopLable(STR_USER, (this.isLive ? STR_LIVE_GAMES : STR_FALLOW_GAMES));
+            ScreensObj_SetTopLable(STR_USER, (this.isLive ? STR_LIVE_GAMES : STR_FOLLOW_GAMES));
         },
         label_exit: function() {
             Main_IconLoad('label_refresh', 'icon-refresh', STR_REFRESH + ":" + STR_GUIDE);
@@ -1321,7 +1321,7 @@ function ScreensObj_InitUserChannels() {
             Main_values.Main_BeforeChannel = Main_UserChannels;
             Main_values.Main_Go = Main_ChannelContent;
             Main_values.Main_BeforeChannelisSet = true;
-            AddCode_IsFallowing = true;
+            AddCode_IsFollowing = true;
             ChannelContent_UserChannels = true;
             Screens_exit();
             Main_SwitchScreen();
@@ -1376,7 +1376,7 @@ function ScreensObj_InitSearchChannels() {
             Main_values.Main_BeforeChannel = Main_SearchChannels;
             Main_values.Main_Go = Main_ChannelContent;
             Main_values.Main_BeforeChannelisSet = true;
-            AddCode_IsFallowing = false;
+            AddCode_IsFollowing = false;
             ChannelContent_UserChannels = false;
             Screens_exit();
             Main_SwitchScreen();

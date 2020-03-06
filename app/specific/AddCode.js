@@ -145,13 +145,18 @@ function AddCode_refreshTokens(position, tryes, callbackFunc, callbackFuncNOK) {
             if (xmlHttp.status === 200) {
                 AddCode_refreshTokensSucess(xmlHttp.responseText, position, callbackFunc);
             } else {
-                var response = JSON.parse(xmlHttp.responseText);
-                if (response.message) {
-                    if (response.message.indexOf('Invalid refresh token') !== -1) {
-                        AddCode_requestTokensFailRunning(position);
-                        if (callbackFuncNOK) callbackFuncNOK();
+                try {
+                    var response = JSON.parse(xmlHttp.responseText);
+                    if (response.message) {
+                        if (Main_A_includes_B(response.message, 'Invalid refresh token')) {
+                            AddCode_requestTokensFailRunning(position);
+                            if (callbackFuncNOK) callbackFuncNOK();
+                        } else AddCode_refreshTokensError(position, tryes, callbackFunc, callbackFuncNOK);
                     } else AddCode_refreshTokensError(position, tryes, callbackFunc, callbackFuncNOK);
-                } else AddCode_refreshTokensError(position, tryes, callbackFunc, callbackFuncNOK);
+                } catch (e) {
+                    console.log(xmlHttp);
+                    AddCode_refreshTokensError(position, tryes, callbackFunc, callbackFuncNOK);
+                }
             }
         }
     };

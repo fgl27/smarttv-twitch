@@ -136,7 +136,7 @@ Open Windows Powershell as Admin and run the following command to setup chocolat
 
 Close and Re-Open Windows Powershell once the installer is complete and then run the following command
 
-	choco install openjdk8
+	choco install openjdk12
 
 Run the web-ide_Tizen_Studio_X.X_windows-64.exe installer file you downloaded previously with the default options selected
 

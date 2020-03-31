@@ -3376,7 +3376,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = '022120';
+    var Main_minversion = 'March 31, 2020';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
     var Main_ClockOffset = 0;
@@ -11092,7 +11092,7 @@
                 this.check_offset();
 
                 this.url = this.base_url + '&offset=' + this.offset +
-                    (Main_ContentLang !== "" ? ('&broadcaster_language=' + Main_ContentLang) : '');
+                    (Main_ContentLang !== "" ? ('&language=' + Main_ContentLang) : '');
             },
             label_init: function() {
                 Sidepannel_SetDefaultLables();
@@ -11323,7 +11323,7 @@
 
                 this.url = this.base_url + encodeURIComponent(Main_values.Main_gameSelected) +
                     '&limit=' + Main_ItemsLimitMax + '&offset=' + this.offset +
-                    (Main_ContentLang !== "" ? ('&broadcaster_language=' + Main_ContentLang) : '');
+                    (Main_ContentLang !== "" ? ('&language=' + Main_ContentLang) : '');
             },
             label_init: function() {
                 ScreensObj_TopLableAgameInit();

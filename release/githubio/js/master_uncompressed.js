@@ -1393,16 +1393,15 @@
     }
 
     function AddCode_GetGameId() {
-        var theUrl = 'https://api.twitch.tv/helix/games?name=' +
-            Main_values.Main_gameSelected;
+        var theUrl = 'https://api.twitch.tv/api/games/' + encodeURIComponent(Main_values.Main_gameSelected);
 
-        AddCode_BasexmlHttpGet(theUrl, 'GET', 2, null, AddCode_GetGameIdReady);
+        AddCode_BasexmlHttpGetBack(theUrl, 'GET', 2, null, AddCode_GetGameIdReady);
     }
 
     function AddCode_GetGameIdReady(xmlHttp) {
         if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) { //success we now follow the game
-                Main_values.Main_gameSelected_id = JSON.parse(xmlHttp.responseText).data[0].id;
+            if (xmlHttp.status === 200) {
+                Main_values.Main_gameSelected_id = JSON.parse(xmlHttp.responseText)._id;
                 AddCode_loadingDataTry = 0;
                 AddCode_RequestFollowGame();
                 return;
@@ -4364,8 +4363,6 @@
                     callbackSucess(xmlHttp.responseText);
                 } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
                     AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
-                } else if (xmlHttp.status === 410 && inUseObj.screen === Main_games) {
-                    inUseObj.setHelix();
                 } else {
                     calbackError();
                 }
@@ -4400,8 +4397,6 @@
                     callbackSucess(xmlHttp.responseText);
                 } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
                     AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
-                } else if (xmlHttp.status === 410 && inUseObj.screen === Main_games) {
-                    inUseObj.setHelix();
                 } else {
                     calbackError();
                 }
@@ -9520,12 +9515,6 @@
         Main_empty(inUseObj.table);
         Main_HideWarningDialog();
 
-        //After one refresh reset helix
-        if (inUseObj.useHelix) {
-            if (inUseObj.forceResetHelix) inUseObj.resetHelix();
-            else inUseObj.forceResetHelix = true;
-        }
-
         inUseObj.cursor = null;
         inUseObj.after = '';
         inUseObj.status = false;
@@ -11615,13 +11604,10 @@
             Main_SwitchScreenAction();
         },
         setMax: function(tempObj) {
-            if (this.useHelix) {
-                if (tempObj.pagination.cursor) this.after = tempObj.pagination.cursor;
-                else this.dataEnded = true;
-            } else {
-                this.MaxOffset = tempObj._total;
-                if (this.data.length >= this.MaxOffset) this.dataEnded = true;
-            }
+
+            this.MaxOffset = tempObj._total;
+            if (this.data.length >= this.MaxOffset) this.dataEnded = true;
+
         },
         addCell: function(cell) {
             var hasLive = this.isLive || this.screen === Main_games;
@@ -11654,11 +11640,10 @@
             key_pgDown: Main_Vod,
             key_pgUp: Main_Featured,
             object: 'top',
-            useHelix: false,
             base_url: Main_kraken_api + 'games/top?limit=' + Main_ItemsLimitMax,
             set_url: function() {
-                if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset && !this.useHelix) this.dataEnded = true;
-                this.url = this.base_url + (this.useHelix ? '&after=' + this.after : '&offset=' + this.offset);
+                if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+                this.url = this.base_url + '&offset=' + this.offset;
             },
             label_init: function() {
                 Sidepannel_SetDefaultLables();
@@ -11666,38 +11651,7 @@
                 Sidepannel_SetTopOpacity(this.screen);
 
                 ScreensObj_SetTopLable(STR_GAMES);
-            },
-            setHelix: function() {
-                this.useHelix = true;
-                this.base_url = 'https://api.twitch.tv/helix/games/top?first=' + Main_ItemsLimitMax;
-                this.object = 'data';
-                this.forceResetHelix = false;
-                this.addCell = function(cell) {
-                    if (!this.idObject[cell.id]) {
-
-                        this.itemsCount++;
-                        this.idObject[cell.id] = 1;
-
-                        this.row.appendChild(
-                            Screens_createCellGame(
-                                this.row_id + '_' + this.coloumn_id,
-                                this.ids, [cell.box_art_url.replace("{width}x{height}", Main_GameSize),
-                                    cell.name,
-                                    '',
-                                    cell.id
-                                ]));
-
-                        this.coloumn_id++;
-                    }
-                };
-                Screens_StartLoad();
-            },
-            resetHelix: function() {
-                this.useHelix = false;
-                this.base_url = Main_kraken_api + 'games/top?limit=' + Main_ItemsLimitMax;
-                this.object = 'top';
-                this.addCell = Base_Game_obj.addCell;
-            },
+            }
         }, Base_obj);
 
         Game = Screens_assign(Game, Base_Game_obj);

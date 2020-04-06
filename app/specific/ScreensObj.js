@@ -147,7 +147,7 @@ var Base_Vod_obj = {
     HasAnimateThumb: true,
     Vod_newImg: new Image(),
     AnimateThumb: function(screen) {
-        window.clearInterval(this.AnimateThumbId);
+        window.clearInterval(screen.AnimateThumbId);
         if (!Vod_DoAnimateThumb) return;
         var div = document.getElementById(this.ids[6] + this.posY + '_' + this.posX);
 

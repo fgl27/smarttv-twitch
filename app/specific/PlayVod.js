@@ -118,6 +118,7 @@ function PlayVod_PosStart() {
     Main_values.Play_WasPlaying = 2;
     Main_SaveValues();
 
+    window.clearInterval(PlayVod_SaveOffsetId);
     PlayVod_SaveOffsetId = window.setInterval(PlayVod_SaveOffset, 60000);
     //View bot is blocking it
     //new Image().src = Play_IncrementView;
@@ -258,10 +259,13 @@ function PlayVod_Resume() {
         if (PlayVod_isOn) {
             Play_showBufferDialog();
             Play_ResumeAfterOnlineCounter = 0;
+
+            window.clearInterval(Play_ResumeAfterOnlineId);
             if (navigator.onLine) PlayVod_ResumeAfterOnline();
             else Play_ResumeAfterOnlineId = window.setInterval(PlayVod_ResumeAfterOnline, 100);
 
             Play_EndSet(2);
+            window.clearInterval(PlayVod_SaveOffsetId);
             PlayVod_SaveOffsetId = window.setInterval(PlayVod_SaveOffset, 60000);
         }
     }

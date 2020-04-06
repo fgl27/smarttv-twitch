@@ -218,6 +218,7 @@ function Main_initWindows() {
         Play_PreStart();
 
         if (AddUser_UserIsSet()) {
+            window.clearInterval(Main_updateUserFeedId);
             Main_updateUserFeedId = window.setInterval(Main_updateUserFeed, 600000);
         }
         document.body.addEventListener("keyup", Main_handleKeyUp, false);
@@ -236,6 +237,7 @@ function Main_initWindows() {
 
         PlayVod_RestoreVodIds();
 
+        window.clearInterval(Main_updateclockId);
         Main_updateclockId = window.setInterval(Main_updateclock, 60000);
 
         inUseObj = Live;

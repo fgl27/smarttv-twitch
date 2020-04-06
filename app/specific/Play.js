@@ -371,6 +371,7 @@ function Play_Start() {
     document.body.removeEventListener("keyup", Main_handleKeyUp);
     Play_updateStreamInfoStart();
     Play_loadData();
+    window.clearInterval(Play_streamInfoTimerId);
     Play_streamInfoTimerId = window.setInterval(Play_updateStreamInfo, 60000);
 }
 
@@ -506,8 +507,12 @@ function Play_Resume() {
             if (!Play_LoadLogoSucess) Play_updateStreamInfoStart();
             else Play_updateStreamInfo();
             Play_ResumeAfterOnlineCounter = 0;
+
+            window.clearInterval(Play_ResumeAfterOnlineId);
             if (navigator.onLine) Play_ResumeAfterOnline();
             else Play_ResumeAfterOnlineId = window.setInterval(Play_ResumeAfterOnline, 100);
+
+            window.clearInterval(Play_streamInfoTimerId);
             Play_streamInfoTimerId = window.setInterval(Play_updateStreamInfo, 60000);
         }
     }

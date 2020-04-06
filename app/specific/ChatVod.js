@@ -279,7 +279,7 @@ function Chat_Clear() {
 function Main_Addline(id) {
     var elem, i;
     if (Chat_Position < (Chat_Messages.length - 1)) {
-        for (i = Chat_Position; i < Chat_Messages.length; i++ , Chat_Position++) {
+        for (i = Chat_Position; i < Chat_Messages.length; i++, Chat_Position++) {
             if (Chat_Messages[i].time < (PlayVod_currentTime / 1000)) {
                 elem = document.createElement('div');
                 elem.className = 'chat_line';

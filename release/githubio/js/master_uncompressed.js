@@ -1018,6 +1018,8 @@
     }
 
     function AddCode_refreshTokens(position, tryes, callbackFunc, callbackFuncNOK) {
+        if (!AddUser_UsernameArray[position] || !AddUser_UsernameArray[position].access_token) return;
+
         var xmlHttp = new XMLHttpRequest();
 
         var url = AddCode_UrlToken + 'grant_type=refresh_token&client_id=' +
@@ -1043,7 +1045,6 @@
                             } else AddCode_refreshTokensError(position, tryes, callbackFunc, callbackFuncNOK);
                         } else AddCode_refreshTokensError(position, tryes, callbackFunc, callbackFuncNOK);
                     } catch (e) {
-                        console.log(xmlHttp);
                         AddCode_refreshTokensError(position, tryes, callbackFunc, callbackFuncNOK);
                     }
                 }
@@ -1064,10 +1065,11 @@
         if (AddCode_TokensCheckScope(response.scope)) {
             AddUser_UsernameArray[position].access_token = response.access_token;
             AddUser_UsernameArray[position].refresh_token = response.refresh_token;
+            AddUser_UsernameArray[position].expires_in = response.expires_in;
 
             AddUser_SaveUserArray();
 
-            AddCode_Refreshtimeout(position, response.expires_in);
+            AddCode_Refreshtimeout(position);
 
         } else AddCode_requestTokensFailRunning(position);
 
@@ -1125,15 +1127,13 @@
     }
 
     function AddCode_requestTokensFailRunning(position) {
-        //Token fail remove it and warn
+        //Token fail remove it
         Users_status = false;
         Main_HideLoadDialog();
-        Main_showWarningDialog(STR_OAUTH_FAIL);
         AddUser_UsernameArray[position].access_token = 0;
         AddUser_UsernameArray[position].refresh_token = 0;
         AddUser_SaveUserArray();
         Main_SaveValues();
-        window.setTimeout(Main_HideWarningDialog, 4000);
     }
 
     function AddCode_requestTokensSucess(responseText) {
@@ -1205,7 +1205,6 @@
         if (xmlHttp.readyState === 4) {
             if (xmlHttp.status === 200) AddCode_CheckTokenSuccess(xmlHttp.responseText, position);
             else if (xmlHttp.status === 401 || xmlHttp.status === 403) { //token expired
-                AddCode_loadingDataTry = 0;
                 AddCode_refreshTokens(position, 0, null, null);
             } else AddCode_CheckTokenError(position, tryes);
         }
@@ -1214,14 +1213,22 @@
     function AddCode_CheckTokenSuccess(responseText, position) {
         var token = JSON.parse(responseText);
         if (token.scopes && !AddCode_TokensCheckScope(token.scopes)) AddCode_requestTokensFailRunning(position);
-        else if (token.expires_in) AddCode_Refreshtimeout(position, token.expires_in);
+        else if (token.expires_in) {
+            AddUser_UsernameArray[position].expires_in = token.expires_in;
+            AddCode_Refreshtimeout(position);
+        }
     }
 
-    function AddCode_Refreshtimeout(position, time) {
-        window.setTimeout(function() {
-            AddCode_loadingDataTry = 0;
-            AddCode_refreshTokens(position, 0, null, null);
-        }, (time - 60) * 1000);
+    function AddCode_Refreshtimeout(position) {
+        window.clearTimeout(AddUser_UsernameArray[position].timeout_id);
+
+        if (AddUser_UsernameArray[position].access_token) {
+            AddUser_UsernameArray[position].timeout_id = window.setTimeout(function() {
+
+                AddCode_refreshTokens(position, 0, null, null);
+
+            }, (parseInt(AddUser_UsernameArray[position].expires_in) - 60) * 1000);
+        }
     }
 
     function AddCode_CheckTokenError(position, tryes) {
@@ -1833,7 +1840,9 @@
             display_name: AddUser_Username.display_name,
             logo: AddUser_Username.logo,
             access_token: 0,
-            refresh_token: 0
+            refresh_token: 0,
+            expires_in: 0,
+            timeout_id: null,
         });
 
         AddUser_SaveUserArray();
@@ -1848,10 +1857,13 @@
         AddUser_loadingData = false;
     }
 
-    function AddUser_removeUser(Position) {
+    function AddUser_removeUser(position) {
         // remove the user
-        var index = AddUser_UsernameArray.indexOf(AddUser_UsernameArray[Position]);
-        if (index > -1) AddUser_UsernameArray.splice(index, 1);
+        var index = AddUser_UsernameArray.indexOf(AddUser_UsernameArray[position]);
+        if (index > -1) {
+            window.clearTimeout(AddUser_UsernameArray[position].timeout_id);
+            AddUser_UsernameArray.splice(index, 1);
+        }
 
         // reset localStorage usernames
         AddUser_SaveUserArray();
@@ -1859,7 +1871,7 @@
         // restart users and smarthub
         if (AddUser_UsernameArray.length > 0) {
             //Reset main user if user is 0
-            if (!Position) AddUser_UpdateSidepanel();
+            if (!position) AddUser_UpdateSidepanel();
             Users_status = false;
             Users_init();
         } else {
@@ -1877,14 +1889,18 @@
             });
             AddUser_UsernameArray.splice(0, 0, mainuser[0]);
         }
-
+        console.log(AddUser_UsernameArray);
         Main_setItem('AddUser_UsernameArray', JSON.stringify(AddUser_UsernameArray));
     }
 
-    function AddUser_UserMakeOne(Position) {
-        AddUser_Username = AddUser_UsernameArray[0];
-        AddUser_UsernameArray[0] = AddUser_UsernameArray[Position];
-        AddUser_UsernameArray[Position] = AddUser_Username;
+    function AddUser_UserMakeOne(position) {
+        var temp_Username = JSON.parse(JSON.stringify(AddUser_UsernameArray[0]));
+        AddUser_UsernameArray[0] = JSON.parse(JSON.stringify(AddUser_UsernameArray[position]));
+        AddUser_UsernameArray[position] = temp_Username;
+
+        AddCode_Refreshtimeout(0);
+        AddCode_Refreshtimeout(position);
+
         AddUser_SaveUserArray();
         Users_status = false;
         AddUser_UpdateSidepanel();
@@ -3375,7 +3391,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'March 31, 2020';
+    var Main_minversion = 'April 06, 2020';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
     var Main_ClockOffset = 0;
@@ -3475,6 +3491,7 @@
             Play_PreStart();
 
             if (AddUser_UserIsSet()) {
+                window.clearInterval(Main_updateUserFeedId);
                 Main_updateUserFeedId = window.setInterval(Main_updateUserFeed, 600000);
             }
             document.body.addEventListener("keyup", Main_handleKeyUp, false);
@@ -3493,6 +3510,7 @@
 
             PlayVod_RestoreVodIds();
 
+            window.clearInterval(Main_updateclockId);
             Main_updateclockId = window.setInterval(Main_updateclock, 60000);
 
             inUseObj = Live;
@@ -5719,6 +5737,7 @@
         document.body.removeEventListener("keyup", Main_handleKeyUp);
         Play_updateStreamInfoStart();
         Play_loadData();
+        window.clearInterval(Play_streamInfoTimerId);
         Play_streamInfoTimerId = window.setInterval(Play_updateStreamInfo, 60000);
     }
 
@@ -5854,8 +5873,12 @@
                 if (!Play_LoadLogoSucess) Play_updateStreamInfoStart();
                 else Play_updateStreamInfo();
                 Play_ResumeAfterOnlineCounter = 0;
+
+                window.clearInterval(Play_ResumeAfterOnlineId);
                 if (navigator.onLine) Play_ResumeAfterOnline();
                 else Play_ResumeAfterOnlineId = window.setInterval(Play_ResumeAfterOnline, 100);
+
+                window.clearInterval(Play_streamInfoTimerId);
                 Play_streamInfoTimerId = window.setInterval(Play_updateStreamInfo, 60000);
             }
         }
@@ -8290,6 +8313,7 @@
         Main_values.Play_WasPlaying = 2;
         Main_SaveValues();
 
+        window.clearInterval(PlayVod_SaveOffsetId);
         PlayVod_SaveOffsetId = window.setInterval(PlayVod_SaveOffset, 60000);
         //View bot is blocking it
         //new Image().src = Play_IncrementView;
@@ -8430,10 +8454,13 @@
             if (PlayVod_isOn) {
                 Play_showBufferDialog();
                 Play_ResumeAfterOnlineCounter = 0;
+
+                window.clearInterval(Play_ResumeAfterOnlineId);
                 if (navigator.onLine) PlayVod_ResumeAfterOnline();
                 else Play_ResumeAfterOnlineId = window.setInterval(PlayVod_ResumeAfterOnline, 100);
 
                 Play_EndSet(2);
+                window.clearInterval(PlayVod_SaveOffsetId);
                 PlayVod_SaveOffsetId = window.setInterval(PlayVod_SaveOffset, 60000);
             }
         }
@@ -10661,7 +10688,7 @@
         HasAnimateThumb: true,
         Vod_newImg: new Image(),
         AnimateThumb: function(screen) {
-            window.clearInterval(this.AnimateThumbId);
+            window.clearInterval(screen.AnimateThumbId);
             if (!Vod_DoAnimateThumb) return;
             var div = document.getElementById(this.ids[6] + this.posY + '_' + this.posX);
 

@@ -129,6 +129,8 @@ function AddCode_KeyboardEvent(event) {
 }
 
 function AddCode_refreshTokens(position, tryes, callbackFunc, callbackFuncNOK) {
+    if (!AddUser_UsernameArray[position] || !AddUser_UsernameArray[position].access_token) return;
+
     var xmlHttp = new XMLHttpRequest();
 
     var url = AddCode_UrlToken + 'grant_type=refresh_token&client_id=' +
@@ -154,7 +156,6 @@ function AddCode_refreshTokens(position, tryes, callbackFunc, callbackFuncNOK) {
                         } else AddCode_refreshTokensError(position, tryes, callbackFunc, callbackFuncNOK);
                     } else AddCode_refreshTokensError(position, tryes, callbackFunc, callbackFuncNOK);
                 } catch (e) {
-                    console.log(xmlHttp);
                     AddCode_refreshTokensError(position, tryes, callbackFunc, callbackFuncNOK);
                 }
             }
@@ -175,10 +176,11 @@ function AddCode_refreshTokensSucess(responseText, position, callbackFunc) {
     if (AddCode_TokensCheckScope(response.scope)) {
         AddUser_UsernameArray[position].access_token = response.access_token;
         AddUser_UsernameArray[position].refresh_token = response.refresh_token;
+        AddUser_UsernameArray[position].expires_in = response.expires_in;
 
         AddUser_SaveUserArray();
 
-        AddCode_Refreshtimeout(position, response.expires_in);
+        AddCode_Refreshtimeout(position);
 
     } else AddCode_requestTokensFailRunning(position);
 
@@ -236,15 +238,13 @@ function AddCode_requestTokensFail() {
 }
 
 function AddCode_requestTokensFailRunning(position) {
-    //Token fail remove it and warn
+    //Token fail remove it
     Users_status = false;
     Main_HideLoadDialog();
-    Main_showWarningDialog(STR_OAUTH_FAIL);
     AddUser_UsernameArray[position].access_token = 0;
     AddUser_UsernameArray[position].refresh_token = 0;
     AddUser_SaveUserArray();
     Main_SaveValues();
-    window.setTimeout(Main_HideWarningDialog, 4000);
 }
 
 function AddCode_requestTokensSucess(responseText) {
@@ -316,7 +316,6 @@ function AddCode_CheckTokenReady(xmlHttp, position, tryes) {
     if (xmlHttp.readyState === 4) {
         if (xmlHttp.status === 200) AddCode_CheckTokenSuccess(xmlHttp.responseText, position);
         else if (xmlHttp.status === 401 || xmlHttp.status === 403) { //token expired
-            AddCode_loadingDataTry = 0;
             AddCode_refreshTokens(position, 0, null, null);
         } else AddCode_CheckTokenError(position, tryes);
     }
@@ -325,14 +324,22 @@ function AddCode_CheckTokenReady(xmlHttp, position, tryes) {
 function AddCode_CheckTokenSuccess(responseText, position) {
     var token = JSON.parse(responseText);
     if (token.scopes && !AddCode_TokensCheckScope(token.scopes)) AddCode_requestTokensFailRunning(position);
-    else if (token.expires_in) AddCode_Refreshtimeout(position, token.expires_in);
+    else if (token.expires_in) {
+        AddUser_UsernameArray[position].expires_in = token.expires_in;
+        AddCode_Refreshtimeout(position);
+    }
 }
 
-function AddCode_Refreshtimeout(position, time) {
-    window.setTimeout(function() {
-        AddCode_loadingDataTry = 0;
-        AddCode_refreshTokens(position, 0, null, null);
-    }, (time - 60) * 1000);
+function AddCode_Refreshtimeout(position) {
+    window.clearTimeout(AddUser_UsernameArray[position].timeout_id);
+
+    if (AddUser_UsernameArray[position].access_token) {
+        AddUser_UsernameArray[position].timeout_id = window.setTimeout(function() {
+
+            AddCode_refreshTokens(position, 0, null, null);
+
+        }, (parseInt(AddUser_UsernameArray[position].expires_in) - 60) * 1000);
+    }
 }
 
 function AddCode_CheckTokenError(position, tryes) {

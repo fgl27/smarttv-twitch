@@ -2167,7 +2167,7 @@
 
         Main_innerHTML("channel_content_thumbdiv0_0", '<div class="stream_thumbnail_live_img"><img class="stream_img" alt="" src="' + preview_thumbnail.replace("{width}x{height}", Main_VideoSize) + Main_randomimg +
             '" onerror="this.onerror=null;this.src=\'' + IMG_404_VIDEO +
-            '\'"></div><div class="stream_thumbnail_live_text_holder"><span class="stream_spam_text_holder"><div id="channel_content_cell0_3" style="line-height: 1.6ch;"><div class="stream_info_live_name" style="width:' + (ishosting ? 99 : 66) + '%; display: inline-block;">' +
+            '\'"></div><div class="stream_thumbnail_live_text_holder"><div class="stream_text_holder"><div id="channel_content_cell0_3" style="line-height: 1.6ch;"><div class="stream_info_live_name" style="width:' + (ishosting ? 99 : 66) + '%; display: inline-block;">' +
             '<i class="icon-' + (rerun ? 'refresh' : 'circle') + ' live_icon strokedeline" style="color: ' +
             (rerun ? '#FFFFFF' : ishosting ? '#FED000' : 'red') +
             ';"></i> ' + channel_display_name + '</div><div class="stream_info_live" style="width:' +
@@ -2175,16 +2175,16 @@
             (ishosting ? '' : quality) + '</div></div>' +
             '<div class="stream_info_live_title">' + stream_title + '</div>' +
             '<div id="channel_content_cell0_5" class="stream_info_live">' + (stream_game !== "" ? STR_PLAYING + stream_game : "") +
-            '</div>' + '<div class="stream_info_live">' + viwers + '</div></span></div>');
+            '</div>' + '<div class="stream_info_live">' + viwers + '</div></div></div>');
     }
 
     function ChannelContent_createCellOffline() {
         ChannelContent_isoffline = true;
         Main_innerHTML("channel_content_thumbdiv0_0", '<div class="stream_thumbnail_live_img"><img class="stream_img" alt="" src="' + ChannelContent_offline_image + Main_randomimg +
             '" onerror="this.onerror=null;this.src=\'' + IMG_404_VIDEO +
-            '\'"></div><div class="stream_thumbnail_live_text_holder"><span class="stream_spam_text_holder" style="font-size: 150%;"><div style="line-height: 1.6ch;"><div class="stream_info_live_name" style="width:99%; display: inline-block;">' +
+            '\'"></div><div class="stream_thumbnail_live_text_holder"><div class="stream_text_holder" style="font-size: 150%;"><div style="line-height: 1.6ch;"><div class="stream_info_live_name" style="width:99%; display: inline-block;">' +
             Main_values.Main_selectedChannelDisplayname + '</div><div class="stream_info_live" style="width:0%; float: right; text-align: right; display: inline-block;"></div></div>' +
-            '<div class="stream_info_live">' + STR_CH_IS_OFFLINE + '</div></span>' +
+            '<div class="stream_info_live">' + STR_CH_IS_OFFLINE + '</div></div>' +
             '</div>');
     }
 
@@ -9701,11 +9701,11 @@
             idArray[1] + id + '" class="stream_img" alt="" src="' + valuesArray[0] +
             '" onerror="this.onerror=null;this.src=\'' + inUseObj.img_404 + '\'"></div><div id="' +
             idArray[2] + id +
-            '" class="stream_thumbnail_game_text_holder"><span class="stream_spam_text_holder"><div id="<div id="' +
+            '" class="stream_thumbnail_game_text_holder"><div class="stream_text_holder"><div id="<div id="' +
             idArray[3] + id + '" class="stream_info_game_name">' + valuesArray[1] + '</div>' +
             (valuesArray[2] !== '' ? '<div id="' + idArray[4] + id +
                 '"class="stream_info_live" style="width: 100%; display: inline-block;">' + valuesArray[2] +
-                '</div>' : '') + '</div></span></div>');
+                '</div>' : '') + '</div></div></div>');
     }
 
     function Screens_createCellClip(id, idArray, valuesArray) {
@@ -9718,7 +9718,7 @@
             idArray[1] + id + '" class="stream_img" alt="" src="' + valuesArray[13] +
             '" onerror="this.onerror=null;this.src=\'' + inUseObj.img_404 + '\'"></div><div id="' +
             idArray[2] + id +
-            '" class="stream_thumbnail_live_text_holder"><span class="stream_spam_text_holder"><div style="line-height: 1.6ch;"><div id="' +
+            '" class="stream_thumbnail_live_text_holder"><div class="stream_text_holder"><div style="line-height: 1.6ch;"><div id="' +
             idArray[3] + id + '" class="stream_info_live_name" style="width: 72%; display: inline-block;">' +
             valuesArray[4] + '</div><div id="' + idArray[7] + id +
             '"class="stream_info_live" style="width:27%; float: right; text-align: right; display: inline-block;">' +
@@ -9729,7 +9729,7 @@
             '"class="stream_info_live" style="width: auto; display: inline-block;">' + valuesArray[11] + ',' + STR_SPACE +
             valuesArray[12] + '</div><div id="' + idArray[5] + id +
             '"class="stream_info_live" style="width: 6ch; display: inline-block; float: right; text-align: right;">' +
-            Play_timeS(valuesArray[1]) + '</div></div></div></span></div></div>');
+            Play_timeS(valuesArray[1]) + '</div></div></div></div></div></div>');
     }
 
     function Screens_createCellVod(id, idArray, valuesArray) {
@@ -9741,7 +9741,7 @@
             '><img id="' + idArray[1] + id + '" class="stream_img" alt="" src="' + valuesArray[0] +
             '" onerror="this.onerror=null;this.src=\'' + inUseObj.img_404 + '\'"></div><div id="' +
             idArray[2] + id +
-            '" class="stream_thumbnail_live_text_holder"><span class="stream_spam_text_holder"><div style="line-height: 1.6ch;"><div id="' +
+            '" class="stream_thumbnail_live_text_holder"><div class="stream_text_holder"><div style="line-height: 1.6ch;"><div id="' +
             idArray[3] + id + '" class="stream_info_live_name" style="width: 72%; display: inline-block;">' +
             valuesArray[1] + '</div><div id="' + idArray[7] + id +
             '"class="stream_info_live" style="width:27%; float: right; text-align: right; display: inline-block;">' + valuesArray[5] +
@@ -9751,7 +9751,7 @@
             '<div style="line-height: 1.3ch;"><div id="' + idArray[4] + id + '"class="stream_info_live" style="width: auto; display: inline-block;">' +
             valuesArray[2] + ',' + STR_SPACE + valuesArray[4] + '</div><div id="' + idArray[5] + id +
             '"class="stream_info_live" style="width: 9ch; display: inline-block; float: right; text-align: right;">' +
-            Play_timeS(valuesArray[6]) + '</div></div></span></div></div>');
+            Play_timeS(valuesArray[6]) + '</div></div></div></div></div>');
     }
 
     function Screens_createCellLive(id, data, idArray, valuesArray) {
@@ -9764,7 +9764,7 @@
             idArray[1] + id + '" class="stream_img" alt="" src="' + valuesArray[0] + Main_randomimg +
             '" onerror="this.onerror=null;this.src=\'' + inUseObj.img_404 + '\'"></div><div id="' +
             idArray[2] + id +
-            '" class="stream_thumbnail_live_text_holder"><span class="stream_spam_text_holder"><div style="line-height: 1.6ch;"><div id="' +
+            '" class="stream_thumbnail_live_text_holder"><div class="stream_text_holder"><div style="line-height: 1.6ch;"><div id="' +
             idArray[3] + id + '" class="stream_info_live_name" style="width:' + (ishosting ? 99 : 66) + '%; display: inline-block;">' +
             '<i class="icon-' + (data[2] ? 'refresh' : 'circle') + ' live_icon strokedeline" style="color: ' +
             (data[2] ? '#FFFFFF' : ishosting ? '#FED000' : 'red') +
@@ -9773,7 +9773,7 @@
             valuesArray[5] + '</div></div>' +
             '<div id="' + idArray[4] + id + '"class="stream_info_live_title">' + twemoji.parse(valuesArray[2]) + '</div>' +
             '<div id="' + idArray[5] + id + '"class="stream_info_live">' + (valuesArray[3] !== "" ? STR_PLAYING + valuesArray[3] : "") +
-            '</div>' + '<div id="' + idArray[6] + id + '"class="stream_info_live">' + valuesArray[4] + '</div></span></div></div>');
+            '</div>' + '<div id="' + idArray[6] + id + '"class="stream_info_live">' + valuesArray[4] + '</div></div></div></div>');
     }
 
     function Screens_loadDataSuccessFinish() {
@@ -14080,14 +14080,14 @@
         div.innerHTML = '<div id="' + UserLiveFeed_ids[0] + id + '" class="stream_thumbnail_player_feed" >' +
             '<div class="stream_thumbnail_live_img"><img id="' + UserLiveFeed_ids[1] + id + '" alt="" class="stream_img" src="' + valuesArray[0] +
             Main_randomimg + '" onerror="this.onerror=null;this.src=\'' + IMG_404_VIDEO + '\'"></div>' +
-            '<div id="' + UserLiveFeed_ids[2] + id + '" class="player_live_feed_text"><span class="stream_spam_text_holder">' +
+            '<div id="' + UserLiveFeed_ids[2] + id + '" class="player_live_feed_text"><div class="stream_text_holder">' +
             '<div style="line-height: 1.6ch;"><div id="' + UserLiveFeed_ids[3] + id +
             '" class="stream_info_live_name" style="width: 63%; display: inline-block;">' + Main_ReplaceLargeFont(valuesArray[1]) + '</div>' +
             '<div "class="stream_info_live" style="width:36%; float: right; text-align: right; display: inline-block; font-size: 75%; ">' +
             '<i class="icon-' + (!data[2] ? 'circle" style="color: red;' : 'refresh" style="') + ' font-size: 75%; "></i>' +
             STR_SPACE + valuesArray[3] + '</div></div><div id="' + UserLiveFeed_ids[4] + id +
             '"class="stream_info_live_title">' + Main_ReplaceLargeFont(twemoji.parse(valuesArray[4])) + '</div><div id="' +
-            UserLiveFeed_ids[5] + id + '"class="stream_info_live">' + valuesArray[2] + '</div></span></div></div>';
+            UserLiveFeed_ids[5] + id + '"class="stream_info_live">' + valuesArray[2] + '</div></div></div></div>';
 
         return div;
     }

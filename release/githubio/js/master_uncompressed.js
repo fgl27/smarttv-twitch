@@ -1889,7 +1889,7 @@
             });
             AddUser_UsernameArray.splice(0, 0, mainuser[0]);
         }
-        console.log(AddUser_UsernameArray);
+
         Main_setItem('AddUser_UsernameArray', JSON.stringify(AddUser_UsernameArray));
     }
 

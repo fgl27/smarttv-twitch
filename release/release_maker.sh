@@ -177,21 +177,18 @@ sed -i 's/Main_isReleased = false/Main_isReleased = true/g' app/specific/Main.js
 
 mkdir -p "$temp_maker_folder"
 
-cp -rf index.html "$temp_maker_folder"master.css
-cp -rf index.html "$temp_maker_folder"index.html
-cp -rf config.xml "$temp_maker_folder"config.xml
+cp -rf app/index.html "$temp_maker_folder"master.css
+cp -rf app/index.html "$temp_maker_folder"index.html
+cp -rf app/config.xml "$temp_maker_folder"config.xml
 sed -i 's/flbtxFhd64/2ulZzjRf8f/g' "$temp_maker_folder"config.xml
-cp -rf release/index.html index_release.html
+cp -rf release/index.html release/index_release.html
 
 sed -i -n '/bodystart/,/bodyend/p' "$temp_maker_folder"index.html
 sed -i -n '/cssstart/,/cssend/p' "$temp_maker_folder"master.css
 
-rm -rf release/app/
-mkdir -p 'release/app/images/'
-cp -rf app/images/app_icon.png release/app/images/app_icon.png
-cp -rf widget.info release/widget.info
-cp -rf .project release/.project
-cp -rf .tproject release/.tproject
+cp -rf app/widget.info release/widget.info
+cp -rf app/.project release/.project
+cp -rf app/.tproject release/.tproject
 
 echo -e "\\n${bldgrn}Compressing Start\\n";
 
@@ -210,14 +207,13 @@ fi;
 #Make a zip
 cd release/ || exit
 rm -rf *.zip
-zip -qr9 release ./ -x master.* html_body.js master.js release_maker.sh beautify.sh jshint.sh \*githubio\* \*temp_maker\*
+zip -qr9 release ./ -x master.* html_body.js index_release.html api.js master.js release_maker.sh beautify.sh jshint.sh \*githubio\* \*temp_maker\*
 
 # Clean up release/ folder temp files and stash all over git changes
-rm -rf app/
-rm -rf config.xml release/config.xml
-rm -rf widget.info release/widget.info
-rm -rf .project release/.project
-rm -rf .tproject release/.tproject
+rm -rf config.xml
+rm -rf widget.info
+rm -rf .project
+rm -rf .tproject
 
 cd - &> /dev/null || exit;
 
@@ -229,8 +225,8 @@ fi;
 # Copy master.css to its place, it's the css content of index.html
 cp -rf "$temp_maker_folder"2master.css release/githubio/css/master.css
 
-cp -rf index_release.html release/index.html 
-rm -rf index_release.html
+cp -rf release/index_release.html release/index.html 
+rm -rf release/index_release.html
 cd release/ || exit
 
 # Run uglifyjs one more time with "toplevel" enable, only here as if run before js files don't work, the result is around 10% compression improve

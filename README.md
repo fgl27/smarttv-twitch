@@ -145,16 +145,7 @@ Run the web-ide_Tizen_Studio_X.X_windows-64.exe installer file you downloaded pr
 * I used the **Tizen Studio 2.4 with IDE installer** (Any version above that must work well), download the 32/64 bit according to your CPU architecture.  On Linux, the file is an executable binary 480Mb in size. To run it, first give the file permission to execute - properties >  permission > Execute... mark, then just drag the file to a terminal window and click enter, **On Linux it may ask you to use apt-get to install missing dependencies below are the one asked by Tizen Studio 2.4 last time I installed it**
 #
 
-	sudo apt-get install libwebkitgtk-1.0-0 rpm2cpio cpio expect python2.7 ruby libpng12-0 libcanberra-gtk-module libcanberra-gtk3-module gettext bridge-utils
-
-
-**If you get a error** "Package libpng12-0 is not available... etc..." do the bellow, if no error skip to **"Install Java SDK"**
-
-	sudo add-apt-repository ppa:linuxuprising/libpng12
-	sudo apt update
-	sudo apt install libpng12-0
-
-	sudo apt-get install libwebkitgtk-1.0-0 rpm2cpio expect python2.7 ruby gettext bridge-utils
+	sudo apt-get install libwebkitgtk-1.0-0 rpm2cpio cpio expect python2.7 ruby libcanberra-gtk-module libcanberra-gtk3-module gettext
 
 **If you get a error** "Package libwebkitgtk-1 is not available... etc..." do the bellow, if no error skip to **"Install Java SDK"**
 
@@ -185,7 +176,7 @@ Run the web-ide_Tizen_Studio_X.X_windows-64.exe installer file you downloaded pr
 * Main tab **(Main SDK)** Install **Tizen SDK tools**,  **(on Linux it may request you to use apt-get to install missing dependencies)**
 
 ![mainsdk](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_2.png)
-* Second tab **(Extension SDK)** under **TV Extensions-5.0** (or wherever X.X TV version there is) install **Web app. Development**, install **Samsung Certificate Extension** and under **TV Extension Tools** install **Web app. Tools** (on Linux it may request you to use apt-get to install missing dependencies)
+* Second tab **(Extension SDK)** under **TV Extensions-5.X** (or wherever X.X TV version there is) install **Web app. Development**, install **Samsung Certificate Extension** and under **TV Extension Tools** install **Web app. Tools** (on Linux it may request you to use apt-get to install missing dependencies)
 
 ![extensionsdk](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_4.png)
 
@@ -230,7 +221,7 @@ If you have a problem on connecting refer back to **[Account and Downloads:](htt
 
 ## Setup the application:
 
-* **[Download and extract the release_4.0.1_V4.zip file Click here, this is the application recipe file](https://github.com/fgl27/smarttv-twitch/releases/download/4.0.1_V4/release_4_0_1_V4.zip)**
+* **[Download and extract the release_4_0_1_V5.zip file Click here, this is the application recipe file](https://github.com/fgl27/smarttv-twitch/releases/download/4.0.1_V5/release_4_0_1_V5.zip)**
 
 * Making the app, Top menu > File > New > Tizen Project > click twice in **Template** > click twice in **TV** > click twice in **Web Application** > click twice in **Empty** > chose a project name "anyname" (avoid special character and spaces) ....click finish
 
@@ -246,7 +237,6 @@ If you have a problem on connecting refer back to **[Account and Downloads:](htt
 * Wait for it to load
 * The name of the folder **AnyName-X.0** changes to **AnyName-tv-samsung-X.0**
 
-![install_app7](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app7.png)
 ![install_app8_1](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app8_1.png)
 ![install_app8_2](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app8_2.png)
 ![install_app8_3](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app8_3.png)

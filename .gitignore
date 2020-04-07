@@ -3,7 +3,10 @@ lang/ru.js
 .sign/signature1.xml
 .sign/author-signature.xml
 .sign/.manifest.tmp
-smarttv-twitch.wgt
+app/.sign/signature1.xml
+app/.sign/author-signature.xml
+app/.sign/.manifest.tmp
+app/*.wgt
 app.json
 index.html.old
 *.old

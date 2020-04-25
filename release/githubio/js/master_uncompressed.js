@@ -1760,6 +1760,7 @@
         if (AddUser_UsernameArray.length > 0) {
             //Check and refresh all tokens at start
             for (var i = 0; i < AddUser_UsernameArray.length; i++) {
+                AddUser_UsernameArray[i].timeout_id = null;
                 if (AddUser_UsernameArray[i].access_token) AddCode_CheckTokenStart(i);
 
                 if (!AddUser_UsernameArray[i].logo) AddUser_UpdateUser(i, 0);
@@ -3391,7 +3392,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'April 06, 2020';
+    var Main_minversion = 'April 25, 2020';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
     var Main_ClockOffset = 0;

@@ -173,6 +173,7 @@ function AddUser_RestoreUsers() {
     if (AddUser_UsernameArray.length > 0) {
         //Check and refresh all tokens at start
         for (var i = 0; i < AddUser_UsernameArray.length; i++) {
+            AddUser_UsernameArray[i].timeout_id = null;
             if (AddUser_UsernameArray[i].access_token) AddCode_CheckTokenStart(i);
 
             if (!AddUser_UsernameArray[i].logo) AddUser_UpdateUser(i, 0);

@@ -2508,7 +2508,7 @@
     }
 
     function ChatLive_loadEmotesChannelRequest() {
-        var theUrl = 'https://api.betterttv.net/2/channels/' + encodeURIComponent(ChatLive_selectedChannel);
+        var theUrl = 'https://api.betterttv.net/3/cached/users/twitch/' + encodeURIComponent(ChatLive_selectedChannel_id);
         var xmlHttp = new XMLHttpRequest();
 
         xmlHttp.open("GET", theUrl, true);
@@ -2536,8 +2536,32 @@
     }
 
     function ChatLive_loadEmotesChannelSuccess(data) {
-        ChatLive_loadEmotesbbtv(JSON.parse(data));
+        data = JSON.parse(data);
+        ChatLive_loadEmotesbbtvChannel(data.channelEmotes);
+        ChatLive_loadEmotesbbtvChannel(data.sharedEmotes);
         extraEmotesDone.bbtv[ChatLive_selectedChannel_id] = 1;
+    }
+
+    function ChatLive_loadEmotesbbtvChannel(data) {
+
+        var url;
+
+        try {
+            data.forEach(function(emote) {
+
+                url = 'https://cdn.betterttv.net/emote/' + emote.id + '/3x';
+
+                extraEmotes[emote.code] = {
+                    code: emote.code,
+                    id: emote.id,
+                    '4x': url
+                };
+
+            });
+        } catch (e) {
+            console.log('ChatLive_loadEmotesbbtvChannel ' + e);
+        }
+
     }
 
     function ChatLive_loadCheersChannel() {
@@ -2634,15 +2658,15 @@
         extraEmotesDone.ffz[ChatLive_selectedChannel_id] = 1;
     }
 
-    function ChatLive_loadEmotesbbtv(data) {
-        data.emotes.forEach(function(emote) {
-            extraEmotes[emote.code] = {
-                code: emote.code,
-                id: emote.id,
-                '4x': 'https:' + data.urlTemplate.replace('{{id}}', emote.id).replace('{{image}}', '3x')
-            };
-        });
-    }
+    //function ChatLive_loadEmotesbbtv(data) {
+    //    data.emotes.forEach(function(emote) {
+    //        extraEmotes[emote.code] = {
+    //            code: emote.code,
+    //            id: emote.id,
+    //            '4x': 'https:' + data.urlTemplate.replace('{{id}}', emote.id).replace('{{image}}', '3x')
+    //        };
+    //    });
+    //}
 
     function ChatLive_loadEmotesffz(data) {
         Object.keys(data.sets).forEach(function(set) {
@@ -2958,7 +2982,7 @@
     }
 
     function Chat_loadEmotesRequest() {
-        var theUrl = 'https://api.betterttv.net/2/emotes';
+        var theUrl = 'https://api.betterttv.net/3/cached/emotes/global';
         BasexmlHttpGet(theUrl, 10000, 0, null, Chat_loadEmotesSuccess, Chat_loadEmotesError, false);
     }
 
@@ -2969,8 +2993,31 @@
     }
 
     function Chat_loadEmotesSuccess(data) {
-        ChatLive_loadEmotesbbtv(JSON.parse(data));
+        Chat_loadEmotesbbtvGlobal(JSON.parse(data));
         Chat_loadEmotesffz();
+    }
+
+    function Chat_loadEmotesbbtvGlobal(data) {
+        extraEmotesDone.bbtvGlobal = {};
+
+        var url;
+
+        try {
+            data.forEach(function(emote) {
+
+                url = 'https://cdn.betterttv.net/emote/' + emote.id + '/3x';
+
+                extraEmotes[emote.code] = {
+                    code: emote.code,
+                    id: emote.id,
+                    '4x': url
+                };
+
+            });
+        } catch (e) {
+            console.log('Chat_loadEmotesbbtvGlobal ' + e);
+        }
+
     }
 
     function Chat_loadEmotesffz() {
@@ -3392,7 +3439,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'April 25, 2020';
+    var Main_minversion = 'April 30, 2020';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
     var Main_ClockOffset = 0;

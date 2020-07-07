@@ -3443,7 +3443,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'April 30, 2020';
+    var Main_minversion = 'July 07, 2020';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
     var Main_ClockOffset = 0;
@@ -11567,7 +11567,8 @@
             set_url: function() {
                 this.url = this.base_url + '&period=' + this.period[this.periodPos - 1] +
                     (this.cursor ? '&cursor=' + this.cursor : '') +
-                    (Main_ContentLang !== "" ? ('&language=' + Main_ContentLang) : '');
+                    (Main_ContentLang !== "" ?
+                        ('&language=' + (Languages_Extra[Main_ContentLang] ? Languages_Extra[Main_ContentLang] : Main_ContentLang)) : '');
             },
             SetPeriod: function() {
                 Main_setItem('Clip_periodPos', this.periodPos);
@@ -11634,7 +11635,8 @@
             set_url: function() {
                 this.url = this.base_url + encodeURIComponent(Main_values.Main_gameSelected) + '&limit=' + Main_ItemsLimitMax +
                     '&period=' + this.period[this.periodPos - 1] + (this.cursor ? '&cursor=' + this.cursor : '') +
-                    (Main_ContentLang !== "" ? ('&language=' + Main_ContentLang) : '');
+                    (Main_ContentLang !== "" ?
+                        ('&language=' + (Languages_Extra[Main_ContentLang] ? Languages_Extra[Main_ContentLang] : Main_ContentLang)) : '');
             },
             SetPeriod: function() {
                 Main_setItem('AGameClip_periodPos', this.periodPos);
@@ -13007,6 +13009,13 @@
             "defaultValue": 1,
             "set_values": "zh"
         }
+    };
+
+    //For clips the api accept a coma and extra languages
+    var Languages_Extra = {
+        "en": "en,en-gb",
+        "es": "es,es-mx",
+        "pt": "pt,pt-br"
     };
 
     var Languages_value_keys = [];

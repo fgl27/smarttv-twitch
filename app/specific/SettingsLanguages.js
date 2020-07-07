@@ -134,6 +134,13 @@ var Languages_value = {
     }
 };
 
+//For clips the api accept a coma and extra languages
+var Languages_Extra = {
+    "en": "en,en-gb",
+    "es": "es,es-mx",
+    "pt": "pt,pt-br"
+};
+
 var Languages_value_keys = [];
 var Languages_positions_length = 0;
 //Variable initialization end

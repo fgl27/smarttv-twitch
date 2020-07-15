@@ -208,7 +208,19 @@ If you have a problem on connecting refer back to **[Account and Downloads:](htt
 * **Tizen Studio** > Tools > Certificate Manager > + > select/click **Tizen** > create a new author.. next > setup name password etc... next > Use the default Tizen... Finish > **Success** click OK
 * Select the certificate it must have a **"V"** on the front of it (that means you have selected it) close the Certificate Manager
 
-![certificate](https://fgl27.github.io/smarttv-twitch/screenshot/install/certificate.png)
+![certificate](https://fgl27.github.io/smarttv-twitch/screenshot/install/certificate_extra1.png)
+
+![certificate](https://fgl27.github.io/smarttv-twitch/screenshot/install/certificate_extra2.png)
+
+![certificate](https://fgl27.github.io/smarttv-twitch/screenshot/install/certificate_extra3.png)
+
+![certificate](https://fgl27.github.io/smarttv-twitch/screenshot/install/certificate_extra4.png)
+
+![certificate](https://fgl27.github.io/smarttv-twitch/screenshot/install/certificate_extra5.png)
+
+![certificate](https://fgl27.github.io/smarttv-twitch/screenshot/install/certificate_extra6.png)
+
+![certificate](https://fgl27.github.io/smarttv-twitch/screenshot/install/certificate_extra7.png)
 
 * **If you click on finish and you see the image above, just go to the next step [Setup the application:](https://github.com/fgl27/smarttv-twitch#setup-the-application)**
 

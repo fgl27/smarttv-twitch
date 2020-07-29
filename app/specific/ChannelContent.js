@@ -96,7 +96,7 @@ function ChannelContent_loadDataRequest() {
 }
 
 function ChannelContent_loadDataRequestSuccess(response) {
-    if (JSON.parse(response).stream !== null) {
+    if (JSON.parse(response).stream) {
         ChannelContent_responseText = response;
         ChannelContent_loadDataPrepare();
         ChannelContent_GetStreamerInfo();
@@ -163,7 +163,7 @@ function ChannelContent_GetStreamerInfoSuccess(responseText) {
     var channel = JSON.parse(responseText);
     ChannelContent_offline_image = channel.video_banner;
     ChannelContent_offline_image = ChannelContent_offline_image ? ChannelContent_offline_image.replace("1920x1080", Main_VideoSize) : ChannelContent_offline_image;
-    ChannelContent_profile_banner = channel.profile_banner;
+    ChannelContent_profile_banner = channel.profile_banner ? channel.profile_banner : IMG_404_BANNER;
     ChannelContent_selectedChannelViews = channel.views;
     ChannelContent_selectedChannelFollower = channel.followers;
     ChannelContent_description = channel.description;
@@ -195,6 +195,8 @@ function ChannelContent_setFollow() {
 }
 
 function ChannelContent_loadDataSuccess() {
+    if (!Main_values.Main_selectedChannelLogo) Main_values.Main_selectedChannelLogo = IMG_404_LOGO;
+
     Main_innerHTML("channel_content_thumbdiv0_1", '<img class="stream_img_channel_logo" alt="" src="' + Main_values.Main_selectedChannelLogo.replace("300x300", '600x600') + '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'">');
 
     Main_innerHTML("channel_content_img0_1", '<img class="stream_img_channel" alt="" src="' + ChannelContent_profile_banner + '" onerror="this.onerror=null;this.src=\'' + IMG_404_BANNER + '\'">');
@@ -214,12 +216,16 @@ function ChannelContent_loadDataSuccess() {
 
     Main_innerHTML("channel_content_infodiv0_1", streamer_bio);
 
-    if (ChannelContent_responseText !== null) {
+    if (ChannelContent_responseText) {
+
         var response = JSON.parse(ChannelContent_responseText);
-        if (response.stream !== null) {
+        if (response.stream) {
+
             var hosting = ChannelContent_TargetId !== undefined ? Main_values.Main_selectedChannelDisplayname +
                 STR_USER_HOSTING : '';
+
             var stream = response.stream;
+
             ChannelContent_createCell(stream.channel.name, stream.channel._id, stream.preview.template,
                 twemoji.parse(stream.channel.status), stream.game,
                 hosting + stream.channel.display_name,
@@ -229,7 +235,9 @@ function ChannelContent_loadDataSuccess() {
                 Main_is_rerun(stream.broadcast_platform));
 
             ChannelContent_cursorX = 1;
+
         } else ChannelContent_createCellOffline();
+
     } else ChannelContent_createCellOffline();
 
     ChannelContent_loadDataSuccessFinish();
@@ -238,6 +246,7 @@ function ChannelContent_loadDataSuccess() {
 function ChannelContent_createCell(channel_name, channel_id, preview_thumbnail, stream_title, stream_game, channel_display_name, viwers, quality, rerun) {
 
     var ishosting = ChannelContent_TargetId !== undefined;
+    if (!preview_thumbnail) preview_thumbnail = IMG_404_VIDEO;
 
     document.getElementById('channel_content_cell0_1').setAttribute(Main_DataAttribute, JSON.stringify([channel_name, channel_id, rerun, channel_display_name]));
 

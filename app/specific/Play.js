@@ -3,7 +3,7 @@ var Play_ChatPositions = 0;
 var Play_ChatPositionConvertBefore = Play_ChatPositions;
 var Play_PlayerPanelOffset = -5;
 var Play_ChatBackground = 0.55;
-var Play_ChatSizeValue = 4;
+var Play_ChatSizeValue = 2;
 var Play_SingleClickExit = 0;
 var Play_MaxChatSizeValue = 4;
 var Play_LowLatency = false;
@@ -11,7 +11,7 @@ var Play_CanLowLatency = true;
 var Play_PanelHideID = null;
 var Play_quality = "source";
 var Play_qualityPlaying = Play_quality;
-var Play_isFullScreen = false;
+var Play_isFullScreen = true;
 var Play_ChatPositionsBF;
 var Play_ChatEnableBF;
 var Play_ChatSizeValueBF;
@@ -42,7 +42,7 @@ var Play_playingTry = 0;
 var Play_playingUrl = '';
 var Play_qualities = [];
 var Play_qualityIndex = 0;
-var Play_ChatEnable = true;
+var Play_ChatEnable = false;
 var Play_exitID = null;
 
 var Play_selectedChannel_id_Old = null;
@@ -183,7 +183,7 @@ function Play_PreStart() {
         //<object id="av-player" type="application/avplayer" style="width:100%; height:100%; position: absolute;"></object>
         var avplay = document.createElement('object');
         avplay.setAttribute('type', 'application/avplayer');
-        avplay.setAttribute('style', 'width:75%; height:75%; top: 12.5%; position: absolute;');
+        avplay.setAttribute('style', 'width:100%; height:100%; position: absolute;');
         document.getElementById('scene2').appendChild(avplay);
         Play_avplay = (window.tizen && window.webapis.avplay) || {};
         Play_TizenVersion = tizen.systeminfo.getCapability("http://tizen.org/feature/platform.version");
@@ -193,8 +193,8 @@ function Play_PreStart() {
     Play_ProgresBarrElm = document.getElementById("inner_progress_bar");
 
     Play_ChatPositions = Main_getItemInt('ChatPositionsValue', 0);
-    Play_ChatSizeValue = Main_getItemInt('ChatSizeValue', 4);
-    Play_ChatEnable = Main_getItemBool('ChatEnable', true);
+    Play_ChatSizeValue = Main_getItemInt('ChatSizeValue', 2);
+    Play_ChatEnable = Main_getItemBool('ChatEnable', false);
     Play_isFullScreen = Main_getItemBool('Play_isFullScreen', true);
     Play_ChatBackground = (Main_values.ChatBackground * 0.05).toFixed(2);
     Play_ChatDelayPosition = Main_getItemInt('Play_ChatDelayPosition', 0);

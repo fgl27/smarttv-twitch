@@ -59,7 +59,7 @@ var Main_values = {
     "Play_ChatForceDisable": false,
     "Never_run_new": true,
     "Chat_font_size": 3,
-    "ChatBackground": 0,
+    "ChatBackground": 10,
     "IsRerun": false,
     "Main_selectedChannelPartner": false,
     "Sidepannel_Pos": 2,

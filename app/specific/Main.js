@@ -128,12 +128,16 @@ var proxyurl = "https://cors-anywhere.herokuapp.com/";
 var Main_updateUserFeedId;
 var Main_vp9supported = false; //TODO check tizen support
 var Main_Fix = "kimne78kx3";
+var Main_ResetDownId;
+var Main_ResetAppId;
+var Main_ResetDownUPHold = false;
 //Variable initialization end
 
 // this function will be called only once the first time the app startup
 if (!Main_isReleased) Main_Start();
 
 function Main_Start() {
+    Main_Reset();
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", function() {
             Main_loadTranslations(window.navigator.userLanguage || window.navigator.language);
@@ -142,6 +146,72 @@ function Main_Start() {
         Main_loadTranslations(window.navigator.userLanguage || window.navigator.language);
     }
 }
+
+function Main_Reset() {
+    document.body.addEventListener("keydown", Main_ResetDown, false);
+    document.body.addEventListener("keyup", Main_handleKeyUp, false);
+}
+
+function Main_ResetUP(e) {
+    if (e.keyCode === KEY_PG_UP || e.keyCode === KEY_PG_DOWN) {
+        window.clearTimeout(Main_ResetDownId);
+        window.clearTimeout(Main_ResetAppId);
+        document.body.removeEventListener("keyup", Main_ResetUP);
+        document.body.addEventListener("keydown", Main_ResetDown, false);
+
+        window.setTimeout(
+            function() {
+                Main_AddClass('rest_warning', 'hide');
+            },
+            1500
+        );
+
+    }
+}
+
+function Main_ResetDown(e) {
+    if (e.keyCode === KEY_PG_UP || e.keyCode === KEY_PG_DOWN) {
+        document.body.removeEventListener("keydown", Main_ResetDown, false);
+        document.body.addEventListener("keyup", Main_ResetUP, false);
+        Main_ResetDownId = window.setTimeout(Main_ResetWarning, 10 * 1000);
+    }
+}
+
+function Main_ResetWarning() {
+    window.clearTimeout(Main_ResetDownId);
+    window.clearTimeout(Main_ResetAppId);
+
+    Main_innerHTML(
+        'rest_warning',
+        STR_HOLD_RESET
+    );
+    Main_RemoveClass('rest_warning', 'hide');
+
+    Main_ResetDownUPHold = true;
+    Main_ResetAppId = window.setTimeout(Main_ResetApp, 10 * 1000);
+}
+
+var preventSave = false;
+function Main_ResetApp() {
+    preventSave = true;
+    localStorage.removeItem('Main_values');
+    for (var key in Settings_value) {
+        localStorage.removeItem(key);
+    }
+
+    Main_innerHTML(
+        'rest_warning',
+        STR_RESET_DONE
+    );
+
+    window.setTimeout(
+        function() {
+            window.location.reload(true);
+        },
+        1500
+    );
+}
+
 
 function Main_loadTranslations(language) {
     Main_Checktylesheet();
@@ -1056,7 +1126,9 @@ function Main_ReloadScreen() {
 }
 
 function Main_setItem(item, value) {
-    localStorage.setItem(item, value);
+
+    if (!preventSave) localStorage.setItem(item, value);
+
 }
 
 function Main_getItemInt(item, default_value) {

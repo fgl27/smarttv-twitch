@@ -106,11 +106,11 @@ function en_USLang() {
     STR_ABOUT_INFO_4 = "This is an open source application licensed under the GNU General Public License v3.0, check it on github";
     STR_ABOUT_INFO_5 = "github.com/fgl27/smarttv-twitch";
     STR_ABOUT_INFO_6 = "This application uses following dependencies:";
-STR_ABOUT_INFO_7 = "irc-message - Performant, streaming IRC message parser (https://github.com/sigkell/irc-message)";
+    STR_ABOUT_INFO_7 = "irc-message - Performant, streaming IRC message parser (https://github.com/sigkell/irc-message)";
     STR_ABOUT_INFO_8 = "Fontastic - Create your customized icon fonts in seconds (http://app.fontastic.me)";
     STR_ABOUT_INFO_9 = "Twemoji - A simple library that provides standard Unicode emoji support across all platforms (https://github.com/twitter/twemoji)";
     STR_ABOUT_INFO_10 = "UglifyJS - is a JavaScript parser, minifier, compressor and beautifier toolkit (https://github.com/mishoo/UglifyJS2)";
-STR_ABOUT_INFO_11 = "punycode - A robust Punycode converter that fully complies to RFC 3492 and RFC 5891 (https://github.com/bestiejs/punycode.js)";
+    STR_ABOUT_INFO_11 = "punycode - A robust Punycode converter that fully complies to RFC 3492 and RFC 5891 (https://github.com/bestiejs/punycode.js)";
     STR_ABOUT_INFO_12 = "HTMLMinifier - A highly configurable, well-tested, JavaScript-based HTML minifier (https://github.com/kangax/html-minifier)";
     STR_ABOUT_INFO_13 = "JSHint - A Static Code Analysis Tool for JavaScript (https://github.com/jshint/jshint)";
     STR_ABOUT_INFO_14 = "Web:";
@@ -326,4 +326,7 @@ STR_ABOUT_INFO_11 = "punycode - A robust Punycode converter that fully complies 
     STR_VIWES_LOWEST = "Views lowest";
     STR_CREATED_NEWEST = "Created / Uptime newest";
     STR_CREATED_OLDEST = "Created / Uptime Oldest";
+    STR_RESET_DONE = "All configuration erased the app will self restart";
+    STR_HOLD_RESET = "<br>Keep hold Key for 10 seconds to reset all app configuration this can help when the app is freezed, release to dismiss this<br><br>";
+    STR_FORCE_RESET = "Force erase all app config: in case the app misbehave and stop working, hold key channel UP or Down for 20 seconds anywhere in the app, after it 10 seconds there is a confirmation";
 }

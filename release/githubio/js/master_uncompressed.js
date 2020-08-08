@@ -910,7 +910,11 @@
     var AddCode_Channel_id = '';
 
     var AddCode_redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githubio/login/twitch.html';
-    var AddCode_client_secret = "zhd1wr8lxyz9snzo48rfb70r7vtod6";
+    //Get yours client id and secret from https://docs.aws.amazon.com/lumberyard/latest/userguide/chatplay-generate-twitch-client-id.html
+    var AddCode_clientId = "ypvnuqrh98wqz1sr0ov3fgfu4jh1yx"; //public but get yours link above is free
+    var AddCode_client_secret; //none public get yours link above is free
+    var AddCode_client_secret2; //none public get yours link above is free
+
     var AddCode_UrlToken = 'https://id.twitch.tv/oauth2/token?';
     //Variable initialization end
 
@@ -1033,7 +1037,7 @@
         var xmlHttp = new XMLHttpRequest();
 
         var url = AddCode_UrlToken + 'grant_type=refresh_token&client_id=' +
-            encodeURIComponent(Main_clientId) + '&client_secret=' + encodeURIComponent(AddCode_client_secret) +
+            encodeURIComponent(AddCode_clientId) + '&client_secret=' + encodeURIComponent(AddCode_client_secret) +
             '&refresh_token=' + encodeURIComponent(AddUser_UsernameArray[position].refresh_token) +
             '&redirect_uri=' + AddCode_redirect_uri;
 
@@ -1097,7 +1101,7 @@
 
     function AddCode_requestTokens() {
         var theUrl = AddCode_UrlToken + 'grant_type=authorization_code&client_id=' +
-            encodeURIComponent(Main_clientId) + '&client_secret=' + encodeURIComponent(AddCode_client_secret) +
+            encodeURIComponent(AddCode_clientId) + '&client_secret=' + encodeURIComponent(AddCode_client_secret) +
             '&code=' + encodeURIComponent(AddCode_Code) + '&redirect_uri=' + AddCode_redirect_uri;
 
         AddCode_BasexmlHttpGet(theUrl, 'POST', 0, null, AddCode_requestTokensReady);
@@ -1564,10 +1568,10 @@
         xmlHttp.open(type, theUrl, true);
         xmlHttp.timeout = AddCode_loadingDataTimeout;
 
-        Main_Headers_Back[2][1] = access_token;
+        Main_Headers_Priv[2][1] = access_token;
 
         for (var i = 0; i < HeaderQuatity; i++)
-            xmlHttp.setRequestHeader(Main_Headers_Back[i][0], Main_Headers_Back[i][1]);
+            xmlHttp.setRequestHeader(Main_Headers_Priv[i][0], Main_Headers_Priv[i][1]);
 
         xmlHttp.ontimeout = function() {};
 
@@ -1594,7 +1598,8 @@
         };
 
         xmlHttp.send(null);
-    } //Variable initialization
+    }
+    //Variable initialization
     var AddUser_loadingDataTry = 0;
     var AddUser_loadingDataTryMax = 5;
     var AddUser_loadingDataTimeout = 3500;
@@ -3084,7 +3089,7 @@
 
     function Chat_loadChatRequest(id) {
         var theUrl = 'https://api.twitch.tv/v5/videos/' + Main_values.ChannelVod_vodId +
-            '/comments?client_id=' + Main_clientId + (Chat_offset ? '&content_offset_seconds=' + parseInt(Chat_offset) : '');
+            '/comments?client_id=' + AddCode_clientId + (Chat_offset ? '&content_offset_seconds=' + parseInt(Chat_offset) : '');
         var xmlHttp = new XMLHttpRequest();
 
         xmlHttp.open("GET", theUrl, true);
@@ -3271,7 +3276,7 @@
 
     function Chat_loadChatNextRequest(id) {
         var theUrl = 'https://api.twitch.tv/v5/videos/' + Main_values.ChannelVod_vodId +
-            '/comments?client_id=' + Main_clientId + (Chat_next !== null ? '&cursor=' + Chat_next : '');
+            '/comments?client_id=' + AddCode_clientId + (Chat_next !== null ? '&cursor=' + Chat_next : '');
         var xmlHttp = new XMLHttpRequest();
 
         xmlHttp.open("GET", theUrl, true);
@@ -3407,7 +3412,10 @@
         "DeviceBitrateCheck": false,
     };
 
-    var Main_Force = "4mv6wki5h1ko";
+
+    var Main_Headers = [];
+    var Main_Headers_Priv = [];
+
     var Main_LastClickFinish = true;
     var Main_addFocusFinish = true;
     var Main_newUsercode = 0;
@@ -3424,7 +3432,6 @@
     var Main_FirstRun = true;
     var Main_FirstLoad = false;
     var Main_RunningTime = 0;
-    var Main_Hash = "ncx6brgo";
 
     //The values of thumbnail and related for it screen type
     var Main_ReloadLimitOffsetGames = 1.35;
@@ -3442,13 +3449,12 @@
     var Main_ColoumnsCountChannel = 6;
     var Main_ItemsReloadLimitChannel = Math.floor((Main_ItemsLimitChannel / Main_ColoumnsCountChannel) / Main_ReloadLimitOffsetVideos);
 
-    var Main_kraken_api = 'https://api.twitch.tv/kraken/';
-    var Main_clientId = "ypvnuqrh98wqz1sr0ov3fgfu4jh1yx";
-    var Main_clientIdHeader = 'Client-ID';
     var Main_AcceptHeader = 'Accept';
+    var Main_TwithcV5Json = 'application/vnd.twitchtv.v5+json';
+    var Main_clientIdHeader = 'Client-ID';
+    var Main_kraken_api = 'https://api.twitch.tv/kraken/';
     var Main_Authorization = 'Authorization';
     var Main_OAuth = 'OAuth ';
-    var Main_TwithcV5Json = 'application/vnd.twitchtv.v5+json';
     var Main_TwithcV5Flag = '&api_version=5';
     var Main_TwithcV5Flag_I = '?api_version=5';
 
@@ -3457,7 +3463,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'August 01 2020';
+    var Main_minversion = 'August 08 2020';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
     var Main_ClockOffset = 0;
@@ -3466,7 +3472,6 @@
     var proxyurl = "https://cors-anywhere.herokuapp.com/";
     var Main_updateUserFeedId;
     var Main_vp9supported = false; //TODO check tizen support
-    var Main_Fix = "kimne78kx3";
     var Main_ResetDownId;
     var Main_ResetAppId;
     var Main_ResetDownUPHold = false;
@@ -3624,8 +3629,8 @@
                 for (var key in TV_Keys) TVKeyValue_regKey(TV_Keys[key]);
             }
 
-            Chat_Preinit();
             Play_PreStart();
+            Chat_Preinit();
 
             if (AddUser_UserIsSet()) {
                 window.clearInterval(Main_updateUserFeedId);
@@ -4495,12 +4500,6 @@
             console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
     }
 
-    var Main_Headers = [
-        [Main_clientIdHeader, Main_clientId],
-        [Main_AcceptHeader, Main_TwithcV5Json],
-        [Main_Authorization, null]
-    ];
-
     function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
         var xmlHttp = new XMLHttpRequest();
 
@@ -4529,22 +4528,16 @@
         xmlHttp.send(null);
     }
 
-    var Main_Headers_Back = [
-        [Main_clientIdHeader, Main_Fix + Main_Hash + Main_Force],
-        [Main_AcceptHeader, Main_TwithcV5Json],
-        [Main_Authorization, null]
-    ];
-
     function BasexmlHttpGetBack(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
         var xmlHttp = new XMLHttpRequest();
 
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = Timeout;
 
-        Main_Headers_Back[2][1] = access_token;
+        Main_Headers_Priv[2][1] = access_token;
 
         for (var i = 0; i < HeaderQuatity; i++)
-            xmlHttp.setRequestHeader(Main_Headers_Back[i][0], Main_Headers_Back[i][1]);
+            xmlHttp.setRequestHeader(Main_Headers_Priv[i][0], Main_Headers_Priv[i][1]);
 
         xmlHttp.ontimeout = function() {};
 
@@ -4775,7 +4768,7 @@
 
         xmlHttp.open("POST", theUrl, true);
         xmlHttp.timeout = PlayClip_loadingDataTimeout;
-        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Back[0][1]);
+        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Priv[0][1]);
         xmlHttp.setRequestHeader('Content-Type', 'application/json');
 
         xmlHttp.ontimeout = function() {};
@@ -5727,6 +5720,21 @@
         Main_innerHTML('user_feed_notify_img_holder',
             '<img id="user_feed_notify_img" alt="" class="notify_img" src="' + IMG_404_LOGO +
             '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'" >');
+
+        var Main_clientIdHeader = 'Client-ID';
+
+        Main_Headers = [
+            [Main_clientIdHeader, AddCode_clientId],
+            [Main_AcceptHeader, Main_TwithcV5Json],
+            [Main_Authorization, null]
+        ];
+
+        Main_Headers_Priv = [
+            [Main_clientIdHeader, AddCode_client_secret2],
+            [Main_AcceptHeader, Main_TwithcV5Json],
+            [Main_Authorization, null]
+        ];
+
     }
 
     //this are the global set option that need to be set only once
@@ -5909,7 +5917,7 @@
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = Play_loadingDataTimeout;
-        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Back[0][1]);
+        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Priv[0][1]);
 
         xmlHttp.ontimeout = function() {};
 
@@ -5963,7 +5971,7 @@
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = Play_loadingDataTimeout;
-        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Back[0][1]);
+        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Priv[0][1]);
 
         xmlHttp.ontimeout = function() {};
 
@@ -6169,7 +6177,7 @@
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = Play_loadingDataTimeout;
-        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Back[0][1]);
+        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Priv[0][1]);
 
         xmlHttp.ontimeout = function() {};
 
@@ -8657,7 +8665,7 @@
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = Play_loadingDataTimeout;
-        xmlHttp.setRequestHeader(Main_clientIdHeader, Play_410ERROR ? Main_Headers_Back[0][1] : Main_clientId);
+        xmlHttp.setRequestHeader(Main_clientIdHeader, Play_410ERROR ? Main_Headers_Priv[0][1] : AddCode_clientId);
 
         xmlHttp.ontimeout = function() {};
 
@@ -13981,7 +13989,7 @@
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = UserLiveFeed_loadingDataTimeout;
 
-        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_clientId);
+        xmlHttp.setRequestHeader(Main_clientIdHeader, AddCode_clientId);
         xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
         if (UserLiveFeed_token) xmlHttp.setRequestHeader(Main_Authorization, UserLiveFeed_token);
 

@@ -171,7 +171,7 @@ function PlayClip_loadDataRequest() {
 
     xmlHttp.open("POST", theUrl, true);
     xmlHttp.timeout = PlayClip_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Back[0][1]);
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Priv[0][1]);
     xmlHttp.setRequestHeader('Content-Type', 'application/json');
 
     xmlHttp.ontimeout = function() {};

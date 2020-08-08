@@ -222,6 +222,21 @@ function Play_PreStart() {
     Main_innerHTML('user_feed_notify_img_holder',
         '<img id="user_feed_notify_img" alt="" class="notify_img" src="' + IMG_404_LOGO +
         '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'" >');
+
+    var Main_clientIdHeader = 'Client-ID';
+
+    Main_Headers = [
+        [Main_clientIdHeader, AddCode_clientId],
+        [Main_AcceptHeader, Main_TwithcV5Json],
+        [Main_Authorization, null]
+    ];
+
+    Main_Headers_Priv = [
+        [Main_clientIdHeader, AddCode_client_secret2],
+        [Main_AcceptHeader, Main_TwithcV5Json],
+        [Main_Authorization, null]
+    ];
+
 }
 
 //this are the global set option that need to be set only once
@@ -404,7 +419,7 @@ function Play_CheckIfIsLive() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Play_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Back[0][1]);
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Priv[0][1]);
 
     xmlHttp.ontimeout = function() {};
 
@@ -458,7 +473,7 @@ function Play_CheckIfIsLiveLink() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Play_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Back[0][1]);
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Priv[0][1]);
 
     xmlHttp.ontimeout = function() {};
 
@@ -663,7 +678,7 @@ function Play_loadDataRequest() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Play_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Back[0][1]);
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Priv[0][1]);
 
     xmlHttp.ontimeout = function() {};
 

@@ -780,7 +780,7 @@ function Main_checkVersion() {
             Main_currentVersion = Appversion;
 
             Main_versionTag = 'APP ' + STR_VERSION + Appversion + '.' + Main_minversion +
-                (Main_isReleased ? '' : '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-weight: bold;"> TEST ONLY</div><br><div style="display: inline-block; color: #FF0000; font-size: 110%; font-weight: bold;">Don\'t use this version unless you are testing or debugging... Go back to github and downlaod the correct zip that is only 12kb</div>') + STR_BR + 'Tizen ' + STR_VERSION +
+                (Main_isReleased ? '' : '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-weight: bold;"> TEST ONLY</div><br><div style="display: inline-block; color: #FF0000; font-size: 110%; font-weight: bold;">Don\'t use this version unless you are testing or debugging... Go back to github and download the correct release zip that is only 12kb</div>') + STR_BR + 'Tizen ' + STR_VERSION +
                 TizenVersion + STR_SPACE + STR_SPACE + '|' + STR_SPACE + STR_SPACE + 'TV: ' + Main_tvModel + STR_SPACE + STR_SPACE + '|' +
                 STR_SPACE + STR_SPACE + 'FW: ' + fw + STR_BR;
             Appversion = Appversion.split(".");

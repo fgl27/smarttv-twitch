@@ -127,7 +127,8 @@ There is a issue section on this github page [smarttv-twitch/issues](https://git
 * Open the **"APPS"** application
 * Press the key sequence 12345 on your remote
 * On the new window that appears Click **"On"** to enable the **developer mode**
-* In the IP Address Field enter the local IP address of the computer you have downloaded Tizen Studio o
+* In the IP Address Field enter the local IP address of the computer you have downloaded Tizen Studio
+* Reboot the device to enable (on some TV holding the power key will reboot for others is necessary to remove the power from the wall)
 
 *If you don't know how to get the local IP of your computer go to the link here* [How to get your IP](https://github.com/fgl27/smarttv-twitch#how-to-get-the-ip)
 

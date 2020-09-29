@@ -133,7 +133,7 @@ function en_USLang() {
     STR_CONTROLS_PLAY_14 = "Chat and video (Side by side): Color button red (A)";
     STR_F_DISABLE_CHAT = "Chat force disable";
     STR_UPDATE_AVAILABLE = "Update available, check google play store";
-    STR_OAUTH_IN = 'Adding a key allows the app to access live user content faster, follow/unfollow channels/games and access subscribed only past broadcast (for channel you are Sub to and block VOD access to none subscribers) <br><br> Add a key is not demanding and can be done at any point later.<br> In doubt read this link:<br> <br> https://https://github.com/fgl27/smarttv-twitch#twitchtv-authentication-key <br> <br>To add a key for ';
+    STR_OAUTH_IN = 'Adding a key allows the app to access live user content faster, follow/unfollow channels/games<br><br> Add a key is not demanding and can be done at any point later.<br> In doubt read this link:<br> <br> https://https://github.com/fgl27/smarttv-twitch#twitchtv-authentication-key <br> <br>To add a key for ';
     STR_USER_CODE = "Add Authentication key";
     STR_USER_CODE_OK = "Key added OK";
     STR_KEY_BAD = "Key test failed, new one needs to be added";

@@ -9961,7 +9961,7 @@
                         window.setTimeout(function() {
                             if (!Play_IsWarning) Play_HideWarningDialog();
                         }, 2000);
-                        Screens_loadDataSuccessFinishEnd(true);
+                        Screens_loadDataSuccessFinishEnd();
                     });
                 } else if (Main_GoBefore !== Main_Live && Main_GoBefore !== Main_addUser &&
                     Main_GoBefore !== Main_Search) {

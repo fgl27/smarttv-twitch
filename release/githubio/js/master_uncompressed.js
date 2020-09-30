@@ -6157,7 +6157,7 @@
 
         if (Play_state === Play_STATE_LOADING_TOKEN) {
             theUrl = 'https://api.twitch.tv/api/channels/' + Main_values.Play_selectedChannel +
-                '/access_token?platform=_';
+                '/access_token';
         } else {
             if (!Play_tokenResponse.hasOwnProperty('token') || !Play_tokenResponse.hasOwnProperty('sig')) {
                 Play_410ERROR = true;
@@ -8643,7 +8643,7 @@
             state = PlayVod_state === Play_STATE_LOADING_TOKEN;
 
         if (state) {
-            theUrl = 'https://api.twitch.tv/api/vods/' + Main_values.ChannelVod_vodId + '/access_token?platform=_' +
+            theUrl = 'https://api.twitch.tv/api/vods/' + Main_values.ChannelVod_vodId + '/access_token' +
                 (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token && !Play_410ERROR ? '&oauth_token=' +
                     AddUser_UsernameArray[0].access_token : '');
         } else {

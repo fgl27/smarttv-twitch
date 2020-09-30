@@ -3463,7 +3463,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'August 08 2020';
+    var Main_minversion = 'September 30 2020';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
     var Main_ClockOffset = 0;
@@ -9704,7 +9704,7 @@
         inUseObj.row_id = 0;
         inUseObj.currY = 0;
         inUseObj.loadChannelOffsset = 0;
-        inUseObj.followerChannels = '';
+        inUseObj.followerChannels = [];
         inUseObj.followerChannelsDone = false;
         inUseObj.coloumn_id = 0;
         inUseObj.data = null;
@@ -9961,7 +9961,7 @@
                         window.setTimeout(function() {
                             if (!Play_IsWarning) Play_HideWarningDialog();
                         }, 2000);
-                        Screens_loadDataSuccessFinishEnd();
+                        Screens_loadDataSuccessFinishEnd(true);
                     });
                 } else if (Main_GoBefore !== Main_Live && Main_GoBefore !== Main_addUser &&
                     Main_GoBefore !== Main_Search) {
@@ -9971,7 +9971,7 @@
                         Main_values.Main_Go = Main_GoBefore;
                         Screens_RemoveAllFocus();
                         Main_SwitchScreenAction();
-                        if (!Main_newUsercode) Screens_loadDataSuccessFinishEnd();
+                        if (!Main_newUsercode) Screens_loadDataSuccessFinishEnd(true);
                         else {
                             Main_FirstRun = false;
                             Main_HideLoadDialog();
@@ -10022,9 +10022,9 @@
         }
     }
 
-    function Screens_loadDataSuccessFinishEnd() {
+    function Screens_loadDataSuccessFinishEnd(SkipHidedialog) {
         Main_FirstRun = false;
-        Main_HideLoadDialog();
+        if (!SkipHidedialog) Main_HideLoadDialog();
         Main_ShowElement('topbar');
         Main_ShowElement('side_panel_new_holder');
 
@@ -11341,14 +11341,14 @@
                     this.token = null;
                     if (this.followerChannelsDone) {
                         //User followed channels list is done, load live channels
-                        this.url = this.base_url + '?channel=' + encodeURIComponent(this.followerChannels) + '&' +
+                        this.url = this.base_url + '?channel=' + this.followerChannels.join() + '&' +
                             'limit=' + Main_ItemsLimitMax + '&offset=' + this.offset + '&stream_type=all';
                     } else {
                         //User followed channels list is not done, load followed channels
                         this.url = Main_kraken_api + 'users/' +
                             encodeURIComponent(AddUser_UsernameArray[0].id) +
                             '/follows/channels?limit=' + Main_ItemsLimitMax + '&offset=' + this.loadChannelOffsset +
-                            '&sortby=created_at';
+                            '&sortby=last_broadcast';
                     }
                 }
             },
@@ -11397,21 +11397,24 @@
             } else {
                 var response = JSON.parse(responseText).follows,
                     response_items = response.length;
-
                 if (response_items) { // response_items here is not always 99 because banned channels, so check until it is 0
                     //User followed channels list is not done, load followed channels
-                    var ChannelTemp = '',
-                        x = 0;
+                    var x = 0,
+                        max = this.followerChannels.length + response_items;
+
+                    if (max > UserLiveFeed_maxChannels) {
+                        this.followerChannelsDone = true;
+                        response_items = Math.min(response_items, response_items - (max - UserLiveFeed_maxChannels));
+                    }
 
                     for (x; x < response_items; x++) {
-                        ChannelTemp = response[x].channel._id + ',';
-                        if (this.followerChannels.indexOf(ChannelTemp) === -1) this.followerChannels += ChannelTemp;
+                        this.followerChannels.push(response[x].channel._id);
                     }
 
                     this.loadChannelOffsset += response_items;
+
                 } else { // end
                     //User followed channels list is done, load live channels
-                    this.followerChannels = this.followerChannels.slice(0, -1);
                     this.followerChannelsDone = true;
                 }
                 Screens_loadDataRequest();
@@ -13842,7 +13845,7 @@
     var UserLiveFeed_loadChannelOffsset = 0;
     var UserLiveFeed_loadingDataTryMax = 5;
     var UserLiveFeed_dataEnded = false;
-    var UserLiveFeed_followerChannels = '';
+    var UserLiveFeed_followerChannels = [];
     var UserLiveFeed_idObject = {};
     var UserLiveFeed_status = false;
     var UserLiveFeed_LastPos = null;
@@ -13859,6 +13862,7 @@
     var UserLiveFeed_Notify = true;
     var UserLiveFeed_NotifyRunning = false;
     var UserLiveFeed_NotifyTimeout = 3000;
+    var UserLiveFeed_maxChannels = 825;
 
     var UserLiveFeed_ids = ['ulf_thumbdiv', 'ulf_img', 'ulf_infodiv', 'ulf_displayname', 'ulf_streamtitle', 'ulf_streamgame', 'ulf_viwers', 'ulf_quality', 'ulf_cell', 'ulempty_', 'user_live_scroll'];
 
@@ -13890,7 +13894,7 @@
             Main_ShowElement('dialog_loading_feed');
             Main_ShowElement('dialog_loading_side_feed');
             UserLiveFeed_loadChannelOffsset = 0;
-            UserLiveFeed_followerChannels = '';
+            UserLiveFeed_followerChannels = [];
             Play_FeedPos = 0;
             UserLiveFeed_idObject = {};
             Main_updateclock();
@@ -13920,7 +13924,7 @@
 
     function UserLiveFeed_loadChannels() {
         var theUrl = Main_kraken_api + 'users/' + encodeURIComponent(AddUser_UsernameArray[0].id) +
-            '/follows/channels?limit=100&offset=' + UserLiveFeed_loadChannelOffsset + '&sortby=created_at' + Main_TwithcV5Flag;
+            '/follows/channels?limit=100&offset=' + UserLiveFeed_loadChannelOffsset + '&sortby=last_broadcast' + Main_TwithcV5Flag;
 
         BasexmlHttpGet(theUrl, UserLiveFeed_loadingDataTimeout, 2, null, UserLiveFeed_loadChannelLive, UserLiveFeed_loadDataError, false);
     }
@@ -13953,21 +13957,30 @@
             response_items = response.length;
 
         if (response_items) { // response_items here is not always 99 because banned channels, so check until it is 0
-            var ChannelTemp = '',
-                x = 0;
+            var x = 0,
+                max = UserLiveFeed_followerChannels.length + response_items,
+                end = false;
 
-            for (x; x < response_items; x++) {
-                ChannelTemp = response[x].channel._id + ',';
-                if (UserLiveFeed_followerChannels.indexOf(ChannelTemp) === -1) UserLiveFeed_followerChannels += ChannelTemp;
+            if (max > UserLiveFeed_maxChannels) {
+                end = true;
+                response_items = Math.min(response_items, response_items - (max - UserLiveFeed_maxChannels));
             }
 
-            UserLiveFeed_loadChannelOffsset += response_items;
-            UserLiveFeed_loadDataPrepare();
-            UserLiveFeed_loadChannels();
+            for (x; x < response_items; x++) {
+                UserLiveFeed_followerChannels.push(response[x].channel._id);
+            }
+
+            if (end) {
+                UserLiveFeed_loadDataPrepare();
+                UserLiveFeed_loadChannelUserLive();
+            } else {
+                UserLiveFeed_loadChannelOffsset += response_items;
+                UserLiveFeed_loadDataPrepare();
+                UserLiveFeed_loadChannels();
+            }
         } else { // end
-            UserLiveFeed_followerChannels = UserLiveFeed_followerChannels.slice(0, -1);
             UserLiveFeed_loadDataPrepare();
-            Main_ready(UserLiveFeed_loadChannelUserLive);
+            UserLiveFeed_loadChannelUserLive();
         }
     }
 
@@ -13977,7 +13990,7 @@
         if (UserLiveFeed_token) {
             theUrl += 'followed?';
         } else {
-            theUrl += '?channel=' + encodeURIComponent(UserLiveFeed_followerChannels) + '&';
+            theUrl += '?channel=' + UserLiveFeed_followerChannels.join() + '&';
         }
         theUrl += 'limit=100&offset=0&stream_type=all' + Main_TwithcV5Flag;
 

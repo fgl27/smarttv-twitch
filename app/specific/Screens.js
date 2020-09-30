@@ -124,7 +124,7 @@ function Screens_StartLoad() {
     inUseObj.row_id = 0;
     inUseObj.currY = 0;
     inUseObj.loadChannelOffsset = 0;
-    inUseObj.followerChannels = '';
+    inUseObj.followerChannels = [];
     inUseObj.followerChannelsDone = false;
     inUseObj.coloumn_id = 0;
     inUseObj.data = null;
@@ -381,7 +381,7 @@ function Screens_loadDataSuccessFinish() {
                     window.setTimeout(function() {
                         if (!Play_IsWarning) Play_HideWarningDialog();
                     }, 2000);
-                    Screens_loadDataSuccessFinishEnd();
+                    Screens_loadDataSuccessFinishEnd(true);
                 });
             } else if (Main_GoBefore !== Main_Live && Main_GoBefore !== Main_addUser &&
                 Main_GoBefore !== Main_Search) {
@@ -391,7 +391,7 @@ function Screens_loadDataSuccessFinish() {
                     Main_values.Main_Go = Main_GoBefore;
                     Screens_RemoveAllFocus();
                     Main_SwitchScreenAction();
-                    if (!Main_newUsercode) Screens_loadDataSuccessFinishEnd();
+                    if (!Main_newUsercode) Screens_loadDataSuccessFinishEnd(true);
                     else {
                         Main_FirstRun = false;
                         Main_HideLoadDialog();
@@ -442,9 +442,9 @@ function Screens_handleKeyControls(event) {
     }
 }
 
-function Screens_loadDataSuccessFinishEnd() {
+function Screens_loadDataSuccessFinishEnd(SkipHidedialog) {
     Main_FirstRun = false;
-    Main_HideLoadDialog();
+    if (!SkipHidedialog) Main_HideLoadDialog();
     Main_ShowElement('topbar');
     Main_ShowElement('side_panel_new_holder');
 

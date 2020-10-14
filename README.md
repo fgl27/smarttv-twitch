@@ -151,21 +151,12 @@ Run the web-ide_Tizen_Studio_X.X_windows-64.exe installer file you downloaded pr
 
 ## Installing Tizen Studio and Java SDK on Ubunutu
 
-* I used the **Tizen Studio 2.4 with IDE installer** (Any version above that must work well), download the 32/64 bit according to your CPU architecture.  On Linux, the file is an executable binary 480Mb in size. To run it, first give the file permission to execute - properties >  permission > Execute... mark, then just drag the file to a terminal window and click enter, **On Linux it may ask you to use apt-get to install missing dependencies below are the one asked by Tizen Studio 2.4 last time I installed it**
+* I used the **Tizen Studio 3.7 with IDE installer** (Any version above that must work well), download the 32/64 bit according to your CPU architecture.  On Linux, the file is an executable binary 641Mb in size. To run it, first give the file permission to execute - properties >  permission > Execute... mark, then just drag the file to a terminal window and click enter, **On Linux it may ask you to use apt-get to install missing dependencies below are the one asked by Tizen Studio 2.4 last time I installed it**
 #
 
 	sudo apt-get install libwebkitgtk-1.0-0 rpm2cpio cpio expect python2.7 ruby libcanberra-gtk-module libcanberra-gtk3-module gettext
 
-**If you get a error** "Package libwebkitgtk-1 is not available... etc..." do the bellow, if no error skip to **"Install Java SDK"**
-
-	wget http://archive.ubuntu.com/ubuntu/pool/main/i/icu/libicu60_60.2-3ubuntu3_amd64.deb; sudo dpkg -i libicu60_60.2-3ubuntu3_amd64.deb; sudo apt install -fy
-
-	wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/w/webkitgtk/libjavascriptcoregtk-1.0-0_2.4.11-4_amd64.deb; sudo dpkg -i libjavascriptcoregtk-1.0-0_2.4.11-4_amd64.deb; sudo apt install -fy
-
-	wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/w/webkitgtk/libwebkitgtk-1.0-0_2.4.11-4_amd64.deb; sudo dpkg -i libwebkitgtk-1.0-0_2.4.11-4_amd64.deb; sudo apt install -fy
-
-
-	sudo apt-get install rpm2cpio cpio expect python2.7 ruby gettext bridge-utils
+If you are on ubuntu 19 or above 20.4 libwebkitgtk-1.0-0 ins't availeble, in that case check this link [Ubuntu 20 isn't yet supported by Tizen studio this are the steps to get all working](https://github.com/fgl27/smarttv-twitch/blob/master/release/githubio/etc/README_ubutu_20.md)
 
 #
 * Install Java SDK, I install this app with **Open JDK java 8**

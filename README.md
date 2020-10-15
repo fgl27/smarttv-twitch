@@ -173,10 +173,11 @@ If you are on ubuntu 19 or above 20.4 libwebkitgtk-1.0-0 ins't availeble, in tha
 ## Tizen Package Manager(Installing the tools)
 
 * Open **Tizen Package Manager** to start installing the bellow (some may already be installed by default)
-* Main tab **(Main SDK)** Install **Tizen SDK tools**,  **(on Linux it may request you to use apt-get to install missing dependencies)**
+* Main tab **(Main SDK)** Install **Tizen SDK tools** (Emulator manager not necessary),  **(on Linux it may request you to use apt-get to install missing dependencies)**
 
 ![mainsdk](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_2.png)
-* Second tab **(Extension SDK)** under **TV Extensions-5.X** (or wherever X.X TV version there is) install **Web app. Development**, install **Samsung Certificate Extension** and under **TV Extension Tools** install **Web app. Tools** (on Linux it may request you to use apt-get to install missing dependencies)
+
+* Second tab **(Extension SDK)** under **TV Extensions-5.X** (or wherever X.X TV version there is) install **Web app. Development**, install **Samsung Certificate Extension** and under **TV Extension Tools** install **Web app. Tools**
 
 ![extensionsdk](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_4.png)
 

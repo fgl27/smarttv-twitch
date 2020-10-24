@@ -227,13 +227,13 @@ function Play_PreStart() {
 
     Main_Headers = [
         [Main_clientIdHeader, AddCode_clientId],
-        [Main_AcceptHeader, Main_TwithcV5Json],
+        [Main_AcceptHeader, Main_TwitchV5Json],
         [Main_Authorization, null]
     ];
 
-    Main_Headers_Priv = [
-        [Main_clientIdHeader, AddCode_client_secret2],
-        [Main_AcceptHeader, Main_TwithcV5Json],
+    Main_Headers_Backup = [
+        [Main_clientIdHeader, AddCode_client_backup],
+        [Main_AcceptHeader, Main_TwitchV5Json],
         [Main_Authorization, null]
     ];
 
@@ -419,7 +419,7 @@ function Play_CheckIfIsLive() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Play_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Priv[0][1]);
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
 
     xmlHttp.ontimeout = function() {};
 
@@ -473,7 +473,7 @@ function Play_CheckIfIsLiveLink() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Play_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Priv[0][1]);
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
 
     xmlHttp.ontimeout = function() {};
 
@@ -678,7 +678,7 @@ function Play_loadDataRequest() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Play_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Priv[0][1]);
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
 
     xmlHttp.ontimeout = function() {};
 

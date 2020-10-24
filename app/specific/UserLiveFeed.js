@@ -163,7 +163,7 @@ function UserLiveFeed_loadChannelUserLiveGet(theUrl) {
     xmlHttp.timeout = UserLiveFeed_loadingDataTimeout;
 
     xmlHttp.setRequestHeader(Main_clientIdHeader, AddCode_clientId);
-    xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
+    xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwitchV5Json);
     if (UserLiveFeed_token) xmlHttp.setRequestHeader(Main_Authorization, UserLiveFeed_token);
 
     xmlHttp.ontimeout = function() {};

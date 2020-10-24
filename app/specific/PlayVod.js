@@ -323,7 +323,7 @@ function PlayVod_loadDataRequest() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Play_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Play_410ERROR ? Main_Headers_Priv[0][1] : AddCode_clientId);
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Play_410ERROR ? Main_Headers_Backup[0][1] : AddCode_clientId);
 
     xmlHttp.ontimeout = function() {};
 

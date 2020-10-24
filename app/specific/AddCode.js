@@ -14,7 +14,7 @@ var AddCode_redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githu
 //Get yours client id and secret from https://docs.aws.amazon.com/lumberyard/latest/userguide/chatplay-generate-twitch-client-id.html
 var AddCode_clientId = "ypvnuqrh98wqz1sr0ov3fgfu4jh1yx";//public but get yours link above is free
 var AddCode_client_secret;//none public get yours link above is free
-var AddCode_client_secret2;//none public get yours link above is free
+var AddCode_client_backup;
 
 var AddCode_UrlToken = 'https://id.twitch.tv/oauth2/token?';
 //Variable initialization end
@@ -669,10 +669,10 @@ function AddCode_BasexmlHttpGetBack(theUrl, type, HeaderQuatity, access_token, c
     xmlHttp.open(type, theUrl, true);
     xmlHttp.timeout = AddCode_loadingDataTimeout;
 
-    Main_Headers_Priv[2][1] = access_token;
+    Main_Headers_Backup[2][1] = access_token;
 
     for (var i = 0; i < HeaderQuatity; i++)
-        xmlHttp.setRequestHeader(Main_Headers_Priv[i][0], Main_Headers_Priv[i][1]);
+        xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
 
     xmlHttp.ontimeout = function() {};
 

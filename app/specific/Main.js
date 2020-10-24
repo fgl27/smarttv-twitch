@@ -70,7 +70,7 @@ var Main_values = {
 
 
 var Main_Headers = [];
-var Main_Headers_Priv = [];
+var Main_Headers_Backup = [];
 
 var Main_LastClickFinish = true;
 var Main_addFocusFinish = true;
@@ -106,7 +106,7 @@ var Main_ColoumnsCountChannel = 6;
 var Main_ItemsReloadLimitChannel = Math.floor((Main_ItemsLimitChannel / Main_ColoumnsCountChannel) / Main_ReloadLimitOffsetVideos);
 
 var Main_AcceptHeader = 'Accept';
-var Main_TwithcV5Json = 'application/vnd.twitchtv.v5+json';
+var Main_TwitchV5Json = 'application/vnd.twitchtv.v5+json';
 var Main_clientIdHeader = 'Client-ID';
 var Main_kraken_api = 'https://api.twitch.tv/kraken/';
 var Main_Authorization = 'Authorization';
@@ -1189,10 +1189,10 @@ function BasexmlHttpGetBack(theUrl, Timeout, HeaderQuatity, access_token, callba
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Timeout;
 
-    Main_Headers_Priv[2][1] = access_token;
+    Main_Headers_Backup[2][1] = access_token;
 
     for (var i = 0; i < HeaderQuatity; i++)
-        xmlHttp.setRequestHeader(Main_Headers_Priv[i][0], Main_Headers_Priv[i][1]);
+        xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
 
     xmlHttp.ontimeout = function() {};
 

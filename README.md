@@ -1,13 +1,26 @@
 smarttv-twitch
 ==============
 
-This is an application for Samsung Smart TVs, allowing a user to watch Twitch.tv broadcasts. An official Twitch.tv app is not available for most countries, which is why this project exists.
+
+This is an web application designed to give access to Twitch features on SmartTV's, a official Twitch app is not available for most devices, that is why this project exist.
+
+The intention of this is to make a web app that works on all modern browser and can be easily ported to any OS that can run a web app.
 
 The application fully supports all 4k and 1080p Samsung TVs released in 2016 or later. The app also support TVs released in 2015 or earlier that have Tizen version 2.3 or newer, however for some old TV even running Tizen 2.3 may there be some minor FW issues that affect the app most of those have be fixed, so is expected that they all work if doesn't for you open a issue.
 
-[Installation instructions](https://github.com/fgl27/smarttv-twitch#installation-instructions)
+This app has no affiliation with Twitch, this is a user made app, but is only possible because Twitch provide all the API that allows the app to show Twitch content.
 
-In doubt [open a issue](https://github.com/fgl27/smarttv-twitch/issues/new/choose)
+Those API are documented here:
+
+[Twitch Developer Documentation](https://dev.twitch.tv/docs/)
+
+This app has be registered to access Twitch API, that registration process is described here:
+
+[Twitch Registration process](https://dev.twitch.tv/docs/authentication#registration)
+
+This project is the secondary project of two Twitch project I current maintain, originally I start working on this repo, I'm using separated repos to make easier use of github pages and commit history.
+
+This original project runs on Samsung Tizen OS, with is very limited because of that the Android version has become the main project, not all features of the Android project can be ported to the Samsung one, but from time to time I will port the features from the Android version to the Samsung version.
 
 Android TV version
 ===============
@@ -27,9 +40,9 @@ About this fork
 I initially fork this from https://github.com/CazuzaCzz/SmartTwitchTV/commits/tizen
 The original fork is https://github.com/nikitakatchik/SmartTwitchTV
 
-I have started this project because the above Repos of the app did not fully support my TV model and don't have all possible Twitch featuring.
+I have started this project because the above repo's of the app did not fully support my TV model (at the time this was a Samsung Tizen OS only project) and didn't had all possible Twitch featuring.
 
-I start this new repo keep the original name and commit history, work a long time writing this a new application basically from scratch focusing on performance and all available Twitch featuring, with the help of some users reporting bugs and features request, I add many features and work to resolve all the bugs, today the application is very complete, can be easily used to watch all available Twitch content and give the user a lot of extra options, but is know that the application can be always improved, new featuring and improves are always in the works, mostly to give a better experience and more options to the user, but that process is slow.
+I keep the original name and commit history but not as a fork simply because I made so may changes that makes no sense to call this a fork, I made new application from scratch focusing on performance and all available Twitch featuring, with the help of users and contributors reporting bugs and asking for features the app became what is today, a app that can be easily used to watch all available Twitch content and give the user a lot of extra options, but is know that the application can be improved new featuring and improves are always in the works, mostly to give a better experience and more options to the user, but that process is slow mostly because there is only one person working on the project and that work is done for free on spare time.
 
 Project Web Dependencies
 ==============

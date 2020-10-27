@@ -913,7 +913,7 @@
     //Get yours client id and secret from https://docs.aws.amazon.com/lumberyard/latest/userguide/chatplay-generate-twitch-client-id.html
     var AddCode_clientId = "ypvnuqrh98wqz1sr0ov3fgfu4jh1yx"; //public but get yours link above is free
     var AddCode_client_secret; //none public get yours link above is free
-    var AddCode_client_secret2; //none public get yours link above is free
+    var AddCode_client_backup;
 
     var AddCode_UrlToken = 'https://id.twitch.tv/oauth2/token?';
     //Variable initialization end
@@ -1568,10 +1568,10 @@
         xmlHttp.open(type, theUrl, true);
         xmlHttp.timeout = AddCode_loadingDataTimeout;
 
-        Main_Headers_Priv[2][1] = access_token;
+        Main_Headers_Backup[2][1] = access_token;
 
         for (var i = 0; i < HeaderQuatity; i++)
-            xmlHttp.setRequestHeader(Main_Headers_Priv[i][0], Main_Headers_Priv[i][1]);
+            xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
 
         xmlHttp.ontimeout = function() {};
 
@@ -3414,7 +3414,7 @@
 
 
     var Main_Headers = [];
-    var Main_Headers_Priv = [];
+    var Main_Headers_Backup = [];
 
     var Main_LastClickFinish = true;
     var Main_addFocusFinish = true;
@@ -3450,7 +3450,7 @@
     var Main_ItemsReloadLimitChannel = Math.floor((Main_ItemsLimitChannel / Main_ColoumnsCountChannel) / Main_ReloadLimitOffsetVideos);
 
     var Main_AcceptHeader = 'Accept';
-    var Main_TwithcV5Json = 'application/vnd.twitchtv.v5+json';
+    var Main_TwitchV5Json = 'application/vnd.twitchtv.v5+json';
     var Main_clientIdHeader = 'Client-ID';
     var Main_kraken_api = 'https://api.twitch.tv/kraken/';
     var Main_Authorization = 'Authorization';
@@ -4534,10 +4534,10 @@
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = Timeout;
 
-        Main_Headers_Priv[2][1] = access_token;
+        Main_Headers_Backup[2][1] = access_token;
 
         for (var i = 0; i < HeaderQuatity; i++)
-            xmlHttp.setRequestHeader(Main_Headers_Priv[i][0], Main_Headers_Priv[i][1]);
+            xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
 
         xmlHttp.ontimeout = function() {};
 
@@ -4768,7 +4768,7 @@
 
         xmlHttp.open("POST", theUrl, true);
         xmlHttp.timeout = PlayClip_loadingDataTimeout;
-        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Priv[0][1]);
+        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
         xmlHttp.setRequestHeader('Content-Type', 'application/json');
 
         xmlHttp.ontimeout = function() {};
@@ -5725,13 +5725,13 @@
 
         Main_Headers = [
             [Main_clientIdHeader, AddCode_clientId],
-            [Main_AcceptHeader, Main_TwithcV5Json],
+            [Main_AcceptHeader, Main_TwitchV5Json],
             [Main_Authorization, null]
         ];
 
-        Main_Headers_Priv = [
-            [Main_clientIdHeader, AddCode_client_secret2],
-            [Main_AcceptHeader, Main_TwithcV5Json],
+        Main_Headers_Backup = [
+            [Main_clientIdHeader, AddCode_client_backup],
+            [Main_AcceptHeader, Main_TwitchV5Json],
             [Main_Authorization, null]
         ];
 
@@ -5917,7 +5917,7 @@
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = Play_loadingDataTimeout;
-        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Priv[0][1]);
+        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
 
         xmlHttp.ontimeout = function() {};
 
@@ -5971,7 +5971,7 @@
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = Play_loadingDataTimeout;
-        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Priv[0][1]);
+        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
 
         xmlHttp.ontimeout = function() {};
 
@@ -6157,7 +6157,7 @@
 
         if (Play_state === Play_STATE_LOADING_TOKEN) {
             theUrl = 'https://api.twitch.tv/api/channels/' + Main_values.Play_selectedChannel +
-                '/access_token';
+                '/access_token?platform=_';
         } else {
             if (!Play_tokenResponse.hasOwnProperty('token') || !Play_tokenResponse.hasOwnProperty('sig')) {
                 Play_410ERROR = true;
@@ -6177,7 +6177,7 @@
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = Play_loadingDataTimeout;
-        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Priv[0][1]);
+        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
 
         xmlHttp.ontimeout = function() {};
 
@@ -8643,7 +8643,7 @@
             state = PlayVod_state === Play_STATE_LOADING_TOKEN;
 
         if (state) {
-            theUrl = 'https://api.twitch.tv/api/vods/' + Main_values.ChannelVod_vodId + '/access_token' +
+            theUrl = 'https://api.twitch.tv/api/vods/' + Main_values.ChannelVod_vodId + '/access_token?platform=_' +
                 (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token && !Play_410ERROR ? '&oauth_token=' +
                     AddUser_UsernameArray[0].access_token : '');
         } else {
@@ -8665,7 +8665,7 @@
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = Play_loadingDataTimeout;
-        xmlHttp.setRequestHeader(Main_clientIdHeader, Play_410ERROR ? Main_Headers_Priv[0][1] : AddCode_clientId);
+        xmlHttp.setRequestHeader(Main_clientIdHeader, Play_410ERROR ? Main_Headers_Backup[0][1] : AddCode_clientId);
 
         xmlHttp.ontimeout = function() {};
 
@@ -14003,7 +14003,7 @@
         xmlHttp.timeout = UserLiveFeed_loadingDataTimeout;
 
         xmlHttp.setRequestHeader(Main_clientIdHeader, AddCode_clientId);
-        xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwithcV5Json);
+        xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwitchV5Json);
         if (UserLiveFeed_token) xmlHttp.setRequestHeader(Main_Authorization, UserLiveFeed_token);
 
         xmlHttp.ontimeout = function() {};

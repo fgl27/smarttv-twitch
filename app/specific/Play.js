@@ -657,8 +657,9 @@ function Play_loadDataRequest() {
     var theUrl;
 
     if (Play_state === Play_STATE_LOADING_TOKEN) {
-        theUrl = 'https://api.twitch.tv/api/channels/' + Main_values.Play_selectedChannel +
-            '/access_token?platform=web&player_type=frontpage';
+
+        theUrl = Play_live_token.replace('%x', Main_values.Play_selectedChannel);
+
     } else {
         if (!Play_tokenResponse.hasOwnProperty('token') || !Play_tokenResponse.hasOwnProperty('sig')) {
             Play_410ERROR = true;
@@ -669,8 +670,7 @@ function Play_loadDataRequest() {
 
         theUrl = 'https://usher.ttvnw.net/api/channel/hls/' + Main_values.Play_selectedChannel +
             '.m3u8?&token=' + encodeURIComponent(Play_tokenResponse.token) + '&sig=' + Play_tokenResponse.sig +
-            '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true&fast_bread=true' +
-            (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
+            '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true&fast_bread=true&cdm=wv&p=' + Main_RandomInt();
 
         //Play_410ERROR = false;
     }
@@ -679,6 +679,14 @@ function Play_loadDataRequest() {
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Play_loadingDataTimeout;
     xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
+
+    if (Play_Headers && Play_Headers.length) {
+        var len = Play_Headers.length;
+
+        for (var i = 0; i < len; i++)
+            xmlHttp.setRequestHeader(Play_Headers[i][0], Play_Headers[i][1]);
+
+    }
 
     xmlHttp.ontimeout = function() {};
 

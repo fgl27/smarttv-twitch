@@ -10,12 +10,6 @@ var AddCode_IsSub = false;
 var AddCode_PlayRequest = false;
 var AddCode_Channel_id = '';
 
-var AddCode_redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githubio/login/twitch.html';
-//Get yours client id and secret from https://docs.aws.amazon.com/lumberyard/latest/userguide/chatplay-generate-twitch-client-id.html
-var AddCode_clientId = "ypvnuqrh98wqz1sr0ov3fgfu4jh1yx";//public but get yours link above is free
-var AddCode_client_secret;//none public get yours link above is free
-var AddCode_client_backup;
-
 var AddCode_UrlToken = 'https://id.twitch.tv/oauth2/token?';
 //Variable initialization end
 
@@ -700,3 +694,12 @@ function AddCode_BasexmlHttpGetValidate(callbackready, position, tryes) {
 
     xmlHttp.send(null);
 }
+
+var AddCode_redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githubio/login/twitch.html';
+//Get yours client id and secret from https://docs.aws.amazon.com/lumberyard/latest/userguide/chatplay-generate-twitch-client-id.html
+var AddCode_clientId = "ypvnuqrh98wqz1sr0ov3fgfu4jh1yx";//public but get yours link above is free
+var AddCode_client_secret;//none public get yours link above is free
+var AddCode_client_backup;
+
+var Play_Headers;
+var Play_live_token = "https://api.twitch.tv/api/channels/%x/access_token";

@@ -909,12 +909,6 @@
     var AddCode_PlayRequest = false;
     var AddCode_Channel_id = '';
 
-    var AddCode_redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githubio/login/twitch.html';
-    //Get yours client id and secret from https://docs.aws.amazon.com/lumberyard/latest/userguide/chatplay-generate-twitch-client-id.html
-    var AddCode_clientId = "ypvnuqrh98wqz1sr0ov3fgfu4jh1yx"; //public but get yours link above is free
-    var AddCode_client_secret; //none public get yours link above is free
-    var AddCode_client_backup;
-
     var AddCode_UrlToken = 'https://id.twitch.tv/oauth2/token?';
     //Variable initialization end
 
@@ -1599,6 +1593,15 @@
 
         xmlHttp.send(null);
     }
+
+    var AddCode_redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githubio/login/twitch.html';
+    //Get yours client id and secret from https://docs.aws.amazon.com/lumberyard/latest/userguide/chatplay-generate-twitch-client-id.html
+    var AddCode_clientId = "ypvnuqrh98wqz1sr0ov3fgfu4jh1yx"; //public but get yours link above is free
+    var AddCode_client_secret; //none public get yours link above is free
+    var AddCode_client_backup;
+
+    var Play_Headers;
+    var Play_live_token = "https://api.twitch.tv/api/channels/%x/access_token";
     //Variable initialization
     var AddUser_loadingDataTry = 0;
     var AddUser_loadingDataTryMax = 5;
@@ -3463,7 +3466,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'September 30 2020';
+    var Main_minversion = 'October 29 2020';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
     var Main_ClockOffset = 0;
@@ -6156,8 +6159,9 @@
         var theUrl;
 
         if (Play_state === Play_STATE_LOADING_TOKEN) {
-            theUrl = 'https://api.twitch.tv/api/channels/' + Main_values.Play_selectedChannel +
-                '/access_token?platform=web&player_type=frontpage';
+
+            theUrl = Play_live_token.replace('%x', Main_values.Play_selectedChannel);
+
         } else {
             if (!Play_tokenResponse.hasOwnProperty('token') || !Play_tokenResponse.hasOwnProperty('sig')) {
                 Play_410ERROR = true;
@@ -6168,8 +6172,7 @@
 
             theUrl = 'https://usher.ttvnw.net/api/channel/hls/' + Main_values.Play_selectedChannel +
                 '.m3u8?&token=' + encodeURIComponent(Play_tokenResponse.token) + '&sig=' + Play_tokenResponse.sig +
-                '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true&fast_bread=true' +
-                (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
+                '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true&fast_bread=true&cdm=wv&p=' + Main_RandomInt();
 
             //Play_410ERROR = false;
         }
@@ -6178,6 +6181,14 @@
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = Play_loadingDataTimeout;
         xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
+
+        if (Play_Headers && Play_Headers.length) {
+            var len = Play_Headers.length;
+
+            for (var i = 0; i < len; i++)
+                xmlHttp.setRequestHeader(Play_Headers[i][0], Play_Headers[i][1]);
+
+        }
 
         xmlHttp.ontimeout = function() {};
 

@@ -4447,12 +4447,10 @@
 
         if (Main_values.Main_Go === Main_ChannelContent) ChannelContent_StartLoad();
         else if (Main_values.Main_Go === Main_Users) Users_StartLoad();
-        else if (Main_values.Main_Go === Main_usergames) {
-            inUseObj = UserGames;
-            if (!inUseObj.loadingData) inUseObj.key_refresh();
-        } else {
+        else {
             if (Main_values.Main_Go === Main_Live) inUseObj = Live;
             else if (Main_values.Main_Go === Main_Featured) inUseObj = Featured;
+            else if (Main_values.Main_Go === Main_usergames) inUseObj = UserGames;
             else if (Main_values.Main_Go === Main_aGame) inUseObj = AGame;
             else if (Main_values.Main_Go === Main_games) inUseObj = Game;
             else if (Main_values.Main_Go === Main_Vod) inUseObj = Vod;
@@ -11801,7 +11799,7 @@
         },
         addCell: function(cell) {
             var hasLive = this.isLive || this.screen === Main_games;
-            var game = hasLive ? cell.game : cell;
+            var game = cell.game;
             if (!this.idObject[game._id]) {
 
                 this.itemsCount++;
@@ -11855,32 +11853,21 @@
             key_pgDownNext: Main_UserChannels,
             key_pgDown: Main_UserVod,
             key_pgUp: Main_UserHost,
-            isLive: Main_getItemBool('user_Games_live', true),
+            isLive: false,
             OldUserName: '',
             object: 'follows',
-            use_hls: true,
-            base_url: 'https://api.twitch.tv/api/users/',
+            base_url: Main_kraken_api + 'users/',
             set_url: function() {
+
                 if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
-                this.url = this.base_url + encodeURIComponent(AddUser_UsernameArray[0].name) + '/follows/games';
 
-                if (this.isLive) this.url += '/live?limit=150';
-                else this.url += '?limit=' + Main_ItemsLimitMax + '&offset=' + this.offset;
-            },
-            key_refresh: function() {
-                this.isLive = !this.isLive;
+                this.url = this.base_url + encodeURIComponent(AddUser_UsernameArray[0].id) +
+                    '/follows/games?limit=' + Main_ItemsLimitMax + '&offset=' + this.offset;
 
-                ScreensObj_SetTopLable(STR_USER, (this.isLive ? STR_LIVE_GAMES : STR_FOLLOW_GAMES));
-
-                Screens_StartLoad();
-
-                Main_setItem('user_Games_live', this.isLive ? 'true' : 'false');
             },
             label_init: function() {
                 ScreensObj_TopLableUserInit();
-                Main_IconLoad('label_refresh', 'icon-refresh', STR_USER_GAMES_CHANGE + STR_LIVE_GAMES + '/' + STR_FOLLOW_GAMES + ":" + STR_GUIDE);
-
-                ScreensObj_SetTopLable(STR_USER, (this.isLive ? STR_LIVE_GAMES : STR_FOLLOW_GAMES));
+                ScreensObj_SetTopLable(STR_USER, STR_FOLLOW_GAMES);
             },
             label_exit: function() {
                 Main_IconLoad('label_refresh', 'icon-refresh', STR_REFRESH + ":" + STR_GUIDE);

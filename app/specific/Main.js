@@ -774,7 +774,7 @@ function Main_checkVersion() {
             fw = webapis.productinfo.getFirmware();
             Main_tvModel = webapis.productinfo.getModel();
             console.log('App version: ' + Main_minversion);
-        } catch (e) {}
+        } catch (e) { }
 
         if (Appversion !== null && TizenVersion !== null && Main_tvModel !== null && fw !== null) {
             Main_currentVersion = Appversion;
@@ -1099,12 +1099,10 @@ function Main_ReloadScreen() {
 
     if (Main_values.Main_Go === Main_ChannelContent) ChannelContent_StartLoad();
     else if (Main_values.Main_Go === Main_Users) Users_StartLoad();
-    else if (Main_values.Main_Go === Main_usergames) {
-        inUseObj = UserGames;
-        if (!inUseObj.loadingData) inUseObj.key_refresh();
-    } else {
+    else {
         if (Main_values.Main_Go === Main_Live) inUseObj = Live;
         else if (Main_values.Main_Go === Main_Featured) inUseObj = Featured;
+        else if (Main_values.Main_Go === Main_usergames) inUseObj = UserGames;
         else if (Main_values.Main_Go === Main_aGame) inUseObj = AGame;
         else if (Main_values.Main_Go === Main_games) inUseObj = Game;
         else if (Main_values.Main_Go === Main_Vod) inUseObj = Vod;
@@ -1166,7 +1164,7 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
     for (var i = 0; i < HeaderQuatity; i++)
         xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
 
-    xmlHttp.ontimeout = function() {};
+    xmlHttp.ontimeout = function() { };
 
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState === 4) {
@@ -1194,7 +1192,7 @@ function BasexmlHttpGetBack(theUrl, Timeout, HeaderQuatity, access_token, callba
     for (var i = 0; i < HeaderQuatity; i++)
         xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
 
-    xmlHttp.ontimeout = function() {};
+    xmlHttp.ontimeout = function() { };
 
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState === 4) {

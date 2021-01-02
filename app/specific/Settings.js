@@ -225,9 +225,7 @@ function Settings_SetSettings() {
     Settings_value_keys.push(key);
     Settings_value[key].values = [STR_CONTENT_LANG_SUMARRY];
 
-    div += Settings_DivOptionWithSummary(key, STR_CHAT_OPTIONS, '');
-
-    //    div += Settings_Content('chat_opt', [STR_CONTENT_LANG_SUMMARY], STR_CHAT_OPTIONS, null);
+    div += Settings_DivOptionNoSummary(key, STR_CHAT_OPTIONS);
 
     //live_feed_sort
     key = "live_feed_sort";

@@ -361,7 +361,6 @@ function en_USLang() {
     STR_CHAT_OPTIONS_EMOTE_SORT_SUMMARY = "If this is disabled, the lists of emotes will be showed in the order provider by the server";
     STR_CHAT_OPTIONS_FORCE_SHOW = "Force show chat";
     STR_CHAT_OPTIONS_FORCE_SHOW_SUMMARY = "If you wanna see the chat when write to chat is used, enable this";
-    //STR_WARNING_NEW = "A new featuring was added<br><br>Write to chat<br><br>Because this new featuring all previously added authorization keys have be revoked, because chat permissions wasn't asked before<br><br>If you had a key added please add a new one so you can keep using the app the same way as before<br><br>If you have any doubt about the new authorization key go to:<br><br> https://github.com/fgl27/SmartTwitchTV#authorization<br><br>This dialog will auto hide in 1 minute";
     STR_NOKEY_CHAT_WARN = "Add an user authorization key to be able to logging and write to chat";
     STR_CHAT_NOT_READY = "Chat not ready to send! Try again is a second or two.";
     STR_CHAT_REDEEMED_MESSAGE_HIGH = "Redeemed Highlight My Message";
@@ -395,10 +394,12 @@ function en_USLang() {
     STR_SHOW_IN_CHAT_VIEWERS = 'Show viewers';
     STR_SHOW_IN_CHAT_CHATTERS = 'Show chatters';
     STR_UNKNOWN = "Unknown";
-
     STR_LOADING_CHAT = "Chat: Connecting to";
     STR_LOADING_FAIL = "Connecting timeout, Fail to logging...";
     STR_CHAT_CONNECTED = "Chat: Connected";
     STR_CHAT_SEND_DELAY = "Message send, chat delay enabled, message will show in chat after";
     STR_CHAT_DELAY = "Chat: delay";
+
+    STR_WARNING_NEW = "A new featuring was added<br><br>Write to chat plus extra settings chat option<br><br>Because this new featuring all previously added authorization keys added before january 02 2021 have be revoked, that is because chat permissions wasn't be asked before<br><br>If you had a key added please add a new one so you can keep using the app the same way as before<br><br>If you have any doubt about the new authorization key go to:<br><br> https://github.com/fgl27/smarttv-twitch#twitchtv-authentication-key<br><br>This dialog will auto hide in 1 minute, or press any key to hide it";
+
 }

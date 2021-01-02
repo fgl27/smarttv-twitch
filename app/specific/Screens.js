@@ -363,6 +363,9 @@ function Screens_loadDataSuccessFinish() {
                 Main_values.Play_WasPlaying = 0;
             }
 
+            if (!Main_values.Never_run_new && Main_values.warning_extra) Main_showWarningExtra(STR_WARNING_NEW);
+            Main_values.warning_extra = false;
+
             if (Settings_value.restor_playback.defaultValue && Main_values.Play_WasPlaying && inUseObj.status) {
 
                 Main_ExitCurrent(Main_values.Main_Go);

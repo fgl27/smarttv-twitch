@@ -65,6 +65,7 @@ var Main_values = {
     "Sidepannel_IsUser": false,
     "My_channel": false,
     "DeviceBitrateCheck": false,
+    "warning_extra": true,
 };
 
 
@@ -1336,4 +1337,30 @@ function Main_clearInterval(id) {
 
 function Main_tendsWith(str, suffix) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+function Main_showWarningExtra(text) {
+    Main_innerHTML('dialog_warning_extra_text', text);
+    Main_ShowElement('dialog_warning_extra');
+
+    window.addEventListener("keydown", Main_PreventClickfun, true);
+    window.addEventListener("keyup", Main_PreventClickfun, true);
+    window.addEventListener("keypress", Main_PreventClickfun, true);
+
+    Main_setTimeout(function() {
+        Main_PreventClickfunEnd();
+    }, 60000);
+}
+
+function Main_PreventClickfun(e) {
+    e.stopPropagation();
+    Main_PreventClickfunEnd();
+}
+
+function Main_PreventClickfunEnd() {
+    Main_HideElement('dialog_warning_extra');
+    window.removeEventListener("keydown", Main_PreventClickfun, true);
+    window.removeEventListener("keyup", Main_PreventClickfun, true);
+    window.removeEventListener("keypress", Main_PreventClickfun, true);
+
 }

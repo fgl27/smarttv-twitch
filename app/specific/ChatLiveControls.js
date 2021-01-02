@@ -288,11 +288,18 @@ function ChatLiveControls_handleKeyDown(event) {
 
 function ChatLiveControls_KeyboardEvent(event) {
     ChatLiveControls_UpdateResultText();
+
     switch (event.keyCode) {
+        case KEY_KEYBOARD_DELETE_ALL:
+            Main_ChatLiveInput.value = '';
+            ChatLiveControls_UpdateResultTextEmpty();
+            break;
         case KEY_RETURN:
         case KEY_KEYBOARD_DONE:
+        case KEY_KEYBOARD_CANCEL:
         case KEY_DOWN:
         case KEY_UP:
+
             ChatLiveControls_KeyboardDismiss();
             break;
         default:
@@ -612,7 +619,7 @@ function ChatLiveControls_EmotesScroll(position) {
 }
 
 function ChatLiveControls_UpdateTextInput(text) {
-    if (Main_ChatLiveInput.value !== '' && Main_ChatLiveInput.value !== null && !(Main_ChatLiveInput.value).endsWith(' ')) Main_ChatLiveInput.value += ' ';
+    if (Main_ChatLiveInput.value !== '' && Main_ChatLiveInput.value !== null && !Main_tendsWith(Main_ChatLiveInput.value, ' ')) Main_ChatLiveInput.value += ' ';
     Main_ChatLiveInput.value += text + ' ';
     ChatLiveControls_UpdateResultText();
 }

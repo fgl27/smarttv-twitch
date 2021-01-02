@@ -57,7 +57,7 @@ var Main_values = {
     "Search_isSearching": false,
     "Play_ChatForceDisable": false,
     "Never_run_new": true,
-    "Chat_font_size": 3,
+    "Chat_font_size_new": 75,
     "ChatBackground": 10,
     "IsRerun": false,
     "Main_selectedChannelPartner": false,
@@ -990,7 +990,8 @@ function Main_Checktylesheet() {
         if (window.getComputedStyle(span, null).getPropertyValue('font-family') !== 'icons') {
             console.log('Main_Checktylesheet reloading');
             Main_LoadStylesheet('https://fgl27.github.io/smarttv-twitch/release/githubio/css/font-awesome.min.css');
-            Main_LoadStylesheet('https://fgl27.github.io/smarttv-twitch/release/githubio/css/master.css');
+            //TODO remove this when updating
+            //Main_LoadStylesheet('https://fgl27.github.io/smarttv-twitch/release/githubio/css/master.css');
         } else console.log('Main_Checktylesheet loaded OK');
 
         document.body.removeChild(span);
@@ -1333,6 +1334,6 @@ function Main_clearInterval(id) {
     window.clearInterval(id);
 }
 
-function Main_textContentWithEle(ele, value) {
-    ele.textContent = value;
+function Main_tendsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
 }

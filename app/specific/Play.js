@@ -340,6 +340,7 @@ function Play_Start() {
     document.getElementById('controls_' + Play_controlsOpenVod).style.display = 'none';
     //Chat delay
     document.getElementById('controls_' + Play_controlsChatDelay).style.display = '';
+    document.getElementById('controls_' + Play_controlsChatSend).style.display = '';
 
     document.getElementById('controls_' + Play_controlsLowLatency).style.display = Play_CanLowLatency ? '' : 'none';
 

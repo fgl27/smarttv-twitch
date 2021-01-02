@@ -43,7 +43,6 @@ var Chat_JustStarted = true;
 
 function Chat_Preinit() {
     Chat_div[0] = Main_getElementById('chat_box0');
-    Chat_div[1] = Main_getElementById('chat_box1');
     ChatLive_LineAddCounter[0] = 0;
     ChatLive_LineAddCounter[1] = 0;
     ChatLive_Messages[0] = [];
@@ -448,13 +447,11 @@ function Chat_Clear() {
     Chat_Pause();
     Chat_Id[0] = 0;
     Main_emptyWithEle(Chat_div[0]);
-    Main_emptyWithEle(Chat_div[1]);
     Chat_next = null;
     Chat_Messages = [];
     Chat_MessagesNext = [];
     Chat_Position = 0;
     ChatLive_ClearIds(0);
-    ChatLive_ClearIds(1);
     ChatLive_resetChatters(0);
 }
 
@@ -464,7 +461,7 @@ function Main_Addline(id) {
     if (Chat_Position < (len - 1)) {
         i = Chat_Position;
         for (i; i < len; i++, Chat_Position++) {
-            if (Chat_Messages[i].time < (ChannelVod_vodOffset + (PlayVod_currentTime / 1000))) {
+            if (Chat_Messages[i].time < (PlayVod_currentTime / 1000)) {
 
                 ChatLive_ElemntAdd(Chat_Messages[i]);
 
@@ -555,7 +552,6 @@ function Chat_SingleLine(Line) {
     elem.innerHTML = div;
 
     Chat_div[0].appendChild(elem);
-    Chat_div[1].appendChild(elem.cloneNode(true));
 }
 
 function Chat_Clean(chat_number) {

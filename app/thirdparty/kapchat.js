@@ -1,12 +1,5 @@
-// The bellow are some function or adptations of function from
-// https://www.nightdev.com/kapchat/
-function extraEmoticonize(message, emote) {
-    return message.replace(emote.code, extraEmoteTemplate(emote));
-}
-
-function extraEmoteTemplate(emote) {
-    return '<img class="emoticon" alt="" src="' + emote['4x'] + '"/>';
-}
+// The bellow are some function or adaptations of function from
+// © NightDev 2016 https://www.nightdev.com/kapchat/
 
 function emoteURL(id) {
     return 'https://static-cdn.jtvnw.net/emoticons/v1/' + id + '/3.0';//emotes 3.0 === 4.0
@@ -20,74 +13,56 @@ function mescape(message) {
     return message.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-function extraMessageTokenize(message, bits) {
-    var tokenizedString = message.split(' '),
+function extraMessageTokenize(message, chat_number, bits) {
+    var SplittedMessage = message.split(' '),
         emote,
-        cheer;
+        cheer,
+        i = 0,
+        len = SplittedMessage.length;
 
-    for (var i = 0; i < tokenizedString.length; i++) {
-        message = tokenizedString[i];
+    for (i; i < len; i++) {
 
-        cheer = bits ? findCheerInToken(message) : 0;
+        cheer = bits ? findCheerInToken(SplittedMessage[i], chat_number) : 0;
 
         if (cheer) {
-            tokenizedString[i] = emoteTemplate(cheer);
-            continue;
+
+            SplittedMessage[i] = cheer;
+
+        } else {
+
+            emote = extraEmotes[SplittedMessage[i]];
+            SplittedMessage[i] = emote ? emote.chat_div : mescape(SplittedMessage[i]);
+
         }
 
-        emote = extraEmotes[message.replace(/(^[~!@#$%\^&\*\(\)]+|[~!@#$%\^&\*\(\)]+$)/g, '')] || extraEmotes[message];
-
-        tokenizedString[i] = emote ? extraEmoticonize(message, emote) : mescape(message);
     }
 
-    return tokenizedString.join(' ') + (bits ? (' ' + bits + ' bits') : '');
+    return SplittedMessage.join(' ') + (bits ? (' ' + bits + ' bits') : '');
 }
 
-
-function calculateColorReplacement(color) {
-    // Modified from http://www.sitepoint.com/javascript-generate-lighter-darker-color/
-    var rgb = "#",
-        brightness = "0.25", c, i;
-
-    if (color === '#000000') return "#2cffa2";//Black can't be see on a black background
-
-    color = String(color).replace(/[^0-9a-f]/gi, '');
-    if (color.length < 6) {
-        color = color[0] + color[0] + color[1] + color[1] + color[2] + color[2];
-    }
-
-    for (i = 0; i < 3; i++) {
-        c = parseInt(color.substr(i * 2, 2), 16);
-        if (c < 10) c = 10;
-        c = Math.round(Math.min(Math.max(0, c + (c * brightness)), 255)).toString(16);
-        rgb += ("00" + c).substr(c.length);
-    }
-
-    return rgb;
-}
-
-function findCheerInToken(message) {
-    var cheerPrefixes = Object.keys(cheers[ChatLive_selectedChannel_id]),
+function findCheerInToken(message, chat_number) {
+    var cheerPrefixes = Object.keys(cheers[ChatLive_selectedChannel_id[chat_number]]),
         tokenLower = message.toLowerCase(),
-        index = -1;
+        index = -1,
+        i = 0,
+        len = cheerPrefixes.length;
 
-    for (var i = 0; i < cheerPrefixes.length; i++) {
-
+    for (i; i < len; i++) {
         //Try  case sensitive first as some prefixes start the same, but some users type without carrying about case
-        if (message.indexOf(cheerPrefixes[i]) !== -1)
-            return getCheer(cheerPrefixes[i], parseInt(message.substr(cheerPrefixes[i].length), 10));
+        if (message.startsWith(cheerPrefixes[i]))
+            return getCheer(cheerPrefixes[i], parseInt(message.substr(cheerPrefixes[i].length), 10), chat_number);
 
         //Try  case insensitive after
-        if (tokenLower.indexOf(cheerPrefixes[i].toLowerCase()) !== -1) index = i;
+        if (tokenLower.startsWith(cheerPrefixes[i].toLowerCase())) index = i;
     }
 
     return ((index > -1) ?
-        getCheer(cheerPrefixes[index], parseInt(tokenLower.substr(cheerPrefixes[index].toLowerCase().length), 10))
+        getCheer(cheerPrefixes[index], parseInt(tokenLower.substr(cheerPrefixes[index].toLowerCase().length), 10), chat_number)
         : null);
 }
 
-function getCheer(prefix, amount) {
-    var amounts = cheers[ChatLive_selectedChannel_id][prefix],
+function getCheer(prefix, amount, chat_number) {
+    var amounts = cheers[ChatLive_selectedChannel_id[chat_number]][prefix],
         amountsArray = Object.keys(amounts),
         length = amountsArray.length;
 
@@ -104,21 +79,22 @@ function emoticonize(message, emotes) {
     if (!emotes) return [message];
 
     var tokenizedMessage = [],
-        emotesList = Object.keys(emotes),
-        replacements = [],
-        emote, i;
+        property,
+        replacements = [], replacement,
+        emote, i, len;
 
-    emotesList.forEach(function(id) {
-        emote = emotes[id];
+    for (property in emotes) {
+        emote = emotes[property];
 
-        for (i = emote.length - 1; i >= 0; i--) {
+        for (i = 0, len = emote.length; i < len; i++) {
             replacements.push({
-                id: id,
+                id: property,
                 first: emote[i][0],
                 last: emote[i][1]
             });
         }
-    });
+
+    }
 
     replacements.sort(function(a, b) {
         return b.first - a.first;
@@ -129,7 +105,9 @@ function emoticonize(message, emotes) {
     // punycode is used in the replacements loop below as well
     message = punycode.ucs2.decode(message);
 
-    replacements.forEach(function(replacement) {
+    for (i = 0, len = replacements.length; i < len; i++) {
+        replacement = replacements[i];
+
         // Unshift the end of the message (that doesn't contain the emote)
         tokenizedMessage.unshift(punycode.ucs2.encode(message.slice(replacement.last + 1)));
 
@@ -138,7 +116,8 @@ function emoticonize(message, emotes) {
 
         // Splice the unparsed piece of the message
         message = message.slice(0, replacement.first);
-    });
+
+    }
 
     // Unshift the remaining part of the message (that contains no emotes)
     tokenizedMessage.unshift(punycode.ucs2.encode(message));
@@ -146,23 +125,24 @@ function emoticonize(message, emotes) {
     return tokenizedMessage;
 }
 
-function transformBadges(sets) {
-    return Object.keys(sets).map(function(b) {
-        var badge = sets[b];
-        badge.type = b;
-        badge.versions = Object.keys(sets[b].versions).map(function(v) {
-            var version = sets[b].versions[v];
-            version.type = v;
-            return version;
-        });
-        return badge;
-    });
-}
+// function calculateColorReplacement(color) {
+//     // Modified from http://www.sitepoint.com/javascript-generate-lighter-darker-color/
+//     var rgb = "#",
+//         brightness = "0.5", c, i;
 
-function tagCSS(type, version, url, doc) {
-    var style = document.createElement('style');
-    style.type = 'text/css';
-    style.innerHTML = '.' + type + '-' + version + ' { background-image: url("' + url.replace('http:', 'https:') + '"); }';
-    if (doc) doc.appendChild(style);
-    else document.head.appendChild(style);
-}
+//     if (color === '#000000') return "#2cffa2";//Black can't be see on a black background
+
+//     color = String(color).replace(/[^0-9a-f]/gi, '');
+//     if (color.length < 6) {
+//         color = color[0] + color[0] + color[1] + color[1] + color[2] + color[2];
+//     }
+
+//     for (i = 0; i < 3; i++) {
+//         c = parseInt(color.substr(i * 2, 2), 16);
+//         if (c < 10) c = 10;
+//         c = Math.round(Math.min(Math.max(0, c + (c * brightness)), 255)).toString(16);
+//         rgb += ("00" + c).substr(c.length);
+//     }
+
+//     return rgb;
+// }

@@ -86,7 +86,68 @@ var Settings_value = {
         "values": ["All"],
         "set_values": [""],
         "defaultValue": 1
-    }
+    },
+    "chat_opt": {
+        "values": ["None"],
+        "set_values": [""],
+        "defaultValue": 1
+    },
+    "highlight_rewards": {//Migrated to dialog
+        "values": ["no", "yes"],
+        "defaultValue": 2
+    },
+    "highlight_atstreamer": {//Migrated to dialog
+        "values": ["no", "yes"],
+        "defaultValue": 2
+    },
+    "highlight_atuser": {//Migrated to dialog
+        "values": ["no", "yes"],
+        "defaultValue": 2
+    },
+    "highlight_user_send": {//Migrated to dialog
+        "values": ["no", "yes"],
+        "defaultValue": 1
+    },
+    "show_sub": {//Migrated to dialog
+        "values": ["no", "yes"],
+        "defaultValue": 2
+    },
+    "highlight_bits": {//Migrated to dialog
+        "values": ["no", "yes"],
+        "defaultValue": 2
+    },
+    "show_actions": {//Migrated to dialog
+        "values": ["no", "yes"],
+        "defaultValue": 1
+    },
+    "clear_chat": {//Migrated to dialog
+        "values": ["no", "yes"],
+        "defaultValue": 2
+    },
+    "show_chatters": {//Migrated to dialog
+        "values": ["no", "yes"],
+        "defaultValue": 2
+    },
+    "individual_lines": {//Migrated to dialog
+        "values": ["no", "yes"],
+        "defaultValue": 2
+    },
+    "chat_individual_background": {//Migrated to dialog
+        "values": ["disabled", "enabled", "bright", "dark"],
+        "defaultValue": 1
+    },
+    "chat_logging": {//Migrated to dialog
+        "values": ["no", "yes"],
+        "defaultValue": 2
+    },
+    "chat_nickcolor": {//Migrated to dialog
+        "values": ["no", "yes"],
+        "defaultValue": 2
+    },
+    "chat_timestamp": {//Migrated to dialog
+        "values": ["no", "yes"],
+        "defaultValue": 1
+    },
 };
 
 var Settings_FeedSort = [
@@ -159,6 +220,14 @@ function Settings_SetSettings() {
     Settings_value[key].values = [STR_CONTENT_LANG_SUMARRY];
 
     div += Settings_DivOptionWithSummary(key, STR_CONTENT_LANG, '');
+
+    key = "chat_opt";
+    Settings_value_keys.push(key);
+    Settings_value[key].values = [STR_CONTENT_LANG_SUMARRY];
+
+    div += Settings_DivOptionWithSummary(key, STR_CHAT_OPTIONS, '');
+
+    //    div += Settings_Content('chat_opt', [STR_CONTENT_LANG_SUMMARY], STR_CHAT_OPTIONS, null);
 
     //live_feed_sort
     key = "live_feed_sort";
@@ -532,7 +601,7 @@ function Settings_SetBuffers(whocall) {
         } else if (whocall === 3) {
             PlayClip_Buffer = Settings_Obj_values("buffer_clip");
         }
-    } catch (e) {}
+    } catch (e) { }
 }
 
 function Settings_SetAnimations() {
@@ -576,7 +645,7 @@ function Settings_SetAnimations() {
                 el.classList.remove(Main_classThumb);
             }
         );
-    } catch (e) {}
+    } catch (e) { }
 
     Main_classThumb = animate ? 'stream_thumbnail_focused' : 'stream_thumbnail_focused_no_ani';
     UserLiveFeed_FocusClass = animate ? 'feed_thumbnail_focused' : 'feed_thumbnail_focused_no_ani';
@@ -705,8 +774,231 @@ function Settings_handleKeyDown(event) {
             break;
         case KEY_ENTER:
             if (!Settings_cursorY) Languages_init();
+            else if (Main_A_includes_B(Settings_value_keys[Settings_cursorY], 'chat_opt')) Settings_DialogShowChat();
             break;
         default:
             break;
     }
+}
+
+
+function Settings_DialogShowChat() {
+    var yes_no = [STR_NO, STR_YES];
+    Settings_value.highlight_rewards.values = yes_no;
+    Settings_value.highlight_atstreamer.values = yes_no;
+    Settings_value.highlight_atuser.values = yes_no;
+    Settings_value.highlight_user_send.values = yes_no;
+    Settings_value.show_sub.values = yes_no;
+    Settings_value.highlight_bits.values = yes_no;
+    Settings_value.show_actions.values = yes_no;
+    Settings_value.chat_individual_background.values = [STR_DISABLED, STR_ENABLED, STR_BRIGHT_MODE, STR_DARK_MODE];
+    Settings_value.chat_logging.values = yes_no;
+    Settings_value.individual_lines.values = yes_no;
+    Settings_value.chat_nickcolor.values = yes_no;
+    Settings_value.chat_timestamp.values = yes_no;
+    Settings_value.clear_chat.values = yes_no;
+    Settings_value.show_chatters.values = [STR_DISABLED, STR_SHOW_IN_CHAT_CHATTERS, STR_SHOW_IN_CHAT_VIEWERS];
+
+    var obj = {
+        chat_logging: {
+            defaultValue: Settings_value.chat_logging.defaultValue,
+            values: Settings_value.chat_logging.values,
+            title: STR_CHAT_LOGGING,
+            summary: STR_CHAT_LOGGING_SUMMARY
+        },
+        individual_lines: {
+            defaultValue: Settings_value.individual_lines.defaultValue,
+            values: Settings_value.individual_lines.values,
+            title: STR_CHAT_INDIVIDUAL_LINE,
+            summary: null
+        },
+        chat_individual_background: {
+            defaultValue: Settings_value.chat_individual_background.defaultValue,
+            values: Settings_value.chat_individual_background.values,
+            title: STR_CHAT_INDIVIDUAL_BACKGROUND,
+            summary: STR_CHAT_INDIVIDUAL_BACKGROUND_SUMMARY
+        },
+        chat_timestamp: {
+            defaultValue: Settings_value.chat_timestamp.defaultValue,
+            values: Settings_value.chat_timestamp.values,
+            title: STR_CHAT_TIMESTAMP,
+            summary: null
+        },
+        show_chatters: {
+            defaultValue: Settings_value.chat_timestamp.defaultValue,
+            values: Settings_value.chat_timestamp.values,
+            title: STR_SHOW_IN_CHAT,
+            summary: STR_SHOW_IN_CHAT_SUMMARY
+        },
+        chat_nickcolor: {
+            defaultValue: Settings_value.chat_nickcolor.defaultValue,
+            values: Settings_value.chat_nickcolor.values,
+            title: STR_CHAT_NICK_COLOR,
+            summary: STR_CHAT_NICK_COLOR_SUMMARY
+        },
+        highlight_rewards: {
+            defaultValue: Settings_value.highlight_rewards.defaultValue,
+            values: Settings_value.highlight_rewards.values,
+            title: STR_CHAT_HIGHLIGHT_REDEEMED,
+            summary: null
+        },
+        highlight_atstreamer: {
+            defaultValue: Settings_value.highlight_atstreamer.defaultValue,
+            values: Settings_value.highlight_atstreamer.values,
+            title: STR_CHAT_HIGHLIGHT_STREAMER,
+            summary: null
+        },
+        highlight_atuser: {
+            defaultValue: Settings_value.highlight_atuser.defaultValue,
+            values: Settings_value.highlight_atuser.values,
+            title: STR_CHAT_HIGHLIGHT_USER,
+            summary: null
+        },
+        highlight_user_send: {
+            defaultValue: Settings_value.highlight_user_send.defaultValue,
+            values: Settings_value.highlight_user_send.values,
+            title: STR_CHAT_HIGHLIGHT_USER_SEND,
+            summary: null
+        },
+        show_sub: {
+            defaultValue: Settings_value.show_sub.defaultValue,
+            values: Settings_value.show_sub.values,
+            title: STR_CHAT_SHOW_SUB,
+            summary: null
+        },
+        highlight_bits: {
+            defaultValue: Settings_value.highlight_bits.defaultValue,
+            values: Settings_value.highlight_bits.values,
+            title: STR_CHAT_HIGHLIGHT_BIT,
+            summary: null
+        },
+        clear_chat: {
+            defaultValue: Settings_value.clear_chat.defaultValue,
+            values: Settings_value.clear_chat.values,
+            title: STR_CHAT_CLEAR_MSG,
+            summary: STR_CHAT_CLEAR_MSG_SUMMARY
+        },
+        show_actions: {
+            defaultValue: Settings_value.show_actions.defaultValue,
+            values: Settings_value.show_actions.values,
+            title: STR_CHAT_HIGHLIGHT_ACTIONS,
+            summary: STR_CHAT_HIGHLIGHT_ACTIONS_SUMMARY
+        },
+    };
+
+    Settings_DialogShow(obj, STR_CHAT_OPTIONS);
+}
+
+var Settings_DialogValue = [];
+var Settings_DialogPos = 0;
+
+function Settings_DialogShow(obj, title) {
+    Main_removeEventListener("keydown", Settings_handleKeyDown);
+
+    var dialogContent = title + STR_BR + STR_BR;
+    Settings_DialogValue = [];
+
+    for (var property in obj) {
+        Settings_DialogValue.push(property);
+        if (obj[property].keyenter) {
+            dialogContent += Settings_Content(property, [STR_CONTENT_LANG_SUMARRY], obj[property].title, null);
+        } else {
+            dialogContent += obj[property].summary ?
+                Settings_DivOptionWithSummary(property, obj[property].title, obj[property].summary, 73) :
+                Settings_DivOptionNoSummary(property, obj[property].title);
+        }
+    }
+
+    Main_innerHTML("dialog_settings_text", dialogContent + STR_DIV_TITLE + STR_CLOSE_THIS + '</div>');
+
+    Settings_DialogPos = 0;
+    Main_AddClass(Settings_DialogValue[0], 'settings_value_focus');
+    Main_AddClass(Settings_DialogValue[0] + '_div', 'settings_div_focus');
+    Settings_SetarrowsKey(Settings_DialogValue[0]);
+
+    Main_ShowElement('dialog_settings');
+    Main_addEventListener("keydown", Settings_DialoghandleKeyDown);
+}
+
+function Settings_SetarrowsKey(key) {
+    if (!Settings_Obj_length(key)) return;
+
+    var currentValue = Settings_Obj_default(key);
+    var maxValue = Settings_Obj_length(key);
+
+    if (currentValue > 0 && currentValue < maxValue) {
+        Main_getElementById(key + "arrow_left").style.opacity = "1";
+        Main_getElementById(key + "arrow_right").style.opacity = "1";
+    } else if (currentValue === maxValue) {
+        Main_getElementById(key + "arrow_left").style.opacity = "1";
+        Main_getElementById(key + "arrow_right").style.opacity = "0.2";
+    } else {
+        Main_getElementById(key + "arrow_left").style.opacity = "0.2";
+        Main_getElementById(key + "arrow_right").style.opacity = "1";
+    }
+}
+
+function Settings_DialoghandleKeyDown(event) {
+    var key;
+    switch (event.keyCode) {
+        case KEY_ENTER:
+        case KEY_KEYBOARD_BACKSPACE:
+        case KEY_RETURN:
+            Settings_RemoveinputFocusKey(Settings_DialogValue[Settings_DialogPos]);
+            Main_HideElement('dialog_settings');
+            Main_removeEventListener("keydown", Settings_DialoghandleKeyDown);
+            Main_addEventListener("keydown", Settings_handleKeyDown);
+            break;
+        case KEY_LEFT:
+            key = Settings_DialogValue[Settings_DialogPos];
+            if (Settings_Obj_default(key) > 0) Settings_DialogRigthLeft(-1);
+            break;
+        case KEY_RIGHT:
+            key = Settings_DialogValue[Settings_DialogPos];
+            if (Settings_Obj_default(key) < Settings_Obj_length(key)) Settings_DialogRigthLeft(1);
+            break;
+        case KEY_UP:
+            if (Settings_DialogPos > 0) Settings_DialogUpDown(-1);
+            break;
+        case KEY_DOWN:
+            if (Settings_DialogPos < (Settings_DialogValue.length - 1)) Settings_DialogUpDown(1);
+            break;
+        default:
+            break;
+    }
+}
+
+function Settings_DialogUpDown(offset) {
+    Settings_RemoveinputFocusKey(Settings_DialogValue[Settings_DialogPos]);
+    Settings_DialogPos += offset;
+
+    var key = Settings_DialogValue[Settings_DialogPos];
+    Main_AddClass(key, 'settings_value_focus');
+    Main_AddClass(key + '_div', 'settings_div_focus');
+    Settings_SetarrowsKey(key);
+}
+
+function Settings_DialogRigthLeft(offset) {
+    var key = Settings_DialogValue[Settings_DialogPos];
+
+    Settings_value[key].defaultValue += offset;
+
+    Main_setItem(key, Settings_Obj_default(key) + 1);
+    Main_textContent(key, Settings_Obj_values(key));
+    Settings_SetarrowsKey(key);
+    Settings_SetDefault(key);
+}
+
+function Settings_RemoveinputFocusKey(key) {
+    Main_getElementById(key + "arrow_left").style.opacity = "0";
+    Main_getElementById(key + "arrow_right").style.opacity = "0";
+    Main_RemoveClass(key, 'settings_value_focus');
+    Main_RemoveClass(key + '_div', 'settings_div_focus');
+}
+
+function Settings_Content(key, valuesArray, STR, STR_SUMMARY) {
+    Settings_value_keys.push(key);
+    if (valuesArray) Settings_value[key].values = valuesArray;
+
+    return (STR_SUMMARY ? Settings_DivOptionWithSummary(key, STR, STR_SUMMARY) : Settings_DivOptionNoSummary(key, STR));
 }

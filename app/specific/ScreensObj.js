@@ -22,6 +22,8 @@ var Vod_DoAnimateThumb = 1;
 
 var AGame_following = false;
 
+var noop_fun = function() { };
+
 //Screens
 var Clip;
 var ChannelClip;
@@ -35,7 +37,6 @@ var Vod;
 var AGameVod;
 var UserVod;
 var ChannelVod;
-var UserHost;
 var UserLive;
 var UserChannels;
 var SearchGames;

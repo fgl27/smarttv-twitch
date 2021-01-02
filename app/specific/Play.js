@@ -168,7 +168,7 @@ var Play_ChatSizeVal = [{
     "dialogTop": -120
 }];
 
-var Play_ChatFontObj = ['chat_extra_small', 'chat_size_small', 'chat_size_default', 'chat_size_biger', 'chat_size_bigest'];
+var Play_ChatFontObj = [];
 
 var Play_avplay;
 var Play_BufferPercentage = 0;
@@ -189,8 +189,10 @@ function Play_PreStart() {
         Play_TizenVersion = tizen.systeminfo.getCapability("http://tizen.org/feature/platform.version");
     }
 
-    Play_chat_container = document.getElementById("chat_container");
+    Play_chat_container = document.getElementById("chat_container0");
     Play_ProgresBarrElm = document.getElementById("inner_progress_bar");
+    Play_dialog_warning_play_middle_text = Main_getElementById('dialog_warning_play_middle_text');
+    Play_dialog_warning_play_middle = Main_getElementById('dialog_warning_play_middle');
 
     Play_ChatPositions = Main_getItemInt('ChatPositionsValue', 0);
     Play_ChatSizeValue = Main_getItemInt('ChatSizeValue', 2);
@@ -213,6 +215,12 @@ function Play_PreStart() {
             console.log(ex.message);
         }
     }
+
+    var i = 25, max = 301;
+    for (i; i < max; i++) {
+        Play_ChatFontObj.push(i);
+    }
+    if (Main_values.Chat_font_size_new > (Play_ChatFontObj.length - 1)) Main_values.Chat_font_size_new = Play_ChatFontObj.length - 1;
 
     Play_ClearPlayer();
     Play_ChatSize(false);
@@ -316,10 +324,7 @@ function Play_setDisplayRect(isfull) {
 }
 
 function Play_SetChatFont() {
-    for (var i = 0; i < Play_ChatFontObj.length; i++)
-        Main_RemoveClass('chat_inner_container', Play_ChatFontObj[i]);
-
-    Main_AddClass('chat_inner_container', Play_ChatFontObj[Main_values.Chat_font_size]);
+    Main_getElementById('chat_inner_container').style.fontSize = (Play_ChatFontObj[Main_values.Chat_font_size_new] * 0.76) + '%';
 }
 
 function Play_Start() {
@@ -421,7 +426,7 @@ function Play_CheckIfIsLive() {
     xmlHttp.timeout = Play_loadingDataTimeout;
     xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
 
-    xmlHttp.ontimeout = function() {};
+    xmlHttp.ontimeout = function() { };
 
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState === 4) {
@@ -475,7 +480,7 @@ function Play_CheckIfIsLiveLink() {
     xmlHttp.timeout = Play_loadingDataTimeout;
     xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
 
-    xmlHttp.ontimeout = function() {};
+    xmlHttp.ontimeout = function() { };
 
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState === 4) {
@@ -688,7 +693,7 @@ function Play_loadDataRequest() {
 
     }
 
-    xmlHttp.ontimeout = function() {};
+    xmlHttp.ontimeout = function() { };
 
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState === 4) {
@@ -1031,7 +1036,7 @@ function Play_onPlayer() {
             try {
                 //GET_LIVE_DURATION not supported by all TVs
                 if (Play_LowLatency) Play_avplay.seekTo(Play_avplay.getStreamingProperty("GET_LIVE_DURATION").split('|')[1] - 3000);
-            } catch (e) {}
+            } catch (e) { }
 
             Play_avplay.play();
             Play_Playing = true;
@@ -1414,18 +1419,18 @@ function Play_setHidePanel() {
 function Play_showChat() {
     Play_ChatPosition();
     Play_ChatBackgroundChange(false);
-    Main_ShowElement('chat_container');
+    Main_ShowElement('chat_container0');
 
     Play_controls[Play_controlsChat].setLable();
 }
 
 function Play_hideChat() {
-    Main_HideElement('chat_container');
+    Main_HideElement('chat_container0');
     Play_controls[Play_controlsChat].setLable();
 }
 
 function Play_isChatShown() {
-    return Main_isElementShowing('chat_container');
+    return Main_isElementShowing('chat_container0');
 }
 
 function Play_getQualitiesCount() {
@@ -2285,13 +2290,14 @@ var Play_controlsFollow = 4;
 var Play_controlsQuality = 5;
 var Play_controlsLowLatency = 6;
 var Play_controlsChat = 7;
-var Play_controlsChatSide = 8;
-var Play_controlsChatPos = 9;
-var Play_controlsChatSize = 10;
-var Play_controlsChatBright = 11;
-var Play_controlsChatFont = 12;
-var Play_controlsChatDelay = 13;
-var Play_controlsChatForceDis = 14;
+var Play_controlsChatSend = 8;
+var Play_controlsChatSide = 9;
+var Play_controlsChatPos = 10;
+var Play_controlsChatSize = 11;
+var Play_controlsChatBright = 12;
+var Play_controlsChatFont = 13;
+var Play_controlsChatDelay = 14;
+var Play_controlsChatForceDis = 15;
 
 var Play_controlsDefault = Play_controlsChat;
 var Play_Panelcounter = Play_controlsDefault;
@@ -2509,6 +2515,36 @@ function Play_MakeControls() {
         },
     };
 
+    Play_controls[Play_controlsChatSend] = {
+        ShowInLive: true,
+        ShowInVod: true,
+        ShowInClip: true,
+        ShowInPP: true,
+        ShowInMulti: true,
+        ShowInChat: false,
+        ShowInAudioPP: false,
+        ShowInAudioMulti: false,
+        ShowInPreview: false,
+        ShowInStay: true,
+        icons: "keyboard",
+        string: STR_CHAT_WRITE,
+        opacity: 0,
+        values: null,
+        defaultValue: null,
+        enterKey: function() {
+            if (Main_values.Play_ChatForceDisable) {
+                Play_showWarningMidleDialog(STR_CHAT_DISABLE, 1500);
+                return;
+            } else if (!AddUser_UserIsSet() || !AddUser_UsernameArray[0].access_token) {
+                Play_showWarningMidleDialog(STR_NOKEY_CHAT_WARN, 1500);
+                return;
+            }
+
+            ChatLiveControls_Show();
+
+        }
+    };
+
     Play_controls[Play_controlsChatSide] = { //chat side
         icons: Play_isFullScreen ? "resize-down" : "resize-up",
         string: STR_CHAT_VIDEO_MODE,
@@ -2634,28 +2670,38 @@ function Play_MakeControls() {
     };
 
     Play_controls[Play_controlsChatFont] = { //Chat font size
+        ShowInLive: false,
+        ShowInVod: false,
+        ShowInClip: false,
+        ShowInPP: false,
+        ShowInMulti: false,
+        ShowInChat: true,
+        ShowInAudioPP: false,
+        ShowInAudioMulti: false,
+        ShowInPreview: false,
+        ShowInStay: false,
         icons: "chat-font",
         string: STR_CHAT_FONT,
-        values: ["60%", "80%", "100%", "120%", "140%"],
-        defaultValue: Main_values.Chat_font_size,
         opacity: 0,
+        values: Play_ChatFontObj,
+        defaultValue: Main_values.Chat_font_size_new,
         isChat: true,
         updown: function(adder) {
             if (!Play_isChatShown()) return;
+
             this.defaultValue += adder;
             if (this.defaultValue < 0)
                 this.defaultValue = 0;
             else if (this.defaultValue > (this.values.length - 1)) this.defaultValue = (this.values.length - 1);
-            Main_values.Chat_font_size = this.defaultValue;
+            Main_values.Chat_font_size_new = this.defaultValue;
 
             Play_SetChatFont();
-            this.setLable();
             this.bottomArrows();
+            this.setLable();
             Main_SaveValues();
         },
         setLable: function() {
-            Main_textContent('controls_name_' + this.position,
-                this.values[this.defaultValue]);
+            Main_textContent('controls_name_' + this.position, this.values[this.defaultValue] + '%');
         },
         bottomArrows: function() {
             Play_BottomArrows(this.position);
@@ -2848,4 +2894,31 @@ function Play_SetControls() {
 
 function Play_SetControlsArrows(key) {
     return '<div id="controls_arrows_' + key + '" style="font-size: 50%; display: inline-block; vertical-align: middle;"><div style="display: inline-block;"><div id="control_arrow_up_' + key + '" class="up"></div><div id="control_arrow_down' + key + '" class="down"></div></div></div>&nbsp;<div id="controls_name_' + key + '" class="arrows_text">' + Play_controls[key].values[Play_controls[key].defaultValue] + '</div>';
+}
+
+var Play_dialog_warning_play_middle;
+var Play_dialog_warning_play_middle_text;
+var Play_showWarningMidleDialogId;
+function Play_showWarningMidleDialog(text, timeout) {
+    Main_innerHTMLWithEle(Play_dialog_warning_play_middle_text, text);
+
+    if (UserLiveFeed_isFeedShow()) Play_dialog_warning_play_middle.style.marginTop = '90vh';
+    else Play_dialog_warning_play_middle.style.marginTop = '50vh';
+
+    Main_ShowElementWithEle(Play_dialog_warning_play_middle);
+
+    if (timeout) {
+        Play_showWarningMidleDialogId = Main_setTimeout(
+            function() {
+                Play_HideWarningMidleDialog();
+            },
+            timeout,
+            Play_showWarningMidleDialogId
+        );
+    } else Main_clearTimeout(Play_showWarningMidleDialogId);
+}
+
+function Play_HideWarningMidleDialog() {
+    Main_HideElementWithEle(Play_dialog_warning_play_middle);
+    Main_clearTimeout(Play_showWarningMidleDialogId);
 }

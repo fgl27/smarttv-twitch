@@ -80,6 +80,7 @@ var Main_IsDayFirst = false;
 var Main_SearchInput;
 var Main_AddUserInput;
 var Main_AddCodeInput;
+var Main_ChatLiveInput;
 var Main_updateclockId;
 var Main_ContentLang = "";
 var Main_Periods = [];
@@ -228,7 +229,7 @@ function Main_loadTranslations(language) {
             } catch (e) {
                 Main_IsNotBrowserVersion = '1.0.0';
                 Main_IsNotBrowser = 0;
-                document.body.style.backgroundColor = "rgba(0, 0, 0, 1)";
+                Main_body.style.backgroundColor = "rgba(155, 155, 155, 1)";//default rgba(0, 0, 0, 1)
                 Main_isDebug = true;
                 console.log('Main_isReleased: ' + Main_isReleased);
                 console.log('Main_isDebug: ' + Main_isDebug);
@@ -261,6 +262,7 @@ function Main_loadTranslations(language) {
             Main_SearchInput = document.getElementById("search_input");
             Main_AddUserInput = document.getElementById("user_input");
             Main_AddCodeInput = document.getElementById("oauth_input");
+            Main_ChatLiveInput = Main_getElementById("chat_send_input");
 
             AddUser_RestoreUsers();
             //Allow page to proper load/resize and users 0 be restored before Main_initWindows
@@ -385,6 +387,19 @@ function Main_SetStringsSecondary() {
     Main_innerHTML('channel_content_titley_0', '<i class="icon-movie-play stream_channel_follow_icon"></i>' + STR_SPACE + STR_SPACE + STR_VIDEOS);
     Main_innerHTML('channel_content_titley_1', '<i class="icon-movie stream_channel_follow_icon"></i>' + STR_SPACE + STR_SPACE + STR_CLIPS);
     Main_innerHTML('channel_content_titley_2', '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + STR_FOLLOW);
+
+    Main_textContent("chat_send_button0", STR_OPTIONS);
+    Main_textContent("chat_send_button1", STR_CHAT_DELL_ALL);
+    Main_textContent("chat_send_button2", STR_CHAT_UNICODE_EMOJI);
+    Main_textContent("chat_send_button3", STR_CHAT_BTTV_GLOBAL);
+    Main_textContent("chat_send_button4", STR_CHAT_FFZ_GLOBAL);
+    Main_textContent("chat_send_button5", STR_CHAT_SEND);
+    Main_textContent("chat_send_button6", STR_CHAT_AT_STREAM);
+    Main_textContent("chat_send_button7", STR_CHAT_TW_EMOTES);
+    Main_textContent("chat_send_button8", STR_CHAT_BTTV_STREAM);
+    Main_textContent("chat_send_button9", STR_CHAT_FFZ_STREAM);
+    Main_textContent("chat_result", STR_CHAT_RESULT);
+    ChatLiveControls_OptionsUpdate_defautls();
 }
 
 function Main_IconLoad(lable, icon, string) {
@@ -1001,6 +1016,7 @@ function Main_ready(func) {
     } else document.addEventListener("DOMContentLoaded", func);
 }
 
+var Main_clock_H_M = '';
 function Main_getclock() {
     var date = new Date().getTime() + Main_ClockOffset,
         dayMonth;
@@ -1010,7 +1026,9 @@ function Main_getclock() {
     if (Main_IsDayFirst) dayMonth = STR_DAYS[date.getDay()] + ' ' + date.getDate() + ' ' + STR_MONTHS[date.getMonth()];
     else dayMonth = STR_DAYS[date.getDay()] + ' ' + STR_MONTHS[date.getMonth()] + ' ' + date.getDate();
 
-    return dayMonth + ' ' + Play_lessthanten(date.getHours()) + ':' + Play_lessthanten(date.getMinutes());
+    Main_clock_H_M = Play_lessthanten(date.getHours()) + ':' + Play_lessthanten(date.getMinutes());
+
+    return dayMonth + ' ' + Main_clock_H_M;
 }
 
 // right after the TV comes from standby the network can lag, delay the check
@@ -1142,7 +1160,7 @@ function Main_PrintUnicode(string) {
         console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
 }
 
-function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
+function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, key, id) {
     var xmlHttp = new XMLHttpRequest();
 
     xmlHttp.open("GET", theUrl, true);
@@ -1158,11 +1176,11 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState === 4) {
             if (xmlHttp.status === 200) {
-                callbackSucess(xmlHttp.responseText);
+                callbackSucess(xmlHttp.responseText, key, id);
             } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
                 AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
             } else {
-                calbackError();
+                calbackError(key, id);
             }
         }
     };
@@ -1237,3 +1255,84 @@ function Main_A_includes_B(A, B) {
 // function Main_A_equals_B_No_Case(A, B) {// jshint ignore:line
 //     return (A ? A.toLowerCase() : null) === (B ? B.toLowerCase() : null);
 // }
+
+var Main_body = document.body;
+
+function Main_addEventListener(type, fun) {
+    Main_removeEventListener(type, fun);
+    Main_body.addEventListener(type, fun);
+}
+
+function Main_removeEventListener(type, fun) {
+    Main_body.removeEventListener(type, fun);
+}
+
+function Main_getElementById(elemString) {
+    return document.getElementById(elemString);
+}
+
+function Main_setTimeout(fun, timeout, id) {
+    Main_clearTimeout(id);
+    if (timeout && timeout > 0) return window.setTimeout(fun, timeout);
+    else return window.setTimeout(fun);
+}
+
+function Main_clearTimeout(id) {
+    window.clearTimeout(id);
+}
+
+function Main_A_equals_B(A, B) {
+    return A === B;
+}
+
+function Main_Log(text) {
+    if (Main_isDebug) {
+        text = text + ' ' + Main_LogDate(new Date());
+        console.log(text);
+    }
+}
+
+function Main_LogDate(date) {
+    return date.toLocaleTimeString([], {hour12: false}) + '.' + date.getMilliseconds();
+}
+
+function Main_AddClassWitEle(element, mclass) {
+    element.classList.add(mclass);
+}
+
+function Main_RemoveClassWithEle(element, mclass) {
+    element.classList.remove(mclass);
+}
+
+function Main_emptyWithEle(el) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+}
+
+function Main_ShowElementWithEle(element) {
+    element.classList.remove('hide');
+}
+
+function Main_HideElementWithEle(element) {
+    element.classList.add('hide');
+}
+
+function Main_innerHTMLWithEle(ele, value) {
+    ele.innerHTML = value;
+}
+
+var DefaultHttpGetTimeout = 25000;
+var DefaultHttpGetTimeoutPlus = 5000;
+var DefaultHttpGetReTryMax = 2;
+
+function Main_setInterval(fun, timeout, id) {
+    Main_clearInterval(id);
+    if (timeout && timeout > 0) return window.setInterval(fun, timeout);
+}
+
+function Main_clearInterval(id) {
+    window.clearInterval(id);
+}
+
+function Main_textContentWithEle(ele, value) {
+    ele.textContent = value;
+}

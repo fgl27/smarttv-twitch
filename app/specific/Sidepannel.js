@@ -131,17 +131,17 @@ function Sidepannel_KeyEnterBase() {
                 ChannelContent_SetChannelValue();
             Main_OpenSearch();
         } else document.body.addEventListener("keydown", Sidepannel_Callback, false);
-    } else if (Main_values.Sidepannel_Pos === 9) {
+    } else if (Main_values.Sidepannel_Pos === 8) {
         Main_showSettings();
-    } else if (Main_values.Sidepannel_Pos === 10) {
+    } else if (Main_values.Sidepannel_Pos === 9) {
         document.body.removeEventListener("keydown", Sidepannel_Callback, false);
         document.body.addEventListener("keydown", Screens_handleKeyControls);
         Main_showAboutDialog();
-    } else if (Main_values.Sidepannel_Pos === 11) {
+    } else if (Main_values.Sidepannel_Pos === 10) {
         document.body.removeEventListener("keydown", Sidepannel_Callback, false);
         document.body.addEventListener("keydown", Screens_handleKeyControls);
         Main_showControlsDialog();
-    } else if (Main_values.Sidepannel_Pos === 12) Main_showExitDialog(Sidepannel_Callback);
+    } else if (Main_values.Sidepannel_Pos === 11) Main_showExitDialog(Sidepannel_Callback);
 
 }
 
@@ -294,7 +294,6 @@ function Sidepannel_SetUserLables() {
 
     Main_innerHTML('side_panel_movel_user_text', STR_SPACE + STR_USER_MENU + STR_SPACE);
     Main_ShowElement('side_panel_movel_user_text_holder');
-    Main_ShowElement('side_panel_movel_new_8');
 
     Main_innerHTML('side_panel_movel_new_2', STR_SPACE + STR_MAIN_MENU);
     Main_innerHTML('side_panel_movel_new_4', STR_SPACE + STR_GAMES);
@@ -306,6 +305,7 @@ function Sidepannel_SetUserLables() {
     Sidepannel_SetIcons('side_panel_new_4', 'gamepad');
     Sidepannel_SetIcons('side_panel_new_5', 'movie-play');
     Sidepannel_SetIcons('side_panel_new_6', 'filmstrip');
+    Sidepannel_SetIcons('side_panel_new_7', 'user');
 
 }
 
@@ -313,7 +313,6 @@ function Sidepannel_SetDefaultLables() {
     if (AddUser_UsernameArray[0]) Sidepannel_SetUserlable(AddUser_UsernameArray[0].display_name);
     else Sidepannel_SetUserlable(STR_USER_ADD);
 
-    Main_HideElement('side_panel_movel_new_8');
     Main_HideElement('side_panel_movel_user_text_holder');
 
     Main_innerHTML('side_panel_movel_new_1', STR_SPACE + STR_SEARCH);
@@ -337,7 +336,7 @@ function Sidepannel_SetDefaultLables() {
     Sidepannel_SetIcons('side_panel_new_4', 'star');
     Sidepannel_SetIcons('side_panel_new_5', 'gamepad');
     Sidepannel_SetIcons('side_panel_new_6', 'movie-play');
-    Sidepannel_SetIcons('side_panel_new_7', 'user');
+    Sidepannel_SetIcons('side_panel_new_7', 'movie');
 }
 
 function Sidepannel_SetUserlable(text) {
@@ -466,7 +465,6 @@ function Sidepannel_handleKeyDownMain(event) {
             if (Main_values.Sidepannel_Pos) {
                 Sidepannel_RemoveFocusMain();
                 Main_values.Sidepannel_Pos--;
-                if (!Main_values.Sidepannel_IsUser && Main_values.Sidepannel_Pos === 7) Main_values.Sidepannel_Pos--;
                 Sidepannel_AddFocusMain();
             }
             break;
@@ -475,7 +473,6 @@ function Sidepannel_handleKeyDownMain(event) {
             if (Main_values.Sidepannel_Pos < 11) {
                 Sidepannel_RemoveFocusMain();
                 Main_values.Sidepannel_Pos++;
-                if (!Main_values.Sidepannel_IsUser && Main_values.Sidepannel_Pos === 8) Main_values.Sidepannel_Pos++;
                 Sidepannel_AddFocusMain();
             }
             break;

@@ -72,6 +72,8 @@ function PlayVod_Start() {
 
     document.getElementById('controls_' + Play_controlsLowLatency).style.display = 'none';
 
+    document.getElementById('controls_' + Play_controlsChatSend).style.display = 'none';
+
     Play_CurrentSpeed = 3;
     Play_IconsResetFocus();
 
@@ -325,7 +327,7 @@ function PlayVod_loadDataRequest() {
     xmlHttp.timeout = Play_loadingDataTimeout;
     xmlHttp.setRequestHeader(Main_clientIdHeader, Play_410ERROR ? Main_Headers_Backup[0][1] : AddCode_clientId);
 
-    xmlHttp.ontimeout = function() {};
+    xmlHttp.ontimeout = function() { };
 
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState === 4) {
@@ -1151,7 +1153,7 @@ function PlayVod_handleKeyDown(e) {
                         if (PlayVod_addToJump) PlayVod_jump();
                     } else if (PlayVod_PanelY === 1) {
                         if (!Main_values.Play_ChatForceDisable) {
-                            if (Play_isNotplaying()) Chat_Play(Chat_Id);
+                            if (Play_isNotplaying()) Chat_Play(Chat_Id[0]);
                             else Chat_Pause();
                         }
                         if (!Play_isEndDialogVisible()) Play_KeyPause(2);
@@ -1168,7 +1170,7 @@ function PlayVod_handleKeyDown(e) {
             case KEY_PLAY:
                 if (!Play_isEndDialogVisible() && Play_isNotplaying()) {
                     Play_KeyPause(2);
-                    if (!Main_values.Play_ChatForceDisable) Chat_Play(Chat_Id);
+                    if (!Main_values.Play_ChatForceDisable) Chat_Play(Chat_Id[0]);
                 }
                 break;
             case KEY_PAUSE:
@@ -1180,7 +1182,7 @@ function PlayVod_handleKeyDown(e) {
             case KEY_PLAYPAUSE:
             case KEY_KEYBOARD_SPACE:
                 if (!Main_values.Play_ChatForceDisable) {
-                    if (Play_isNotplaying()) Chat_Play(Chat_Id);
+                    if (Play_isNotplaying()) Chat_Play(Chat_Id[0]);
                     else Chat_Pause();
                 }
                 if (!Play_isEndDialogVisible()) Play_KeyPause(2);

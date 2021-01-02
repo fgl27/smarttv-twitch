@@ -1,4 +1,27 @@
-//Spacing for reease maker not trow erros frm jshint
+/*
+    Copyright (c) 2013-2015, Fionn Kelleher All rights reserved.
+    Redistribution and use in source and binary forms, with or without modification,
+    are permitted provided that the following conditions are met:
+        Redistributions of source code must retain the above copyright notice,
+        this list of conditions and the following disclaimer.
+        Redistributions in binary form must reproduce the above copyright notice,
+        this list of conditions and the following disclaimer in the documentation and/or other materials
+        provided with the distribution.
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+    IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+    INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+    (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+    OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+    OF SUCH DAMAGE.
+*/
+//From:
+//https://github.com/sigkell/irc-message/blob/master/index.js
+//Updated version:
+//https://github.com/tmijs/tmi.js/blob/master/lib/parser.js
 window.parseIRC = function(data) {
     var message = {
         raw: data,
@@ -24,13 +47,16 @@ window.parseIRC = function(data) {
         }
 
         // Tags are split by a semi colon.
-        var rawTags = data.slice(1, nextspace).split(';');
+        var rawTags = data.slice(1, nextspace).split(';'),
+            i = 0,
+            len = rawTags.length;
 
-        for (var i = 0; i < rawTags.length; i++) {
+        for (i; i < len; i++) {
             // Tags delimited by an equals sign are key=value tags.
             // If there's no equals, we assign the tag a value of true.
-            var pair = rawTags[i].split('=');
-            message.tags[pair[0]] = pair[1] || true;
+            var tag = rawTags[i];
+            var pair = tag.split('=');
+            message.tags[pair[0]] = tag.substring(tag.indexOf('=') + 1) || true;
         }
 
         position = nextspace + 1;

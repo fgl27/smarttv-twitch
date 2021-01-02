@@ -10,6 +10,14 @@ var AddCode_IsSub = false;
 var AddCode_PlayRequest = false;
 var AddCode_Channel_id = '';
 
+var AddCode_Scopes = [
+    'user_read',
+    'user_follows_edit',
+    'user_subscriptions',
+    'chat:edit',
+    'chat:read'
+];
+
 var AddCode_UrlToken = 'https://id.twitch.tv/oauth2/token?';
 //Variable initialization end
 
@@ -138,7 +146,7 @@ function AddCode_refreshTokens(position, tryes, callbackFunc, callbackFuncNOK) {
 
     xmlHttp.open("POST", url, true);
     xmlHttp.timeout = AddCode_loadingDataTimeout;
-    xmlHttp.ontimeout = function() {};
+    xmlHttp.ontimeout = function() { };
 
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState === 4) {
@@ -187,9 +195,12 @@ function AddCode_refreshTokensSucess(responseText, position, callbackFunc) {
 
 //Check if has all scopes, in canse they change
 function AddCode_TokensCheckScope(scope) {
-    if (scope.indexOf("user_read") === -1) return false;
-    if (scope.indexOf("user_follows_edit") === -1) return false;
-    if (scope.indexOf("user_subscriptions") === -1) return false;
+
+    var i = 0, len = AddCode_Scopes.length;
+
+    for (i; i < len; i++) {
+        if (scope.indexOf(AddCode_Scopes[i]) === -1) return false;
+    }
 
     return true;
 }
@@ -648,7 +659,7 @@ function AddCode_BasexmlHttpGet(theUrl, type, HeaderQuatity, access_token, callb
     for (var i = 0; i < HeaderQuatity; i++)
         xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
 
-    xmlHttp.ontimeout = function() {};
+    xmlHttp.ontimeout = function() { };
 
     xmlHttp.onreadystatechange = function() {
         callbackready(xmlHttp);
@@ -668,7 +679,7 @@ function AddCode_BasexmlHttpGetBack(theUrl, type, HeaderQuatity, access_token, c
     for (var i = 0; i < HeaderQuatity; i++)
         xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
 
-    xmlHttp.ontimeout = function() {};
+    xmlHttp.ontimeout = function() { };
 
     xmlHttp.onreadystatechange = function() {
         callbackready(xmlHttp);
@@ -686,7 +697,7 @@ function AddCode_BasexmlHttpGetValidate(callbackready, position, tryes) {
     xmlHttp.setRequestHeader(Main_Authorization, Main_OAuth + AddUser_UsernameArray[position].access_token);
 
     xmlHttp.timeout = 10000;
-    xmlHttp.ontimeout = function() {};
+    xmlHttp.ontimeout = function() { };
 
     xmlHttp.onreadystatechange = function() {
         callbackready(xmlHttp, position, tryes);

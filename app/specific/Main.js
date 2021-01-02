@@ -12,20 +12,19 @@ var Main_games = 4;
 var Main_Vod = 5;
 var Main_Clip = 6;
 var Main_UserLive = 7;
-var Main_UserHost = 8;
-var Main_usergames = 9;
-var Main_UserVod = 10;
-var Main_UserChannels = 11;
-var Main_SearchGames = 12;
-var Main_SearchLive = 13;
-var Main_SearchChannels = 14;
-var Main_ChannelContent = 15;
-var Main_ChannelVod = 16;
-var Main_ChannelClip = 17;
-var Main_addUser = 18;
-var Main_aGame = 19;
-var Main_AGameVod = 20;
-var Main_AGameClip = 21;
+var Main_usergames = 8;
+var Main_UserVod = 9;
+var Main_UserChannels = 10;
+var Main_SearchGames = 11;
+var Main_SearchLive = 12;
+var Main_SearchChannels = 13;
+var Main_ChannelContent = 14;
+var Main_ChannelVod = 15;
+var Main_ChannelClip = 16;
+var Main_addUser = 17;
+var Main_aGame = 18;
+var Main_AGameVod = 19;
+var Main_AGameClip = 20;
 
 var Main_GoBefore = '';
 var Main_values = {
@@ -58,7 +57,7 @@ var Main_values = {
     "Search_isSearching": false,
     "Play_ChatForceDisable": false,
     "Never_run_new": true,
-    "Chat_font_size": 3,
+    "Chat_font_size_new": 75,
     "ChatBackground": 10,
     "IsRerun": false,
     "Main_selectedChannelPartner": false,
@@ -66,6 +65,7 @@ var Main_values = {
     "Sidepannel_IsUser": false,
     "My_channel": false,
     "DeviceBitrateCheck": false,
+    "warning_extra": true,
 };
 
 
@@ -81,6 +81,7 @@ var Main_IsDayFirst = false;
 var Main_SearchInput;
 var Main_AddUserInput;
 var Main_AddCodeInput;
+var Main_ChatLiveInput;
 var Main_updateclockId;
 var Main_ContentLang = "";
 var Main_Periods = [];
@@ -229,7 +230,7 @@ function Main_loadTranslations(language) {
             } catch (e) {
                 Main_IsNotBrowserVersion = '1.0.0';
                 Main_IsNotBrowser = 0;
-                document.body.style.backgroundColor = "rgba(0, 0, 0, 1)";
+                Main_body.style.backgroundColor = "rgba(155, 155, 155, 1)";//default rgba(0, 0, 0, 1)
                 Main_isDebug = true;
                 console.log('Main_isReleased: ' + Main_isReleased);
                 console.log('Main_isDebug: ' + Main_isDebug);
@@ -262,6 +263,7 @@ function Main_loadTranslations(language) {
             Main_SearchInput = document.getElementById("search_input");
             Main_AddUserInput = document.getElementById("user_input");
             Main_AddCodeInput = document.getElementById("oauth_input");
+            Main_ChatLiveInput = Main_getElementById("chat_send_input");
 
             AddUser_RestoreUsers();
             //Allow page to proper load/resize and users 0 be restored before Main_initWindows
@@ -386,6 +388,19 @@ function Main_SetStringsSecondary() {
     Main_innerHTML('channel_content_titley_0', '<i class="icon-movie-play stream_channel_follow_icon"></i>' + STR_SPACE + STR_SPACE + STR_VIDEOS);
     Main_innerHTML('channel_content_titley_1', '<i class="icon-movie stream_channel_follow_icon"></i>' + STR_SPACE + STR_SPACE + STR_CLIPS);
     Main_innerHTML('channel_content_titley_2', '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + STR_FOLLOW);
+
+    Main_textContent("chat_send_button0", STR_OPTIONS);
+    Main_textContent("chat_send_button1", STR_CHAT_DELL_ALL);
+    Main_textContent("chat_send_button2", STR_CHAT_UNICODE_EMOJI);
+    Main_textContent("chat_send_button3", STR_CHAT_BTTV_GLOBAL);
+    Main_textContent("chat_send_button4", STR_CHAT_FFZ_GLOBAL);
+    Main_textContent("chat_send_button5", STR_CHAT_SEND);
+    Main_textContent("chat_send_button6", STR_CHAT_AT_STREAM);
+    Main_textContent("chat_send_button7", STR_CHAT_TW_EMOTES);
+    Main_textContent("chat_send_button8", STR_CHAT_BTTV_STREAM);
+    Main_textContent("chat_send_button9", STR_CHAT_FFZ_STREAM);
+    Main_textContent("chat_result", STR_CHAT_RESULT);
+    ChatLiveControls_OptionsUpdate_defautls();
 }
 
 function Main_IconLoad(lable, icon, string) {
@@ -583,7 +598,6 @@ function Main_RemoveKeys() {
         else if (Main_values.Main_Go === Main_AGameVod) inUseObj = AGameVod;
         else if (Main_values.Main_Go === Main_UserVod) inUseObj = UserVod;
         else if (Main_values.Main_Go === Main_ChannelVod) inUseObj = ChannelVod;
-        else if (Main_values.Main_Go === Main_UserHost) inUseObj = UserHost;
         else if (Main_values.Main_Go === Main_UserLive) inUseObj = UserLive;
         else if (Main_values.Main_Go === Main_UserChannels) inUseObj = UserChannels;
         else if (Main_values.Main_Go === Main_SearchGames) inUseObj = SearchGames;
@@ -624,11 +638,6 @@ Main_Switchobj[Main_UserChannels] = function() {
 
 Main_Switchobj[Main_UserLive] = function() {
     inUseObj = UserLive;
-    Screens_init();
-};
-
-Main_Switchobj[Main_UserHost] = function() {
-    inUseObj = UserHost;
     Screens_init();
 };
 
@@ -724,7 +733,6 @@ Main_ExitCurrentobj[Main_SearchLive] = Screens_exit;
 Main_ExitCurrentobj[Main_SearchGames] = Screens_exit;
 Main_ExitCurrentobj[Main_UserChannels] = Screens_exit;
 Main_ExitCurrentobj[Main_UserLive] = Screens_exit;
-Main_ExitCurrentobj[Main_UserHost] = Screens_exit;
 Main_ExitCurrentobj[Main_usergames] = Screens_exit;
 Main_ExitCurrentobj[Main_ChannelVod] = Screens_exit;
 Main_ExitCurrentobj[Main_UserVod] = Screens_exit;
@@ -856,8 +864,6 @@ function Main_OpenLiveStream(id, idsArray, handleKeyDownFunction) {
     Main_values.IsRerun = Main_values.Play_selectedChannel[2];
     Main_values.Play_selectedChannel = Main_values.Play_selectedChannel[0];
 
-    Main_values.Play_isHost = (Main_values.Main_Go === Main_UserHost) && !Play_UserLiveFeedPressed;
-
     if (Main_values.Play_isHost) {
         Main_values.Play_DisplaynameHost = document.getElementById(idsArray[3] + id).textContent;
         Main_values.Play_selectedChannelDisplayname = Main_values.Play_DisplaynameHost.split(STR_USER_HOSTING)[1];
@@ -985,7 +991,8 @@ function Main_Checktylesheet() {
         if (window.getComputedStyle(span, null).getPropertyValue('font-family') !== 'icons') {
             console.log('Main_Checktylesheet reloading');
             Main_LoadStylesheet('https://fgl27.github.io/smarttv-twitch/release/githubio/css/font-awesome.min.css');
-            Main_LoadStylesheet('https://fgl27.github.io/smarttv-twitch/release/githubio/css/master.css');
+            //TODO remove this when updating
+            //Main_LoadStylesheet('https://fgl27.github.io/smarttv-twitch/release/githubio/css/master.css');
         } else console.log('Main_Checktylesheet loaded OK');
 
         document.body.removeChild(span);
@@ -1011,6 +1018,7 @@ function Main_ready(func) {
     } else document.addEventListener("DOMContentLoaded", func);
 }
 
+var Main_clock_H_M = '';
 function Main_getclock() {
     var date = new Date().getTime() + Main_ClockOffset,
         dayMonth;
@@ -1020,7 +1028,9 @@ function Main_getclock() {
     if (Main_IsDayFirst) dayMonth = STR_DAYS[date.getDay()] + ' ' + date.getDate() + ' ' + STR_MONTHS[date.getMonth()];
     else dayMonth = STR_DAYS[date.getDay()] + ' ' + STR_MONTHS[date.getMonth()] + ' ' + date.getDate();
 
-    return dayMonth + ' ' + Play_lessthanten(date.getHours()) + ':' + Play_lessthanten(date.getMinutes());
+    Main_clock_H_M = Play_lessthanten(date.getHours()) + ':' + Play_lessthanten(date.getMinutes());
+
+    return dayMonth + ' ' + Main_clock_H_M;
 }
 
 // right after the TV comes from standby the network can lag, delay the check
@@ -1112,7 +1122,6 @@ function Main_ReloadScreen() {
         else if (Main_values.Main_Go === Main_AGameVod) inUseObj = AGameVod;
         else if (Main_values.Main_Go === Main_UserVod) inUseObj = UserVod;
         else if (Main_values.Main_Go === Main_ChannelVod) inUseObj = ChannelVod;
-        else if (Main_values.Main_Go === Main_UserHost) inUseObj = UserHost;
         else if (Main_values.Main_Go === Main_UserLive) inUseObj = UserLive;
         else if (Main_values.Main_Go === Main_UserChannels) inUseObj = UserChannels;
         else if (Main_values.Main_Go === Main_SearchGames) inUseObj = SearchGames;
@@ -1153,7 +1162,7 @@ function Main_PrintUnicode(string) {
         console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
 }
 
-function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
+function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, key, id) {
     var xmlHttp = new XMLHttpRequest();
 
     xmlHttp.open("GET", theUrl, true);
@@ -1169,11 +1178,11 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState === 4) {
             if (xmlHttp.status === 200) {
-                callbackSucess(xmlHttp.responseText);
+                callbackSucess(xmlHttp.responseText, key, id);
             } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
                 AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
             } else {
-                calbackError();
+                calbackError(key, id);
             }
         }
     };
@@ -1248,3 +1257,110 @@ function Main_A_includes_B(A, B) {
 // function Main_A_equals_B_No_Case(A, B) {// jshint ignore:line
 //     return (A ? A.toLowerCase() : null) === (B ? B.toLowerCase() : null);
 // }
+
+var Main_body = document.body;
+
+function Main_addEventListener(type, fun) {
+    Main_removeEventListener(type, fun);
+    Main_body.addEventListener(type, fun);
+}
+
+function Main_removeEventListener(type, fun) {
+    Main_body.removeEventListener(type, fun);
+}
+
+function Main_getElementById(elemString) {
+    return document.getElementById(elemString);
+}
+
+function Main_setTimeout(fun, timeout, id) {
+    Main_clearTimeout(id);
+    if (timeout && timeout > 0) return window.setTimeout(fun, timeout);
+    else return window.setTimeout(fun);
+}
+
+function Main_clearTimeout(id) {
+    window.clearTimeout(id);
+}
+
+function Main_A_equals_B(A, B) {
+    return A === B;
+}
+
+function Main_Log(text) {
+    if (Main_isDebug) {
+        text = text + ' ' + Main_LogDate(new Date());
+        console.log(text);
+    }
+}
+
+function Main_LogDate(date) {
+    return date.toLocaleTimeString([], {hour12: false}) + '.' + date.getMilliseconds();
+}
+
+function Main_AddClassWitEle(element, mclass) {
+    element.classList.add(mclass);
+}
+
+function Main_RemoveClassWithEle(element, mclass) {
+    element.classList.remove(mclass);
+}
+
+function Main_emptyWithEle(el) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+}
+
+function Main_ShowElementWithEle(element) {
+    element.classList.remove('hide');
+}
+
+function Main_HideElementWithEle(element) {
+    element.classList.add('hide');
+}
+
+function Main_innerHTMLWithEle(ele, value) {
+    ele.innerHTML = value;
+}
+
+var DefaultHttpGetTimeout = 25000;
+var DefaultHttpGetTimeoutPlus = 5000;
+var DefaultHttpGetReTryMax = 2;
+
+function Main_setInterval(fun, timeout, id) {
+    Main_clearInterval(id);
+    if (timeout && timeout > 0) return window.setInterval(fun, timeout);
+}
+
+function Main_clearInterval(id) {
+    window.clearInterval(id);
+}
+
+function Main_tendsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+function Main_showWarningExtra(text) {
+    Main_innerHTML('dialog_warning_extra_text', text);
+    Main_ShowElement('dialog_warning_extra');
+
+    window.addEventListener("keydown", Main_PreventClickfun, true);
+    window.addEventListener("keyup", Main_PreventClickfun, true);
+    window.addEventListener("keypress", Main_PreventClickfun, true);
+
+    Main_setTimeout(function() {
+        Main_PreventClickfunEnd();
+    }, 60000);
+}
+
+function Main_PreventClickfun(e) {
+    e.stopPropagation();
+    Main_PreventClickfunEnd();
+}
+
+function Main_PreventClickfunEnd() {
+    Main_HideElement('dialog_warning_extra');
+    window.removeEventListener("keydown", Main_PreventClickfun, true);
+    window.removeEventListener("keyup", Main_PreventClickfun, true);
+    window.removeEventListener("keypress", Main_PreventClickfun, true);
+
+}

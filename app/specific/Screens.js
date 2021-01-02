@@ -14,7 +14,6 @@ function Screens_InitScreens() {
     ScreensObj_InitFeatured();
     ScreensObj_InitAGame();
     //Live user screens
-    ScreensObj_InitUserHost();
     ScreensObj_InitUserLive();
 
     //Clips screens
@@ -363,6 +362,9 @@ function Screens_loadDataSuccessFinish() {
                 Main_GoBefore = Main_Live;
                 Main_values.Play_WasPlaying = 0;
             }
+
+            if (!Main_values.Never_run_new && Main_values.warning_extra) Main_showWarningExtra(STR_WARNING_NEW);
+            Main_values.warning_extra = false;
 
             if (Settings_value.restor_playback.defaultValue && Main_values.Play_WasPlaying && inUseObj.status) {
 

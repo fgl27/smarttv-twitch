@@ -632,7 +632,7 @@ function ScreensObj_InitUserLive() {
         table: 'stream_table_user_live',
         screen: Main_UserLive,
         object: 'streams',
-        key_pgDown: Main_UserHost,
+        key_pgDown: Main_usergames,
         key_pgUp: Main_UserChannels,
         base_url: Main_kraken_api + 'streams/',
         loadChannelOffsset: 0,
@@ -730,58 +730,6 @@ function ScreensObj_InitUserLive() {
                 this.followerChannelsDone = true;
             }
             Screens_loadDataRequest();
-        }
-    };
-}
-
-function ScreensObj_InitUserHost() {
-    UserHost = Screens_assign({
-        HeaderQuatity: 2,
-        ids: Screens_ScreenIds('UserHost'),
-        table: 'stream_table_user_host',
-        screen: Main_UserHost,
-        object: 'hosts',
-        use_hls: true,
-        key_pgDown: Main_usergames,
-        key_pgUp: Main_UserLive,
-        base_url: 'https://api.twitch.tv/api/users/',
-        set_url: function() {
-            if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
-            this.url = this.base_url +
-                encodeURIComponent(AddUser_UsernameArray[0].name) +
-                '/followed/hosting?limit=' + Main_ItemsLimitMax + '&offset=' + this.offset;
-        },
-        label_init: function() {
-            ScreensObj_TopLableUserInit();
-
-            ScreensObj_SetTopLable(STR_USER, STR_LIVE_HOSTS);
-        },
-        key_play: function() {
-            Main_OpenLiveStream(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
-        }
-    }, Base_obj);
-
-    UserHost = Screens_assign(UserHost, Base_Live_obj);
-
-    UserHost.addCell = function(cell) {
-        if (!this.idObject[cell.target._id + '' + cell._id]) { //combined id host and hosted
-
-            this.itemsCount++;
-            this.idObject[cell.target._id + '' + cell._id] = 1;
-
-            this.row.appendChild(
-                Screens_createCellLive(
-                    this.row_id + '_' + this.coloumn_id,
-                    [cell.target.channel.name, cell.target._id, false],
-                    this.ids,
-                    [cell.target.preview_urls.template.replace("{width}x{height}", Main_VideoSize),
-                    cell.display_name + STR_USER_HOSTING + cell.target.channel.display_name,
-                    cell.target.title, cell.target.meta_game,
-                    STR_FOR.charAt(0).toUpperCase() + STR_FOR.slice(1) +
-                    Main_addCommas(cell.target.viewers) + STR_SPACE + STR_VIEWER, ''
-                    ]));
-
-            this.coloumn_id++;
         }
     };
 }
@@ -1158,7 +1106,7 @@ function ScreensObj_InitUserGames() {
         screen: Main_usergames,
         key_pgDownNext: Main_UserChannels,
         key_pgDown: Main_UserVod,
-        key_pgUp: Main_UserHost,
+        key_pgUp: Main_UserLive,
         isLive: false,
         hasGameProp: true,
         OldUserName: '',

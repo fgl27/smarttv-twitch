@@ -12,20 +12,19 @@ var Main_games = 4;
 var Main_Vod = 5;
 var Main_Clip = 6;
 var Main_UserLive = 7;
-var Main_UserHost = 8;
-var Main_usergames = 9;
-var Main_UserVod = 10;
-var Main_UserChannels = 11;
-var Main_SearchGames = 12;
-var Main_SearchLive = 13;
-var Main_SearchChannels = 14;
-var Main_ChannelContent = 15;
-var Main_ChannelVod = 16;
-var Main_ChannelClip = 17;
-var Main_addUser = 18;
-var Main_aGame = 19;
-var Main_AGameVod = 20;
-var Main_AGameClip = 21;
+var Main_usergames = 8;
+var Main_UserVod = 9;
+var Main_UserChannels = 10;
+var Main_SearchGames = 11;
+var Main_SearchLive = 12;
+var Main_SearchChannels = 13;
+var Main_ChannelContent = 14;
+var Main_ChannelVod = 15;
+var Main_ChannelClip = 16;
+var Main_addUser = 17;
+var Main_aGame = 18;
+var Main_AGameVod = 19;
+var Main_AGameClip = 20;
 
 var Main_GoBefore = '';
 var Main_values = {
@@ -583,7 +582,6 @@ function Main_RemoveKeys() {
         else if (Main_values.Main_Go === Main_AGameVod) inUseObj = AGameVod;
         else if (Main_values.Main_Go === Main_UserVod) inUseObj = UserVod;
         else if (Main_values.Main_Go === Main_ChannelVod) inUseObj = ChannelVod;
-        else if (Main_values.Main_Go === Main_UserHost) inUseObj = UserHost;
         else if (Main_values.Main_Go === Main_UserLive) inUseObj = UserLive;
         else if (Main_values.Main_Go === Main_UserChannels) inUseObj = UserChannels;
         else if (Main_values.Main_Go === Main_SearchGames) inUseObj = SearchGames;
@@ -624,11 +622,6 @@ Main_Switchobj[Main_UserChannels] = function() {
 
 Main_Switchobj[Main_UserLive] = function() {
     inUseObj = UserLive;
-    Screens_init();
-};
-
-Main_Switchobj[Main_UserHost] = function() {
-    inUseObj = UserHost;
     Screens_init();
 };
 
@@ -724,7 +717,6 @@ Main_ExitCurrentobj[Main_SearchLive] = Screens_exit;
 Main_ExitCurrentobj[Main_SearchGames] = Screens_exit;
 Main_ExitCurrentobj[Main_UserChannels] = Screens_exit;
 Main_ExitCurrentobj[Main_UserLive] = Screens_exit;
-Main_ExitCurrentobj[Main_UserHost] = Screens_exit;
 Main_ExitCurrentobj[Main_usergames] = Screens_exit;
 Main_ExitCurrentobj[Main_ChannelVod] = Screens_exit;
 Main_ExitCurrentobj[Main_UserVod] = Screens_exit;
@@ -855,8 +847,6 @@ function Main_OpenLiveStream(id, idsArray, handleKeyDownFunction) {
     Main_values.Play_selectedChannel_id = Main_values.Play_selectedChannel[1];
     Main_values.IsRerun = Main_values.Play_selectedChannel[2];
     Main_values.Play_selectedChannel = Main_values.Play_selectedChannel[0];
-
-    Main_values.Play_isHost = (Main_values.Main_Go === Main_UserHost) && !Play_UserLiveFeedPressed;
 
     if (Main_values.Play_isHost) {
         Main_values.Play_DisplaynameHost = document.getElementById(idsArray[3] + id).textContent;
@@ -1112,7 +1102,6 @@ function Main_ReloadScreen() {
         else if (Main_values.Main_Go === Main_AGameVod) inUseObj = AGameVod;
         else if (Main_values.Main_Go === Main_UserVod) inUseObj = UserVod;
         else if (Main_values.Main_Go === Main_ChannelVod) inUseObj = ChannelVod;
-        else if (Main_values.Main_Go === Main_UserHost) inUseObj = UserHost;
         else if (Main_values.Main_Go === Main_UserLive) inUseObj = UserLive;
         else if (Main_values.Main_Go === Main_UserChannels) inUseObj = UserChannels;
         else if (Main_values.Main_Go === Main_SearchGames) inUseObj = SearchGames;

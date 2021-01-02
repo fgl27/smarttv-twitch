@@ -14,7 +14,6 @@ function Screens_InitScreens() {
     ScreensObj_InitFeatured();
     ScreensObj_InitAGame();
     //Live user screens
-    ScreensObj_InitUserHost();
     ScreensObj_InitUserLive();
 
     //Clips screens

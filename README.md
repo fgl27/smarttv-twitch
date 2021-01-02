@@ -100,7 +100,7 @@ The key is generated on the page below. The page receives a key after you use it
 
 ### when accessing Twitch authorization site after adding yours credential (User and password) you will see the bellow information
 
-![logging](https://fgl27.github.io/SmartTwitchTV/screenshot/logging.png)
+![logging](https://fgl27.github.io/smarttv-twitch/screenshot/logging.png)
 
 **The app uses the following permission:**
 
@@ -187,11 +187,15 @@ You can install OpenJava JDK 8 with chocolately package manager or download and 
 #### Via chocolately
 Open Windows Powershell as Admin and run the following command to setup chocolately package manager
 
-	Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+```
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+```
 
 Close and Re-Open Windows Powershell once the installer is complete and then run the following command
 
-	choco install openjdk12
+```
+choco install openjdk12
+```
 
 Run the web-ide_Tizen_Studio_X.X_windows-64.exe installer file you downloaded previously with the default options selected
 
@@ -199,7 +203,9 @@ Run the web-ide_Tizen_Studio_X.X_windows-64.exe installer file you downloaded pr
 
 * I used the **Tizen Studio 3.7 with IDE installer** (Any version above that must work well), download the 32/64 bit according to your CPU architecture.  On Linux, the file is an executable binary 641Mb in size. To run it, first give the file permission to execute - properties >  permission > Execute... mark, then just drag the file to a terminal window and click enter, **On Linux it may ask you to use apt-get to install missing dependencies below are the one asked by Tizen Studio 2.4 last time I installed it**
 
-	sudo apt-get install libwebkitgtk-1.0-0 rpm2cpio cpio expect python2.7 ruby libcanberra-gtk-module libcanberra-gtk3-module gettext
+```
+sudo apt-get install libwebkitgtk-1.0-0 rpm2cpio cpio expect python2.7 ruby libcanberra-gtk-module libcanberra-gtk3-module gettext
+```
 
 If you are on ubuntu 19 or above 20.4 libwebkitgtk-1.0-0 ins't availeble, in that case check this link [Ubuntu 20 isn't yet supported by Tizen studio this are the steps to get all working](https://github.com/fgl27/smarttv-twitch/blob/master/release/githubio/etc/README_ubutu_20.md)
 
@@ -207,10 +213,11 @@ If you are on ubuntu 19 or above 20.4 libwebkitgtk-1.0-0 ins't availeble, in tha
 * Install Java SDK, I install this app with **Open JDK java 8**
 " (last know tested was "jdk-8u152-windows-x64.exe" any above that must work always try the latest version **but make sure is Java 8**), on Linux terminal commands below
 
-	sudo add-apt-repository ppa:openjdk-r/ppa
-	sudo apt-get update
-	sudo apt-get install openjdk-8-jdk
-
+```
+sudo add-apt-repository ppa:openjdk-r/ppa
+sudo apt-get update
+sudo apt-get install openjdk-8-jdk
+```
 
 * Press enter and Click OK/YES and accept all the requests from java installer on the terminal
 

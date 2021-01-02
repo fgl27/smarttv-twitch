@@ -805,8 +805,6 @@ var OptionsShowArray = [];
 var ChatLiveControls_OptionsY = 0;
 
 function ChatLiveControls_OptionsUpdate_defautls() {
-    OptionsShowObj.keyboard_options = {};
-    OptionsShowObj.keyboard_options.defaultValue = Main_getItemInt('keyboard_options', 1);
     OptionsShowObj.emote_sorting = {};
     OptionsShowObj.emote_sorting.defaultValue = Main_getItemInt('emote_sorting', 0);
     OptionsShowObj.force_show_chat_write = {};
@@ -817,12 +815,6 @@ function ChatLiveControls_OptionsShow() {
     Main_removeEventListener("keydown", ChatLiveControls_handleKeyDown);
 
     OptionsShowObj = {
-        keyboard_options: {
-            defaultValue: OptionsShowObj.keyboard_options.defaultValue,
-            values: [STR_CHAT_OPTIONS_KEYBOARD_1, STR_CHAT_OPTIONS_KEYBOARD_2, STR_CHAT_OPTIONS_KEYBOARD_3],
-            title: STR_CHAT_OPTIONS_KEYBOARD,
-            summary: STR_CHAT_OPTIONS_KEYBOARD_SUMMARY
-        },
         emote_sorting: {
             defaultValue: OptionsShowObj.emote_sorting.defaultValue,
             values: [STR_DISABLED, STR_A_Z, STR_Z_A],

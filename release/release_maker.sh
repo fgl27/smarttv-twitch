@@ -207,7 +207,7 @@ fi;
 #Make a zip
 cd release/ || exit
 rm -rf *.zip
-zip -qr9 release ./ -x master.* html_body.js index_release.html api.js master.js release_maker.sh beautify.sh jshint.sh \*githubio\* \*temp_maker\*
+zip -qr9 release ./ -x *.sh master.* html_body.js index_release.html api.js master.js \*githubio\* \*temp_maker\*
 
 # Clean up release/ folder temp files and stash all over git changes
 rm -rf config.xml
@@ -220,7 +220,8 @@ cd - &> /dev/null || exit;
 # Compress using cleancss
 if [ "$cancrass" == 1 ]; then
 	crass "$temp_maker_folder"master.css > "$temp_maker_folder"2master.css
-	crass release/githubio/css/font-awesome.css > release/githubio/css/font-awesome.min.css
+	crass release/githubio/css/icons.css > release/githubio/css/icons.min.css
+	cp -rf release/githubio/css/icons.min.css release/githubio/css/font-awesome.min.css
 fi;
 # Copy master.css to its place, it's the css content of index.html
 cp -rf "$temp_maker_folder"2master.css release/githubio/css/master.css

@@ -38,6 +38,5 @@ release/locales/
 release/temp_maker/
 .package/
 index_release.html
-icon.png
 release/testing.sh
 app/*.js

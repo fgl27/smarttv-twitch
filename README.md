@@ -287,33 +287,24 @@ If you have a problem on connecting refer back to **[Account and Downloads:](htt
 
 ### Setup the application:
 
-* **[Download and extract the release_4_0_1_V5.zip file Click here, this is the application recipe file](https://github.com/fgl27/smarttv-twitch/releases/download/4.0.1_V5/release_4_0_1_V5.zip)**
+* **[Download and extract the release_4_0_1_V6.zip file Click here, this is the application recipe file](https://github.com/fgl27/smarttv-twitch/releases/download/4.0.1_V6/4.0.1_V6.zip)**
 
-* Making the app, Top menu > File > New > Tizen Project > click twice in **Template** > click twice in **TV** > click twice in **Web Application** > click twice in **Empty** > chose a project name "anyname" (avoid special character and spaces) ....click finish
+* Making the app, Top menu > File >Import > Tizen > Tizen Project > Click Browser > Select the extraced folder > Click Next > Click Finish
+* Wait for it to load
 
+![install_app1](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app1.png)
 ![install_app2](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app2.png)
 ![install_app3](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app3.png)
 ![install_app4](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app4.png)
 ![install_app5](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app5.png)
-![install_app6](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app6.png)
-
-* Wait for it to load
-* Back on **Tizen Studio**, left click on the folder symbol with **AnyName-X.0** on the left corner under project explorer, just to select the folder (**AnyName-X.0** is the default name given when you created a project in the last step; if you used a different name, click on that)
-* Top menu > **File** > Import > General > File System ... next > Browse.. to find the extracted folder from the release_X_X_X.zip ... > click Select All, mark Overwrite existing ... > Finish
-* Wait for it to load
-* The name of the folder **AnyName-X.0** changes to **AnyName-tv-samsung-X.0**
-
-![install_app8_1](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app8_1.png)
-![install_app8_2](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app8_2.png)
-![install_app8_3](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app8_3.png)
-![install_app9](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app9.png)
+![install_app5](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app6.png)
 
 ### Install the application:
 
-* Click on that folder **AnyName-tv-samsung-X.0** left click, then right click > Run as > **1 Tizen Web Application**, the installation will start
+* Click on that folder **4.0.1_V...etc** left click, then right click > Run as > **1 Tizen Web Application**, the installation will start
 * If everything goes OK, the app will be opened in a few seconds on the TV, and you can start using it
 
-![install_app10](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app10.png)
+![install_app5](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app7.png)
 
 * If it fails during the installation, make sure you don't have any other Twitch.TV applications installed on the TV. To uninstall the app manually, just open the **"apps"** application, find all Twitch.TV apps you have installed in **"my app"** tab, hold down the enter/select key on the top of the app and choose delete. After you have deleted all Twitch.TV apps, try to install again.
 * This app can update itself 99% of the time, so this installation process will only have to be redone after a major update where the changes cannot be done by the app itself. The app will warn the user if there is a need to update it manually by performing the installation steps again.

@@ -211,9 +211,7 @@ function Play_PreStart() {
         try {
             //reset old no longer used live feed
             webapis.preview.setPreviewData('{}');
-        } catch (ex) {
-            console.log(ex.message);
-        }
+        } catch (ex) { }
     }
 
     var i = 25, max = 301;

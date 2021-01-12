@@ -7471,15 +7471,8 @@
     }
 
     function PlayClip_loadDataSuccessFake() {
-        PlayClip_qualities = [{
-                'id': 'Auto',
-                'url': ''
-            },
-            {
-                'id': '1080p60 | source | mp4',
-                'url': 'https://fake'
-            },
-        ];
+        PlayClip_qualities = tempQualities;
+
         PlayClip_state = PlayClip_STATE_PLAYING;
         PlayClip_qualityChanged();
     }
@@ -7542,6 +7535,7 @@
 
         if (response && response.hasOwnProperty('data') && response.data.hasOwnProperty('clip')) {
             response = response.data.clip.videoQualities;
+
             for (var i = 0; i < response.length; i++) {
 
                 if (!PlayClip_qualities.length) {
@@ -8454,6 +8448,7 @@
     }
 
     function Play_setDisplayRect(isfull) {
+
         try {
             Play_avplay.setDisplayMethod("PLAYER_DISPLAY_MODE_AUTO_ASPECT_RATIO");
         } catch (e) {
@@ -8461,20 +8456,37 @@
         }
 
         if (isfull) {
+
             try {
                 Play_avplay.setDisplayRect(0, 0, screen.width, screen.height);
             } catch (e) {
                 console.log(e + " Play_SetFullScreen true");
             }
+
         } else {
+            var res, Is_4_by_3;
+
+            if (Play_isOn)
+                res = Play_qualities[Play_qualityIndex].resolution.split('x');
+            else if (PlayVod_isOn)
+                res = PlayVod_qualities[PlayVod_qualityIndex].resolution.split('x');
+
+            if (res)
+                Is_4_by_3 = (parseInt(res[0]) / parseInt(res[1])) < 1.7;
+
             // Chat is 25% of the screen, resize to 75% and center left
             try {
-                Play_avplay.setDisplayRect(0, (screen.height * 0.25) / 2, screen.width * 0.75, screen.height * 0.75);
+
+                if (Is_4_by_3)
+                    Play_avplay.setDisplayRect(0, 0, screen.width * 0.75, screen.height);
+                else
+                    Play_avplay.setDisplayRect(0, (screen.height * 0.25) / 2, screen.width * 0.75, screen.height * 0.75);
+
             } catch (e) {
                 console.log(e + " Play_SetFullScreen false");
             }
-        }
 
+        }
     }
 
     function Play_SetChatFont() {
@@ -8931,44 +8943,52 @@
     }
 
     //Browsers crash trying to get the streams link
+    var tempQualities = [{
+            'id': 'Auto',
+            'band': 0,
+            'codec': 'avc',
+            'resolution': 'auto',
+            'url': 'https://auto'
+        },
+        {
+            'id': '1080p60 | source ',
+            'band': '| 10.00Mbps',
+            'codec': ' | avc',
+            'resolution': '1920x1080',
+            'url': 'https://souce'
+        },
+        {
+            'id': '720p60',
+            'band': ' | 5.00Mbps',
+            'codec': ' | avc',
+            'resolution': '1920x1080',
+            'url': 'https://720p60'
+        },
+        {
+            'id': '720p',
+            'band': ' | 2.50Mbps',
+            'codec': ' | avc',
+            'resolution': '1280x720',
+            'url': 'https://720'
+        },
+        {
+            'id': '480p',
+            'band': ' | 2.50Mbps',
+            'codec': ' | avc',
+            'resolution': '640x480',
+            'url': 'https://480'
+        },
+        {
+            'id': '320p',
+            'band': ' | 2.50Mbps',
+            'codec': ' | avc',
+            'resolution': '480x320',
+            'url': 'https://320'
+        },
+    ];
+
     function Play_loadDataSuccessFake() {
-        Play_qualities = [{
-                'id': 'Auto',
-                'band': 0,
-                'codec': 'avc',
-                'url': 'https://auto'
-            },
-            {
-                'id': '1080p60 | source ',
-                'band': '| 10.00Mbps',
-                'codec': ' | avc',
-                'url': 'https://souce'
-            },
-            {
-                'id': '720p60',
-                'band': ' | 5.00Mbps',
-                'codec': ' | avc',
-                'url': 'https://720p60'
-            },
-            {
-                'id': '720p',
-                'band': ' | 2.50Mbps',
-                'codec': ' | avc',
-                'url': 'https://720'
-            },
-            {
-                'id': '480p',
-                'band': ' | 2.50Mbps',
-                'codec': ' | avc',
-                'url': 'https://480'
-            },
-            {
-                'id': '320p',
-                'band': ' | 2.50Mbps',
-                'codec': ' | avc',
-                'url': 'https://320'
-            },
-        ];
+        Play_qualities = tempQualities;
         Play_state = Play_STATE_PLAYING;
         if (Play_isOn) Play_qualityChanged();
     }
@@ -9002,17 +9022,23 @@
     }
 
     function Play_extractQualities(input) {
+
         var Band,
             codec,
             result = [],
             TempId = '',
-            tempCount = 1;
+            tempCount = 1,
+            Resolution;
 
         var streams = Play_extractStreamDeclarations(input);
+
         for (var i = 0; i < streams.length; i++) {
+
             TempId = streams[i].split('NAME="')[1].split('"')[0];
             Band = Play_extractBand(streams[i].split('BANDWIDTH=')[1].split(',')[0]);
             codec = Play_extractCodec(streams[i].split('CODECS="')[1].split('.')[0]);
+            Resolution = streams[i].split('RESOLUTION=')[1].split(',')[0];
+
             if (!result.length) {
                 if (TempId.indexOf('ource') === -1) TempId = TempId + ' | source';
                 else TempId = TempId.replace('(', ' | ').replace(')', '');
@@ -9020,6 +9046,7 @@
                     'id': TempId,
                     'band': Band,
                     'codec': codec,
+                    'resolution': Resolution,
                     'url': streams[i].split("\n")[2]
                 });
             } else if (result[i - tempCount].id !== TempId && result[i - tempCount].id !== TempId + ' | source') {
@@ -9027,6 +9054,7 @@
                     'id': TempId,
                     'band': Band,
                     'codec': codec,
+                    'resolution': Resolution,
                     'url': streams[i].split("\n")[2]
                 });
             } else tempCount++;
@@ -11453,37 +11481,8 @@
 
     //Browsers crash trying to get the streams link
     function PlayVod_loadDataSuccessFake() {
-        PlayVod_qualities = [{
-                'id': '1080p60 | source ',
-                'band': '| 10.00Mbps',
-                'codec': ' | avc',
-                'url': 'https://souce'
-            },
-            {
-                'id': '720p60',
-                'band': ' | 5.00Mbps',
-                'codec': ' | avc',
-                'url': 'https://720p60'
-            },
-            {
-                'id': '720p',
-                'band': ' | 2.50Mbps',
-                'codec': ' | avc',
-                'url': 'https://720'
-            },
-            {
-                'id': '480p',
-                'band': ' | 2.50Mbps',
-                'codec': ' | avc',
-                'url': 'https://480'
-            },
-            {
-                'id': '320p',
-                'band': ' | 2.50Mbps',
-                'codec': ' | avc',
-                'url': 'https://320'
-            },
-        ];
+        PlayVod_qualities = tempQualities;
+
         PlayVod_state = Play_STATE_PLAYING;
         if (PlayVod_isOn) PlayVod_qualityChanged();
     }

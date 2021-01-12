@@ -2484,7 +2484,7 @@ function Play_MakeControls() {
             this.setLable();
         },
         setLable: function() {
-            Main_textContent('extra_button_' + this.position, "(" + (Play_LowLatency ? STR_ENABLE : STR_DISABLE) + ")");
+            Main_textContent('extra_button_' + this.position, "(" + (Play_LowLatency ? STR_ENABLED : STR_DISABLED) + ")");
         },
     };
 

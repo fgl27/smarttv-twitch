@@ -225,15 +225,8 @@ function PlayClip_loadDataError() {
 }
 
 function PlayClip_loadDataSuccessFake() {
-    PlayClip_qualities = [{
-        'id': 'Auto',
-        'url': ''
-    },
-    {
-        'id': '1080p60 | source | mp4',
-        'url': 'https://fake'
-    },
-    ];
+    PlayClip_qualities = tempQualities;
+
     PlayClip_state = PlayClip_STATE_PLAYING;
     PlayClip_qualityChanged();
 }
@@ -296,6 +289,7 @@ function PlayClip_QualityGenerate(response) {
 
     if (response && response.hasOwnProperty('data') && response.data.hasOwnProperty('clip')) {
         response = response.data.clip.videoQualities;
+
         for (var i = 0; i < response.length; i++) {
 
             if (!PlayClip_qualities.length) {

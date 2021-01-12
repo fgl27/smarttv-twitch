@@ -319,6 +319,12 @@ function Play_setDisplayRect(isfull) {
             console.log(e + " Play_SetFullScreen false");
         }
     }
+
+    try {
+        Play_avplay.setDisplayMethod("PLAYER_DISPLAY_MODE_AUTO_ASPECT_RATIO");
+    } catch (e) {
+        console.log("setDisplayMethod " + e);
+    }
 }
 
 function Play_SetChatFont() {

@@ -5997,7 +5997,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'January 03 2022';
+    var Main_minversion = 'January 12 2022';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
     var Main_ClockOffset = 0;
@@ -8467,6 +8467,12 @@
             } catch (e) {
                 console.log(e + " Play_SetFullScreen false");
             }
+        }
+
+        try {
+            Play_avplay.setDisplayMethod("PLAYER_DISPLAY_MODE_AUTO_ASPECT_RATIO");
+        } catch (e) {
+            console.log("setDisplayMethod " + e);
         }
     }
 

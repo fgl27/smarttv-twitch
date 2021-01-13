@@ -1778,7 +1778,9 @@
     var AddCode_client_backup;
 
     var Play_Headers;
-    var Play_live_token = "https://api.twitch.tv/api/channels/%x/access_token";
+
+    var Play_live_token = '{"query":"{streamPlaybackAccessToken(channelName:\\"%x\\", params:{platform:\\"android\\",playerType:\\"mobile\\"}){value signature}}"}';
+    var Play_vod_token = '{"query":"{videoPlaybackAccessToken(id:\\"%x\\", params:{platform:\\"android\\",playerType:\\"mobile\\"}){value signature}}"}';
     //Variable initialization
     var AddUser_loadingDataTry = 0;
     var AddUser_loadingDataTryMax = 5;
@@ -5997,7 +5999,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'January 12 2022';
+    var Main_minversion = 'January 13 2022';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
     var Main_ClockOffset = 0;
@@ -8590,12 +8592,23 @@
 
 
     function Play_CheckIfIsLive() {
-        var theUrl = 'https://api.twitch.tv/api/channels/' + Play_CheckIfIsLiveStartChannel + '/access_token';
 
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open("GET", theUrl, true);
+        xmlHttp.open(
+            "POST",
+            'https://gql.twitch.tv/gql',
+            true
+        );
         xmlHttp.timeout = Play_loadingDataTimeout;
-        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
+
+        if (Play_Headers && Play_Headers.length) {
+
+            var len = Play_Headers.length;
+
+            for (var i = 0; i < len; i++)
+                xmlHttp.setRequestHeader(Play_Headers[i][0], Play_Headers[i][1]);
+
+        }
 
         xmlHttp.ontimeout = function() {};
 
@@ -8603,19 +8616,26 @@
             if (xmlHttp.readyState === 4) {
                 if (xmlHttp.status === 200) {
 
-                    Play_tokenResponse = JSON.parse(xmlHttp.responseText);
+                    try {
+                        Play_tokenResponse = JSON.parse(xmlHttp.responseText).data.streamPlaybackAccessToken;
 
-                    if (!Play_tokenResponse.hasOwnProperty('token') || !Play_tokenResponse.hasOwnProperty('sig')) Play_CheckIfIsLiveError();
-                    else {
-                        Play_CheckIfIsLiveStartCounter = 0;
-                        Play_CheckIfIsLiveLink();
+                        if (!Play_tokenResponse.hasOwnProperty('value') || !Play_tokenResponse.hasOwnProperty('signature')) Play_CheckIfIsLiveError();
+                        else {
+                            Play_CheckIfIsLiveStartCounter = 0;
+                            Play_CheckIfIsLiveLink();
+                        }
+
+                    } catch (e) {
+                        Play_CheckIfIsLiveError();
                     }
 
                 } else Play_CheckIfIsLiveError();
             }
         };
 
-        xmlHttp.send(null);
+        xmlHttp.send(
+            Play_live_token.replace('%x', Play_CheckIfIsLiveStartChannel)
+        );
     }
 
     function Play_CheckIfIsLiveError() {
@@ -8642,9 +8662,17 @@
     }
 
     function Play_CheckIfIsLiveLink() {
-        var theUrl = 'https://usher.ttvnw.net/api/channel/hls/' + Play_CheckIfIsLiveStartChannel +
-            '.m3u8?&token=' + encodeURIComponent(Play_tokenResponse.token) + '&sig=' + Play_tokenResponse.sig +
-            '&reassignments_supported=true&playlist_include_framerate=true&allow_source=true&p=' + Main_RandomInt();
+        var theUrl;
+        try {
+
+            theUrl = 'https://usher.ttvnw.net/api/channel/hls/' + Play_CheckIfIsLiveStartChannel +
+                '.m3u8?&token=' + encodeURIComponent(Play_tokenResponse.value) + '&sig=' + Play_tokenResponse.signature +
+                '&reassignments_supported=true&playlist_include_framerate=true&allow_source=true&p=' + Main_RandomInt();
+
+        } catch (e) {
+            Play_CheckIfIsLiveLinkError();
+            return;
+        }
 
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", theUrl, true);
@@ -8831,66 +8859,87 @@
     var Play_410ERROR = true;
 
     function Play_loadDataRequest() {
-        var theUrl;
 
-        if (Play_state === Play_STATE_LOADING_TOKEN) {
+        try {
 
-            theUrl = Play_live_token.replace('%x', Main_values.Play_selectedChannel);
+            var theUrl;
+            var xmlHttp = new XMLHttpRequest();
 
-        } else {
-            if (!Play_tokenResponse.hasOwnProperty('token') || !Play_tokenResponse.hasOwnProperty('sig')) {
-                Play_410ERROR = true;
-                if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
-                Play_loadDataError();
-                return;
-            }
+            if (Play_state === Play_STATE_LOADING_TOKEN) {
 
-            theUrl = 'https://usher.ttvnw.net/api/channel/hls/' + Main_values.Play_selectedChannel +
-                '.m3u8?&token=' + encodeURIComponent(Play_tokenResponse.token) + '&sig=' + Play_tokenResponse.sig +
-                '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true&fast_bread=true&cdm=wv&p=' + Main_RandomInt();
+                xmlHttp.open(
+                    "POST",
+                    'https://gql.twitch.tv/gql',
+                    true
+                );
 
-            //Play_410ERROR = false;
-        }
+            } else {
 
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open("GET", theUrl, true);
-        xmlHttp.timeout = Play_loadingDataTimeout;
-        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
-
-        if (Play_Headers && Play_Headers.length) {
-            var len = Play_Headers.length;
-
-            for (var i = 0; i < len; i++)
-                xmlHttp.setRequestHeader(Play_Headers[i][0], Play_Headers[i][1]);
-
-        }
-
-        xmlHttp.ontimeout = function() {};
-
-        xmlHttp.onreadystatechange = function() {
-            if (xmlHttp.readyState === 4) {
-                if (xmlHttp.status === 200) {
-                    Play_loadingDataTry = 0;
-                    if (Play_isOn) Play_loadDataSuccess(xmlHttp.responseText);
-                    //Play_410ERROR = false;
-                } else if (xmlHttp.status === 403 || xmlHttp.status === 404) { //forbidden access
-                    //404 = off line
-                    //403 = forbidden access
-                    //410 = api v3 is gone use v5 bug
-                    Play_loadDataErrorLog(xmlHttp);
-                    Play_loadDataErrorFinish(xmlHttp.status === 410, xmlHttp.status === 403);
-                } else {
-                    if (xmlHttp.status === 410) {
-                        Play_410ERROR = true;
-                        if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
-                    }
-                    Play_loadDataErrorLog(xmlHttp);
+                if (!Play_tokenResponse.hasOwnProperty('value') || !Play_tokenResponse.hasOwnProperty('signature')) {
+                    Play_410ERROR = true;
+                    if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
                     Play_loadDataError();
+                    return;
                 }
-            }
-        };
 
-        xmlHttp.send(null);
+                theUrl = 'https://usher.ttvnw.net/api/channel/hls/' + Main_values.Play_selectedChannel +
+                    '.m3u8?&token=' + encodeURIComponent(Play_tokenResponse.value) + '&sig=' + Play_tokenResponse.signature +
+                    '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true&fast_bread=true&cdm=wv&p=' + Main_RandomInt();
+
+                xmlHttp.open(
+                    "GET",
+                    theUrl,
+                    true
+                );
+
+            }
+
+            xmlHttp.timeout = Play_loadingDataTimeout;
+
+            if (Play_Headers && Play_Headers.length) {
+
+                var len = Play_Headers.length;
+
+                for (var i = 0; i < len; i++)
+                    xmlHttp.setRequestHeader(Play_Headers[i][0], Play_Headers[i][1]);
+
+            }
+
+            xmlHttp.ontimeout = function() {};
+
+            xmlHttp.onreadystatechange = function() {
+                if (xmlHttp.readyState === 4) {
+                    if (xmlHttp.status === 200) {
+                        Play_loadingDataTry = 0;
+                        if (Play_isOn) Play_loadDataSuccess(xmlHttp.responseText);
+                        //Play_410ERROR = false;
+                    } else if (xmlHttp.status === 403 || xmlHttp.status === 404) { //forbidden access
+                        //404 = off line
+                        //403 = forbidden access
+                        //410 = api v3 is gone use v5 bug
+                        Play_loadDataErrorLog(xmlHttp);
+                        Play_loadDataErrorFinish(xmlHttp.status === 410, xmlHttp.status === 403);
+                    } else {
+                        if (xmlHttp.status === 410) {
+                            Play_410ERROR = true;
+                            if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                        }
+                        Play_loadDataErrorLog(xmlHttp);
+                        Play_loadDataError();
+                    }
+                }
+            };
+
+            xmlHttp.send(
+                (Play_state === Play_STATE_LOADING_TOKEN) ?
+                Play_live_token.replace('%x', Main_values.Play_selectedChannel) :
+                null
+            );
+
+        } catch (e) {
+            Play_loadDataError();
+        }
+
     }
 
     function Play_loadDataErrorLog(xmlHttp) {
@@ -8999,9 +9048,19 @@
 
     function Play_loadDataSuccess(responseText) {
         if (Play_state === Play_STATE_LOADING_TOKEN) {
-            Play_tokenResponse = JSON.parse(responseText);
+
+            try {
+                Play_tokenResponse = JSON.parse(responseText).data.streamPlaybackAccessToken;
+            } catch (e) {
+
+                Play_tokenResponse = null;
+
+            }
+
             Play_state = Play_STATE_LOADING_PLAYLIST;
+
             Play_loadData();
+
         } else if (Play_state === Play_STATE_LOADING_PLAYLIST) {
             UserLiveFeed_Hide(true);
 
@@ -11414,60 +11473,100 @@
         var theUrl,
             state = PlayVod_state === Play_STATE_LOADING_TOKEN;
 
-        if (state) {
-            theUrl = 'https://api.twitch.tv/api/vods/' + Main_values.ChannelVod_vodId + '/access_token?platform=_' +
-                (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token && !Play_410ERROR ? '&oauth_token=' +
-                    AddUser_UsernameArray[0].access_token : '');
-        } else {
-            if (!PlayVod_tokenResponse.hasOwnProperty('token') || !PlayVod_tokenResponse.hasOwnProperty('sig')) {
-                Play_410ERROR = true;
-                if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
-                PlayVod_loadDataError();
-                return;
+        var xmlHttp = new XMLHttpRequest();
+
+
+        try {
+
+            if (state) {
+
+                xmlHttp.open(
+                    "POST",
+                    'https://gql.twitch.tv/gql',
+                    true
+                );
+
+            } else {
+
+                if (!PlayVod_tokenResponse.hasOwnProperty('value') || !PlayVod_tokenResponse.hasOwnProperty('signature')) {
+                    Play_410ERROR = true;
+                    if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                    PlayVod_loadDataError();
+                    return;
+                }
+
+                theUrl = 'https://usher.ttvnw.net/vod/' + Main_values.ChannelVod_vodId +
+                    '.m3u8?&nauth=' + encodeURIComponent(PlayVod_tokenResponse.value) + '&nauthsig=' + PlayVod_tokenResponse.signature +
+                    '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true' +
+                    (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
+
+                xmlHttp.open(
+                    "GET",
+                    theUrl,
+                    true
+                );
+
             }
 
-            theUrl = 'https://usher.ttvnw.net/vod/' + Main_values.ChannelVod_vodId +
-                '.m3u8?&nauth=' + encodeURIComponent(PlayVod_tokenResponse.token) + '&nauthsig=' + PlayVod_tokenResponse.sig +
-                '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true' +
-                (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
 
-            //Play_410ERROR = false;
+            xmlHttp.timeout = Play_loadingDataTimeout;
+            if (Play_Headers && Play_Headers.length) {
+
+                var len = Play_Headers.length;
+
+                for (var i = 0; i < len; i++)
+                    xmlHttp.setRequestHeader(Play_Headers[i][0], Play_Headers[i][1]);
+
+            }
+
+            xmlHttp.ontimeout = function() {};
+
+            xmlHttp.onreadystatechange = function() {
+                if (xmlHttp.readyState === 4) {
+                    if (xmlHttp.status === 200) {
+                        PlayVod_loadDataSuccess(xmlHttp.responseText);
+                        //Play_410ERROR = false;
+                    } else {
+                        if (xmlHttp.status === 410) {
+                            Play_410ERROR = true;
+                            if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                        }
+                        PlayVod_loadDataError();
+                    }
+                }
+            };
+
+            xmlHttp.send(
+                state ?
+                Play_vod_token.replace('%x', Main_values.ChannelVod_vodId) :
+                null
+            );
+
+        } catch (e) {
+
+            PlayVod_loadDataError();
+
         }
 
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open("GET", theUrl, true);
-        xmlHttp.timeout = Play_loadingDataTimeout;
-        xmlHttp.setRequestHeader(Main_clientIdHeader, Play_410ERROR ? Main_Headers_Backup[0][1] : AddCode_clientId);
-
-        xmlHttp.ontimeout = function() {};
-
-        xmlHttp.onreadystatechange = function() {
-            if (xmlHttp.readyState === 4) {
-                if (xmlHttp.status === 200) {
-                    PlayVod_loadDataSuccess(xmlHttp.responseText);
-                    //Play_410ERROR = false;
-                } else {
-                    if (xmlHttp.status === 410) {
-                        Play_410ERROR = true;
-                        if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
-                    }
-                    PlayVod_loadDataError();
-                }
-            }
-        };
-
-        xmlHttp.send(null);
     }
 
     function PlayVod_loadDataError() {
         if (PlayVod_isOn) {
             var mjson;
-            if (PlayVod_tokenResponse.token) mjson = JSON.parse(PlayVod_tokenResponse.token);
-            if (mjson) {
-                if (JSON.parse(PlayVod_tokenResponse.token).chansub.restricted_bitrates.length !== 0) {
-                    PlayVod_loadDataCheckSub();
-                    return;
+
+            try {
+
+                if (PlayVod_tokenResponse.value) mjson = JSON.parse(PlayVod_tokenResponse.value);
+
+                if (mjson) {
+                    if (JSON.parse(PlayVod_tokenResponse.value).chansub.restricted_bitrates.length !== 0) {
+                        PlayVod_loadDataCheckSub();
+                        return;
+                    }
                 }
+
+            } catch (e) {
+
             }
 
             PlayVod_loadingDataTry++;
@@ -11493,9 +11592,18 @@
 
     function PlayVod_loadDataSuccess(responseText) {
         if (PlayVod_state === Play_STATE_LOADING_TOKEN) {
-            PlayVod_tokenResponse = JSON.parse(responseText);
+
+            try {
+
+                PlayVod_tokenResponse = JSON.parse(responseText).data.videoPlaybackAccessToken;
+
+            } catch (e) {
+                PlayVod_tokenResponse = null;
+            }
+
             PlayVod_state = Play_STATE_LOADING_PLAYLIST;
             PlayVod_loadData();
+
         } else if (PlayVod_state === Play_STATE_LOADING_PLAYLIST) {
             PlayVod_playlistResponse = responseText;
             PlayVod_qualities = Play_extractQualities(PlayVod_playlistResponse);

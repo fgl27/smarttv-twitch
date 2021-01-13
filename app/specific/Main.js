@@ -1335,8 +1335,12 @@ function Main_clearInterval(id) {
     window.clearInterval(id);
 }
 
-function Main_tendsWith(str, suffix) {
-    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+function Main_endsWith(str, suffix) {
+    return str && suffix && str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+function Main_startsWith(str, suffix) {
+    return str && !str.indexOf(suffix);
 }
 
 function Main_showWarningExtra(text) {

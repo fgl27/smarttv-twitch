@@ -302,60 +302,100 @@ function PlayVod_loadDataRequest() {
     var theUrl,
         state = PlayVod_state === Play_STATE_LOADING_TOKEN;
 
-    if (state) {
-        theUrl = 'https://api.twitch.tv/api/vods/' + Main_values.ChannelVod_vodId + '/access_token?platform=_' +
-            (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token && !Play_410ERROR ? '&oauth_token=' +
-                AddUser_UsernameArray[0].access_token : '');
-    } else {
-        if (!PlayVod_tokenResponse.hasOwnProperty('token') || !PlayVod_tokenResponse.hasOwnProperty('sig')) {
-            Play_410ERROR = true;
-            if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
-            PlayVod_loadDataError();
-            return;
+    var xmlHttp = new XMLHttpRequest();
+
+
+    try {
+
+        if (state) {
+
+            xmlHttp.open(
+                "POST",
+                'https://gql.twitch.tv/gql',
+                true
+            );
+
+        } else {
+
+            if (!PlayVod_tokenResponse.hasOwnProperty('value') || !PlayVod_tokenResponse.hasOwnProperty('signature')) {
+                Play_410ERROR = true;
+                if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                PlayVod_loadDataError();
+                return;
+            }
+
+            theUrl = 'https://usher.ttvnw.net/vod/' + Main_values.ChannelVod_vodId +
+                '.m3u8?&nauth=' + encodeURIComponent(PlayVod_tokenResponse.value) + '&nauthsig=' + PlayVod_tokenResponse.signature +
+                '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true' +
+                (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
+
+            xmlHttp.open(
+                "GET",
+                theUrl,
+                true
+            );
+
         }
 
-        theUrl = 'https://usher.ttvnw.net/vod/' + Main_values.ChannelVod_vodId +
-            '.m3u8?&nauth=' + encodeURIComponent(PlayVod_tokenResponse.token) + '&nauthsig=' + PlayVod_tokenResponse.sig +
-            '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true' +
-            (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
 
-        //Play_410ERROR = false;
+        xmlHttp.timeout = Play_loadingDataTimeout;
+        if (Play_Headers && Play_Headers.length) {
+
+            var len = Play_Headers.length;
+
+            for (var i = 0; i < len; i++)
+                xmlHttp.setRequestHeader(Play_Headers[i][0], Play_Headers[i][1]);
+
+        }
+
+        xmlHttp.ontimeout = function() { };
+
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState === 4) {
+                if (xmlHttp.status === 200) {
+                    PlayVod_loadDataSuccess(xmlHttp.responseText);
+                    //Play_410ERROR = false;
+                } else {
+                    if (xmlHttp.status === 410) {
+                        Play_410ERROR = true;
+                        if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                    }
+                    PlayVod_loadDataError();
+                }
+            }
+        };
+
+        xmlHttp.send(
+            state ?
+                Play_vod_token.replace('%x', Main_values.ChannelVod_vodId) :
+                null
+        );
+
+    } catch (e) {
+
+        PlayVod_loadDataError();
+
     }
 
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", theUrl, true);
-    xmlHttp.timeout = Play_loadingDataTimeout;
-    xmlHttp.setRequestHeader(Main_clientIdHeader, Play_410ERROR ? Main_Headers_Backup[0][1] : AddCode_clientId);
-
-    xmlHttp.ontimeout = function() { };
-
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) {
-                PlayVod_loadDataSuccess(xmlHttp.responseText);
-                //Play_410ERROR = false;
-            } else {
-                if (xmlHttp.status === 410) {
-                    Play_410ERROR = true;
-                    if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
-                }
-                PlayVod_loadDataError();
-            }
-        }
-    };
-
-    xmlHttp.send(null);
 }
 
 function PlayVod_loadDataError() {
     if (PlayVod_isOn) {
         var mjson;
-        if (PlayVod_tokenResponse.token) mjson = JSON.parse(PlayVod_tokenResponse.token);
-        if (mjson) {
-            if (JSON.parse(PlayVod_tokenResponse.token).chansub.restricted_bitrates.length !== 0) {
-                PlayVod_loadDataCheckSub();
-                return;
+
+        try {
+
+            if (PlayVod_tokenResponse.value) mjson = JSON.parse(PlayVod_tokenResponse.value);
+
+            if (mjson) {
+                if (JSON.parse(PlayVod_tokenResponse.value).chansub.restricted_bitrates.length !== 0) {
+                    PlayVod_loadDataCheckSub();
+                    return;
+                }
             }
+
+        } catch (e) {
+
         }
 
         PlayVod_loadingDataTry++;
@@ -381,9 +421,18 @@ function PlayVod_loadDataSuccessFake() {
 
 function PlayVod_loadDataSuccess(responseText) {
     if (PlayVod_state === Play_STATE_LOADING_TOKEN) {
-        PlayVod_tokenResponse = JSON.parse(responseText);
+
+        try {
+
+            PlayVod_tokenResponse = JSON.parse(responseText).data.videoPlaybackAccessToken;
+
+        } catch (e) {
+            PlayVod_tokenResponse = null;
+        }
+
         PlayVod_state = Play_STATE_LOADING_PLAYLIST;
         PlayVod_loadData();
+
     } else if (PlayVod_state === Play_STATE_LOADING_PLAYLIST) {
         PlayVod_playlistResponse = responseText;
         PlayVod_qualities = Play_extractQualities(PlayVod_playlistResponse);

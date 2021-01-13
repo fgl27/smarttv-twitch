@@ -713,4 +713,6 @@ var AddCode_client_secret;//none public get yours link above is free
 var AddCode_client_backup;
 
 var Play_Headers;
-var Play_live_token = "https://api.twitch.tv/api/channels/%x/access_token";
+
+var Play_live_token = '{"query":"{streamPlaybackAccessToken(channelName:\\"%x\\", params:{platform:\\"android\\",playerType:\\"mobile\\"}){value signature}}"}';
+var Play_vod_token = '{"query":"{videoPlaybackAccessToken(id:\\"%x\\", params:{platform:\\"android\\",playerType:\\"mobile\\"}){value signature}}"}';

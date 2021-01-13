@@ -477,6 +477,7 @@ function Play_CheckIfIsLive() {
                     }
 
                 } catch (e) {
+                    console.log('Play_CheckIfIsLive e ' + e);
                     Play_CheckIfIsLiveError();
                 }
 
@@ -521,6 +522,7 @@ function Play_CheckIfIsLiveLink() {
             '&reassignments_supported=true&playlist_include_framerate=true&allow_source=true&p=' + Main_RandomInt();
 
     } catch (e) {
+        console.log('Play_CheckIfIsLiveLink e ' + e);
         Play_CheckIfIsLiveLinkError();
         return;
     }
@@ -787,6 +789,7 @@ function Play_loadDataRequest() {
         );
 
     } catch (e) {
+        console.log('Play_loadDataRequest e ' + e);
         Play_loadDataError();
     }
 
@@ -905,7 +908,7 @@ function Play_loadDataSuccess(responseText) {
         } catch (e) {
 
             Play_tokenResponse = null;
-
+            console.log('Play_loadDataSuccess e ' + e);
         }
 
         Play_state = Play_STATE_LOADING_PLAYLIST;

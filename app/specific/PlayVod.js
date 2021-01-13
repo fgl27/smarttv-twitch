@@ -374,7 +374,7 @@ function PlayVod_loadDataRequest() {
     } catch (e) {
 
         PlayVod_loadDataError();
-
+        console.log('PlayVod_loadDataRequest e ' + e);
     }
 
 }
@@ -395,7 +395,7 @@ function PlayVod_loadDataError() {
             }
 
         } catch (e) {
-
+            console.log('PlayVod_loadDataError e ' + e);
         }
 
         PlayVod_loadingDataTry++;
@@ -428,6 +428,7 @@ function PlayVod_loadDataSuccess(responseText) {
 
         } catch (e) {
             PlayVod_tokenResponse = null;
+            console.log('PlayVod_loadDataSuccess e ' + e);
         }
 
         PlayVod_state = Play_STATE_LOADING_PLAYLIST;

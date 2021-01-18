@@ -2704,11 +2704,6 @@
 
             if (tags.hasOwnProperty('emote-only') && tags['emote-only']) text += "Emote-only, ";
 
-            //TODO convert this to strings
-            if (tags.hasOwnProperty('followers-only') && tags['followers-only'] !== -1) {
-                text += "Followers-only" + (tags['followers-only'] ? (' minimum ' + tags['followers-only'] + ' minute(s) fallowing') : '') + ', ';
-            }
-
             if (tags.hasOwnProperty('rk9') && tags.rk9) text += 'R9K messages with more than 9 characters must be unique, ';
 
             if (tags.hasOwnProperty('slow') && tags.slow) {
@@ -2716,6 +2711,11 @@
             }
 
             if (tags.hasOwnProperty('subs-only') && tags['subs-only']) text += 'Subscribers-only, ';
+
+            //TODO convert this to strings
+            if (tags.hasOwnProperty('followers-only') && tags['followers-only'] !== -1) {
+                text += "Followers-only" + (tags['followers-only'] ? (' minimum ' + tags['followers-only'] + ' minute(s) fallowing') : '') + ', ';
+            }
 
             text = text.slice(0, -2);
         }
@@ -8626,6 +8626,7 @@
                         }
 
                     } catch (e) {
+                        console.log('Play_CheckIfIsLive e ' + e);
                         Play_CheckIfIsLiveError();
                     }
 
@@ -8670,6 +8671,7 @@
                 '&reassignments_supported=true&playlist_include_framerate=true&allow_source=true&p=' + Main_RandomInt();
 
         } catch (e) {
+            console.log('Play_CheckIfIsLiveLink e ' + e);
             Play_CheckIfIsLiveLinkError();
             return;
         }
@@ -8937,6 +8939,7 @@
             );
 
         } catch (e) {
+            console.log('Play_loadDataRequest e ' + e);
             Play_loadDataError();
         }
 
@@ -9054,7 +9057,7 @@
             } catch (e) {
 
                 Play_tokenResponse = null;
-
+                console.log('Play_loadDataSuccess e ' + e);
             }
 
             Play_state = Play_STATE_LOADING_PLAYLIST;
@@ -11545,7 +11548,7 @@
         } catch (e) {
 
             PlayVod_loadDataError();
-
+            console.log('PlayVod_loadDataRequest e ' + e);
         }
 
     }
@@ -11566,7 +11569,7 @@
                 }
 
             } catch (e) {
-
+                console.log('PlayVod_loadDataError e ' + e);
             }
 
             PlayVod_loadingDataTry++;
@@ -11599,6 +11602,7 @@
 
             } catch (e) {
                 PlayVod_tokenResponse = null;
+                console.log('PlayVod_loadDataSuccess e ' + e);
             }
 
             PlayVod_state = Play_STATE_LOADING_PLAYLIST;

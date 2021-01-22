@@ -385,7 +385,7 @@ function en_USLang() {
     STR_CHAT_CLEAR_MSG = "Clear chat, delete user’s message’s";
     STR_PURGED_MESSAGE = " - Single user message deleted";
     STR_PURGED_MESSAGE_TIMEOUT = " - All messages from this user was deleted, they was timeout for ";
-    STR_CHAT_CLEAR_MSG_SUMMARY = 'Delete chat messages from a specific user (typically after they received a timeout or ban), deleted messages will always have a blue background, the message will be removed if this is set to yes if not only the background color will change';
+    STR_CHAT_CLEAR_MSG_SUMMARY = 'Delete chat messages from a specific user (typically after they received a timeout or ban), deleted messages will always have a blue background, the message will be deleted if this is set to yes, if not only the background color will change';
     STR_DARK_MODE = "Dark mode";
     STR_BRIGHT_MODE = "Bright mode";
     STR_CHAT_CLEAR_MSG_SUMMARY = 'Delete chat messages from a specific user (typically after they received a timeout or ban), deleted messages will always have a blue background, the message will be removed if this is set to yes if not only';

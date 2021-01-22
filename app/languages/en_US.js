@@ -385,10 +385,10 @@ function en_USLang() {
     STR_CHAT_CLEAR_MSG = "Clear chat, delete user’s message’s";
     STR_PURGED_MESSAGE = " - Single user message deleted";
     STR_PURGED_MESSAGE_TIMEOUT = " - All messages from this user was deleted, they was timeout for ";
-    STR_CHAT_CLEAR_MSG_SUMMARY = 'Delete chat messages from a specific user (typically after they received a timeout or ban), deleted messages will always have a blue background, the message will be removed if this is set to yes if not only';
+    STR_CHAT_CLEAR_MSG_SUMMARY = 'Delete chat messages from a specific user (typically after they received a timeout or ban), deleted messages will always have a blue background, the message will be removed if this is set to yes if not only the background color will change';
     STR_DARK_MODE = "Dark mode";
     STR_BRIGHT_MODE = "Bright mode";
-    STR_CHAT_CLEAR_MSG_SUMMARY = 'Purges chat messages from a specific user (typically after a timeout or ban), purged messages will always have a blue background, the message will be replaced with "' + STR_PURGED_MESSAGE + '" if this is set to yes';
+    STR_CHAT_CLEAR_MSG_SUMMARY = 'Delete chat messages from a specific user (typically after they received a timeout or ban), deleted messages will always have a blue background, the message will be removed if this is set to yes if not only';
     STR_IN_CHAT = " In chat";
     STR_SHOW_IN_CHAT = "Show total logged in user on top of the chat or viewers";
     STR_SHOW_IN_CHAT_SUMMARY = "This is very helpfully to know for example if the offline chat has any user to talk to, also let the user know the difference from total viewer VS total chat user";

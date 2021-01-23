@@ -294,7 +294,7 @@ function ChatLive_loadChatters(chat_number, id) {
         );
         Main_RemoveClass('chat_loggedin' + chat_number, 'hide');
 
-        Main_getElementById('chat_box_holder' + chat_number).style.height = 'calc(100% - 2.7ch)';
+        Main_getElementById('chat_box_holder' + chat_number).style.height = '97.1%';
 
         ChatLive_loadChattersCheckType(chat_number, id);
     }

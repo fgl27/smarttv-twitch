@@ -304,10 +304,12 @@ If you have a problem on connecting refer back to **[Account and Downloads:](htt
 
 ### Install the application:
 
+* If yours device uses square icons on the home screen as the bellow image shows, before the next step you need to set the proper icon, to do that is very simple, just delete the file **icon.png** and rename the **icon_square.png** to **icon.png** 
 * Click on that folder **4.0.1_V...etc** left click, then right click > Run as > **1 Tizen Web Application**, the installation will start
 * If everything goes OK, the app will be opened in a few seconds on the TV, and you can start using it
 
-![install_app5](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app7.png)
+![install_app7](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app7.png)
+![icon_suqare](https://fgl27.github.io/smarttv-twitch/screenshot/install/icon_suqare.png)
 
 * If it fails during the installation, make sure you don't have any other Twitch.TV applications installed on the TV. To uninstall the app manually, just open the **"apps"** application, find all Twitch.TV apps you have installed in **"my app"** tab, hold down the enter/select key on the top of the app and choose delete. After you have deleted all Twitch.TV apps, try to install again.
 * This app can update itself 99% of the time, so this installation process will only have to be redone after a major update where the changes cannot be done by the app itself. The app will warn the user if there is a need to update it manually by performing the installation steps again.

@@ -180,7 +180,7 @@ mkdir -p "$temp_maker_folder"
 cp -rf app/index.html "$temp_maker_folder"master.css
 cp -rf app/index.html "$temp_maker_folder"index.html
 cp -rf app/config.xml "$temp_maker_folder"config.xml
-sed -i 's/flbtxFhd64/2ulZzjRf8f/g' "$temp_maker_folder"config.xml
+sed -i 's/flbtxFhd64/tnr2wzf2uk/g' "$temp_maker_folder"config.xml
 cp -rf release/index.html release/index_release.html
 
 sed -i -n '/bodystart/,/bodyend/p' "$temp_maker_folder"index.html

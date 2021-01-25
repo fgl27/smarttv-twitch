@@ -388,8 +388,9 @@
     var STR_CHAT_TIMESTAMP;
     var STR_CHAT_CLEAR_MSG;
     var STR_CHAT_CLEAR_MSG_SUMMARY;
-    var STR_PURGED_MESSAGE;
-    var STR_PURGED_MESSAGE_TIMEOUT;
+    var STR_CHAT_MESSAGE_DELETED;
+    var STR_CHAT_MESSAGE_DELETED_ALL;
+    var STR_CHAT_MESSAGE_DELETED_TIMEOUT;
     var STR_ENABLED;
     var STR_DISABLED;
     var STR_SHOW_IN_CHAT_VIEWERS;
@@ -896,8 +897,9 @@
         STR_CHAT_NICK_COLOR = "Readable nick colors";
         STR_CHAT_NICK_COLOR_SUMMARY = "Instead of using the default nick color that some times can't be readable on a dark background, use a custom easy to read color";
         STR_CHAT_CLEAR_MSG = "Clear chat, delete user’s message’s";
-        STR_PURGED_MESSAGE = " - Single user message deleted";
-        STR_PURGED_MESSAGE_TIMEOUT = " - All messages from this user was deleted, they was timeout for ";
+        STR_CHAT_MESSAGE_DELETED = " - Single user message deleted";
+        STR_CHAT_MESSAGE_DELETED_ALL = " - All messages from this user was deleted";
+        STR_CHAT_MESSAGE_DELETED_TIMEOUT = ", they've be timeout for ";
         STR_CHAT_CLEAR_MSG_SUMMARY = 'Delete chat messages from a specific user (typically after they received a timeout or ban), deleted messages will always have a blue background, the message will be deleted if this is set to yes, if not only the background color will change';
         STR_DARK_MODE = "Dark mode";
         STR_BRIGHT_MODE = "Bright mode";
@@ -5275,12 +5277,13 @@
         if (message.tags && message.tags.hasOwnProperty('target-user-id')) {
 
             var duration = message.tags['ban-duration'] || 0,
-                timeout = '',
-                array = Chat_div[chat_number].getElementsByClassName(message.tags['target-user-id']); //The user id is added as a class
+                msg = STR_CHAT_MESSAGE_DELETED_ALL,
+                classId = message.tags['target-user-id'],
+                array = Chat_div[chat_number].getElementsByClassName(classId); //The user id is added as a class
 
             if (duration) {
 
-                timeout = duration + (duration > 1 ? STR_SECONDS : STR_SECOND);
+                msg += STR_CHAT_MESSAGE_DELETED_TIMEOUT + duration + (duration > 1 ? STR_SECONDS : STR_SECOND);
 
             }
 
@@ -5290,10 +5293,12 @@
                     function(el) {
                         if (el) {
 
-                            if (ChatLive_ClearChat) el.innerHTML = STR_PURGED_MESSAGE_TIMEOUT + timeout;
-                            else el.innerHTML += STR_PURGED_MESSAGE_TIMEOUT + timeout;
+                            if (ChatLive_ClearChat) el.innerHTML = msg;
+                            else el.innerHTML += msg;
 
                             Main_AddClassWitEle(el.parentElement, 'chat_purged');
+                            //Prevent duplicate removal
+                            Main_RemoveClassWithEle(el, classId);
 
                         }
                     }
@@ -5323,12 +5328,15 @@
         if (message.tags && message.tags.hasOwnProperty('target-msg-id')) {
             //Elem may not be there anymore
             var el = Main_getElementById(message.tags['target-msg-id']);
+
             if (el) {
 
-                if (ChatLive_ClearChat) el.innerHTML = STR_PURGED_MESSAGE;
-                else el.innerHTML += STR_PURGED_MESSAGE;
+                if (ChatLive_ClearChat) el.innerHTML = STR_CHAT_MESSAGE_DELETED;
+                else el.innerHTML += STR_CHAT_MESSAGE_DELETED;
 
                 Main_AddClassWitEle(el.parentElement, 'chat_purged');
+                //Prevent duplicate removal
+                el.id = '_';
             }
         }
 

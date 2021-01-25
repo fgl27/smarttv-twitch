@@ -304,15 +304,17 @@ If you have a problem on connecting refer back to **[Account and Downloads:](htt
 
 ### Install the application:
 
-* If yours device uses square icons on the home screen as the bellow image shows, before the next step you need to set the proper icon, to do that is very simple, just delete the file **icon.png** and rename the **icon_square.png** to **icon.png** 
-* Click on that folder **4.0.1_V...etc** left click, then right click > Run as > **1 Tizen Web Application**, the installation will start
+* If yours device uses square icons on the home screen (only devices running Tizen 5.5 and above need this, most of this devices are 2020 or newer models) as the bellow image shows, before the next step you need to set the proper icon, to do that is very simple, just delete the file **icon.png** and rename the **icon_square.png** to **icon.png** 
+* Now the installation, left click on the folder **4.0.1_VX...etc** to select it, then right click > Run as > **1 Tizen Web Application**, the installation will start
 * If everything goes OK, the app will be opened in a few seconds on the TV, and you can start using it
 
 ![install_app7](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app7.png)
-![icon_suqare](https://fgl27.github.io/smarttv-twitch/screenshot/install/icon_suqare.png)
+![icon_square](https://fgl27.github.io/smarttv-twitch/screenshot/install/icon_square.png)
 
 * If it fails during the installation, make sure you don't have any other Twitch.TV applications installed on the TV. To uninstall the app manually, just open the **"apps"** application, find all Twitch.TV apps you have installed in **"my app"** tab, hold down the enter/select key on the top of the app and choose delete. After you have deleted all Twitch.TV apps, try to install again.
-* This app can update itself 99% of the time, so this installation process will only have to be redone after a major update where the changes cannot be done by the app itself. The app will warn the user if there is a need to update it manually by performing the installation steps again.
+
+
+**This app can update itself 99% of the time, is a very simple process every time you open the app (when it is fully closed not running on the background) it will download the latest version of the app code from the repository, this way the installation process will only have to be redone after a major update where the changes are in the files from the release.zip, the app will warn the user if is needed to update it manually by performing the installation steps again.**
 
 ## In doubt [open a issue](https://github.com/fgl27/smarttv-twitch/issues/new/choose)
 

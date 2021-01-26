@@ -26,6 +26,7 @@
 	- [Generate a certificate:](#generate-a-certificate)
 	- [Setup the application:](#setup-the-application)
 	- [Install the application:](#install-the-application)
+- [Updates](#updates)
 - [In doubt open a issue](#in-doubt-open-a-issue)
 - [Donations](#donations)
 - [How to get the IP](#how-to-get-the-ip)
@@ -313,8 +314,9 @@ If you have a problem on connecting refer back to **[Account and Downloads:](htt
 
 * If it fails during the installation, make sure you don't have any other Twitch.TV applications installed on the TV. To uninstall the app manually, just open the **"apps"** application, find all Twitch.TV apps you have installed in **"my app"** tab, hold down the enter/select key on the top of the app and choose delete. After you have deleted all Twitch.TV apps, try to install again.
 
+## Updates
 
-**This app can update itself 99% of the time, is a very simple process every time you open the app (when it is fully closed not running on the background) it will download the latest version of the app code from the repository, this way the installation process will only have to be redone after a major update where the changes are in the files from the release.zip, the app will warn the user if is needed to update it manually by performing the installation steps again.**
+This app can update itself 99% of the time, is a very simple process every time you open the app (when it is fully closed not running on the background) it will download the latest version of the app code from the repository, this way the installation process will only have to be redone after a major update where the changes are in the files from the release.zip, the app will warn the user if is needed to update it manually by performing the installation steps again.
 
 ## In doubt [open a issue](https://github.com/fgl27/smarttv-twitch/issues/new/choose)
 

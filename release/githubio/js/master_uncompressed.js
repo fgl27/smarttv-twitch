@@ -9460,6 +9460,7 @@
     function Play_timeS(time) {
         var seconds, minutes, hours;
         time += Play_offsettimeMinus / 1000;
+        time = Math.round(Math.max(0, time));
 
         seconds = Play_lessthanten(parseInt(time) % 60);
 

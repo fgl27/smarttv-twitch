@@ -1134,19 +1134,9 @@ function Play_onPlayer() {
 
             if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live OK:', 'date: ' + (new Date()));
 
-            Play_Latency = 0;
-            Play_LatencyTemp = 0;
-            Play_LatencyCounter2 = 1;
-            Play_LatencyCounter = 0;
-            Play_BaseDuration = 0;
-
             try {
                 //GET_LIVE_DURATION not supported by all TVs
-                if (Play_LowLatency) {
-
-                    Play_avplay.seekTo(Play_avplay.getStreamingProperty("GET_LIVE_DURATION").split('|')[1] - 3000);
-
-                }
+                if (Play_LowLatency) Play_avplay.seekTo(Play_avplay.getStreamingProperty("GET_LIVE_DURATION").split('|')[1] - 3000);
             } catch (e) { }
 
             Play_avplay.play();
@@ -1362,13 +1352,6 @@ function Play_exitMain() {
     Main_ReStartScreens();
 }
 
-var Play_LatencyCounter = 0;
-var Play_LatencyCounter2 = 1;
-var Play_LatencyTemp = 0;
-var Play_Latency = 0;
-var Play_Duration = 0;
-var Play_BaseDuration = 0;
-
 function Play_updateCurrentTime(currentTime) {
     Play_currentTime = currentTime;
 
@@ -1376,45 +1359,6 @@ function Play_updateCurrentTime(currentTime) {
     if (Play_bufferingcomplete && Play_BufferDialogVisible()) Play_HideBufferDialog();
 
     Play_oldcurrentTime = currentTime + Play_offsettime - 14000; // 14s buffer size from twitch
-    try {
-
-        Play_Duration = Play_avplay.getStreamingProperty("GET_LIVE_DURATION").split('|')[1];
-        if (!Play_BaseDuration) Play_BaseDuration = Play_Duration / 10;
-
-    } catch (e) {
-        Play_Duration = 0;
-    }
-
-    if (Play_Duration) {
-
-        Play_LatencyTemp += Play_Duration - currentTime;
-
-        if (Play_Latency < 1) {
-
-            Play_Latency = Play_LatencyTemp + (Play_Buffer * 1000) + Play_BaseDuration;
-
-            // console.log('Play_Duration ' + Play_Duration);
-            // console.log('currentTime   ' + currentTime);
-            // console.log('Play_Latency  ' + Play_Latency);
-
-        }
-
-        Play_LatencyCounter++;
-        if (Play_LatencyCounter > 20) {
-
-            Play_LatencyCounter2++;
-            Play_Latency += Play_LatencyTemp / Play_LatencyCounter;
-
-            Play_LatencyTemp = 0;
-            Play_LatencyCounter = 0;
-
-            // console.log('Play_Duration ' + Play_Duration);
-            // console.log('currentTime   ' + currentTime);
-            // console.log('Play_Latency  ' + ((Play_Latency / Play_LatencyCounter2) + Play_BaseDuration));
-        }
-
-    }
-
     if (Play_isPanelShown()) Play_RefreshWatchingtime();
 }
 

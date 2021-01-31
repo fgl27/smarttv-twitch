@@ -38,6 +38,8 @@ This is an web application designed to give access to Twitch features on SmartTV
 
 The intention of this is to make a web app that works on all modern browser and can be easily ported to any OS that can run a web app.
 
+This project is the "secondary" project of two Twitch project I current maintain, the primary project is the Android TV one [SmartTwitchTV](https://github.com/fgl27/SmartTwitchTV), the reason this is secondary is simple Tizen is a very limited and exhausting system to work on Android is much better in any form and way, because of that the Tizen version is always lagging behind on features in relation to Android plus some of the Android features can't be ported to the Tizen most related to multiple players support as the OS doesn't allows it.
+
 The application fully supports all 4k and 1080p Samsung TVs released in 2016 or later. The app also support TVs released in 2015 or earlier that have Tizen version 2.3 or newer, however for some old TV even running Tizen 2.3 may there be some minor FW issues that affect the app most of those have be fixed, so is expected that they all work if doesn't for you open a issue.
 
 This app has no affiliation with Twitch, this is a user made app, but is only possible because Twitch provide all the API that allows the app to show Twitch content.
@@ -49,10 +51,6 @@ Those API are documented here:
 This app has be registered to access Twitch API, that registration process is described here:
 
 [Twitch Registration process](https://dev.twitch.tv/docs/authentication#registration)
-
-This project is the secondary project of two Twitch project I current maintain, originally I start working on this repo, I'm using separated repos to make easier use of github pages and commit history.
-
-This original project runs on Samsung Tizen OS, with is very limited because of that the Android version has become the main project, not all features of the Android project can be ported to the Samsung one, but from time to time I will port the features from the Android version to the Samsung version.
 
 ## Android TV version
 

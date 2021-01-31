@@ -1736,7 +1736,7 @@ function ChatLive_CleanUser(chat_number, message) {
                     if (el) {
 
                         if (ChatLive_ClearChat) el.innerHTML = msg;
-                        else el.innerHTML += msg;
+                        else el.innerHTML += STR_BR + STR_BR + msg;
 
                         Main_AddClassWitEle(el.parentElement, 'chat_purged');
                         //Prevent duplicate removal
@@ -1774,7 +1774,7 @@ function ChatLive_CleanMessage(message) {
         if (el) {
 
             if (ChatLive_ClearChat) el.innerHTML = STR_CHAT_MESSAGE_DELETED;
-            else el.innerHTML += STR_CHAT_MESSAGE_DELETED;
+            else el.innerHTML += STR_BR + STR_BR + STR_CHAT_MESSAGE_DELETED;
 
             Main_AddClassWitEle(el.parentElement, 'chat_purged');
             //Prevent duplicate removal

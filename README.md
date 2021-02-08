@@ -95,7 +95,7 @@ The application never stops receiving updates so the below images could be outda
 
 The key is generated on the page below. The page receives a key after you use it to request one with the official Twitch.TV web site. The link below is the same that you would see on the application screen.
 
-### [Twitch.TV app for Samsung TV authorization request page](http://tiny.cc/twitchkeycode)
+### [Twitch.TV app for Samsung TV authorization request page](http://tiny.cc/twitchkey)
 
 ### when accessing Twitch authorization site after adding yours credential (User and password) you will see the bellow information
 

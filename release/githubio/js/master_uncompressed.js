@@ -514,7 +514,7 @@
             STR_DIV_TITLE + STR_CLOSE_THIS + '</div></div>';
 
         STR_OAUTH_EXPLAIN = STR_OAUTH_EXPLAIN1 + STR_BR +
-            STR_DOT + STR_OAUTH_EXPLAIN2.replace('link_link', '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-family: \'Roboto-Bold\';">http://tiny.cc/twitchkeycode</div>') + STR_BR +
+            STR_DOT + STR_OAUTH_EXPLAIN2.replace('link_link', '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-family: \'Roboto-Bold\';">http://tiny.cc/twitchkey</div>') + STR_BR +
             STR_DOT + STR_OAUTH_EXPLAIN3 + STR_BR +
             STR_DOT + STR_OAUTH_EXPLAIN4 + STR_BR +
             STR_DOT + STR_OAUTH_EXPLAIN5 + STR_BR +

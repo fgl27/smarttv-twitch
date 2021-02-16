@@ -98,6 +98,7 @@ function ChatLive_Init() {
     Chat_Id[chat_number] = (new Date()).getTime();
     ChatLive_selectedChannel_id[chat_number] = Main_values.Play_selectedChannel_id;
     ChatLive_selectedChannel[chat_number] = Main_values.Play_selectedChannel;
+    if (ChatLive_selectedChannel[chat_number]) ChatLive_selectedChannel[chat_number] = ChatLive_selectedChannel[chat_number].toLowerCase();
 
     ChatLive_SetOptions(chat_number, Chat_Id[chat_number]);
 

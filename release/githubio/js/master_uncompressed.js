@@ -3691,6 +3691,7 @@
         if (ChatLive_selectedChannel[chat_number]) ChatLive_selectedChannel[chat_number] = ChatLive_selectedChannel[chat_number].toLowerCase();
 
         ChatLive_SetOptions(chat_number, Chat_Id[chat_number]);
+        ChatLive_PreLoadChat(chat_number, Chat_Id[chat_number]);
 
         ChatLive_loadChatters(chat_number, Chat_Id[chat_number]);
         ChatLive_loadEmotesUser();
@@ -4262,6 +4263,44 @@
         }
     }
 
+    function ChatLive_PreLoadChat(chat_number, id) {
+
+        BasexmlHttpGet(
+            'https://recent-messages.robotty.de/api/v2/recent-messages/' + ChatLive_selectedChannel[chat_number] + '?limit=30',
+            DefaultHttpGetTimeout * 2,
+            0,
+            null,
+            ChatLive_PreLoadChatSuccess,
+            noop_fun,
+            chat_number,
+            id
+        );
+
+    }
+
+    function ChatLive_PreLoadChatSuccess(data, chat_number, id) {
+
+        if (id !== Chat_Id[chat_number]) return;
+
+        var obj = JSON.parse(data),
+            len = obj.messages.length,
+            i = 0,
+            message;
+
+        for (i; i < len; i++) {
+
+            message = window.parseIRC(obj.messages[i].trim());
+
+            if (message.command === "PRIVMSG") {
+
+                ChatLive_loadChatSuccess(message, chat_number, true);
+
+            }
+
+        }
+
+    }
+
     var useToken = [];
 
     function ChatLive_loadChat(chat_number, id) {
@@ -4271,7 +4310,7 @@
 
         ChatLive_LineAdd({
             chat_number: chat_number,
-            message: ChatLive_LineAddSimple(STR_LOADING_CHAT + STR_SPACE + STR_LIVE + STR_SPACE + STR_CHANNEL + ': ' + Main_values.Play_selectedChannelDisplayname)
+            message: ChatLive_LineAddSimple(STR_LOADING_CHAT + STR_SPACE + Main_values.Play_selectedChannelDisplayname + STR_SPACE + STR_LIVE)
         });
 
         useToken[chat_number] = ChatLive_Logging && !ChatLive_Banned[chat_number] && AddUser_IsUserSet() && AddUser_UsernameArray[0].access_token;
@@ -4924,7 +4963,7 @@
         );
     }
 
-    function ChatLive_loadChatSuccess(message, chat_number) {
+    function ChatLive_loadChatSuccess(message, chat_number, addToStart) {
         var div = '',
             tags = message.tags,
             nick,
@@ -5033,7 +5072,8 @@
             atstreamer: atstreamer,
             atuser: atuser,
             hasbits: (hasbits && ChatLive_Highlight_Bits),
-            extraMessage: extraMessage
+            extraMessage: extraMessage,
+            addToStart: addToStart
         };
 
         ChatLive_LineAddCheckDelay(chat_number, messageObj);
@@ -5231,7 +5271,15 @@
         // </span>
         // </div>
 
-        Chat_div[messageObj.chat_number].appendChild(elem);
+        if (!messageObj.addToStart) {
+
+            Chat_div[messageObj.chat_number].appendChild(elem);
+
+        } else {
+
+            Chat_div[messageObj.chat_number].insertBefore(elem, Chat_div[messageObj.chat_number].childNodes[0]);
+
+        }
     }
 
     function ChatLive_MessagesRunAfterPause() {
@@ -5651,8 +5699,7 @@
             Chat_MessageVector({
                 chat_number: 0,
                 time: 0,
-                message: '<span class="message">' + STR_LOADING_CHAT + Chat_title + STR_SPACE + STR_CHANNEL + ': ' +
-                    Main_values.Main_selectedChannelDisplayname + '</span>'
+                message: '<span class="message">' + STR_LOADING_CHAT + STR_SPACE + Main_values.Main_selectedChannelDisplayname + STR_SPACE + Chat_title + '</span>'
             });
 
 
@@ -6053,7 +6100,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'January 21 2022';
+    var Main_minversion = 'March 08 2021';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
     var Main_ClockOffset = 0;

@@ -1105,6 +1105,8 @@ function Play_onPlayer() {
     }
 
     if (Main_IsNotBrowser) {
+        Play_loadChat();
+
         try {
             Play_avplay.stop();
             Play_avplay.close();
@@ -1141,7 +1143,6 @@ function Play_onPlayer() {
 
             Play_avplay.play();
             Play_Playing = true;
-            Play_loadChat();
             if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
 
             Play_PlayerCheckCount = 0;

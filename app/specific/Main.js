@@ -1020,10 +1020,9 @@ function Main_ready(func) {
 
 var Main_clock_H_M = '';
 function Main_getclock() {
-    var date = new Date().getTime() + Main_ClockOffset,
-        dayMonth;
-
-    date = new Date(date);
+    var timems = new Date().getTime() + Main_ClockOffset,
+        dayMonth,
+        date = new Date(timems);
 
     if (Main_IsDayFirst) dayMonth = STR_DAYS[date.getDay()] + ' ' + date.getDate() + ' ' + STR_MONTHS[date.getMonth()];
     else dayMonth = STR_DAYS[date.getDay()] + ' ' + STR_MONTHS[date.getMonth()] + ' ' + date.getDate();

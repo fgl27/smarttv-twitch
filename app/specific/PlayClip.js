@@ -165,12 +165,12 @@ function PlayClip_loadData() {
     PlayClip_loadDataRequest();
 }
 
+var PlayClip_BaseClipUrl = 'https://gql.twitch.tv/gql';
 function PlayClip_loadDataRequest() {
-    var theUrl = 'https://gql.twitch.tv/gql';
 
     var xmlHttp = new XMLHttpRequest();
 
-    xmlHttp.open("POST", theUrl, true);
+    xmlHttp.open("POST", PlayClip_BaseClipUrl, true);
     xmlHttp.timeout = PlayClip_loadingDataTimeout;
     xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
     xmlHttp.setRequestHeader('Content-Type', 'application/json');

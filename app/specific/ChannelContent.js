@@ -116,40 +116,49 @@ function ChannelContent_loadDataError() {
         ChannelContent_loadingDataTimeout += 500;
         ChannelContent_loadDataRequest();
     } else {
-        ChannelContent_responseText = null;
-        ChannelContent_loadDataPrepare();
-        ChannelContent_GetStreamerInfo();
+
+        ChannelContent_loadDataCheckHostError();
+
     }
 }
 
+var ChannelContent_loadDataCheckHostId;
 function ChannelContent_loadDataCheckHost() {
-    var theUrl = 'https://tmi.twitch.tv/hosts?include_logins=1&host=' + encodeURIComponent(Main_values.Main_selectedChannel_id);
 
-    BasexmlHttpGet(theUrl, ChannelContent_loadingDataTimeout, 1, null, ChannelContent_CheckHost, ChannelContent_loadDataCheckHostError, true);
+    ChannelContent_loadDataCheckHostId = (new Date().getTime());
+
+    Main_GetHost(
+        ChannelContent_CheckHost,
+        ChannelContent_loadDataCheckHostId,
+        Main_values.Main_selectedChannel
+    );
 }
 
 function ChannelContent_loadDataCheckHostError() {
-    ChannelContent_loadingDataTry++;
-    if (ChannelContent_loadingDataTry < ChannelContent_loadingDataTryMax) {
-        ChannelContent_loadingDataTimeout += 500;
-        ChannelContent_loadDataCheckHost();
-    } else {
-        ChannelContent_responseText = null;
-        ChannelContent_loadDataPrepare();
-        ChannelContent_GetStreamerInfo();
-    }
+    ChannelContent_responseText = null;
+    ChannelContent_loadDataPrepare();
+    ChannelContent_GetStreamerInfo();
 }
 
-function ChannelContent_CheckHost(responseText) {
-    var response = JSON.parse(responseText);
-    ChannelContent_TargetId = response.hosts[0].target_id;
-    if (ChannelContent_TargetId !== undefined) {
-        ChannelContent_loadDataPrepare();
-        ChannelContent_loadDataRequest();
-    } else {
-        ChannelContent_responseText = null;
-        ChannelContent_loadDataPrepare();
-        ChannelContent_GetStreamerInfo();
+function ChannelContent_CheckHost(responseObj, id) {
+
+    if (ChannelContent_loadDataCheckHostId === id) {
+
+        if (responseObj.status === 200) {
+
+            var response = JSON.parse(responseObj.responseText).data.user.hosting;
+
+            if (response) {
+
+                ChannelContent_TargetId = parseInt(response.id);
+                ChannelContent_loadDataRequest();
+
+                return;
+            }
+        }
+
+        ChannelContent_loadDataCheckHostError();
+
     }
 }
 

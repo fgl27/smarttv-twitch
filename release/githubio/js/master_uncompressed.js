@@ -2252,40 +2252,50 @@
             ChannelContent_loadingDataTimeout += 500;
             ChannelContent_loadDataRequest();
         } else {
-            ChannelContent_responseText = null;
-            ChannelContent_loadDataPrepare();
-            ChannelContent_GetStreamerInfo();
+
+            ChannelContent_loadDataCheckHostError();
+
         }
     }
 
-    function ChannelContent_loadDataCheckHost() {
-        var theUrl = 'https://tmi.twitch.tv/hosts?include_logins=1&host=' + encodeURIComponent(Main_values.Main_selectedChannel_id);
+    var ChannelContent_loadDataCheckHostId;
 
-        BasexmlHttpGet(theUrl, ChannelContent_loadingDataTimeout, 1, null, ChannelContent_CheckHost, ChannelContent_loadDataCheckHostError, true);
+    function ChannelContent_loadDataCheckHost() {
+
+        ChannelContent_loadDataCheckHostId = (new Date().getTime());
+
+        Main_GetHost(
+            ChannelContent_CheckHost,
+            ChannelContent_loadDataCheckHostId,
+            Main_values.Main_selectedChannel
+        );
     }
 
     function ChannelContent_loadDataCheckHostError() {
-        ChannelContent_loadingDataTry++;
-        if (ChannelContent_loadingDataTry < ChannelContent_loadingDataTryMax) {
-            ChannelContent_loadingDataTimeout += 500;
-            ChannelContent_loadDataCheckHost();
-        } else {
-            ChannelContent_responseText = null;
-            ChannelContent_loadDataPrepare();
-            ChannelContent_GetStreamerInfo();
-        }
+        ChannelContent_responseText = null;
+        ChannelContent_loadDataPrepare();
+        ChannelContent_GetStreamerInfo();
     }
 
-    function ChannelContent_CheckHost(responseText) {
-        var response = JSON.parse(responseText);
-        ChannelContent_TargetId = response.hosts[0].target_id;
-        if (ChannelContent_TargetId !== undefined) {
-            ChannelContent_loadDataPrepare();
-            ChannelContent_loadDataRequest();
-        } else {
-            ChannelContent_responseText = null;
-            ChannelContent_loadDataPrepare();
-            ChannelContent_GetStreamerInfo();
+    function ChannelContent_CheckHost(responseObj, id) {
+
+        if (ChannelContent_loadDataCheckHostId === id) {
+
+            if (responseObj.status === 200) {
+
+                var response = JSON.parse(responseObj.responseText).data.user.hosting;
+
+                if (response) {
+
+                    ChannelContent_TargetId = parseInt(response.id);
+                    ChannelContent_loadDataRequest();
+
+                    return;
+                }
+            }
+
+            ChannelContent_loadDataCheckHostError();
+
         }
     }
 
@@ -6136,7 +6146,6 @@
     var Main_ClockOffset = 0;
     var Main_IsNotBrowser = 0;
     var Main_randomimg = '?' + Math.random();
-    var proxyurl = "https://cors-anywhere.herokuapp.com/";
     var Main_updateUserFeedId;
     var Main_vp9supported = false; //TODO check tizen support
     var Main_ResetDownId;
@@ -7229,6 +7238,33 @@
         xmlHttp.send(null);
     }
 
+    var Main_GetHostBaseUrl = '{"operationName":"UseHosting","variables":{"channelLogin":\"%x\"},"extensions":{"persistedQuery":{"version": 1,"sha256Hash":"427f55a3daca510f726c02695a898ef3a0de4355b39af328848876052ea6b337"}}}';
+
+    function Main_GetHost(callbackSucess, checkResult, channel) {
+
+        var xmlHttp = new XMLHttpRequest();
+
+        xmlHttp.open("POST", PlayClip_BaseClipUrl, true);
+        xmlHttp.timeout = 25000;
+        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
+        xmlHttp.setRequestHeader('Content-Type', 'application/json');
+
+        xmlHttp.ontimeout = function() {};
+
+        xmlHttp.onreadystatechange = function() {
+            if (this.readyState === 4) {
+
+                callbackSucess(this, checkResult);
+
+            }
+        };
+
+        xmlHttp.send(
+            Main_GetHostBaseUrl.replace('%x', channel) //postMessage, null for get
+        );
+
+    }
+
     var Main_VideoSizeAll = ["384x216", "512x288", "640x360", "896x504", "1280x720"];
     var Main_GameSizeAll = ["179x250", "272x380", "340x475", "476x665", "773x1080"];
     var Main_SidePannelSizeAll = ["640x360", "896x504", "1280x720", "1536x864", "1920x1080"];
@@ -7547,12 +7583,13 @@
         PlayClip_loadDataRequest();
     }
 
+    var PlayClip_BaseClipUrl = 'https://gql.twitch.tv/gql';
+
     function PlayClip_loadDataRequest() {
-        var theUrl = 'https://gql.twitch.tv/gql';
 
         var xmlHttp = new XMLHttpRequest();
 
-        xmlHttp.open("POST", theUrl, true);
+        xmlHttp.open("POST", PlayClip_BaseClipUrl, true);
         xmlHttp.timeout = PlayClip_loadingDataTimeout;
         xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
         xmlHttp.setRequestHeader('Content-Type', 'application/json');
@@ -10070,13 +10107,13 @@
         } else if (Play_Endcounter === 1) {
             if (Main_values.Play_isHost) {
                 Main_values.Play_DisplaynameHost = Main_values.Play_selectedChannelDisplayname + STR_USER_HOSTING;
-                Main_values.Play_selectedChannel = Play_TargetHost.target_login;
-                Main_values.Play_selectedChannelDisplayname = Play_TargetHost.target_display_name;
+                Main_values.Play_selectedChannel = Play_TargetHost.login;
+                Main_values.Play_selectedChannelDisplayname = Play_TargetHost.displayName;
                 Main_values.Play_DisplaynameHost = Main_values.Play_DisplaynameHost + Main_values.Play_selectedChannelDisplayname;
                 Play_PreshutdownStream(false);
                 document.body.addEventListener("keydown", Play_handleKeyDown, false);
 
-                Main_values.Play_selectedChannel_id = Play_TargetHost.target_id;
+                Main_values.Play_selectedChannel_id = Play_TargetHost.id;
                 Main_ready(Play_Start);
             } else {
                 PlayClip_OpenVod();
@@ -10108,7 +10145,7 @@
 
             Play_EndTextsReset();
             Main_innerHTML("end_channel_name_text", Main_values.Play_selectedChannelDisplayname);
-            Main_innerHTML("end_vod_title_text", Main_values.Play_selectedChannelDisplayname + STR_IS_NOW + STR_USER_HOSTING + Play_TargetHost.target_display_name);
+            Main_innerHTML("end_vod_title_text", Main_values.Play_selectedChannelDisplayname + STR_IS_NOW + STR_USER_HOSTING + Play_TargetHost.displayName);
         } else if (PlayVodClip === 1) { // play
             Play_EndIconsRemoveFocus();
             Play_Endcounter = 2;
@@ -10341,38 +10378,54 @@
         } else Play_EndStart(false, 1);
     }
 
+    var Play_loadDataCheckHostId;
+
     function Play_loadDataCheckHost() {
-        BasexmlHttpGet((!Main_IsNotBrowser ? proxyurl : '') + 'https://tmi.twitch.tv/hosts?include_logins=1&host=' +
-            encodeURIComponent(Main_values.Play_selectedChannel_id),
-            Play_loadingDataTimeout, 1, null, Play_CheckHost, Play_loadDataCheckHostError);
+
+        Play_loadDataCheckHostId = (new Date().getTime());
+
+        Main_GetHost(
+            Play_CheckHost,
+            Play_loadDataCheckHostId,
+            Main_values.Main_selectedChannel
+        );
     }
 
-    function Play_loadDataCheckHostError() {
-        Play_loadingDataTry++;
-        if (Play_loadingDataTry < Play_loadingDataTryMax) {
-            Play_loadingDataTimeout += 250;
-            Play_loadDataCheckHost();
-        } else Play_EndStart(false, 1);
-    }
+    function Play_CheckHost(responseObj, id) {
 
-    function Play_CheckHost(responseText) {
-        Play_TargetHost = JSON.parse(responseText).hosts[0];
+        if (Play_isOn && Play_loadDataCheckHostId === id) {
 
-        if (Play_TargetHost.target_login !== undefined) {
-            Play_IsWarning = true;
-            Play_showWarningDialog(Main_values.Play_selectedChannelDisplayname + STR_IS_NOW + STR_USER_HOSTING + Play_TargetHost.target_display_name);
-            window.setTimeout(function() {
-                Play_IsWarning = false;
-            }, 4000);
+            if (responseObj.status === 200) {
 
-            Play_EndSet(0);
-            Main_values.Play_isHost = true;
-        } else {
+                var response = JSON.parse(responseObj.responseText).data.user.hosting;
+
+                if (response) {
+
+                    Play_TargetHost = response;
+
+                    Play_IsWarning = true;
+                    Play_showWarningDialog(Main_values.Play_selectedChannelDisplayname + STR_IS_NOW + STR_USER_HOSTING + Play_TargetHost.displayName);
+
+                    window.setTimeout(function() {
+                        Play_IsWarning = false;
+                    }, 4000);
+
+                    Play_EndSet(0);
+                    Main_values.Play_isHost = true;
+
+                    Play_PlayEndStart(1);
+
+                    return;
+                }
+
+            }
+
             Play_EndSet(1);
             Main_values.Play_isHost = false;
+            Play_PlayEndStart(1);
+
         }
 
-        Play_PlayEndStart(1);
     }
 
     function Play_setFollow() {

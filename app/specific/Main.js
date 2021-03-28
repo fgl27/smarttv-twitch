@@ -225,7 +225,7 @@ function Main_loadTranslations(language) {
                 Main_IsNotBrowser = tizen !== null;
                 console.log('Main_IsNotBrowser tizen = ' + Main_IsNotBrowser);
                 Main_IsNotBrowserVersion = '1.0.0';
-                if (!Main_isReleased) Main_isDebug = true;
+                Main_isDebug = true;
             } catch (e) {
                 Main_IsNotBrowserVersion = '1.0.0';
                 Main_IsNotBrowser = 0;

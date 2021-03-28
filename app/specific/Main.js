@@ -134,7 +134,7 @@ var Main_ResetDownUPHold = false;
 //Variable initialization end
 
 // this function will be called only once the first time the app startup
-Main_Start();
+if (!Main_isReleased) Main_Start();
 
 function Main_Start() {
     Main_Reset();
@@ -217,6 +217,8 @@ function Main_loadTranslations(language) {
     Main_Checktylesheet();
 
     Main_ready(function() {
+        // var STR_BODY is defined by the release_maker script
+        if (Main_isReleased) document.body.innerHTML = STR_BODY; // jshint ignore:line
 
         Main_ready(function() {
             try {
@@ -1390,47 +1392,4 @@ function Main_PreventClickfunEnd() {
     window.removeEventListener("keyup", Main_PreventClickfun, true);
     window.removeEventListener("keypress", Main_PreventClickfun, true);
 
-}
-
-window.dataLayer = window.dataLayer || [];
-function gtag() {
-    try {
-
-        dataLayer.push(arguments);
-
-    } catch (e) {
-        console.log("gtag e " + e);
-        skipfirebase = true;
-    }
-}
-
-var skipfirebase = false;
-function Main_Startfirebase() {
-
-    var firebaseConfig = {
-        apiKey: "AIzaSyDU1477wMbrpHnLJPgCMohvt2q_LH_tA3c",
-        authDomain: "smarttv-twitch-web-samsung.firebaseapp.com",
-        databaseURL: "https://smarttv-twitch-web-samsung.firebaseio.com",
-        projectId: "smarttv-twitch-web-samsung",
-        storageBucket: "smarttv-twitch-web-samsung.appspot.com",
-        messagingSenderId: "302068341837",
-        appId: "1:302068341837:web:604f8a975842c2e6879004",
-        measurementId: "G-9T1TS1E2SC"
-    };
-
-    try {
-
-        if (!Main_A_includes_B(window.location.href, 'code')) {
-
-            firebase.initializeApp(firebaseConfig);
-            firebase.analytics();
-
-            gtag('js', new Date());
-
-        } else skipfirebase = true;
-
-    } catch (e) {
-        console.log("Main_Startfirebase e " + e);
-        skipfirebase = true;
-    }
 }

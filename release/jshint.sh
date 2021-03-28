@@ -67,7 +67,7 @@ if which 'jshint' >/dev/null ; then
 		npm install jshint -g
 	fi;
 	echo -e "${bldgrn}\nJSHint Test started...\\n";
-	echo -e '/* jshint eqeqeq: true, undef: true, unused: true, node: true, browser: true */\n/*globals tizen, webapis, punycode, smartTwitchTV, firebase, dataLayer */' > "$mainfolder"/release/master.js;
+	echo -e '/* jshint eqeqeq: true, undef: true, unused: true, node: true, browser: true */\n/*globals tizen, webapis, punycode, smartTwitchTV */' > "$mainfolder"/release/master.js;
 	echo "$master_start" >> "$mainfolder"/release/master.js;
 	js_jshint "${js_folders[@]}";
 else

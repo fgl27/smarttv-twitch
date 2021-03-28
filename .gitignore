@@ -31,7 +31,6 @@ release/config.xml
 release/widget.info
 release/*.zip
 release/.master.js
-release/.main.js
 release/.tproject
 release/.project
 release/master.js

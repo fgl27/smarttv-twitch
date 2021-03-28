@@ -18,19 +18,11 @@
     <link rel="preconnect" href="https://api.betterttv.net">
     <link rel="dns-prefetch" href="https://api.betterttv.net">
     <link rel="preconnect" href="https://badges.twitch.tv">
-    <link rel="dns-prefetch" href="https://clips.twitch.tv">
-    <link rel="preconnect" href="https://clips.twitch.tv">
-    <link rel="dns-prefetch" href="https://usher.ttvnw.net">
-    <link rel="preconnect" href="https://usher.ttvnw.net">
-    <link rel="stylesheet" href="https://fgl27.github.io/smarttv-twitch/release/githubio/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fgl27.github.io/smarttv-twitch/release/githubio/css/icons.min.css">
     <title>SmartTV Client for Twitch</title>
     <link rel='shortcut icon' type='image/x-icon'
-        href="https://fgl27.github.io/SmartTwitchTV/release/githubio/images/favicon.ico" />
+        href="https://fgl27.github.io/smarttv-twitch/release/githubio/images/favicon.png" />
     <style>
-        /*cssstart this is here so release_maker can work don't remove*/
-
-        /*Do not add css comments on the same line as code, add it on a new line, TODO fix release maker to be able to do this*/
-
         body,
         html {
             background-color: #000000;
@@ -1933,46 +1925,10 @@
             width: 20%;
             color: #FFF;
         }*/
-
-        /*cssend this is here so release_maker can work don't remove*/
     </style>
-    <script src="$WEBAPIS/webapis/webapis.min.js" defer></script>
-    <!--<script src="master.js" defer></script>-->
-    <script src="languages/0_Strings.js" defer></script>
-    <script src="languages/en_US.js" defer></script>
-    <script src="languages/default.js" defer></script>
-    <script src="general/TVKeyValue.js" defer></script>
-    <script src="general/img64.js" defer></script>
-    <script src="specific/Play.js" defer></script>
-    <script src="specific/PlayClip.js" defer></script>
-    <script src="specific/PlayVod.js" defer></script>
-    <script src="specific/AddUser.js" defer></script>
-    <script src="specific/AddCode.js" defer></script>
-    <script src="specific/ChatVod.js" defer></script>
-    <script src="specific/ChatLive.js" defer></script>
-    <script src="specific/ChatLiveControls.js" defer></script>
-    <script src="thirdparty/irc-message.js" defer></script>
-    <script src="thirdparty/twemoji.js" defer></script>
-    <script src="thirdparty/punycode.js" defer></script>
-    <script src="thirdparty/kapchat.js" defer></script>
-    <script src="specific/Settings.js" defer></script>
-    <script src="specific/SettingsLanguages.js" defer></script>
-    <script src="specific/ChannelContent.js" defer></script>
-    <script src="specific/Search.js" defer></script>
-    <script src="specific/Users.js" defer></script>
-    <script src="specific/UserLiveFeed.js" defer></script>
-    <script src="specific/Screens.js" defer></script>
-    <script src="specific/Sidepannel.js" defer></script>
-    <script src="general/resize.js" defer></script>
-    <script src="general/emojis.js" defer></script>
-    <script src="testing.js" defer></script>
-    <script src="specific/Main.js" defer></script>
-    <script src="specific/ScreensObj.js" defer></script>
-    <!-- this is here so release_maker can work don't remove jsend-->
 </head>
 
 <body>
-    <!-- bodystart this is here so release_maker can work don't remove-->
     <div id="body_container" style="margin: 0px auto;">
         <div id="scene1" class="screen_size" style="background-color: rgba(0, 0, 0, 1);">
             <div id="dialog_loading" class="screens dialogs hide"
@@ -2665,7 +2621,48 @@
             </div>
         </div>
     </div>
-    <!-- bodyend this is here so release_maker can work don't remove-->
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js" defer></script>
+    <!-- The Firebase analytics librarie -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js" defer></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="https://www.googletagmanager.com/gtag/js" defer></script>
+
+    <script src="$WEBAPIS/webapis/webapis.min.js" defer></script>
+
+    <!-- jsstart this is here so release_maker can work don't remove-->
+    <script src="languages/0_Strings.js" defer></script>
+    <script src="languages/en_US.js" defer></script>
+    <script src="languages/default.js" defer></script>
+    <script src="general/TVKeyValue.js" defer></script>
+    <script src="general/img64.js" defer></script>
+    <script src="specific/Play.js" defer></script>
+    <script src="specific/PlayClip.js" defer></script>
+    <script src="specific/PlayVod.js" defer></script>
+    <script src="specific/AddUser.js" defer></script>
+    <script src="specific/AddCode.js" defer></script>
+    <script src="specific/ChatVod.js" defer></script>
+    <script src="specific/ChatLive.js" defer></script>
+    <script src="specific/ChatLiveControls.js" defer></script>
+    <script src="thirdparty/irc-message.js" defer></script>
+    <script src="thirdparty/twemoji.js" defer></script>
+    <script src="thirdparty/punycode.js" defer></script>
+    <script src="thirdparty/kapchat.js" defer></script>
+    <script src="specific/Settings.js" defer></script>
+    <script src="specific/SettingsLanguages.js" defer></script>
+    <script src="specific/ChannelContent.js" defer></script>
+    <script src="specific/Search.js" defer></script>
+    <script src="specific/Users.js" defer></script>
+    <script src="specific/UserLiveFeed.js" defer></script>
+    <script src="specific/Screens.js" defer></script>
+    <script src="specific/Sidepannel.js" defer></script>
+    <script src="general/resize.js" defer></script>
+    <script src="general/emojis.js" defer></script>
+    <script src="testing.js" defer></script>
+    <script src="specific/Main.js" defer></script>
+    <script src="specific/ScreensObj.js" defer></script>
+    <!-- this is here so release_maker can work don't remove jsend-->
 </body>
 
 </html>

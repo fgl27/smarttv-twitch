@@ -40,6 +40,8 @@ function Screens_InitScreens() {
     ScreensObj_InitSearchGames();
     ScreensObj_InitSearchLive();
     ScreensObj_InitSearchChannels();
+
+    Main_Startfirebase();
 }
 
 //TODO cleanup not used when finished migrate all

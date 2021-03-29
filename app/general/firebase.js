@@ -95,13 +95,10 @@ function Firebase_CheckScript(url, AddOnunhandledrejection) {
 
         if (!AddOnunhandledrejection) {
 
-            var Extra_Script = document.createElement('script'),
-                text = 'window.onunhandledrejection = function(e) {};';
-
-            Extra_Script.setAttribute('type', 'text/javascript');
-            Extra_Script.setAttribute('defer', 'true');
-            Extra_Script.innerHTML = text;
-            document.body.appendChild(Extra_Script);
+            window.onunhandledrejection = function() {
+                //function(e) {
+                //console.log('onunhandledrejection e ' + e);
+            };
 
         }
 

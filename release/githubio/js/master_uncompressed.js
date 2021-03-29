@@ -1,5 +1,5 @@
 /* jshint undef: true, unused: true, node: true, browser: true */
-/*globals tizen, webapis, STR_BODY, punycode, smartTwitchTV */
+/*globals tizen, webapis, STR_BODY, punycode, smartTwitchTV, dataLayer, firebase */
 (function(root) {
 
     /** Detect free variables */
@@ -953,7 +953,193 @@
     //https://github.com/kevinfaguiar/vue-twemoji-picker/tree/master/emoji-data/en
     //https://emojipedia.org/
     //But removed not working or not needed as is too much
-    var emojis_string = '[{"unicode":"😀","tags":"grin","id":0},{"unicode":"😃","tags":"smile","id":1},{"unicode":"😄","tags":"smile2","id":2},{"unicode":"😁","tags":"smile3","id":3},{"unicode":"😆","tags":"satisfied","id":4},{"unicode":"😅","tags":"sweat","id":5},{"unicode":"🤣","tags":"rolling","id":6},{"unicode":"😂","tags":"tear","id":7},{"unicode":"🙂","tags":"smile4","id":8},{"unicode":"🙃","tags":"smile-upside-down","id":9},{"unicode":"😉","tags":"wink","id":10},{"unicode":"😊","tags":"smile-blush","id":11},{"unicode":"😇","tags":"angel","id":12},{"unicode":"🥰","tags":"adore","id":13},{"unicode":"😍","tags":"smile-love","id":14},{"unicode":"🤩","tags":"smile-star","id":15},{"unicode":"😘","tags":"kiss","id":16},{"unicode":"😗","tags":"kiss2","id":17},{"unicode":"☺️","tags":"relaxed","id":18},{"unicode":"😚","tags":"kiss3","id":19},{"unicode":"😙","tags":"kis4","id":20},{"unicode":"😋","tags":"delicious","id":21},{"unicode":"😛","tags":"tongue","id":22},{"unicode":"😜","tags":"tongue-wink","id":23},{"unicode":"🤪","tags":"goofy","id":24},{"unicode":"😝","tags":"tongue-><","id":25},{"unicode":"🤑","tags":"face-money","id":26},{"unicode":"🤗","tags":"hugging","id":27},{"unicode":"🤭","tags":"whoops","id":28},{"unicode":"🤫","tags":"quiet","id":29},{"unicode":"🤔","tags":"thinking","id":30},{"unicode":"🤐","tags":"zipper","id":31},{"unicode":"🤨","tags":"skeptic","id":32},{"unicode":"😑","tags":"unexpressive","id":33},{"unicode":"😶","tags":"silent","id":34},{"unicode":"😏","tags":"smirk","id":35},{"unicode":"😒","tags":"unhappy","id":36},{"unicode":"🙄","tags":"eyeroll","id":37},{"unicode":"😬","tags":"grimace","id":38},{"unicode":"🤥","tags":"pinocchio","id":39},{"unicode":"😌","tags":"relieved","id":40},{"unicode":"😔","tags":"pensive","id":41},{"unicode":"😪","tags":"sleep","id":42},{"unicode":"🤤","tags":"drooling-face","id":43},{"unicode":"😴","tags":"sleep-face","id":44},{"unicode":"😷","tags":"cold-face","id":45},{"unicode":"🤒","tags":"sick-face","id":46},{"unicode":"🤕","tags":"bandage-face","id":47},{"unicode":"🤢","tags":"nauseated-face","id":48},{"unicode":"🤮","tags":"sick-face","id":49},{"unicode":"🤧","tags":"sneeze","id":50},{"unicode":"🥵","tags":"feverish","id":51},{"unicode":"🥶","tags":"blue-faced","id":52},{"unicode":"🥴","tags":"intoxicated","id":53},{"unicode":"😵","tags":"dizzy","id":54},{"unicode":"🤯","tags":"mind blown","id":55},{"unicode":"🤠","tags":"cowboy","id":56},{"unicode":"🥳","tags":"celebration","id":57},{"unicode":"😎","tags":"cool-face","id":58},{"unicode":"🤓","tags":"cool","id":59},{"unicode":"🧐","tags":"stuffy","id":60},{"unicode":"😕","tags":"confused","id":61},{"unicode":"😟","tags":"worried","id":62},{"unicode":"🙁","tags":"frown","id":63},{"unicode":"☹️","tags":"frown","id":64},{"unicode":"😮","tags":"mouth-open","id":65},{"unicode":"😯","tags":"surprised","id":66},{"unicode":"😲","tags":"astonished","id":67},{"unicode":"😳","tags":"dazed","id":68},{"unicode":"🥺","tags":"puppy eyes","id":69},{"unicode":"😦","tags":"frown","id":70},{"unicode":"😧","tags":"anguished","id":71},{"unicode":"😨","tags":"fearful","id":72},{"unicode":"😰","tags":"fearful2","id":73},{"unicode":"😥","tags":"disappointed","id":74},{"unicode":"😢","tags":"cry-face","id":75},{"unicode":"😭","tags":"cry-face2","id":76},{"unicode":"😱","tags":"fear-face","id":77},{"unicode":"😖","tags":"confounded","id":78},{"unicode":"😣","tags":"persevere","id":79},{"unicode":"😞","tags":"disappointed","id":80},{"unicode":"😓","tags":"cold","id":81},{"unicode":"😩","tags":"weary","id":82},{"unicode":"😫","tags":"tired","id":83},{"unicode":"😤","tags":"triumph","id":84},{"unicode":"😡","tags":"angry","id":85},{"unicode":"😠","tags":"mad","id":86},{"unicode":"🤬","tags":"swearing","id":87},{"unicode":"😈","tags":"devil","id":88},{"unicode":"👿","tags":"demon","id":89},{"unicode":"💀","tags":"death","id":90},{"unicode":"☠️","tags":"crossbones","id":91},{"unicode":"💩","tags":"poop","id":92},{"unicode":"🤡","tags":"clown","id":93},{"unicode":"👹","tags":"creature","id":94},{"unicode":"👺","tags":"creature2","id":95},{"unicode":"👻","tags":"ghost","id":96},{"unicode":"👾","tags":"alien","id":97},{"unicode":"🤖","tags":"robot","id":98},{"unicode":"😺","tags":"cat-face","id":99},{"unicode":"😸","tags":"cat-smile","id":100},{"unicode":"😹","tags":"cat-tear","id":101},{"unicode":"😻","tags":"cat-heart","id":102},{"unicode":"😼","tags":"cat-ironic","id":103},{"unicode":"😽","tags":"cat-kiss","id":104},{"unicode":"🙀","tags":"cat-surprised","id":105},{"unicode":"😿","tags":"cat-sad","id":106},{"unicode":"😾","tags":"cat-pouting","id":107},{"unicode":"👋","tags":"hand-wave","id":108},{"unicode":"🤚","tags":"backhand","id":109},{"unicode":"🖐️","tags":"hand-open-finger","id":110},{"unicode":"✋","tags":"hand","id":111},{"unicode":"🖖","tags":"hand-vulcan","id":112},{"unicode":"👌","tags":"hand-ok","id":113},{"unicode":"✌️","tags":"hand-v","id":114},{"unicode":"🤞","tags":"hand-cross","id":115},{"unicode":"🤟","tags":"hand-ily","id":116},{"unicode":"🤘","tags":"hand-horns","id":117},{"unicode":"🤙","tags":"hand-call","id":118},{"unicode":"🖕","tags":"hand-finger","id":119},{"unicode":"👈","tags":"hand-point","id":120},{"unicode":"👇","tags":"hand-poin2","id":121},{"unicode":"☝️","tags":"hand-point3","id":122},{"unicode":"👍","tags":"hand-thumb-up","id":123},{"unicode":"👎","tags":"hand-thumb-down","id":124},{"unicode":"✊","tags":"hand-punch","id":125},{"unicode":"👊","tags":"hand-punch2","id":126},{"unicode":"🤛","tags":"hand-punch3","id":127},{"unicode":"🤜","tags":"hand-punch4","id":128},{"unicode":"👏","tags":"hand-clap","id":129},{"unicode":"🙌","tags":"hand-celebration","id":130},{"unicode":"👐","tags":"hand-open","id":131},{"unicode":"🤲","tags":"hand-prayer","id":132},{"unicode":"🤝","tags":"hand-agreement","id":133},{"unicode":"🙏","tags":"hand-please","id":134},{"unicode":"✍️","tags":"hand-write","id":135},{"unicode":"💅","tags":"cosmetics","id":136},{"unicode":"🤳","tags":"self","id":137},{"unicode":"💪","tags":"muscle","id":138},{"unicode":"🦵","tags":"kick","id":139},{"unicode":"🦶","tags":"kick2","id":140},{"unicode":"👂","tags":"ear","id":141},{"unicode":"👃","tags":"nose","id":142},{"unicode":"🧠","tags":"brain","id":143},{"unicode":"🦷","tags":"tooth","id":144},{"unicode":"👀","tags":"eyes","id":145},{"unicode":"👁️","tags":"eye","id":146},{"unicode":"👅","tags":"tongue2","id":147},{"unicode":"👄","tags":"lips","id":148},{"unicode":"👶","tags":"baby","id":149},{"unicode":"👨‍🦲","tags":"bald","id":150},{"unicode":"👴","tags":"old-man","id":151},{"unicode":"👵","tags":"old-woman","id":152},{"unicode":"🔥","tags":"fire","id":153},{"unicode":"👨‍🚒","tags":"firefighter","id":154},{"unicode":"👩‍🚒","tags":"firefighter2","id":155},{"unicode":"👮‍♂️","tags":"police-officer","id":156},{"unicode":"👮‍♀️","tags":"police-officer-woman","id":157},{"unicode":"👨‍👩‍👧‍👦","tags":"family","id":158},{"unicode":"🙈","tags":"monkey-see","id":159},{"unicode":"🙉","tags":"monkey-hear","id":160},{"unicode":"🙊","tags":"monkey-speak","id":161},{"unicode":"💋","tags":"kiss-lips","id":162},{"unicode":"💌","tags":"heart-letter","id":163},{"unicode":"💘","tags":"arrow-cupid","id":164},{"unicode":"💝","tags":"valentine","id":165},{"unicode":"💖","tags":"sparkle-heart","id":166},{"unicode":"💗","tags":"pulse","id":167},{"unicode":"💓","tags":"beating","id":168},{"unicode":"💞","tags":"revolving","id":169},{"unicode":"💕","tags":"love","id":170},{"unicode":"❣️","tags":"exclamation","id":171},{"unicode":"💔","tags":"broken-heart","id":172},{"unicode":"💟","tags":"heart-Decoration","id":173},{"unicode":"🖤","tags":"heart-black","id":174},{"unicode":"🤎","tags":"heart-brown","id":175},{"unicode":"💙","tags":"heart-blue","id":176},{"unicode":"💚","tags":"heart-green","id":177},{"unicode":"🧡","tags":"heart-orange","id":178},{"unicode":"💜","tags":"heart-purple","id":179},{"unicode":"❤️","tags":"heart-red","id":180},{"unicode":"🤍","tags":"black-white","id":181},{"unicode":"💛","tags":"heart-yellow","id":182},{"unicode":"💯","tags":"hundred","id":183},{"unicode":"💢","tags":"mad","id":184},{"unicode":"💥","tags":"boom","id":185},{"unicode":"💫","tags":"stars","id":186},{"unicode":"💦","tags":"splashing","id":187},{"unicode":"💨","tags":"comic-dash","id":188},{"unicode":"🕳️","tags":"hole","id":189},{"unicode":"💬","tags":"balloon-dialog","id":190},{"unicode":"🗨️","tags":"dialog","id":191},{"unicode":"🗯️","tags":"angry-balloon","id":192},{"unicode":"💭","tags":"balloon-bubble","id":193},{"unicode":"💤","tags":"comic-sleep","id":194},{"unicode":"🕶️","tags":"glasses-dark","id":195},{"unicode":"🥽","tags":"glasses-swimming","id":196},{"unicode":"🥼","tags":"scientist","id":197},{"unicode":"👔","tags":"tie","id":198},{"unicode":"👕","tags":"tshirt","id":199},{"unicode":"👖","tags":"pants","id":200},{"unicode":"🧣","tags":"neck","id":201},{"unicode":"🧤","tags":"hand","id":202},{"unicode":"🧥","tags":"jacket","id":203},{"unicode":"🧦","tags":"stocking","id":204},{"unicode":"👗","tags":"clothing","id":205},{"unicode":"👘","tags":"clothing2","id":206},{"unicode":"👙","tags":"swim-clothing","id":207},{"unicode":"👚","tags":"woman-clothing","id":208},{"unicode":"👛","tags":"coin-clothing","id":209},{"unicode":"👜","tags":"purse","id":210},{"unicode":"👝","tags":"pouch","id":211},{"unicode":"🛍️","tags":"shopping-bag","id":212},{"unicode":"🎒","tags":"school-bag","id":213},{"unicode":"👞","tags":"shoe","id":214},{"unicode":"👟","tags":"sneaker","id":215},{"unicode":"🥾","tags":"hiking-boot","id":216},{"unicode":"🥿","tags":"ballet flat","id":217},{"unicode":"👠","tags":"woman-shoe","id":218},{"unicode":"👡","tags":"woman-shoe2","id":219},{"unicode":"👢","tags":"woman-boot","id":220},{"unicode":"👑","tags":"king","id":221},{"unicode":"👒","tags":"hat","id":222},{"unicode":"🎩","tags":"tophat","id":223},{"unicode":"🧢","tags":"baseball cap","id":224},{"unicode":"⛑️","tags":"aid","id":225},{"unicode":"📿","tags":"beads","id":226},{"unicode":"💄","tags":"lipstick","id":227},{"unicode":"💍","tags":"diamond-ring","id":228},{"unicode":"💎","tags":"diamond","id":229},{"unicode":"🔇","tags":"mute","id":230},{"unicode":"🔉","tags":"medium","id":231},{"unicode":"🔊","tags":"loud","id":232},{"unicode":"📢","tags":"loud2","id":233},{"unicode":"📣","tags":"cheering","id":234},{"unicode":"📯","tags":"horn","id":235},{"unicode":"🔔","tags":"bell","id":236},{"unicode":"🔕","tags":"bell","id":237},{"unicode":"🎼","tags":"music-score","id":238},{"unicode":"🎵","tags":"music-note","id":239},{"unicode":"🎶","tags":"music-notes","id":240},{"unicode":"🎙️","tags":"microphone","id":241},{"unicode":"🎤","tags":"microphone2","id":242},{"unicode":"🎷","tags":"sax","id":243},{"unicode":"🎸","tags":"guitar","id":244},{"unicode":"🎹","tags":"piano-keys","id":245},{"unicode":"🎺","tags":"trumpet","id":246},{"unicode":"🎻","tags":"violin","id":247},{"unicode":"🥁","tags":"drumsticks","id":248},{"unicode":"📱","tags":"cellphone","id":249},{"unicode":"☎️","tags":"phone","id":250},{"unicode":"📞","tags":"phone2","id":251},{"unicode":"📠","tags":"fax","id":252},{"unicode":"🔋","tags":"battery","id":253},{"unicode":"🔌","tags":"plug","id":254},{"unicode":"🖥️","tags":"computer-desktop","id":255},{"unicode":"🖨️","tags":"printer","id":256},{"unicode":"⌨️","tags":"keyboard","id":257},{"unicode":"🖱️","tags":"mouse-computer","id":258},{"unicode":"💽","tags":"computer-disk","id":259},{"unicode":"💾","tags":"floppy-disk","id":260},{"unicode":"📀","tags":"blu-ray","id":261},{"unicode":"🧮","tags":"calculation","id":262},{"unicode":"🎥","tags":"camera","id":263},{"unicode":"🎞️","tags":"cinema","id":264},{"unicode":"📽️","tags":"cinema2","id":265},{"unicode":"📸","tags":"camera-flash","id":266},{"unicode":"📼","tags":"vhs-tape","id":267},{"unicode":"🔎","tags":"magnifying","id":268},{"unicode":"🕯️","tags":"light","id":269},{"unicode":"💡","tags":"bulb","id":270},{"unicode":"🔦","tags":"electric-torch","id":271},{"unicode":"📒","tags":"notebook","id":272},{"unicode":"📃","tags":"note","id":273},{"unicode":"📰","tags":"newspaper","id":274},{"unicode":"🗞️","tags":"newspaper-rolled","id":275},{"unicode":"💴","tags":"money-rolled","id":276},{"unicode":"💲","tags":"dollar-sign","id":277},{"unicode":"✉️","tags":"email","id":278},{"unicode":"✏️","tags":"pencil","id":279},{"unicode":"✒️","tags":"pen","id":280},{"unicode":"📝","tags":"note-pencil","id":281},{"unicode":"💼","tags":"briefcase","id":282},{"unicode":"🗓️","tags":"calendar","id":283},{"unicode":"📌","tags":"pin","id":284},{"unicode":"📍","tags":"pin2","id":285},{"unicode":"📎","tags":"paperclip","id":286},{"unicode":"📏","tags":"ruler","id":287},{"unicode":"📐","tags":"ruler2","id":288},{"unicode":"✂️","tags":"cutting","id":289},{"unicode":"🗑️","tags":"wastebasket","id":290},{"unicode":"🔑","tags":"key","id":291},{"unicode":"🗝️","tags":"key-old","id":292},{"unicode":"🔨","tags":"hammer","id":293},{"unicode":"⛏️","tags":"pickaxe","id":294},{"unicode":"⚒️","tags":"hammer2","id":295},{"unicode":"🛠️","tags":"hammer-wrench","id":296},{"unicode":"🗡️","tags":"knife","id":297},{"unicode":"⚔️","tags":"swords","id":298},{"unicode":"🔫","tags":"gun-tool","id":299},{"unicode":"🏹","tags":"archer","id":300},{"unicode":"🛡️","tags":"shield","id":301},{"unicode":"🔧","tags":"spanner","id":302},{"unicode":"🔩","tags":"bolt","id":303},{"unicode":"⚙️","tags":"cog","id":304},{"unicode":"⚖️","tags":"balance","id":305},{"unicode":"🔗","tags":"link","id":306},{"unicode":"🧲","tags":"magnetic","id":307},{"unicode":"⚗️","tags":"chemistry","id":308},{"unicode":"🧪","tags":"chemist","id":309},{"unicode":"🧬","tags":"gene","id":310},{"unicode":"🔬","tags":"microscope","id":311},{"unicode":"🔭","tags":"telescope","id":312},{"unicode":"📡","tags":"antenna-dish","id":313},{"unicode":"💉","tags":"medicine","id":314},{"unicode":"💊","tags":"medicine","id":315},{"unicode":"🚪","tags":"door","id":316},{"unicode":"🛏️","tags":"hotel-bed","id":317},{"unicode":"🚽","tags":"toilet","id":318},{"unicode":"🚿","tags":"shower","id":319},{"unicode":"🛁","tags":"bath","id":320},{"unicode":"🧴","tags":"lotion","id":321},{"unicode":"🧷","tags":"diaper","id":322},{"unicode":"🧹","tags":"sweeping","id":323},{"unicode":"🧺","tags":"farming","id":324},{"unicode":"🧻","tags":"toilet paper","id":325},{"unicode":"🧯","tags":"extinguisher","id":326},{"unicode":"🛒","tags":"shopping-cart","id":327},{"unicode":"🚬","tags":"smoking","id":328},{"unicode":"✔️","tags":"check","id":329},{"unicode":"⚰️","tags":"death","id":330},{"unicode":"🗿","tags":"statue-face","id":331},{"unicode":"🐵","tags":"monkey-face","id":332},{"unicode":"🐒","tags":"monkey","id":333},{"unicode":"🦍","tags":"gorilla","id":334},{"unicode":"🐶","tags":"dog-face","id":335},{"unicode":"🐩","tags":"dog","id":336},{"unicode":"🐺","tags":"face","id":337},{"unicode":"🦊","tags":"face","id":338},{"unicode":"🦝","tags":"curious","id":339},{"unicode":"🐱","tags":"cat","id":340},{"unicode":"🦁","tags":"lion-face","id":341},{"unicode":"🐯","tags":"tiger-face","id":342},{"unicode":"🐅","tags":"tiger","id":343},{"unicode":"🐆","tags":"leopard","id":344},{"unicode":"🐴","tags":"horse-face","id":345},{"unicode":"🐎","tags":"racehorse","id":346},{"unicode":"🦄","tags":"unicorn-face","id":347},{"unicode":"🦓","tags":"zebra","id":348},{"unicode":"🦌","tags":"deer","id":349},{"unicode":"🐮","tags":"cow","id":350},{"unicode":"🐂","tags":"bull","id":351},{"unicode":"🐃","tags":"buffalo","id":352},{"unicode":"🐄","tags":"cow","id":353},{"unicode":"🐷","tags":"pig-face","id":354},{"unicode":"🐖","tags":"sow","id":355},{"unicode":"🐗","tags":"pig","id":356},{"unicode":"🐽","tags":"pig-nose","id":357},{"unicode":"🐏","tags":"aries","id":358},{"unicode":"🐑","tags":"sheep","id":359},{"unicode":"🐐","tags":"capricorn","id":360},{"unicode":"🐪","tags":"dromedary","id":361},{"unicode":"🐫","tags":"camel","id":362},{"unicode":"🦙","tags":"alpaca","id":363},{"unicode":"🦒","tags":"spots","id":364},{"unicode":"🐘","tags":"elephant","id":365},{"unicode":"🦏","tags":"rhinoceros","id":366},{"unicode":"🦛","tags":"hippo","id":367},{"unicode":"🐭","tags":"mouse-face","id":368},{"unicode":"🐁","tags":"mouse","id":369},{"unicode":"🐀","tags":"rat","id":370},{"unicode":"🐹","tags":"pet-face","id":371},{"unicode":"🐰","tags":"bunny-face","id":372},{"unicode":"🐇","tags":"bunny","id":373},{"unicode":"🐿️","tags":"squirrel","id":374},{"unicode":"🦔","tags":"spiny","id":375},{"unicode":"🦇","tags":"vampire","id":376},{"unicode":"🐻","tags":"face","id":377},{"unicode":"🐨","tags":"bear","id":378},{"unicode":"🐼","tags":"panda-face","id":379},{"unicode":"🦘","tags":"marsupial","id":380},{"unicode":"🦡","tags":"honey badger","id":381},{"unicode":"🐾","tags":"paw","id":382},{"unicode":"🦃","tags":"bird","id":383},{"unicode":"🐔","tags":"chicken","id":384},{"unicode":"🐓","tags":"rooster","id":385},{"unicode":"🐣","tags":"baby-bird","id":386},{"unicode":"🐤","tags":"baby-chick","id":387},{"unicode":"🐥","tags":"baby-chick2","id":388},{"unicode":"🐧","tags":"penguin","id":389},{"unicode":"🕊️","tags":"bird-fly","id":390},{"unicode":"🦅","tags":"eagle","id":391},{"unicode":"🦆","tags":"duck","id":392},{"unicode":"🦢","tags":"swan","id":393},{"unicode":"🦉","tags":"owl","id":394},{"unicode":"🦚","tags":"peahen","id":395},{"unicode":"🦜","tags":"macaw","id":396},{"unicode":"🐸","tags":"frog-face","id":397},{"unicode":"🐊","tags":"crocodile","id":398},{"unicode":"🐢","tags":"turtle","id":399},{"unicode":"🦎","tags":"reptile","id":400},{"unicode":"🐍","tags":"snake","id":401},{"unicode":"🐲","tags":"dragon-face","id":402},{"unicode":"🐉","tags":"dragon","id":403},{"unicode":"🦕","tags":"brontosaurus","id":404},{"unicode":"🦖","tags":"t-rex","id":405},{"unicode":"🐳","tags":"whale","id":406},{"unicode":"🐋","tags":"whale2","id":407},{"unicode":"🐬","tags":"flipper","id":408},{"unicode":"🐠","tags":"tropical-fish","id":409},{"unicode":"🐡","tags":"fish","id":410},{"unicode":"🦈","tags":"shark","id":411},{"unicode":"🐙","tags":"octopus","id":412},{"unicode":"🐚","tags":"shell","id":413},{"unicode":"🐌","tags":"snail","id":414},{"unicode":"🦋","tags":"butterfly","id":415},{"unicode":"🐛","tags":"insect","id":416},{"unicode":"🐜","tags":"insect","id":417},{"unicode":"🐝","tags":"bee","id":418},{"unicode":"🐞","tags":"ladybug","id":419},{"unicode":"🦗","tags":"grasshopper","id":420},{"unicode":"🕷️","tags":"insect","id":421},{"unicode":"🕸️","tags":"spider-web","id":422},{"unicode":"🦂","tags":"scorpio","id":423},{"unicode":"🦟","tags":"mosquito","id":424},{"unicode":"🦠","tags":"amoeba","id":425},{"unicode":"💐","tags":"flower","id":426},{"unicode":"🌸","tags":"blossom","id":427},{"unicode":"🌹","tags":"flower","id":428},{"unicode":"🥀","tags":"flower-wilted","id":429},{"unicode":"🌺","tags":"flower2","id":430},{"unicode":"🌻","tags":"sun-flower","id":431},{"unicode":"🌼","tags":"flower3","id":432},{"unicode":"🌷","tags":"flower4","id":433},{"unicode":"🌱","tags":"young-tree","id":434},{"unicode":"🌲","tags":"tree","id":435},{"unicode":"🌳","tags":"big-tree","id":436},{"unicode":"🌵","tags":"plant","id":437},{"unicode":"🌿","tags":"leaf","id":438},{"unicode":"☘️","tags":"three-leaf clover","id":439},{"unicode":"🍀","tags":"four-leaf clover","id":440},{"unicode":"🍁","tags":"falling-leaf","id":441},{"unicode":"🏁","tags":"checkered","id":442},{"unicode":"🚩","tags":"post","id":443},{"unicode":"🎌","tags":"japanese-celebration","id":444},{"unicode":"🏴","tags":"flag-black","id":445},{"unicode":"🏳️","tags":"flag-white","id":446},{"unicode":"🏳️‍🌈","tags":"flag-pride","id":447},{"unicode":"🏴‍☠️","tags":"flag-pirate","id":448},{"unicode":"🇦🇷","tags":"AR","id":449},{"unicode":"🇦🇺","tags":"AU","id":450},{"unicode":"🇧🇬","tags":"BG","id":451},{"unicode":"🇧🇷","tags":"BR","id":452},{"unicode":"🇨🇦","tags":"CA","id":453},{"unicode":"🇨🇳","tags":"CN","id":454},{"unicode":"🇨🇿","tags":"CZ","id":455},{"unicode":"🇩🇪","tags":"DE","id":456},{"unicode":"🇩🇰","tags":"DK","id":457},{"unicode":"🇩🇲","tags":"DM","id":458},{"unicode":"🇩🇴","tags":"DO","id":459},{"unicode":"🇩🇿","tags":"DZ","id":460},{"unicode":"🇪🇦","tags":"EA","id":461},{"unicode":"🇪🇨","tags":"EC","id":462},{"unicode":"🇪🇸","tags":"ES","id":463},{"unicode":"🇫🇮","tags":"FI","id":464},{"unicode":"🇫🇷","tags":"FR","id":465},{"unicode":"🇬🇧","tags":"GB","id":466},{"unicode":"🇭🇰","tags":"HK","id":467},{"unicode":"🇮🇱","tags":"IL","id":468},{"unicode":"🇮🇹","tags":"IT","id":469},{"unicode":"🇯🇵","tags":"JA","id":470},{"unicode":"🇰🇵","tags":"KP","id":471},{"unicode":"🇰🇷","tags":"KR","id":472},{"unicode":"🇳🇱","tags":"NL","id":473},{"unicode":"🇳🇴","tags":"NO","id":474},{"unicode":"🇵🇱","tags":"PL","id":475},{"unicode":"🇵🇹","tags":"PT","id":476},{"unicode":"🇷🇴","tags":"RO","id":477},{"unicode":"🇷🇺","tags":"RU","id":478},{"unicode":"🇸🇰","tags":"SK","id":479},{"unicode":"🇸🇻","tags":"SV","id":480},{"unicode":"🇹🇭","tags":"TH","id":481},{"unicode":"🇹🇷","tags":"TR","id":482},{"unicode":"🇻🇮","tags":"VI","id":483}]'; //Spacing for release maker not trow erros from jshint
+    var emojis_string = '[{"unicode":"😀","tags":"grin","id":0},{"unicode":"😃","tags":"smile","id":1},{"unicode":"😄","tags":"smile2","id":2},{"unicode":"😁","tags":"smile3","id":3},{"unicode":"😆","tags":"satisfied","id":4},{"unicode":"😅","tags":"sweat","id":5},{"unicode":"🤣","tags":"rolling","id":6},{"unicode":"😂","tags":"tear","id":7},{"unicode":"🙂","tags":"smile4","id":8},{"unicode":"🙃","tags":"smile-upside-down","id":9},{"unicode":"😉","tags":"wink","id":10},{"unicode":"😊","tags":"smile-blush","id":11},{"unicode":"😇","tags":"angel","id":12},{"unicode":"🥰","tags":"adore","id":13},{"unicode":"😍","tags":"smile-love","id":14},{"unicode":"🤩","tags":"smile-star","id":15},{"unicode":"😘","tags":"kiss","id":16},{"unicode":"😗","tags":"kiss2","id":17},{"unicode":"☺️","tags":"relaxed","id":18},{"unicode":"😚","tags":"kiss3","id":19},{"unicode":"😙","tags":"kis4","id":20},{"unicode":"😋","tags":"delicious","id":21},{"unicode":"😛","tags":"tongue","id":22},{"unicode":"😜","tags":"tongue-wink","id":23},{"unicode":"🤪","tags":"goofy","id":24},{"unicode":"😝","tags":"tongue-><","id":25},{"unicode":"🤑","tags":"face-money","id":26},{"unicode":"🤗","tags":"hugging","id":27},{"unicode":"🤭","tags":"whoops","id":28},{"unicode":"🤫","tags":"quiet","id":29},{"unicode":"🤔","tags":"thinking","id":30},{"unicode":"🤐","tags":"zipper","id":31},{"unicode":"🤨","tags":"skeptic","id":32},{"unicode":"😑","tags":"unexpressive","id":33},{"unicode":"😶","tags":"silent","id":34},{"unicode":"😏","tags":"smirk","id":35},{"unicode":"😒","tags":"unhappy","id":36},{"unicode":"🙄","tags":"eyeroll","id":37},{"unicode":"😬","tags":"grimace","id":38},{"unicode":"🤥","tags":"pinocchio","id":39},{"unicode":"😌","tags":"relieved","id":40},{"unicode":"😔","tags":"pensive","id":41},{"unicode":"😪","tags":"sleep","id":42},{"unicode":"🤤","tags":"drooling-face","id":43},{"unicode":"😴","tags":"sleep-face","id":44},{"unicode":"😷","tags":"cold-face","id":45},{"unicode":"🤒","tags":"sick-face","id":46},{"unicode":"🤕","tags":"bandage-face","id":47},{"unicode":"🤢","tags":"nauseated-face","id":48},{"unicode":"🤮","tags":"sick-face","id":49},{"unicode":"🤧","tags":"sneeze","id":50},{"unicode":"🥵","tags":"feverish","id":51},{"unicode":"🥶","tags":"blue-faced","id":52},{"unicode":"🥴","tags":"intoxicated","id":53},{"unicode":"😵","tags":"dizzy","id":54},{"unicode":"🤯","tags":"mind blown","id":55},{"unicode":"🤠","tags":"cowboy","id":56},{"unicode":"🥳","tags":"celebration","id":57},{"unicode":"😎","tags":"cool-face","id":58},{"unicode":"🤓","tags":"cool","id":59},{"unicode":"🧐","tags":"stuffy","id":60},{"unicode":"😕","tags":"confused","id":61},{"unicode":"😟","tags":"worried","id":62},{"unicode":"🙁","tags":"frown","id":63},{"unicode":"☹️","tags":"frown","id":64},{"unicode":"😮","tags":"mouth-open","id":65},{"unicode":"😯","tags":"surprised","id":66},{"unicode":"😲","tags":"astonished","id":67},{"unicode":"😳","tags":"dazed","id":68},{"unicode":"🥺","tags":"puppy eyes","id":69},{"unicode":"😦","tags":"frown","id":70},{"unicode":"😧","tags":"anguished","id":71},{"unicode":"😨","tags":"fearful","id":72},{"unicode":"😰","tags":"fearful2","id":73},{"unicode":"😥","tags":"disappointed","id":74},{"unicode":"😢","tags":"cry-face","id":75},{"unicode":"😭","tags":"cry-face2","id":76},{"unicode":"😱","tags":"fear-face","id":77},{"unicode":"😖","tags":"confounded","id":78},{"unicode":"😣","tags":"persevere","id":79},{"unicode":"😞","tags":"disappointed","id":80},{"unicode":"😓","tags":"cold","id":81},{"unicode":"😩","tags":"weary","id":82},{"unicode":"😫","tags":"tired","id":83},{"unicode":"😤","tags":"triumph","id":84},{"unicode":"😡","tags":"angry","id":85},{"unicode":"😠","tags":"mad","id":86},{"unicode":"🤬","tags":"swearing","id":87},{"unicode":"😈","tags":"devil","id":88},{"unicode":"👿","tags":"demon","id":89},{"unicode":"💀","tags":"death","id":90},{"unicode":"☠️","tags":"crossbones","id":91},{"unicode":"💩","tags":"poop","id":92},{"unicode":"🤡","tags":"clown","id":93},{"unicode":"👹","tags":"creature","id":94},{"unicode":"👺","tags":"creature2","id":95},{"unicode":"👻","tags":"ghost","id":96},{"unicode":"👾","tags":"alien","id":97},{"unicode":"🤖","tags":"robot","id":98},{"unicode":"😺","tags":"cat-face","id":99},{"unicode":"😸","tags":"cat-smile","id":100},{"unicode":"😹","tags":"cat-tear","id":101},{"unicode":"😻","tags":"cat-heart","id":102},{"unicode":"😼","tags":"cat-ironic","id":103},{"unicode":"😽","tags":"cat-kiss","id":104},{"unicode":"🙀","tags":"cat-surprised","id":105},{"unicode":"😿","tags":"cat-sad","id":106},{"unicode":"😾","tags":"cat-pouting","id":107},{"unicode":"👋","tags":"hand-wave","id":108},{"unicode":"🤚","tags":"backhand","id":109},{"unicode":"🖐️","tags":"hand-open-finger","id":110},{"unicode":"✋","tags":"hand","id":111},{"unicode":"🖖","tags":"hand-vulcan","id":112},{"unicode":"👌","tags":"hand-ok","id":113},{"unicode":"✌️","tags":"hand-v","id":114},{"unicode":"🤞","tags":"hand-cross","id":115},{"unicode":"🤟","tags":"hand-ily","id":116},{"unicode":"🤘","tags":"hand-horns","id":117},{"unicode":"🤙","tags":"hand-call","id":118},{"unicode":"🖕","tags":"hand-finger","id":119},{"unicode":"👈","tags":"hand-point","id":120},{"unicode":"👇","tags":"hand-poin2","id":121},{"unicode":"☝️","tags":"hand-point3","id":122},{"unicode":"👍","tags":"hand-thumb-up","id":123},{"unicode":"👎","tags":"hand-thumb-down","id":124},{"unicode":"✊","tags":"hand-punch","id":125},{"unicode":"👊","tags":"hand-punch2","id":126},{"unicode":"🤛","tags":"hand-punch3","id":127},{"unicode":"🤜","tags":"hand-punch4","id":128},{"unicode":"👏","tags":"hand-clap","id":129},{"unicode":"🙌","tags":"hand-celebration","id":130},{"unicode":"👐","tags":"hand-open","id":131},{"unicode":"🤲","tags":"hand-prayer","id":132},{"unicode":"🤝","tags":"hand-agreement","id":133},{"unicode":"🙏","tags":"hand-please","id":134},{"unicode":"✍️","tags":"hand-write","id":135},{"unicode":"💅","tags":"cosmetics","id":136},{"unicode":"🤳","tags":"self","id":137},{"unicode":"💪","tags":"muscle","id":138},{"unicode":"🦵","tags":"kick","id":139},{"unicode":"🦶","tags":"kick2","id":140},{"unicode":"👂","tags":"ear","id":141},{"unicode":"👃","tags":"nose","id":142},{"unicode":"🧠","tags":"brain","id":143},{"unicode":"🦷","tags":"tooth","id":144},{"unicode":"👀","tags":"eyes","id":145},{"unicode":"👁️","tags":"eye","id":146},{"unicode":"👅","tags":"tongue2","id":147},{"unicode":"👄","tags":"lips","id":148},{"unicode":"👶","tags":"baby","id":149},{"unicode":"👨‍🦲","tags":"bald","id":150},{"unicode":"👴","tags":"old-man","id":151},{"unicode":"👵","tags":"old-woman","id":152},{"unicode":"🔥","tags":"fire","id":153},{"unicode":"👨‍🚒","tags":"firefighter","id":154},{"unicode":"👩‍🚒","tags":"firefighter2","id":155},{"unicode":"👮‍♂️","tags":"police-officer","id":156},{"unicode":"👮‍♀️","tags":"police-officer-woman","id":157},{"unicode":"👨‍👩‍👧‍👦","tags":"family","id":158},{"unicode":"🙈","tags":"monkey-see","id":159},{"unicode":"🙉","tags":"monkey-hear","id":160},{"unicode":"🙊","tags":"monkey-speak","id":161},{"unicode":"💋","tags":"kiss-lips","id":162},{"unicode":"💌","tags":"heart-letter","id":163},{"unicode":"💘","tags":"arrow-cupid","id":164},{"unicode":"💝","tags":"valentine","id":165},{"unicode":"💖","tags":"sparkle-heart","id":166},{"unicode":"💗","tags":"pulse","id":167},{"unicode":"💓","tags":"beating","id":168},{"unicode":"💞","tags":"revolving","id":169},{"unicode":"💕","tags":"love","id":170},{"unicode":"❣️","tags":"exclamation","id":171},{"unicode":"💔","tags":"broken-heart","id":172},{"unicode":"💟","tags":"heart-Decoration","id":173},{"unicode":"🖤","tags":"heart-black","id":174},{"unicode":"🤎","tags":"heart-brown","id":175},{"unicode":"💙","tags":"heart-blue","id":176},{"unicode":"💚","tags":"heart-green","id":177},{"unicode":"🧡","tags":"heart-orange","id":178},{"unicode":"💜","tags":"heart-purple","id":179},{"unicode":"❤️","tags":"heart-red","id":180},{"unicode":"🤍","tags":"black-white","id":181},{"unicode":"💛","tags":"heart-yellow","id":182},{"unicode":"💯","tags":"hundred","id":183},{"unicode":"💢","tags":"mad","id":184},{"unicode":"💥","tags":"boom","id":185},{"unicode":"💫","tags":"stars","id":186},{"unicode":"💦","tags":"splashing","id":187},{"unicode":"💨","tags":"comic-dash","id":188},{"unicode":"🕳️","tags":"hole","id":189},{"unicode":"💬","tags":"balloon-dialog","id":190},{"unicode":"🗨️","tags":"dialog","id":191},{"unicode":"🗯️","tags":"angry-balloon","id":192},{"unicode":"💭","tags":"balloon-bubble","id":193},{"unicode":"💤","tags":"comic-sleep","id":194},{"unicode":"🕶️","tags":"glasses-dark","id":195},{"unicode":"🥽","tags":"glasses-swimming","id":196},{"unicode":"🥼","tags":"scientist","id":197},{"unicode":"👔","tags":"tie","id":198},{"unicode":"👕","tags":"tshirt","id":199},{"unicode":"👖","tags":"pants","id":200},{"unicode":"🧣","tags":"neck","id":201},{"unicode":"🧤","tags":"hand","id":202},{"unicode":"🧥","tags":"jacket","id":203},{"unicode":"🧦","tags":"stocking","id":204},{"unicode":"👗","tags":"clothing","id":205},{"unicode":"👘","tags":"clothing2","id":206},{"unicode":"👙","tags":"swim-clothing","id":207},{"unicode":"👚","tags":"woman-clothing","id":208},{"unicode":"👛","tags":"coin-clothing","id":209},{"unicode":"👜","tags":"purse","id":210},{"unicode":"👝","tags":"pouch","id":211},{"unicode":"🛍️","tags":"shopping-bag","id":212},{"unicode":"🎒","tags":"school-bag","id":213},{"unicode":"👞","tags":"shoe","id":214},{"unicode":"👟","tags":"sneaker","id":215},{"unicode":"🥾","tags":"hiking-boot","id":216},{"unicode":"🥿","tags":"ballet flat","id":217},{"unicode":"👠","tags":"woman-shoe","id":218},{"unicode":"👡","tags":"woman-shoe2","id":219},{"unicode":"👢","tags":"woman-boot","id":220},{"unicode":"👑","tags":"king","id":221},{"unicode":"👒","tags":"hat","id":222},{"unicode":"🎩","tags":"tophat","id":223},{"unicode":"🧢","tags":"baseball cap","id":224},{"unicode":"⛑️","tags":"aid","id":225},{"unicode":"📿","tags":"beads","id":226},{"unicode":"💄","tags":"lipstick","id":227},{"unicode":"💍","tags":"diamond-ring","id":228},{"unicode":"💎","tags":"diamond","id":229},{"unicode":"🔇","tags":"mute","id":230},{"unicode":"🔉","tags":"medium","id":231},{"unicode":"🔊","tags":"loud","id":232},{"unicode":"📢","tags":"loud2","id":233},{"unicode":"📣","tags":"cheering","id":234},{"unicode":"📯","tags":"horn","id":235},{"unicode":"🔔","tags":"bell","id":236},{"unicode":"🔕","tags":"bell","id":237},{"unicode":"🎼","tags":"music-score","id":238},{"unicode":"🎵","tags":"music-note","id":239},{"unicode":"🎶","tags":"music-notes","id":240},{"unicode":"🎙️","tags":"microphone","id":241},{"unicode":"🎤","tags":"microphone2","id":242},{"unicode":"🎷","tags":"sax","id":243},{"unicode":"🎸","tags":"guitar","id":244},{"unicode":"🎹","tags":"piano-keys","id":245},{"unicode":"🎺","tags":"trumpet","id":246},{"unicode":"🎻","tags":"violin","id":247},{"unicode":"🥁","tags":"drumsticks","id":248},{"unicode":"📱","tags":"cellphone","id":249},{"unicode":"☎️","tags":"phone","id":250},{"unicode":"📞","tags":"phone2","id":251},{"unicode":"📠","tags":"fax","id":252},{"unicode":"🔋","tags":"battery","id":253},{"unicode":"🔌","tags":"plug","id":254},{"unicode":"🖥️","tags":"computer-desktop","id":255},{"unicode":"🖨️","tags":"printer","id":256},{"unicode":"⌨️","tags":"keyboard","id":257},{"unicode":"🖱️","tags":"mouse-computer","id":258},{"unicode":"💽","tags":"computer-disk","id":259},{"unicode":"💾","tags":"floppy-disk","id":260},{"unicode":"📀","tags":"blu-ray","id":261},{"unicode":"🧮","tags":"calculation","id":262},{"unicode":"🎥","tags":"camera","id":263},{"unicode":"🎞️","tags":"cinema","id":264},{"unicode":"📽️","tags":"cinema2","id":265},{"unicode":"📸","tags":"camera-flash","id":266},{"unicode":"📼","tags":"vhs-tape","id":267},{"unicode":"🔎","tags":"magnifying","id":268},{"unicode":"🕯️","tags":"light","id":269},{"unicode":"💡","tags":"bulb","id":270},{"unicode":"🔦","tags":"electric-torch","id":271},{"unicode":"📒","tags":"notebook","id":272},{"unicode":"📃","tags":"note","id":273},{"unicode":"📰","tags":"newspaper","id":274},{"unicode":"🗞️","tags":"newspaper-rolled","id":275},{"unicode":"💴","tags":"money-rolled","id":276},{"unicode":"💲","tags":"dollar-sign","id":277},{"unicode":"✉️","tags":"email","id":278},{"unicode":"✏️","tags":"pencil","id":279},{"unicode":"✒️","tags":"pen","id":280},{"unicode":"📝","tags":"note-pencil","id":281},{"unicode":"💼","tags":"briefcase","id":282},{"unicode":"🗓️","tags":"calendar","id":283},{"unicode":"📌","tags":"pin","id":284},{"unicode":"📍","tags":"pin2","id":285},{"unicode":"📎","tags":"paperclip","id":286},{"unicode":"📏","tags":"ruler","id":287},{"unicode":"📐","tags":"ruler2","id":288},{"unicode":"✂️","tags":"cutting","id":289},{"unicode":"🗑️","tags":"wastebasket","id":290},{"unicode":"🔑","tags":"key","id":291},{"unicode":"🗝️","tags":"key-old","id":292},{"unicode":"🔨","tags":"hammer","id":293},{"unicode":"⛏️","tags":"pickaxe","id":294},{"unicode":"⚒️","tags":"hammer2","id":295},{"unicode":"🛠️","tags":"hammer-wrench","id":296},{"unicode":"🗡️","tags":"knife","id":297},{"unicode":"⚔️","tags":"swords","id":298},{"unicode":"🔫","tags":"gun-tool","id":299},{"unicode":"🏹","tags":"archer","id":300},{"unicode":"🛡️","tags":"shield","id":301},{"unicode":"🔧","tags":"spanner","id":302},{"unicode":"🔩","tags":"bolt","id":303},{"unicode":"⚙️","tags":"cog","id":304},{"unicode":"⚖️","tags":"balance","id":305},{"unicode":"🔗","tags":"link","id":306},{"unicode":"🧲","tags":"magnetic","id":307},{"unicode":"⚗️","tags":"chemistry","id":308},{"unicode":"🧪","tags":"chemist","id":309},{"unicode":"🧬","tags":"gene","id":310},{"unicode":"🔬","tags":"microscope","id":311},{"unicode":"🔭","tags":"telescope","id":312},{"unicode":"📡","tags":"antenna-dish","id":313},{"unicode":"💉","tags":"medicine","id":314},{"unicode":"💊","tags":"medicine","id":315},{"unicode":"🚪","tags":"door","id":316},{"unicode":"🛏️","tags":"hotel-bed","id":317},{"unicode":"🚽","tags":"toilet","id":318},{"unicode":"🚿","tags":"shower","id":319},{"unicode":"🛁","tags":"bath","id":320},{"unicode":"🧴","tags":"lotion","id":321},{"unicode":"🧷","tags":"diaper","id":322},{"unicode":"🧹","tags":"sweeping","id":323},{"unicode":"🧺","tags":"farming","id":324},{"unicode":"🧻","tags":"toilet paper","id":325},{"unicode":"🧯","tags":"extinguisher","id":326},{"unicode":"🛒","tags":"shopping-cart","id":327},{"unicode":"🚬","tags":"smoking","id":328},{"unicode":"✔️","tags":"check","id":329},{"unicode":"⚰️","tags":"death","id":330},{"unicode":"🗿","tags":"statue-face","id":331},{"unicode":"🐵","tags":"monkey-face","id":332},{"unicode":"🐒","tags":"monkey","id":333},{"unicode":"🦍","tags":"gorilla","id":334},{"unicode":"🐶","tags":"dog-face","id":335},{"unicode":"🐩","tags":"dog","id":336},{"unicode":"🐺","tags":"face","id":337},{"unicode":"🦊","tags":"face","id":338},{"unicode":"🦝","tags":"curious","id":339},{"unicode":"🐱","tags":"cat","id":340},{"unicode":"🦁","tags":"lion-face","id":341},{"unicode":"🐯","tags":"tiger-face","id":342},{"unicode":"🐅","tags":"tiger","id":343},{"unicode":"🐆","tags":"leopard","id":344},{"unicode":"🐴","tags":"horse-face","id":345},{"unicode":"🐎","tags":"racehorse","id":346},{"unicode":"🦄","tags":"unicorn-face","id":347},{"unicode":"🦓","tags":"zebra","id":348},{"unicode":"🦌","tags":"deer","id":349},{"unicode":"🐮","tags":"cow","id":350},{"unicode":"🐂","tags":"bull","id":351},{"unicode":"🐃","tags":"buffalo","id":352},{"unicode":"🐄","tags":"cow","id":353},{"unicode":"🐷","tags":"pig-face","id":354},{"unicode":"🐖","tags":"sow","id":355},{"unicode":"🐗","tags":"pig","id":356},{"unicode":"🐽","tags":"pig-nose","id":357},{"unicode":"🐏","tags":"aries","id":358},{"unicode":"🐑","tags":"sheep","id":359},{"unicode":"🐐","tags":"capricorn","id":360},{"unicode":"🐪","tags":"dromedary","id":361},{"unicode":"🐫","tags":"camel","id":362},{"unicode":"🦙","tags":"alpaca","id":363},{"unicode":"🦒","tags":"spots","id":364},{"unicode":"🐘","tags":"elephant","id":365},{"unicode":"🦏","tags":"rhinoceros","id":366},{"unicode":"🦛","tags":"hippo","id":367},{"unicode":"🐭","tags":"mouse-face","id":368},{"unicode":"🐁","tags":"mouse","id":369},{"unicode":"🐀","tags":"rat","id":370},{"unicode":"🐹","tags":"pet-face","id":371},{"unicode":"🐰","tags":"bunny-face","id":372},{"unicode":"🐇","tags":"bunny","id":373},{"unicode":"🐿️","tags":"squirrel","id":374},{"unicode":"🦔","tags":"spiny","id":375},{"unicode":"🦇","tags":"vampire","id":376},{"unicode":"🐻","tags":"face","id":377},{"unicode":"🐨","tags":"bear","id":378},{"unicode":"🐼","tags":"panda-face","id":379},{"unicode":"🦘","tags":"marsupial","id":380},{"unicode":"🦡","tags":"honey badger","id":381},{"unicode":"🐾","tags":"paw","id":382},{"unicode":"🦃","tags":"bird","id":383},{"unicode":"🐔","tags":"chicken","id":384},{"unicode":"🐓","tags":"rooster","id":385},{"unicode":"🐣","tags":"baby-bird","id":386},{"unicode":"🐤","tags":"baby-chick","id":387},{"unicode":"🐥","tags":"baby-chick2","id":388},{"unicode":"🐧","tags":"penguin","id":389},{"unicode":"🕊️","tags":"bird-fly","id":390},{"unicode":"🦅","tags":"eagle","id":391},{"unicode":"🦆","tags":"duck","id":392},{"unicode":"🦢","tags":"swan","id":393},{"unicode":"🦉","tags":"owl","id":394},{"unicode":"🦚","tags":"peahen","id":395},{"unicode":"🦜","tags":"macaw","id":396},{"unicode":"🐸","tags":"frog-face","id":397},{"unicode":"🐊","tags":"crocodile","id":398},{"unicode":"🐢","tags":"turtle","id":399},{"unicode":"🦎","tags":"reptile","id":400},{"unicode":"🐍","tags":"snake","id":401},{"unicode":"🐲","tags":"dragon-face","id":402},{"unicode":"🐉","tags":"dragon","id":403},{"unicode":"🦕","tags":"brontosaurus","id":404},{"unicode":"🦖","tags":"t-rex","id":405},{"unicode":"🐳","tags":"whale","id":406},{"unicode":"🐋","tags":"whale2","id":407},{"unicode":"🐬","tags":"flipper","id":408},{"unicode":"🐠","tags":"tropical-fish","id":409},{"unicode":"🐡","tags":"fish","id":410},{"unicode":"🦈","tags":"shark","id":411},{"unicode":"🐙","tags":"octopus","id":412},{"unicode":"🐚","tags":"shell","id":413},{"unicode":"🐌","tags":"snail","id":414},{"unicode":"🦋","tags":"butterfly","id":415},{"unicode":"🐛","tags":"insect","id":416},{"unicode":"🐜","tags":"insect","id":417},{"unicode":"🐝","tags":"bee","id":418},{"unicode":"🐞","tags":"ladybug","id":419},{"unicode":"🦗","tags":"grasshopper","id":420},{"unicode":"🕷️","tags":"insect","id":421},{"unicode":"🕸️","tags":"spider-web","id":422},{"unicode":"🦂","tags":"scorpio","id":423},{"unicode":"🦟","tags":"mosquito","id":424},{"unicode":"🦠","tags":"amoeba","id":425},{"unicode":"💐","tags":"flower","id":426},{"unicode":"🌸","tags":"blossom","id":427},{"unicode":"🌹","tags":"flower","id":428},{"unicode":"🥀","tags":"flower-wilted","id":429},{"unicode":"🌺","tags":"flower2","id":430},{"unicode":"🌻","tags":"sun-flower","id":431},{"unicode":"🌼","tags":"flower3","id":432},{"unicode":"🌷","tags":"flower4","id":433},{"unicode":"🌱","tags":"young-tree","id":434},{"unicode":"🌲","tags":"tree","id":435},{"unicode":"🌳","tags":"big-tree","id":436},{"unicode":"🌵","tags":"plant","id":437},{"unicode":"🌿","tags":"leaf","id":438},{"unicode":"☘️","tags":"three-leaf clover","id":439},{"unicode":"🍀","tags":"four-leaf clover","id":440},{"unicode":"🍁","tags":"falling-leaf","id":441},{"unicode":"🏁","tags":"checkered","id":442},{"unicode":"🚩","tags":"post","id":443},{"unicode":"🎌","tags":"japanese-celebration","id":444},{"unicode":"🏴","tags":"flag-black","id":445},{"unicode":"🏳️","tags":"flag-white","id":446},{"unicode":"🏳️‍🌈","tags":"flag-pride","id":447},{"unicode":"🏴‍☠️","tags":"flag-pirate","id":448},{"unicode":"🇦🇷","tags":"AR","id":449},{"unicode":"🇦🇺","tags":"AU","id":450},{"unicode":"🇧🇬","tags":"BG","id":451},{"unicode":"🇧🇷","tags":"BR","id":452},{"unicode":"🇨🇦","tags":"CA","id":453},{"unicode":"🇨🇳","tags":"CN","id":454},{"unicode":"🇨🇿","tags":"CZ","id":455},{"unicode":"🇩🇪","tags":"DE","id":456},{"unicode":"🇩🇰","tags":"DK","id":457},{"unicode":"🇩🇲","tags":"DM","id":458},{"unicode":"🇩🇴","tags":"DO","id":459},{"unicode":"🇩🇿","tags":"DZ","id":460},{"unicode":"🇪🇦","tags":"EA","id":461},{"unicode":"🇪🇨","tags":"EC","id":462},{"unicode":"🇪🇸","tags":"ES","id":463},{"unicode":"🇫🇮","tags":"FI","id":464},{"unicode":"🇫🇷","tags":"FR","id":465},{"unicode":"🇬🇧","tags":"GB","id":466},{"unicode":"🇭🇰","tags":"HK","id":467},{"unicode":"🇮🇱","tags":"IL","id":468},{"unicode":"🇮🇹","tags":"IT","id":469},{"unicode":"🇯🇵","tags":"JA","id":470},{"unicode":"🇰🇵","tags":"KP","id":471},{"unicode":"🇰🇷","tags":"KR","id":472},{"unicode":"🇳🇱","tags":"NL","id":473},{"unicode":"🇳🇴","tags":"NO","id":474},{"unicode":"🇵🇱","tags":"PL","id":475},{"unicode":"🇵🇹","tags":"PT","id":476},{"unicode":"🇷🇴","tags":"RO","id":477},{"unicode":"🇷🇺","tags":"RU","id":478},{"unicode":"🇸🇰","tags":"SK","id":479},{"unicode":"🇸🇻","tags":"SV","id":480},{"unicode":"🇹🇭","tags":"TH","id":481},{"unicode":"🇹🇷","tags":"TR","id":482},{"unicode":"🇻🇮","tags":"VI","id":483}]';
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+
+        try {
+
+            dataLayer.push(arguments);
+
+        } catch (e) {
+
+            console.log("gtag e " + e);
+
+        }
+    }
+
+    function Firebase_Startfirebase() {
+
+        Firebase_setTimeout(Firebase_firebaseInitializeApp, 10000);
+
+    }
+
+    var Firebase_IsLoaded = false;
+
+    function Firebase_firebaseInitializeApp() {
+
+        var firebaseConfig = {
+            apiKey: "AIzaSyDU1477wMbrpHnLJPgCMohvt2q_LH_tA3c",
+            authDomain: "smarttv-twitch-web-samsung.firebaseapp.com",
+            databaseURL: "https://smarttv-twitch-web-samsung.firebaseio.com",
+            projectId: "smarttv-twitch-web-samsung",
+            storageBucket: "smarttv-twitch-web-samsung.appspot.com",
+            messagingSenderId: "302068341837",
+            appId: "1:302068341837:web:604f8a975842c2e6879004",
+            measurementId: "G-9T1TS1E2SC"
+        };
+
+        try {
+            console.log("Firebase_Startfirebase start");
+
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+
+            gtag('js', new Date());
+
+            Firebase_IsLoaded = true;
+
+        } catch (e) {
+
+            console.log("Firebase_Startfirebase e " + e);
+
+        }
+
+    }
+
+    function Firebase_setTimeout(fun, time) {
+        window.setTimeout(fun, time ? time : 0);
+    }
+
+    function Firebase_Start() {
+
+        //The url may not be part of release so check first
+        var urls = [
+                'https://unpkg.com/core-js-bundle@3.0.1/minified.js',
+                'https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js',
+                'https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js',
+                'https://www.googletagmanager.com/gtag/js'
+            ],
+            i = 0,
+            len = urls.length;
+
+        //Is needed to gitve at least 10s for it file to load to prevent errors on the TV, on a browser it work on TV there is this issue
+        for (i; i < len; i++) {
+
+            Firebase_LoadUrlAsync(urls[i], i);
+
+        }
+
+
+        Firebase_setTimeout(Firebase_Startfirebase, len * 10000);
+
+    }
+
+    function Firebase_LoadUrlAsync(url, i) {
+        Firebase_setTimeout(
+            function() {
+
+                Firebase_CheckScript(url, i);
+
+            },
+            i * 10000
+        );
+    }
+
+    function Firebase_CheckScript(url, AddOnunhandledrejection) {
+
+        if (!Firebase_ScriptLoaded(url)) {
+
+            if (!AddOnunhandledrejection) {
+
+                window.onunhandledrejection = function() {
+                    //function(e) {
+                    //console.log('onunhandledrejection e ' + e);
+                };
+
+            }
+
+            var jsCode = document.createElement('script');
+            jsCode.setAttribute('src', url);
+            jsCode.setAttribute('defer', 'true');
+            document.body.appendChild(jsCode);
+
+        }
+
+    }
+
+    function Firebase_ScriptLoaded(url) {
+
+        var scripts = document.getElementsByTagName('script'),
+            i = 0,
+            len = scripts.length;
+
+        for (i; i < len; i++) {
+
+            if (scripts[i].src === url) {
+
+                return true;
+
+            }
+
+        }
+
+        return false;
+    }
+
+    function Firebase_EventScreen(screen) {
+        Firebase_EventShowScreen(
+            'screen_view',
+            screen
+        );
+    }
+
+    function Firebase_EventAgame(game) {
+        Firebase_EventShowScreen(
+            'game_view',
+            game
+        );
+    }
+
+    function Firebase_EventShowScreen(type, name) {
+        if (!Firebase_IsLoaded) return;
+
+        try {
+
+            gtag(
+                'event',
+                type, {
+                    'name': name,
+                    'lang': Languages_Selected
+                }
+            );
+
+        } catch (e) {
+            console.log("Firebase_EventShowScreen e " + e);
+        }
+    }
+
+    function Firebase_EventPlay(type, name, game, lang, screen, mode) {
+        if (!Firebase_IsLoaded) return;
+
+        try {
+
+            gtag(
+                'event',
+                type, {
+                    'name': name,
+                    'lang': lang ? lang.toUpperCase() : 'UNKNOWN',
+                    'game': game ? game : 'UNKNOWN',
+                    'screen': screen ? screen : 'UNKNOWN',
+                    'mode': mode ? mode : 'NORMAL'
+                }
+            );
+
+        } catch (e) {
+            console.log("Firebase_EventPlay e " + e);
+        }
+    } //Spacing for release maker not trow erros from jshint
     var IMG_404_GAME = "data:image/png;base64,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";
 
     var IMG_404_LOGO = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAMAAABrrFhUAAAASFBMVEVHcEw1NTXb29swMDB9fX1DQ0NeXl5RUVFtbW3m5ubT09Pg4ODKyso7Ozufn5+9vb2urq62traQkJClpaWJiYmYmJjCwsLq6uo9xg8yAAAAF3RSTlMACeoDbBxBLlX54PHUEZnCrbiFonuQyd/Z9QoAAAhdSURBVHgB7MGBAAAAAICg/akXqQIAAAAAYO7qJdtSEIbC8AKREB4icI57/jOtzm1Ur1ZdFRO/GfxxqzdbTFnJex9+eO9pLWZ5fbgpFFwf7cg2MeNvnGw+2uguUDFvfOaFQt+zZfwT27z3QOU9ezDkvtUy/gvb4+vIvCF+RMYvcRyqj7CGLTNO4ryFVWM9uZZwkdQcqatnXIqrnhusP/VX4+YUvAuL3yxuYze/CH/4FTergmdAPWKC2Enk9mkkTJKGF9fvd8ZEvHth+ZhO0AloQr7gE9BgPIQHPZ5fPhYPsp/ybH/IeFgOT66/QYBGD+UvLkEE+1me6PcVYlQ/Pd90hiDczdx+qhCm0sx+lyBOctPy1x0i7eucfh8hVPRT5s8Qi93t+WWDaFu5t58OCHeQ3Ndf/4cgJCiQwl39Dkp8bslfvlDju1zfbwYUGeby/h2q7BdfoDQo08ql/RXq1CK6f4Kj6N+/jA2YBqWa0f/9F/AvGFBsnO/vUK2f7XdQzp3rDwzlOJzpJwv1Ev2+f424EScb83HkaNOf9u5Ex3EQCQPwjznA+D7sev83XWnVGu1oZ9Jp8pcTNP4eIN2xOaqgCK0oyh6F7CJKunPbU/SDMdYaM/iY9u3sPi4cOERFHpO3ACx+Y30as6g4UCSJgnwEg78y4ciiIKFA7IRucgO+MbjpIwZCa3phW8Lbas76AT81CtmU8LQ0Cdn47gEgpzcXH6X3RgCbxw/5Tagajx+wM/v1F0hZmJb3pUCLRxG/vCktsr75jF0Ke7ypE8wfs2XvWuGZ+TOA/k5laq6fCYYsNF3Ai0J3eV44ftL3hw3dxeFQbLXa//urEtqI7y3vX43SW5dbLh0BHUjcheMgMQncQLMJS28ue9inAY2ZriqfGZrr465rY9NmwCM7v7NxpGv2ingPegbZfEnTXN/fAfTfzXrFH0mgS0LSef0GMEHBJCSrfhYUoCCoTwSOPAJ+7DjolIPANkJFbHXDwcSPgclG3TF6+vAGQGwCk8X/i0KyQM0iJEG/fWmwSUhGxTSoN1Bjer2Z0AnJDkW7kLjKhkD+MKj2ySdUTUIStdKAHap2pYTAfnoUyI8GrU6icVqosqeQBJ0ecEDZISSrSg+QBGVJZYE86O89scRWow+s7MdaQTAoq8bsukHdprBu5zshcVDnFBZHk7AkaLMa/+wmLBHqYkvvrybzWxUfv79mw14LkmygzmR6e3XCMuECi7A4elXUjAvM7Jopyy4K0Q8EuBmhb9mPVNcoLK1nl0UduMAhNIl9OniFPv7/OwvNjgvs5PJp29f3AKjJq+/q6wLUyDXIvzsISiAfjxlrewCO/HnXBELkJjuLVJwLEKaBU8ijqjLbC88J2Cw8zQBt1jTCkw11FpT2ohUhZjYQhSlBXRKmiCBMDuqcMCXyAz2g7hCmRH6gE9RN5Ca7C1PnocsOjTDtOIQqQFkQqgOzUO1QtgvVjEnqGgQW9v97ClUb1feFqHr0UlUfSMLVI0tVfWATroxGauoDvhGuBo2QOShyQtaglZr6wCRkLYStDaqpMBtaYZuhZhS2Fp2wtVExCGDr0AjdBiWr0DXIUk0T8I3QZWThG6tpAJLRC1/nwWd9J3w9JlGwKUXBfBNm0ZBAl0TDjFE05AFkQxYNI1ZRMYJsFBUrnOgIGh2Az6l9cj8odAA+hyBKNoUOwJcQW1Gy1nDPXcTQiRYHktCKktZz6wN0VgZiI1oaAyyipokg8FnU9BYYRU/v8TLfi54FwC6K+sj8/nwjf4Ql3wEbe/VbiIKo6tIn3/ObHqy0srSOess9f+3KZFG2WhSxqyjLBgBm0TZFFIiLaFsKSg6KNA4/5hpRdxRkmoWWSHj9dKlgu6FUe3g8zR+tFChdvz/lEt0R8ZR4NHKJbIqS7XLdGPGtOHZykfn6WyXbxXk84N3cymV2pU3ndhoffGIzJ2/xB9a7uZErBf6BdJFucfG7SxG6c3TBG4sv1vjgxrOTB9p979XW7md+C49ZvtH05zKP6zpuy9Q3zyRVJqy9TiGDE4pzj/hirT+F6Pz6ZBPGRlgctfKkGYPF/xpGodkG/DK4paX/4MkpLzqd17sjqHMqgUJvaBXISzJF8Wx5KuX3TD3cEeUFc8Df2L2TF7W7xZ8M7iTuYNue/vW/xFntmk6bet4G9qp3jWg6pVif8HcWxvWsrbsgJc6EJxiXpUh2Bt8Y9obQAwqDwewsnjOUvKneeTwhboQeUJQRjh7PM2n6aeMyeFI4GRUcidL6H7BhzD+4nNvieaZkrgmv/VDjOuDnhrQ18q1mTgN+KE4lm4K/c5ds9/i0Tg9eVzcdyaOA2dtXixd8V3CJcOlD2Kbcym/a5tzW5C1Khf7Vat6xYKenmB1icm5fj3E81t25FAeL1/j5xZL+oNz89e3ytFR8HOX0+Fg2dT9LBAuGwc1An/5m8l5aizfiw8X+lavgDvXCN33+lO8dhWeydnw+O5zynS6W1WOuqII/y2tYY/e43dTB9+VHmo4Hj82iFj7LI3PRsZzFoB6hK2gAj5tA9qiJK65i941q1e9ljoIp4NHqqENl7FQ6lv+xCSyoTuxK7wPeH7ea2oeBveR0jkOF7FL6i4/pwf2UFXgc2KeSI6oBdRpLBzPfPA6cauGb0sHMPQ6camH30nTWTg8Cp4qbwGlKxo+Aeo3F4eyqf3/g9RPBUXSjmUPNluLDzKG94JeS9bnyfG6vcg58sN+3l93m41C3pTyc9VkvCLi+DzSx7Mj2icpF+a82FT69EZUbmld2NGZxqN3ySjTrc0Ltjq8QuEz0qJ17aUXbonY2SRvwL0vi8E8LB/5txuKX2+12u91ut9vtdrvdbrfb7Xa7/Qf0wSAxhEqDGQAAAABJRU5ErkJggg==";
@@ -1690,44 +1876,6 @@
         }
     }
 
-    function AddCode_CheckFollowGame() {
-        AddCode_loadingDataTry = 0;
-        AddCode_RequestCheckFollowGame();
-    }
-
-    function AddCode_RequestCheckFollowGame() {
-        var theUrl = 'https://api.twitch.tv/api/users/' + AddUser_UsernameArray[0].name + '/follows/games/' +
-            encodeURIComponent(Main_values.Main_gameSelected) + Main_TwithcV5Flag_I;
-
-        AddCode_BasexmlHttpGetBack(theUrl, 'GET', 2, null, AddCode_CheckFollowGameReady);
-    }
-
-    function AddCode_CheckFollowGameReady(xmlHttp) {
-        if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) { //success yes user follows
-                AGame_following = true;
-                AGame_setFollow();
-                return;
-            } else if (xmlHttp.status === 404) { //success no user doesnot follows
-                AGame_following = false;
-                AGame_setFollow();
-                return;
-            } else { // internet error
-                AddCode_CheckFollowGameError();
-                return;
-            }
-        }
-    }
-
-    function AddCode_CheckFollowGameError() {
-        AddCode_loadingDataTry++;
-        if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) AddCode_RequestCheckFollowGame();
-        else {
-            AGame_following = false;
-            AGame_setFollow();
-        }
-    }
-
     function AddCode_BasexmlHttpGet(theUrl, type, HeaderQuatity, access_token, callbackready) {
         var xmlHttp = new XMLHttpRequest();
 
@@ -2401,7 +2549,7 @@
             '\'"></div><div class="stream_thumbnail_live_text_holder"><div class="stream_text_holder"><div id="channel_content_cell0_3" style="line-height: 1.6ch;"><div class="stream_info_live_name" style="width:' + (ishosting ? 99 : 66) + '%; display: inline-block;">' +
             '<i class="icon-' + (rerun ? 'refresh' : 'circle') + ' live_icon strokedeline" style="color: ' +
             (rerun ? '#FFFFFF' : ishosting ? '#FED000' : 'red') +
-            ';"></i> ' + channel_display_name + '</div><div class="stream_info_live" style="width:' +
+            ';"></i> ' + channel_display_name + '</div><div id="channel_content_cell0_7" class="stream_info_live" style="width:' +
             (ishosting ? 0 : 33) + '%; float: right; text-align: right; display: inline-block;">' +
             (ishosting ? '' : quality) + '</div></div>' +
             '<div class="stream_info_live_title">' + stream_title + '</div>' +
@@ -2517,6 +2665,14 @@
             Main_values.Play_gameSelected = playing.indexOf(STR_PLAYING) !== -1 ? playing.split(STR_PLAYING)[1] : "";
 
             Main_ready(Main_openStream);
+
+            Firebase_EventPlay(
+                'live',
+                Main_values.Play_selectedChannelDisplayname,
+                Main_values.Play_gameSelected,
+                document.getElementById('channel_content_cell0_7').textContent.split('[')[1].split(']')[0],
+                'ChannelContent'
+            );
         }
     }
 
@@ -6140,7 +6296,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'March 08 2021';
+    var Main_minversion = 'March 29 2021';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
     var Main_ClockOffset = 0;
@@ -6894,6 +7050,15 @@
 
         if (Main_values.Main_Go === Main_aGame) Main_values.Main_OldgameSelected = Main_values.Main_gameSelected;
         Main_openStream();
+
+        Firebase_EventPlay(
+            'live',
+            Main_values.Play_selectedChannelDisplayname,
+            Main_values.Play_gameSelected,
+            document.getElementById(idsArray[7] + id).textContent.split('[')[1].split(']')[0],
+            inUseObj.ScreenName ? inUseObj.ScreenName : null
+        );
+
     }
 
     function Main_openStream() {
@@ -6937,6 +7102,14 @@
         Play_HideWarningDialog();
         Play_CleanHideExit();
         Main_ready(PlayClip_Start);
+
+        Firebase_EventPlay(
+            'clip',
+            Main_values.Main_selectedChannelDisplayname,
+            Main_values.Play_gameSelected,
+            document.getElementById(idsArray[7] + id).textContent.split('[')[1].split(']')[0],
+            inUseObj.ScreenName ? inUseObj.ScreenName : null
+        );
     }
 
     function Main_OpenVod(id, idsArray, handleKeyDownFunction) {
@@ -6968,6 +7141,14 @@
         Main_values.ChannelVod_vodId = Main_values.ChannelVod_vodId[8].substr(1);
 
         Main_openVod();
+
+        Firebase_EventPlay(
+            'vod',
+            Main_values.Main_selectedChannelDisplayname,
+            Main_values.Play_gameSelected,
+            document.getElementById(idsArray[7] + id).textContent.split('[')[1].split(']')[0],
+            inUseObj.ScreenName ? inUseObj.ScreenName : null
+        );
     }
 
     function Main_openVod() {
@@ -12660,23 +12841,26 @@
         ScreensObj_InitSearchGames();
         ScreensObj_InitSearchLive();
         ScreensObj_InitSearchChannels();
+
+        Firebase_Start();
     }
 
     //TODO cleanup not used when finished migrate all
     function Screens_ScreenIds(base) {
-        return [base + '_thumbdiv',
-            base + '_img',
-            base + '_infodiv',
-            base + '_title',
-            base + '_createdon',
-            base + '_game',
-            base + '_viewers',
-            base + '_duration',
-            base + '_cell',
-            'cpempty_',
-            base + '_scroll',
-            base + '_lang',
-            base + '_row'
+        return [
+            base + '_thumbdiv', //0
+            base + '_img', //1
+            base + '_infodiv', //2
+            base + '_title', //3
+            base + '_createdon', //4
+            base + '_game', //5
+            base + '_viewers', //6
+            base + '_duration', //7
+            base + '_cell', //8
+            'cpempty_', //9
+            base + '_scroll', //10
+            base + '_lang', //11
+            base + '_row' //12
         ];
     }
 
@@ -12707,10 +12891,17 @@
         Main_ShowElement(inUseObj.ids[10]);
 
         if (inUseObj.status) {
+
             Main_YRst(inUseObj.posY);
             Screens_addFocus(true);
             Main_SaveValues();
-        } else Screens_StartLoad();
+
+        } else {
+
+            Screens_StartLoad();
+            inUseObj.screen_view();
+
+        }
     }
 
     function Screens_exit() {
@@ -12724,6 +12915,8 @@
 
     function Screens_StartLoad() {
         Main_showLoadDialog();
+        if (!Main_FirstRun) inUseObj.screen_view();
+
         Main_updateclock();
         Main_empty(inUseObj.table);
         Main_HideWarningDialog();
@@ -12964,7 +13157,6 @@
 
     function Screens_loadDataSuccessFinish() {
         if (!inUseObj.status) {
-            if (Main_values.Main_Go === Main_aGame) AGame_Checkfollow();
 
             if (inUseObj.emptyContent) Main_showWarningDialog(inUseObj.empty_str());
             else {
@@ -13549,14 +13741,6 @@
         }
     }
 
-    function AGame_Checkfollow() {
-        if (AddUser_UserIsSet()) AddCode_CheckFollowGame();
-        else {
-            AGame_following = false;
-            AGame_setFollow();
-        }
-    }
-
     function AGame_setFollow() {
         if (AGame_following) Main_innerHTML(AGame.ids[3] + "y_2", '<i class="icon-heart" style="color: #6441a4; font-size: 100%;"></i>' + STR_SPACE + STR_SPACE + STR_FOLLOWING);
         else Main_innerHTML(AGame.ids[3] + "y_2", '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + (AddUser_UserIsSet() ? STR_FOLLOW : STR_NOKEY));
@@ -13852,7 +14036,11 @@
                 this.loadDataSuccess();
             }
             this.loadingData = false;
-        }
+        },
+        screen_view: function() {
+            if (this.ScreenName)
+                Firebase_EventScreen(this.ScreenName);
+        },
     };
 
     var Base_Vod_obj = {
@@ -13943,6 +14131,7 @@
             ids: Screens_ScreenIds('Vod'),
             table: 'stream_table_vod',
             screen: Main_Vod,
+            ScreenName: 'Vod',
             highlightSTR: 'Vod_highlight',
             highlight: Main_getItemBool('Vod_highlight', false),
             periodPos: Main_getItemInt('vod_periodPos', 2),
@@ -14006,6 +14195,7 @@
             ids: Screens_ScreenIds('ChannelVod'),
             table: 'stream_table_channel_vod',
             screen: Main_ChannelVod,
+            ScreenName: 'ChannelVod',
             time: ['time', 'views'],
             extraoffset: 0,
             OffSetPos: 0,
@@ -14104,6 +14294,7 @@
             ids: Screens_ScreenIds('AGameVod'),
             table: 'stream_table_a_game_vod',
             screen: Main_AGameVod,
+            ScreenName: 'AGameVod',
             highlightSTR: 'AGameVod_highlight',
             highlight: Main_getItemBool('AGameVod_highlight', false),
             periodPos: Main_getItemInt('AGameVod_periodPos', 2),
@@ -14169,6 +14360,7 @@
             ids: Screens_ScreenIds('UserVod'),
             table: 'stream_table_user_vod',
             screen: Main_UserVod,
+            ScreenName: 'UserVod',
             time: ['time', 'views'],
             highlightSTR: 'UserVod_highlight',
             highlight: Main_getItemBool('UserVod_highlight', false),
@@ -14269,14 +14461,18 @@
                         this.row_id + '_' + this.coloumn_id,
                         [cell.channel.name, cell.channel._id, Main_is_rerun(cell.broadcast_platform)],
                         this.ids,
-                        [cell.preview.template.replace("{width}x{height}", Main_VideoSize),
+                        [
+                            cell.preview.template.replace("{width}x{height}", Main_VideoSize),
                             cell.channel.display_name,
                             cell.channel.status,
                             cell.game,
                             STR_SINCE + Play_streamLiveAt(cell.created_at) + STR_SPACE + STR_FOR + Main_addCommas(cell.viewers) +
                             STR_SPACE + STR_VIEWER,
-                            Main_videoqualitylang(cell.video_height, cell.average_fps, cell.channel.broadcaster_language)
-                        ]));
+                            Main_videoqualitylang(cell.video_height, cell.average_fps, cell.channel.broadcaster_language),
+                            cell.channel.broadcaster_language
+                        ]
+                    )
+                );
 
                 this.coloumn_id++;
             }
@@ -14290,6 +14486,7 @@
             ids: Screens_ScreenIds('Live'),
             table: 'stream_table_live',
             screen: Main_Live,
+            ScreenName: 'Live',
             object: 'streams',
             key_pgDown: Main_Featured,
             key_pgUp: Main_Clip,
@@ -14321,6 +14518,7 @@
             ids: Screens_ScreenIds('SearchLive'),
             table: 'stream_table_search_live',
             screen: Main_SearchLive,
+            ScreenName: 'SearchLive',
             object: 'streams',
             base_url: Main_kraken_api + 'search/streams?limit=' + Main_ItemsLimitMax + '&query=',
             set_url: function() {
@@ -14362,6 +14560,7 @@
             ids: Screens_ScreenIds('UserLive'),
             table: 'stream_table_user_live',
             screen: Main_UserLive,
+            ScreenName: 'UserLive',
             object: 'streams',
             key_pgDown: Main_usergames,
             key_pgUp: Main_UserChannels,
@@ -14471,6 +14670,7 @@
             ids: Screens_ScreenIds('AGame'),
             table: 'stream_table_a_game',
             screen: Main_aGame,
+            ScreenName: 'aGame',
             object: 'streams',
             key_pgDown: Main_Vod,
             key_pgUp: Main_Featured,
@@ -14493,11 +14693,11 @@
             },
             label_exit: ScreensObj_TopLableAgameExit,
             HasSwitches: true,
-            SwitchesIcons: ['movie-play', 'movie', 'heart-o'],
+            SwitchesIcons: ['movie-play', 'movie'],
             addSwitches: function() {
                 this.TopRowCreated = true;
                 this.row = document.createElement('div');
-                var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_VIDEOS, STR_SPACE + STR_SPACE + STR_CLIPS, STR_SPACE + STR_SPACE + STR_FOLLOW];
+                var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_VIDEOS, STR_SPACE + STR_SPACE + STR_CLIPS];
                 var thumbfollow, div, i = 0;
 
                 for (i; i < SwitchesStrings.length; i++) {
@@ -14528,6 +14728,7 @@
             ids: Screens_ScreenIds('Featured'),
             table: 'stream_table_featured',
             screen: Main_Featured,
+            ScreenName: 'Featured',
             key_pgDown: Main_games,
             key_pgUp: Main_Live,
             base_url: Main_kraken_api + 'streams/featured?limit=' + Main_ItemsLimitMax,
@@ -14649,6 +14850,7 @@
             ids: Screens_ScreenIds('Clip'),
             table: 'stream_table_clip',
             screen: Main_Clip,
+            ScreenName: 'Clip',
             key_pgDown: Main_Live,
             key_pgUp: Main_Vod,
             periodPos: Main_getItemInt('Clip_periodPos', 2),
@@ -14683,6 +14885,7 @@
             ids: Screens_ScreenIds('ChannelClip'),
             table: 'stream_table_channel_clip',
             screen: Main_ChannelClip,
+            ScreenName: 'ChannelClip',
             key_pgUp: Main_ChannelVod,
             periodPos: Main_getItemInt('ChannelClip_periodPos', 2),
             base_url: Main_kraken_api + 'clips/top?channel=',
@@ -14717,6 +14920,7 @@
             ids: Screens_ScreenIds('AGameClip'),
             table: 'stream_table_a_game_clip',
             screen: Main_AGameClip,
+            ScreenName: 'AGameClip',
             key_pgDown: Main_Vod,
             key_pgUp: Main_Featured,
             periodPos: Main_getItemInt('AGameClip_periodPos', 2),
@@ -14809,6 +15013,7 @@
             ids: Screens_ScreenIds('Game'),
             table: 'stream_table_games',
             screen: Main_games,
+            ScreenName: 'games',
             key_pgDown: Main_Vod,
             key_pgUp: Main_Featured,
             object: 'top',
@@ -14835,6 +15040,7 @@
             ids: Screens_ScreenIds('UserGames'),
             table: 'stream_table_user_games',
             screen: Main_usergames,
+            ScreenName: 'usergames',
             key_pgDownNext: Main_UserChannels,
             key_pgDown: Main_UserVod,
             key_pgUp: Main_UserLive,
@@ -14868,6 +15074,7 @@
             ids: Screens_ScreenIds('SearchGames'),
             table: 'stream_table_search_game',
             screen: Main_SearchGames,
+            ScreenName: 'SearchGames',
             isLive: false,
             OldUserName: '',
             object: 'games',
@@ -14935,6 +15142,7 @@
             ids: Screens_ScreenIds('UserChannels'),
             table: 'stream_table_user_channels',
             screen: Main_UserChannels,
+            ScreenName: 'UserChannels',
             object: 'follows',
             key_pgDown: Main_UserLive,
             key_pgUp: Main_UserVod,
@@ -14986,6 +15194,7 @@
             ids: Screens_ScreenIds('SearchChannels'),
             table: 'stream_table_search_channel',
             screen: Main_SearchChannels,
+            ScreenName: 'SearchChannels',
             object: 'channels',
             base_url: Main_kraken_api + 'search/channels?limit=' + Main_ItemsLimitMax + '&query=',
             set_url: function() {
@@ -15045,6 +15254,8 @@
         Sidepannel_SetDefaultLables();
         Main_values.Sidepannel_IsUser = false;
         Sidepannel_SetTopOpacity(inUseObj.screen);
+
+        Firebase_EventAgame(Main_values.Main_gameSelected);
     }
 
     function ScreensObj_TopLableAgameExit() {

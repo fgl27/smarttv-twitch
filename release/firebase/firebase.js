@@ -1,90 +1,104 @@
-window.dataLayer = window.dataLayer || [];
-function gtag() {
+(function(root) {
 
-	try {
+	/** Detect free variables */
+	var smartTwitchTVFirebaseGlobal = typeof global === 'object' && global;
+	if (
+		smartTwitchTVFirebaseGlobal.global === smartTwitchTVFirebaseGlobal ||
+		smartTwitchTVFirebaseGlobal.window === smartTwitchTVFirebaseGlobal ||
+		smartTwitchTVFirebaseGlobal.self === smartTwitchTVFirebaseGlobal
+	) {
+		root = smartTwitchTVFirebaseGlobal;
+	}
+	var smartTwitchTVFirebase;
 
-		dataLayer.push(arguments);
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
 
-	} catch (e) {
+		try {
 
-		console.log("gtag e " + e);
+			dataLayer.push(arguments);
+
+		} catch (e) {
+
+			console.log("gtag e " + e);
+
+		}
+	}
+
+	function Firebase_Startfirebase() {
+
+		Firebase_setTimeout(Firebase_firebaseInitializeApp);
 
 	}
-}
 
-function Main_Startfirebase() {
+	function Firebase_firebaseInitializeApp() {
 
-	Main_setTimeout(Main_firebaseInitializeApp);
+		var firebaseConfig = {
+			apiKey: "AIzaSyDU1477wMbrpHnLJPgCMohvt2q_LH_tA3c",
+			authDomain: "smarttv-twitch-web-samsung.firebaseapp.com",
+			databaseURL: "https://smarttv-twitch-web-samsung.firebaseio.com",
+			projectId: "smarttv-twitch-web-samsung",
+			storageBucket: "smarttv-twitch-web-samsung.appspot.com",
+			messagingSenderId: "302068341837",
+			appId: "1:302068341837:web:604f8a975842c2e6879004",
+			measurementId: "G-9T1TS1E2SC"
+		};
 
-}
+		try {
+			console.log("Firebase_Startfirebase start");
 
-function Main_firebaseInitializeApp() {
+			firebase.initializeApp(firebaseConfig);
+			firebase.analytics();
 
-	var firebaseConfig = {
-		apiKey: "AIzaSyDU1477wMbrpHnLJPgCMohvt2q_LH_tA3c",
-		authDomain: "smarttv-twitch-web-samsung.firebaseapp.com",
-		databaseURL: "https://smarttv-twitch-web-samsung.firebaseio.com",
-		projectId: "smarttv-twitch-web-samsung",
-		storageBucket: "smarttv-twitch-web-samsung.appspot.com",
-		messagingSenderId: "302068341837",
-		appId: "1:302068341837:web:604f8a975842c2e6879004",
-		measurementId: "G-9T1TS1E2SC"
+			gtag('js', new Date());
+
+			Firebase_setTimeout(Firebase_firebaseEvent);
+
+		} catch (e) {
+
+			console.log("Firebase_Startfirebase e " + e);
+
+		}
+
+	}
+
+	function Firebase_firebaseEvent() {
+
+		try {
+
+			console.log("send event");
+
+			firebase.analytics().logEvent('app_load');
+
+		} catch (e) {
+
+			console.log("end event fail e " + e);
+
+		}
+	}
+
+	function Firebase_setTimeout(fun) {
+		window.setTimeout(fun, 10000);
+	}
+
+	function Firebase_Start() {
+
+		Firebase_setTimeout(Firebase_Startfirebase);
+
+	}
+
+	/**
+	 * Define the public API
+	 * and all function need to be called outiside the API
+	 * smartTwitchTVFirebase + all functions called by java
+	 */
+	smartTwitchTVFirebase = {
+		'firestart': Firebase_Start,
 	};
 
-	try {
-		console.log("Main_Startfirebase start");
+	/** Expose `smartTwitchTVFirebase` */
+	root.smartTwitchTVFirebase = smartTwitchTVFirebase;
+}(this));
 
-		firebase.initializeApp(firebaseConfig);
-		firebase.analytics();
+smartTwitchTVFirebase.firestart();
 
-		gtag('js', new Date());
-
-		Main_setTimeout(Main_firebaseEvent);
-
-	} catch (e) {
-
-		console.log("Main_Startfirebase e " + e);
-
-	}
-
-}
-
-function Main_firebaseEvent() {
-
-	try {
-
-		console.log("send event");
-
-		firebase.analytics().logEvent('app_load');
-
-	} catch (e) {
-
-		console.log("end event fail e " + e);
-
-	}
-}
-
-function Main_setTimeout(fun) {
-	window.setTimeout(fun, 15000);
-}
-
-Main_Start();
-
-function Main_Start() {
-
-	if (document.readyState === "loading") {
-
-		document.addEventListener("DOMContentLoaded",
-			function() {
-
-				Main_Startfirebase();
-
-			}
-		);
-	} else { // `DOMContentLoaded` already fired
-
-		Main_Startfirebase();
-
-	}
-
-}

@@ -164,6 +164,7 @@ function Firebase_EventShowScreen(type, name) {
 }
 
 function Firebase_EventPlay(type, name, game, lang, screen, mode) {
+
     if (!Firebase_IsLoaded) return;
 
     try {

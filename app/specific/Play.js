@@ -2157,7 +2157,12 @@ function Play_OpenLiveFeed(ResetFeed, doc) {
 
         Main_values.Play_isHost = false;
         Play_UserLiveFeedPressed = true;
-        Main_OpenLiveStream(Play_FeedPos, UserLiveFeed_ids, Play_handleKeyDown);
+        Main_OpenLiveStream(
+            Play_FeedPos,
+            UserLiveFeed_ids,
+            Play_handleKeyDown,
+            'userpreview'
+        );
     } else if (ResetFeed) UserLiveFeed_ResetFeedId();
 }
 

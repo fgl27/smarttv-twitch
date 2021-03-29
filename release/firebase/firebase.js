@@ -1,15 +1,24 @@
 window.dataLayer = window.dataLayer || [];
 function gtag() {
+
 	try {
 
 		dataLayer.push(arguments);
 
 	} catch (e) {
+
 		console.log("gtag e " + e);
+
 	}
 }
 
 function Main_Startfirebase() {
+
+	Main_setTimeout(Main_firebaseInitializeApp);
+
+}
+
+function Main_firebaseInitializeApp() {
 
 	var firebaseConfig = {
 		apiKey: "AIzaSyDU1477wMbrpHnLJPgCMohvt2q_LH_tA3c",
@@ -23,17 +32,40 @@ function Main_Startfirebase() {
 	};
 
 	try {
+		console.log("Main_Startfirebase start");
 
 		firebase.initializeApp(firebaseConfig);
 		firebase.analytics();
 
 		gtag('js', new Date());
 
+		Main_setTimeout(Main_firebaseEvent);
+
 	} catch (e) {
 
 		console.log("Main_Startfirebase e " + e);
 
 	}
+
+}
+
+function Main_firebaseEvent() {
+
+	try {
+
+		console.log("send event");
+
+		firebase.analytics().logEvent('app_load');
+
+	} catch (e) {
+
+		console.log("end event fail e " + e);
+
+	}
+}
+
+function Main_setTimeout(fun) {
+	window.setTimeout(fun, 15000);
 }
 
 Main_Start();
@@ -41,10 +73,18 @@ Main_Start();
 function Main_Start() {
 
 	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", function() {
-			Main_Startfirebase();
-		});
+
+		document.addEventListener("DOMContentLoaded",
+			function() {
+
+				Main_Startfirebase();
+
+			}
+		);
 	} else { // `DOMContentLoaded` already fired
+
 		Main_Startfirebase();
+
 	}
+
 }

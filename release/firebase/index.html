@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Workaround page to have firebasejs working when loading a page from a local file, this page will be loaded via iframe-->
 <html>
 
 <head>
@@ -8,8 +9,27 @@
 
 <body style="display: none;">
 
-	<!-- Load Babel -->
-	<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+	<!-- Support for "Unhandled promise rejection" / "Uncaught (in promise)" https://github.com/getsentry/sentry-javascript/issues/424 -->
+	<script type="text/javascript">
+
+		window.onunhandledrejection = function(e) {
+
+			console.log("onunhandledrejection");
+
+		};
+
+		if (window.Promise) {
+			console.log("delete window.Promise onunhandledrejection");
+
+			delete window.Promise
+		}
+	</script>
+
+	<!-- Load Babel v6-->
+	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+	<!-- Load core-js-->
+	<script src="https://unpkg.com/core-js-bundle@3.0.1/minified.js"></script>
 
 	<!-- The core Firebase JS SDK is always required and must be listed first -->
 	<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js" defer></script>

@@ -264,7 +264,7 @@ function ChannelContent_createCell(channel_name, channel_id, preview_thumbnail, 
         '\'"></div><div class="stream_thumbnail_live_text_holder"><div class="stream_text_holder"><div id="channel_content_cell0_3" style="line-height: 1.6ch;"><div class="stream_info_live_name" style="width:' + (ishosting ? 99 : 66) + '%; display: inline-block;">' +
         '<i class="icon-' + (rerun ? 'refresh' : 'circle') + ' live_icon strokedeline" style="color: ' +
         (rerun ? '#FFFFFF' : ishosting ? '#FED000' : 'red') +
-        ';"></i> ' + channel_display_name + '</div><div class="stream_info_live" style="width:' +
+        ';"></i> ' + channel_display_name + '</div><div id="channel_content_cell0_7" class="stream_info_live" style="width:' +
         (ishosting ? 0 : 33) + '%; float: right; text-align: right; display: inline-block;">' +
         (ishosting ? '' : quality) + '</div></div>' +
         '<div class="stream_info_live_title">' + stream_title + '</div>' +
@@ -380,6 +380,14 @@ function ChannelContent_keyEnter() {
         Main_values.Play_gameSelected = playing.indexOf(STR_PLAYING) !== -1 ? playing.split(STR_PLAYING)[1] : "";
 
         Main_ready(Main_openStream);
+
+        Firebase_EventPlay(
+            'live',
+            Main_values.Play_selectedChannelDisplayname,
+            Main_values.Play_gameSelected,
+            document.getElementById('channel_content_cell0_7').textContent.split('[')[1].split(']')[0],
+            'ChannelContent'
+        );
     }
 }
 

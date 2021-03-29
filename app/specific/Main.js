@@ -873,6 +873,15 @@ function Main_OpenLiveStream(id, idsArray, handleKeyDownFunction) {
 
     if (Main_values.Main_Go === Main_aGame) Main_values.Main_OldgameSelected = Main_values.Main_gameSelected;
     Main_openStream();
+
+    Firebase_EventPlay(
+        'live',
+        Main_values.Play_selectedChannelDisplayname,
+        Main_values.Play_gameSelected,
+        document.getElementById(idsArray[7] + id).textContent.split('[')[1].split(']')[0],
+        inUseObj.ScreenName ? inUseObj.ScreenName : null
+    );
+
 }
 
 function Main_openStream() {
@@ -916,6 +925,14 @@ function Main_OpenClip(id, idsArray, handleKeyDownFunction) {
     Play_HideWarningDialog();
     Play_CleanHideExit();
     Main_ready(PlayClip_Start);
+
+    Firebase_EventPlay(
+        'clip',
+        Main_values.Main_selectedChannelDisplayname,
+        Main_values.Play_gameSelected,
+        document.getElementById(idsArray[7] + id).textContent.split('[')[1].split(']')[0],
+        inUseObj.ScreenName ? inUseObj.ScreenName : null
+    );
 }
 
 function Main_OpenVod(id, idsArray, handleKeyDownFunction) {
@@ -947,6 +964,14 @@ function Main_OpenVod(id, idsArray, handleKeyDownFunction) {
     Main_values.ChannelVod_vodId = Main_values.ChannelVod_vodId[8].substr(1);
 
     Main_openVod();
+
+    Firebase_EventPlay(
+        'vod',
+        Main_values.Main_selectedChannelDisplayname,
+        Main_values.Play_gameSelected,
+        document.getElementById(idsArray[7] + id).textContent.split('[')[1].split(']')[0],
+        inUseObj.ScreenName ? inUseObj.ScreenName : null
+    );
 }
 
 function Main_openVod() {

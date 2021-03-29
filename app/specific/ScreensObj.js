@@ -779,11 +779,11 @@ function ScreensObj_InitAGame() {
         },
         label_exit: ScreensObj_TopLableAgameExit,
         HasSwitches: true,
-        SwitchesIcons: ['movie-play', 'movie', 'heart-o'],
+        SwitchesIcons: ['movie-play', 'movie'],
         addSwitches: function() {
             this.TopRowCreated = true;
             this.row = document.createElement('div');
-            var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_VIDEOS, STR_SPACE + STR_SPACE + STR_CLIPS, STR_SPACE + STR_SPACE + STR_FOLLOW];
+            var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_VIDEOS, STR_SPACE + STR_SPACE + STR_CLIPS];
             var thumbfollow, div, i = 0;
 
             for (i; i < SwitchesStrings.length; i++) {

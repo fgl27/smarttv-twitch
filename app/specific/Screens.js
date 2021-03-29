@@ -356,7 +356,6 @@ function Screens_createCellLive(id, data, idArray, valuesArray) {
 
 function Screens_loadDataSuccessFinish() {
     if (!inUseObj.status) {
-        if (Main_values.Main_Go === Main_aGame) AGame_Checkfollow();
 
         if (inUseObj.emptyContent) Main_showWarningDialog(inUseObj.empty_str());
         else {
@@ -938,14 +937,6 @@ function AGame_follow() {
             if (inUseObj.emptyContent && Main_values.Main_Go === Main_aGame) Main_showWarningDialog(STR_NO + STR_LIVE_GAMES);
             else Main_HideWarningDialog();
         }, 2000);
-    }
-}
-
-function AGame_Checkfollow() {
-    if (AddUser_UserIsSet()) AddCode_CheckFollowGame();
-    else {
-        AGame_following = false;
-        AGame_setFollow();
     }
 }
 

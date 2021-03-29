@@ -610,44 +610,6 @@ function AddCode_UnFollowGameRequestError() {
     }
 }
 
-function AddCode_CheckFollowGame() {
-    AddCode_loadingDataTry = 0;
-    AddCode_RequestCheckFollowGame();
-}
-
-function AddCode_RequestCheckFollowGame() {
-    var theUrl = 'https://api.twitch.tv/api/users/' + AddUser_UsernameArray[0].name + '/follows/games/' +
-        encodeURIComponent(Main_values.Main_gameSelected) + Main_TwithcV5Flag_I;
-
-    AddCode_BasexmlHttpGetBack(theUrl, 'GET', 2, null, AddCode_CheckFollowGameReady);
-}
-
-function AddCode_CheckFollowGameReady(xmlHttp) {
-    if (xmlHttp.readyState === 4) {
-        if (xmlHttp.status === 200) { //success yes user follows
-            AGame_following = true;
-            AGame_setFollow();
-            return;
-        } else if (xmlHttp.status === 404) { //success no user doesnot follows
-            AGame_following = false;
-            AGame_setFollow();
-            return;
-        } else { // internet error
-            AddCode_CheckFollowGameError();
-            return;
-        }
-    }
-}
-
-function AddCode_CheckFollowGameError() {
-    AddCode_loadingDataTry++;
-    if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) AddCode_RequestCheckFollowGame();
-    else {
-        AGame_following = false;
-        AGame_setFollow();
-    }
-}
-
 function AddCode_BasexmlHttpGet(theUrl, type, HeaderQuatity, access_token, callbackready) {
     var xmlHttp = new XMLHttpRequest();
 

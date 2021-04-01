@@ -431,12 +431,7 @@ function Sidepannel_handleKeyDown(event) {
                 Main_values.Play_isHost = false;
                 Play_UserLiveFeedPressed = true;
                 Main_ready(function() {
-                    Main_OpenLiveStream(
-                        Sidepannel_PosFeed,
-                        UserLiveFeed_side_ids,
-                        Sidepannel_handleKeyDown,
-                        'sidepannel'
-                    );
+                    Main_OpenLiveStream(Sidepannel_PosFeed, UserLiveFeed_side_ids, Sidepannel_handleKeyDown);
                     if (Settings_Obj_default("app_animations")) doc.style.transition = '';
                 });
             }

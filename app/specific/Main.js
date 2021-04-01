@@ -854,7 +854,7 @@ function Main_ThumbOpenIsNull(id, thumbnail) {
     return document.getElementById(thumbnail + id) === null;
 }
 
-function Main_OpenLiveStream(id, idsArray, handleKeyDownFunction, screen) {
+function Main_OpenLiveStream(id, idsArray, handleKeyDownFunction) {
     if (Main_ThumbOpenIsNull(id, idsArray[0])) return;
     document.body.removeEventListener("keydown", handleKeyDownFunction);
     Main_values.Play_selectedChannel = JSON.parse(document.getElementById(idsArray[8] + id).getAttribute(Main_DataAttribute));
@@ -868,7 +868,7 @@ function Main_OpenLiveStream(id, idsArray, handleKeyDownFunction, screen) {
         Main_values.Play_selectedChannelDisplayname = Main_values.Play_DisplaynameHost.split(STR_USER_HOSTING)[1];
     } else Main_values.Play_selectedChannelDisplayname = document.getElementById(idsArray[3] + id).textContent;
 
-    var playing = (screen ? STR_PLAYING : '') + document.getElementById(idsArray[5] + id).textContent;
+    var playing = document.getElementById(idsArray[5] + id).textContent;
     Main_values.Play_gameSelected = playing.indexOf(STR_PLAYING) !== -1 ? playing.split(STR_PLAYING)[1] : "";
 
     if (Main_values.Main_Go === Main_aGame) Main_values.Main_OldgameSelected = Main_values.Main_gameSelected;
@@ -879,7 +879,7 @@ function Main_OpenLiveStream(id, idsArray, handleKeyDownFunction, screen) {
         Main_values.Play_selectedChannelDisplayname,
         Main_values.Play_gameSelected,
         document.getElementById(idsArray[7] + id).textContent.split('[')[1].split(']')[0],
-        screen ? screen : (inUseObj.ScreenName ? inUseObj.ScreenName : null)
+        inUseObj.ScreenName ? inUseObj.ScreenName : null
     );
 
 }

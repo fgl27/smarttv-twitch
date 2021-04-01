@@ -122,11 +122,7 @@ var Base_obj = {
             this.loadDataSuccess();
         }
         this.loadingData = false;
-    },
-    screen_view: function() {
-        if (this.ScreenName)
-            Firebase_EventScreen(this.ScreenName);
-    },
+    }
 };
 
 var Base_Vod_obj = {
@@ -217,7 +213,6 @@ function ScreensObj_InitVod() {
         ids: Screens_ScreenIds('Vod'),
         table: 'stream_table_vod',
         screen: Main_Vod,
-        ScreenName: 'Vod',
         highlightSTR: 'Vod_highlight',
         highlight: Main_getItemBool('Vod_highlight', false),
         periodPos: Main_getItemInt('vod_periodPos', 2),
@@ -281,7 +276,6 @@ function ScreensObj_InitChannelVod() {
         ids: Screens_ScreenIds('ChannelVod'),
         table: 'stream_table_channel_vod',
         screen: Main_ChannelVod,
-        ScreenName: 'ChannelVod',
         time: ['time', 'views'],
         extraoffset: 0,
         OffSetPos: 0,
@@ -380,7 +374,6 @@ function ScreensObj_InitAGameVod() {
         ids: Screens_ScreenIds('AGameVod'),
         table: 'stream_table_a_game_vod',
         screen: Main_AGameVod,
-        ScreenName: 'AGameVod',
         highlightSTR: 'AGameVod_highlight',
         highlight: Main_getItemBool('AGameVod_highlight', false),
         periodPos: Main_getItemInt('AGameVod_periodPos', 2),
@@ -446,7 +439,6 @@ function ScreensObj_InitUserVod() {
         ids: Screens_ScreenIds('UserVod'),
         table: 'stream_table_user_vod',
         screen: Main_UserVod,
-        ScreenName: 'UserVod',
         time: ['time', 'views'],
         highlightSTR: 'UserVod_highlight',
         highlight: Main_getItemBool('UserVod_highlight', false),
@@ -547,18 +539,14 @@ var Base_Live_obj = {
                     this.row_id + '_' + this.coloumn_id,
                     [cell.channel.name, cell.channel._id, Main_is_rerun(cell.broadcast_platform)],
                     this.ids,
-                    [
-                        cell.preview.template.replace("{width}x{height}", Main_VideoSize),
-                        cell.channel.display_name,
-                        cell.channel.status,
-                        cell.game,
-                        STR_SINCE + Play_streamLiveAt(cell.created_at) + STR_SPACE + STR_FOR + Main_addCommas(cell.viewers) +
-                        STR_SPACE + STR_VIEWER,
-                        Main_videoqualitylang(cell.video_height, cell.average_fps, cell.channel.broadcaster_language),
-                        cell.channel.broadcaster_language
-                    ]
-                )
-            );
+                    [cell.preview.template.replace("{width}x{height}", Main_VideoSize),
+                    cell.channel.display_name,
+                    cell.channel.status,
+                    cell.game,
+                    STR_SINCE + Play_streamLiveAt(cell.created_at) + STR_SPACE + STR_FOR + Main_addCommas(cell.viewers) +
+                    STR_SPACE + STR_VIEWER,
+                    Main_videoqualitylang(cell.video_height, cell.average_fps, cell.channel.broadcaster_language)
+                    ]));
 
             this.coloumn_id++;
         }
@@ -572,7 +560,6 @@ function ScreensObj_InitLive() {
         ids: Screens_ScreenIds('Live'),
         table: 'stream_table_live',
         screen: Main_Live,
-        ScreenName: 'Live',
         object: 'streams',
         key_pgDown: Main_Featured,
         key_pgUp: Main_Clip,
@@ -604,7 +591,6 @@ function ScreensObj_InitSearchLive() {
         ids: Screens_ScreenIds('SearchLive'),
         table: 'stream_table_search_live',
         screen: Main_SearchLive,
-        ScreenName: 'SearchLive',
         object: 'streams',
         base_url: Main_kraken_api + 'search/streams?limit=' + Main_ItemsLimitMax + '&query=',
         set_url: function() {
@@ -646,7 +632,6 @@ function ScreensObj_InitUserLive() {
         ids: Screens_ScreenIds('UserLive'),
         table: 'stream_table_user_live',
         screen: Main_UserLive,
-        ScreenName: 'UserLive',
         object: 'streams',
         key_pgDown: Main_usergames,
         key_pgUp: Main_UserChannels,
@@ -756,7 +741,6 @@ function ScreensObj_InitAGame() {
         ids: Screens_ScreenIds('AGame'),
         table: 'stream_table_a_game',
         screen: Main_aGame,
-        ScreenName: 'aGame',
         object: 'streams',
         key_pgDown: Main_Vod,
         key_pgUp: Main_Featured,
@@ -814,7 +798,6 @@ function ScreensObj_InitFeatured() {
         ids: Screens_ScreenIds('Featured'),
         table: 'stream_table_featured',
         screen: Main_Featured,
-        ScreenName: 'Featured',
         key_pgDown: Main_games,
         key_pgUp: Main_Live,
         base_url: Main_kraken_api + 'streams/featured?limit=' + Main_ItemsLimitMax,
@@ -936,7 +919,6 @@ function ScreensObj_InitClip() {
         ids: Screens_ScreenIds('Clip'),
         table: 'stream_table_clip',
         screen: Main_Clip,
-        ScreenName: 'Clip',
         key_pgDown: Main_Live,
         key_pgUp: Main_Vod,
         periodPos: Main_getItemInt('Clip_periodPos', 2),
@@ -971,7 +953,6 @@ function ScreensObj_InitChannelClip() {
         ids: Screens_ScreenIds('ChannelClip'),
         table: 'stream_table_channel_clip',
         screen: Main_ChannelClip,
-        ScreenName: 'ChannelClip',
         key_pgUp: Main_ChannelVod,
         periodPos: Main_getItemInt('ChannelClip_periodPos', 2),
         base_url: Main_kraken_api + 'clips/top?channel=',
@@ -1006,7 +987,6 @@ function ScreensObj_InitAGameClip() {
         ids: Screens_ScreenIds('AGameClip'),
         table: 'stream_table_a_game_clip',
         screen: Main_AGameClip,
-        ScreenName: 'AGameClip',
         key_pgDown: Main_Vod,
         key_pgUp: Main_Featured,
         periodPos: Main_getItemInt('AGameClip_periodPos', 2),
@@ -1099,7 +1079,6 @@ function ScreensObj_InitGame() {
         ids: Screens_ScreenIds('Game'),
         table: 'stream_table_games',
         screen: Main_games,
-        ScreenName: 'games',
         key_pgDown: Main_Vod,
         key_pgUp: Main_Featured,
         object: 'top',
@@ -1126,7 +1105,6 @@ function ScreensObj_InitUserGames() {
         ids: Screens_ScreenIds('UserGames'),
         table: 'stream_table_user_games',
         screen: Main_usergames,
-        ScreenName: 'usergames',
         key_pgDownNext: Main_UserChannels,
         key_pgDown: Main_UserVod,
         key_pgUp: Main_UserLive,
@@ -1160,7 +1138,6 @@ function ScreensObj_InitSearchGames() {
         ids: Screens_ScreenIds('SearchGames'),
         table: 'stream_table_search_game',
         screen: Main_SearchGames,
-        ScreenName: 'SearchGames',
         isLive: false,
         OldUserName: '',
         object: 'games',
@@ -1228,7 +1205,6 @@ function ScreensObj_InitUserChannels() {
         ids: Screens_ScreenIds('UserChannels'),
         table: 'stream_table_user_channels',
         screen: Main_UserChannels,
-        ScreenName: 'UserChannels',
         object: 'follows',
         key_pgDown: Main_UserLive,
         key_pgUp: Main_UserVod,
@@ -1280,7 +1256,6 @@ function ScreensObj_InitSearchChannels() {
         ids: Screens_ScreenIds('SearchChannels'),
         table: 'stream_table_search_channel',
         screen: Main_SearchChannels,
-        ScreenName: 'SearchChannels',
         object: 'channels',
         base_url: Main_kraken_api + 'search/channels?limit=' + Main_ItemsLimitMax + '&query=',
         set_url: function() {
@@ -1340,8 +1315,6 @@ function ScreensObj_TopLableAgameInit() {
     Sidepannel_SetDefaultLables();
     Main_values.Sidepannel_IsUser = false;
     Sidepannel_SetTopOpacity(inUseObj.screen);
-
-    Firebase_EventAgame(Main_values.Main_gameSelected);
 }
 
 function ScreensObj_TopLableAgameExit() {

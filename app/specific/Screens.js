@@ -40,26 +40,23 @@ function Screens_InitScreens() {
     ScreensObj_InitSearchGames();
     ScreensObj_InitSearchLive();
     ScreensObj_InitSearchChannels();
-
-    Firebase_Start();
 }
 
 //TODO cleanup not used when finished migrate all
 function Screens_ScreenIds(base) {
-    return [
-        base + '_thumbdiv',//0
-        base + '_img',//1
-        base + '_infodiv',//2
-        base + '_title',//3
-        base + '_createdon',//4
-        base + '_game',//5
-        base + '_viewers',//6
-        base + '_duration',//7
-        base + '_cell',//8
-        'cpempty_',//9
-        base + '_scroll',//10
-        base + '_lang',//11
-        base + '_row'//12
+    return [base + '_thumbdiv',
+    base + '_img',
+    base + '_infodiv',
+    base + '_title',
+    base + '_createdon',
+    base + '_game',
+    base + '_viewers',
+    base + '_duration',
+    base + '_cell',
+        'cpempty_',
+    base + '_scroll',
+    base + '_lang',
+    base + '_row'
     ];
 }
 
@@ -90,17 +87,10 @@ function Screens_init() {
     Main_ShowElement(inUseObj.ids[10]);
 
     if (inUseObj.status) {
-
         Main_YRst(inUseObj.posY);
         Screens_addFocus(true);
         Main_SaveValues();
-
-    } else {
-
-        Screens_StartLoad();
-        inUseObj.screen_view();
-
-    }
+    } else Screens_StartLoad();
 }
 
 function Screens_exit() {
@@ -114,8 +104,6 @@ function Screens_exit() {
 
 function Screens_StartLoad() {
     Main_showLoadDialog();
-    if (!Main_FirstRun) inUseObj.screen_view();
-
     Main_updateclock();
     Main_empty(inUseObj.table);
     Main_HideWarningDialog();

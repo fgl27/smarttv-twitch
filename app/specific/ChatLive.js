@@ -135,6 +135,14 @@ var ChatLive_Show_TimeStamp;
 var ChatLive_ClearChat;
 
 function ChatLive_SetOptions(chat_number, Channel_id, selectedChannel) {
+
+    Chat_Id[chat_number] = (new Date()).getTime();
+
+    ChatLive_selectedChannel_id[chat_number] = Channel_id;
+    ChatLive_selectedChannel[chat_number] = selectedChannel;
+    if (ChatLive_selectedChannel[chat_number])
+        ChatLive_selectedChannel[chat_number] = ChatLive_selectedChannel[chat_number].toLowerCase();
+
     ChatLive_User_Set = AddUser_IsUserSet();
 
     ChatLive_Logging = Settings_value.chat_logging.defaultValue;
@@ -159,13 +167,6 @@ function ChatLive_SetOptions(chat_number, Channel_id, selectedChannel) {
         ChatLive_User_Regex_Search = new RegExp('@' + AddUser_UsernameArray[0].name + '(?=\\s|$)', "i");
         ChatLive_User_Regex_Replace = new RegExp('@' + AddUser_UsernameArray[0].name, "gi");
     }
-
-    Chat_Id[chat_number] = (new Date()).getTime();
-
-    ChatLive_selectedChannel_id[chat_number] = Channel_id;
-    ChatLive_selectedChannel[chat_number] = selectedChannel;
-    if (ChatLive_selectedChannel[chat_number])
-        ChatLive_selectedChannel[chat_number] = ChatLive_selectedChannel[chat_number].toLowerCase();
 
     ChatLive_loadEmotesChannelbttv(chat_number, Chat_Id[chat_number]);
     ChatLive_loadEmotesChannelffz(chat_number, Chat_Id[chat_number]);

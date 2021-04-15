@@ -15,6 +15,7 @@ var UserLiveFeed_Feedid;
 var UserLiveFeed_FocusClass = 'feed_thumbnail_focused';
 var UserLiveFeed_PreventAddfocus = false;
 var UserLiveFeed_PreventHide = false;
+var UserLiveFeed_Sort = 0;
 
 var UserLiveFeed_CheckNotifycation = false;
 var UserLiveFeed_WasLiveidObject = {};
@@ -58,6 +59,7 @@ function UserLiveFeed_StartLoad(PreventAddfocus) {
         Play_FeedPos = 0;
         UserLiveFeed_idObject = {};
         Main_updateclock();
+        UserLiveFeed_Sort = Settings_value.live_feed_sort.defaultValue;
 
         UserLiveFeed_loadDataPrepare();
         UserLiveFeed_CheckToken();
@@ -166,7 +168,7 @@ function UserLiveFeed_loadChannelUserLiveGet(theUrl) {
     xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwitchV5Json);
     if (UserLiveFeed_token) xmlHttp.setRequestHeader(Main_Authorization, UserLiveFeed_token);
 
-    xmlHttp.ontimeout = function() {};
+    xmlHttp.ontimeout = function() { };
 
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState === 4) {
@@ -458,7 +460,8 @@ function UserLiveFeed_ShowFeed(PreventAddfocus) {
         Play_FeedOldUserName = AddUser_UsernameArray[0].name;
     }
 
-    if (!hasuser || !UserLiveFeed_ThumbNull(0, UserLiveFeed_ids[0])) UserLiveFeed_status = false;
+    if (!hasuser || !UserLiveFeed_ThumbNull(0, UserLiveFeed_ids[0]) ||
+        !Main_A_equals_B(UserLiveFeed_Sort, Settings_value.live_feed_sort.defaultValue)) UserLiveFeed_status = false;
 
     if (!UserLiveFeed_status && !UserLiveFeed_loadingData) UserLiveFeed_StartLoad(PreventAddfocus);
 

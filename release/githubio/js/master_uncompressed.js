@@ -16785,7 +16785,8 @@
         if (Play_FeedOldUserName !== AddUser_UsernameArray[0].name) UserLiveFeed_status = false;
         Play_FeedOldUserName = AddUser_UsernameArray[0].name;
 
-        if (!UserLiveFeed_ThumbNull(0, UserLiveFeed_ids[0])) UserLiveFeed_status = false;
+        if (!UserLiveFeed_ThumbNull(0, UserLiveFeed_ids[0]) ||
+            !Main_A_equals_B(UserLiveFeed_Sort, Settings_value.live_feed_sort.defaultValue)) UserLiveFeed_status = false;
 
         if (!UserLiveFeed_status && !UserLiveFeed_loadingData) UserLiveFeed_StartLoad();
 
@@ -17070,6 +17071,7 @@
     var UserLiveFeed_FocusClass = 'feed_thumbnail_focused';
     var UserLiveFeed_PreventAddfocus = false;
     var UserLiveFeed_PreventHide = false;
+    var UserLiveFeed_Sort = 0;
 
     var UserLiveFeed_CheckNotifycation = false;
     var UserLiveFeed_WasLiveidObject = {};
@@ -17113,6 +17115,7 @@
             Play_FeedPos = 0;
             UserLiveFeed_idObject = {};
             Main_updateclock();
+            UserLiveFeed_Sort = Settings_value.live_feed_sort.defaultValue;
 
             UserLiveFeed_loadDataPrepare();
             UserLiveFeed_CheckToken();
@@ -17513,7 +17516,8 @@
             Play_FeedOldUserName = AddUser_UsernameArray[0].name;
         }
 
-        if (!hasuser || !UserLiveFeed_ThumbNull(0, UserLiveFeed_ids[0])) UserLiveFeed_status = false;
+        if (!hasuser || !UserLiveFeed_ThumbNull(0, UserLiveFeed_ids[0]) ||
+            !Main_A_equals_B(UserLiveFeed_Sort, Settings_value.live_feed_sort.defaultValue)) UserLiveFeed_status = false;
 
         if (!UserLiveFeed_status && !UserLiveFeed_loadingData) UserLiveFeed_StartLoad(PreventAddfocus);
 

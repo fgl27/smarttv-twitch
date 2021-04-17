@@ -771,8 +771,7 @@ function Main_checkVersion() {
             TizenVersion = null,
             fw = null,
             value = 0,
-            Main_tvModel,
-            Main_currentVersion;
+            Main_tvModel
 
         try {
             Appversion = tizen.application.getAppInfo().version;
@@ -784,7 +783,6 @@ function Main_checkVersion() {
         } catch (e) { }
 
         if (Appversion !== null && TizenVersion !== null && Main_tvModel !== null && fw !== null) {
-            Main_currentVersion = Appversion;
 
             Main_versionTag = 'APP ' + STR_VERSION + Appversion + '.' + Main_minversion +
                 (Main_isReleased ? '' : '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-weight: bold;"> TEST ONLY</div><br><div style="display: inline-block; color: #FF0000; font-size: 110%; font-weight: bold;">Don\'t use this version unless you are testing or debugging... Go back to github and download the correct release zip that is only 12kb</div>') + STR_BR + 'Tizen ' + STR_VERSION +
@@ -804,12 +802,6 @@ function Main_checkVersion() {
     }
     Main_RunningTime = Date.now();
 }
-
-//function Main_needUpdate(version) {
-//    version = version.split(".");
-//    return (parseFloat(version[0] + '.' + version[1]) < parseFloat(Main_stringVersion)) ||
-//        (parseInt(version[2]) < parseInt(Main_stringVersion_Min.split(".")[1]));
-//}
 
 function Main_empty(el) {
     el = document.getElementById(el);

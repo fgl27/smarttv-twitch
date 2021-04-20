@@ -1,4 +1,4 @@
-// more keys at http://developer.samsung.com/tv/develop/guides/user-interaction/remote-control/
+// more keys at https://developer.samsung.com/smarttv/develop/guides/user-interaction/remote-control.html
 var KEY_PAUSE = 19;
 var KEY_PLAY = 415;
 var KEY_PLAYPAUSE = 10252;
@@ -19,18 +19,21 @@ var KEY_INFO = 457;
 var KEY_RETURN = 10009;
 var KEY_RETURN_Q = 81; //key q
 
-var KEY_KEYBOARD_BACKSPACE = 8; // http://developer.samsung.com/tv/develop/guides/user-interaction/keyboardime
-var KEY_KEYBOARD_DONE = 65376;
-var KEY_KEYBOARD_SPACE = 32;
-var KEY_KEYBOARD_DELETE_ALL = 46;
-
+// ColorFX____ keys
 var KEY_RED = 403;
 var KEY_GREEN = 404;
 var KEY_YELLOW = 405;
 var KEY_BLUE = 406;
 var KEY_KEYBOARD_CANCEL = 65385;
 
-var TV_Keys = ['ChannelUp',
+// http://developer.samsung.com/tv/develop/guides/user-interaction/keyboardime
+var KEY_KEYBOARD_BACKSPACE = 8;
+var KEY_KEYBOARD_DONE = 65376;
+var KEY_KEYBOARD_SPACE = 32;
+var KEY_KEYBOARD_DELETE_ALL = 46;
+
+var TV_Keys = [
+    'ChannelUp',
     'ChannelDown',
     'MediaRewind',
     'MediaFastForward',
@@ -43,8 +46,21 @@ var TV_Keys = ['ChannelUp',
     'ColorF2Yellow',
     'ColorF3Blue',
     'Guide',
-    'Info'];
+    'Info'
+];
 
+//Some device may not have all keys, with causes crash when trying to register it
+function TVKeyValue_regKey(key) {
+    try {
+        tizen.tvinputdevice.registerKey(key);
+    } catch (e) {
+        console.log('Registering key ' + key + ' error');
+        console.log(e);
+    }
+}
+
+// This fun only gets called on a browser
+// Used for testing on a none TV device
 function TVKeyValue_fixKey() {
     KEY_RETURN = 49;
     KEY_PG_DOWN = 34;
@@ -64,11 +80,3 @@ function TVKeyValue_fixKey() {
     KEY_MEDIAFASTFORWARD = 80; //key P
 }
 
-function TVKeyValue_regKey(key) {
-    try {
-        tizen.tvinputdevice.registerKey(key);
-    } catch (e) {
-        console.log('Registering key ' + key + ' error');
-        console.log(e);
-    }
-}

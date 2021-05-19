@@ -1002,7 +1002,7 @@
 
     function calculateFontSizeTizen() {
         if (!Main_IsNotBrowser) calculateFontSize();
-    } // more keys at http://developer.samsung.com/tv/develop/guides/user-interaction/remote-control/
+    } // more keys at https://developer.samsung.com/smarttv/develop/guides/user-interaction/remote-control.html
     var KEY_PAUSE = 19;
     var KEY_PLAY = 415;
     var KEY_PLAYPAUSE = 10252;
@@ -1023,18 +1023,21 @@
     var KEY_RETURN = 10009;
     var KEY_RETURN_Q = 81; //key q
 
-    var KEY_KEYBOARD_BACKSPACE = 8; // http://developer.samsung.com/tv/develop/guides/user-interaction/keyboardime
-    var KEY_KEYBOARD_DONE = 65376;
-    var KEY_KEYBOARD_SPACE = 32;
-    var KEY_KEYBOARD_DELETE_ALL = 46;
-
+    // ColorFX____ keys
     var KEY_RED = 403;
     var KEY_GREEN = 404;
     var KEY_YELLOW = 405;
     var KEY_BLUE = 406;
     var KEY_KEYBOARD_CANCEL = 65385;
 
-    var TV_Keys = ['ChannelUp',
+    // http://developer.samsung.com/tv/develop/guides/user-interaction/keyboardime
+    var KEY_KEYBOARD_BACKSPACE = 8;
+    var KEY_KEYBOARD_DONE = 65376;
+    var KEY_KEYBOARD_SPACE = 32;
+    var KEY_KEYBOARD_DELETE_ALL = 46;
+
+    var TV_Keys = [
+        'ChannelUp',
         'ChannelDown',
         'MediaRewind',
         'MediaFastForward',
@@ -1050,6 +1053,18 @@
         'Info'
     ];
 
+    //Some device may not have all keys, with causes crash when trying to register it
+    function TVKeyValue_regKey(key) {
+        try {
+            tizen.tvinputdevice.registerKey(key);
+        } catch (e) {
+            console.log('Registering key ' + key + ' error');
+            console.log(e);
+        }
+    }
+
+    // This fun only gets called on a browser
+    // Used for testing on a none TV device
     function TVKeyValue_fixKey() {
         KEY_RETURN = 49;
         KEY_PG_DOWN = 34;
@@ -1069,14 +1084,6 @@
         KEY_MEDIAFASTFORWARD = 80; //key P
     }
 
-    function TVKeyValue_regKey(key) {
-        try {
-            tizen.tvinputdevice.registerKey(key);
-        } catch (e) {
-            console.log('Registering key ' + key + ' error');
-            console.log(e);
-        }
-    }
     //Variable initialization
     var AddCode_loadingDataTry = 0;
     var AddCode_loadingDataTryMax = 5;
@@ -6103,7 +6110,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'March 29 2021';
+    var Main_minversion = 'May 19 2021';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
     var Main_ClockOffset = 0;
@@ -6755,8 +6762,7 @@
                 TizenVersion = null,
                 fw = null,
                 value = 0,
-                Main_tvModel,
-                Main_currentVersion;
+                Main_tvModel;
 
             try {
                 Appversion = tizen.application.getAppInfo().version;
@@ -6768,7 +6774,6 @@
             } catch (e) {}
 
             if (Appversion !== null && TizenVersion !== null && Main_tvModel !== null && fw !== null) {
-                Main_currentVersion = Appversion;
 
                 Main_versionTag = 'APP ' + STR_VERSION + Appversion + '.' + Main_minversion +
                     (Main_isReleased ? '' : '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-weight: bold;"> TEST ONLY</div><br><div style="display: inline-block; color: #FF0000; font-size: 110%; font-weight: bold;">Don\'t use this version unless you are testing or debugging... Go back to github and download the correct release zip that is only 12kb</div>') + STR_BR + 'Tizen ' + STR_VERSION +
@@ -6788,12 +6793,6 @@
         }
         Main_RunningTime = Date.now();
     }
-
-    //function Main_needUpdate(version) {
-    //    version = version.split(".");
-    //    return (parseFloat(version[0] + '.' + version[1]) < parseFloat(Main_stringVersion)) ||
-    //        (parseInt(version[2]) < parseInt(Main_stringVersion_Min.split(".")[1]));
-    //}
 
     function Main_empty(el) {
         el = document.getElementById(el);
@@ -8584,11 +8583,24 @@
     }
 
     function Play_setDisplayRect(isfull) {
+        var res, Is_4_by_3;
+
+        if (Play_isOn)
+            res = Play_qualities[Play_qualityIndex].resolution.split('x');
+        else if (PlayVod_isOn)
+            res = PlayVod_qualities[PlayVod_qualityIndex].resolution.split('x');
+        // for clips there is no info about resolution that can be used here
+
+        if (res)
+            Is_4_by_3 = (parseInt(res[0]) / parseInt(res[1])) < 1.7;
 
         try {
-            Play_avplay.setDisplayMethod("PLAYER_DISPLAY_MODE_AUTO_ASPECT_RATIO");
+            Play_avplay.setDisplayMethod(
+                Is_4_by_3 ?
+                "PLAYER_DISPLAY_MODE_LETTER_BOX" : "PLAYER_DISPLAY_MODE_FULL_SCREEN"
+            );
         } catch (e) {
-            console.log("setDisplayMethod " + e);
+            console.log("setDisplayMethod Is_4_by_3 " + Is_4_by_3 + " e " + e);
         }
 
         if (isfull) {
@@ -8600,19 +8612,9 @@
             }
 
         } else {
-            var res, Is_4_by_3;
-
-            if (Play_isOn)
-                res = Play_qualities[Play_qualityIndex].resolution.split('x');
-            else if (PlayVod_isOn)
-                res = PlayVod_qualities[PlayVod_qualityIndex].resolution.split('x');
-
-            if (res)
-                Is_4_by_3 = (parseInt(res[0]) / parseInt(res[1])) < 1.7;
 
             // Chat is 25% of the screen, resize to 75% and center left
             try {
-
                 if (Is_4_by_3)
                     Play_avplay.setDisplayRect(0, 0, screen.width * 0.75, screen.height);
                 else
@@ -15126,7 +15128,7 @@
             case KEY_ENTER:
                 if (!Search_cursorY) Search_inputFocus();
                 else {
-                    if (Main_SearchInput.value !== '' && Main_SearchInput.value !== null) {
+                    if (Main_SearchInput.value && Main_SearchInput.value !== '') {
                         Main_values.Search_data = Main_SearchInput.value;
                         Main_SearchInput.value = '';
                         Search_loadData();

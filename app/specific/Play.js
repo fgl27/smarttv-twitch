@@ -305,11 +305,24 @@ function Play_SetFullScreen(isfull) {
 }
 
 function Play_setDisplayRect(isfull) {
+    var res, Is_4_by_3;
+
+    if (Play_isOn)
+        res = Play_qualities[Play_qualityIndex].resolution.split('x');
+    else if (PlayVod_isOn)
+        res = PlayVod_qualities[PlayVod_qualityIndex].resolution.split('x');
+    // for clips there is no info about resolution that can be used here
+
+    if (res)
+        Is_4_by_3 = (parseInt(res[0]) / parseInt(res[1])) < 1.7;
 
     try {
-        Play_avplay.setDisplayMethod("PLAYER_DISPLAY_MODE_AUTO_ASPECT_RATIO");
+        Play_avplay.setDisplayMethod(
+            Is_4_by_3 ?
+                "PLAYER_DISPLAY_MODE_LETTER_BOX" : "PLAYER_DISPLAY_MODE_FULL_SCREEN"
+        );
     } catch (e) {
-        console.log("setDisplayMethod " + e);
+        console.log("setDisplayMethod Is_4_by_3 " + Is_4_by_3 + " e " + e);
     }
 
     if (isfull) {
@@ -321,19 +334,9 @@ function Play_setDisplayRect(isfull) {
         }
 
     } else {
-        var res, Is_4_by_3;
-
-        if (Play_isOn)
-            res = Play_qualities[Play_qualityIndex].resolution.split('x');
-        else if (PlayVod_isOn)
-            res = PlayVod_qualities[PlayVod_qualityIndex].resolution.split('x');
-
-        if (res)
-            Is_4_by_3 = (parseInt(res[0]) / parseInt(res[1])) < 1.7;
 
         // Chat is 25% of the screen, resize to 75% and center left
         try {
-
             if (Is_4_by_3)
                 Play_avplay.setDisplayRect(0, 0, screen.width * 0.75, screen.height);
             else

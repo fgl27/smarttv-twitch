@@ -107,7 +107,7 @@ function Search_handleKeyDown(event) {
         case KEY_ENTER:
             if (!Search_cursorY) Search_inputFocus();
             else {
-                if (Main_SearchInput.value !== '' && Main_SearchInput.value !== null) {
+                if (Main_SearchInput.value && Main_SearchInput.value !== '') {
                     Main_values.Search_data = Main_SearchInput.value;
                     Main_SearchInput.value = '';
                     Search_loadData();

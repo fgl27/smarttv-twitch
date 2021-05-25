@@ -303,11 +303,12 @@ If you have a problem on connecting refer back to **[Account and Downloads:](htt
 
 ### Install the application:
 
-* If yours device uses square icons on the home screen (only devices running Tizen 5.5 and above need this, most of this devices are 2020 or newer models) as the bellow image shows, before the next step you need to set the proper icon, to do that is very simple, just delete the file **icon.png** and rename the **icon_square.png** to **icon.png** 
+* If yours device uses square icons on the home screen (only devices running Tizen 5.5 and above need this, most of this devices are 2020 or newer models) as the bellow image shows, before the next step you need to set the proper icon, to do that is very simple, just delete the file **icon.png** and rename the **icon_square.png** to **icon.png**, if by mistake you used the wrong icon to install the app, you need to reinstall the app with the correct icon but before uninstall the old app, if that doesn't work then power-off the TV by unplugging it from the wall, after an power-on it must be OK.
 * Now the installation, left click on the folder **4.0.1_VX...etc** to select it, then right click > Run as > **1 Tizen Web Application**, the installation will start
 * If everything goes OK, the app will be opened in a few seconds on the TV, and you can start using it
 
 ![install_app7](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app7.png)
+
 ![icon_square](https://fgl27.github.io/smarttv-twitch/screenshot/install/icon_square.png)
 
 * If it fails during the installation, make sure you don't have any other Twitch.TV applications installed on the TV. To uninstall the app manually, just open the **"apps"** application, find all Twitch.TV apps you have installed in **"my app"** tab, hold down the enter/select key on the top of the app and choose delete. After you have deleted all Twitch.TV apps, try to install again.

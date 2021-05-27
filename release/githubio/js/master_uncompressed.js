@@ -7546,6 +7546,7 @@
     }
 
     var PlayClip_BaseClipUrl = 'https://gql.twitch.tv/gql';
+    var PlayClip_postMessage = '{"operationName":"VideoAccessToken_Clip","variables":{"slug":"%x"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"36b89d2507fce29e5ca551df756d27c1cfe079e2609642b4390aa4c35796eb11"}}}';
 
     function PlayClip_loadDataRequest() {
 
@@ -7574,11 +7575,7 @@
             }
         };
 
-        //    xmlHttp.send('{"query":"\\n query getClipStatus($slug:ID!) {\\n clip(slug: $slug) {\\n videoQualities {\\n frameRate\\n quality\\n sourceURL\\n }\\n }\\n }\\n","variables":{"slug":"' +
-        //    ChannelClip_playUrl +'"}}');
-
-        xmlHttp.send('{"query":"\\n {\\n clip(slug: \\"' + ChannelClip_playUrl +
-            '\\") {\\n videoQualities {\\n frameRate\\n quality\\n sourceURL\\n }\\n }\\n }\\n"}');
+        xmlHttp.send(PlayClip_postMessage.replace('%x', ChannelClip_playUrl));
     }
 
     function PlayClip_loadDataSuccess410() {
@@ -7667,8 +7664,10 @@
         PlayClip_qualities = [];
 
         response = JSON.parse(response);
+        var token;
 
         if (response && response.hasOwnProperty('data') && response.data.hasOwnProperty('clip')) {
+            token = "?sig=" + encodeURIComponent(response.data.clip.playbackAccessToken.signature) + "&token=" + encodeURIComponent(response.data.clip.playbackAccessToken.value);
             response = response.data.clip.videoQualities;
 
             for (var i = 0; i < response.length; i++) {
@@ -7676,12 +7675,12 @@
                 if (!PlayClip_qualities.length) {
                     PlayClip_qualities.push({
                         'id': response[i].quality + 'p' + PlayClip_FrameRate(response[i].frameRate) + ' | source | mp4',
-                        'url': response[i].sourceURL
+                        'url': response[i].sourceURL + token
                     });
                 } else {
                     PlayClip_qualities.push({
                         'id': response[i].quality + 'p' + PlayClip_FrameRate(response[i].frameRate) + ' | mp4',
-                        'url': response[i].sourceURL
+                        'url': response[i].sourceURL + token
                     });
                 }
             }

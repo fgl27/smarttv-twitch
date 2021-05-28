@@ -227,11 +227,11 @@ sudo apt-get install openjdk-8-jdk
 
 ![mainsdk](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_2.png)
 
-* Second tab **(Extension SDK)** under **TV Extensions-5.X** (or wherever newer/older X.X TV version there is) install **Web app. Development**, install **Samsung Certificate Extension** and under **TV Extension Tools** install **Web app. Tools**
+* Second tab **(Extension SDK)** under **TV Extensions-X.X** (or wherever newer/older X.X TV version there is) install **Web app. Development**, install **Samsung Certificate Extension** and under **TV Extension Tools** install **Web app. Tools**
 
 ![extensionsdk](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_4.png)
 
-* After latest update of Tizen Studio version 4.1 the TV Extensions became unavailable, this is a Tizen studio bug that may already be fixed but if that is still a issue when you are reading this check this... [Missing TV extension on Package Manager](https://github.com/fgl27/smarttv-twitch/issues/157#issuecomment-757519336)
+* After latest update of Tizen Studio version 4.1 the TV Extensions became unavailable, this is a Tizen studio bug that may already be fixed but if that is still a issue when you are reading this check this... [Missing TV extension on Package Manager](https://github.com/fgl27/smarttv-twitch/issues/157#issuecomment-842215657)
 * Tizen is always changing the packages that are available some packages may became deprecated and not show anymore, proceed with the installation process even if packages aren't available for you, report a issue if the application doesn't install but make sure you go to all steps at least once again after a problem just revise it all before reporting.*
 * After everything finishes installing as you close the package manager it will ask if you want to open the **Tizen Studio** - click YES to open it. On windows it may ask you to give firewall permission for Tizen.
 
@@ -287,7 +287,7 @@ If you have a problem on connecting refer back to **[Account and Downloads:](htt
 
 ### Setup the application:
 
-* **[Download and extract the release_4_0_1_V7.zip file Click here, this is the application recipe file](https://github.com/fgl27/smarttv-twitch/releases/download/4.0.1_V7/4.0.1_V7.zip)**
+* **[Download and extract the release_4_0_1_V8.zip file Click here, this is the application recipe file](https://github.com/fgl27/smarttv-twitch/releases/download/4.0.1_V8/4.0.1_V8.zip)**
 
 * Making the app, Top menu > File >Import > Tizen > Tizen Project > Click Browser > Select the extraced folder > Click Next > Click Finish
 * Wait for it to load
@@ -299,7 +299,11 @@ If you have a problem on connecting refer back to **[Account and Downloads:](htt
 ![install_app5](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app5.png)
 ![install_app5](https://fgl27.github.io/smarttv-twitch/screenshot/install/install_app6.png)
 
-* After latest update of Tizen Studio version 4.1 the TV Extensions became unavailable causing a error on the above step, this is a Tizen studio bug that may already be fixed but if that is still a issue when you are reading this check this... [Missing TV extension on Package Manager](https://github.com/fgl27/smarttv-twitch/issues/157#issuecomment-757519336)
+* **Version** on the above image is the TV Extensions-X.X that you install on the bellow image, make sure to selected here is the same version number from the one you installed, as Tizen may receive updates and the day you are reading this 6.0 isn't available
+
+![extensionsdk](https://fgl27.github.io/smarttv-twitch/screenshot/install/sdk_4.png)
+
+* After latest update of Tizen Studio version 4.1 the TV Extensions became unavailable causing a error on the above step, this is a Tizen studio bug that may already be fixed but if that is still a issue when you are reading this check this... [Missing TV extension on Package Manager](https://github.com/fgl27/smarttv-twitch/issues/157#issuecomment-842215657)
 
 ### Install the application:
 

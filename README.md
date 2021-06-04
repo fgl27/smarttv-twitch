@@ -307,7 +307,9 @@ If you have a problem on connecting refer back to **[Account and Downloads:](htt
 
 ### Install the application:
 
-* If yours device uses square icons on the home screen (only devices running Tizen 5.5 and above need this, most of this devices are 2020 or newer models) as the bellow image shows, before the next step you need to set the proper icon, to do that is very simple, just delete the file **icon.png** and rename the **icon_square.png** to **icon.png**, if by mistake you used the wrong icon to install the app, you need to reinstall the app with the correct icon but before uninstall the old app, if that doesn't work then power-off the TV by unplugging it from the wall, after an power-on it must be OK.
+* If yours device uses square icons on the home screen (only devices running Tizen 5.5 and above need this, most of this devices are 2020 or newer models) as the bellow image shows, before the next step you need to set the proper icon, to do that is very simple, just delete the file **icon.png** and rename the **icon_square.png** to **icon.png**, if by mistake you used the wrong icon to install the app, you need to reinstall the app. You need to uninstall the app from your TV, then go to config.xml file. Then on Tizen tab generate new application ID and save using `ctrl + s` or `cmd + s`. This will ensure new icon is picked up everytime  without rebooting your television.
+![image](https://user-images.githubusercontent.com/9083268/120811869-c0564e00-c54c-11eb-9525-4c0e534baa2c.png)
+
 * Now the installation, left click on the folder **4.0.1_VX...etc** to select it, then right click > Run as > **1 Tizen Web Application**, the installation will start
 * If everything goes OK, the app will be opened in a few seconds on the TV, and you can start using it
 

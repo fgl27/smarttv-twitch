@@ -12746,14 +12746,24 @@
 
     function Screens_loadDatafail() {
         inUseObj.loadingData = false;
+
         if (!inUseObj.itemsCount) {
+
             Sidepannel_SetTopOpacity(Main_values.Main_Go);
             inUseObj.FirstLoad = false;
             Main_HideLoadDialog();
             Main_showWarningDialog(STR_REFRESH_PROBLEM);
-            inUseObj.key_exit();
             Main_ShowElement('topbar');
             Main_ShowElement('side_panel_new_holder');
+
+            if (inUseObj.HasSwitches) {
+
+                inUseObj.emptyContent = true;
+                inUseObj.addSwitches();
+                Screens_loadDataSuccessFinish();
+
+            } else inUseObj.key_exit();
+
         } else inUseObj.dataEnded = true;
     }
 

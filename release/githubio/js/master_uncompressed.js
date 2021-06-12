@@ -4508,7 +4508,7 @@
 
         ChatLive_socket[chat_number].onclose =
             function(event) {
-                //Main_Log(JSON.stringify(event) + ' onclose main ');
+                if (!Main_isReleased) Main_Log(JSON.stringify(event) + ' onclose main ');
                 ChatLive_LineAddErro('Websocket closed remotely... ' + JSON.stringify(event), chat_number);
                 ChatLive_loaded[chat_number] = false;
                 ChatLive_Check(chat_number, id, ChatLive_ReTryDelay, true);
@@ -4516,7 +4516,7 @@
 
         ChatLive_socket[chat_number].onerror =
             function(error) {
-                //Main_Log(JSON.stringify(error) + ' erro main');
+                if (!Main_isReleased) Main_Log(JSON.stringify(error) + ' erro main');
                 ChatLive_LineAddErro('Error... ' + JSON.stringify(error), chat_number);
                 ChatLive_loaded[chat_number] = false;
                 ChatLive_Check(chat_number, id, ChatLive_ReTryDelay, true);
@@ -4744,7 +4744,7 @@
 
         ChatLive_socketSend.onclose =
             function(event) {
-                //Main_Log(JSON.stringify(event) + ' onclose send');
+                if (!Main_isReleased) Main_Log(JSON.stringify(event) + ' onclose send');
                 ChatLive_LineAddErro('Websocket closed remotely... ' + JSON.stringify(event), 0, true);
                 ChatLive_socketSendJoin = false;
                 ChatLive_socketSendCheck(chat_number, id, ChatLive_ReTryDelay, true);
@@ -4752,7 +4752,7 @@
 
         ChatLive_socketSend.onerror =
             function(error) {
-                //Main_Log(JSON.stringify(error) + ' error send');
+                if (!Main_isReleased) Main_Log(JSON.stringify(error) + ' error send');
                 ChatLive_LineAddErro('Error... ' + JSON.stringify(error), 0, true);
                 ChatLive_socketSendJoin = false;
                 ChatLive_socketSendCheck(chat_number, id, ChatLive_ReTryDelay, true);

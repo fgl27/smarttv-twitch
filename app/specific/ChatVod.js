@@ -215,11 +215,11 @@ function Chat_loadSeven_tvGlobalEmotes(tryes) {
         'https://api.7tv.app/v2/emotes/global',
         tryes,
         Chat_loadEmotesSuccessSeven_tv,
-        Chat_loadEmotesErrorffz
+        Chat_loadEmotesErrorSeven_tv
     );
 }
 
-function Chat_loadEmotesErrorffz(tryes) {
+function Chat_loadEmotesErrorSeven_tv(tryes) {
     if (tryes < DefaultHttpGetReTryMax) Chat_loadSeven_tvGlobalEmotes(tryes + 1);
 }
 

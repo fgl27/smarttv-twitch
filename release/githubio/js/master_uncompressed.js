@@ -348,6 +348,8 @@
     var STR_CHAT_BTTV_STREAM;
     var STR_CHAT_FFZ_GLOBAL;
     var STR_CHAT_FFZ_STREAM;
+    var STR_CHAT_SEVENTV_GLOBAL;
+    var STR_CHAT_SEVENTV_STREAM;
     var STR_CHAT_AT_STREAM;
     var STR_CHAT_RESULT;
     var STR_CHAT_SEND;
@@ -871,6 +873,8 @@
         STR_CHAT_BTTV_STREAM = "BTTV streamer";
         STR_CHAT_FFZ_GLOBAL = "FFZ global";
         STR_CHAT_FFZ_STREAM = "FFZ streamer";
+        STR_CHAT_SEVENTV_GLOBAL = "7TV global";
+        STR_CHAT_SEVENTV_STREAM = "7TV streamer";
         STR_CHAT_AT_STREAM = "@streamer";
         STR_CHAT_RESULT = "In Chat expected result:";
         STR_CHAT_SEND = "Send";
@@ -2630,7 +2634,8 @@
 
     var ChatLiveControls_inputFocusId;
     var ChatLiveControls_keyBoardOn = false;
-    var ChatLiveControls_cursor = 5;
+    var ChatLiveControls_cursor_default = 6;
+    var ChatLiveControls_cursor = ChatLiveControls_cursor_default;
     var ChatLiveControls_Channel = 0;
     var ChatLiveControls_LastChannel = '';
 
@@ -2770,7 +2775,7 @@
     function ChatLiveControls_KeyboardDismiss() {
         Main_clearTimeout(ChatLiveControls_inputFocusId);
         ChatLiveControls_RemoveinputFocus(true);
-        ChatLiveControls_cursor = 5;
+        ChatLiveControls_cursor = ChatLiveControls_cursor_default;
         ChatLiveControls_refreshInputFocusTools();
     }
 
@@ -2780,7 +2785,7 @@
     }
 
     function ChatLiveControls_resetInputFocusTools() {
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 12; i++)
             Main_RemoveClass('chat_send_button' + i, 'button_chat_focused');
     }
 
@@ -2830,6 +2835,10 @@
 
         } else if (ChatLiveControls_cursor === 5) {
 
+            ChatLiveControls_SetEmotesDiv(extraEmotesDone.seven_tvGlobal, STR_CHAT_SEVENTV_GLOBAL);
+
+        } else if (ChatLiveControls_cursor === 6) {
+
             if (Main_ChatLiveInput.value !== '' && Main_ChatLiveInput.value !== null) {
 
                 if (ChatLiveControls_CanSend()) {
@@ -2845,21 +2854,25 @@
 
             } else ChatLiveControls_showWarningDialog(STR_SEARCH_EMPTY, 1000);
 
-        } else if (ChatLiveControls_cursor === 6 && ChatLiveControls_CanSendAnyEmote() && ChatLiveControls_CanSend()) {
+        } else if (ChatLiveControls_cursor === 7 && ChatLiveControls_CanSendAnyEmote() && ChatLiveControls_CanSend()) {
 
             ChatLiveControls_UpdateTextInput('@' + Main_values.Play_selectedChannelDisplayname);
 
-        } else if (ChatLiveControls_cursor === 7) {
+        } else if (ChatLiveControls_cursor === 8) {
 
             ChatLiveControls_SetEmotesDiv(userEmote[AddUser_UsernameArray[0].id], STR_CHAT_TW_EMOTES);
 
-        } else if (ChatLiveControls_cursor === 8) {
+        } else if (ChatLiveControls_cursor === 9) {
 
             ChatLiveControls_SetEmotesDiv(extraEmotesDone.bttv[ChatLive_selectedChannel_id[ChatLiveControls_Channel]], STR_CHAT_BTTV_STREAM);
 
-        } else if (ChatLiveControls_cursor === 9) {
+        } else if (ChatLiveControls_cursor === 10) {
 
             ChatLiveControls_SetEmotesDiv(extraEmotesDone.ffz[ChatLive_selectedChannel_id[ChatLiveControls_Channel]], STR_CHAT_FFZ_STREAM);
+
+        } else if (ChatLiveControls_cursor === 11) {
+
+            ChatLiveControls_SetEmotesDiv(extraEmotesDone.seven_tv[ChatLive_selectedChannel_id[ChatLiveControls_Channel]], STR_CHAT_SEVENTV_STREAM);
 
         }
     }
@@ -2871,25 +2884,25 @@
                 break;
             case KEY_LEFT:
                 ChatLiveControls_cursor--;
-                if (ChatLiveControls_cursor < 0) ChatLiveControls_cursor = 9;
+                if (ChatLiveControls_cursor < 0) ChatLiveControls_cursor = 11;
                 ChatLiveControls_refreshInputFocusTools();
                 break;
             case KEY_RIGHT:
                 ChatLiveControls_cursor++;
-                if (ChatLiveControls_cursor > 9) ChatLiveControls_cursor = 0;
+                if (ChatLiveControls_cursor > 11) ChatLiveControls_cursor = 0;
                 ChatLiveControls_refreshInputFocusTools();
                 break;
             case KEY_UP:
-                if (ChatLiveControls_cursor > 4) {
-                    ChatLiveControls_cursor -= 5;
+                if (ChatLiveControls_cursor > 5) {
+                    ChatLiveControls_cursor -= 6;
                     ChatLiveControls_refreshInputFocusTools();
                 } else {
                     ChatLiveControls_inputFocus();
                 }
                 break;
             case KEY_DOWN:
-                if (ChatLiveControls_cursor < 5) {
-                    ChatLiveControls_cursor += 5;
+                if (ChatLiveControls_cursor < 6) {
+                    ChatLiveControls_cursor += 6;
                     ChatLiveControls_refreshInputFocusTools();
                 } else {
                     ChatLiveControls_inputFocus();
@@ -3135,7 +3148,7 @@
             Main_removeEventListener("keydown", ChatLiveControls_handleKeyDown);
 
             Main_addEventListener("keydown", ChatLiveControls_EmotesEvent);
-            ChatLiveControls_resetInputFocusTools();
+            //ChatLiveControls_resetInputFocusTools();
 
             Main_getElementById('chat_emotes').style.transform = '';
             ChatLiveControls_EmotesUpdateCounter(0);
@@ -3605,6 +3618,7 @@
     var extraEmotesDone = {
         bttv: {},
         ffz: {},
+        seven_tv: {},
         cheers: {},
         BadgesChannel: {}
     };
@@ -3739,6 +3753,7 @@
 
         ChatLive_loadEmotesChannelbttv(chat_number, Chat_Id[chat_number]);
         ChatLive_loadEmotesChannelffz(chat_number, Chat_Id[chat_number]);
+        ChatLive_loadEmotesChannelseven_tv(chat_number, Chat_Id[chat_number]);
 
         ChatLive_loadBadgesChannel(chat_number, Chat_Id[chat_number]);
         ChatLive_loadCheersChannel(chat_number, Chat_Id[chat_number]);
@@ -4200,9 +4215,9 @@
         ChatLive_loadEmotesffz(JSON.parse(data), chat_number, false);
     }
 
-    function ChatLive_loadEmotesffz(data, chat_number, skipChannel) {
-        if (!skipChannel) extraEmotesDone.ffz[ChatLive_selectedChannel_id[chat_number]] = {};
-        else extraEmotesDone.ffzGlobal = {};
+    function ChatLive_loadEmotesffz(data, chat_number, isGlobal) {
+        if (isGlobal) extraEmotesDone.ffzGlobal = {};
+        else extraEmotesDone.ffz[ChatLive_selectedChannel_id[chat_number]] = {};
 
         var url, chat_div, id;
 
@@ -4233,15 +4248,15 @@
                         };
 
                         //Don't copy to prevent shallow clone
-                        if (!skipChannel) {
-                            extraEmotesDone.ffz[ChatLive_selectedChannel_id[chat_number]][emoticon.name] = {
+                        if (isGlobal) {
+                            extraEmotesDone.ffzGlobal[emoticon.name] = {
                                 code: emoticon.name,
                                 id: id,
                                 chat_div: chat_div,
                                 '4x': url
                             };
                         } else {
-                            extraEmotesDone.ffzGlobal[emoticon.name] = {
+                            extraEmotesDone.ffz[ChatLive_selectedChannel_id[chat_number]][emoticon.name] = {
                                 code: emoticon.name,
                                 id: id,
                                 chat_div: chat_div,
@@ -4255,6 +4270,79 @@
         } catch (e) {
             Main_Log('ChatLive_loadEmotesffz ' + e);
         }
+
+    }
+
+    function ChatLive_loadEmotesChannelseven_tv(chat_number, id) {
+        if (id !== Chat_Id[chat_number]) return;
+
+        if (!extraEmotesDone.seven_tv[ChatLive_selectedChannel_id[chat_number]]) {
+
+            BasexmlHttpGet(
+                'https://api.7tv.app/v2/users/' + encodeURIComponent(ChatLive_selectedChannel_id[chat_number]) + "/emotes",
+                DefaultHttpGetTimeout * 2,
+                0,
+                null,
+                ChatLive_loadEmotesChannelseven_tvSuccess,
+                noop_fun,
+                chat_number,
+                id
+            );
+
+        } else {
+
+            ChatLive_updateExtraEmotes(extraEmotesDone.seven_tv[ChatLive_selectedChannel_id[chat_number]]);
+
+        }
+    }
+
+    function ChatLive_loadEmotesChannelseven_tvSuccess(data, chat_number, id) {
+        if (id !== Chat_Id[chat_number]) return;
+        ChatLive_loadEmotesseven_tv(JSON.parse(data), chat_number, false);
+    }
+
+    function ChatLive_loadEmotesseven_tv(data, chat_number, isGlobal) {
+        if (isGlobal) extraEmotesDone.seven_tvGlobal = {};
+        else extraEmotesDone.seven_tv[ChatLive_selectedChannel_id[chat_number]] = {};
+
+        var url, chat_div, id;
+
+        try {
+            data.forEach(function(emote) {
+
+                url = emote.urls[3][1];
+                chat_div = emoteTemplate(url);
+                id = emote.name + emote.id;
+
+                extraEmotes[emote.name] = {
+                    code: emote.name,
+                    id: id,
+                    chat_div: chat_div,
+                    '4x': url
+                };
+
+                //Don't copy to prevent shallow clone
+                if (isGlobal) {
+                    extraEmotesDone.seven_tvGlobal[emote.name] = {
+                        code: emote.name,
+                        id: id,
+                        chat_div: chat_div,
+                        '4x': url
+                    };
+                } else {
+                    extraEmotesDone.seven_tv[ChatLive_selectedChannel_id[chat_number]][emote.name] = {
+                        code: emote.name,
+                        id: id,
+                        chat_div: chat_div,
+                        '4x': url
+                    };
+                }
+
+            });
+        } catch (e) {
+            Main_Log('ChatLive_loadEmotesseven_tvChannel ' + e);
+        }
+
     }
 
     function ChatLive_PreLoadChat(chat_number, id) {
@@ -5500,6 +5588,8 @@
         if (!Chat_LoadGlobalBadges) Chat_loadBadgesGlobalRequest(0);
         if (!extraEmotesDone.bttvGlobal) Chat_loadBTTVGlobalEmotes(0);
         if (!extraEmotesDone.ffzGlobal) Chat_loadEmotesffz(0);
+        if (!extraEmotesDone.Seven_tvGlobal) Chat_loadSeven_tvGlobalEmotes(0);
+
         ChatLiveControls_SetEmojisObj();
     }
 
@@ -5632,6 +5722,24 @@
             Main_Log('Chat_loadEmotesbttvGlobal ' + e);
         }
 
+    }
+
+    function Chat_loadSeven_tvGlobalEmotes(tryes) {
+        Chat_BaseLoadUrl(
+            'https://api.7tv.app/v2/emotes/global',
+            tryes,
+            Chat_loadEmotesSuccessSeven_tv,
+            Chat_loadEmotesErrorSeven_tv
+        );
+    }
+
+    function Chat_loadEmotesErrorSeven_tv(tryes) {
+        if (tryes < DefaultHttpGetReTryMax) Chat_loadSeven_tvGlobalEmotes(tryes + 1);
+    }
+
+
+    function Chat_loadEmotesSuccessSeven_tv(data) {
+        ChatLive_loadEmotesseven_tv(JSON.parse(data), 0, true);
     }
 
     function Chat_loadEmotesffz(tryes) {
@@ -6384,11 +6492,13 @@
         Main_textContent("chat_send_button2", STR_CHAT_UNICODE_EMOJI);
         Main_textContent("chat_send_button3", STR_CHAT_BTTV_GLOBAL);
         Main_textContent("chat_send_button4", STR_CHAT_FFZ_GLOBAL);
-        Main_textContent("chat_send_button5", STR_CHAT_SEND);
-        Main_textContent("chat_send_button6", STR_CHAT_AT_STREAM);
-        Main_textContent("chat_send_button7", STR_CHAT_TW_EMOTES);
-        Main_textContent("chat_send_button8", STR_CHAT_BTTV_STREAM);
-        Main_textContent("chat_send_button9", STR_CHAT_FFZ_STREAM);
+        Main_textContent("chat_send_button5", STR_CHAT_SEVENTV_GLOBAL);
+        Main_textContent("chat_send_button6", STR_CHAT_SEND);
+        Main_textContent("chat_send_button7", STR_CHAT_AT_STREAM);
+        Main_textContent("chat_send_button8", STR_CHAT_TW_EMOTES);
+        Main_textContent("chat_send_button9", STR_CHAT_BTTV_STREAM);
+        Main_textContent("chat_send_button10", STR_CHAT_FFZ_STREAM);
+        Main_textContent("chat_send_button11", STR_CHAT_SEVENTV_STREAM);
         Main_textContent("chat_result", STR_CHAT_RESULT);
         ChatLiveControls_OptionsUpdate_defautls();
     }

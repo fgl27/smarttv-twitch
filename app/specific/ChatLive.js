@@ -696,8 +696,9 @@ function ChatLive_loadEmotesChannelseven_tv(chat_number, id) {
 
     if (!extraEmotesDone.seven_tv[ChatLive_selectedChannel_id[chat_number]]) {
 
-        BaseXmlHttpGet(
+        BasexmlHttpGet(
             'https://api.7tv.app/v2/users/' + encodeURIComponent(ChatLive_selectedChannel_id[chat_number]) + "/emotes",
+            DefaultHttpGetTimeout * 2,
             0,
             null,
             ChatLive_loadEmotesChannelseven_tvSuccess,

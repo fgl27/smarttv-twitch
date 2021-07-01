@@ -287,7 +287,7 @@ If you have a problem on connecting refer back to **[Account and Downloads:](htt
 
 ### Setup the application:
 
-* **[Download and extract the release_4_0_1_V8.zip file Click here, this is the application recipe file](https://github.com/fgl27/smarttv-twitch/releases/download/4.0.1_V8/4.0.1_V8.zip)**
+* **[Download and extract the release_4_0_1_V9.zip file Click here, this is the application recipe file](https://github.com/fgl27/smarttv-twitch/releases/download/4.0.1_V8/4.0.1_V9.zip)**
 
 * Making the app, Top menu > File >Import > Tizen > Tizen Project > Click Browser > Select the extraced folder > Click Next > Click Finish
 * Wait for it to load

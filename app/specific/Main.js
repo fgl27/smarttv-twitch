@@ -1326,7 +1326,7 @@ function Main_RemoveClassWithEle(element, mclass) {
 }
 
 function Main_emptyWithEle(el) {
-    el.textContent = '';
+    while (el.firstChild) el.removeChild(el.firstChild);
 }
 
 function Main_ShowElementWithEle(element) {

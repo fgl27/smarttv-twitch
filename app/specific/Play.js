@@ -1945,17 +1945,24 @@ function Play_OpenGame(PlayVodClip) {
 }
 
 function Play_FollowUnfollow() {
-    if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
-        if (AddCode_IsFollowing) AddCode_UnFollow();
-        else AddCode_Follow();
-    } else {
-        Play_showWarningDialog(STR_NOKEY_WARN);
-        Play_IsWarning = true;
-        window.setTimeout(function() {
-            Play_HideWarningDialog();
-            Play_IsWarning = false;
-        }, 2000);
-    }
+    // if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
+    //     if (AddCode_IsFollowing) AddCode_UnFollow();
+    //     else AddCode_Follow();
+    // } else {
+    //     Play_showWarningDialog(STR_NOKEY_WARN);
+    //     Play_IsWarning = true;
+    //     window.setTimeout(function() {
+    //         Play_HideWarningDialog();
+    //         Play_IsWarning = false;
+    //     }, 2000);
+    // }
+
+    Play_showWarningDialog(STR_FOLLOW_ISSUE);
+    Play_IsWarning = true;
+    window.setTimeout(function() {
+        Play_HideWarningDialog();
+        Play_IsWarning = false;
+    }, 2000);
 }
 
 function Play_qualityDisplay(getQualitiesCount, qualityIndex, callback) {

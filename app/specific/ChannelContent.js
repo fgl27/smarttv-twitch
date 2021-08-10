@@ -348,15 +348,17 @@ function ChannelContent_keyEnter() {
                 Screens_init();
             });
         } else if (ChannelContent_cursorX === 2) {
-            if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
-                AddCode_PlayRequest = false;
-                AddCode_Channel_id = Main_values.Main_selectedChannel_id;
-                if (AddCode_IsFollowing) AddCode_UnFollow();
-                else AddCode_Follow();
-            } else {
-                Main_showWarningDialog(STR_NOKEY_WARN);
-                window.setTimeout(Main_HideWarningDialog, 2000);
-            }
+            // if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
+            //     AddCode_PlayRequest = false;
+            //     AddCode_Channel_id = Main_values.Main_selectedChannel_id;
+            //     if (AddCode_IsFollowing) AddCode_UnFollow();
+            //     else AddCode_Follow();
+            // } else {
+            //     Main_showWarningDialog(STR_NOKEY_WARN);
+            //     window.setTimeout(Main_HideWarningDialog, 2000);
+            // }
+            Main_showWarningDialog(STR_FOLLOW_ISSUE);
+            window.setTimeout(Main_HideWarningDialog, 2000);
         }
     } else {
         document.body.removeEventListener("keydown", ChannelContent_handleKeyDown);

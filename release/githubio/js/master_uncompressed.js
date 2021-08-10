@@ -143,6 +143,7 @@
     var STR_OAUTH_FAIL;
     var STR_NOKEY;
     var STR_NOKEY_WARN;
+    var STR_FOLLOW_ISSUE;
     var STR_RESET;
     var STR_CLIP;
     var STR_CHANNEL_CONT;
@@ -673,6 +674,7 @@
         STR_OAUTH_FAIL_USER = "The added key doesn\'t belong to the user ";
         STR_NOKEY = "No user";
         STR_NOKEY_WARN = "Set user and an authentication key to be able to follow/unfollow";
+        STR_FOLLOW_ISSUE = "Third party apps can no longer follow/unfollow channels";
         STR_NOKUSER_WARN = "Set a user first";
         STR_RESET = "Restart the";
         STR_CLIP = " Clip";
@@ -2458,15 +2460,17 @@
                     Screens_init();
                 });
             } else if (ChannelContent_cursorX === 2) {
-                if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
-                    AddCode_PlayRequest = false;
-                    AddCode_Channel_id = Main_values.Main_selectedChannel_id;
-                    if (AddCode_IsFollowing) AddCode_UnFollow();
-                    else AddCode_Follow();
-                } else {
-                    Main_showWarningDialog(STR_NOKEY_WARN);
-                    window.setTimeout(Main_HideWarningDialog, 2000);
-                }
+                // if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
+                //     AddCode_PlayRequest = false;
+                //     AddCode_Channel_id = Main_values.Main_selectedChannel_id;
+                //     if (AddCode_IsFollowing) AddCode_UnFollow();
+                //     else AddCode_Follow();
+                // } else {
+                //     Main_showWarningDialog(STR_NOKEY_WARN);
+                //     window.setTimeout(Main_HideWarningDialog, 2000);
+                // }
+                Main_showWarningDialog(STR_FOLLOW_ISSUE);
+                window.setTimeout(Main_HideWarningDialog, 2000);
             }
         } else {
             document.body.removeEventListener("keydown", ChannelContent_handleKeyDown);
@@ -10359,17 +10363,24 @@
     }
 
     function Play_FollowUnfollow() {
-        if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
-            if (AddCode_IsFollowing) AddCode_UnFollow();
-            else AddCode_Follow();
-        } else {
-            Play_showWarningDialog(STR_NOKEY_WARN);
-            Play_IsWarning = true;
-            window.setTimeout(function() {
-                Play_HideWarningDialog();
-                Play_IsWarning = false;
-            }, 2000);
-        }
+        // if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
+        //     if (AddCode_IsFollowing) AddCode_UnFollow();
+        //     else AddCode_Follow();
+        // } else {
+        //     Play_showWarningDialog(STR_NOKEY_WARN);
+        //     Play_IsWarning = true;
+        //     window.setTimeout(function() {
+        //         Play_HideWarningDialog();
+        //         Play_IsWarning = false;
+        //     }, 2000);
+        // }
+
+        Play_showWarningDialog(STR_FOLLOW_ISSUE);
+        Play_IsWarning = true;
+        window.setTimeout(function() {
+            Play_HideWarningDialog();
+            Play_IsWarning = false;
+        }, 2000);
     }
 
     function Play_qualityDisplay(getQualitiesCount, qualityIndex, callback) {

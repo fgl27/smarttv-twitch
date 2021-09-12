@@ -123,8 +123,8 @@ function Chat_loadBadgesGlobalSuccess(responseText) {
     Chat_LoadGlobalBadges = true;
 }
 
-function Chat_loadBadgesTransform(responseText) {
-    var versions, property, version, url, innerHTML = [];
+function Chat_loadBadgesTransform(responseText, checkSubMissing) {
+    var versions, property, version, url, innerHTML = [], versionInt;
 
     innerHTML[0] = '';
     innerHTML[1] = '';
@@ -135,6 +135,20 @@ function Chat_loadBadgesTransform(responseText) {
             url = Chat_BasetagCSSUrl(versions[version].image_url_4x);
             innerHTML[0] += Chat_BasetagCSS(property + 0, version, url);
             innerHTML[1] += Chat_BasetagCSS(property + 1, version, url);
+
+            //some channel may be missing 0 3 6 12 etc badges but they have 2000 2003 etc
+            if (checkSubMissing) {
+
+                versionInt = parseInt(version) -
+                    parseInt(version.toString()[0]) * Math.pow(10, version.length - 1);
+
+                if (versionInt > -1 && !versions.hasOwnProperty(versionInt)) {
+
+                    innerHTML[0] += Chat_BasetagCSS(property + 0, versionInt, url);
+                    innerHTML[1] += Chat_BasetagCSS(property + 1, versionInt, url);
+                }
+
+            }
         }
     }
 

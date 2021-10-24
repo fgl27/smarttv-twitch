@@ -2090,9 +2090,10 @@ function Play_CheckHost(responseObj, id) {
 
         if (responseObj.status === 200) {
 
-            var response = JSON.parse(responseObj.responseText).data.user.hosting;
+            var data = JSON.parse(responseObj.responseText).data;
 
-            if (response) {
+            if (data.user && data.user.hosting) {
+                var response = data.user.hosting;
 
                 Play_TargetHost = response;
 

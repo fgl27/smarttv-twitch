@@ -673,6 +673,7 @@ var AddCode_redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githu
 var AddCode_clientId = "ypvnuqrh98wqz1sr0ov3fgfu4jh1yx";//public but get yours link above is free
 var AddCode_client_secret;//none public get yours link above is free
 var AddCode_client_backup;
+var AddCode_main_token;
 
 var Play_Headers;
 

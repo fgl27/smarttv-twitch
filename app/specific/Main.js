@@ -110,6 +110,7 @@ var Main_AcceptHeader = 'Accept';
 var Main_TwitchV5Json = 'application/vnd.twitchtv.v5+json';
 var Main_clientIdHeader = 'Client-ID';
 var Main_kraken_api = 'https://api.twitch.tv/kraken/';
+var Main_helix_api = 'https://api.twitch.tv/helix/';
 var Main_Authorization = 'Authorization';
 var Main_OAuth = 'OAuth ';
 var Main_TwithcV5Flag = '&api_version=5';
@@ -1154,21 +1155,34 @@ function Main_PrintUnicode(string) {
         console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
 }
 
-function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, key, id) {
+var Main_Bearer_Headers = [
+    [Main_clientIdHeader, AddCode_clientId],
+    ['Authorization', 'Bearer ' + AddCode_main_token]
+];
+
+function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, use_helix, key, id) {
     var xmlHttp = new XMLHttpRequest();
 
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Timeout;
 
-    Main_Headers[2][1] = access_token;
+    if (use_helix) {
 
-    for (var i = 0; i < HeaderQuatity; i++)
-        xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
+        for (var i = 0; i < Main_Bearer_Headers.length; i++)
+            xmlHttp.setRequestHeader(Main_Bearer_Headers[i][0], Main_Bearer_Headers[i][1]);
 
+    } else {
+        Main_Headers[2][1] = access_token;
+
+        for (var i = 0; i < HeaderQuatity; i++)
+            xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
+
+    }
     xmlHttp.ontimeout = function() { };
 
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState === 4) {
+
             if (xmlHttp.status === 200) {
                 callbackSucess(xmlHttp.responseText, key, id);
             } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2

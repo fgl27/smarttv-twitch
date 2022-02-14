@@ -100,8 +100,9 @@ var Base_obj = {
         } else Screens_OpenSidePanel();
     },
     concatenate: function(responseText) {
-        //console.log(responseText);
+
         if (this.data) {
+
             responseText = JSON.parse(responseText);
 
             if (responseText[this.object]) {
@@ -111,10 +112,12 @@ var Base_obj = {
 
             this.setMax(responseText);
         } else {
+
             responseText = JSON.parse(responseText);
 
             this.data = responseText[this.object];
             if (this.data) {
+
                 this.offset = this.data.length;
                 this.setMax(responseText);
             } else this.data = [];
@@ -508,13 +511,20 @@ var Base_Live_obj = {
     thumbclass: 'stream_thumbnail_live_holder',
     img_404: IMG_404_VIDEO,
     setMax: function(tempObj) {
-        this.MaxOffset = tempObj._total;
+        if (this.use_helix) {
 
-        if (!tempObj[this.object]) this.dataEnded = true;
-        else if (typeof this.MaxOffset === 'undefined') {
-            if (tempObj[this.object].length < 90) this.dataEnded = true;
+            this.cursor = tempObj.pagination.cursor
+            if (this.cursor === '') this.dataEnded = true;
+
         } else {
-            if (this.data.length >= this.MaxOffset) this.dataEnded = true;
+            this.MaxOffset = tempObj._total;
+
+            if (!tempObj[this.object]) this.dataEnded = true;
+            else if (typeof this.MaxOffset === 'undefined') {
+                if (tempObj[this.object].length < 90) this.dataEnded = true;
+            } else {
+                if (this.data.length >= this.MaxOffset) this.dataEnded = true;
+            }
         }
     },
     check_offset: function() {
@@ -529,25 +539,39 @@ var Base_Live_obj = {
         this.addCellTemp(cell);
     },
     addCellTemp: function(cell) {
-        if (!this.idObject[cell.channel._id]) {
+        if (!this.idObject[cell.user_id]) {
 
             this.itemsCount++;
-            this.idObject[cell.channel._id] = 1;
-
-            this.row.appendChild(
-                Screens_createCellLive(
-                    this.row_id + '_' + this.coloumn_id,
-                    [cell.channel.name, cell.channel._id, Main_is_rerun(cell.broadcast_platform)],
-                    this.ids,
-                    [cell.preview.template.replace("{width}x{height}", Main_VideoSize),
-                    cell.channel.display_name,
-                    cell.channel.status,
-                    cell.game,
-                    STR_SINCE + Play_streamLiveAt(cell.created_at) + STR_SPACE + STR_FOR + Main_addCommas(cell.viewers) +
-                    STR_SPACE + STR_VIEWER,
-                    Main_videoqualitylang(cell.video_height, cell.average_fps, cell.channel.broadcaster_language)
-                    ]));
-
+            this.idObject[cell.user_id] = 1;
+            if (this.use_helix) {
+                this.row.appendChild(
+                    Screens_createCellLive(
+                        this.row_id + '_' + this.coloumn_id,
+                        [cell.user_login, cell.user_id, Main_is_rerun(cell.type)],
+                        this.ids,
+                        [cell.thumbnail_url.replace("{width}x{height}", Main_VideoSize),
+                        cell.user_name,
+                        cell.title,
+                        cell.game_name,
+                        STR_SINCE + Play_streamLiveAt(cell.started_at) + STR_SPACE + STR_FOR + Main_addCommas(cell.viewer_count) +
+                        STR_SPACE + STR_VIEWER,
+                        cell.language.toUpperCase()
+                        ]));
+            } else {
+                this.row.appendChild(
+                    Screens_createCellLive(
+                        this.row_id + '_' + this.coloumn_id,
+                        [cell.channel.name, cell.channel._id, Main_is_rerun(cell.broadcast_platform)],
+                        this.ids,
+                        [cell.preview.template.replace("{width}x{height}", Main_VideoSize),
+                        cell.channel.display_name,
+                        cell.channel.status,
+                        cell.game,
+                        STR_SINCE + Play_streamLiveAt(cell.created_at) + STR_SPACE + STR_FOR + Main_addCommas(cell.viewers) +
+                        STR_SPACE + STR_VIEWER,
+                        Main_videoqualitylang(cell.video_height, cell.average_fps, cell.channel.broadcaster_language)
+                        ]));
+            }
             this.coloumn_id++;
         }
     },
@@ -560,14 +584,15 @@ function ScreensObj_InitLive() {
         ids: Screens_ScreenIds('Live'),
         table: 'stream_table_live',
         screen: Main_Live,
-        object: 'streams',
+        object: 'data',
         key_pgDown: Main_Featured,
         key_pgUp: Main_Clip,
-        base_url: Main_kraken_api + 'streams?limit=' + Main_ItemsLimitMax,
+        use_helix: true,
+        base_url: Main_helix_api + 'streams?first=' + Main_ItemsLimitMax,
         set_url: function() {
-            this.check_offset();
+            //this.check_offset();
 
-            this.url = this.base_url + '&offset=' + this.offset +
+            this.url = this.base_url + (this.cursor ? '&after=' + this.cursor : '') +
                 (Main_ContentLang !== "" ? ('&language=' + Main_ContentLang) : '');
         },
         label_init: function() {
@@ -866,8 +891,10 @@ var Base_Clip_obj = {
         document.getElementById(this.table).appendChild(this.row);
     },
     setMax: function(tempObj) {
-        this.cursor = tempObj._cursor;
+
+        this.cursor = use_helix ? tempObj.pagination.cursor : tempObj._cursor;
         if (this.cursor === '') this.dataEnded = true;
+
     },
     key_play: function() {
         if (this.posY === -1) {

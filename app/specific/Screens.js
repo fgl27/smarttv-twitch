@@ -149,7 +149,7 @@ function Screens_loadDataRequest() {
     if (inUseObj.use_hls)
         BasexmlHttpGetBack(inUseObj.url + Main_TwithcV5Flag, inUseObj.loadingDataTimeout, inUseObj.HeaderQuatity, inUseObj.token, Screens_concatenate, Screens_loadDataError);
     else
-        BasexmlHttpGet(inUseObj.url + Main_TwithcV5Flag, inUseObj.loadingDataTimeout, inUseObj.HeaderQuatity, inUseObj.token, Screens_concatenate, Screens_loadDataError);
+        BasexmlHttpGet(inUseObj.url + (inUseObj.use_helix ? '' : Main_TwithcV5Flag), inUseObj.loadingDataTimeout, inUseObj.HeaderQuatity, inUseObj.token, Screens_concatenate, Screens_loadDataError, inUseObj.use_helix);
 }
 
 function Screens_loadDataError() {

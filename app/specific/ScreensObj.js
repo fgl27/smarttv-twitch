@@ -513,7 +513,7 @@ var Base_Live_obj = {
     setMax: function(tempObj) {
         if (this.use_helix) {
 
-            this.cursor = tempObj.pagination.cursor
+            this.cursor = tempObj.pagination.cursor;
             if (!this.cursor || this.cursor === '') this.dataEnded = true;
 
         } else {
@@ -558,7 +558,7 @@ var Base_Live_obj = {
                         cell.game_name,
                         STR_SINCE + Play_streamLiveAt(cell.started_at) + STR_SPACE + STR_FOR + Main_addCommas(cell.viewer_count) +
                         STR_SPACE + STR_VIEWER,
-                        cell.language.toUpperCase()
+                        '[' + cell.language.toUpperCase() + ']'
                         ]));
             } else {
 
@@ -896,8 +896,8 @@ var Base_Clip_obj = {
     },
     setMax: function(tempObj) {
 
-        this.cursor = use_helix ? tempObj.pagination.cursor : tempObj._cursor;
-        if (this.cursor === '') this.dataEnded = true;
+        this.cursor = this.use_helix ? tempObj.pagination.cursor : tempObj._cursor;
+        if (!this.cursor || this.cursor === '') this.dataEnded = true;
 
     },
     key_play: function() {
@@ -1076,7 +1076,7 @@ var Base_Game_obj = {
     },
     setMax: function(tempObj) {
         if (this.use_helix) {
-            this.cursor = tempObj.pagination.cursor
+            this.cursor = tempObj.pagination.cursor;
             if (!this.cursor || this.cursor === '') this.dataEnded = true;
         } else {
             this.MaxOffset = tempObj._total;

@@ -1165,16 +1165,17 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
 
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Timeout;
+    var i = 0;
 
     if (use_helix) {
 
-        for (var i = 0; i < Main_Bearer_Headers.length; i++)
+        for (i; i < Main_Bearer_Headers.length; i++)
             xmlHttp.setRequestHeader(Main_Bearer_Headers[i][0], Main_Bearer_Headers[i][1]);
 
     } else {
         Main_Headers[2][1] = access_token;
 
-        for (var i = 0; i < HeaderQuatity; i++)
+        for (i; i < HeaderQuatity; i++)
             xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
 
     }

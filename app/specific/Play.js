@@ -603,8 +603,8 @@ function Play_ResumeAfterOnline() {
 }
 
 function Play_updateStreamInfoStart() {
-    var theUrl = Main_kraken_api + 'streams/' + Main_values.Play_selectedChannel_id + Main_TwithcV5Flag_I;
-    BasexmlHttpGet(theUrl, Play_loadingInfoDataTimeout, 2, null, Play_updateStreamInfoStartValues, Play_updateStreamInfoStartError, false);
+    var theUrl = Main_helix_api + 'streams/?user_id=' + Main_values.Play_selectedChannel_id;
+    BasexmlHttpGet(theUrl, Play_loadingInfoDataTimeout, 2, null, Play_updateStreamInfoStartValues, Play_updateStreamInfoStartError, false, null, true);
 }
 
 function Play_partnerIcon(name, partner, islive, lang) {
@@ -631,23 +631,26 @@ function Play_updateStreamInfoStartValues(response) {
     } else Play_hideFollow();
 
     response = JSON.parse(response);
-    if (response.stream !== null) {
-        Main_values.IsRerun = Main_is_rerun(response.stream.broadcast_platform);
+    if (response.data && response.data.length) {
+        //TODO update this with a API that provides logo and is partner
+        response.stream = response.data[0];
 
-        Main_innerHTML("stream_info_title", twemoji.parse(response.stream.channel.status, false, true));
-        Main_values.Play_gameSelected = response.stream.game;
-        Play_Lang = ' [' + (response.stream.channel.broadcaster_language).toUpperCase() + ']';
+        Main_values.IsRerun = Main_is_rerun(response.stream.type);
 
-        Play_partnerIcon(Play_isHost ? Main_values.Play_DisplaynameHost : Main_values.Play_selectedChannelDisplayname, response.stream.channel.partner, true, Play_Lang);
+        Main_innerHTML("stream_info_title", twemoji.parse(response.stream.title, false, true));
+        Main_values.Play_gameSelected = response.stream.game_name;
+        Play_Lang = ' [' + (response.stream.language).toUpperCase() + ']';
+
+        Play_partnerIcon(Play_isHost ? Main_values.Play_DisplaynameHost : Main_values.Play_selectedChannelDisplayname, false, true, Play_Lang);//response.stream.channel.partner
 
         var playing = (Main_values.Play_gameSelected !== "" ? STR_PLAYING + Main_values.Play_gameSelected : "");
         Main_textContent("stream_info_game", playing);
 
-        Main_innerHTML("stream_live_viewers", STR_SPACE + STR_FOR + Main_addCommas(response.stream.viewers) + STR_SPACE + STR_VIEWER);
-        Main_values.Play_selectedChannelLogo = response.stream.channel.logo;
+        Main_innerHTML("stream_live_viewers", STR_SPACE + STR_FOR + Main_addCommas(response.stream.viewer_count) + STR_SPACE + STR_VIEWER);
+        //Main_values.Play_selectedChannelLogo = response.stream.channel.logo;
         Play_LoadLogoSucess = true;
         Play_LoadLogo(document.getElementById('stream_info_icon'), Main_values.Play_selectedChannelLogo);
-        Play_created = response.stream.created_at;
+        Play_created = response.stream.started_at;
 
         Play_controls[Play_controlsChanelCont].setLable(Main_values.Play_selectedChannelDisplayname);
         Play_controls[Play_controlsGameCont].setLable(Main_values.Play_gameSelected);
@@ -665,18 +668,21 @@ function Play_updateStreamInfoStartError() {
 }
 
 function Play_updateStreamInfo() {
-    var theUrl = Main_kraken_api + 'streams/' + Main_values.Play_selectedChannel_id + Main_TwithcV5Flag_I;
-    BasexmlHttpGet(theUrl, 3000, 2, null, Play_updateStreamInfoValues, Play_updateStreamInfoError, false);
+    var theUrl = Main_helix_api + 'streams/?user_id=' + Main_values.Play_selectedChannel_id;
+
+    BasexmlHttpGet(theUrl, 3000, 2, null, Play_updateStreamInfoValues, Play_updateStreamInfoError, false, null, true);
 }
 
 function Play_updateStreamInfoValues(response) {
     response = JSON.parse(response);
-    if (response.stream !== null) {
-        Main_innerHTML("stream_info_title", twemoji.parse(response.stream.channel.status, false, true));
-        Main_values.Play_gameSelected = response.stream.game;
+    if (response.data && response.data.length) {
+        response.stream = response.data[0];
+
+        Main_innerHTML("stream_info_title", twemoji.parse(response.stream.title, false, true));
+        Main_values.Play_gameSelected = response.stream.game_name;
         Main_textContent("stream_info_game", STR_PLAYING + Main_values.Play_gameSelected);
 
-        Main_innerHTML("stream_live_viewers", STR_SPACE + STR_FOR + Main_addCommas(response.stream.viewers) +
+        Main_innerHTML("stream_live_viewers", STR_SPACE + STR_FOR + Main_addCommas(response.stream.viewer_count) +
             STR_SPACE + STR_VIEWER);
 
         if (!Play_LoadLogoSucess) Play_LoadLogo(document.getElementById('stream_info_icon'),
@@ -2046,31 +2052,38 @@ function Play_CheckHostStart(error_410) {
     window.clearInterval(Play_streamInfoTimerId);
     window.clearInterval(Play_streamCheckId);
     if (Main_values.Play_selectedChannel_id !== '') Play_loadDataCheckHost();
-    else Play_CheckId();
+    //else Play_CheckId();
 }
 
-function Play_CheckId() {
-    BasexmlHttpGet('https://api.twitch.tv/kraken/users?login=' + Main_values.Play_selectedChannel,
-        Play_loadingDataTimeout, 2, null, Play_CheckIdValue, Play_CheckIdError, false);
-}
+// function Play_CheckId() {
+//     BasexmlHttpGet(
+//         'https://api.twitch.tv/kraken/users?login=' + Main_values.Play_selectedChannel,
+//         Play_loadingDataTimeout,
+//         2,
+//         null,
+//         Play_CheckIdValue,
+//         Play_CheckIdError,
+//         false
+//     );
+// }
 
-function Play_CheckIdValue(musers) {
-    musers = JSON.parse(musers).users[0];
-    if (musers !== undefined) {
-        Main_values.Play_selectedChannel_id = musers._id;
-        Play_loadingDataTry = 0;
-        Play_loadingDataTimeout = 2000;
-        Play_loadDataCheckHost();
-    } else Play_PlayEndStart(1);
-}
+// function Play_CheckIdValue(musers) {
+//     musers = JSON.parse(musers).users[0];
+//     if (musers !== undefined) {
+//         Main_values.Play_selectedChannel_id = musers._id;
+//         Play_loadingDataTry = 0;
+//         Play_loadingDataTimeout = 2000;
+//         Play_loadDataCheckHost();
+//     } else Play_PlayEndStart(1);
+// }
 
-function Play_CheckIdError() {
-    Play_loadingDataTry++;
-    if (Play_loadingDataTry < Play_loadingDataTryMax) {
-        Play_loadingDataTimeout += 250;
-        Play_CheckId();
-    } else Play_EndStart(false, 1);
-}
+// function Play_CheckIdError() {
+//     Play_loadingDataTry++;
+//     if (Play_loadingDataTry < Play_loadingDataTryMax) {
+//         Play_loadingDataTimeout += 250;
+//         Play_CheckId();
+//     } else Play_EndStart(false, 1);
+// }
 
 var Play_loadDataCheckHostId;
 function Play_loadDataCheckHost() {

@@ -539,11 +539,14 @@ var Base_Live_obj = {
         this.addCellTemp(cell);
     },
     addCellTemp: function(cell) {
-        if (!this.idObject[cell.user_id]) {
+        var id_cell = this.use_helix ? cell.user_id : cell.channel._id;
+
+        if (!this.idObject[id_cell]) {
 
             this.itemsCount++;
-            this.idObject[cell.user_id] = 1;
+            this.idObject[id_cell] = 1;
             if (this.use_helix) {
+
                 this.row.appendChild(
                     Screens_createCellLive(
                         this.row_id + '_' + this.coloumn_id,
@@ -558,6 +561,7 @@ var Base_Live_obj = {
                         cell.language.toUpperCase()
                         ]));
             } else {
+
                 this.row.appendChild(
                     Screens_createCellLive(
                         this.row_id + '_' + this.coloumn_id,
@@ -1071,9 +1075,13 @@ var Base_Game_obj = {
         Main_SwitchScreenAction();
     },
     setMax: function(tempObj) {
-
-        this.MaxOffset = tempObj._total;
-        if (this.data.length >= this.MaxOffset) this.dataEnded = true;
+        if (this.use_helix) {
+            this.cursor = tempObj.pagination.cursor
+            if (this.cursor === '') this.dataEnded = true;
+        } else {
+            this.MaxOffset = tempObj._total;
+            if (this.data.length >= this.MaxOffset) this.dataEnded = true;
+        }
 
     },
     addCell: function(cell) {
@@ -1081,20 +1089,32 @@ var Base_Game_obj = {
         var hasLive = this.isLive || this.screen === Main_games;
         var game = this.hasGameProp ? cell.game : cell;
 
-        if (!this.idObject[game._id]) {
+        var id_cell = this.use_helix ? game.id : game._id;
+
+        if (!this.idObject[id_cell]) {
 
             this.itemsCount++;
-            this.idObject[game._id] = 1;
-
-            this.row.appendChild(
-                Screens_createCellGame(
-                    this.row_id + '_' + this.coloumn_id,
-                    this.ids, [game.box.template.replace("{width}x{height}", Main_GameSize),
-                    game.name,
-                    hasLive ? Main_addCommas(cell.channels) + STR_SPACE + STR_CHANNELS + STR_BR + STR_FOR +
-                        Main_addCommas(cell.viewers) + STR_SPACE + STR_VIEWER : '',
-                    game._id
-                ]));
+            this.idObject[id_cell] = 1;
+            if (this.use_helix) {
+                this.row.appendChild(
+                    Screens_createCellGame(
+                        this.row_id + '_' + this.coloumn_id,
+                        this.ids, [game.box_art_url.replace("{width}x{height}", Main_GameSize),
+                        game.name,
+                        '',
+                        id_cell
+                    ]));
+            } else {
+                this.row.appendChild(
+                    Screens_createCellGame(
+                        this.row_id + '_' + this.coloumn_id,
+                        this.ids, [game.box.template.replace("{width}x{height}", Main_GameSize),
+                        game.name,
+                        hasLive ? Main_addCommas(cell.channels) + STR_SPACE + STR_CHANNELS + STR_BR + STR_FOR +
+                            Main_addCommas(cell.viewers) + STR_SPACE + STR_VIEWER : '',
+                        id_cell
+                    ]));
+            }
 
             this.coloumn_id++;
         }
@@ -1108,12 +1128,14 @@ function ScreensObj_InitGame() {
         screen: Main_games,
         key_pgDown: Main_Vod,
         key_pgUp: Main_Featured,
-        object: 'top',
-        hasGameProp: true,
-        base_url: Main_kraken_api + 'games/top?limit=' + Main_ItemsLimitMax,
+        object: 'data',
+        use_helix: true,
+        base_url: Main_helix_api + 'games/top?first=' + Main_ItemsLimitMax,
         set_url: function() {
-            if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
-            this.url = this.base_url + '&offset=' + this.offset;
+
+            if (!this.use_helix && this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+            this.url = this.base_url + (this.cursor ? '&after=' + this.cursor : '');
+
         },
         label_init: function() {
             Sidepannel_SetDefaultLables();

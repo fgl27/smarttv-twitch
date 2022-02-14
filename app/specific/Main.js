@@ -1160,7 +1160,7 @@ var Main_Bearer_Headers = [
     ['Authorization', 'Bearer ' + AddCode_main_token]
 ];
 
-function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, use_helix, key, id) {
+function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, key, id, use_helix) {
     var xmlHttp = new XMLHttpRequest();
 
     xmlHttp.open("GET", theUrl, true);

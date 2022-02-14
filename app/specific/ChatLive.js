@@ -340,7 +340,7 @@ function ChatLive_loadChattersCheckType(chat_number, id) {
 
 function ChatLive_loadChattersViewers(chat_number, id) {
 
-    var theUrl = Main_kraken_api + 'streams/?stream_type=all&channel=' + ChatLive_selectedChannel_id[chat_number] + Main_TwithcV5Flag;
+    var theUrl = Main_helix_api + 'streams/?user_id=' + ChatLive_selectedChannel_id[chat_number];
 
     BasexmlHttpGet(
         theUrl,
@@ -350,7 +350,8 @@ function ChatLive_loadChattersViewers(chat_number, id) {
         ChatLive_loadChattersViewersSuccess,
         noop_fun,
         chat_number,
-        id
+        id,
+        true
     );
 
 }
@@ -362,11 +363,11 @@ function ChatLive_loadChattersViewersSuccess(responseText, chat_number, id) {
 
             var resultObj = JSON.parse(responseText);
 
-            if (resultObj.streams && resultObj.streams.length) {
+            if (resultObj.data && resultObj.data.length) {
 
                 Main_innerHTML(
                     "chat_loggedin" + chat_number,
-                    Main_addCommas(resultObj.streams[0].viewers) + STR_SPACE + STR_VIEWER
+                    Main_addCommas(resultObj.data[0].viewer_count) + STR_SPACE + STR_VIEWER
                 );
             }
 

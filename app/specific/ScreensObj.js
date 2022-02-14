@@ -514,7 +514,7 @@ var Base_Live_obj = {
         if (this.use_helix) {
 
             this.cursor = tempObj.pagination.cursor
-            if (this.cursor === '') this.dataEnded = true;
+            if (!this.cursor || this.cursor === '') this.dataEnded = true;
 
         } else {
             this.MaxOffset = tempObj._total;
@@ -1077,7 +1077,7 @@ var Base_Game_obj = {
     setMax: function(tempObj) {
         if (this.use_helix) {
             this.cursor = tempObj.pagination.cursor
-            if (this.cursor === '') this.dataEnded = true;
+            if (!this.cursor || this.cursor === '') this.dataEnded = true;
         } else {
             this.MaxOffset = tempObj._total;
             if (this.data.length >= this.MaxOffset) this.dataEnded = true;

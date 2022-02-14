@@ -770,15 +770,15 @@ function ScreensObj_InitAGame() {
         ids: Screens_ScreenIds('AGame'),
         table: 'stream_table_a_game',
         screen: Main_aGame,
-        object: 'streams',
+        object: 'data',
         key_pgDown: Main_Vod,
         key_pgUp: Main_Featured,
-        base_url: Main_kraken_api + 'streams?game=',
+        use_helix: true,
+        base_url: Main_helix_api + 'streams?game_id=',
         set_url: function() {
-            this.check_offset();
-
-            this.url = this.base_url + encodeURIComponent(Main_values.Main_gameSelected) +
-                '&limit=' + Main_ItemsLimitMax + '&offset=' + this.offset +
+            //this.check_offset();
+            this.url = this.base_url + encodeURIComponent(Main_values.Main_gameSelected_id) +
+                '&first=' + Main_ItemsLimitMax + (this.cursor ? '&after=' + this.cursor : '') +
                 (Main_ContentLang !== "" ? ('&language=' + Main_ContentLang) : '');
         },
         label_init: function() {
@@ -1082,6 +1082,8 @@ var Base_Game_obj = {
             this.MaxOffset = tempObj._total;
             if (this.data.length >= this.MaxOffset) this.dataEnded = true;
         }
+
+
 
     },
     addCell: function(cell) {

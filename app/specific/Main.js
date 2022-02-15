@@ -1155,9 +1155,15 @@ function Main_PrintUnicode(string) {
         console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
 }
 
+var Main_Bearer = 'Bearer ';
 var Main_Bearer_Headers = [
     [Main_clientIdHeader, AddCode_clientId],
-    ['Authorization', 'Bearer ' + AddCode_main_token]
+    ['Authorization', Main_Bearer + AddCode_main_token]
+];
+
+var Main_Bearer_User_Headers = [
+    [Main_clientIdHeader, AddCode_clientId],
+    ['Authorization', null]
 ];
 
 function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, key, id, use_helix) {
@@ -1169,8 +1175,18 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
 
     if (use_helix) {
 
-        for (i; i < Main_Bearer_Headers.length; i++)
-            xmlHttp.setRequestHeader(Main_Bearer_Headers[i][0], Main_Bearer_Headers[i][1]);
+        if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
+
+            Main_Bearer_User_Headers[1][1] = Main_Bearer + AddUser_UsernameArray[0].access_token;
+
+            for (i; i < Main_Bearer_Headers.length; i++)
+                xmlHttp.setRequestHeader(Main_Bearer_User_Headers[i][0], Main_Bearer_User_Headers[i][1]);
+
+        } else {
+
+            for (i; i < Main_Bearer_Headers.length; i++)
+                xmlHttp.setRequestHeader(Main_Bearer_Headers[i][0], Main_Bearer_Headers[i][1]);
+        }
 
     } else {
         Main_Headers[2][1] = access_token;

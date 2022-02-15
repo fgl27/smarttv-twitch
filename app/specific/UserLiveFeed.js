@@ -69,7 +69,7 @@ function UserLiveFeed_StartLoad(PreventAddfocus) {
 function UserLiveFeed_CheckToken() {
     UserLiveFeed_token = AddUser_UsernameArray[0].access_token;
     if (UserLiveFeed_token) {
-        UserLiveFeed_token = Main_OAuth + UserLiveFeed_token;
+        UserLiveFeed_token = Main_Bearer + UserLiveFeed_token;
         UserLiveFeed_loadChannelUserLive();
     } else {
         UserLiveFeed_loadDataPrepare();
@@ -147,14 +147,7 @@ function UserLiveFeed_loadChannelLive(responseText) {
 }
 
 function UserLiveFeed_loadChannelUserLive() {
-    var theUrl = Main_kraken_api + 'streams/';
-
-    if (UserLiveFeed_token) {
-        theUrl += 'followed?';
-    } else {
-        theUrl += '?channel=' + UserLiveFeed_followerChannels.join() + '&';
-    }
-    theUrl += 'limit=100&offset=0&stream_type=all' + Main_TwithcV5Flag;
+    var theUrl = Main_helix_api + 'streams/followed?user_id=' + AddUser_UsernameArray[0].id + '&first=100';
 
     UserLiveFeed_loadChannelUserLiveGet(theUrl);
 }
@@ -212,7 +205,7 @@ function UserLiveFeed_loadDataErrorLive() {
 
 function UserLiveFeed_loadDataSuccess(responseText) {
 
-    var response = JSON.parse(responseText).streams;
+    var response = JSON.parse(responseText).data;
     var response_items = response.length;
     var sorting = Settings_Obj_default('live_feed_sort');
 
@@ -261,49 +254,52 @@ function UserLiveFeed_loadDataSuccess(responseText) {
 
     for (i; i < response_items; i++) {
         stream = response[i];
-        id = stream.channel._id;
+        id = stream.user_id;
         if (!UserLiveFeed_idObject[id]) {
 
             //Check if was live if not notificate
             if (!UserLiveFeed_WasLiveidObject[AddUser_UsernameArray[0].name][id]) {
                 UserLiveFeed_NotifyLiveidObject.push({
-                    name: stream.channel.display_name,
-                    logo: stream.channel.logo,
-                    title: Main_ReplaceLargeFont(twemoji.parse(stream.channel.status)),
-                    game: stream.game,
-                    rerun: Main_is_rerun(stream.broadcast_platform),
+                    name: stream.user_name,
+                    logo: null,
+                    title: Main_ReplaceLargeFont(twemoji.parse(stream.title)),
+                    game: stream.game_name,
+                    rerun: Main_is_rerun(stream.type),
                 });
             }
 
             UserLiveFeed_idObject[id] = 1;
-            if (UserLiveFeed_LastPos !== null && UserLiveFeed_LastPos === stream.channel.name) Play_FeedPos = i;
+            if (UserLiveFeed_LastPos !== null && UserLiveFeed_LastPos === stream.user_name) Play_FeedPos = i;
 
             doc.appendChild(UserLiveFeed_CreatFeed(i,
-                [stream.channel.name, id, Main_is_rerun(stream.broadcast_platform)],
-                [stream.preview.template.replace("{width}x{height}", Main_VideoSize),
-                stream.channel.display_name,
-                stream.game,
-                Main_addCommas(stream.viewers),
-                stream.channel.status
+                [stream.user_login, id, Main_is_rerun(stream.type)],
+                [stream.thumbnail_url.replace("{width}x{height}", Main_VideoSize),
+                stream.user_name,
+                stream.game_name,
+                Main_addCommas(stream.viewer_count),
+                stream.title
                 ]));
 
             if (UserSidePannel_LastPos !== null && UserSidePannel_LastPos === stream.channel.name) Sidepannel_PosFeed = i;
 
             docside.appendChild(UserLiveFeed_CreatSideFeed(i,
-                [stream.channel.name, id, Main_is_rerun(stream.broadcast_platform)],
-                [stream.channel.name, id, stream.preview.template.replace("{width}x{height}", Main_SidePannelSize),
-                stream.channel.display_name,
-                stream.channel.status, stream.game,
-                STR_SINCE + Play_streamLiveAt(stream.created_at) + ' ' +
-                STR_FOR + Main_addCommas(stream.viewers) + STR_SPACE + STR_VIEWER,
-                Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language),
-                Main_is_rerun(stream.broadcast_platform), stream.channel.partner
+                [stream.user_login, id, Main_is_rerun(stream.type)],
+                [stream.user_login, id, stream.thumbnail_url.replace("{width}x{height}", Main_SidePannelSize),
+                stream.user_name,
+                stream.title,
+                stream.game_name,
+                STR_SINCE + Play_streamLiveAt(stream.started_at) + ' ' +
+                STR_FOR + Main_addCommas(stream.viewer_count) + STR_SPACE + STR_VIEWER,
+                '[' + stream.language.toUpperCase() + ']',
+                Main_is_rerun(stream.type), false
                 ],
-                [stream.channel.logo,
-                stream.channel.display_name,
-                stream.channel.display_name,
-                stream.game, Main_addCommas(stream.viewers)
-                ]));
+                [null,
+                    stream.user_name,
+                    stream.user_name,
+                    stream.game_name,
+                    Main_addCommas(stream.viewer_count)
+                ]
+            ));
         }
     }
 

@@ -151,14 +151,14 @@ var Settings_value = {
 };
 
 var Settings_FeedSort = [
-    [null, 'viewers', 0],
-    [null, 'viewers', 1],
-    ['channel', 'name', 1],
-    ['channel', 'name', 0],
-    [null, 'game', 1],
-    [null, 'game', 0],
-    [null, 'created_at', 0],
-    [null, 'created_at', 1]
+    [null, 'viewer_count', 0],
+    [null, 'viewer_count', 1],
+    [null, 'user_login', 1],
+    [null, 'user_login', 0],
+    [null, 'game_name', 1],
+    [null, 'game_name', 0],
+    [null, 'started_at', 0],
+    [null, 'started_at', 1]
 ];
 
 function Settings_GenerateClock() {

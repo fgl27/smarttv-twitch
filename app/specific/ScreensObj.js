@@ -677,7 +677,6 @@ function ScreensObj_InitUserLive() {
             this.url = this.base_url + 'followed?user_id=' + AddUser_UsernameArray[0].id + '&first=' + Main_ItemsLimitMax +
                 (this.cursor ? '&after=' + this.cursor : '');
 
-            console.log(this.url)
         },
         label_init: function() {
             ScreensObj_TopLableUserInit();

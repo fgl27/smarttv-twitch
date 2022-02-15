@@ -213,7 +213,6 @@ function AddCode_requestTokens() {
 }
 
 function AddCode_requestTokensReady(xmlHttp) {
-    console.log(xmlHttp)
     if (xmlHttp.readyState === 4) {
         if (xmlHttp.status === 200) {
             AddCode_requestTokensSucess(xmlHttp.responseText);

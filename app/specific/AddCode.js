@@ -11,9 +11,8 @@ var AddCode_PlayRequest = false;
 var AddCode_Channel_id = '';
 
 var AddCode_Scopes = [
-    'user_read',
-    'user_follows_edit',
-    'user_subscriptions',
+    'user:read:follows',
+    'user:read:subscriptions',
     'chat:edit',
     'chat:read'
 ];
@@ -214,6 +213,7 @@ function AddCode_requestTokens() {
 }
 
 function AddCode_requestTokensReady(xmlHttp) {
+    console.log(xmlHttp)
     if (xmlHttp.readyState === 4) {
         if (xmlHttp.status === 200) {
             AddCode_requestTokensSucess(xmlHttp.responseText);

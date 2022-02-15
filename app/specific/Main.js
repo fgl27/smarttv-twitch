@@ -1166,7 +1166,7 @@ var Main_Bearer_User_Headers = [
     ['Authorization', null]
 ];
 
-function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, key, id, use_helix) {
+function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, key, id, use_helix, skip_user_token) {
     var xmlHttp = new XMLHttpRequest();
 
     xmlHttp.open("GET", theUrl, true);
@@ -1175,7 +1175,7 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
 
     if (use_helix) {
 
-        if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
+        if (!skip_user_token && AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
 
             Main_Bearer_User_Headers[1][1] = Main_Bearer + AddUser_UsernameArray[0].access_token;
 

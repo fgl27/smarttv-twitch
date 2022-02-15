@@ -602,6 +602,35 @@ function Play_ResumeAfterOnline() {
     Play_ResumeAfterOnlineCounter++;
 }
 
+function Play_updateStreamLogo() {
+    var theUrl = Main_helix_api + 'users?id=' + Main_values.Play_selectedChannel_id;
+    BasexmlHttpGet(theUrl, Play_loadingInfoDataTimeout, 2, null, Play_updateStreamLogoValues, Play_updateStreamLogoError, false, null, true, true);
+}
+
+function Play_updateStreamLogoValues(response) {
+    response = JSON.parse(response);
+    if (response.data && response.data.length) {
+        //TODO update this with a API that provides logo and is partner
+        response.stream = response.data[0];
+
+        Play_partnerIcon(Play_isHost ? Main_values.Play_DisplaynameHost : Main_values.Play_selectedChannelDisplayname, response.stream.broadcaster_type === 'partner', true, Play_Lang);//response.stream.channel.partner
+        Main_values.Play_selectedChannelLogo = response.stream.profile_image_url;
+        Play_LoadLogoSucess = true;
+        Play_LoadLogo(document.getElementById('stream_info_icon'), Main_values.Play_selectedChannelLogo);
+    }
+}
+
+function Play_updateStreamLogoError() {
+    if (Play_loadingInfoDataTry < Play_loadingInfoDataTryMax) {
+        Play_loadingInfoDataTimeout += 500;
+        window.setTimeout(function() {
+            if (Play_isOn) Play_updateStreamLogoValues();
+        }, 750);
+    }
+    Play_loadingInfoDataTry++;
+}
+
+
 function Play_updateStreamInfoStart() {
     var theUrl = Main_helix_api + 'streams/?user_id=' + Main_values.Play_selectedChannel_id;
     BasexmlHttpGet(theUrl, Play_loadingInfoDataTimeout, 2, null, Play_updateStreamInfoStartValues, Play_updateStreamInfoStartError, false, null, true);
@@ -647,14 +676,16 @@ function Play_updateStreamInfoStartValues(response) {
         Main_textContent("stream_info_game", playing);
 
         Main_innerHTML("stream_live_viewers", STR_SPACE + STR_FOR + Main_addCommas(response.stream.viewer_count) + STR_SPACE + STR_VIEWER);
-        //Main_values.Play_selectedChannelLogo = response.stream.channel.logo;
-        Play_LoadLogoSucess = true;
-        Play_LoadLogo(document.getElementById('stream_info_icon'), Main_values.Play_selectedChannelLogo);
+
         Play_created = response.stream.started_at;
 
         Play_controls[Play_controlsChanelCont].setLable(Main_values.Play_selectedChannelDisplayname);
         Play_controls[Play_controlsGameCont].setLable(Main_values.Play_gameSelected);
     }
+
+    Play_loadingInfoDataTry = 0;
+    Play_loadingInfoDataTimeout = 3000;
+    Play_updateStreamLogo();
 }
 
 function Play_updateStreamInfoStartError() {
@@ -685,8 +716,11 @@ function Play_updateStreamInfoValues(response) {
         Main_innerHTML("stream_live_viewers", STR_SPACE + STR_FOR + Main_addCommas(response.stream.viewer_count) +
             STR_SPACE + STR_VIEWER);
 
-        if (!Play_LoadLogoSucess) Play_LoadLogo(document.getElementById('stream_info_icon'),
-            response.stream.channel.logo);
+        if (!Play_LoadLogoSucess) {
+            Play_loadingInfoDataTry = 0;
+            Play_loadingInfoDataTimeout = 3000;
+            Play_updateStreamLogo();
+        }
 
         Play_controls[Play_controlsChanelCont].setLable(Main_values.Play_selectedChannelDisplayname);
         Play_controls[Play_controlsGameCont].setLable(Main_values.Play_gameSelected);

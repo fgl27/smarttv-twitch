@@ -11,7 +11,6 @@ var Screens_SettingDoAnimations = true;
 function Screens_InitScreens() {
     //Live screens
     ScreensObj_InitLive();
-    ScreensObj_InitFeatured();
     ScreensObj_InitAGame();
     //Live user screens
     ScreensObj_InitUserLive();

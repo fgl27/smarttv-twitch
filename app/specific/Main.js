@@ -7,24 +7,23 @@ var Main_cursorYAddFocus = -1;
 var Main_Search = 0;
 var Main_Live = 1;
 var Main_Users = 2;
-var Main_Featured = 3;
-var Main_games = 4;
-var Main_Vod = 5;
-var Main_Clip = 6;
-var Main_UserLive = 7;
-var Main_usergames = 8;
-var Main_UserVod = 9;
-var Main_UserChannels = 10;
-var Main_SearchGames = 11;
-var Main_SearchLive = 12;
-var Main_SearchChannels = 13;
-var Main_ChannelContent = 14;
-var Main_ChannelVod = 15;
-var Main_ChannelClip = 16;
-var Main_addUser = 17;
-var Main_aGame = 18;
-var Main_AGameVod = 19;
-var Main_AGameClip = 20;
+var Main_games = 3;
+var Main_Vod = 4;
+var Main_Clip = 5;
+var Main_UserLive = 6;
+var Main_usergames = 7;
+var Main_UserVod = 8;
+var Main_UserChannels = 9;
+var Main_SearchGames = 10;
+var Main_SearchLive = 11;
+var Main_SearchChannels = 12;
+var Main_ChannelContent = 13;
+var Main_ChannelVod = 14;
+var Main_ChannelClip = 15;
+var Main_addUser = 16;
+var Main_aGame = 17;
+var Main_AGameVod = 18;
+var Main_AGameClip = 19;
 
 var Main_GoBefore = '';
 var Main_values = {
@@ -590,7 +589,6 @@ function Main_RemoveKeys() {
     else {
         if (Main_values.Main_Go === Main_Live) inUseObj = Live;
         else if (Main_values.Main_Go === Main_aGame) inUseObj = AGame;
-        else if (Main_values.Main_Go === Main_Featured) inUseObj = Featured;
         else if (Main_values.Main_Go === Main_games) inUseObj = Game;
         else if (Main_values.Main_Go === Main_ChannelClip) inUseObj = ChannelClip;
         else if (Main_values.Main_Go === Main_Vod) inUseObj = Vod;
@@ -658,10 +656,6 @@ Main_Switchobj[Main_UserVod] = function() {
 };
 Main_Switchobj[Main_Live] = function() {
     inUseObj = Live;
-    Screens_init();
-};
-Main_Switchobj[Main_Featured] = function() {
-    inUseObj = Featured;
     Screens_init();
 };
 Main_Switchobj[Main_AGameClip] = function() {
@@ -739,7 +733,6 @@ Main_ExitCurrentobj[Main_usergames] = Screens_exit;
 Main_ExitCurrentobj[Main_ChannelVod] = Screens_exit;
 Main_ExitCurrentobj[Main_UserVod] = Screens_exit;
 Main_ExitCurrentobj[Main_Live] = Screens_exit;
-Main_ExitCurrentobj[Main_Featured] = Screens_exit;
 Main_ExitCurrentobj[Main_AGameClip] = Screens_exit;
 Main_ExitCurrentobj[Main_AGameVod] = Screens_exit;
 Main_ExitCurrentobj[Main_Clip] = Screens_exit;
@@ -1104,7 +1097,6 @@ function Main_ReloadScreen() {
     else if (Main_values.Main_Go === Main_Users) Users_StartLoad();
     else {
         if (Main_values.Main_Go === Main_Live) inUseObj = Live;
-        else if (Main_values.Main_Go === Main_Featured) inUseObj = Featured;
         else if (Main_values.Main_Go === Main_usergames) inUseObj = UserGames;
         else if (Main_values.Main_Go === Main_aGame) inUseObj = AGame;
         else if (Main_values.Main_Go === Main_games) inUseObj = Game;

@@ -373,7 +373,7 @@ function ScreensObj_InitAGameVod() {
         HeaderQuatity: 2,
         object: 'vods',
         key_pgDown: Main_Vod,
-        key_pgUp: Main_Featured,
+        key_pgUp: Main_Users,
         ids: Screens_ScreenIds('AGameVod'),
         table: 'stream_table_a_game_vod',
         screen: Main_AGameVod,
@@ -590,7 +590,7 @@ function ScreensObj_InitLive() {
         table: 'stream_table_live',
         screen: Main_Live,
         object: 'data',
-        key_pgDown: Main_Featured,
+        key_pgDown: Main_Users,
         key_pgUp: Main_Clip,
         use_helix: true,
         base_url: Main_helix_api + 'streams?first=' + Main_ItemsLimitMax,
@@ -699,7 +699,7 @@ function ScreensObj_InitAGame() {
         screen: Main_aGame,
         object: 'data',
         key_pgDown: Main_Vod,
-        key_pgUp: Main_Featured,
+        key_pgUp: Main_Users,
         use_helix: true,
         base_url: Main_helix_api + 'streams?game_id=',
         set_url: function() {
@@ -746,43 +746,6 @@ function ScreensObj_InitAGame() {
     }, Base_obj);
 
     AGame = Screens_assign(AGame, Base_Live_obj);
-}
-
-function ScreensObj_InitFeatured() {
-    Featured = Screens_assign({
-        HeaderQuatity: 2,
-        ids: Screens_ScreenIds('Featured'),
-        table: 'stream_table_featured',
-        screen: Main_Featured,
-        key_pgDown: Main_games,
-        key_pgUp: Main_Live,
-        base_url: Main_kraken_api + 'streams/featured?limit=' + Main_ItemsLimitMax,
-        set_url: function() {
-            this.check_offset();
-
-            this.url = this.base_url + '&offset=' + this.offset +
-                (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token ? '&oauth_token=' +
-                    AddUser_UsernameArray[0].access_token : '');
-        },
-        label_init: function() {
-            Sidepannel_SetDefaultLables();
-            Main_values.Sidepannel_IsUser = false;
-            Sidepannel_SetTopOpacity(this.screen);
-
-            ScreensObj_SetTopLable(STR_FEATURED);
-        },
-        object: 'featured',
-        key_play: function() {
-            Main_OpenLiveStream(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
-        }
-    }, Base_obj);
-
-    Featured = Screens_assign(Featured, Base_Live_obj);
-
-    Featured.addCell = function(cell) {
-        cell = cell.stream;
-        this.addCellTemp(cell);
-    };
 }
 
 var Base_Clip_obj = {
@@ -946,7 +909,7 @@ function ScreensObj_InitAGameClip() {
         table: 'stream_table_a_game_clip',
         screen: Main_AGameClip,
         key_pgDown: Main_Vod,
-        key_pgUp: Main_Featured,
+        key_pgUp: Main_Users,
         periodPos: Main_getItemInt('AGameClip_periodPos', 2),
         base_url: Main_kraken_api + 'clips/top?game=',
         set_url: function() {
@@ -1056,7 +1019,7 @@ function ScreensObj_InitGame() {
         table: 'stream_table_games',
         screen: Main_games,
         key_pgDown: Main_Vod,
-        key_pgUp: Main_Featured,
+        key_pgUp: Main_Users,
         object: 'data',
         use_helix: true,
         base_url: Main_helix_api + 'games/top?first=' + Main_ItemsLimitMax,

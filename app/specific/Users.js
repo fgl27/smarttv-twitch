@@ -222,9 +222,13 @@ function Users_setRemoveDialog() {
 
 function Users_showRemoveDialog() {
     Users_setRemoveDialog();
-    if (!Users_Isautentication) Main_innerHTML("main_dialog_remove", STR_REMOVE_USER + STR_BR + AddUser_UsernameArray[Users_showUserDialogPos].name + '?');
-    else Main_innerHTML("main_dialog_remove", STR_OAUTH_IN + ' ' + AddUser_UsernameArray[Users_showUserDialogPos].name + '?');
-    Main_ShowElement('main_remove_dialog');
+
+    if (Users_showUserDialogPos > -1) {
+        if (!Users_Isautentication) Main_innerHTML("main_dialog_remove", STR_REMOVE_USER + STR_BR + AddUser_UsernameArray[Users_showUserDialogPos].name + '?');
+        else Main_innerHTML("main_dialog_remove", STR_OAUTH_IN + ' ' + AddUser_UsernameArray[Users_showUserDialogPos].name + '?');
+        Main_ShowElement('main_remove_dialog');
+    }
+
 }
 
 function Users_HideRemoveDialog() {

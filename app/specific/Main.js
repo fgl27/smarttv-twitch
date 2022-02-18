@@ -1246,6 +1246,7 @@ function BasexmlHttpGetBack(theUrl, Timeout, HeaderQuatity, access_token, callba
 
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState === 4) {
+
             if (xmlHttp.status === 200) {
                 callbackSucess(xmlHttp.responseText);
             } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2

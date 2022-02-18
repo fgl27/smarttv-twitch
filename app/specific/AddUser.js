@@ -137,13 +137,13 @@ function AddUser_KeyboardEvent(event) {
 }
 
 function AddUser_loadDataRequest() {
-    var theUrl = Main_kraken_api + 'users?login=' + encodeURIComponent(AddUser_Username) + Main_TwithcV5Flag;
+    var theUrl = Main_helix_api + 'users?login=' + encodeURIComponent(AddUser_Username);
 
-    BasexmlHttpGet(theUrl, AddUser_loadingDataTimeout, 2, null, AddUser_loadDataRequestSuccess, AddUser_loadDataError);
+    BasexmlHttpGet(theUrl, AddUser_loadingDataTimeout, 2, null, AddUser_loadDataRequestSuccess, AddUser_loadDataError, false, null, true, true);
 }
 
 function AddUser_loadDataRequestSuccess(response) {
-    if (JSON.parse(response)._total) {
+    if (JSON.parse(response).data.length) {
         Main_AddUserInput.value = '';
         document.body.removeEventListener("keydown", AddUser_handleKeyDown);
         AddUser_SaveNewUser(response);
@@ -208,14 +208,14 @@ function AddUser_UserIsSet() {
 }
 
 function AddUser_UpdateUser(position, tryes) {
-    var theUrl = Main_kraken_api + 'users?login=' + encodeURIComponent(AddUser_UsernameArray[position].name) + Main_TwithcV5Flag;
+    var theUrl = Main_helix_api + 'users?login=' + encodeURIComponent(AddUser_UsernameArray[position].name);
     var xmlHttp = new XMLHttpRequest();
 
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = 10000;
 
-    for (var i = 0; i < 2; i++)
-        xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
+    for (i; i < Main_Bearer_Headers.length; i++)
+        xmlHttp.setRequestHeader(Main_Bearer_Headers[i][0], Main_Bearer_Headers[i][1]);
 
     xmlHttp.ontimeout = function() { };
 
@@ -232,10 +232,9 @@ function AddUser_UpdateUser(position, tryes) {
 function AddUser_UpdateUsertSuccess(response, position) {
     var user = JSON.parse(response);
     if (user._total) {
-        document.body.removeEventListener("keydown", AddUser_handleKeyDown);
         user = user.users[0];
         AddUser_UsernameArray[position].display_name = user.display_name;
-        AddUser_UsernameArray[position].logo = user.logo;
+        AddUser_UsernameArray[position].logo = user.profile_image_url;
         if (!position) AddUser_UpdateSidepanel();
     }
     AddUser_SaveUserArray();
@@ -247,12 +246,14 @@ function AddUser_UpdateUserError(position, tryes) {
 }
 
 function AddUser_SaveNewUser(responseText) {
-    AddUser_Username = JSON.parse(responseText).users[0];
+
+    console.log(responseText)
+    AddUser_Username = JSON.parse(responseText).data[0];
     AddUser_UsernameArray.push({
-        name: AddUser_Username.name,
-        id: AddUser_Username._id,
+        name: AddUser_Username.login,
+        id: AddUser_Username.id,
         display_name: AddUser_Username.display_name,
-        logo: AddUser_Username.logo,
+        logo: AddUser_Username.profile_image_url,
         access_token: 0,
         refresh_token: 0,
         expires_in: 0,

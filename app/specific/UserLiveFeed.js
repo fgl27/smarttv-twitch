@@ -276,7 +276,9 @@ function UserLiveFeed_loadDataSuccessEnd(response, mapLogoPartner) {
             }
 
             UserLiveFeed_idObject[id] = 1;
-            if (UserLiveFeed_LastPos !== null && UserLiveFeed_LastPos === stream.user_name) Play_FeedPos = i;
+            if (UserLiveFeed_LastPos !== null && UserLiveFeed_LastPos === stream.user_login) {
+                Play_FeedPos = i;
+            }
 
             doc.appendChild(UserLiveFeed_CreatFeed(i,
                 [stream.user_login, id, Main_is_rerun(stream.type)],
@@ -288,7 +290,9 @@ function UserLiveFeed_loadDataSuccessEnd(response, mapLogoPartner) {
                     stream.title
                 ]));
 
-            if (UserSidePannel_LastPos !== null && UserSidePannel_LastPos === stream.user_name) Sidepannel_PosFeed = i;
+            if (UserSidePannel_LastPos !== null && UserSidePannel_LastPos === stream.user_login) {
+                Sidepannel_PosFeed = i;
+            }
 
             docside.appendChild(UserLiveFeed_CreatSideFeed(i,
                 [stream.user_login, id, Main_is_rerun(stream.type)],

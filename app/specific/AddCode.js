@@ -133,6 +133,96 @@ function AddCode_KeyboardEvent(event) {
     }
 }
 
+function AddCode_AppTokenCheck(tryes, callbackFunc, callbackFuncNOK) {
+    var xmlHttp = new XMLHttpRequest();
+
+    var url = 'https://id.twitch.tv/oauth2/validate';
+
+    xmlHttp.open("GET", url, true);
+    xmlHttp.setRequestHeader(Main_Authorization, Main_Bearer + AddCode_main_token);
+    xmlHttp.timeout = AddCode_loadingDataTimeout;
+    xmlHttp.ontimeout = function() { };
+
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) {
+
+                callbackFunc();
+
+                var data = JSON.parse(xmlHttp.responseText);
+
+                window.setTimeout(function() {
+
+                    AddCode_AppToken(0, null, null);
+
+                }, (parseInt(data.expires_in) - 60) * 1000);
+            } else if (xmlHttp.status === 401) {
+                callbackFuncNOK();
+            } else {
+                AddCode_AppTokenCheckError(tryes, callbackFunc, callbackFuncNOK);
+            }
+        }
+    };
+
+    xmlHttp.send(null);
+}
+
+function AddCode_AppTokenCheckError(tryes, callbackFuncOK, callbackFuncNOK) {
+    tryes++;
+    if (tryes < 5) AddCode_AppTokenCheck(tryes, callbackFuncOK, callbackFuncNOK);
+    else if (callbackFuncNOK) callbackFuncNOK();
+}
+
+function AddCode_AppTokenCheckSucess(responseText, callbackFunc) {
+    var response = JSON.parse(responseText);
+    if (response) {
+        AddCode_main_token = response.access_token;
+    }
+
+    if (callbackFunc) callbackFunc();
+}
+
+function AddCode_AppToken(tryes, callbackFunc, callbackFuncNOK) {
+
+    var xmlHttp = new XMLHttpRequest();
+
+    var url = 'https://id.twitch.tv/oauth2/token?client_id=' + AddCode_clientId +
+        '&client_secret=' + AddCode_client_secret +
+        '&grant_type=client_credentials';
+
+    xmlHttp.open("POST", url, true);
+    xmlHttp.timeout = AddCode_loadingDataTimeout;
+    xmlHttp.ontimeout = function() { };
+
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) {
+                AddCode_AppTokenSucess(xmlHttp.responseText, callbackFunc);
+            } else {
+                AddCode_AppTokenError(tryes, callbackFunc, callbackFuncNOK);
+            }
+        }
+    };
+
+    xmlHttp.send(null);
+}
+
+function AddCode_AppTokenError(tryes, callbackFuncOK, callbackFuncNOK) {
+    tryes++;
+    if (tryes < 5) AddCode_AppToken(tryes, callbackFuncOK, callbackFuncNOK);
+    else if (callbackFuncNOK) callbackFuncNOK();
+}
+
+function AddCode_AppTokenSucess(responseText, callbackFunc) {
+    var response = JSON.parse(responseText);
+
+    if (response) {
+        AddCode_main_token = response.access_token;
+    }
+
+    if (callbackFunc) callbackFunc();
+}
+
 function AddCode_refreshTokens(position, tryes, callbackFunc, callbackFuncNOK) {
     if (!AddUser_UsernameArray[position] || !AddUser_UsernameArray[position].access_token) return;
 
@@ -655,7 +745,7 @@ function AddCode_BasexmlHttpGetValidate(callbackready, position, tryes) {
     var xmlHttp = new XMLHttpRequest();
 
     xmlHttp.open("GET", theUrl, true);
-    xmlHttp.setRequestHeader(Main_Authorization, Main_OAuth + AddUser_UsernameArray[position].access_token);
+    xmlHttp.setRequestHeader(Main_Authorization, Main_Bearer + AddUser_UsernameArray[position].access_token);
 
     xmlHttp.timeout = 10000;
     xmlHttp.ontimeout = function() { };

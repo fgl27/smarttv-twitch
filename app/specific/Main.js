@@ -266,11 +266,20 @@ function Main_loadTranslations(language) {
             Main_ChatLiveInput = Main_getElementById("chat_send_input");
 
             AddUser_RestoreUsers();
-            //Allow page to proper load/resize and users 0 be restored before Main_initWindows
-            window.setTimeout(Main_initWindows, 500);
+
+            AddCode_AppTokenCheck(0, Main_initWindowsCheck, Main_initWindowsCheckFail);
         });
     });
 
+}
+
+function Main_initWindowsCheckFail() {
+    AddCode_AppToken(0, Main_initWindowsCheck, Main_initWindowsCheck);
+}
+
+function Main_initWindowsCheck() {
+    //Allow page to proper load/resize and users 0 be restored before Main_initWindows
+    window.setTimeout(Main_initWindows, 500);
 }
 
 function Main_initWindows() {
@@ -1171,11 +1180,14 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
 
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = Timeout;
-    var i = 0;
+    var i = 0,
+        userToken = false,
+        appToken = false;
 
     if (use_helix) {
 
         if (!skip_user_token && AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
+            userToken = true;
 
             Main_Bearer_User_Headers[1][1] = Main_Bearer + AddUser_UsernameArray[0].access_token;
 
@@ -1183,7 +1195,7 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
                 xmlHttp.setRequestHeader(Main_Bearer_User_Headers[i][0], Main_Bearer_User_Headers[i][1]);
 
         } else {
-
+            appToken = true;
             for (i; i < Main_Bearer_Headers.length; i++)
                 xmlHttp.setRequestHeader(Main_Bearer_Headers[i][0], Main_Bearer_Headers[i][1]);
         }
@@ -1202,8 +1214,14 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
 
             if (xmlHttp.status === 200) {
                 callbackSucess(xmlHttp.responseText, key, id);
-            } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
-                AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
+            } else if ((HeaderQuatity > 2 || use_helix) && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
+                if (userToken) {
+                    AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
+                } else if (appToken) {
+                    AddCode_AppToken(0, Screens_loadDataRequestStart, Screens_loadDatafail);
+                } else {
+                    calbackError(key, id);
+                }
             } else {
                 calbackError(key, id);
             }

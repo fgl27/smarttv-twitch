@@ -464,7 +464,11 @@ function UserLiveFeed_isFeedShow() {
 }
 
 function UserLiveFeed_ShowFeed(PreventAddfocus) {
-    var hasuser = AddUser_UserIsSet();
+    var hasuser = AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token;
+
+    if (!hasuser) {
+        return;
+    }
 
     if (hasuser) {
         if (Play_FeedOldUserName !== AddUser_UsernameArray[0].name) UserLiveFeed_status = false;

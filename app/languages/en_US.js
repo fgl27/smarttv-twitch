@@ -194,7 +194,7 @@ function en_USLang() {
     STR_CHAT_END = "Chat: The Chat has ended!";
     STR_TIME = ", Most recent";
     STR_VIWES = ", Most views";
-    STR_NOKEY_VIDEO_WARN = "Set an user authentication key to be able to see followed videos";
+    STR_NOKEY_VIDEO_WARN = "Set an user authentication key to be able to see followed content, navigate to the side panel (Top option) User: Switch, add, key";
     STR_SWITCH_TYPE = "Switch: Most recent or views";
     STR_ENABLE = "Enable";
     STR_DISABLE = "Disable";

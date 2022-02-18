@@ -2357,7 +2357,7 @@ function Play_handleKeyDown(e) {
                         } else PlayVod_IconsBottonFocus();
                     } else Play_BottomUpDown(1, 1);
                     Play_setHidePanel();
-                } else if (!UserLiveFeed_isFeedShow() && AddUser_UserIsSet()) UserLiveFeed_ShowFeed();
+                } else if (!UserLiveFeed_isFeedShow() && AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) UserLiveFeed_ShowFeed();
                 else if (Play_isEndDialogVisible()) {
                     Play_EndTextClear();
                     document.body.removeEventListener("keydown", Play_handleKeyDown, false);

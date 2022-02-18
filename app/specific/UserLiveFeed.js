@@ -23,7 +23,6 @@ var UserLiveFeed_NotifyLiveidObject = [];
 var UserLiveFeed_Notify = true;
 var UserLiveFeed_NotifyRunning = false;
 var UserLiveFeed_NotifyTimeout = 3000;
-var UserLiveFeed_maxChannels = 825;
 
 var UserLiveFeed_ids = ['ulf_thumbdiv', 'ulf_img', 'ulf_infodiv', 'ulf_displayname', 'ulf_streamtitle', 'ulf_streamgame', 'ulf_viwers', 'ulf_quality', 'ulf_cell', 'ulempty_', 'user_live_scroll'];
 
@@ -68,82 +67,13 @@ function UserLiveFeed_StartLoad(PreventAddfocus) {
 
 function UserLiveFeed_CheckToken() {
     UserLiveFeed_token = AddUser_UsernameArray[0].access_token;
-    if (UserLiveFeed_token) {
-        UserLiveFeed_token = Main_Bearer + UserLiveFeed_token;
-        UserLiveFeed_loadChannelUserLive();
-    } else {
-        UserLiveFeed_loadDataPrepare();
-        UserLiveFeed_token = null;
-        UserLiveFeed_loadChannels();
-    }
+    UserLiveFeed_loadChannelUserLive();
 }
 
 function UserLiveFeed_loadDataPrepare() {
     UserLiveFeed_loadingData = true;
     UserLiveFeed_loadingDataTry = 0;
     UserLiveFeed_loadingDataTimeout = 3500;
-}
-
-function UserLiveFeed_loadChannels() {
-    var theUrl = Main_kraken_api + 'users/' + encodeURIComponent(AddUser_UsernameArray[0].id) +
-        '/follows/channels?limit=100&offset=' + UserLiveFeed_loadChannelOffsset + '&sortby=last_broadcast' + Main_TwithcV5Flag;
-
-    BasexmlHttpGet(theUrl, UserLiveFeed_loadingDataTimeout, 2, null, UserLiveFeed_loadChannelLive, UserLiveFeed_loadDataError, false);
-}
-
-function UserLiveFeed_loadDataError() {
-    UserLiveFeed_loadingDataTry++;
-    if (UserLiveFeed_loadingDataTry < UserLiveFeed_loadingDataTryMax) {
-        UserLiveFeed_loadingDataTimeout += 500;
-        UserLiveFeed_loadChannels();
-    } else {
-        UserLiveFeed_loadingData = false;
-        if (!UserLiveFeed_GetSize()) {
-            Main_HideElement('dialog_loading_feed');
-            Main_HideElement('dialog_loading_side_feed');
-            if (UserLiveFeed_isFeedShow()) {
-                Play_showWarningDialog(STR_REFRESH_PROBLEM);
-                window.setTimeout(function() {
-                    Play_HideWarningDialog();
-                }, 2000);
-            }
-        } else {
-            UserLiveFeed_dataEnded = true;
-            UserLiveFeed_loadDataSuccessFinish();
-        }
-    }
-}
-
-function UserLiveFeed_loadChannelLive(responseText) {
-    var response = JSON.parse(responseText).follows,
-        response_items = response.length;
-
-    if (response_items) { // response_items here is not always 99 because banned channels, so check until it is 0
-        var x = 0,
-            max = UserLiveFeed_followerChannels.length + response_items,
-            end = false;
-
-        if (max > UserLiveFeed_maxChannels) {
-            end = true;
-            response_items = Math.min(response_items, response_items - (max - UserLiveFeed_maxChannels));
-        }
-
-        for (x; x < response_items; x++) {
-            UserLiveFeed_followerChannels.push(response[x].channel._id);
-        }
-
-        if (end) {
-            UserLiveFeed_loadDataPrepare();
-            UserLiveFeed_loadChannelUserLive();
-        } else {
-            UserLiveFeed_loadChannelOffsset += response_items;
-            UserLiveFeed_loadDataPrepare();
-            UserLiveFeed_loadChannels();
-        }
-    } else { // end
-        UserLiveFeed_loadDataPrepare();
-        UserLiveFeed_loadChannelUserLive();
-    }
 }
 
 function UserLiveFeed_loadChannelUserLive() {
@@ -252,7 +182,7 @@ function UserLiveFeed_loadDataSuccessUpdateMap(response) {
             mapLogoPartner[data[i].id] = {
                 partner: data[i].broadcaster_type === 'partner',
                 logo: data[i].profile_image_url,
-            }
+            };
         }
 
         UserLiveFeed_loadDataSuccessEnd(UserLiveFeed_loadDataSuccessResponse, mapLogoPartner);
@@ -358,7 +288,7 @@ function UserLiveFeed_loadDataSuccessEnd(response, mapLogoPartner) {
                     stream.title
                 ]));
 
-            if (UserSidePannel_LastPos !== null && UserSidePannel_LastPos === stream.channel.name) Sidepannel_PosFeed = i;
+            if (UserSidePannel_LastPos !== null && UserSidePannel_LastPos === stream.user_name) Sidepannel_PosFeed = i;
 
             docside.appendChild(UserLiveFeed_CreatSideFeed(i,
                 [stream.user_login, id, Main_is_rerun(stream.type)],

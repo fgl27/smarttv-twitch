@@ -157,9 +157,10 @@ function UserLiveFeed_loadChannelUserLiveGet(theUrl) {
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = UserLiveFeed_loadingDataTimeout;
 
-    xmlHttp.setRequestHeader(Main_clientIdHeader, AddCode_clientId);
-    xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwitchV5Json);
-    if (UserLiveFeed_token) xmlHttp.setRequestHeader(Main_Authorization, UserLiveFeed_token);
+    Main_Bearer_User_Headers[1][1] = Main_Bearer + AddUser_UsernameArray[0].access_token;
+
+    for (var i = 0; i < Main_Bearer_Headers.length; i++)
+        xmlHttp.setRequestHeader(Main_Bearer_User_Headers[i][0], Main_Bearer_User_Headers[i][1]);
 
     xmlHttp.ontimeout = function() { };
 
@@ -203,9 +204,84 @@ function UserLiveFeed_loadDataErrorLive() {
     }
 }
 
-function UserLiveFeed_loadDataSuccess(responseText) {
+var UserLiveFeed_loadDataSuccessResponse = [];
+var UserLiveFeed_loadDataSuccessUrl;
 
-    var response = JSON.parse(responseText).data;
+function UserLiveFeed_loadDataSuccess(responseText) {
+    UserLiveFeed_loadDataSuccessResponse = JSON.parse(responseText).data;
+    var userids;
+
+    for (var i = 0; i < UserLiveFeed_loadDataSuccessResponse.length; i++) {
+        if (userids) {
+            userids += '&id=' + UserLiveFeed_loadDataSuccessResponse[i].user_id;
+        } else {
+            userids = '?id=' + UserLiveFeed_loadDataSuccessResponse[i].user_id;
+        }
+    }
+
+    UserLiveFeed_loadDataSuccessUrl = Main_helix_api + 'users' + userids;
+    UserLiveFeed_loadingDataTry = 0;
+    UserLiveFeed_loadingDataTimeout = 3500;
+    UserLiveFeed_loadDataSuccessHttpRequest();
+}
+
+function UserLiveFeed_loadDataSuccessHttpRequest() {
+    BasexmlHttpGet(
+        UserLiveFeed_loadDataSuccessUrl,
+        UserLiveFeed_loadingDataTimeout,
+        2,
+        null,
+        UserLiveFeed_loadDataSuccessUpdateMap,
+        UserLiveFeed_loadDataSuccessError,
+        false,
+        null,
+        true,
+        true
+    );
+}
+
+function UserLiveFeed_loadDataSuccessUpdateMap(response) {
+    response = JSON.parse(response);
+    if (response.data && response.data.length) {
+
+        var data = response.data;
+
+        var mapLogoPartner = {};
+
+        for (var i = 0; i < data.length; i++) {
+            mapLogoPartner[data[i].id] = {
+                partner: data[i].broadcaster_type === 'partner',
+                logo: data[i].profile_image_url,
+            }
+        }
+
+        UserLiveFeed_loadDataSuccessEnd(UserLiveFeed_loadDataSuccessResponse, mapLogoPartner);
+
+    }
+}
+
+function UserLiveFeed_loadDataSuccessError() {
+    UserLiveFeed_loadingDataTry++;
+    if (UserLiveFeed_loadingDataTry < UserLiveFeed_loadingDataTryMax) {
+        UserLiveFeed_loadingDataTimeout += 500;
+        UserLiveFeed_loadDataSuccessHttpRequest();
+    } else {
+        UserLiveFeed_loadingData = false;
+        Main_HideElement('dialog_loading_feed');
+        Main_HideElement('dialog_loading_side_feed');
+        if (UserLiveFeed_isFeedShow()) {
+            Play_showWarningDialog(STR_REFRESH_PROBLEM);
+            window.setTimeout(function() {
+                Play_HideWarningDialog();
+            }, 2000);
+        }
+    }
+
+}
+
+function UserLiveFeed_loadDataSuccessEnd(response, mapLogoPartner) {
+
+    //var response = JSON.parse(responseText).data;
     var response_items = response.length;
     var sorting = Settings_Obj_default('live_feed_sort');
 
@@ -255,13 +331,14 @@ function UserLiveFeed_loadDataSuccess(responseText) {
     for (i; i < response_items; i++) {
         stream = response[i];
         id = stream.user_id;
+
         if (!UserLiveFeed_idObject[id]) {
 
             //Check if was live if not notificate
             if (!UserLiveFeed_WasLiveidObject[AddUser_UsernameArray[0].name][id]) {
                 UserLiveFeed_NotifyLiveidObject.push({
                     name: stream.user_name,
-                    logo: null,
+                    logo: mapLogoPartner[id].logo,
                     title: Main_ReplaceLargeFont(twemoji.parse(stream.title)),
                     game: stream.game_name,
                     rerun: Main_is_rerun(stream.type),
@@ -273,27 +350,31 @@ function UserLiveFeed_loadDataSuccess(responseText) {
 
             doc.appendChild(UserLiveFeed_CreatFeed(i,
                 [stream.user_login, id, Main_is_rerun(stream.type)],
-                [stream.thumbnail_url.replace("{width}x{height}", Main_VideoSize),
-                stream.user_name,
-                stream.game_name,
-                Main_addCommas(stream.viewer_count),
-                stream.title
+                [
+                    stream.thumbnail_url.replace("{width}x{height}", Main_VideoSize),
+                    stream.user_name,
+                    stream.game_name,
+                    Main_addCommas(stream.viewer_count),
+                    stream.title
                 ]));
 
             if (UserSidePannel_LastPos !== null && UserSidePannel_LastPos === stream.channel.name) Sidepannel_PosFeed = i;
 
             docside.appendChild(UserLiveFeed_CreatSideFeed(i,
                 [stream.user_login, id, Main_is_rerun(stream.type)],
-                [stream.user_login, id, stream.thumbnail_url.replace("{width}x{height}", Main_SidePannelSize),
-                stream.user_name,
-                stream.title,
-                stream.game_name,
-                STR_SINCE + Play_streamLiveAt(stream.started_at) + ' ' +
-                STR_FOR + Main_addCommas(stream.viewer_count) + STR_SPACE + STR_VIEWER,
-                '[' + stream.language.toUpperCase() + ']',
-                Main_is_rerun(stream.type), false
+                [
+                    stream.user_login, id, stream.thumbnail_url.replace("{width}x{height}", Main_SidePannelSize),
+                    stream.user_name,
+                    stream.title,
+                    stream.game_name,
+                    STR_SINCE + Play_streamLiveAt(stream.started_at) + ' ' +
+                    STR_FOR + Main_addCommas(stream.viewer_count) + STR_SPACE + STR_VIEWER,
+                    '[' + stream.language.toUpperCase() + ']',
+                    Main_is_rerun(stream.type),
+                    mapLogoPartner[id].partner
                 ],
-                [null,
+                [
+                    mapLogoPartner[id].logo,
                     stream.user_name,
                     stream.user_name,
                     stream.game_name,

@@ -610,7 +610,7 @@ function Play_updateStreamLogo() {
 function Play_updateStreamLogoValues(response) {
     response = JSON.parse(response);
     if (response.data && response.data.length) {
-        //TODO update this with a API that provides logo and is partner
+
         response.stream = response.data[0];
 
         Play_partnerIcon(Play_isHost ? Main_values.Play_DisplaynameHost : Main_values.Play_selectedChannelDisplayname, response.stream.broadcaster_type === 'partner', true, Play_Lang);//response.stream.channel.partner
@@ -661,7 +661,6 @@ function Play_updateStreamInfoStartValues(response) {
 
     response = JSON.parse(response);
     if (response.data && response.data.length) {
-        //TODO update this with a API that provides logo and is partner
         response.stream = response.data[0];
 
         Main_values.IsRerun = Main_is_rerun(response.stream.type);

@@ -372,7 +372,10 @@ function Screens_loadDataSuccessFinish() {
                 Main_values.Play_WasPlaying = 0;
             }
 
-            if (Main_values.warning_new_api2) Main_showWarningExtra(STR_WARNING_NEW);
+            if (Main_values.warning_new_api2) {
+                Main_showWarningExtra(STR_WARNING_NEW);
+                Main_GoBefore = Main_Live;
+            }
             Main_values.warning_new_api2 = false;
 
             if (Settings_value.restor_playback.defaultValue && Main_values.Play_WasPlaying && inUseObj.status) {

@@ -103,14 +103,9 @@ The key is generated on the page below. The page receives a key after you use it
 
 **The app uses the following permission:**
 
-- user_read, user_follows_edit, user_subscriptions, chat:edit, chat:read they are summarized here [authentication twitch-api-v5](https://dev.Twitch/docs/authentication#twitch-api-v5)<br>
+- user:read:follows, user:read:subscriptions, chat:edit, chat:read they are summarized here [authentication twitch-api-v5](https://dev.Twitch/docs/authentication#twitch-api-v5)<br>
 
 **How the app uses it individual permission:**
-
-**Manage your followed channels:**
-
-- The permission used for this is **user_follows_edit** the API used on this is [Follow Channel](https://dev.Twitch/docs/v5/reference/users/#follow-channel)
-- Allow to follow or unfollow streamers or games for that user (unfollow a game is current not supported by Twitch for third party app, but follow is).<br>
 
 **Send live Stream Chat and Rooms messages:**
 
@@ -118,14 +113,13 @@ The key is generated on the page below. The page receives a key after you use it
 - Allows access so you can use the app to logging in on Twitch chat using yours username to send chat messages.
 - Also enable you to receive gifted sub give for user in chat.<br>
 
-**View your email address:**
+**Read your list of follows:**
 
-- The permission used for this is **user_read** the API used on this is [Get Followed Streams](https://dev.Twitch/docs/v5/reference/streams#get-followed-streams)
-- Email will not be read! (you can search the source code if you are in doubt no user email is accessed), this permission has many uses, as the above API, it allows to access user live channels list in a faster way, the app can load user live list without this but it can be really slow if you follow too many streamers (100+ you already notice the slow down).<br>
+- The permission used for this is **user:read:follows** the API used on this is [Get Followed Streams](https://dev.Twitch/docs/v5/reference/streams#get-followed-streams)
 
 **View your paid subscriptions:**
 
-- The permission used for this is **user_subscriptions** the API's used on this are [Get User Emotes](https://dev.Twitch/docs/v5/reference/users/#get-user-emotes ) and [Check User Subscription by Channel](https://dev.Twitch/docs/v5/reference/users#check-user-subscription-by-channel)
+- The permission used for this is **user:read:subscriptions** the API's used on this are [Get User Emotes](https://dev.Twitch/docs/v5/reference/users/#get-user-emotes ) and [Check User Subscription by Channel](https://dev.Twitch/docs/v5/reference/users#check-user-subscription-by-channel)
 - Allows to get yours emotes list from all subscriptions you have, even if you aren't sub to a channel this is needed to get yours available Twitch emotes, this list will be used on the write to chat implementation.
 - Allows to check if you are sub to a particularly channel, that information is used to give a on screen warning when a content is block for Sub-only (a Sub-only chat ROOM (write mode, read will always work) or a VOD for example) and you don't have access because you aren't a sub of a particularly channel (unfortunately twitch has blocked all third party app's to access sub-only VOD's so this warning will let you know that, on the past that wasn't a issue for sub-only VOD's)<br>
 

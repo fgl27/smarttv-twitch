@@ -296,7 +296,7 @@ function UserLiveFeed_loadDataSuccessEnd(response, mapLogoPartner) {
                     STR_FOR + Main_addCommas(stream.viewer_count) + STR_SPACE + STR_VIEWER,
                     '[' + stream.language.toUpperCase() + ']',
                     Main_is_rerun(stream.type),
-                    mapLogoPartner[id] ? mapLogoPartner[id].mapLogoPartner : null
+                    mapLogoPartner[id] ? mapLogoPartner[id].partner : null
                 ],
                 [
                     mapLogoPartner[id] ? mapLogoPartner[id].logo : null,

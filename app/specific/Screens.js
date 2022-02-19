@@ -373,7 +373,7 @@ function Screens_loadDataSuccessFinish() {
             }
 
             if (Main_values.warning_new_api) Main_showWarningExtra(STR_WARNING_NEW);
-            //Main_values.warning_new_api = false;
+            Main_values.warning_new_api = false;
 
             if (Settings_value.restor_playback.defaultValue && Main_values.Play_WasPlaying && inUseObj.status) {
 

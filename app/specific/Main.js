@@ -70,17 +70,7 @@ var Main_values = {
     "AddCode_main_token": null,
 };
 
-var Main_Bearer = 'Bearer ';
 
-var Main_Bearer_User_Headers = [
-    [Main_clientIdHeader, AddCode_clientId],
-    ['Authorization', null]
-];
-
-var Main_Bearer_Headers = [
-    [Main_clientIdHeader, AddCode_clientId],
-    ['Authorization', Main_Bearer + AddCode_main_token]
-];
 
 var Main_Headers = [];
 var Main_Headers_Backup = [];
@@ -145,6 +135,18 @@ var Main_vp9supported = false; //TODO check tizen support
 var Main_ResetDownId;
 var Main_ResetAppId;
 var Main_ResetDownUPHold = false;
+
+var Main_Bearer = 'Bearer ';
+
+var Main_Bearer_User_Headers = [
+    [Main_clientIdHeader, AddCode_clientId],
+    ['Authorization', null]
+];
+
+var Main_Bearer_Headers = [
+    [Main_clientIdHeader, AddCode_clientId],
+    ['Authorization', Main_Bearer + AddCode_main_token]
+];
 //Variable initialization end
 
 // this function will be called only once the first time the app startup
@@ -1202,8 +1204,8 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
             userToken = true;
 
             Main_Bearer_User_Headers[1][1] = Main_Bearer + AddUser_UsernameArray[0].access_token;
-
-            for (i; i < Main_Bearer_Headers.length; i++)
+            console.log(Main_Bearer_User_Headers)
+            for (i; i < Main_Bearer_User_Headers.length; i++)
                 xmlHttp.setRequestHeader(Main_Bearer_User_Headers[i][0], Main_Bearer_User_Headers[i][1]);
 
         } else {
@@ -1211,7 +1213,8 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
             for (i; i < Main_Bearer_Headers.length; i++)
                 xmlHttp.setRequestHeader(Main_Bearer_Headers[i][0], Main_Bearer_Headers[i][1]);
         }
-
+        console.log('userToken ' + userToken);
+        console.log('appToken ' + appToken);
     } else {
         Main_Headers[2][1] = access_token;
 

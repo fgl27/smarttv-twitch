@@ -3,7 +3,7 @@ var UserLiveFeed_loadingData = false;
 var UserLiveFeed_loadingDataTry = 0;
 var UserLiveFeed_loadingDataTimeout = 3500;
 var UserLiveFeed_loadChannelOffsset = 0;
-var UserLiveFeed_loadingDataTryMax = 5;
+var UserLiveFeed_loadingDataTryMax = 2;
 var UserLiveFeed_dataEnded = false;
 var UserLiveFeed_followerChannels = [];
 var UserLiveFeed_idObject = {};
@@ -196,15 +196,7 @@ function UserLiveFeed_loadDataSuccessError() {
         UserLiveFeed_loadingDataTimeout += 500;
         UserLiveFeed_loadDataSuccessHttpRequest();
     } else {
-        UserLiveFeed_loadingData = false;
-        Main_HideElement('dialog_loading_feed');
-        Main_HideElement('dialog_loading_side_feed');
-        if (UserLiveFeed_isFeedShow()) {
-            Play_showWarningDialog(STR_REFRESH_PROBLEM);
-            window.setTimeout(function() {
-                Play_HideWarningDialog();
-            }, 2000);
-        }
+        UserLiveFeed_loadDataSuccessEnd(UserLiveFeed_loadDataSuccessResponse, {});
     }
 
 }
@@ -268,7 +260,7 @@ function UserLiveFeed_loadDataSuccessEnd(response, mapLogoPartner) {
             if (!UserLiveFeed_WasLiveidObject[AddUser_UsernameArray[0].name][id]) {
                 UserLiveFeed_NotifyLiveidObject.push({
                     name: stream.user_name,
-                    logo: mapLogoPartner[id].logo,
+                    logo: mapLogoPartner[id] ? mapLogoPartner[id].logo : null,
                     title: Main_ReplaceLargeFont(twemoji.parse(stream.title)),
                     game: stream.game_name,
                     rerun: Main_is_rerun(stream.type),
@@ -305,10 +297,10 @@ function UserLiveFeed_loadDataSuccessEnd(response, mapLogoPartner) {
                     STR_FOR + Main_addCommas(stream.viewer_count) + STR_SPACE + STR_VIEWER,
                     '[' + stream.language.toUpperCase() + ']',
                     Main_is_rerun(stream.type),
-                    mapLogoPartner[id].partner
+                    mapLogoPartner[id] ? mapLogoPartner[id].mapLogoPartner : null
                 ],
                 [
-                    mapLogoPartner[id].logo,
+                    mapLogoPartner[id] ? mapLogoPartner[id].logo : null,
                     stream.user_name,
                     stream.user_name,
                     stream.game_name,

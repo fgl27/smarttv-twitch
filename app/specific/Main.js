@@ -298,7 +298,7 @@ function Main_initWindows() {
         Play_PreStart();
         Chat_Preinit();
 
-        if (AddUser_UserIsSet() && && AddUser_UsernameArray[0].access_token) {
+        if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
             window.clearInterval(Main_updateUserFeedId);
             Main_updateUserFeedId = window.setInterval(Main_updateUserFeed, 600000);
         }

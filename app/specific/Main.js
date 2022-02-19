@@ -1228,10 +1228,13 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
             if (xmlHttp.status === 200) {
                 callbackSucess(xmlHttp.responseText, key, id);
             } else if ((HeaderQuatity > 2 || use_helix) && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
+                var erroFun = function() {
+                    calbackError(key, id);
+                };
                 if (userToken) {
-                    AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
+                    AddCode_refreshTokens(0, 0, erroFun, erroFun);
                 } else if (appToken) {
-                    AddCode_AppToken(0, Screens_loadDataRequestStart, Screens_loadDatafail);
+                    AddCode_AppToken(0, erroFun, erroFun);
                 } else {
                     calbackError(key, id);
                 }

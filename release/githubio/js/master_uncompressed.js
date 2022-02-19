@@ -143,6 +143,7 @@
     var STR_OAUTH_FAIL;
     var STR_NOKEY;
     var STR_NOKEY_WARN;
+    var STR_NOKEY_GENERAL_WARN;
     var STR_FOLLOW_ISSUE;
     var STR_RESET;
     var STR_CLIP;
@@ -522,6 +523,7 @@
             STR_DOT + STR_OAUTH_EXPLAIN4 + STR_BR +
             STR_DOT + STR_OAUTH_EXPLAIN5 + STR_BR +
             STR_DOT + STR_OAUTH_EXPLAIN6;
+
     }
     //Spacing for reease maker not trow erros frm jshint
     function en_USLang() {
@@ -532,6 +534,7 @@
         //document.getElementById("side_panel").style.width = "25%";
 
         //Below are variables to translate
+        STR_NOKEY_GENERAL_WARN = ", navigate to the side panel (Top option) User: Switch, add, key, press enter on the user";
         STR_KEY_UP_DOWN = " CH Up/Down";
         STR_GUIDE = " Hold enter or press Guide or Info";
         STR_REFRESH = "Refresh";
@@ -658,7 +661,7 @@
         STR_CONTROLS_PLAY_14 = "Chat and video (Side by side): Color button red (A)";
         STR_F_DISABLE_CHAT = "Chat force disable";
         STR_UPDATE_AVAILABLE = "Update available, check google play store";
-        STR_OAUTH_IN = 'Adding a key allows the app to access live user content faster, follow/unfollow channels/games<br><br> Add a key is not demanding and can be done at any point later.<br> In doubt read this link:<br> <br> https://https://github.com/fgl27/smarttv-twitch#twitchtv-authentication-key <br> <br>To add a key for ';
+        STR_OAUTH_IN = 'Adding a key allows the app to access user follow content and logging to chat.<br><br> Add a key is not demanding and can be done at any point later.<br> In doubt read this link:<br> <br> https://https://github.com/fgl27/smarttv-twitch#twitchtv-authentication-key <br> <br>To add a key for ';
         STR_USER_CODE = "Add Authentication key";
         STR_USER_CODE_OK = "Key added OK";
         STR_KEY_BAD = "Key test failed, new one needs to be added";
@@ -675,7 +678,7 @@
         STR_NOKEY = "No user";
         STR_NOKEY_WARN = "Set user and an authentication key to be able to follow/unfollow";
         STR_FOLLOW_ISSUE = "Third party apps can no longer follow/unfollow channels";
-        STR_NOKUSER_WARN = "Set a user first";
+        STR_NOKUSER_WARN = "Set a user and authentication key to be able to see the side panel followed content" + STR_NOKEY_GENERAL_WARN;
         STR_RESET = "Restart the";
         STR_CLIP = " Clip";
         STR_CHANNEL_CONT = "Channel content";
@@ -719,7 +722,7 @@
         STR_CHAT_END = "Chat: The Chat has ended!";
         STR_TIME = ", Most recent";
         STR_VIWES = ", Most views";
-        STR_NOKEY_VIDEO_WARN = "Set an user authentication key to be able to see followed videos";
+        STR_NOKEY_VIDEO_WARN = "Set an user authentication key to be able to see the side panel followed content" + STR_NOKEY_GENERAL_WARN;
         STR_SWITCH_TYPE = "Switch: Most recent or views";
         STR_ENABLE = "Enable";
         STR_DISABLE = "Disable";
@@ -891,7 +894,7 @@
         STR_CHAT_OPTIONS_EMOTE_SORT_SUMMARY = "If this is disabled, the lists of emotes will be showed in the order provider by the server";
         STR_CHAT_OPTIONS_FORCE_SHOW = "Force show chat";
         STR_CHAT_OPTIONS_FORCE_SHOW_SUMMARY = "If you wanna see the chat when write to chat is used, enable this";
-        STR_NOKEY_CHAT_WARN = "Add an user authorization key to be able to logging and write to chat";
+        STR_NOKEY_CHAT_WARN = "Add an user authorization key to be able to logging and write to chat" + STR_NOKEY_GENERAL_WARN;
         STR_CHAT_NOT_READY = "Chat not ready to send! Try again is a second or two.";
         STR_CHAT_REDEEMED_MESSAGE_HIGH = "Redeemed Highlight My Message";
         STR_CHAT_REDEEMED_MESSAGE_SUB = "Redeemed Send a Message in Sub-Only Mode";
@@ -932,7 +935,7 @@
         STR_CHAT_SEND_DELAY = "Message send, chat delay enabled, message will show in chat after";
         STR_CHAT_DELAY = "Chat: delay";
 
-        STR_WARNING_NEW = "A new featuring was added<br><br>Write to chat plus extra settings chat option<br><br>Because this new featuring all previously added authorization keys added before january 02 2021 have be revoked, that is because chat permissions wasn't be asked before<br><br>If you had a key added please add a new one so you can keep using the app the same way as before<br><br>If you have any doubt about the new authorization key go to:<br><br> https://github.com/fgl27/smarttv-twitch#twitchtv-authentication-key<br><br>This dialog will auto hide in 1 minute, or press any key to hide it";
+        STR_WARNING_NEW = "Twitch is shutting down some of they API, making necessary to update all app API calls to they new API, the new API is different because of that it demands a lot of work.<br><br>Because of that the app is going thru a update phase, during this time some app content may not work.<br><br>Be aware with this new Twitch API is necessary to add a User and a Authentication key, if you don’t you may not have access to any content in future updates or after Twitch completely shutting they old API.<br><br>This dialog will auto hide in 1 minute, or press any key to hide it";
 
     }
     /*
@@ -1103,9 +1106,8 @@
     var AddCode_Channel_id = '';
 
     var AddCode_Scopes = [
-        'user_read',
-        'user_follows_edit',
-        'user_subscriptions',
+        'user:read:follows',
+        'user:read:subscriptions',
         'chat:edit',
         'chat:read'
     ];
@@ -1226,13 +1228,94 @@
         }
     }
 
+    function AddCode_AppTokenCheck(tryes, callbackFunc, callbackFuncNOK) {
+        var xmlHttp = new XMLHttpRequest();
+
+        var url = 'https://id.twitch.tv/oauth2/validate';
+
+        xmlHttp.open("GET", url, true);
+        xmlHttp.setRequestHeader(Main_Authorization, Main_Bearer + AddCode_main_token);
+        xmlHttp.timeout = AddCode_loadingDataTimeout;
+        xmlHttp.ontimeout = function() {};
+
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState === 4) {
+                if (xmlHttp.status === 200) {
+
+                    callbackFunc();
+
+                    var data = JSON.parse(xmlHttp.responseText);
+
+                    window.setTimeout(function() {
+
+                        AddCode_AppToken(0, null, null);
+
+                    }, (parseInt(data.expires_in) - 60) * 1000);
+                } else if (xmlHttp.status === 401) {
+                    callbackFuncNOK();
+                } else {
+                    AddCode_AppTokenCheckError(tryes, callbackFunc, callbackFuncNOK);
+                }
+            }
+        };
+
+        xmlHttp.send(null);
+    }
+
+    function AddCode_AppTokenCheckError(tryes, callbackFuncOK, callbackFuncNOK) {
+        tryes++;
+        if (tryes < 5) AddCode_AppTokenCheck(tryes, callbackFuncOK, callbackFuncNOK);
+        else if (callbackFuncNOK) callbackFuncNOK();
+    }
+
+    function AddCode_AppToken(tryes, callbackFunc, callbackFuncNOK) {
+
+        var xmlHttp = new XMLHttpRequest();
+
+        var url = 'https://id.twitch.tv/oauth2/token?client_id=' + AddCode_clientId +
+            '&client_secret=' + AddCode_client_token +
+            '&grant_type=client_credentials';
+
+        xmlHttp.open("POST", url, true);
+        xmlHttp.timeout = AddCode_loadingDataTimeout;
+        xmlHttp.ontimeout = function() {};
+
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState === 4) {
+                if (xmlHttp.status === 200) {
+                    AddCode_AppTokenSucess(xmlHttp.responseText, callbackFunc);
+                } else {
+                    AddCode_AppTokenError(tryes, callbackFunc, callbackFuncNOK);
+                }
+            }
+        };
+
+        xmlHttp.send(null);
+    }
+
+    function AddCode_AppTokenError(tryes, callbackFuncOK, callbackFuncNOK) {
+        tryes++;
+        if (tryes < 5) AddCode_AppToken(tryes, callbackFuncOK, callbackFuncNOK);
+        else if (callbackFuncNOK) callbackFuncNOK();
+    }
+
+    function AddCode_AppTokenSucess(responseText, callbackFunc) {
+        var response = JSON.parse(responseText);
+
+        if (response) {
+            AddCode_main_token = response.access_token;
+        }
+
+        if (callbackFunc) callbackFunc();
+    }
+
     function AddCode_refreshTokens(position, tryes, callbackFunc, callbackFuncNOK) {
         if (!AddUser_UsernameArray[position] || !AddUser_UsernameArray[position].access_token) return;
 
         var xmlHttp = new XMLHttpRequest();
 
         var url = AddCode_UrlToken + 'grant_type=refresh_token&client_id=' +
-            encodeURIComponent(AddCode_clientId) + '&client_secret=' + encodeURIComponent(AddCode_client_secret) +
+            encodeURIComponent(AddCode_clientId) + '&client_secret=' + encodeURIComponent(AddCode_client_token) +
             '&refresh_token=' + encodeURIComponent(AddUser_UsernameArray[position].refresh_token) +
             '&redirect_uri=' + AddCode_redirect_uri;
 
@@ -1300,7 +1383,7 @@
 
     function AddCode_requestTokens() {
         var theUrl = AddCode_UrlToken + 'grant_type=authorization_code&client_id=' +
-            encodeURIComponent(AddCode_clientId) + '&client_secret=' + encodeURIComponent(AddCode_client_secret) +
+            encodeURIComponent(AddCode_clientId) + '&client_secret=' + encodeURIComponent(AddCode_client_token) +
             '&code=' + encodeURIComponent(AddCode_Code) + '&redirect_uri=' + AddCode_redirect_uri;
 
         AddCode_BasexmlHttpGet(theUrl, 'POST', 0, null, AddCode_requestTokensReady);
@@ -1749,7 +1832,7 @@
         var xmlHttp = new XMLHttpRequest();
 
         xmlHttp.open("GET", theUrl, true);
-        xmlHttp.setRequestHeader(Main_Authorization, Main_OAuth + AddUser_UsernameArray[position].access_token);
+        xmlHttp.setRequestHeader(Main_Authorization, Main_Bearer + AddUser_UsernameArray[position].access_token);
 
         xmlHttp.timeout = 10000;
         xmlHttp.ontimeout = function() {};
@@ -1764,8 +1847,9 @@
     var AddCode_redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githubio/login/twitch.html';
     //Get yours client id and secret from https://docs.aws.amazon.com/lumberyard/latest/userguide/chatplay-generate-twitch-client-id.html
     var AddCode_clientId = "ypvnuqrh98wqz1sr0ov3fgfu4jh1yx"; //public but get yours link above is free
-    var AddCode_client_secret; //none public get yours link above is free
+    var AddCode_client_token; //none public get yours link above is free
     var AddCode_client_backup;
+    var AddCode_main_token;
 
     var Play_Headers;
 
@@ -1910,13 +1994,23 @@
     }
 
     function AddUser_loadDataRequest() {
-        var theUrl = Main_kraken_api + 'users?login=' + encodeURIComponent(AddUser_Username) + Main_TwithcV5Flag;
+        var theUrl = Main_helix_api + 'users?login=' + encodeURIComponent(AddUser_Username);
 
-        BasexmlHttpGet(theUrl, AddUser_loadingDataTimeout, 2, null, AddUser_loadDataRequestSuccess, AddUser_loadDataError);
+        BasexmlHttpGet(
+            theUrl,
+            AddUser_loadingDataTimeout,
+            2,
+            null,
+            AddUser_loadDataRequestSuccess,
+            AddUser_loadDataError,
+            false,
+            null,
+            true
+        );
     }
 
     function AddUser_loadDataRequestSuccess(response) {
-        if (JSON.parse(response)._total) {
+        if (JSON.parse(response).data.length) {
             Main_AddUserInput.value = '';
             document.body.removeEventListener("keydown", AddUser_handleKeyDown);
             AddUser_SaveNewUser(response);
@@ -1949,8 +2043,9 @@
                 AddUser_UsernameArray[i].timeout_id = null;
                 if (AddUser_UsernameArray[i].access_token) AddCode_CheckTokenStart(i);
 
-                if (!AddUser_UsernameArray[i].logo) AddUser_UpdateUser(i, 0);
-                else if (!i) AddUser_UpdateSidepanel();
+                if (!i) AddUser_UpdateSidepanel();
+                AddUser_UpdateUser(i, 0);
+
             }
         } else AddUser_UpdateSidepanelDefault();
     }
@@ -1981,34 +2076,27 @@
     }
 
     function AddUser_UpdateUser(position, tryes) {
-        var theUrl = Main_kraken_api + 'users?login=' + encodeURIComponent(AddUser_UsernameArray[position].name) + Main_TwithcV5Flag;
-        var xmlHttp = new XMLHttpRequest();
+        var theUrl = Main_helix_api + 'users?login=' + encodeURIComponent(AddUser_UsernameArray[position].name);
 
-        xmlHttp.open("GET", theUrl, true);
-        xmlHttp.timeout = 10000;
-
-        for (var i = 0; i < 2; i++)
-            xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
-
-        xmlHttp.ontimeout = function() {};
-
-        xmlHttp.onreadystatechange = function() {
-            if (xmlHttp.readyState === 4) {
-                if (xmlHttp.status === 200) AddUser_UpdateUsertSuccess(xmlHttp.responseText, position);
-                else AddUser_UpdateUserError(position, tryes);
-            }
-        };
-
-        xmlHttp.send(null);
+        BasexmlHttpGet(
+            theUrl,
+            AddUser_loadingDataTimeout,
+            2,
+            null,
+            AddUser_UpdateUsertSuccess,
+            AddUser_UpdateUserError,
+            position,
+            tryes,
+            true
+        );
     }
 
     function AddUser_UpdateUsertSuccess(response, position) {
         var user = JSON.parse(response);
-        if (user._total) {
-            document.body.removeEventListener("keydown", AddUser_handleKeyDown);
-            user = user.users[0];
+        if (user.data.length) {
+            user = user.data[0];
             AddUser_UsernameArray[position].display_name = user.display_name;
-            AddUser_UsernameArray[position].logo = user.logo;
+            AddUser_UsernameArray[position].logo = user.profile_image_url;
             if (!position) AddUser_UpdateSidepanel();
         }
         AddUser_SaveUserArray();
@@ -2020,12 +2108,12 @@
     }
 
     function AddUser_SaveNewUser(responseText) {
-        AddUser_Username = JSON.parse(responseText).users[0];
+        AddUser_Username = JSON.parse(responseText).data[0];
         AddUser_UsernameArray.push({
-            name: AddUser_Username.name,
-            id: AddUser_Username._id,
+            name: AddUser_Username.login,
+            id: AddUser_Username.id,
             display_name: AddUser_Username.display_name,
-            logo: AddUser_Username.logo,
+            logo: AddUser_Username.profile_image_url,
             access_token: 0,
             refresh_token: 0,
             expires_in: 0,
@@ -2034,7 +2122,7 @@
 
         AddUser_SaveUserArray();
         Users_status = false;
-        Users_Userlastadded = AddUser_Username.name;
+        Users_Userlastadded = AddUser_Username.login;
         Users_ShowAutetication = true;
         AddUser_exit();
         Main_values.Main_Go = Main_Users;
@@ -3952,7 +4040,7 @@
 
     function ChatLive_loadChattersViewers(chat_number, id) {
 
-        var theUrl = Main_kraken_api + 'streams/?stream_type=all&channel=' + ChatLive_selectedChannel_id[chat_number] + Main_TwithcV5Flag;
+        var theUrl = Main_helix_api + 'streams/?user_id=' + ChatLive_selectedChannel_id[chat_number];
 
         BasexmlHttpGet(
             theUrl,
@@ -3962,7 +4050,8 @@
             ChatLive_loadChattersViewersSuccess,
             noop_fun,
             chat_number,
-            id
+            id,
+            true
         );
 
     }
@@ -3974,11 +4063,11 @@
 
                 var resultObj = JSON.parse(responseText);
 
-                if (resultObj.streams && resultObj.streams.length) {
+                if (resultObj.data && resultObj.data.length) {
 
                     Main_innerHTML(
                         "chat_loggedin" + chat_number,
-                        Main_addCommas(resultObj.streams[0].viewers) + STR_SPACE + STR_VIEWER
+                        Main_addCommas(resultObj.data[0].viewer_count) + STR_SPACE + STR_VIEWER
                     );
                 }
 
@@ -6193,6 +6282,7 @@
         "Play_selectedChannelDisplayname": '',
         "Play_selectedChannel": '',
         "Play_gameSelected": '',
+        "Play_gameSelected_id": null,
         "Users_AddcodePosition": 0,
         "Play_WasPlaying": 0,
         "ChannelVod_vodId": '',
@@ -6211,7 +6301,7 @@
         "Sidepannel_IsUser": false,
         "My_channel": false,
         "DeviceBitrateCheck": false,
-        "warning_extra": true,
+        "warning_new_api": true,
     };
 
 
@@ -6256,6 +6346,7 @@
     var Main_TwitchV5Json = 'application/vnd.twitchtv.v5+json';
     var Main_clientIdHeader = 'Client-ID';
     var Main_kraken_api = 'https://api.twitch.tv/kraken/';
+    var Main_helix_api = 'https://api.twitch.tv/helix/';
     var Main_Authorization = 'Authorization';
     var Main_OAuth = 'OAuth ';
     var Main_TwithcV5Flag = '&api_version=5';
@@ -6412,11 +6503,20 @@
                 Main_ChatLiveInput = Main_getElementById("chat_send_input");
 
                 AddUser_RestoreUsers();
-                //Allow page to proper load/resize and users 0 be restored before Main_initWindows
-                window.setTimeout(Main_initWindows, 500);
+
+                AddCode_AppTokenCheck(0, Main_initWindowsCheck, Main_initWindowsCheckFail);
             });
         });
 
+    }
+
+    function Main_initWindowsCheckFail() {
+        AddCode_AppToken(0, Main_initWindowsCheck, Main_initWindowsCheck);
+    }
+
+    function Main_initWindowsCheck() {
+        //Allow page to proper load/resize and users 0 be restored before Main_initWindows
+        window.setTimeout(Main_initWindows, 500);
     }
 
     function Main_initWindows() {
@@ -6435,7 +6535,7 @@
             Play_PreStart();
             Chat_Preinit();
 
-            if (AddUser_UserIsSet()) {
+            if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
                 window.clearInterval(Main_updateUserFeedId);
                 Main_updateUserFeedId = window.setInterval(Main_updateUserFeed, 600000);
             }
@@ -7002,6 +7102,7 @@
 
         Main_values.Play_selectedChannel_id = Main_values.Play_selectedChannel[1];
         Main_values.IsRerun = Main_values.Play_selectedChannel[2];
+        Main_values.Play_gameSelected_id = Main_values.Play_selectedChannel[3];
         Main_values.Play_selectedChannel = Main_values.Play_selectedChannel[0];
 
         if (Main_values.Play_isHost) {
@@ -7039,6 +7140,7 @@
         Main_values.Main_selectedChannel_id = ChannelClip_playUrl[6];
         Main_values.ChannelVod_vodId = ChannelClip_playUrl[7];
         ChannelVod_vodOffset = parseInt(ChannelClip_playUrl[8]);
+        Main_values.Play_gameSelected_id = null;
 
         ChannelClip_title = ChannelClip_playUrl[9];
         ChannelClip_language = ChannelClip_playUrl[10];
@@ -7077,6 +7179,7 @@
         ChannelVod_title = Main_values.ChannelVod_vodId[3];
         ChannelVod_game = (Main_values.Play_gameSelected !== "" && Main_values.Play_gameSelected !== null ? STR_STARTED + STR_PLAYING + Main_values.Play_gameSelected : "");
         ChannelVod_views = Main_values.ChannelVod_vodId[4];
+        Main_values.Play_gameSelected_id = null;
 
         Main_values.Main_selectedChannel_id = Main_values.ChannelVod_vodId[13];
         Main_values.Main_selectedChannelLogo = Main_values.ChannelVod_vodId[14];
@@ -7302,25 +7405,64 @@
             console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
     }
 
-    function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, key, id) {
+    var Main_Bearer = 'Bearer ';
+    var Main_Bearer_Headers = [
+        [Main_clientIdHeader, AddCode_clientId],
+        ['Authorization', Main_Bearer + AddCode_main_token]
+    ];
+
+    var Main_Bearer_User_Headers = [
+        [Main_clientIdHeader, AddCode_clientId],
+        ['Authorization', null]
+    ];
+
+    function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, key, id, use_helix, skip_user_token) {
         var xmlHttp = new XMLHttpRequest();
 
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = Timeout;
+        var i = 0,
+            userToken = false,
+            appToken = false;
 
-        Main_Headers[2][1] = access_token;
+        if (use_helix) {
 
-        for (var i = 0; i < HeaderQuatity; i++)
-            xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
+            if (!skip_user_token && AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
+                userToken = true;
 
+                Main_Bearer_User_Headers[1][1] = Main_Bearer + AddUser_UsernameArray[0].access_token;
+
+                for (i; i < Main_Bearer_Headers.length; i++)
+                    xmlHttp.setRequestHeader(Main_Bearer_User_Headers[i][0], Main_Bearer_User_Headers[i][1]);
+
+            } else {
+                appToken = true;
+                for (i; i < Main_Bearer_Headers.length; i++)
+                    xmlHttp.setRequestHeader(Main_Bearer_Headers[i][0], Main_Bearer_Headers[i][1]);
+            }
+
+        } else {
+            Main_Headers[2][1] = access_token;
+
+            for (i; i < HeaderQuatity; i++)
+                xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
+
+        }
         xmlHttp.ontimeout = function() {};
 
         xmlHttp.onreadystatechange = function() {
             if (xmlHttp.readyState === 4) {
+
                 if (xmlHttp.status === 200) {
                     callbackSucess(xmlHttp.responseText, key, id);
-                } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
-                    AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
+                } else if ((HeaderQuatity > 2 || use_helix) && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
+                    if (userToken) {
+                        AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
+                    } else if (appToken) {
+                        AddCode_AppToken(0, Screens_loadDataRequestStart, Screens_loadDatafail);
+                    } else {
+                        calbackError(key, id);
+                    }
                 } else {
                     calbackError(key, id);
                 }
@@ -7345,6 +7487,7 @@
 
         xmlHttp.onreadystatechange = function() {
             if (xmlHttp.readyState === 4) {
+
                 if (xmlHttp.status === 200) {
                     callbackSucess(xmlHttp.responseText);
                 } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
@@ -7659,6 +7802,22 @@
         }
         Play_controls[Play_controlsChanelCont].setLable(Main_values.Main_selectedChannelDisplayname);
         Play_controls[Play_controlsGameCont].setLable(Main_values.Play_gameSelected);
+
+        if (!Main_values.Play_gameSelected_id && Main_values.Play_gameSelected) {
+            PlayClip_UpdateGameInfo();
+        }
+    }
+
+    function PlayClip_UpdateGameInfo() {
+        var theUrl = Main_helix_api + 'games?name=' + Main_values.Play_gameSelected;
+        BasexmlHttpGet(theUrl, Play_loadingInfoDataTimeout, 2, null, PlayClip_UpdateGameInfoSuccess, null, false, null, true);
+    }
+
+    function PlayClip_UpdateGameInfoSuccess(response) {
+        response = JSON.parse(response);
+        if (response.data && response.data.length) {
+            Main_values.Play_gameSelected_id = response.data[0].id;
+        }
     }
 
     function PlayClip_updateVodInfo() {
@@ -8855,6 +9014,10 @@
         Play_loadData();
         window.clearInterval(Play_streamInfoTimerId);
         Play_streamInfoTimerId = window.setInterval(Play_updateStreamInfo, 60000);
+
+        if (!Main_values.Play_gameSelected_id && Main_values.Play_gameSelected) {
+            PlayClip_UpdateGameInfo();
+        }
     }
 
     // To Force a warn, not used regularly so keep commented out
@@ -9037,9 +9200,37 @@
         Play_ResumeAfterOnlineCounter++;
     }
 
+    function Play_updateStreamLogo() {
+        var theUrl = Main_helix_api + 'users?id=' + Main_values.Play_selectedChannel_id;
+        BasexmlHttpGet(theUrl, Play_loadingInfoDataTimeout, 2, null, Play_updateStreamLogoValues, Play_updateStreamLogoError, false, null, true);
+    }
+
+    function Play_updateStreamLogoValues(response) {
+        response = JSON.parse(response);
+        if (response.data && response.data.length) {
+
+            response.stream = response.data[0];
+
+            Play_partnerIcon(Play_isHost ? Main_values.Play_DisplaynameHost : Main_values.Play_selectedChannelDisplayname, response.stream.broadcaster_type === 'partner', true, Play_Lang); //response.stream.channel.partner
+            Main_values.Play_selectedChannelLogo = response.stream.profile_image_url;
+            Play_LoadLogoSucess = true;
+            Play_LoadLogo(document.getElementById('stream_info_icon'), Main_values.Play_selectedChannelLogo);
+        }
+    }
+
+    function Play_updateStreamLogoError() {
+        if (Play_loadingInfoDataTry < Play_loadingInfoDataTryMax) {
+            Play_loadingInfoDataTimeout += 500;
+            window.setTimeout(function() {
+                if (Play_isOn) Play_updateStreamLogoValues();
+            }, 750);
+        }
+        Play_loadingInfoDataTry++;
+    }
+
     function Play_updateStreamInfoStart() {
-        var theUrl = Main_kraken_api + 'streams/' + Main_values.Play_selectedChannel_id + Main_TwithcV5Flag_I;
-        BasexmlHttpGet(theUrl, Play_loadingInfoDataTimeout, 2, null, Play_updateStreamInfoStartValues, Play_updateStreamInfoStartError, false);
+        var theUrl = Main_helix_api + 'streams/?user_id=' + Main_values.Play_selectedChannel_id;
+        BasexmlHttpGet(theUrl, Play_loadingInfoDataTimeout, 2, null, Play_updateStreamInfoStartValues, Play_updateStreamInfoStartError, false, null, true);
     }
 
     function Play_partnerIcon(name, partner, islive, lang) {
@@ -9066,27 +9257,31 @@
         } else Play_hideFollow();
 
         response = JSON.parse(response);
-        if (response.stream !== null) {
-            Main_values.IsRerun = Main_is_rerun(response.stream.broadcast_platform);
+        if (response.data && response.data.length) {
+            response.stream = response.data[0];
 
-            Main_innerHTML("stream_info_title", twemoji.parse(response.stream.channel.status, false, true));
-            Main_values.Play_gameSelected = response.stream.game;
-            Play_Lang = ' [' + (response.stream.channel.broadcaster_language).toUpperCase() + ']';
+            Main_values.IsRerun = Main_is_rerun(response.stream.type);
 
-            Play_partnerIcon(Play_isHost ? Main_values.Play_DisplaynameHost : Main_values.Play_selectedChannelDisplayname, response.stream.channel.partner, true, Play_Lang);
+            Main_innerHTML("stream_info_title", twemoji.parse(response.stream.title, false, true));
+            Main_values.Play_gameSelected = response.stream.game_name;
+            Play_Lang = ' [' + (response.stream.language).toUpperCase() + ']';
+
+            Play_partnerIcon(Play_isHost ? Main_values.Play_DisplaynameHost : Main_values.Play_selectedChannelDisplayname, false, true, Play_Lang); //response.stream.channel.partner
 
             var playing = (Main_values.Play_gameSelected !== "" ? STR_PLAYING + Main_values.Play_gameSelected : "");
             Main_textContent("stream_info_game", playing);
 
-            Main_innerHTML("stream_live_viewers", STR_SPACE + STR_FOR + Main_addCommas(response.stream.viewers) + STR_SPACE + STR_VIEWER);
-            Main_values.Play_selectedChannelLogo = response.stream.channel.logo;
-            Play_LoadLogoSucess = true;
-            Play_LoadLogo(document.getElementById('stream_info_icon'), Main_values.Play_selectedChannelLogo);
-            Play_created = response.stream.created_at;
+            Main_innerHTML("stream_live_viewers", STR_SPACE + STR_FOR + Main_addCommas(response.stream.viewer_count) + STR_SPACE + STR_VIEWER);
+
+            Play_created = response.stream.started_at;
 
             Play_controls[Play_controlsChanelCont].setLable(Main_values.Play_selectedChannelDisplayname);
             Play_controls[Play_controlsGameCont].setLable(Main_values.Play_gameSelected);
         }
+
+        Play_loadingInfoDataTry = 0;
+        Play_loadingInfoDataTimeout = 3000;
+        Play_updateStreamLogo();
     }
 
     function Play_updateStreamInfoStartError() {
@@ -9100,22 +9295,28 @@
     }
 
     function Play_updateStreamInfo() {
-        var theUrl = Main_kraken_api + 'streams/' + Main_values.Play_selectedChannel_id + Main_TwithcV5Flag_I;
-        BasexmlHttpGet(theUrl, 3000, 2, null, Play_updateStreamInfoValues, Play_updateStreamInfoError, false);
+        var theUrl = Main_helix_api + 'streams/?user_id=' + Main_values.Play_selectedChannel_id;
+
+        BasexmlHttpGet(theUrl, 3000, 2, null, Play_updateStreamInfoValues, Play_updateStreamInfoError, false, null, true);
     }
 
     function Play_updateStreamInfoValues(response) {
         response = JSON.parse(response);
-        if (response.stream !== null) {
-            Main_innerHTML("stream_info_title", twemoji.parse(response.stream.channel.status, false, true));
-            Main_values.Play_gameSelected = response.stream.game;
+        if (response.data && response.data.length) {
+            response.stream = response.data[0];
+
+            Main_innerHTML("stream_info_title", twemoji.parse(response.stream.title, false, true));
+            Main_values.Play_gameSelected = response.stream.game_name;
             Main_textContent("stream_info_game", STR_PLAYING + Main_values.Play_gameSelected);
 
-            Main_innerHTML("stream_live_viewers", STR_SPACE + STR_FOR + Main_addCommas(response.stream.viewers) +
+            Main_innerHTML("stream_live_viewers", STR_SPACE + STR_FOR + Main_addCommas(response.stream.viewer_count) +
                 STR_SPACE + STR_VIEWER);
 
-            if (!Play_LoadLogoSucess) Play_LoadLogo(document.getElementById('stream_info_icon'),
-                response.stream.channel.logo);
+            if (!Play_LoadLogoSucess) {
+                Play_loadingInfoDataTry = 0;
+                Play_loadingInfoDataTimeout = 3000;
+                Play_updateStreamLogo();
+            }
 
             Play_controls[Play_controlsChanelCont].setLable(Main_values.Play_selectedChannelDisplayname);
             Play_controls[Play_controlsGameCont].setLable(Main_values.Play_gameSelected);
@@ -10372,7 +10573,8 @@
         Main_values.Main_Go = Main_aGame;
 
         Main_values.Main_gameSelected = Main_values.Play_gameSelected;
-        Main_values.Main_gameSelected_id = null;
+        Main_values.Main_gameSelected_id = Main_values.Play_gameSelected_id;
+
         Play_hideChat();
         if (PlayVodClip === 1) Play_shutdownStream();
         else if (PlayVodClip === 2) PlayVod_shutdownStream();
@@ -10481,31 +10683,38 @@
         window.clearInterval(Play_streamInfoTimerId);
         window.clearInterval(Play_streamCheckId);
         if (Main_values.Play_selectedChannel_id !== '') Play_loadDataCheckHost();
-        else Play_CheckId();
+        //else Play_CheckId();
     }
 
-    function Play_CheckId() {
-        BasexmlHttpGet('https://api.twitch.tv/kraken/users?login=' + Main_values.Play_selectedChannel,
-            Play_loadingDataTimeout, 2, null, Play_CheckIdValue, Play_CheckIdError, false);
-    }
+    // function Play_CheckId() {
+    //     BasexmlHttpGet(
+    //         'https://api.twitch.tv/kraken/users?login=' + Main_values.Play_selectedChannel,
+    //         Play_loadingDataTimeout,
+    //         2,
+    //         null,
+    //         Play_CheckIdValue,
+    //         Play_CheckIdError,
+    //         false
+    //     );
+    // }
 
-    function Play_CheckIdValue(musers) {
-        musers = JSON.parse(musers).users[0];
-        if (musers !== undefined) {
-            Main_values.Play_selectedChannel_id = musers._id;
-            Play_loadingDataTry = 0;
-            Play_loadingDataTimeout = 2000;
-            Play_loadDataCheckHost();
-        } else Play_PlayEndStart(1);
-    }
+    // function Play_CheckIdValue(musers) {
+    //     musers = JSON.parse(musers).users[0];
+    //     if (musers !== undefined) {
+    //         Main_values.Play_selectedChannel_id = musers._id;
+    //         Play_loadingDataTry = 0;
+    //         Play_loadingDataTimeout = 2000;
+    //         Play_loadDataCheckHost();
+    //     } else Play_PlayEndStart(1);
+    // }
 
-    function Play_CheckIdError() {
-        Play_loadingDataTry++;
-        if (Play_loadingDataTry < Play_loadingDataTryMax) {
-            Play_loadingDataTimeout += 250;
-            Play_CheckId();
-        } else Play_EndStart(false, 1);
-    }
+    // function Play_CheckIdError() {
+    //     Play_loadingDataTry++;
+    //     if (Play_loadingDataTry < Play_loadingDataTryMax) {
+    //         Play_loadingDataTimeout += 250;
+    //         Play_CheckId();
+    //     } else Play_EndStart(false, 1);
+    // }
 
     var Play_loadDataCheckHostId;
 
@@ -10747,7 +10956,7 @@
                             } else PlayVod_IconsBottonFocus();
                         } else Play_BottomUpDown(1, 1);
                         Play_setHidePanel();
-                    } else if (!UserLiveFeed_isFeedShow() && AddUser_UserIsSet()) UserLiveFeed_ShowFeed();
+                    } else if (!UserLiveFeed_isFeedShow() && AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) UserLiveFeed_ShowFeed();
                     else if (Play_isEndDialogVisible()) {
                         Play_EndTextClear();
                         document.body.removeEventListener("keydown", Play_handleKeyDown, false);
@@ -11101,7 +11310,7 @@
                     Play_showWarningMidleDialog(STR_CHAT_DISABLE, 1500);
                     return;
                 } else if (!AddUser_UserIsSet() || !AddUser_UsernameArray[0].access_token) {
-                    Play_showWarningMidleDialog(STR_NOKEY_CHAT_WARN, 1500);
+                    Play_showWarningMidleDialog(STR_NOKEY_CHAT_WARN, 3000);
                     return;
                 }
 
@@ -11596,6 +11805,10 @@
             Play_showVodDialog();
         } else {
             PlayVod_PosStart();
+        }
+
+        if (!Main_values.Play_gameSelected_id && Main_values.Play_gameSelected) {
+            PlayClip_UpdateGameInfo();
         }
     }
 
@@ -12899,7 +13112,7 @@
         if (inUseObj.use_hls)
             BasexmlHttpGetBack(inUseObj.url + Main_TwithcV5Flag, inUseObj.loadingDataTimeout, inUseObj.HeaderQuatity, inUseObj.token, Screens_concatenate, Screens_loadDataError);
         else
-            BasexmlHttpGet(inUseObj.url + Main_TwithcV5Flag, inUseObj.loadingDataTimeout, inUseObj.HeaderQuatity, inUseObj.token, Screens_concatenate, Screens_loadDataError);
+            BasexmlHttpGet(inUseObj.url + (inUseObj.use_helix ? '' : Main_TwithcV5Flag), inUseObj.loadingDataTimeout, inUseObj.HeaderQuatity, inUseObj.token, Screens_concatenate, Screens_loadDataError, null, null, inUseObj.use_helix);
     }
 
     function Screens_loadDataError() {
@@ -13122,8 +13335,8 @@
                     Main_values.Play_WasPlaying = 0;
                 }
 
-                if (!Main_values.Never_run_new && Main_values.warning_extra) Main_showWarningExtra(STR_WARNING_NEW);
-                Main_values.warning_extra = false;
+                if (Main_values.warning_new_api) Main_showWarningExtra(STR_WARNING_NEW);
+                Main_values.warning_new_api = false;
 
                 if (Settings_value.restor_playback.defaultValue && Main_values.Play_WasPlaying && inUseObj.status) {
 
@@ -13961,8 +14174,9 @@
             } else Screens_OpenSidePanel();
         },
         concatenate: function(responseText) {
-            //console.log(responseText);
+
             if (this.data) {
+
                 responseText = JSON.parse(responseText);
 
                 if (responseText[this.object]) {
@@ -13972,10 +14186,12 @@
 
                 this.setMax(responseText);
             } else {
+
                 responseText = JSON.parse(responseText);
 
                 this.data = responseText[this.object];
                 if (this.data) {
+
                     this.offset = this.data.length;
                     this.setMax(responseText);
                 } else this.data = [];
@@ -14369,13 +14585,20 @@
         thumbclass: 'stream_thumbnail_live_holder',
         img_404: IMG_404_VIDEO,
         setMax: function(tempObj) {
-            this.MaxOffset = tempObj._total;
+            if (this.use_helix) {
 
-            if (!tempObj[this.object]) this.dataEnded = true;
-            else if (typeof this.MaxOffset === 'undefined') {
-                if (tempObj[this.object].length < 90) this.dataEnded = true;
+                this.cursor = tempObj.pagination.cursor;
+                if (!this.cursor || this.cursor === '') this.dataEnded = true;
+
             } else {
-                if (this.data.length >= this.MaxOffset) this.dataEnded = true;
+                this.MaxOffset = tempObj._total;
+
+                if (!tempObj[this.object]) this.dataEnded = true;
+                else if (typeof this.MaxOffset === 'undefined') {
+                    if (tempObj[this.object].length < 90) this.dataEnded = true;
+                } else {
+                    if (this.data.length >= this.MaxOffset) this.dataEnded = true;
+                }
             }
         },
         check_offset: function() {
@@ -14390,25 +14613,44 @@
             this.addCellTemp(cell);
         },
         addCellTemp: function(cell) {
-            if (!this.idObject[cell.channel._id]) {
+
+            var id_cell = this.use_helix ? cell.user_id : cell.channel._id;
+
+            if (!this.idObject[id_cell]) {
 
                 this.itemsCount++;
-                this.idObject[cell.channel._id] = 1;
+                this.idObject[id_cell] = 1;
+                if (this.use_helix) {
 
-                this.row.appendChild(
-                    Screens_createCellLive(
-                        this.row_id + '_' + this.coloumn_id,
-                        [cell.channel.name, cell.channel._id, Main_is_rerun(cell.broadcast_platform)],
-                        this.ids,
-                        [cell.preview.template.replace("{width}x{height}", Main_VideoSize),
-                            cell.channel.display_name,
-                            cell.channel.status,
-                            cell.game,
-                            STR_SINCE + Play_streamLiveAt(cell.created_at) + STR_SPACE + STR_FOR + Main_addCommas(cell.viewers) +
-                            STR_SPACE + STR_VIEWER,
-                            Main_videoqualitylang(cell.video_height, cell.average_fps, cell.channel.broadcaster_language)
-                        ]));
+                    this.row.appendChild(
+                        Screens_createCellLive(
+                            this.row_id + '_' + this.coloumn_id,
+                            [cell.user_login, cell.user_id, Main_is_rerun(cell.type), cell.game_id],
+                            this.ids,
+                            [cell.thumbnail_url.replace("{width}x{height}", Main_VideoSize),
+                                cell.user_name,
+                                cell.title,
+                                cell.game_name,
+                                STR_SINCE + Play_streamLiveAt(cell.started_at) + STR_SPACE + STR_FOR + Main_addCommas(cell.viewer_count) +
+                                STR_SPACE + STR_VIEWER,
+                                '[' + cell.language.toUpperCase() + ']'
+                            ]));
+                } else {
 
+                    this.row.appendChild(
+                        Screens_createCellLive(
+                            this.row_id + '_' + this.coloumn_id,
+                            [cell.channel.name, cell.channel._id, Main_is_rerun(cell.broadcast_platform)],
+                            this.ids,
+                            [cell.preview.template.replace("{width}x{height}", Main_VideoSize),
+                                cell.channel.display_name,
+                                cell.channel.status,
+                                cell.game,
+                                STR_SINCE + Play_streamLiveAt(cell.created_at) + STR_SPACE + STR_FOR + Main_addCommas(cell.viewers) +
+                                STR_SPACE + STR_VIEWER,
+                                Main_videoqualitylang(cell.video_height, cell.average_fps, cell.channel.broadcaster_language)
+                            ]));
+                }
                 this.coloumn_id++;
             }
         },
@@ -14421,14 +14663,15 @@
             ids: Screens_ScreenIds('Live'),
             table: 'stream_table_live',
             screen: Main_Live,
-            object: 'streams',
+            object: 'data',
             key_pgDown: Main_Featured,
             key_pgUp: Main_Clip,
-            base_url: Main_kraken_api + 'streams?limit=' + Main_ItemsLimitMax,
+            use_helix: true,
+            base_url: Main_helix_api + 'streams?first=' + Main_ItemsLimitMax,
             set_url: function() {
-                this.check_offset();
+                //this.check_offset();
 
-                this.url = this.base_url + '&offset=' + this.offset +
+                this.url = this.base_url + (this.cursor ? '&after=' + this.cursor : '') +
                     (Main_ContentLang !== "" ? ('&language=' + Main_ContentLang) : '');
             },
             label_init: function() {
@@ -14493,38 +14736,21 @@
             ids: Screens_ScreenIds('UserLive'),
             table: 'stream_table_user_live',
             screen: Main_UserLive,
-            object: 'streams',
+            object: 'data',
             key_pgDown: Main_usergames,
             key_pgUp: Main_UserChannels,
-            base_url: Main_kraken_api + 'streams/',
+            base_url: Main_helix_api + 'streams/',
             loadChannelOffsset: 0,
             followerChannels: '',
             followerChannelsDone: false,
+            use_helix: true,
             set_url: function() {
-                this.check_offset();
+                //this.check_offset();
 
-                if (AddUser_UsernameArray[0].access_token) {
-                    //User has added a key
-                    this.HeaderQuatity = 3;
-                    this.token = Main_OAuth + AddUser_UsernameArray[0].access_token;
-                    this.url = this.base_url + 'followed?' + 'limit=' + Main_ItemsLimitMax + '&offset=' +
-                        this.offset + '&stream_type=all';
-                } else {
-                    //User didn't added a key
-                    this.HeaderQuatity = 2;
-                    this.token = null;
-                    if (this.followerChannelsDone) {
-                        //User followed channels list is done, load live channels
-                        this.url = this.base_url + '?channel=' + this.followerChannels.join() + '&' +
-                            'limit=' + Main_ItemsLimitMax + '&offset=' + this.offset + '&stream_type=all';
-                    } else {
-                        //User followed channels list is not done, load followed channels
-                        this.url = Main_kraken_api + 'users/' +
-                            encodeURIComponent(AddUser_UsernameArray[0].id) +
-                            '/follows/channels?limit=' + Main_ItemsLimitMax + '&offset=' + this.loadChannelOffsset +
-                            '&sortby=last_broadcast';
-                    }
-                }
+                //this.token = Main_Bearer + AddUser_UsernameArray[0].access_token;
+                this.url = this.base_url + 'followed?user_id=' + AddUser_UsernameArray[0].id + '&first=' + Main_ItemsLimitMax +
+                    (this.cursor ? '&after=' + this.cursor : '');
+
             },
             label_init: function() {
                 ScreensObj_TopLableUserInit();
@@ -14537,63 +14763,6 @@
 
         UserLive = Screens_assign(UserLive, Base_Live_obj);
 
-        UserLive.concatenate = function(responseText) {
-            if (this.token || this.followerChannelsDone) {
-                //User has added a key or followed channels list is done, concatenate live channels
-                if (this.data) {
-                    responseText = JSON.parse(responseText);
-
-                    if (responseText[this.object]) {
-                        this.data = this.data.concat(responseText[this.object]);
-                        this.offset = this.data.length;
-                    }
-
-                    this.setMax(responseText);
-                } else {
-                    responseText = JSON.parse(responseText);
-
-                    this.data = responseText[this.object];
-                    if (this.data) this.offset = this.data.length;
-                    else this.data = [];
-
-                    this.setMax(responseText);
-
-                    //Live user sort by views was removed bt twitch without any warning.
-                    if (this.dataEnded && this.token) {
-                        this.data.sort(function(a, b) {
-                            return (b.viewers - a.viewers);
-                        });
-                    }
-
-                    this.loadDataSuccess();
-                }
-                this.loadingData = false;
-            } else {
-                var response = JSON.parse(responseText).follows,
-                    response_items = response.length;
-                if (response_items) { // response_items here is not always 99 because banned channels, so check until it is 0
-                    //User followed channels list is not done, load followed channels
-                    var x = 0,
-                        max = this.followerChannels.length + response_items;
-
-                    if (max > UserLiveFeed_maxChannels) {
-                        this.followerChannelsDone = true;
-                        response_items = Math.min(response_items, response_items - (max - UserLiveFeed_maxChannels));
-                    }
-
-                    for (x; x < response_items; x++) {
-                        this.followerChannels.push(response[x].channel._id);
-                    }
-
-                    this.loadChannelOffsset += response_items;
-
-                } else { // end
-                    //User followed channels list is done, load live channels
-                    this.followerChannelsDone = true;
-                }
-                Screens_loadDataRequest();
-            }
-        };
     }
 
     function ScreensObj_InitAGame() {
@@ -14602,15 +14771,15 @@
             ids: Screens_ScreenIds('AGame'),
             table: 'stream_table_a_game',
             screen: Main_aGame,
-            object: 'streams',
+            object: 'data',
             key_pgDown: Main_Vod,
             key_pgUp: Main_Featured,
-            base_url: Main_kraken_api + 'streams?game=',
+            use_helix: true,
+            base_url: Main_helix_api + 'streams?game_id=',
             set_url: function() {
-                this.check_offset();
-
-                this.url = this.base_url + encodeURIComponent(Main_values.Main_gameSelected) +
-                    '&limit=' + Main_ItemsLimitMax + '&offset=' + this.offset +
+                //this.check_offset();
+                this.url = this.base_url + encodeURIComponent(Main_values.Main_gameSelected_id) +
+                    '&first=' + Main_ItemsLimitMax + (this.cursor ? '&after=' + this.cursor : '') +
                     (Main_ContentLang !== "" ? ('&language=' + Main_ContentLang) : '');
             },
             label_init: function() {
@@ -14727,8 +14896,10 @@
             document.getElementById(this.table).appendChild(this.row);
         },
         setMax: function(tempObj) {
-            this.cursor = tempObj._cursor;
-            if (this.cursor === '') this.dataEnded = true;
+
+            this.cursor = this.use_helix ? tempObj.pagination.cursor : tempObj._cursor;
+            if (!this.cursor || this.cursor === '') this.dataEnded = true;
+
         },
         key_play: function() {
             if (this.posY === -1) {
@@ -14905,9 +15076,15 @@
             Main_SwitchScreenAction();
         },
         setMax: function(tempObj) {
+            if (this.use_helix) {
+                this.cursor = tempObj.pagination.cursor;
+                if (!this.cursor || this.cursor === '') this.dataEnded = true;
+            } else {
+                this.MaxOffset = tempObj._total;
+                if (this.data.length >= this.MaxOffset) this.dataEnded = true;
+            }
 
-            this.MaxOffset = tempObj._total;
-            if (this.data.length >= this.MaxOffset) this.dataEnded = true;
+
 
         },
         addCell: function(cell) {
@@ -14915,20 +15092,32 @@
             var hasLive = this.isLive || this.screen === Main_games;
             var game = this.hasGameProp ? cell.game : cell;
 
-            if (!this.idObject[game._id]) {
+            var id_cell = this.use_helix ? game.id : game._id;
+
+            if (!this.idObject[id_cell]) {
 
                 this.itemsCount++;
-                this.idObject[game._id] = 1;
-
-                this.row.appendChild(
-                    Screens_createCellGame(
-                        this.row_id + '_' + this.coloumn_id,
-                        this.ids, [game.box.template.replace("{width}x{height}", Main_GameSize),
-                            game.name,
-                            hasLive ? Main_addCommas(cell.channels) + STR_SPACE + STR_CHANNELS + STR_BR + STR_FOR +
-                            Main_addCommas(cell.viewers) + STR_SPACE + STR_VIEWER : '',
-                            game._id
-                        ]));
+                this.idObject[id_cell] = 1;
+                if (this.use_helix) {
+                    this.row.appendChild(
+                        Screens_createCellGame(
+                            this.row_id + '_' + this.coloumn_id,
+                            this.ids, [game.box_art_url.replace("{width}x{height}", Main_GameSize),
+                                game.name,
+                                '',
+                                id_cell
+                            ]));
+                } else {
+                    this.row.appendChild(
+                        Screens_createCellGame(
+                            this.row_id + '_' + this.coloumn_id,
+                            this.ids, [game.box.template.replace("{width}x{height}", Main_GameSize),
+                                game.name,
+                                hasLive ? Main_addCommas(cell.channels) + STR_SPACE + STR_CHANNELS + STR_BR + STR_FOR +
+                                Main_addCommas(cell.viewers) + STR_SPACE + STR_VIEWER : '',
+                                id_cell
+                            ]));
+                }
 
                 this.coloumn_id++;
             }
@@ -14942,12 +15131,14 @@
             screen: Main_games,
             key_pgDown: Main_Vod,
             key_pgUp: Main_Featured,
-            object: 'top',
-            hasGameProp: true,
-            base_url: Main_kraken_api + 'games/top?limit=' + Main_ItemsLimitMax,
+            object: 'data',
+            use_helix: true,
+            base_url: Main_helix_api + 'games/top?first=' + Main_ItemsLimitMax,
             set_url: function() {
-                if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
-                this.url = this.base_url + '&offset=' + this.offset;
+
+                if (!this.use_helix && this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
+                this.url = this.base_url + (this.cursor ? '&after=' + this.cursor : '');
+
             },
             label_init: function() {
                 Sidepannel_SetDefaultLables();
@@ -15529,14 +15720,14 @@
     };
 
     var Settings_FeedSort = [
-        [null, 'viewers', 0],
-        [null, 'viewers', 1],
-        ['channel', 'name', 1],
-        ['channel', 'name', 0],
-        [null, 'game', 1],
-        [null, 'game', 0],
-        [null, 'created_at', 0],
-        [null, 'created_at', 1]
+        [null, 'viewer_count', 0],
+        [null, 'viewer_count', 1],
+        [null, 'user_login', 1],
+        [null, 'user_login', 0],
+        [null, 'game_name', 1],
+        [null, 'game_name', 0],
+        [null, 'started_at', 0],
+        [null, 'started_at', 1]
     ];
 
     function Settings_GenerateClock() {
@@ -16818,7 +17009,7 @@
     function Sidepannel_KeyEnterUser() {
         var hidepanel = true;
 
-        if (Main_values.Sidepannel_Pos === 5 && !AddUser_UsernameArray[0].access_token) {
+        if (Main_values.Sidepannel_Pos >= 3 && Main_values.Sidepannel_Pos <= 6 && !AddUser_UsernameArray[0].access_token) {
             Main_showWarningDialog(STR_NOKEY_VIDEO_WARN);
             window.setTimeout(Main_HideWarningDialog, 5000);
             return;
@@ -17196,12 +17387,17 @@
                 break;
             case KEY_LEFT:
                 if (AddUser_UserIsSet()) {
-                    document.body.removeEventListener("keydown", Sidepannel_handleKeyDownMain);
-                    Main_ShowElement('side_panel_feed_thumb'); //TODO check if this is needed
-                    Sidepannel_StartFeed();
+                    if (AddUser_UsernameArray[0].access_token) {
+                        document.body.removeEventListener("keydown", Sidepannel_handleKeyDownMain);
+                        Main_ShowElement('side_panel_feed_thumb'); //TODO check if this is needed
+                        Sidepannel_StartFeed();
+                    } else {
+                        Main_showWarningDialog(STR_NOKEY_VIDEO_WARN);
+                        window.setTimeout(Main_HideWarningDialog, 5000);
+                    }
                 } else {
                     Main_showWarningDialog(STR_NOKUSER_WARN);
-                    window.setTimeout(Main_HideWarningDialog, 2000);
+                    window.setTimeout(Main_HideWarningDialog, 5000);
                 }
                 break;
             case KEY_PG_UP:
@@ -17236,7 +17432,7 @@
     var UserLiveFeed_loadingDataTry = 0;
     var UserLiveFeed_loadingDataTimeout = 3500;
     var UserLiveFeed_loadChannelOffsset = 0;
-    var UserLiveFeed_loadingDataTryMax = 5;
+    var UserLiveFeed_loadingDataTryMax = 2;
     var UserLiveFeed_dataEnded = false;
     var UserLiveFeed_followerChannels = [];
     var UserLiveFeed_idObject = {};
@@ -17256,7 +17452,6 @@
     var UserLiveFeed_Notify = true;
     var UserLiveFeed_NotifyRunning = false;
     var UserLiveFeed_NotifyTimeout = 3000;
-    var UserLiveFeed_maxChannels = 825;
 
     var UserLiveFeed_ids = ['ulf_thumbdiv', 'ulf_img', 'ulf_infodiv', 'ulf_displayname', 'ulf_streamtitle', 'ulf_streamgame', 'ulf_viwers', 'ulf_quality', 'ulf_cell', 'ulempty_', 'user_live_scroll'];
 
@@ -17301,14 +17496,7 @@
 
     function UserLiveFeed_CheckToken() {
         UserLiveFeed_token = AddUser_UsernameArray[0].access_token;
-        if (UserLiveFeed_token) {
-            UserLiveFeed_token = Main_OAuth + UserLiveFeed_token;
-            UserLiveFeed_loadChannelUserLive();
-        } else {
-            UserLiveFeed_loadDataPrepare();
-            UserLiveFeed_token = null;
-            UserLiveFeed_loadChannels();
-        }
+        UserLiveFeed_loadChannelUserLive();
     }
 
     function UserLiveFeed_loadDataPrepare() {
@@ -17317,77 +17505,8 @@
         UserLiveFeed_loadingDataTimeout = 3500;
     }
 
-    function UserLiveFeed_loadChannels() {
-        var theUrl = Main_kraken_api + 'users/' + encodeURIComponent(AddUser_UsernameArray[0].id) +
-            '/follows/channels?limit=100&offset=' + UserLiveFeed_loadChannelOffsset + '&sortby=last_broadcast' + Main_TwithcV5Flag;
-
-        BasexmlHttpGet(theUrl, UserLiveFeed_loadingDataTimeout, 2, null, UserLiveFeed_loadChannelLive, UserLiveFeed_loadDataError, false);
-    }
-
-    function UserLiveFeed_loadDataError() {
-        UserLiveFeed_loadingDataTry++;
-        if (UserLiveFeed_loadingDataTry < UserLiveFeed_loadingDataTryMax) {
-            UserLiveFeed_loadingDataTimeout += 500;
-            UserLiveFeed_loadChannels();
-        } else {
-            UserLiveFeed_loadingData = false;
-            if (!UserLiveFeed_GetSize()) {
-                Main_HideElement('dialog_loading_feed');
-                Main_HideElement('dialog_loading_side_feed');
-                if (UserLiveFeed_isFeedShow()) {
-                    Play_showWarningDialog(STR_REFRESH_PROBLEM);
-                    window.setTimeout(function() {
-                        Play_HideWarningDialog();
-                    }, 2000);
-                }
-            } else {
-                UserLiveFeed_dataEnded = true;
-                UserLiveFeed_loadDataSuccessFinish();
-            }
-        }
-    }
-
-    function UserLiveFeed_loadChannelLive(responseText) {
-        var response = JSON.parse(responseText).follows,
-            response_items = response.length;
-
-        if (response_items) { // response_items here is not always 99 because banned channels, so check until it is 0
-            var x = 0,
-                max = UserLiveFeed_followerChannels.length + response_items,
-                end = false;
-
-            if (max > UserLiveFeed_maxChannels) {
-                end = true;
-                response_items = Math.min(response_items, response_items - (max - UserLiveFeed_maxChannels));
-            }
-
-            for (x; x < response_items; x++) {
-                UserLiveFeed_followerChannels.push(response[x].channel._id);
-            }
-
-            if (end) {
-                UserLiveFeed_loadDataPrepare();
-                UserLiveFeed_loadChannelUserLive();
-            } else {
-                UserLiveFeed_loadChannelOffsset += response_items;
-                UserLiveFeed_loadDataPrepare();
-                UserLiveFeed_loadChannels();
-            }
-        } else { // end
-            UserLiveFeed_loadDataPrepare();
-            UserLiveFeed_loadChannelUserLive();
-        }
-    }
-
     function UserLiveFeed_loadChannelUserLive() {
-        var theUrl = Main_kraken_api + 'streams/';
-
-        if (UserLiveFeed_token) {
-            theUrl += 'followed?';
-        } else {
-            theUrl += '?channel=' + UserLiveFeed_followerChannels.join() + '&';
-        }
-        theUrl += 'limit=100&offset=0&stream_type=all' + Main_TwithcV5Flag;
+        var theUrl = Main_helix_api + 'streams/followed?user_id=' + AddUser_UsernameArray[0].id + '&first=100';
 
         UserLiveFeed_loadChannelUserLiveGet(theUrl);
     }
@@ -17397,9 +17516,10 @@
         xmlHttp.open("GET", theUrl, true);
         xmlHttp.timeout = UserLiveFeed_loadingDataTimeout;
 
-        xmlHttp.setRequestHeader(Main_clientIdHeader, AddCode_clientId);
-        xmlHttp.setRequestHeader(Main_AcceptHeader, Main_TwitchV5Json);
-        if (UserLiveFeed_token) xmlHttp.setRequestHeader(Main_Authorization, UserLiveFeed_token);
+        Main_Bearer_User_Headers[1][1] = Main_Bearer + AddUser_UsernameArray[0].access_token;
+
+        for (var i = 0; i < Main_Bearer_Headers.length; i++)
+            xmlHttp.setRequestHeader(Main_Bearer_User_Headers[i][0], Main_Bearer_User_Headers[i][1]);
 
         xmlHttp.ontimeout = function() {};
 
@@ -17443,9 +17563,75 @@
         }
     }
 
-    function UserLiveFeed_loadDataSuccess(responseText) {
+    var UserLiveFeed_loadDataSuccessResponse = [];
+    var UserLiveFeed_loadDataSuccessUrl;
 
-        var response = JSON.parse(responseText).streams;
+    function UserLiveFeed_loadDataSuccess(responseText) {
+        UserLiveFeed_loadDataSuccessResponse = JSON.parse(responseText).data;
+        var userids;
+
+        for (var i = 0; i < UserLiveFeed_loadDataSuccessResponse.length; i++) {
+            if (userids) {
+                userids += '&id=' + UserLiveFeed_loadDataSuccessResponse[i].user_id;
+            } else {
+                userids = '?id=' + UserLiveFeed_loadDataSuccessResponse[i].user_id;
+            }
+        }
+
+        UserLiveFeed_loadDataSuccessUrl = Main_helix_api + 'users' + userids;
+        UserLiveFeed_loadingDataTry = 0;
+        UserLiveFeed_loadingDataTimeout = 3500;
+        UserLiveFeed_loadDataSuccessHttpRequest();
+    }
+
+    function UserLiveFeed_loadDataSuccessHttpRequest() {
+        BasexmlHttpGet(
+            UserLiveFeed_loadDataSuccessUrl,
+            UserLiveFeed_loadingDataTimeout,
+            2,
+            null,
+            UserLiveFeed_loadDataSuccessUpdateMap,
+            UserLiveFeed_loadDataSuccessError,
+            false,
+            null,
+            true
+        );
+    }
+
+    function UserLiveFeed_loadDataSuccessUpdateMap(response) {
+        response = JSON.parse(response);
+        if (response.data && response.data.length) {
+
+            var data = response.data;
+
+            var mapLogoPartner = {};
+
+            for (var i = 0; i < data.length; i++) {
+                mapLogoPartner[data[i].id] = {
+                    partner: data[i].broadcaster_type === 'partner',
+                    logo: data[i].profile_image_url,
+                };
+            }
+
+            UserLiveFeed_loadDataSuccessEnd(UserLiveFeed_loadDataSuccessResponse, mapLogoPartner);
+
+        }
+    }
+
+    function UserLiveFeed_loadDataSuccessError() {
+        UserLiveFeed_loadingDataTry++;
+        if (UserLiveFeed_loadingDataTry < UserLiveFeed_loadingDataTryMax) {
+            UserLiveFeed_loadingDataTimeout += 500;
+            UserLiveFeed_loadDataSuccessHttpRequest();
+        } else {
+            UserLiveFeed_loadDataSuccessEnd(UserLiveFeed_loadDataSuccessResponse, {});
+        }
+
+    }
+
+    function UserLiveFeed_loadDataSuccessEnd(response, mapLogoPartner) {
+
+        //var response = JSON.parse(responseText).data;
         var response_items = response.length;
         var sorting = Settings_Obj_default('live_feed_sort');
 
@@ -17494,49 +17680,61 @@
 
         for (i; i < response_items; i++) {
             stream = response[i];
-            id = stream.channel._id;
+            id = stream.user_id;
+
             if (!UserLiveFeed_idObject[id]) {
 
                 //Check if was live if not notificate
                 if (!UserLiveFeed_WasLiveidObject[AddUser_UsernameArray[0].name][id]) {
                     UserLiveFeed_NotifyLiveidObject.push({
-                        name: stream.channel.display_name,
-                        logo: stream.channel.logo,
-                        title: Main_ReplaceLargeFont(twemoji.parse(stream.channel.status)),
-                        game: stream.game,
-                        rerun: Main_is_rerun(stream.broadcast_platform),
+                        name: stream.user_name,
+                        logo: mapLogoPartner[id] ? mapLogoPartner[id].logo : null,
+                        title: Main_ReplaceLargeFont(twemoji.parse(stream.title)),
+                        game: stream.game_name,
+                        rerun: Main_is_rerun(stream.type),
                     });
                 }
 
                 UserLiveFeed_idObject[id] = 1;
-                if (UserLiveFeed_LastPos !== null && UserLiveFeed_LastPos === stream.channel.name) Play_FeedPos = i;
+                if (UserLiveFeed_LastPos !== null && UserLiveFeed_LastPos === stream.user_login) {
+                    Play_FeedPos = i;
+                }
 
                 doc.appendChild(UserLiveFeed_CreatFeed(i,
-                    [stream.channel.name, id, Main_is_rerun(stream.broadcast_platform)],
-                    [stream.preview.template.replace("{width}x{height}", Main_VideoSize),
-                        stream.channel.display_name,
-                        stream.game,
-                        Main_addCommas(stream.viewers),
-                        stream.channel.status
+                    [stream.user_login, id, Main_is_rerun(stream.type)],
+                    [
+                        stream.thumbnail_url.replace("{width}x{height}", Main_VideoSize),
+                        stream.user_name,
+                        stream.game_name,
+                        Main_addCommas(stream.viewer_count),
+                        stream.title
                     ]));
 
-                if (UserSidePannel_LastPos !== null && UserSidePannel_LastPos === stream.channel.name) Sidepannel_PosFeed = i;
+                if (UserSidePannel_LastPos !== null && UserSidePannel_LastPos === stream.user_login) {
+                    Sidepannel_PosFeed = i;
+                }
 
                 docside.appendChild(UserLiveFeed_CreatSideFeed(i,
-                    [stream.channel.name, id, Main_is_rerun(stream.broadcast_platform)],
-                    [stream.channel.name, id, stream.preview.template.replace("{width}x{height}", Main_SidePannelSize),
-                        stream.channel.display_name,
-                        stream.channel.status, stream.game,
-                        STR_SINCE + Play_streamLiveAt(stream.created_at) + ' ' +
-                        STR_FOR + Main_addCommas(stream.viewers) + STR_SPACE + STR_VIEWER,
-                        Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language),
-                        Main_is_rerun(stream.broadcast_platform), stream.channel.partner
+                    [stream.user_login, id, Main_is_rerun(stream.type)],
+                    [
+                        stream.user_login, id, stream.thumbnail_url.replace("{width}x{height}", Main_SidePannelSize),
+                        stream.user_name,
+                        stream.title,
+                        stream.game_name,
+                        STR_SINCE + Play_streamLiveAt(stream.started_at) + ' ' +
+                        STR_FOR + Main_addCommas(stream.viewer_count) + STR_SPACE + STR_VIEWER,
+                        '[' + stream.language.toUpperCase() + ']',
+                        Main_is_rerun(stream.type),
+                        mapLogoPartner[id] ? mapLogoPartner[id].partner : null
                     ],
-                    [stream.channel.logo,
-                        stream.channel.display_name,
-                        stream.channel.display_name,
-                        stream.game, Main_addCommas(stream.viewers)
-                    ]));
+                    [
+                        mapLogoPartner[id] ? mapLogoPartner[id].logo : null,
+                        stream.user_name,
+                        stream.user_name,
+                        stream.game_name,
+                        Main_addCommas(stream.viewer_count)
+                    ]
+                ));
             }
         }
 
@@ -17686,7 +17884,11 @@
     }
 
     function UserLiveFeed_ShowFeed(PreventAddfocus) {
-        var hasuser = AddUser_UserIsSet();
+        var hasuser = AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token;
+
+        if (!hasuser) {
+            return;
+        }
 
         if (hasuser) {
             if (Play_FeedOldUserName !== AddUser_UsernameArray[0].name) UserLiveFeed_status = false;
@@ -18042,9 +18244,13 @@
 
     function Users_showRemoveDialog() {
         Users_setRemoveDialog();
-        if (!Users_Isautentication) Main_innerHTML("main_dialog_remove", STR_REMOVE_USER + STR_BR + AddUser_UsernameArray[Users_showUserDialogPos].name + '?');
-        else Main_innerHTML("main_dialog_remove", STR_OAUTH_IN + ' ' + AddUser_UsernameArray[Users_showUserDialogPos].name + '?');
-        Main_ShowElement('main_remove_dialog');
+
+        if (Users_showUserDialogPos > -1) {
+            if (!Users_Isautentication) Main_innerHTML("main_dialog_remove", STR_REMOVE_USER + STR_BR + AddUser_UsernameArray[Users_showUserDialogPos].name + '?');
+            else Main_innerHTML("main_dialog_remove", STR_OAUTH_IN + ' ' + AddUser_UsernameArray[Users_showUserDialogPos].name + '?');
+            Main_ShowElement('main_remove_dialog');
+        }
+
     }
 
     function Users_HideRemoveDialog() {

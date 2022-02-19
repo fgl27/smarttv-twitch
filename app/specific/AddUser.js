@@ -176,8 +176,9 @@ function AddUser_RestoreUsers() {
             AddUser_UsernameArray[i].timeout_id = null;
             if (AddUser_UsernameArray[i].access_token) AddCode_CheckTokenStart(i);
 
-            if (!AddUser_UsernameArray[i].logo) AddUser_UpdateUser(i, 0);
-            else if (!i) AddUser_UpdateSidepanel();
+            if (!i) AddUser_UpdateSidepanel();
+            AddUser_UpdateUser(i, 0);
+
         }
     } else AddUser_UpdateSidepanelDefault();
 }
@@ -214,7 +215,7 @@ function AddUser_UpdateUser(position, tryes) {
     xmlHttp.open("GET", theUrl, true);
     xmlHttp.timeout = 10000;
 
-    for (i; i < Main_Bearer_Headers.length; i++)
+    for (var i = 0; i < Main_Bearer_Headers.length; i++)
         xmlHttp.setRequestHeader(Main_Bearer_Headers[i][0], Main_Bearer_Headers[i][1]);
 
     xmlHttp.ontimeout = function() { };
@@ -231,8 +232,8 @@ function AddUser_UpdateUser(position, tryes) {
 
 function AddUser_UpdateUsertSuccess(response, position) {
     var user = JSON.parse(response);
-    if (user._total) {
-        user = user.users[0];
+    if (user.data.length) {
+        user = user.data[0];
         AddUser_UsernameArray[position].display_name = user.display_name;
         AddUser_UsernameArray[position].logo = user.profile_image_url;
         if (!position) AddUser_UpdateSidepanel();
@@ -246,8 +247,6 @@ function AddUser_UpdateUserError(position, tryes) {
 }
 
 function AddUser_SaveNewUser(responseText) {
-
-    console.log(responseText)
     AddUser_Username = JSON.parse(responseText).data[0];
     AddUser_UsernameArray.push({
         name: AddUser_Username.login,

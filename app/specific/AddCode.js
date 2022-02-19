@@ -173,15 +173,6 @@ function AddCode_AppTokenCheckError(tryes, callbackFuncOK, callbackFuncNOK) {
     else if (callbackFuncNOK) callbackFuncNOK();
 }
 
-function AddCode_AppTokenCheckSucess(responseText, callbackFunc) {
-    var response = JSON.parse(responseText);
-    if (response) {
-        AddCode_main_token = response.access_token;
-    }
-
-    if (callbackFunc) callbackFunc();
-}
-
 function AddCode_AppToken(tryes, callbackFunc, callbackFuncNOK) {
 
     var xmlHttp = new XMLHttpRequest();

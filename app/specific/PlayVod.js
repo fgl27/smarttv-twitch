@@ -108,6 +108,10 @@ function PlayVod_Start() {
     } else {
         PlayVod_PosStart();
     }
+
+    if (!Main_values.Play_gameSelected_id && Main_values.Play_gameSelected) {
+        PlayClip_UpdateGameInfo();
+    }
 }
 
 function PlayVod_PosStart() {

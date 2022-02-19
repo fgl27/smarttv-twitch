@@ -420,6 +420,10 @@ function Play_Start() {
     Play_loadData();
     window.clearInterval(Play_streamInfoTimerId);
     Play_streamInfoTimerId = window.setInterval(Play_updateStreamInfo, 60000);
+
+    if (!Main_values.Play_gameSelected_id && Main_values.Play_gameSelected) {
+        PlayClip_UpdateGameInfo();
+    }
 }
 
 // To Force a warn, not used regularly so keep commented out
@@ -629,7 +633,6 @@ function Play_updateStreamLogoError() {
     }
     Play_loadingInfoDataTry++;
 }
-
 
 function Play_updateStreamInfoStart() {
     var theUrl = Main_helix_api + 'streams/?user_id=' + Main_values.Play_selectedChannel_id;
@@ -1976,7 +1979,8 @@ function Play_OpenGame(PlayVodClip) {
     Main_values.Main_Go = Main_aGame;
 
     Main_values.Main_gameSelected = Main_values.Play_gameSelected;
-    Main_values.Main_gameSelected_id = null;
+    Main_values.Main_gameSelected_id = Main_values.Play_gameSelected_id;
+
     Play_hideChat();
     if (PlayVodClip === 1) Play_shutdownStream();
     else if (PlayVodClip === 2) PlayVod_shutdownStream();

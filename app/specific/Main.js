@@ -47,6 +47,7 @@ var Main_values = {
     "Play_selectedChannelDisplayname": '',
     "Play_selectedChannel": '',
     "Play_gameSelected": '',
+    "Play_gameSelected_id": null,
     "Users_AddcodePosition": 0,
     "Play_WasPlaying": 0,
     "ChannelVod_vodId": '',
@@ -865,6 +866,7 @@ function Main_OpenLiveStream(id, idsArray, handleKeyDownFunction) {
 
     Main_values.Play_selectedChannel_id = Main_values.Play_selectedChannel[1];
     Main_values.IsRerun = Main_values.Play_selectedChannel[2];
+    Main_values.Play_gameSelected_id = Main_values.Play_selectedChannel[3];
     Main_values.Play_selectedChannel = Main_values.Play_selectedChannel[0];
 
     if (Main_values.Play_isHost) {
@@ -902,6 +904,7 @@ function Main_OpenClip(id, idsArray, handleKeyDownFunction) {
     Main_values.Main_selectedChannel_id = ChannelClip_playUrl[6];
     Main_values.ChannelVod_vodId = ChannelClip_playUrl[7];
     ChannelVod_vodOffset = parseInt(ChannelClip_playUrl[8]);
+    Main_values.Play_gameSelected_id = null;
 
     ChannelClip_title = ChannelClip_playUrl[9];
     ChannelClip_language = ChannelClip_playUrl[10];
@@ -940,6 +943,7 @@ function Main_OpenVod(id, idsArray, handleKeyDownFunction) {
     ChannelVod_title = Main_values.ChannelVod_vodId[3];
     ChannelVod_game = (Main_values.Play_gameSelected !== "" && Main_values.Play_gameSelected !== null ? STR_STARTED + STR_PLAYING + Main_values.Play_gameSelected : "");
     ChannelVod_views = Main_values.ChannelVod_vodId[4];
+    Main_values.Play_gameSelected_id = null;
 
     Main_values.Main_selectedChannel_id = Main_values.ChannelVod_vodId[13];
     Main_values.Main_selectedChannelLogo = Main_values.ChannelVod_vodId[14];

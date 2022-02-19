@@ -551,7 +551,7 @@ var Base_Live_obj = {
                 this.row.appendChild(
                     Screens_createCellLive(
                         this.row_id + '_' + this.coloumn_id,
-                        [cell.user_login, cell.user_id, Main_is_rerun(cell.type)],
+                        [cell.user_login, cell.user_id, Main_is_rerun(cell.type), cell.game_id],
                         this.ids,
                         [cell.thumbnail_url.replace("{width}x{height}", Main_VideoSize),
                         cell.user_name,

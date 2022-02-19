@@ -165,7 +165,6 @@ function UserLiveFeed_loadDataSuccessHttpRequest() {
         UserLiveFeed_loadDataSuccessError,
         false,
         null,
-        true,
         true
     );
 }

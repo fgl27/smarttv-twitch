@@ -604,7 +604,7 @@ function Play_ResumeAfterOnline() {
 
 function Play_updateStreamLogo() {
     var theUrl = Main_helix_api + 'users?id=' + Main_values.Play_selectedChannel_id;
-    BasexmlHttpGet(theUrl, Play_loadingInfoDataTimeout, 2, null, Play_updateStreamLogoValues, Play_updateStreamLogoError, false, null, true, true);
+    BasexmlHttpGet(theUrl, Play_loadingInfoDataTimeout, 2, null, Play_updateStreamLogoValues, Play_updateStreamLogoError, false, null, true);
 }
 
 function Play_updateStreamLogoValues(response) {

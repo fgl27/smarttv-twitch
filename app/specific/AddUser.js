@@ -148,7 +148,6 @@ function AddUser_loadDataRequest() {
         AddUser_loadDataError,
         false,
         null,
-        true,
         true
     );
 }
@@ -221,24 +220,18 @@ function AddUser_UserIsSet() {
 
 function AddUser_UpdateUser(position, tryes) {
     var theUrl = Main_helix_api + 'users?login=' + encodeURIComponent(AddUser_UsernameArray[position].name);
-    var xmlHttp = new XMLHttpRequest();
 
-    xmlHttp.open("GET", theUrl, true);
-    xmlHttp.timeout = 10000;
-
-    for (var i = 0; i < Main_Bearer_Headers.length; i++)
-        xmlHttp.setRequestHeader(Main_Bearer_Headers[i][0], Main_Bearer_Headers[i][1]);
-
-    xmlHttp.ontimeout = function() { };
-
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) AddUser_UpdateUsertSuccess(xmlHttp.responseText, position);
-            else AddUser_UpdateUserError(position, tryes);
-        }
-    };
-
-    xmlHttp.send(null);
+    BasexmlHttpGet(
+        theUrl,
+        AddUser_loadingDataTimeout,
+        2,
+        null,
+        AddUser_UpdateUsertSuccess,
+        AddUser_UpdateUserError,
+        position,
+        tryes,
+        true
+    );
 }
 
 function AddUser_UpdateUsertSuccess(response, position) {

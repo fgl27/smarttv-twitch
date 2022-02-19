@@ -66,7 +66,7 @@ var Main_values = {
     "Sidepannel_IsUser": false,
     "My_channel": false,
     "DeviceBitrateCheck": false,
-    "warning_new_api": true,
+    "warning_new_api2": true,
     "AddCode_main_token": null,
 };
 

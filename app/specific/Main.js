@@ -65,7 +65,7 @@ var Main_values = {
     "Sidepannel_IsUser": false,
     "My_channel": false,
     "DeviceBitrateCheck": false,
-    "warning_extra": true,
+    "warning_new_api": true,
 };
 
 

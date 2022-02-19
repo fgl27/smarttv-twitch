@@ -408,6 +408,6 @@ function en_USLang() {
     STR_CHAT_SEND_DELAY = "Message send, chat delay enabled, message will show in chat after";
     STR_CHAT_DELAY = "Chat: delay";
 
-    STR_WARNING_NEW = "A new featuring was added<br><br>Write to chat plus extra settings chat option<br><br>Because this new featuring all previously added authorization keys added before January 02 2021 have be revoked, that is because chat permissions wasn't be asked before<br><br>If you had a key added please add a new one so you can keep using the app the same way as before<br><br>If you have any doubt about the new authorization key go to:<br><br> https://github.com/fgl27/smarttv-twitch#twitchtv-authentication-key<br><br>This dialog will auto hide in 1 minute, or press any key to hide it";
+    STR_WARNING_NEW = "Twitch is shutting down some of they API, making necessary to update all app API calls to they new API, the new API is different because of that it demands a lot of work.<br><br>Because of that the app is going thru a update phase, during this time some app content may not work.<br><br>Be aware with this new Twitch API is necessary to add a User and a Authentication key, if you don’t you may not have access to any content in future updates or after Twitch completely shutting they old API.<br><br>This dialog will auto hide in 1 minute, or press any key to hide it";
 
 }

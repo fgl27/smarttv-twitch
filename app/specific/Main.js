@@ -1213,8 +1213,6 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
             for (i; i < Main_Bearer_Headers.length; i++)
                 xmlHttp.setRequestHeader(Main_Bearer_Headers[i][0], Main_Bearer_Headers[i][1]);
         }
-        console.log('userToken ' + userToken);
-        console.log('appToken ' + appToken);
     } else {
         Main_Headers[2][1] = access_token;
 

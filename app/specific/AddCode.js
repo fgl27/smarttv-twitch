@@ -187,7 +187,7 @@ function AddCode_AppToken(tryes, callbackFunc, callbackFuncNOK) {
     var xmlHttp = new XMLHttpRequest();
 
     var url = 'https://id.twitch.tv/oauth2/token?client_id=' + AddCode_clientId +
-        '&client_secret=' + AddCode_client_secret +
+        '&client_secret=' + AddCode_client_token +
         '&grant_type=client_credentials';
 
     xmlHttp.open("POST", url, true);
@@ -229,7 +229,7 @@ function AddCode_refreshTokens(position, tryes, callbackFunc, callbackFuncNOK) {
     var xmlHttp = new XMLHttpRequest();
 
     var url = AddCode_UrlToken + 'grant_type=refresh_token&client_id=' +
-        encodeURIComponent(AddCode_clientId) + '&client_secret=' + encodeURIComponent(AddCode_client_secret) +
+        encodeURIComponent(AddCode_clientId) + '&client_secret=' + encodeURIComponent(AddCode_client_token) +
         '&refresh_token=' + encodeURIComponent(AddUser_UsernameArray[position].refresh_token) +
         '&redirect_uri=' + AddCode_redirect_uri;
 
@@ -296,7 +296,7 @@ function AddCode_TokensCheckScope(scope) {
 
 function AddCode_requestTokens() {
     var theUrl = AddCode_UrlToken + 'grant_type=authorization_code&client_id=' +
-        encodeURIComponent(AddCode_clientId) + '&client_secret=' + encodeURIComponent(AddCode_client_secret) +
+        encodeURIComponent(AddCode_clientId) + '&client_secret=' + encodeURIComponent(AddCode_client_token) +
         '&code=' + encodeURIComponent(AddCode_Code) + '&redirect_uri=' + AddCode_redirect_uri;
 
     AddCode_BasexmlHttpGet(theUrl, 'POST', 0, null, AddCode_requestTokensReady);
@@ -760,7 +760,7 @@ function AddCode_BasexmlHttpGetValidate(callbackready, position, tryes) {
 var AddCode_redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githubio/login/twitch.html';
 //Get yours client id and secret from https://docs.aws.amazon.com/lumberyard/latest/userguide/chatplay-generate-twitch-client-id.html
 var AddCode_clientId = "ypvnuqrh98wqz1sr0ov3fgfu4jh1yx";//public but get yours link above is free
-var AddCode_client_secret;//none public get yours link above is free
+var AddCode_client_token;//none public get yours link above is free
 var AddCode_client_backup;
 var AddCode_main_token;
 

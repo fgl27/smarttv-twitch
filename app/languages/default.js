@@ -113,4 +113,5 @@ function DefaultLang() {
         STR_DOT + STR_OAUTH_EXPLAIN4 + STR_BR +
         STR_DOT + STR_OAUTH_EXPLAIN5 + STR_BR +
         STR_DOT + STR_OAUTH_EXPLAIN6;
+
 }

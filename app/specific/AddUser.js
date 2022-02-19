@@ -139,7 +139,18 @@ function AddUser_KeyboardEvent(event) {
 function AddUser_loadDataRequest() {
     var theUrl = Main_helix_api + 'users?login=' + encodeURIComponent(AddUser_Username);
 
-    BasexmlHttpGet(theUrl, AddUser_loadingDataTimeout, 2, null, AddUser_loadDataRequestSuccess, AddUser_loadDataError, false, null, true, true);
+    BasexmlHttpGet(
+        theUrl,
+        AddUser_loadingDataTimeout,
+        2,
+        null,
+        AddUser_loadDataRequestSuccess,
+        AddUser_loadDataError,
+        false,
+        null,
+        true,
+        true
+    );
 }
 
 function AddUser_loadDataRequestSuccess(response) {
@@ -261,7 +272,7 @@ function AddUser_SaveNewUser(responseText) {
 
     AddUser_SaveUserArray();
     Users_status = false;
-    Users_Userlastadded = AddUser_Username.name;
+    Users_Userlastadded = AddUser_Username.login;
     Users_ShowAutetication = true;
     AddUser_exit();
     Main_values.Main_Go = Main_Users;

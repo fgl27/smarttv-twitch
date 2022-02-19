@@ -76,7 +76,7 @@ function Sidepannel_GetSize() {
 function Sidepannel_KeyEnterUser() {
     var hidepanel = true;
 
-    if (!AddUser_UsernameArray[0].access_token) {
+    if (Main_values.Sidepannel_Pos >= 3 && Main_values.Sidepannel_Pos <= 6 && !AddUser_UsernameArray[0].access_token) {
         Main_showWarningDialog(STR_NOKEY_VIDEO_WARN);
         window.setTimeout(Main_HideWarningDialog, 5000);
         return;
@@ -460,11 +460,11 @@ function Sidepannel_handleKeyDownMain(event) {
                     Sidepannel_StartFeed();
                 } else {
                     Main_showWarningDialog(STR_NOKEY_VIDEO_WARN);
-                    window.setTimeout(Main_HideWarningDialog, 2500);
+                    window.setTimeout(Main_HideWarningDialog, 5000);
                 }
             } else {
                 Main_showWarningDialog(STR_NOKUSER_WARN);
-                window.setTimeout(Main_HideWarningDialog, 2500);
+                window.setTimeout(Main_HideWarningDialog, 5000);
             }
             break;
         case KEY_PG_UP:

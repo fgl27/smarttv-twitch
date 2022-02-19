@@ -7,6 +7,7 @@ function en_USLang() {
     //document.getElementById("side_panel").style.width = "25%";
 
     //Below are variables to translate
+    STR_NOKEY_GENERAL_WARN = ", navigate to the side panel (Top option) User: Switch, add, key, press enter on the user";
     STR_KEY_UP_DOWN = " CH Up/Down";
     STR_GUIDE = " Hold enter or press Guide or Info";
     STR_REFRESH = "Refresh";
@@ -133,7 +134,7 @@ function en_USLang() {
     STR_CONTROLS_PLAY_14 = "Chat and video (Side by side): Color button red (A)";
     STR_F_DISABLE_CHAT = "Chat force disable";
     STR_UPDATE_AVAILABLE = "Update available, check google play store";
-    STR_OAUTH_IN = 'Adding a key allows the app to access live user content faster, follow/unfollow channels/games<br><br> Add a key is not demanding and can be done at any point later.<br> In doubt read this link:<br> <br> https://https://github.com/fgl27/smarttv-twitch#twitchtv-authentication-key <br> <br>To add a key for ';
+    STR_OAUTH_IN = 'Adding a key allows the app to access user follow content and logging to chat.<br><br> Add a key is not demanding and can be done at any point later.<br> In doubt read this link:<br> <br> https://https://github.com/fgl27/smarttv-twitch#twitchtv-authentication-key <br> <br>To add a key for ';
     STR_USER_CODE = "Add Authentication key";
     STR_USER_CODE_OK = "Key added OK";
     STR_KEY_BAD = "Key test failed, new one needs to be added";
@@ -150,7 +151,7 @@ function en_USLang() {
     STR_NOKEY = "No user";
     STR_NOKEY_WARN = "Set user and an authentication key to be able to follow/unfollow";
     STR_FOLLOW_ISSUE = "Third party apps can no longer follow/unfollow channels";
-    STR_NOKUSER_WARN = "Set a user first";
+    STR_NOKUSER_WARN = "Set a user and authentication key to be able to see the side panel followed content" + STR_NOKEY_GENERAL_WARN;
     STR_RESET = "Restart the";
     STR_CLIP = " Clip";
     STR_CHANNEL_CONT = "Channel content";
@@ -194,7 +195,7 @@ function en_USLang() {
     STR_CHAT_END = "Chat: The Chat has ended!";
     STR_TIME = ", Most recent";
     STR_VIWES = ", Most views";
-    STR_NOKEY_VIDEO_WARN = "Set an user authentication key to be able to see followed content, navigate to the side panel (Top option) User: Switch, add, key";
+    STR_NOKEY_VIDEO_WARN = "Set an user authentication key to be able to see the side panel followed content" + STR_NOKEY_GENERAL_WARN;
     STR_SWITCH_TYPE = "Switch: Most recent or views";
     STR_ENABLE = "Enable";
     STR_DISABLE = "Disable";
@@ -366,7 +367,7 @@ function en_USLang() {
     STR_CHAT_OPTIONS_EMOTE_SORT_SUMMARY = "If this is disabled, the lists of emotes will be showed in the order provider by the server";
     STR_CHAT_OPTIONS_FORCE_SHOW = "Force show chat";
     STR_CHAT_OPTIONS_FORCE_SHOW_SUMMARY = "If you wanna see the chat when write to chat is used, enable this";
-    STR_NOKEY_CHAT_WARN = "Add an user authorization key to be able to logging and write to chat";
+    STR_NOKEY_CHAT_WARN = "Add an user authorization key to be able to logging and write to chat" + STR_NOKEY_GENERAL_WARN;
     STR_CHAT_NOT_READY = "Chat not ready to send! Try again is a second or two.";
     STR_CHAT_REDEEMED_MESSAGE_HIGH = "Redeemed Highlight My Message";
     STR_CHAT_REDEEMED_MESSAGE_SUB = "Redeemed Send a Message in Sub-Only Mode";
@@ -407,6 +408,6 @@ function en_USLang() {
     STR_CHAT_SEND_DELAY = "Message send, chat delay enabled, message will show in chat after";
     STR_CHAT_DELAY = "Chat: delay";
 
-    STR_WARNING_NEW = "A new featuring was added<br><br>Write to chat plus extra settings chat option<br><br>Because this new featuring all previously added authorization keys added before january 02 2021 have be revoked, that is because chat permissions wasn't be asked before<br><br>If you had a key added please add a new one so you can keep using the app the same way as before<br><br>If you have any doubt about the new authorization key go to:<br><br> https://github.com/fgl27/smarttv-twitch#twitchtv-authentication-key<br><br>This dialog will auto hide in 1 minute, or press any key to hide it";
+    STR_WARNING_NEW = "A new featuring was added<br><br>Write to chat plus extra settings chat option<br><br>Because this new featuring all previously added authorization keys added before January 02 2021 have be revoked, that is because chat permissions wasn't be asked before<br><br>If you had a key added please add a new one so you can keep using the app the same way as before<br><br>If you have any doubt about the new authorization key go to:<br><br> https://github.com/fgl27/smarttv-twitch#twitchtv-authentication-key<br><br>This dialog will auto hide in 1 minute, or press any key to hide it";
 
 }

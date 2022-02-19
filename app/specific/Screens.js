@@ -415,11 +415,6 @@ function Screens_loadDataSuccessFinish() {
                     Main_values.Main_BeforeChannelisSet = false;
                     Main_values.Main_BeforeAgameisSet = false;
 
-                    if (Main_values.Never_run_new) {
-                        Main_showControlsDialog();
-                        document.body.removeEventListener("keydown", Screens_handleKeyDown);
-                        document.body.addEventListener("keydown", Screens_handleKeyControls, false);
-                    }
                     Main_values.Never_run_new = false;
                     Screens_addFocus(true);
                     Main_SaveValues();

@@ -211,7 +211,14 @@ function AddCode_AppTokenSucess(responseText, callbackFunc) {
         AddCode_main_token = response.access_token;
     }
 
+    Main_values.AddCode_main_token = AddCode_main_token;
+    Main_Bearer_Headers = [
+        [Main_clientIdHeader, AddCode_clientId],
+        ['Authorization', Main_Bearer + AddCode_main_token]
+    ];
     if (callbackFunc) callbackFunc();
+
+    Main_SaveValues();
 }
 
 function AddCode_refreshTokens(position, tryes, callbackFunc, callbackFuncNOK) {

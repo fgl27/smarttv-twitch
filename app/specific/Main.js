@@ -67,8 +67,20 @@ var Main_values = {
     "My_channel": false,
     "DeviceBitrateCheck": false,
     "warning_new_api": true,
+    "AddCode_main_token": null,
 };
 
+var Main_Bearer = 'Bearer ';
+
+var Main_Bearer_User_Headers = [
+    [Main_clientIdHeader, AddCode_clientId],
+    ['Authorization', null]
+];
+
+var Main_Bearer_Headers = [
+    [Main_clientIdHeader, AddCode_clientId],
+    ['Authorization', Main_Bearer + AddCode_main_token]
+];
 
 var Main_Headers = [];
 var Main_Headers_Backup = [];
@@ -267,6 +279,14 @@ function Main_loadTranslations(language) {
             Main_ChatLiveInput = Main_getElementById("chat_send_input");
 
             AddUser_RestoreUsers();
+            Main_RestoreValues();
+            if (Main_values.AddCode_main_token) {
+                AddCode_main_token = Main_values.AddCode_main_token;
+                Main_Bearer_Headers = [
+                    [Main_clientIdHeader, AddCode_clientId],
+                    ['Authorization', Main_Bearer + AddCode_main_token]
+                ];
+            }
 
             AddCode_AppTokenCheck(0, Main_initWindowsCheck, Main_initWindowsCheckFail);
         });
@@ -284,7 +304,6 @@ function Main_initWindowsCheck() {
 }
 
 function Main_initWindows() {
-    Main_RestoreValues();
 
     Main_SetStringsMain(true);
 
@@ -1167,17 +1186,6 @@ function Main_PrintUnicode(string) {
     for (var i = 0; i < string.length; i++)
         console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
 }
-
-var Main_Bearer = 'Bearer ';
-var Main_Bearer_Headers = [
-    [Main_clientIdHeader, AddCode_clientId],
-    ['Authorization', Main_Bearer + AddCode_main_token]
-];
-
-var Main_Bearer_User_Headers = [
-    [Main_clientIdHeader, AddCode_clientId],
-    ['Authorization', null]
-];
 
 function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, key, id, use_helix, skip_user_token) {
     var xmlHttp = new XMLHttpRequest();

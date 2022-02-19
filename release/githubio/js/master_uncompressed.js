@@ -1306,7 +1306,14 @@
             AddCode_main_token = response.access_token;
         }
 
+        Main_values.AddCode_main_token = AddCode_main_token;
+        Main_Bearer_Headers = [
+            [Main_clientIdHeader, AddCode_clientId],
+            ['Authorization', Main_Bearer + AddCode_main_token]
+        ];
         if (callbackFunc) callbackFunc();
+
+        Main_SaveValues();
     }
 
     function AddCode_refreshTokens(position, tryes, callbackFunc, callbackFuncNOK) {
@@ -6302,7 +6309,9 @@
         "My_channel": false,
         "DeviceBitrateCheck": false,
         "warning_new_api": true,
+        "AddCode_main_token": null,
     };
+
 
 
     var Main_Headers = [];
@@ -6368,6 +6377,18 @@
     var Main_ResetDownId;
     var Main_ResetAppId;
     var Main_ResetDownUPHold = false;
+
+    var Main_Bearer = 'Bearer ';
+
+    var Main_Bearer_User_Headers = [
+        [Main_clientIdHeader, AddCode_clientId],
+        ['Authorization', null]
+    ];
+
+    var Main_Bearer_Headers = [
+        [Main_clientIdHeader, AddCode_clientId],
+        ['Authorization', Main_Bearer + AddCode_main_token]
+    ];
     //Variable initialization end
 
     // this function will be called only once the first time the app startup
@@ -6503,6 +6524,14 @@
                 Main_ChatLiveInput = Main_getElementById("chat_send_input");
 
                 AddUser_RestoreUsers();
+                Main_RestoreValues();
+                if (Main_values.AddCode_main_token) {
+                    AddCode_main_token = Main_values.AddCode_main_token;
+                    Main_Bearer_Headers = [
+                        [Main_clientIdHeader, AddCode_clientId],
+                        ['Authorization', Main_Bearer + AddCode_main_token]
+                    ];
+                }
 
                 AddCode_AppTokenCheck(0, Main_initWindowsCheck, Main_initWindowsCheckFail);
             });
@@ -6520,7 +6549,6 @@
     }
 
     function Main_initWindows() {
-        Main_RestoreValues();
 
         Main_SetStringsMain(true);
 
@@ -7405,17 +7433,6 @@
             console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
     }
 
-    var Main_Bearer = 'Bearer ';
-    var Main_Bearer_Headers = [
-        [Main_clientIdHeader, AddCode_clientId],
-        ['Authorization', Main_Bearer + AddCode_main_token]
-    ];
-
-    var Main_Bearer_User_Headers = [
-        [Main_clientIdHeader, AddCode_clientId],
-        ['Authorization', null]
-    ];
-
     function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, key, id, use_helix, skip_user_token) {
         var xmlHttp = new XMLHttpRequest();
 
@@ -7432,7 +7449,7 @@
 
                 Main_Bearer_User_Headers[1][1] = Main_Bearer + AddUser_UsernameArray[0].access_token;
 
-                for (i; i < Main_Bearer_Headers.length; i++)
+                for (i; i < Main_Bearer_User_Headers.length; i++)
                     xmlHttp.setRequestHeader(Main_Bearer_User_Headers[i][0], Main_Bearer_User_Headers[i][1]);
 
             } else {
@@ -7440,7 +7457,8 @@
                 for (i; i < Main_Bearer_Headers.length; i++)
                     xmlHttp.setRequestHeader(Main_Bearer_Headers[i][0], Main_Bearer_Headers[i][1]);
             }
-
+            console.log('userToken ' + userToken);
+            console.log('appToken ' + appToken);
         } else {
             Main_Headers[2][1] = access_token;
 
@@ -13378,11 +13396,6 @@
                         Main_values.Main_BeforeChannelisSet = false;
                         Main_values.Main_BeforeAgameisSet = false;
 
-                        if (Main_values.Never_run_new) {
-                            Main_showControlsDialog();
-                            document.body.removeEventListener("keydown", Screens_handleKeyDown);
-                            document.body.addEventListener("keydown", Screens_handleKeyControls, false);
-                        }
                         Main_values.Never_run_new = false;
                         Screens_addFocus(true);
                         Main_SaveValues();

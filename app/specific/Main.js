@@ -1204,7 +1204,7 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
             userToken = true;
 
             Main_Bearer_User_Headers[1][1] = Main_Bearer + AddUser_UsernameArray[0].access_token;
-            console.log(Main_Bearer_User_Headers)
+
             for (i; i < Main_Bearer_User_Headers.length; i++)
                 xmlHttp.setRequestHeader(Main_Bearer_User_Headers[i][0], Main_Bearer_User_Headers[i][1]);
 

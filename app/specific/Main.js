@@ -973,7 +973,7 @@ function Main_OpenVod(id, idsArray, handleKeyDownFunction) {
     Main_values.Main_selectedChannel = Main_values.ChannelVod_vodId[11];
     Play_IncrementView = Main_values.ChannelVod_vodId[12];
 
-    Main_values.ChannelVod_vodId = Main_values.ChannelVod_vodId[8].substr(1);
+    Main_values.ChannelVod_vodId = Main_values.ChannelVod_vodId[8].slice(1);
 
     Main_openVod();
 }

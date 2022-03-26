@@ -583,6 +583,9 @@ function Main_addCommas(value) {
     return (value + '').replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+/**
+ * @deprecated API no longer give average fps info and video height
+ */
 function Main_videoqualitylang(video_height, average_fps, language) {
     video_height = video_height + ''; //stringfy doesnot work 8|
     if (!video_height.indexOf('x')) video_height = video_height.slice(-3);
@@ -594,6 +597,13 @@ function Main_videoqualitylang(video_height, average_fps, language) {
     return video_height + 'p' + average_fps + ((language !== "") ? ' [' + language.toUpperCase() + ']' : '');
 }
 
+function Main_lang(language) {
+    return (language !== "") ? ' [' + language.toUpperCase() + ']' : '';
+}
+
+/**
+ * @deprecated API no longer giving broadcast platform info
+ */
 function Main_is_rerun(content) {
     return ((content + '').indexOf('live') === -1);
 }

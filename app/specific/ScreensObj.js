@@ -1235,11 +1235,12 @@ function ScreensObj_InitSearchChannels() {
         table: 'stream_table_search_channel',
         screen: Main_SearchChannels,
         object: 'channels',
-        base_url: Main_kraken_api + 'search/channels?limit=' + Main_ItemsLimitMax + '&query=',
+        use_helix: true,
+        base_url: Main_helix_api + 'search/channels?first=' + Main_ItemsLimitMax + '&query=',
         set_url: function() {
             if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
             this.url = this.base_url + encodeURIComponent(Main_values.Search_data) +
-                '&offset=' + this.offset;
+                '&after=' + this.offset; // offset probably still broken, the behaviour changed
         },
         label_init: function() {
             Main_values.Search_isSearching = true;

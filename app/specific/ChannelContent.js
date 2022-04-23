@@ -88,30 +88,17 @@ function ChannelContent_loadDataPrepare() {
 }
 
 function ChannelContent_loadDataRequest() {
-    // https://dev.twitch.tv/docs/api/reference#get-streams
+    // Changed to Get Streams https://dev.twitch.tv/docs/api/reference#get-streams
     var theUrl = Main_helix_api + 'streams?user_id=' +
         encodeURIComponent(ChannelContent_TargetId !== undefined ? ChannelContent_TargetId : Main_values.Main_selectedChannel_id);
 
-    BasexmlHttpGet(
-        theUrl,
-        ChannelContent_loadingDataTimeout,
-        2,
-        null,
-        ChannelContent_loadDataRequestSuccess,
-        ChannelContent_loadDataError,
-        false,
-        null,
-        true
-    );
+    BasexmlHttpGet(theUrl, ChannelContent_loadingDataTimeout, 2, null, ChannelContent_loadDataRequestSuccess, ChannelContent_loadDataError, false, null, true);
 }
 
 function ChannelContent_loadDataRequestSuccess(response) {
-    var responseObject = JSON.parse(response);
-
-    if (responseObject.data && responseObject.data.length) {
+    if (JSON.parse(response).stream) {
         ChannelContent_responseText = response;
         ChannelContent_loadDataPrepare();
-        ChannelContent_GetStreamerFollowers();
         ChannelContent_GetStreamerInfo();
     } else if (!ChannelContent_TargetId) {
         ChannelContent_loadDataPrepare();
@@ -119,7 +106,6 @@ function ChannelContent_loadDataRequestSuccess(response) {
     } else {
         ChannelContent_responseText = null;
         ChannelContent_loadDataPrepare();
-        ChannelContent_GetStreamerFollowers();
         ChannelContent_GetStreamerInfo();
     }
 }
@@ -151,7 +137,6 @@ function ChannelContent_loadDataCheckHost() {
 function ChannelContent_loadDataCheckHostError() {
     ChannelContent_responseText = null;
     ChannelContent_loadDataPrepare();
-    ChannelContent_GetStreamerFollowers();
     ChannelContent_GetStreamerInfo();
 }
 
@@ -179,73 +164,30 @@ function ChannelContent_CheckHost(responseObj, id) {
     }
 }
 
-function ChannelContent_GetStreamerFollowers() {
-    // https://dev.twitch.tv/docs/api/reference#get-users-follows
-    var theUrl = Main_helix_api + encodeURI('users/follows?to_id=' + Main_values.Main_selectedChannel_id);
-
-    BasexmlHttpGet(
-      theUrl,
-      PlayVod_loadingInfoDataTimeout,
-      2,
-      null,
-      ChannelContent_GetStreamerFollowersSuccess,
-      ChannelContent_GetStreamerFollowersError,
-      false,
-      null,
-      true,
-    );
-}
-
-function ChannelContent_GetStreamerFollowersSuccess(responseText) {
-    var response = JSON.parse(responseText);
-
-    if (response.total) {
-        ChannelContent_selectedChannelFollower = response.total;
-    }
-}
-
-function ChannelContent_GetStreamerFollowersError() {
-    ChannelContent_loadingDataTry++;
-    if (ChannelContent_loadingDataTry < ChannelContent_loadingDataTryMax) {
-        ChannelContent_loadingDataTimeout += 500;
-        ChannelContent_GetStreamerFollowers();
-    } else {
-        ChannelContent_selectedChannelFollower = '';
-    }
-}
-
 function ChannelContent_GetStreamerInfo() {
     // https://dev.twitch.tv/docs/api/reference#get-users
-    var theUrl = Main_helix_api + encodeURI('users?id=' + Main_values.Main_selectedChannel_id);
+    var theUrl = Main_helix_api + 'users?id=' + Main_values.Main_selectedChannel_id;
 
-    BasexmlHttpGet(
-      theUrl,
-      PlayVod_loadingInfoDataTimeout,
-      2,
-      null,
-      ChannelContent_GetStreamerInfoSuccess,
-      ChannelContent_GetStreamerInfoError,
-      false,
-      null,
-      true,
-    );
+    BasexmlHttpGet(theUrl, PlayVod_loadingInfoDataTimeout, 2, null, ChannelContent_GetStreamerInfoSuccess, ChannelContent_GetStreamerInfoError, false, null, true);
 }
 
 function ChannelContent_GetStreamerInfoSuccess(responseText) {
-    var response = JSON.parse(responseText);
+    var channel = JSON.parse(responseText).data;
 
-    if (response.data && response.data.length) {
-        var channel = response.data[0];
-
+    if (channel.length) {
+        channel = channel[0];
         ChannelContent_offline_image = channel.offline_image_url;
         ChannelContent_offline_image = ChannelContent_offline_image ? ChannelContent_offline_image.replace("1920x1080", Main_VideoSize) : ChannelContent_offline_image;
         ChannelContent_profile_banner = channel.profile_image_url ? channel.profile_image_url : IMG_404_BANNER;
         ChannelContent_selectedChannelViews = channel.view_count;
+        ChannelContent_selectedChannelFollower = channel.followers;
         ChannelContent_description = channel.description;
-        Main_values.Main_selectedChannelLogo = ChannelContent_offline_image;
-        Main_values.Main_selectedChannelPartner = channel.broadcaster_type === 'partner';
+        Main_values.Main_selectedChannelLogo = channel.logo;
+        Main_values.Main_selectedChannelPartner = channel.broadcaster_type === "partner";
 
         ChannelContent_loadDataSuccess();
+    } else {
+        ChannelContent_loadDataError();
     }
 }
 
@@ -293,22 +235,22 @@ function ChannelContent_loadDataSuccess() {
     Main_innerHTML("channel_content_infodiv0_1", streamer_bio);
 
     if (ChannelContent_responseText) {
-        var response = JSON.parse(ChannelContent_responseText);
 
-        if (response) {
+        var response = JSON.parse(ChannelContent_responseText);
+        if (response.stream) {
 
             var hosting = ChannelContent_TargetId !== undefined ? Main_values.Main_selectedChannelDisplayname +
                 STR_USER_HOSTING : '';
-            var thumbnailUrl = response.thumbnail_url.replace("{width}x{height}", Main_VideoSize);
 
-            ChannelContent_createCell(response.user_name, response.user_id, thumbnailUrl,
-                twemoji.parse(response.type), response.game_name,
-                hosting + response.user_name,
-                STR_SINCE + Play_streamLiveAt(response.started_at) + STR_SPACE + STR_FOR +
-                Main_addCommas(response.viewer_count) + STR_SPACE + STR_VIEWER,
-                Main_lang(response.language),
-                Main_is_rerun('')
-            );
+            var stream = response.stream;
+
+            ChannelContent_createCell(stream.channel.name, stream.channel._id, stream.preview.template,
+                twemoji.parse(stream.channel.status), stream.game,
+                hosting + stream.channel.display_name,
+                STR_SINCE + Play_streamLiveAt(stream.created_at) + STR_SPACE + STR_FOR +
+                Main_addCommas(stream.viewers) + STR_SPACE + STR_VIEWER,
+                Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language),
+                Main_is_rerun(stream.broadcast_platform));
 
             ChannelContent_cursorX = 1;
 

@@ -180,12 +180,12 @@ var Base_Vod_obj = {
                 Screens_createCellVod(
                     this.row_id + '_' + this.coloumn_id,
                     this.ids,
-                    [thubnail.replace("{width}x{height}", Main_VideoSize),
+                    [thubnail.replace("%{width}x%{height}", Main_VideoSize),
                     cell.channel.display_name,
                     STR_STREAM_ON + Main_videoCreatedAt(cell.created_at),
                     twemoji.parse(cell.title),
                     Main_addCommas(cell.views) + STR_VIEWS,
-                    cell.resolutions.chunked ? Main_videoqualitylang(cell.resolutions.chunked.slice(-4), (parseInt(cell.fps.chunked) || 0), cell.channel.broadcaster_language) : '',
+                    cell.language ? Main_lang(cell.language) : '',
                     cell.length,
                     cell.animated_preview_url,
                     cell._id,
@@ -275,7 +275,7 @@ function ScreensObj_InitChannelVod() {
         periodMaxPos: 2,
         HeaderQuatity: 2,
         key_pgDown: Main_ChannelClip,
-        object: 'videos',
+        object: 'data',
         ids: Screens_ScreenIds('ChannelVod'),
         table: 'stream_table_channel_vod',
         screen: Main_ChannelVod,
@@ -285,12 +285,14 @@ function ScreensObj_InitChannelVod() {
         highlightSTR: 'ChannelVod_highlight',
         highlight: Main_getItemBool('ChannelVod_highlight', false),
         periodPos: Main_getItemInt('ChannelVod_periodPos', 1),
-        base_url: Main_kraken_api + 'channels/',
+        use_helix: true,
+        base_url: Main_helix_api + 'videos?user_id=',
         set_url: function() {
+            // https://dev.twitch.tv/docs/api/reference#get-videos
             this.url = this.base_url +
-                encodeURIComponent(Main_values.Main_selectedChannel_id) + '/videos?limit=' + Main_ItemsLimitMax +
-                '&broadcast_type=' + (this.highlight ? 'highlight' : 'archive') + '&sort=' +
-                this.time[this.periodPos - 1] + '&offset=' + (this.offset + this.extraoffset);
+                encodeURIComponent(Main_values.Main_selectedChannel_id) +
+                '&type=' + (this.highlight ? 'highlight' : 'archive') + '&sort=' +
+                this.time[this.periodPos - 1] + '&after=' + (this.cursor ? this.cursor : '');
         },
         key_play: function() {
             if (this.posY === -1) {
@@ -355,8 +357,18 @@ function ScreensObj_InitChannelVod() {
     ChannelVod = Screens_assign(ChannelVod, Base_Vod_obj);
 
     ChannelVod.addCell = function(cell) {
+        var thumbnail = cell.thumbnail_url;
+        cell.channel = {
+            _id: cell.user_id,
+            display_name: cell.user_name,
+            broadcaster_language: cell.language,
+            name: cell.user_name,
+        };
 
-        var thumbnail = cell.preview.template;
+        cell.views = cell.view_count;
+        cell.length = cell.duration;
+        cell.animated_preview_url = thumbnail.replace("%{width}x%{height}", Main_VideoSize);
+        cell._id = cell.id;
 
         // video content can be null sometimes, in that case the preview will be 404_processing
         // but if the video is from the stream that has not yet ended it can also be 404_processing and not be a null video
@@ -1234,13 +1246,13 @@ function ScreensObj_InitSearchChannels() {
         ids: Screens_ScreenIds('SearchChannels'),
         table: 'stream_table_search_channel',
         screen: Main_SearchChannels,
-        object: 'channels',
+        object: 'data',
         use_helix: true,
         base_url: Main_helix_api + 'search/channels?first=' + Main_ItemsLimitMax + '&query=',
         set_url: function() {
             if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
             this.url = this.base_url + encodeURIComponent(Main_values.Search_data) +
-                '&after=' + this.offset; // offset probably still broken, the behaviour changed
+                '&after=' + (this.cursor ? this.cursor : ''); // offset probably still broken, the behaviour changed
         },
         label_init: function() {
             Main_values.Search_isSearching = true;
@@ -1274,6 +1286,10 @@ function ScreensObj_InitSearchChannels() {
             Main_SwitchScreen();
         },
         addCell: function(cell) {
+            cell._id = cell.id;
+            cell.name = cell.display_name;
+            cell.logo = cell.thumbnail_url;
+
             this.addCellTemp(cell);
         }
     }, Base_obj);

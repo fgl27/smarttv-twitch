@@ -181,8 +181,9 @@ function PlayVod_updateStreamerInfoValues() {
 }
 
 function PlayVod_updateVodInfo() {
-    var theUrl = Main_kraken_api + 'videos/' + Main_values.ChannelVod_vodId + Main_TwithcV5Flag_I;
-    BasexmlHttpGet(theUrl, PlayVod_loadingInfoDataTimeout, 2, null, PlayVod_updateVodInfoPannel, PlayVod_updateVodInfoError, false);
+    // https://dev.twitch.tv/docs/api/reference#get-videos
+    var theUrl = Main_helix_api + 'videos?id=' + Main_values.ChannelVod_vodId;
+    BasexmlHttpGet(theUrl, PlayVod_loadingInfoDataTimeout, 2, null, PlayVod_updateVodInfoPannel, PlayVod_updateVodInfoError, false, null, true);
 }
 
 function PlayVod_updateVodInfoError() {
@@ -194,7 +195,15 @@ function PlayVod_updateVodInfoError() {
 }
 
 function PlayVod_updateVodInfoPannel(response) {
-    response = JSON.parse(response);
+    response = JSON.parse(response).data[0];
+    response.channel = {
+        partner: false,
+        broadcaster_language: response.language,
+        display_name: response.user_name,
+        _id: response.user_id,
+        name: response.user_name,
+    };
+    response.length = Play_timeHMS(response.length);
 
     ChannelVod_title = twemoji.parse(response.title, false, true);
 

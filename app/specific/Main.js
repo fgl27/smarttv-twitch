@@ -583,9 +583,6 @@ function Main_addCommas(value) {
     return (value + '').replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-/**
- * @deprecated API no longer give average fps info and video height
- */
 function Main_videoqualitylang(video_height, average_fps, language) {
     video_height = video_height + ''; //stringfy doesnot work 8|
     if (!video_height.indexOf('x')) video_height = video_height.slice(-3);
@@ -601,9 +598,6 @@ function Main_lang(language) {
     return (language !== "") ? ' [' + language.toUpperCase() + ']' : '';
 }
 
-/**
- * @deprecated API no longer giving broadcast platform info
- */
 function Main_is_rerun(content) {
     return ((content + '').indexOf('live') === -1);
 }
@@ -983,7 +977,7 @@ function Main_OpenVod(id, idsArray, handleKeyDownFunction) {
     Main_values.Main_selectedChannel = Main_values.ChannelVod_vodId[11];
     Play_IncrementView = Main_values.ChannelVod_vodId[12];
 
-    Main_values.ChannelVod_vodId = Main_values.ChannelVod_vodId[8].substr(1);
+    Main_values.ChannelVod_vodId = Main_values.ChannelVod_vodId[8];
 
     Main_openVod();
 }

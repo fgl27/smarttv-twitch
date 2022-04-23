@@ -1328,6 +1328,18 @@ function Play_timeS(time) {
     return (!time) ? (minutes + ":" + seconds) : (hours + ":" + minutes + ":" + seconds);
 }
 
+function Play_timeHMS(time) {
+    var hourIndex = time.indexOf('h');
+    var minuteIndex = time.indexOf('m');
+    var secondIndex = time.indexOf('s');
+
+    var hour = time.substring(0, hourIndex);
+    var minute = time.substring(hourIndex + 1, minuteIndex);
+    var second = time.substring(minuteIndex + 1, secondIndex);
+
+    return Number(Number(hour || 0) * 3600) + Number(Number(minute) * 60) + Number(second);
+}
+
 function Play_timeMs(time) {
     if (time < 0 && !Play_offsettimeMinus) Play_offsettimeMinus = time * -1;
     time += Play_offsettimeMinus;

@@ -139,7 +139,10 @@ var Base_Vod_obj = {
         Screens_addFocusVideo(y, x, idArray, forceScroll);
     },
     setMax: function(tempObj) {
-        if (tempObj[this.object].length < (Main_ItemsLimitMax - 5)) this.dataEnded = true;
+        if (this.use_helix) {
+            this.cursor = tempObj.pagination.cursor;
+            if (!this.cursor || this.cursor === '') this.dataEnded = true;
+        } else if (tempObj[this.object].length < (Main_ItemsLimitMax - 5)) this.dataEnded = true;
     },
     img_404: IMG_404_VIDEO,
     HasSwitches: true,
@@ -286,13 +289,13 @@ function ScreensObj_InitChannelVod() {
         highlight: Main_getItemBool('ChannelVod_highlight', false),
         periodPos: Main_getItemInt('ChannelVod_periodPos', 1),
         use_helix: true,
-        base_url: Main_helix_api + 'videos?user_id=',
+        base_url: Main_helix_api + 'videos?first=' + Main_ItemsLimitMax + '&user_id=',
         set_url: function() {
             // https://dev.twitch.tv/docs/api/reference#get-videos
             this.url = this.base_url +
                 encodeURIComponent(Main_values.Main_selectedChannel_id) +
                 '&type=' + (this.highlight ? 'highlight' : 'archive') + '&sort=' +
-                this.time[this.periodPos - 1] + '&after=' + (this.cursor ? this.cursor : '');
+                this.time[this.periodPos - 1] + (this.cursor ? '&after=' + this.cursor : '');
         },
         key_play: function() {
             if (this.posY === -1) {

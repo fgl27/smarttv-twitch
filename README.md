@@ -103,31 +103,30 @@ The key is generated on the page below. The page receives a key after you use it
 
 **The app uses the following permission:**
 
-- user:read:follows, user:read:subscriptions, chat:edit, chat:read they are summarized here [authentication twitch-api-v5](https://dev.Twitch/docs/authentication#twitch-api-v5)<br>
+-   user:read:follows, user:read:subscriptions, chat:edit, chat:read they are summarized here [Twitch Access Token Scopes](https://dev.twitch.tv/docs/authentication/scopes)<br>
 
 **How the app uses it individual permission:**
 
-**Send live Stream Chat and Rooms messages:**
-
-- The permission used for this is **chat:edit** the API used on this is [Connecting to Twitch IRC](https://dev.Twitch/docs/irc/guide/#connecting-to-twitch-irc)
-- Allows access so you can use the app to logging in on Twitch chat using yours username to send chat messages.
-- Also enable you to receive gifted sub give for user in chat.<br>
-
 **Read your list of follows:**
 
-- The permission used for this is **user:read:follows** the API used on this is [Get Followed Streams](https://dev.Twitch/docs/v5/reference/streams#get-followed-streams)
+-   The permission used for this is **user:read:follows** the API used on this is [Get Followed Streams](https://dev.twitch.tv/docs/api/reference#get-followed-streams)
 
-**View your paid subscriptions:**
+**Get the details of your subscription to a channel.:**
 
-- The permission used for this is **user:read:subscriptions** the API's used on this are [Get User Emotes](https://dev.Twitch/docs/v5/reference/users/#get-user-emotes ) and [Check User Subscription by Channel](https://dev.Twitch/docs/v5/reference/users#check-user-subscription-by-channel)
-- Allows to get yours emotes list from all subscriptions you have, even if you aren't sub to a channel this is needed to get yours available Twitch emotes, this list will be used on the write to chat implementation.
-- Allows to check if you are sub to a particularly channel, that information is used to give a on screen warning when a content is block for Sub-only (a Sub-only chat ROOM (write mode, read will always work) or a VOD for example) and you don't have access because you aren't a sub of a particularly channel (unfortunately twitch has blocked all third party app's to access sub-only VOD's so this warning will let you know that, on the past that wasn't a issue for sub-only VOD's)<br>
+-   The permission used for this is **user:read:subscriptions** the API's used on this is [Check User Subscription by Channel](https://dev.twitch.tv/docs/api/reference#check-user-subscription)
+-   Allows to check if you are sub to a particularly channel, that information is used to give a on screen warning when a content is block for Sub-only (a Sub-only chat ROOM (write mode, read will always work) or a VOD for example) and you don't have access because you aren't a sub of a particularly channel (unfortunately twitch has blocked all third party app's to access sub-only VOD's so this warning will let you know that, on the past that wasn't a issue for sub-only VOD's)<br>
+
+**Send live Stream Chat and Rooms messages:**
+
+-   The permission used for this is **chat:edit** the API used on this is [Authenticating with the Twitch IRC Server](https://dev.twitch.tv/docs/irc/authenticate-bot#getting-an-access-token)
+-   Allows access so you can use the app to logging in on Twitch chat using yours username to send chat messages.
+-   Also enable you to receive gifted sub give for user in chat.<br>
 
 **View live Stream Chat and Rooms messages:**
 
-- The permission used for this is **chat:read** the API used on this is [Connecting to Twitch IRC](https://dev.Twitch/docs/irc/guide/#connecting-to-twitch-irc)
-- Allows access so you can use the app to logging in on Twitch chat using yours username to read chat messages as yours user (technically the app can read chat without a user but the bellow option will not work on that case as the login is as anonymous).
-- Also enable you to receive gifted sub give for user in chat.<br>
+-   The permission used for this is **chat:read** the API used on this is [Authenticating with the Twitch IRC Server](https://dev.twitch.tv/docs/irc/authenticate-bot#getting-an-access-token)
+-   Allows access so you can use the app to logging in on Twitch chat using yours username to read chat messages as yours user (technically the app can read chat without a user but the bellow option will not work on that case as the login is as anonymous).
+-   Also enable you to receive gifted sub give for user in chat.<br>
 
 ## Controls
 

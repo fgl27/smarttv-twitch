@@ -91,7 +91,6 @@ function PlayVod_Start() {
     if (Main_values.vodOffset) {
         // this is a vod coming from a clip or from restore playback
         PlayVod_PrepareLoad();
-        PlayVod_updateStreamLogo();
     } else {
         PlayVod_updateStreamerInfoValues();
         Main_innerHTML('stream_info_title', ChannelVod_title);
@@ -102,6 +101,8 @@ function PlayVod_Start() {
 
         Main_replaceClassEmoji('stream_info_title');
     }
+
+    PlayVod_updateStreamLogo();
 
     if (PlayVod_VodIds['#' + Main_values.ChannelVod_vodId] && !Main_values.vodOffset) {
         Play_HideBufferDialog();
@@ -172,7 +173,7 @@ function PlayVod_updateStreamLogo() {
     BasexmlHttpGet(theUrl, PlayVod_loadingInfoDataTimeout, 2, null, PlayVod_updateStreamLogoValues, noop_fun, false, null, true);
 }
 
-function PlayVod_updateStreamLogoValues(responseText, key, id) {
+function PlayVod_updateStreamLogoValues(responseText) {
     var response = JSON.parse(responseText);
 
     if (response.data && response.data.length) {

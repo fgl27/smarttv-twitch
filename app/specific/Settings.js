@@ -283,7 +283,7 @@ function Settings_SetSettings() {
 
     key = "clip_auto_play_next";
     Settings_value_keys.push(key);
-    Settings_value[key].values = [STR_YES, STR_NO];
+    Settings_value[key].values = [STR_NO, STR_YES];
 
     div += Settings_DivOptionNoSummary(key, STR_AUTO_PLAY_NEXT);
 

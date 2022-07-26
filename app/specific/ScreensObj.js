@@ -170,28 +170,28 @@ var Base_Vod_obj = {
         this.Vod_newImg.src = div.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
     },
     addCellBase: function (cell, thubnail) {
-        if (!this.idObject[cell._id] && (thubnail + '').indexOf('404_processing') === -1) {
+        if (!this.idObject[cell.id] && (thubnail + '').indexOf('404_processing') === -1) {
             this.itemsCount++;
-            this.idObject[cell._id] = 1;
+            this.idObject[cell.id] = 1;
 
             this.row.appendChild(
                 Screens_createCellVod(this.row_id + '_' + this.coloumn_id, this.ids, [
                     thubnail.replace('%{width}x%{height}', Main_VideoSize),
-                    cell.channel.display_name,
+                    cell.user_name,
                     STR_STREAM_ON + Main_videoCreatedAt(cell.created_at),
                     twemoji.parse(cell.title),
-                    Main_addCommas(cell.views) + STR_VIEWS,
+                    Main_addCommas(cell.view_count) + STR_VIEWS,
                     cell.language ? Main_lang(cell.language) : '',
-                    cell.length,
-                    cell.animated_preview_url,
-                    cell._id,
-                    cell.channel.broadcaster_language,
-                    cell.game,
-                    cell.channel.name,
-                    cell.increment_view_count_url,
-                    cell.channel._id,
-                    cell.channel.logo,
-                    cell.channel.partner
+                    cell.duration,
+                    null,
+                    cell.id,
+                    cell.language,
+                    null,
+                    cell.user_login,
+                    null,
+                    cell.user_id,
+                    null,
+                    null
                 ])
             );
 
@@ -392,17 +392,6 @@ function ScreensObj_InitChannelVod() {
 
     ChannelVod.addCell = function (cell) {
         var thumbnail = cell.thumbnail_url;
-        cell.channel = {
-            _id: cell.user_id,
-            display_name: cell.user_name,
-            broadcaster_language: cell.language,
-            name: cell.user_name
-        };
-
-        cell.views = cell.view_count;
-        cell.length = cell.duration;
-        cell.animated_preview_url = thumbnail.replace('%{width}x%{height}', Main_VideoSize);
-        cell._id = cell.id;
 
         // video content can be null sometimes, in that case the preview will be 404_processing
         // but if the video is from the stream that has not yet ended it can also be 404_processing and not be a null video
@@ -415,9 +404,10 @@ function ScreensObj_InitChannelVod() {
 function ScreensObj_InitAGameVod() {
     AGameVod = Screens_assign(
         {
+            use_helix: true,
             periodMaxPos: 4,
             HeaderQuatity: 2,
-            object: 'vods',
+            object: 'data',
             key_pgDown: Main_Vod,
             key_pgUp: Main_Featured,
             ids: Screens_ScreenIds('AGameVod'),
@@ -426,19 +416,17 @@ function ScreensObj_InitAGameVod() {
             highlightSTR: 'AGameVod_highlight',
             highlight: Main_getItemBool('AGameVod_highlight', false),
             periodPos: Main_getItemInt('AGameVod_periodPos', 2),
-            base_url: Main_kraken_api + 'videos/top?game=',
+            base_url: Main_helix_api + 'videos?first=' + Main_ItemsLimitMax + '&game_id=',
             set_url: function () {
                 this.url =
                     this.base_url +
-                    encodeURIComponent(Main_values.Main_gameSelected) +
-                    '&limit=' +
-                    Main_ItemsLimitMax +
-                    '&broadcast_type=' +
+                    Main_values.Main_gameSelected_id +
+                    '&type=' +
                     (this.highlight ? 'highlight' : 'archive') +
-                    '&sort=views&offset=' +
-                    this.offset +
+                    '&sort=views' +
                     '&period=' +
                     this.period[this.periodPos - 1] +
+                    (this.cursor ? '&after=' + this.cursor : '') +
                     (Main_ContentLang !== '' ? '&language=' + Main_ContentLang : '');
             },
             key_play: function () {

@@ -14124,7 +14124,7 @@
             }
         },
         addCell: function(cell) {
-            this.addCellBase(cell, cell.preview.template);
+            this.addCellBase(cell, cell.thumbnail_url);
         }
     };
 

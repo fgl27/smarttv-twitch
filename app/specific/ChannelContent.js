@@ -95,8 +95,10 @@ function ChannelContent_loadDataRequest() {
 }
 
 function ChannelContent_loadDataRequestSuccess(response) {
-    if (JSON.parse(response).data.length) {
-        ChannelContent_responseText = response;
+    var obj = JSON.parse(response);
+
+    if (obj.data && obj.data.length) {
+        ChannelContent_responseText = obj.data;
         ChannelContent_loadDataPrepare();
         ChannelContent_GetStreamerInfo();
     } else if (!ChannelContent_TargetId) {
@@ -159,17 +161,17 @@ function ChannelContent_GetStreamerInfo() {
 }
 
 function ChannelContent_GetStreamerInfoSuccess(responseText) {
-    var channel = JSON.parse(responseText).data;
+    var obj = JSON.parse(responseText);
 
-    if (channel.length) {
-        channel = channel[0];
+    if (obj.data && obj.data.length) {
+        channel = obj.data[0];
         ChannelContent_offline_image = channel.offline_image_url;
         ChannelContent_offline_image = ChannelContent_offline_image ? ChannelContent_offline_image.replace('1920x1080', Main_VideoSize) : ChannelContent_offline_image;
-        ChannelContent_profile_banner = channel.profile_image_url ? channel.profile_image_url : IMG_404_BANNER;
+        //ChannelContent_profile_banner = channel.profile_image_url ? channel.profile_image_url : IMG_404_BANNER;
         ChannelContent_selectedChannelViews = channel.view_count;
-        ChannelContent_selectedChannelFollower = channel.followers;
+        //ChannelContent_selectedChannelFollower = channel.followers;
         ChannelContent_description = channel.description;
-        Main_values.Main_selectedChannelLogo = channel.logo;
+        Main_values.Main_selectedChannelLogo = channel.profile_image_url;
         Main_values.Main_selectedChannelPartner = channel.broadcaster_type === 'partner';
 
         ChannelContent_loadDataSuccess();
@@ -222,11 +224,10 @@ function ChannelContent_loadDataSuccess() {
     Main_innerHTML('channel_content_infodiv0_1', streamer_bio);
 
     if (ChannelContent_responseText) {
-        var response = JSON.parse(ChannelContent_responseText);
-        if (response.data.length) {
+        if (ChannelContent_responseText.length) {
             var hosting = ChannelContent_TargetId !== undefined ? Main_values.Main_selectedChannelDisplayname + STR_USER_HOSTING : '';
 
-            var stream = response.data[0];
+            var stream = ChannelContent_responseText[0];
 
             ChannelContent_createCell(
                 stream.user_name,

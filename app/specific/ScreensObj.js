@@ -1266,11 +1266,11 @@ var Base_Channel_obj = {
         return STR_NO + STR_SPACE + STR_USER_CHANNEL;
     },
     addCellTemp: function (cell) {
-        if (!this.idObject[cell._id]) {
+        if (!this.idObject[cell.id]) {
             this.itemsCount++;
-            this.idObject[cell._id] = 1;
+            this.idObject[cell.id] = 1;
 
-            this.row.appendChild(Screens_createCellChannel(this.row_id + '_' + this.coloumn_id, this.ids, [cell.name, cell._id, cell.logo, cell.display_name, cell.partner]));
+            this.row.appendChild(Screens_createCellChannel(this.row_id + '_' + this.coloumn_id, this.ids, [cell.broadcaster_login, cell.id, cell.thumbnail_url, cell.display_name, null]));
 
             this.coloumn_id++;
         }
@@ -1376,10 +1376,6 @@ function ScreensObj_InitSearchChannels() {
                 Main_SwitchScreen();
             },
             addCell: function (cell) {
-                cell._id = cell.id;
-                cell.name = cell.display_name;
-                cell.logo = cell.thumbnail_url;
-
                 this.addCellTemp(cell);
             }
         },

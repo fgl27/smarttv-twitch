@@ -1309,7 +1309,11 @@ function Play_timeHMS(time) {
     var minute = time.substring(hourIndex + 1, minuteIndex);
     var second = time.substring(minuteIndex + 1, secondIndex);
 
-    return Number(Number(hour || 0) * 3600) + Number(Number(minute) * 60) + Number(second);
+    var hourInt = hour ? parseInt(hour) * 3600 : 0;
+    var minuteInt = minute ? parseInt(minute) * 60 : 0;
+    var secondInt = second ? parseInt(second) : 0;
+
+    return hourInt + minuteInt + secondInt;
 }
 
 function Play_timeMs(time) {

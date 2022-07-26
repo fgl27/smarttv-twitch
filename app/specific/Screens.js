@@ -326,8 +326,8 @@ function Screens_createCellVod(id, idArray, valuesArray) {
         (valuesArray[10] !== "" && valuesArray[10] !== null ? STR_STARTED + STR_PLAYING + valuesArray[10] : "") + '</div>' +
         '<div style="line-height: 1.3ch;"><div id="' + idArray[4] + id + '"class="stream_info_live" style="width: auto; display: inline-block;">' +
         valuesArray[2] + ',' + STR_SPACE + valuesArray[4] + '</div><div id="' + idArray[5] + id +
-        '"class="stream_info_live" style="width: 9ch; display: inline-block; float: right; text-align: right;">' +
-        Play_timeS(valuesArray[6]) + '</div></div></div></div></div>');
+        '"class="stream_info_live" style="width: 12ch; display: inline-block; float: right; text-align: right;">' +
+        valuesArray[6] + '</div></div></div></div></div>');
 }
 
 function Screens_createCellLive(id, data, idArray, valuesArray) {

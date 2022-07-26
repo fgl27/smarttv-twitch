@@ -88,15 +88,15 @@ function ChannelContent_loadDataPrepare() {
 }
 
 function ChannelContent_loadDataRequest() {
-    var theUrl = Main_kraken_api + 'streams/' +
-        encodeURIComponent(ChannelContent_TargetId !== undefined ? ChannelContent_TargetId : Main_values.Main_selectedChannel_id) +
-        Main_TwithcV5Flag_I;
+    // Changed to Get Streams https://dev.twitch.tv/docs/api/reference#get-streams
+    var theUrl = Main_helix_api + 'streams?user_id=' +
+        encodeURIComponent(ChannelContent_TargetId !== undefined ? ChannelContent_TargetId : Main_values.Main_selectedChannel_id);
 
-    BasexmlHttpGet(theUrl, ChannelContent_loadingDataTimeout, 2, null, ChannelContent_loadDataRequestSuccess, ChannelContent_loadDataError);
+    BasexmlHttpGet(theUrl, ChannelContent_loadingDataTimeout, 2, null, ChannelContent_loadDataRequestSuccess, ChannelContent_loadDataError, false, null, true);
 }
 
 function ChannelContent_loadDataRequestSuccess(response) {
-    if (JSON.parse(response).stream) {
+    if (JSON.parse(response).data.length) {
         ChannelContent_responseText = response;
         ChannelContent_loadDataPrepare();
         ChannelContent_GetStreamerInfo();
@@ -165,23 +165,30 @@ function ChannelContent_CheckHost(responseObj, id) {
 }
 
 function ChannelContent_GetStreamerInfo() {
-    var theUrl = Main_kraken_api + 'channels/' + Main_values.Main_selectedChannel_id + Main_TwithcV5Flag_I;
+    // https://dev.twitch.tv/docs/api/reference#get-users
+    var theUrl = Main_helix_api + 'users?id=' + Main_values.Main_selectedChannel_id;
 
-    BasexmlHttpGet(theUrl, PlayVod_loadingInfoDataTimeout, 2, null, ChannelContent_GetStreamerInfoSuccess, ChannelContent_GetStreamerInfoError);
+    BasexmlHttpGet(theUrl, PlayVod_loadingInfoDataTimeout, 2, null, ChannelContent_GetStreamerInfoSuccess, ChannelContent_GetStreamerInfoError, false, null, true);
 }
 
 function ChannelContent_GetStreamerInfoSuccess(responseText) {
-    var channel = JSON.parse(responseText);
-    ChannelContent_offline_image = channel.video_banner;
-    ChannelContent_offline_image = ChannelContent_offline_image ? ChannelContent_offline_image.replace("1920x1080", Main_VideoSize) : ChannelContent_offline_image;
-    ChannelContent_profile_banner = channel.profile_banner ? channel.profile_banner : IMG_404_BANNER;
-    ChannelContent_selectedChannelViews = channel.views;
-    ChannelContent_selectedChannelFollower = channel.followers;
-    ChannelContent_description = channel.description;
-    Main_values.Main_selectedChannelLogo = channel.logo;
-    Main_values.Main_selectedChannelPartner = channel.partner;
+    var channel = JSON.parse(responseText).data;
 
-    ChannelContent_loadDataSuccess();
+    if (channel.length) {
+        channel = channel[0];
+        ChannelContent_offline_image = channel.offline_image_url;
+        ChannelContent_offline_image = ChannelContent_offline_image ? ChannelContent_offline_image.replace("1920x1080", Main_VideoSize) : ChannelContent_offline_image;
+        ChannelContent_profile_banner = channel.profile_image_url ? channel.profile_image_url : IMG_404_BANNER;
+        ChannelContent_selectedChannelViews = channel.view_count;
+        ChannelContent_selectedChannelFollower = channel.followers;
+        ChannelContent_description = channel.description;
+        Main_values.Main_selectedChannelLogo = channel.logo;
+        Main_values.Main_selectedChannelPartner = channel.broadcaster_type === "partner";
+
+        ChannelContent_loadDataSuccess();
+    } else {
+        ChannelContent_loadDataError();
+    }
 }
 
 function ChannelContent_GetStreamerInfoError() {
@@ -230,20 +237,20 @@ function ChannelContent_loadDataSuccess() {
     if (ChannelContent_responseText) {
 
         var response = JSON.parse(ChannelContent_responseText);
-        if (response.stream) {
+        if (response.data.length) {
 
             var hosting = ChannelContent_TargetId !== undefined ? Main_values.Main_selectedChannelDisplayname +
                 STR_USER_HOSTING : '';
 
-            var stream = response.stream;
+            var stream = response.data[0];
 
-            ChannelContent_createCell(stream.channel.name, stream.channel._id, stream.preview.template,
-                twemoji.parse(stream.channel.status), stream.game,
-                hosting + stream.channel.display_name,
-                STR_SINCE + Play_streamLiveAt(stream.created_at) + STR_SPACE + STR_FOR +
-                Main_addCommas(stream.viewers) + STR_SPACE + STR_VIEWER,
-                Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language),
-                Main_is_rerun(stream.broadcast_platform));
+            ChannelContent_createCell(stream.user_name, stream.id, stream.thumbnail_url,
+                twemoji.parse(stream.title), stream.game_name,
+                hosting + stream.user_name,
+                STR_SINCE + Play_streamLiveAt(stream.started_at) + STR_SPACE + STR_FOR +
+                Main_addCommas(stream.viewer_count) + STR_SPACE + STR_VIEWER,
+                Main_lang(stream.language),
+                Main_is_rerun(stream.type));
 
             ChannelContent_cursorX = 1;
 
@@ -254,7 +261,7 @@ function ChannelContent_loadDataSuccess() {
     ChannelContent_loadDataSuccessFinish();
 }
 
-function ChannelContent_createCell(channel_name, channel_id, preview_thumbnail, stream_title, stream_game, channel_display_name, viwers, quality, rerun) {
+function ChannelContent_createCell(channel_name, channel_id, preview_thumbnail, stream_title, stream_game, channel_display_name, viewers, quality, rerun) {
 
     var ishosting = ChannelContent_TargetId !== undefined;
     if (!preview_thumbnail) preview_thumbnail = IMG_404_VIDEO;
@@ -271,7 +278,7 @@ function ChannelContent_createCell(channel_name, channel_id, preview_thumbnail, 
         (ishosting ? '' : quality) + '</div></div>' +
         '<div class="stream_info_live_title">' + stream_title + '</div>' +
         '<div id="channel_content_cell0_5" class="stream_info_live">' + (stream_game !== "" ? STR_PLAYING + stream_game : "") +
-        '</div>' + '<div class="stream_info_live">' + viwers + '</div></div></div>');
+        '</div>' + '<div class="stream_info_live">' + viewers + '</div></div></div>');
 }
 
 function ChannelContent_createCellOffline() {

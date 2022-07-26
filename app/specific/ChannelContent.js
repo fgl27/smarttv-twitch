@@ -164,7 +164,7 @@ function ChannelContent_GetStreamerInfoSuccess(responseText) {
     var obj = JSON.parse(responseText);
 
     if (obj.data && obj.data.length) {
-        channel = obj.data[0];
+        var channel = obj.data[0];
         ChannelContent_offline_image = channel.offline_image_url;
         ChannelContent_offline_image = ChannelContent_offline_image ? ChannelContent_offline_image.replace('1920x1080', Main_VideoSize) : ChannelContent_offline_image;
         //ChannelContent_profile_banner = channel.profile_image_url ? channel.profile_image_url : IMG_404_BANNER;

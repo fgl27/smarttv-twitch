@@ -1,4 +1,4 @@
-/* jshint undef: true, unused: true, node: true, browser: true */
+/* jshint undef: true, unused: true, node: true, laxbreak: true, browser: true */
 /*globals tizen, webapis, STR_BODY, punycode, smartTwitchTV */
 (function(root) {
 
@@ -408,10 +408,11 @@
     var STR_CHAT_CONNECTED;
     var STR_CHAT_SEND_DELAY;
     var STR_WARNING_NEW;
-    var STR_BITCOIN_SUMMARY; // Bellow here are the all untranslatable string,they are a combination of strings and html code use by pats of the code
-    var STR_ABOUT_EMAIL = "fglfgl27@gmail.com";
-    var STR_BR = "<br>";
-    var STR_DOT = '<i  class="icon-circle class_bold" style="font-size: 50%; vertical-align: middle;"></i>' + "  ";
+    var STR_BITCOIN_SUMMARY;
+    // Bellow here are the all untranslatable string,they are a combination of strings and html code use by pats of the code
+    var STR_ABOUT_EMAIL = 'fglfgl27@gmail.com';
+    var STR_BR = '<br>';
+    var STR_DOT = '<i  class="icon-circle class_bold" style="font-size: 50%; vertical-align: middle;"></i>' + '  ';
     var STR_DIV_TITLE = '<div class="about_text_title">';
     var STR_DIV_TITLE_LEFT = '<div class="about_text_title" style="text-align: left;">';
     var STR_DIV_MIDLE_LEFT = '<div style="text-align: left;">';
@@ -426,35 +427,63 @@
     var STR_SPACE = '&nbsp;';
     var STR_PAYPAL;
     var STR_BITCOIN;
-    var STR_BITCOIN_WALLET = "1DuhCT6L3VfBtFcS8FNfVXgBzE2rwCPx3x";
+    var STR_BITCOIN_WALLET = '1DuhCT6L3VfBtFcS8FNfVXgBzE2rwCPx3x';
     var STR_DIV_LINK = '<div style="text-align: center; width: 100%; display: inline-block; color: #0366d6;">';
 
     // This function is called after the main language is loaded, the above are initialized empty so it doesn't cause loading exceptions
     function DefaultLang() {
-        STR_CONTROL_KEY = STR_CONTROLS + " (C)";
-        STR_SEARCH_KEY = STR_SEARCH + " (D)";
-        STR_SETTINGS_KEY = STR_SETTINGS + " (A)";
-        STR_ABOUT_KEY = STR_ABOUT + " (A)";
+        STR_CONTROL_KEY = STR_CONTROLS + ' (C)';
+        STR_SEARCH_KEY = STR_SEARCH + ' (D)';
+        STR_SETTINGS_KEY = STR_SETTINGS + ' (A)';
+        STR_ABOUT_KEY = STR_ABOUT + ' (A)';
         STR_SWITCH = STR_SWITCH + STR_KEY_UP_DOWN;
         STR_SWITCH_USER = STR_SWITCH_USER + STR_KEY_UP_DOWN;
         STR_CONTROLS_MAIN_3 = STR_CONTROLS_MAIN_3 + STR_GUIDE;
         STR_GOBACK = STR_GOBACK_START;
-        STR_PAYPAL = '<div style="vertical-align: middle;"><img style="vertical-align: middle; display: inline-block; width: 4%;" alt="" src="https://fgl27.github.io/SmartTwitchTV/release/githubio/images/paypal.png"><div class="class_bold" style="vertical-align: middle; display: inline-block; font-size: 120%;">' +
-            STR_PAYPAL_SUMMARY + STR_BR + '<div style="display: inline-block; color: #0366d6;font-size: 2vh;text-align: center; font-family: Roboto;">http://tiny.cc/donatetofgl27</div></div></div>';
-        STR_BITCOIN = '<div style="vertical-align: middle;"><img style="vertical-align: middle; display: inline-block; width: 4%;" alt="" src="https://fgl27.github.io/SmartTwitchTV/release/githubio/images/bitcoin.png"><div class="class_bold" style="vertical-align: middle; display: inline-block; font-size: 120%;">' +
-            STR_SPACE + STR_BITCOIN_SUMMARY + STR_BR + STR_SPACE + '<div style="display: inline-block; color: #0366d6;font-size: 2.7vh;text-align: center; font-family: Roboto;">' + STR_BITCOIN_WALLET + '</div></div></div>';
+        STR_PAYPAL =
+            '<div style="vertical-align: middle;"><img style="vertical-align: middle; display: inline-block; width: 4%;" alt="" src="https://fgl27.github.io/SmartTwitchTV/release/githubio/images/paypal.png"><div class="class_bold" style="vertical-align: middle; display: inline-block; font-size: 120%;">' +
+            STR_PAYPAL_SUMMARY +
+            STR_BR +
+            '<div style="display: inline-block; color: #0366d6;font-size: 2vh;text-align: center; font-family: Roboto;">http://tiny.cc/donatetofgl27</div></div></div>';
+        STR_BITCOIN =
+            '<div style="vertical-align: middle;"><img style="vertical-align: middle; display: inline-block; width: 4%;" alt="" src="https://fgl27.github.io/SmartTwitchTV/release/githubio/images/bitcoin.png"><div class="class_bold" style="vertical-align: middle; display: inline-block; font-size: 120%;">' +
+            STR_SPACE +
+            STR_BITCOIN_SUMMARY +
+            STR_BR +
+            STR_SPACE +
+            '<div style="display: inline-block; color: #0366d6;font-size: 2.7vh;text-align: center; font-family: Roboto;">' +
+            STR_BITCOIN_WALLET +
+            '</div></div></div>';
 
-        STR_CONTROLS_PLAY_0 = STR_DIV_TITLE + STR_PLAYER + '</div>' +
+        STR_CONTROLS_PLAY_0 =
+            STR_DIV_TITLE +
+            STR_PLAYER +
+            '</div>' +
             STR_DIV_MIDLE_LEFT +
-            STR_DOT + STR_CONTROLS_PLAY_4 + STR_BR +
-            STR_DOT + STR_CONTROLS_PLAY_1 + STR_BR +
-            STR_DOT + STR_CONTROLS_PLAY_2 + STR_BR + '</div>' +
+            STR_DOT +
+            STR_CONTROLS_PLAY_4 +
+            STR_BR +
+            STR_DOT +
+            STR_CONTROLS_PLAY_1 +
+            STR_BR +
+            STR_DOT +
+            STR_CONTROLS_PLAY_2 +
+            STR_BR +
+            '</div>' +
             STR_DIV_MIDLE_LEFT +
-            STR_DOT + STR_CONTROLS_PLAY_3 + STR_BR +
-            STR_DOT + STR_CONTROLS_PLAY_5 + STR_BR +
-            STR_DOT + STR_CONTROLS_PLAY_6 + STR_BR +
-            STR_DOT + STR_CONTROLS_PLAY_13 + STR_BR + STR_BR +
-
+            STR_DOT +
+            STR_CONTROLS_PLAY_3 +
+            STR_BR +
+            STR_DOT +
+            STR_CONTROLS_PLAY_5 +
+            STR_BR +
+            STR_DOT +
+            STR_CONTROLS_PLAY_6 +
+            STR_BR +
+            STR_DOT +
+            STR_CONTROLS_PLAY_13 +
+            STR_BR +
+            STR_BR +
             //        STR_DIV_TITLE + STR_PICTURE_PICTURE + '</div>' +
             //        STR_DIV_MIDLE_LEFT +
             //        STR_DOT + STR_PICTURE_CONTROLS1 + STR_BR +
@@ -470,60 +499,144 @@
             //        STR_DOT + STR_PICTURE_CONTROLS10 + STR_BR +
             //        STR_DOT + STR_PICTURE_CONTROLS11 + STR_BR +
 
-            STR_DIV_TITLE + STR_CHAT + ':</div>' +
+            STR_DIV_TITLE +
+            STR_CHAT +
+            ':</div>' +
             STR_DIV_MIDLE_LEFT +
-            STR_DOT + STR_CONTROLS_PLAY_7 + STR_BR +
-            STR_DOT + STR_CONTROLS_PLAY_8 + STR_BR +
-            STR_DOT + STR_CONTROLS_PLAY_9 + STR_BR +
-            STR_DOT + STR_CONTROLS_PLAY_10 + STR_BR +
-            STR_DOT + STR_CONTROLS_PLAY_11;
+            STR_DOT +
+            STR_CONTROLS_PLAY_7 +
+            STR_BR +
+            STR_DOT +
+            STR_CONTROLS_PLAY_8 +
+            STR_BR +
+            STR_DOT +
+            STR_CONTROLS_PLAY_9 +
+            STR_BR +
+            STR_DOT +
+            STR_CONTROLS_PLAY_10 +
+            STR_BR +
+            STR_DOT +
+            STR_CONTROLS_PLAY_11;
 
-        STR_CONTROLS_MAIN_0 = STR_DIV_TITLE + STR_CONTROLS + '</div>' +
-            STR_DIV_TITLE + STR_GENERAL + '</div>' +
+        STR_CONTROLS_MAIN_0 =
+            STR_DIV_TITLE +
+            STR_CONTROLS +
+            '</div>' +
+            STR_DIV_TITLE +
+            STR_GENERAL +
+            '</div>' +
             STR_DIV_MIDLE_LEFT +
-            STR_DOT + STR_SIDE_PANEL + STR_BR +
-            STR_DOT + STR_CONTROLS_MAIN_2 + STR_BR +
-            STR_DOT + STR_CONTROLS_MAIN_3 + STR_BR +
-            STR_DOT + STR_CONTROLS_MAIN_4 + STR_BR +
-            STR_DOT + STR_CONTROLS_MAIN_5 + STR_BR +
-            STR_DOT + STR_FORCE_RESET + STR_BR +
-            STR_DOT + STR_CONTROLS_MAIN_6 + STR_BR +
-            STR_DOT + STR_CONTROLS_MAIN_10 + STR_BR +
-            STR_DOT + STR_CONTROLS_MAIN_14 + STR_BR + '</div>' +
-            STR_CONTROLS_PLAY_0 + STR_BR +
-            STR_DIV_TITLE + STR_CLOSE_THIS + '</div>';
+            STR_DOT +
+            STR_SIDE_PANEL +
+            STR_BR +
+            STR_DOT +
+            STR_CONTROLS_MAIN_2 +
+            STR_BR +
+            STR_DOT +
+            STR_CONTROLS_MAIN_3 +
+            STR_BR +
+            STR_DOT +
+            STR_CONTROLS_MAIN_4 +
+            STR_BR +
+            STR_DOT +
+            STR_CONTROLS_MAIN_5 +
+            STR_BR +
+            STR_DOT +
+            STR_FORCE_RESET +
+            STR_BR +
+            STR_DOT +
+            STR_CONTROLS_MAIN_6 +
+            STR_BR +
+            STR_DOT +
+            STR_CONTROLS_MAIN_10 +
+            STR_BR +
+            STR_DOT +
+            STR_CONTROLS_MAIN_14 +
+            STR_BR +
+            '</div>' +
+            STR_CONTROLS_PLAY_0 +
+            STR_BR +
+            STR_DIV_TITLE +
+            STR_CLOSE_THIS +
+            '</div>';
 
         STR_ABOUT_INFO_HEADER = STR_DIV_TITLE + STR_TWITCH_TV + '</div></div>';
-        STR_ABOUT_INFO_0 = STR_DIV_MIDLE_LEFT + STR_BR + STR_ABOUT_INFO_1 + STR_BR +
-            (Main_IsNotBrowser ? '' : STR_BR + '<div class="class_bold" style="display: inline-block; color: #FF0000; font-size: 110%;">' + STR_ABOUT_INFO_2_SOURCE + '</div>') + '</div>' +
-            STR_BR +
-            STR_DIV_TITLE + STR_ABOUT_INFO_3 + '</div>' +
-            STR_DIV_LINK + STR_ABOUT_EMAIL + '</div>' + STR_BR +
-            STR_PAYPAL +
-            STR_BITCOIN + STR_BR +
-            STR_ABOUT_INFO_4 + STR_BR +
-            STR_ABOUT_INFO_5 + STR_BR +
-            STR_BR +
-            STR_DIV_TITLE_LEFT + STR_ABOUT_INFO_6 + '</div>' +
+        STR_ABOUT_INFO_0 =
             STR_DIV_MIDLE_LEFT +
-            STR_SPACE + STR_SPACE + STR_ABOUT_INFO_14 + STR_BR +
-            STR_DOT + STR_ABOUT_INFO_7 + STR_BR +
-            STR_DOT + STR_ABOUT_INFO_11 + STR_BR +
-            STR_DOT + STR_ABOUT_INFO_15 + STR_BR +
-            STR_DOT + STR_ABOUT_INFO_10 + STR_BR +
-            STR_DOT + STR_ABOUT_INFO_12 + STR_BR +
-            STR_DOT + STR_ABOUT_INFO_13 + STR_BR +
-            STR_DOT + STR_ABOUT_INFO_9 + STR_BR +
-            STR_DOT + STR_ABOUT_INFO_8 + STR_BR +
-            STR_DIV_TITLE + STR_CLOSE_THIS + '</div></div>';
+            STR_BR +
+            STR_ABOUT_INFO_1 +
+            STR_BR +
+            (Main_IsNotBrowser ? '' : STR_BR + '<div class="class_bold" style="display: inline-block; color: #FF0000; font-size: 110%;">' + STR_ABOUT_INFO_2_SOURCE + '</div>') +
+            '</div>' +
+            STR_BR +
+            STR_DIV_TITLE +
+            STR_ABOUT_INFO_3 +
+            '</div>' +
+            STR_DIV_LINK +
+            STR_ABOUT_EMAIL +
+            '</div>' +
+            STR_BR +
+            STR_PAYPAL +
+            STR_BITCOIN +
+            STR_BR +
+            STR_ABOUT_INFO_4 +
+            STR_BR +
+            STR_ABOUT_INFO_5 +
+            STR_BR +
+            STR_BR +
+            STR_DIV_TITLE_LEFT +
+            STR_ABOUT_INFO_6 +
+            '</div>' +
+            STR_DIV_MIDLE_LEFT +
+            STR_SPACE +
+            STR_SPACE +
+            STR_ABOUT_INFO_14 +
+            STR_BR +
+            STR_DOT +
+            STR_ABOUT_INFO_7 +
+            STR_BR +
+            STR_DOT +
+            STR_ABOUT_INFO_11 +
+            STR_BR +
+            STR_DOT +
+            STR_ABOUT_INFO_15 +
+            STR_BR +
+            STR_DOT +
+            STR_ABOUT_INFO_10 +
+            STR_BR +
+            STR_DOT +
+            STR_ABOUT_INFO_12 +
+            STR_BR +
+            STR_DOT +
+            STR_ABOUT_INFO_13 +
+            STR_BR +
+            STR_DOT +
+            STR_ABOUT_INFO_9 +
+            STR_BR +
+            STR_DOT +
+            STR_ABOUT_INFO_8 +
+            STR_BR +
+            STR_DIV_TITLE +
+            STR_CLOSE_THIS +
+            '</div></div>';
 
-        STR_OAUTH_EXPLAIN = STR_OAUTH_EXPLAIN1 + STR_BR +
-            STR_DOT + STR_OAUTH_EXPLAIN2.replace('link_link', '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-family: \'Roboto-Bold\';">http://tiny.cc/twitchkey</div>') + STR_BR +
-            STR_DOT + STR_OAUTH_EXPLAIN3 + STR_BR +
-            STR_DOT + STR_OAUTH_EXPLAIN4 + STR_BR +
-            STR_DOT + STR_OAUTH_EXPLAIN5 + STR_BR +
-            STR_DOT + STR_OAUTH_EXPLAIN6;
-
+        STR_OAUTH_EXPLAIN =
+            STR_OAUTH_EXPLAIN1 +
+            STR_BR +
+            STR_DOT +
+            STR_OAUTH_EXPLAIN2.replace('link_link', '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-family: \'Roboto-Bold\';">http://tiny.cc/twitchkey</div>') +
+            STR_BR +
+            STR_DOT +
+            STR_OAUTH_EXPLAIN3 +
+            STR_BR +
+            STR_DOT +
+            STR_OAUTH_EXPLAIN4 +
+            STR_BR +
+            STR_DOT +
+            STR_OAUTH_EXPLAIN5 +
+            STR_BR +
+            STR_DOT +
+            STR_OAUTH_EXPLAIN6;
     }
     //Spacing for reease maker not trow erros frm jshint
     function en_USLang() {
@@ -534,270 +647,277 @@
         //document.getElementById("side_panel").style.width = "25%";
 
         //Below are variables to translate
-        STR_NOKEY_GENERAL_WARN = ", navigate to the side panel (Top option) User: Switch, add, key, press enter on the user";
-        STR_KEY_UP_DOWN = " CH Up/Down";
-        STR_GUIDE = " Hold enter or press Guide or Info";
-        STR_REFRESH = "Refresh";
-        STR_SEARCH = "Search";
-        STR_SETTINGS = "Settings";
-        STR_CONTROLS = "Controls";
-        STR_ABOUT = "About";
-        STR_HIDE = "Hide";
-        STR_SEARCH_EMPTY = "The text you entered is empty.";
-        STR_SEARCH_RESULT_EMPTY = "The search result is empty.";
-        STR_SWITCH = "Switch screen";
-        STR_SWITCH_USER = "Switch user screen";
-        STR_SWITCH_VOD = "Switch: Past Broadcasts or Highlights";
-        STR_SWITCH_CLIP = "Switch: Period (24h, 7d, 30d, all)";
-        STR_GO_TO = "Go to ";
-        STR_USER = "User";
-        STR_LIVE = "Live";
-        STR_GAMES = "Games";
-        STR_PLAYING = "Playing ";
-        STR_FOR = "for ";
-        STR_WATCHING = "Watch time ";
-        STR_SINCE = "Since ";
-        STR_AGAME = "A Game";
-        STR_PLACEHOLDER_SEARCH = "Type your search...";
-        STR_PLACEHOLDER_OAUTH = "Type your authentication key...";
-        STR_PLACEHOLDER_USER = "Type your username...";
-        STR_PLACEHOLDER_PRESS = "Press Enter or Select key to, ";
-        STR_CHANNELS = "Channels";
-        STR_CHANNEL = "Channel";
-        STR_GOBACK_START = "Back to previous screen: Back key";
-        STR_IS_OFFLINE = " has ended";
-        STR_IS_SUB_ONLY = "This video is only available to subscribers.";
-        STR_REFRESH_PROBLEM = "Connection failed, unable to load content. Hit refresh to try again";
-        STR_NO = "No";
-        STR_FOR_THIS = " for this ";
-        STR_PLAYER_PROBLEM = "Connection failed, unable to load video content exiting...";
-        STR_PAST_BROA = " Past Broadcasts";
-        STR_PAST_HIGHL = " Highlights";
-        STR_CLIPS = "Clips";
-        STR_CONTENT = " Content";
-        STR_STREAM_ON = "Streamed ";
-        STR_DURATION = "Duration ";
-        STR_VIEWS = " Views";
-        STR_VIEWER = "Viewers";
-        STR_EXIT_AGAIN = "Click again to exit!";
-        STR_EXIT_AGAIN_PICTURE = "Click again to exit Picture in Picture!";
-        STR_EXIT_MESSAGE = "Do you want to exit SmartTV Client for Twitch?";
-        STR_EXIT = "Exit";
-        STR_CLOSE = "Close";
-        STR_MINIMIZE = "Minimize";
-        STR_CANCEL = "Cancel";
-        STR_NOT_LIVE = "Rerun";
-        STR_LIVE_CHANNELS = " Channels Live";
-        STR_LIVE_HOSTS = "Hosts";
-        STR_LIVE_GAMES = " Games Live";
-        STR_USER_CHANNEL = " Followed Channels";
-        STR_USER_MY_CHANNEL = "My Channel";
-        STR_USER_ADD = "Add User";
-        STR_USER_REMOVE = " Remove User";
-        STR_USER_ERROR = "User doesn\'t exist";
-        STR_USER_HOSTING = " hosting ";
-        STR_USER_SET = " already set";
-        STR_USER_MAKE_ONE = "Switch to";
-        STR_USER_NUMBER_ONE = "First user can follow (when providing a key) and see live channels feed outside of the user screen<br>";
-        STR_ADD_USER_SH = "Add a Twitch user to display it\'s Followed Channels content here";
-        STR_CLIP_DAY = "24h";
-        STR_CLIP_WEEK = "7d";
-        STR_CLIP_MONTH = "30d";
-        STR_CLIP_ALL = "all";
-        STR_JUMP_TIME = "Jumping";
-        STR_JUMP_T0 = " to ";
-        STR_JUMP_CANCEL = "Jump Canceled";
-        STR_JUMP_TIME_BIG = " , jump time bigger then duration";
-        STR_SEC = " Sec";
-        STR_MIN = " Min";
-        STR_HR = " Hr";
-        STR_SOURCE = "Source";
-        STR_VERSION = "Version: ";
-        STR_TWITCH_TV = "SmartTV Client for Twitch";
-        STR_CLOSE_THIS = "Press back or enter key to close this.";
-        STR_PLAYER = "Player Related:";
-        STR_CHAT = "Chat Related:";
-        STR_GENERAL = "General Related:";
+        STR_NOKEY_GENERAL_WARN = ', navigate to the side panel (Top option) User: Switch, add, key, press enter on the user';
+        STR_KEY_UP_DOWN = ' CH Up/Down';
+        STR_GUIDE = ' Hold enter or press Guide or Info';
+        STR_REFRESH = 'Refresh';
+        STR_SEARCH = 'Search';
+        STR_SETTINGS = 'Settings';
+        STR_CONTROLS = 'Controls';
+        STR_ABOUT = 'About';
+        STR_HIDE = 'Hide';
+        STR_SEARCH_EMPTY = 'The text you entered is empty.';
+        STR_SEARCH_RESULT_EMPTY = 'The search result is empty.';
+        STR_SWITCH = 'Switch screen';
+        STR_SWITCH_USER = 'Switch user screen';
+        STR_SWITCH_VOD = 'Switch: Past Broadcasts or Highlights';
+        STR_SWITCH_CLIP = 'Switch: Period (24h, 7d, 30d, all)';
+        STR_GO_TO = 'Go to ';
+        STR_USER = 'User';
+        STR_LIVE = 'Live';
+        STR_GAMES = 'Games';
+        STR_PLAYING = 'Playing ';
+        STR_FOR = 'for ';
+        STR_WATCHING = 'Watch time ';
+        STR_SINCE = 'Since ';
+        STR_AGAME = 'A Game';
+        STR_PLACEHOLDER_SEARCH = 'Type your search...';
+        STR_PLACEHOLDER_OAUTH = 'Type your authentication key...';
+        STR_PLACEHOLDER_USER = 'Type your username...';
+        STR_PLACEHOLDER_PRESS = 'Press Enter or Select key to, ';
+        STR_CHANNELS = 'Channels';
+        STR_CHANNEL = 'Channel';
+        STR_GOBACK_START = 'Back to previous screen: Back key';
+        STR_IS_OFFLINE = ' has ended';
+        STR_IS_SUB_ONLY = 'This video is only available to subscribers.';
+        STR_REFRESH_PROBLEM = 'Connection failed, unable to load content. Hit refresh to try again';
+        STR_NO = 'No';
+        STR_FOR_THIS = ' for this ';
+        STR_PLAYER_PROBLEM = 'Connection failed, unable to load video content exiting...';
+        STR_PAST_BROA = ' Past Broadcasts';
+        STR_PAST_HIGHL = ' Highlights';
+        STR_CLIPS = 'Clips';
+        STR_CONTENT = ' Content';
+        STR_STREAM_ON = 'Streamed ';
+        STR_DURATION = 'Duration ';
+        STR_VIEWS = ' Views';
+        STR_VIEWER = 'Viewers';
+        STR_EXIT_AGAIN = 'Click again to exit!';
+        STR_EXIT_AGAIN_PICTURE = 'Click again to exit Picture in Picture!';
+        STR_EXIT_MESSAGE = 'Do you want to exit SmartTV Client for Twitch?';
+        STR_EXIT = 'Exit';
+        STR_CLOSE = 'Close';
+        STR_MINIMIZE = 'Minimize';
+        STR_CANCEL = 'Cancel';
+        STR_NOT_LIVE = 'Rerun';
+        STR_LIVE_CHANNELS = ' Channels Live';
+        STR_LIVE_HOSTS = 'Hosts';
+        STR_LIVE_GAMES = ' Games Live';
+        STR_USER_CHANNEL = ' Followed Channels';
+        STR_USER_MY_CHANNEL = 'My Channel';
+        STR_USER_ADD = 'Add User';
+        STR_USER_REMOVE = ' Remove User';
+        STR_USER_ERROR = "User doesn't exist";
+        STR_USER_HOSTING = ' hosting ';
+        STR_USER_SET = ' already set';
+        STR_USER_MAKE_ONE = 'Switch to';
+        STR_USER_NUMBER_ONE = 'First user can follow (when providing a key) and see live channels feed outside of the user screen<br>';
+        STR_ADD_USER_SH = "Add a Twitch user to display it's Followed Channels content here";
+        STR_CLIP_DAY = '24h';
+        STR_CLIP_WEEK = '7d';
+        STR_CLIP_MONTH = '30d';
+        STR_CLIP_ALL = 'all';
+        STR_JUMP_TIME = 'Jumping';
+        STR_JUMP_T0 = ' to ';
+        STR_JUMP_CANCEL = 'Jump Canceled';
+        STR_JUMP_TIME_BIG = ' , jump time bigger then duration';
+        STR_SEC = ' Sec';
+        STR_MIN = ' Min';
+        STR_HR = ' Hr';
+        STR_SOURCE = 'Source';
+        STR_VERSION = 'Version: ';
+        STR_TWITCH_TV = 'SmartTV Client for Twitch';
+        STR_CLOSE_THIS = 'Press back or enter key to close this.';
+        STR_PLAYER = 'Player Related:';
+        STR_CHAT = 'Chat Related:';
+        STR_GENERAL = 'General Related:';
         STR_UPDATE = 'Update';
-        STR_CURRENT_VERSION = "Current installed version ";
-        STR_LATEST_VERSION = " latest available version ";
-        STR_CONTROLS_MAIN_2 = "Play a video: Navigate using Directional pad (up/down/left/right), press enter or play play/pause media";
-        STR_CONTROLS_MAIN_3 = "Refresh screen content: ";
-        STR_CONTROLS_MAIN_4 = "Exit the application: from side panel click exit";
-        STR_CONTROLS_MAIN_5 = "Force close the application: Hold the back key until it auto force close";
-        STR_CONTROLS_MAIN_6 = "Switch screen: CH Up/Down or use the side panel";
-        STR_CONTROLS_MAIN_10 = "Start a search: from side panel click search, writing the search press the Enter key on the virtual keyboard and choose a search option";
-        STR_CONTROLS_MAIN_14 = "About this application: from side panel click about";
-        STR_ABOUT_INFO_1 = "This is a SmartTV Client for Twitch developed by a individual on his free time, for TVs that don't have access to a good official application, released for free to anyone who wants to use it.";
-        STR_ABOUT_INFO_2_SOURCE = "This version of the app is for test in browser only!";
-        STR_ABOUT_INFO_3 = "Contact information:";
-        STR_ABOUT_INFO_4 = "This is an open source application licensed under the GNU General Public License v3.0, check it on github";
-        STR_ABOUT_INFO_5 = "github.com/fgl27/smarttv-twitch";
-        STR_ABOUT_INFO_6 = "This application uses following dependencies:";
-        STR_ABOUT_INFO_7 = "irc-message - Performant, streaming IRC message parser (https://github.com/sigkell/irc-message)";
-        STR_ABOUT_INFO_8 = "Fontastic - Create your customized icon fonts in seconds (http://app.fontastic.me)";
-        STR_ABOUT_INFO_9 = "Twemoji - A simple library that provides standard Unicode emoji support across all platforms (https://github.com/twitter/twemoji)";
-        STR_ABOUT_INFO_10 = "UglifyJS - is a JavaScript parser, minifier, compressor and beautifier toolkit (https://github.com/mishoo/UglifyJS2)";
-        STR_ABOUT_INFO_11 = "punycode - A robust Punycode converter that fully complies to RFC 3492 and RFC 5891 (https://github.com/bestiejs/punycode.js)";
-        STR_ABOUT_INFO_12 = "HTMLMinifier - A highly configurable, well-tested, JavaScript-based HTML minifier (https://github.com/kangax/html-minifier)";
-        STR_ABOUT_INFO_13 = "JSHint - A Static Code Analysis Tool for JavaScript (https://github.com/jshint/jshint)";
-        STR_ABOUT_INFO_14 = "Web:";
-        STR_ABOUT_INFO_15 = "crass - A CSS minification, pretty printing, and general utility library written in JS (https://github.com/mattbasta/crass)";
+        STR_CURRENT_VERSION = 'Current installed version ';
+        STR_LATEST_VERSION = ' latest available version ';
+        STR_CONTROLS_MAIN_2 = 'Play a video: Navigate using Directional pad (up/down/left/right), press enter or play play/pause media';
+        STR_CONTROLS_MAIN_3 = 'Refresh screen content: ';
+        STR_CONTROLS_MAIN_4 = 'Exit the application: from side panel click exit';
+        STR_CONTROLS_MAIN_5 = 'Force close the application: Hold the back key until it auto force close';
+        STR_CONTROLS_MAIN_6 = 'Switch screen: CH Up/Down or use the side panel';
+        STR_CONTROLS_MAIN_10 = 'Start a search: from side panel click search, writing the search press the Enter key on the virtual keyboard and choose a search option';
+        STR_CONTROLS_MAIN_14 = 'About this application: from side panel click about';
+        STR_ABOUT_INFO_1 =
+            "This is a SmartTV Client for Twitch developed by a individual on his free time, for TVs that don't have access to a good official application, released for free to anyone who wants to use it.";
+        STR_ABOUT_INFO_2_SOURCE = 'This version of the app is for test in browser only!';
+        STR_ABOUT_INFO_3 = 'Contact information:';
+        STR_ABOUT_INFO_4 = 'This is an open source application licensed under the GNU General Public License v3.0, check it on github';
+        STR_ABOUT_INFO_5 = 'github.com/fgl27/smarttv-twitch';
+        STR_ABOUT_INFO_6 = 'This application uses following dependencies:';
+        STR_ABOUT_INFO_7 = 'irc-message - Performant, streaming IRC message parser (https://github.com/sigkell/irc-message)';
+        STR_ABOUT_INFO_8 = 'Fontastic - Create your customized icon fonts in seconds (http://app.fontastic.me)';
+        STR_ABOUT_INFO_9 = 'Twemoji - A simple library that provides standard Unicode emoji support across all platforms (https://github.com/twitter/twemoji)';
+        STR_ABOUT_INFO_10 = 'UglifyJS - is a JavaScript parser, minifier, compressor and beautifier toolkit (https://github.com/mishoo/UglifyJS2)';
+        STR_ABOUT_INFO_11 = 'punycode - A robust Punycode converter that fully complies to RFC 3492 and RFC 5891 (https://github.com/bestiejs/punycode.js)';
+        STR_ABOUT_INFO_12 = 'HTMLMinifier - A highly configurable, well-tested, JavaScript-based HTML minifier (https://github.com/kangax/html-minifier)';
+        STR_ABOUT_INFO_13 = 'JSHint - A Static Code Analysis Tool for JavaScript (https://github.com/jshint/jshint)';
+        STR_ABOUT_INFO_14 = 'Web:';
+        STR_ABOUT_INFO_15 = 'crass - A CSS minification, pretty printing, and general utility library written in JS (https://github.com/mattbasta/crass)';
 
-        STR_CONTROLS_PLAY_0 = STR_SPACE + "or in player bottom controls";
-        STR_CONTROLS_PLAY_1 = "Show information panel: Press enter key or D-pad keys if live channel feed is not showing";
-        STR_CONTROLS_PLAY_2 = "Close the video: press back key twice or media key Stop";
-        STR_CONTROLS_PLAY_3 = "Play/Pause a video: open information panel and click on pause symbol";
-        STR_CONTROLS_PLAY_4 = "Show user live channels feed: D-pad up";
-        STR_CONTROLS_PLAY_5 = "Change video quality: use the player bottom controls Quality";
-        STR_CONTROLS_PLAY_6 = "Force refresh a video (in case it freezes): Change video quality to the same";
-        STR_CONTROLS_PLAY_7 = "Show or hide the Chat : Guide or Info" + STR_CONTROLS_PLAY_0;
-        STR_CONTROLS_PLAY_8 = "Change Chat position : " + STR_KEY_UP_DOWN + STR_CONTROLS_PLAY_0;
-        STR_CONTROLS_PLAY_9 = "Change Chat size : D-pad down" + STR_CONTROLS_PLAY_0;
-        STR_CONTROLS_PLAY_10 = "Change Chat background brightness: change in player bottom controls";
-        STR_CONTROLS_PLAY_11 = "Force refresh the Chat in Live streams (in case it freezes or doesn\'t load): use the player bottom controls Chat force disable (click twice)";
-        STR_CONTROLS_PLAY_12 = "Start a search: open information panel, navigate using use Directional pad (left/right) to \"Search\" and press enter";
-        STR_CONTROLS_PLAY_13 = "All media keys are supported (play, pause, stop, next track, fast forward, etc...)";
-        STR_CONTROLS_PLAY_14 = "Chat and video (Side by side): Color button red (A)";
-        STR_F_DISABLE_CHAT = "Chat force disable";
-        STR_UPDATE_AVAILABLE = "Update available, check google play store";
-        STR_OAUTH_IN = 'Adding a key allows the app to access user follow content and logging to chat.<br><br> Add a key is not demanding and can be done at any point later.<br> In doubt read this link:<br> <br> https://https://github.com/fgl27/smarttv-twitch#twitchtv-authentication-key <br> <br>To add a key for ';
-        STR_USER_CODE = "Add Authentication key";
-        STR_USER_CODE_OK = "Key added OK";
-        STR_KEY_BAD = "Key test failed, new one needs to be added";
-        STR_KEY_OK = "Key test return OK";
-        STR_OAUTH_WRONG = "You try to add a key for user ";
-        STR_OAUTH_WRONG2 = " but this key is for user ";
-        STR_FOLLOWING = " Following";
-        STR_FOLLOW = " Follow";
-        STR_IS_SUB_NOOAUTH = " And you have not set a authentication key the app can\'t check yours sub status.";
-        STR_IS_SUB_NOT_SUB = " And you are not a sub of this channel";
-        STR_IS_SUB_IS_SUB = " You are a sub of this channel but ";
-        STR_OAUTH_FAIL = "Fail authentication check with the provider key, please check and try again";
-        STR_OAUTH_FAIL_USER = "The added key doesn\'t belong to the user ";
-        STR_NOKEY = "No user";
-        STR_NOKEY_WARN = "Set user and an authentication key to be able to follow/unfollow";
-        STR_FOLLOW_ISSUE = "Third party apps can no longer follow/unfollow channels";
-        STR_NOKUSER_WARN = "Set a user and authentication key to be able to see the side panel followed content" + STR_NOKEY_GENERAL_WARN;
-        STR_RESET = "Restart the";
-        STR_CLIP = " Clip";
-        STR_CHANNEL_CONT = "Channel content";
-        STR_NET_DOWN = "Network is disconnected, the application can\'t work without INTERNET";
-        STR_NET_UP = "Network connection reestablished";
-        STR_FOLLOWERS = " Followers";
-        STR_CANT_FOLLOW = ", Can\'t follow or unfollow ";
-        STR_GAME_CONT = "Game content";
-        STR_YES = "Yes";
-        STR_REMOVE_USER = "Are you sure you want to remove the user ";
-        STR_PLACEHOLDER_PRESS_UP = "Press Up to ";
-        STR_FOLLOW_GAMES = "Followed Games";
-        STR_USER_GAMES_CHANGE = "Change between";
-        STR_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-        STR_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-        STR_STARTED = "Started ";
-        STR_VIDEOS = "Videos";
-        STR_VIDEO = " Video";
-        STR_REPLAY = "Replay";
-        STR_STREAM_END = "exiting in ";
+        STR_CONTROLS_PLAY_0 = STR_SPACE + 'or in player bottom controls';
+        STR_CONTROLS_PLAY_1 = 'Show information panel: Press enter key or D-pad keys if live channel feed is not showing';
+        STR_CONTROLS_PLAY_2 = 'Close the video: press back key twice or media key Stop';
+        STR_CONTROLS_PLAY_3 = 'Play/Pause a video: open information panel and click on pause symbol';
+        STR_CONTROLS_PLAY_4 = 'Show user live channels feed: D-pad up';
+        STR_CONTROLS_PLAY_5 = 'Change video quality: use the player bottom controls Quality';
+        STR_CONTROLS_PLAY_6 = 'Force refresh a video (in case it freezes): Change video quality to the same';
+        STR_CONTROLS_PLAY_7 = 'Show or hide the Chat : Guide or Info' + STR_CONTROLS_PLAY_0;
+        STR_CONTROLS_PLAY_8 = 'Change Chat position : ' + STR_KEY_UP_DOWN + STR_CONTROLS_PLAY_0;
+        STR_CONTROLS_PLAY_9 = 'Change Chat size : D-pad down' + STR_CONTROLS_PLAY_0;
+        STR_CONTROLS_PLAY_10 = 'Change Chat background brightness: change in player bottom controls';
+        STR_CONTROLS_PLAY_11 = "Force refresh the Chat in Live streams (in case it freezes or doesn't load): use the player bottom controls Chat force disable (click twice)";
+        STR_CONTROLS_PLAY_12 = 'Start a search: open information panel, navigate using use Directional pad (left/right) to "Search" and press enter';
+        STR_CONTROLS_PLAY_13 = 'All media keys are supported (play, pause, stop, next track, fast forward, etc...)';
+        STR_CONTROLS_PLAY_14 = 'Chat and video (Side by side): Color button red (A)';
+        STR_F_DISABLE_CHAT = 'Chat force disable';
+        STR_UPDATE_AVAILABLE = 'Update available, check google play store';
+        STR_OAUTH_IN =
+            'Adding a key allows the app to access user follow content and logging to chat.<br><br> Add a key is not demanding and can be done at any point later.<br> In doubt read this link:<br> <br> https://https://github.com/fgl27/smarttv-twitch#twitchtv-authentication-key <br> <br>To add a key for ';
+        STR_USER_CODE = 'Add Authentication key';
+        STR_USER_CODE_OK = 'Key added OK';
+        STR_KEY_BAD = 'Key test failed, new one needs to be added';
+        STR_KEY_OK = 'Key test return OK';
+        STR_OAUTH_WRONG = 'You try to add a key for user ';
+        STR_OAUTH_WRONG2 = ' but this key is for user ';
+        STR_FOLLOWING = ' Following';
+        STR_FOLLOW = ' Follow';
+        STR_IS_SUB_NOOAUTH = " And you have not set a authentication key the app can't check yours sub status.";
+        STR_IS_SUB_NOT_SUB = ' And you are not a sub of this channel';
+        STR_IS_SUB_IS_SUB = ' You are a sub of this channel but ';
+        STR_OAUTH_FAIL = 'Fail authentication check with the provider key, please check and try again';
+        STR_OAUTH_FAIL_USER = "The added key doesn't belong to the user ";
+        STR_NOKEY = 'No user';
+        STR_NOKEY_WARN = 'Set user and an authentication key to be able to follow/unfollow';
+        STR_FOLLOW_ISSUE = 'Third party apps can no longer follow/unfollow channels';
+        STR_NOKUSER_WARN = 'Set a user and authentication key to be able to see the side panel followed content' + STR_NOKEY_GENERAL_WARN;
+        STR_RESET = 'Restart the';
+        STR_CLIP = ' Clip';
+        STR_CHANNEL_CONT = 'Channel content';
+        STR_NET_DOWN = "Network is disconnected, the application can't work without INTERNET";
+        STR_NET_UP = 'Network connection reestablished';
+        STR_FOLLOWERS = ' Followers';
+        STR_CANT_FOLLOW = ", Can't follow or unfollow ";
+        STR_GAME_CONT = 'Game content';
+        STR_YES = 'Yes';
+        STR_REMOVE_USER = 'Are you sure you want to remove the user ';
+        STR_PLACEHOLDER_PRESS_UP = 'Press Up to ';
+        STR_FOLLOW_GAMES = 'Followed Games';
+        STR_USER_GAMES_CHANGE = 'Change between';
+        STR_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+        STR_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        STR_STARTED = 'Started ';
+        STR_VIDEOS = 'Videos';
+        STR_VIDEO = ' Video';
+        STR_REPLAY = 'Replay';
+        STR_STREAM_END = 'exiting in ';
         STR_STREAM_END_EXIT = 'press "Return" to exit';
         STR_FEATURED = 'Featured';
-        STR_CREATED_AT = "Created ";
-        STR_OPEN_BROADCAST = "Open the Broadcast";
-        STR_NO_BROADCAST = "No Broadcast";
-        STR_NO_BROADCAST_WARNING = "There are no Past Broadcasts for this clip";
-        STR_NO_CHAT = "And because of that no chat";
-        STR_IS_NOW = " is now";
-        STR_OPEN_HOST = "Open the Hosting";
-        STR_SETTINGS_PLAYER = "Player related";
-        STR_SETTINGS_BUFFER_SIZE = "Start Buffer size:";
-        STR_SETTINGS_BUFFER_SIZE_SUMMARY = "How much is needed to buffer before starting the playback, this is not related to maximum size the buffer can be, a lower value here will make the player start playing sooner, but it may cause re-buffering which will cause the player to pause to buffer.";
-        STR_SETTINGS_BUFFER_LIVE = "Live streams Start buffer";
-        STR_SETTINGS_BUFFER_VOD = "Videos (Past Broadcast and Highlight) Start buffer";
-        STR_SETTINGS_BUFFER_CLIP = "Clips Start buffer";
-        STR_SETTINGS_GENERAL = "General";
-        STR_SETTINGS_LANG = "Language";
-        STR_VOD_HISTORY = "Play from the start or from where you stopped watching last time?";
-        STR_FROM = "From:" + STR_BR;
-        STR_FROM_START = STR_FROM + "Start";
-        STR_CHAT_END = "Chat: The Chat has ended!";
-        STR_TIME = ", Most recent";
-        STR_VIWES = ", Most views";
-        STR_NOKEY_VIDEO_WARN = "Set an user authentication key to be able to see the side panel followed content" + STR_NOKEY_GENERAL_WARN;
-        STR_SWITCH_TYPE = "Switch: Most recent or views";
-        STR_ENABLE = "Enable";
-        STR_DISABLE = "Disable";
-        STR_ENABLED = "Enabled";
-        STR_DISABLED = "Disabled";
-        STR_RESTORE_PLAYBACK_WARN = "The app was closed while playing, restoring playback";
-        STR_RESTORE_PLAYBACK = "Restore playback";
-        STR_RESTORE_PLAYBACK_SUMARRY = "The app saves what was playing in case it gets close unintentionally (changing apps the system may run out of memory and close it) or force closed by the user, the app then can restore what was previously playing on next start";
-        STR_CHAT_FONT = "Chat font size";
-        STR_VIDEOS_ANIMATION = "Video\'s animated thumbnails";
-        STR_SIDE_PANEL = "Side panel: D-pad left or Back key";
-        STR_SIZE = "Size ";
-        STR_BRIGHTNESS = "Brightness ";
-        STR_FORBIDDEN = "Forbidden content, this is restricted in yours region or is restrained to the official Twitch app only";
-        STR_JUMPING_STEP = "Jump step ";
-        STR_SECOND = " second";
-        STR_SECONDS = STR_SECOND + "s";
-        STR_MINUTE = " minute";
-        STR_MINUTES = STR_MINUTE + "s";
-        STR_CLOCK_OFFSET = "Clock offset";
-        STR_APP_LANG = "Application language";
-        STR_CONTENT_LANG = "Content language";
-        STR_CONTENT_LANG_SUMARRY = "Press enter to access";
-        STR_LANG_ALL = "All";
-        STR_NO_GAME = "No game from this";
+        STR_CREATED_AT = 'Created ';
+        STR_OPEN_BROADCAST = 'Open the Broadcast';
+        STR_NO_BROADCAST = 'No Broadcast';
+        STR_NO_BROADCAST_WARNING = 'There are no Past Broadcasts for this clip';
+        STR_NO_CHAT = 'And because of that no chat';
+        STR_IS_NOW = ' is now';
+        STR_OPEN_HOST = 'Open the Hosting';
+        STR_SETTINGS_PLAYER = 'Player related';
+        STR_SETTINGS_BUFFER_SIZE = 'Start Buffer size:';
+        STR_SETTINGS_BUFFER_SIZE_SUMMARY =
+            'How much is needed to buffer before starting the playback, this is not related to maximum size the buffer can be, a lower value here will make the player start playing sooner, but it may cause re-buffering which will cause the player to pause to buffer.';
+        STR_SETTINGS_BUFFER_LIVE = 'Live streams Start buffer';
+        STR_SETTINGS_BUFFER_VOD = 'Videos (Past Broadcast and Highlight) Start buffer';
+        STR_SETTINGS_BUFFER_CLIP = 'Clips Start buffer';
+        STR_SETTINGS_GENERAL = 'General';
+        STR_SETTINGS_LANG = 'Language';
+        STR_VOD_HISTORY = 'Play from the start or from where you stopped watching last time?';
+        STR_FROM = 'From:' + STR_BR;
+        STR_FROM_START = STR_FROM + 'Start';
+        STR_CHAT_END = 'Chat: The Chat has ended!';
+        STR_TIME = ', Most recent';
+        STR_VIWES = ', Most views';
+        STR_NOKEY_VIDEO_WARN = 'Set an user authentication key to be able to see the side panel followed content' + STR_NOKEY_GENERAL_WARN;
+        STR_SWITCH_TYPE = 'Switch: Most recent or views';
+        STR_ENABLE = 'Enable';
+        STR_DISABLE = 'Disable';
+        STR_ENABLED = 'Enabled';
+        STR_DISABLED = 'Disabled';
+        STR_RESTORE_PLAYBACK_WARN = 'The app was closed while playing, restoring playback';
+        STR_RESTORE_PLAYBACK = 'Restore playback';
+        STR_RESTORE_PLAYBACK_SUMARRY =
+            'The app saves what was playing in case it gets close unintentionally (changing apps the system may run out of memory and close it) or force closed by the user, the app then can restore what was previously playing on next start';
+        STR_CHAT_FONT = 'Chat font size';
+        STR_VIDEOS_ANIMATION = "Video's animated thumbnails";
+        STR_SIDE_PANEL = 'Side panel: D-pad left or Back key';
+        STR_SIZE = 'Size ';
+        STR_BRIGHTNESS = 'Brightness ';
+        STR_FORBIDDEN = 'Forbidden content, this is restricted in yours region or is restrained to the official Twitch app only';
+        STR_JUMPING_STEP = 'Jump step ';
+        STR_SECOND = ' second';
+        STR_SECONDS = STR_SECOND + 's';
+        STR_MINUTE = ' minute';
+        STR_MINUTES = STR_MINUTE + 's';
+        STR_CLOCK_OFFSET = 'Clock offset';
+        STR_APP_LANG = 'Application language';
+        STR_CONTENT_LANG = 'Content language';
+        STR_CONTENT_LANG_SUMARRY = 'Press enter to access';
+        STR_LANG_ALL = 'All';
+        STR_NO_GAME = 'No game from this';
         STR_JUMP_BUFFER_WARNING = "Isn't possible to jump during buffering";
-        STR_CHAT_DISABLE = "Chat is force disabled, enable it in player bottom controls Chat force disable";
+        STR_CHAT_DISABLE = 'Chat is force disabled, enable it in player bottom controls Chat force disable';
         STR_CLIP_FAIL = "This clip/video failed to load. Can't replay";
-        STR_CHAT_BRIGHTNESS = "Chat background brightness";
-        STR_PLAY_NEXT = "Play Next";
-        STR_PLAY_NEXT_IN = "Playing next in ";
-        STR_PLAY_ALL = "Play All";
-        STR_AUTO_PLAY_NEXT = "Auto Play next clip";
-        STR_SIDE_PANEL_SETTINGS = "Back to Main menu";
-        STR_UP = " Press up";
-        STR_HOLD_UP = " Hold up";
-        STR_LIVE_FEED = "Live Feed";
-        STR_END_DIALOG_SETTINGS = "End dialog";
-        STR_END_DIALOG_SETTINGS_SUMMARY = "Set the time that it will take for the stream/video/clip to end dialog taking action";
-        STR_END_DIALOG_DISABLE = "Disable the timer";
-        STR_CHAT = "Chat Show";
-        STR_CHAT_SIZE = "Chat size";
-        STR_CHAT_POS = "Chat position";
-        STR_CHAT_VIDEO_MODE = "Video mode";
-        STR_CHAT_SIDE_FULL = "Full screen";
-        STR_CHAT_PP_SIDE_FULL = "Big plus small screen";
-        STR_CHAT_SIDE = "Smaller screen and chat";
-        STR_CHAT_5050 = "50/50 and chats";
-        STR_SPEED = "Speed";
-        STR_QUALITY = "Quality";
-        STR_NORMAL = "Normal";
-        STR_AUTO = "Auto";
-        STR_DEF_QUALITY = "Default player start quality";
-        STR_DEF_QUALITY_SUMARRY = "Used when the app is first opened, after the user change the quality that becomes default for that section, a section ends when the apps is closed";
-        STR_VERY_LOW = "Very low";
-        STR_LOW = "Low";
-        STR_HIGH = "High";
-        STR_VERY_HIGH = "Very high";
-        STR_THUMB_RESOLUTION = "Thumbnails quality";
-        STR_THUMB_RESOLUTION_SUMARRY = "Default thumbnails resolution for live, videos and games (can't be applied for clips) a lower value will help the app load faster but the thumbnail may look blurry";
-        STR_PAYPAL_SUMMARY = "Paypal donations use bellow link:";
-        STR_BITCOIN_SUMMARY = "Bitcoin donations use wallet address:";
-        STR_PLAYER_PROBLEM_2 = "Connection failed, unable to load second stream info";
-        STR_PLAYER_RESYNC = "Player Auto Sync";
-        STR_PLAYER_AUTO_BIG = "Main window";
-        STR_PLAYER_AUTO_SMALLS = "Small window";
-        STR_PLAYER_AUTO_ALL = "Both windows";
-        STR_PLAYER_BITRATE_UNLIMITED = "Unlimited";
-        STR_PLAYER_BITRATE = "Auto quality Bitrate limit:";
-        STR_PLAYER_BITRATE_SUMARRY = "The maximum video allowed bitrate for the auto quality, this is most to prevent lag or slowdowns when playing in picture and picture mode as that mode used Auto quality only, but also can be used to limit the Main window bitrate when using Auto quality and prevent the player from trying bitrate bigger then what yours internet supports, some devices will slowdown too much if the main and small window bitrate is too high, the recommended is 3Mbps for small and unlimited for main.";
-        STR_PLAYER_BITRATE_MAIN = "Main player bitrate";
-        STR_PLAYER_BITRATE_SMALL = "Small player bitrate (for Picture in Picture mode)";
-        STR_PLAYER_BITRATE_SMALL_SUMARRY = "Different values for Main and small player bitrate may cause a short loading call when changing video source, to prevent this set both values the same at the cost of possible app slowdowns if the bitrate values are too high, the best indicative for detecting too high bitrate for picture in picture is the player Drooped frames value if you are constantly drooping the bitrate is too high, other indicative is the constantly buffering of the stream.";
+        STR_CHAT_BRIGHTNESS = 'Chat background brightness';
+        STR_PLAY_NEXT = 'Play Next';
+        STR_PLAY_NEXT_IN = 'Playing next in ';
+        STR_PLAY_ALL = 'Play All';
+        STR_AUTO_PLAY_NEXT = 'Auto Play next clip';
+        STR_SIDE_PANEL_SETTINGS = 'Back to Main menu';
+        STR_UP = ' Press up';
+        STR_HOLD_UP = ' Hold up';
+        STR_LIVE_FEED = 'Live Feed';
+        STR_END_DIALOG_SETTINGS = 'End dialog';
+        STR_END_DIALOG_SETTINGS_SUMMARY = 'Set the time that it will take for the stream/video/clip to end dialog taking action';
+        STR_END_DIALOG_DISABLE = 'Disable the timer';
+        STR_CHAT = 'Chat Show';
+        STR_CHAT_SIZE = 'Chat size';
+        STR_CHAT_POS = 'Chat position';
+        STR_CHAT_VIDEO_MODE = 'Video mode';
+        STR_CHAT_SIDE_FULL = 'Full screen';
+        STR_CHAT_PP_SIDE_FULL = 'Big plus small screen';
+        STR_CHAT_SIDE = 'Smaller screen and chat';
+        STR_CHAT_5050 = '50/50 and chats';
+        STR_SPEED = 'Speed';
+        STR_QUALITY = 'Quality';
+        STR_NORMAL = 'Normal';
+        STR_AUTO = 'Auto';
+        STR_DEF_QUALITY = 'Default player start quality';
+        STR_DEF_QUALITY_SUMARRY = 'Used when the app is first opened, after the user change the quality that becomes default for that section, a section ends when the apps is closed';
+        STR_VERY_LOW = 'Very low';
+        STR_LOW = 'Low';
+        STR_HIGH = 'High';
+        STR_VERY_HIGH = 'Very high';
+        STR_THUMB_RESOLUTION = 'Thumbnails quality';
+        STR_THUMB_RESOLUTION_SUMARRY =
+            "Default thumbnails resolution for live, videos and games (can't be applied for clips) a lower value will help the app load faster but the thumbnail may look blurry";
+        STR_PAYPAL_SUMMARY = 'Paypal donations use bellow link:';
+        STR_BITCOIN_SUMMARY = 'Bitcoin donations use wallet address:';
+        STR_PLAYER_PROBLEM_2 = 'Connection failed, unable to load second stream info';
+        STR_PLAYER_RESYNC = 'Player Auto Sync';
+        STR_PLAYER_AUTO_BIG = 'Main window';
+        STR_PLAYER_AUTO_SMALLS = 'Small window';
+        STR_PLAYER_AUTO_ALL = 'Both windows';
+        STR_PLAYER_BITRATE_UNLIMITED = 'Unlimited';
+        STR_PLAYER_BITRATE = 'Auto quality Bitrate limit:';
+        STR_PLAYER_BITRATE_SUMARRY =
+            'The maximum video allowed bitrate for the auto quality, this is most to prevent lag or slowdowns when playing in picture and picture mode as that mode used Auto quality only, but also can be used to limit the Main window bitrate when using Auto quality and prevent the player from trying bitrate bigger then what yours internet supports, some devices will slowdown too much if the main and small window bitrate is too high, the recommended is 3Mbps for small and unlimited for main.';
+        STR_PLAYER_BITRATE_MAIN = 'Main player bitrate';
+        STR_PLAYER_BITRATE_SMALL = 'Small player bitrate (for Picture in Picture mode)';
+        STR_PLAYER_BITRATE_SMALL_SUMARRY =
+            'Different values for Main and small player bitrate may cause a short loading call when changing video source, to prevent this set both values the same at the cost of possible app slowdowns if the bitrate values are too high, the best indicative for detecting too high bitrate for picture in picture is the player Drooped frames value if you are constantly drooping the bitrate is too high, other indicative is the constantly buffering of the stream.';
         STR_PICTURE_LIVE_FEED = 'Hold enter to start "Picture in Picture Mode" then use D-Pad left to move, right to resize or down to change videos';
-        STR_AUDIO_SOURCE = "Audio source";
+        STR_AUDIO_SOURCE = 'Audio source';
         //    STR_PICTURE_PICTURE = "Picture in Picture or 50/50 (For Live streams only, add a user to use it):";
         //    STR_PICTURE_CONTROLS1 = "Enable picture in Picture mode: Playing a video press up to show live feed choose a stream then hold key enter to start";
         //    STR_PICTURE_CONTROLS2 = "Change small window content: Same as before, hold key enter above a stream in live feed";
@@ -812,131 +932,136 @@
         //    STR_PICTURE_CONTROLS11 = "Close small window: back key twice";
         //    STR_PICTURE_CONTROLS12 = "Enable 50/50 mode (Two stream two chats): If already in picture in picture mode use bottom controls Video Mode or when in video mode smaller screen plus chat hold key enter to start from live feed";
         //STR_KEEP_INFO_VISIBLE = "Keep player status always visible";
-        STR_SINGLE_EXIT = "Single return key press";
-        STR_SINGLE_EXIT_SUMMARY = "Exit the player or exit picture in picture or exit 50/50 mode with a single key return click";
-        STR_NOW_LIVE = "Now Live";
-        STR_NOW_LIVE_SHOW = "Show Now Live notification";
-        STR_NOW_DURATION = "Now Live notification duration in seconds";
-        STR_GLOBAL_FONT = "Global app font size offset";
-        STR_GLOBAL_FONT_SUMMARY = "This will change the size of all text and most icons in the app (minus chat font size, because it has its own control), too small value may not be visible too big value will overflow the text box holder, that is way this value is limited";
-        STR_MAIN_MENU = "Main Menu";
-        STR_USER_MENU = "User Menu";
-        STR_CH_IS_OFFLINE = "Is offline";
-        STR_SCREEN_COUNTER = "Show screen position counter";
-        STR_SWITCH_POS = "Switch: Starting Position offset";
-        STR_SWITCH_POS_SUMMARY = "Instead of starting on the first possible video, start a a lower position on the list, prevents having to go down and down to find a older video";
-        STR_USER_OPTION = "Choose a option for user";
-        STR_MAIN_USER = "Main user";
-        STR_USER_TOP_LABLE = "Click on a user to see options";
-        STR_USER_EXTRAS = "User: Switch, add, key";
-        STR_LOW_LATENCY = "Low Latency";
-        STR_LOW_LATENCY_SUMARRY = "If start getting buffers issue disable " + STR_LOW_LATENCY +
-            "<br>Use " + STR_SETTINGS_BUFFER_LIVE + " equal or bellow to 3 for this to have effect";
-        STR_LIVE_FEED_SORT = "Live feed sort";
-        STR_LIVE_FEED_SORT_SUMMARY = "Sorts side panel live feed and player live feed";
-        STR_A_Z = "Alphabetical A - Z";
-        STR_Z_A = "Alphabetical Z - A";
-        STR_APP_ANIMATIONS = "Enable app animations";
-        STR_OAUTH_EXPLAIN1 = ", follow bellow steps:";
-        STR_OAUTH_EXPLAIN2 = "Access the site link_link (using a computer or a smart phone)";
-        STR_OAUTH_EXPLAIN3 = "Click the \"Authorize\" button which will take you to main Twitch.TV authentication site";
-        STR_OAUTH_EXPLAIN4 = "Login to Twitch.TV using the username you are trying to add a key for";
-        STR_OAUTH_EXPLAIN5 = "Click on Authorize button of Twitch.TV site if you agree with the requested permissions";
-        STR_OAUTH_EXPLAIN6 = "The web page will update and show a key code, the key only has lowercase letters and numbers.";
-        STR_ENTER_REFRESH = "Disable Hold enter to refresh";
-        STR_RUNNINGTIME = "App running for:";
-        STR_410_ERROR = "Unable to get stream link issue";
-        STR_410_FEATURING = "Third party app are current without access for this featuring.";
-        STR_CLICK_UNFOLLOW = "(Click to unfollow)";
-        STR_CLICK_FOLLOW = "(Click to follow)";
-        STR_NAME_A_Z = "Name A - Z";
-        STR_NAME_Z_A = "Name Z - A";
-        STR_GAME_A_Z = "Game A - Z";
-        STR_GAME_Z_A = "Game Z - A";
-        STR_VIWES_MOST = "Views highest";
-        STR_VIWES_LOWEST = "Views lowest";
-        STR_CREATED_NEWEST = "Created / Uptime newest";
-        STR_CREATED_OLDEST = "Created / Uptime Oldest";
-        STR_RESET_DONE = "All configuration erased the app will self restart";
-        STR_HOLD_RESET = "<br>Keep hold Key for 10 seconds to reset all app configuration this can help when the app is freezed, release to dismiss this<br><br>";
-        STR_FORCE_RESET = "Force erase all app config: in case the app misbehave and stop working, hold key channel UP or Down for 20 seconds anywhere in the app, after it 10 seconds there is a confirmation";
+        STR_SINGLE_EXIT = 'Single return key press';
+        STR_SINGLE_EXIT_SUMMARY = 'Exit the player or exit picture in picture or exit 50/50 mode with a single key return click';
+        STR_NOW_LIVE = 'Now Live';
+        STR_NOW_LIVE_SHOW = 'Show Now Live notification';
+        STR_NOW_DURATION = 'Now Live notification duration in seconds';
+        STR_GLOBAL_FONT = 'Global app font size offset';
+        STR_GLOBAL_FONT_SUMMARY =
+            'This will change the size of all text and most icons in the app (minus chat font size, because it has its own control), too small value may not be visible too big value will overflow the text box holder, that is way this value is limited';
+        STR_MAIN_MENU = 'Main Menu';
+        STR_USER_MENU = 'User Menu';
+        STR_CH_IS_OFFLINE = 'Is offline';
+        STR_SCREEN_COUNTER = 'Show screen position counter';
+        STR_SWITCH_POS = 'Switch: Starting Position offset';
+        STR_SWITCH_POS_SUMMARY = 'Instead of starting on the first possible video, start a a lower position on the list, prevents having to go down and down to find a older video';
+        STR_USER_OPTION = 'Choose a option for user';
+        STR_MAIN_USER = 'Main user';
+        STR_USER_TOP_LABLE = 'Click on a user to see options';
+        STR_USER_EXTRAS = 'User: Switch, add, key';
+        STR_LOW_LATENCY = 'Low Latency';
+        STR_LOW_LATENCY_SUMARRY = 'If start getting buffers issue disable ' + STR_LOW_LATENCY + '<br>Use ' + STR_SETTINGS_BUFFER_LIVE + ' equal or bellow to 3 for this to have effect';
+        STR_LIVE_FEED_SORT = 'Live feed sort';
+        STR_LIVE_FEED_SORT_SUMMARY = 'Sorts side panel live feed and player live feed';
+        STR_A_Z = 'Alphabetical A - Z';
+        STR_Z_A = 'Alphabetical Z - A';
+        STR_APP_ANIMATIONS = 'Enable app animations';
+        STR_OAUTH_EXPLAIN1 = ', follow bellow steps:';
+        STR_OAUTH_EXPLAIN2 = 'Access the site link_link (using a computer or a smart phone)';
+        STR_OAUTH_EXPLAIN3 = 'Click the "Authorize" button which will take you to main Twitch.TV authentication site';
+        STR_OAUTH_EXPLAIN4 = 'Login to Twitch.TV using the username you are trying to add a key for';
+        STR_OAUTH_EXPLAIN5 = 'Click on Authorize button of Twitch.TV site if you agree with the requested permissions';
+        STR_OAUTH_EXPLAIN6 = 'The web page will update and show a key code, the key only has lowercase letters and numbers.';
+        STR_ENTER_REFRESH = 'Disable Hold enter to refresh';
+        STR_RUNNINGTIME = 'App running for:';
+        STR_410_ERROR = 'Unable to get stream link issue';
+        STR_410_FEATURING = 'Third party app are current without access for this featuring.';
+        STR_CLICK_UNFOLLOW = '(Click to unfollow)';
+        STR_CLICK_FOLLOW = '(Click to follow)';
+        STR_NAME_A_Z = 'Name A - Z';
+        STR_NAME_Z_A = 'Name Z - A';
+        STR_GAME_A_Z = 'Game A - Z';
+        STR_GAME_Z_A = 'Game Z - A';
+        STR_VIWES_MOST = 'Views highest';
+        STR_VIWES_LOWEST = 'Views lowest';
+        STR_CREATED_NEWEST = 'Created / Uptime newest';
+        STR_CREATED_OLDEST = 'Created / Uptime Oldest';
+        STR_RESET_DONE = 'All configuration erased the app will self restart';
+        STR_HOLD_RESET = '<br>Keep hold Key for 10 seconds to reset all app configuration this can help when the app is freezed, release to dismiss this<br><br>';
+        STR_FORCE_RESET =
+            'Force erase all app config: in case the app misbehave and stop working, hold key channel UP or Down for 20 seconds anywhere in the app, after it 10 seconds there is a confirmation';
 
-        STR_GIFT_SUB = " has gift you a sub!";
-        STR_ANONYMOUS_USER = "Anonymous";
-        STR_GIFT_ANONYMOUS = "An " + STR_ANONYMOUS_USER;
-        STR_CHAT_BANNED = "You are permanently banned from talking in  ";
-        STR_CHAT_WRITE = "Write to chat";
-        STR_CHAT_EXTRA = "Chat extra settings";
-        STR_PLACEHOLDER_CHAT = "When this seleceted, press enter to show onscreen keyboard, If you have a physical keyboard connected press return or esc to hide the onscreen keyboard";
-        STR_CHAT_ROOMSTATE = "Chat ROOMSTATE:";
-        STR_CHAT_NO_RESTRICTIONS = "No restrictions";
-        STR_OPTIONS = "Options";
-        STR_CHAT_DELL_ALL = "Delete all";
-        STR_CHAT_UNICODE_EMOJI = "Unicode Emoji";
-        STR_CHAT_TW_EMOTES = "Twitch emotes";
-        STR_CHAT_BTTV_GLOBAL = "BTTV global";
-        STR_CHAT_BTTV_STREAM = "BTTV streamer";
-        STR_CHAT_FFZ_GLOBAL = "FFZ global";
-        STR_CHAT_FFZ_STREAM = "FFZ streamer";
-        STR_CHAT_SEVENTV_GLOBAL = "7TV global";
-        STR_CHAT_SEVENTV_STREAM = "7TV streamer";
-        STR_CHAT_AT_STREAM = "@streamer";
-        STR_CHAT_RESULT = "In Chat expected result:";
-        STR_CHAT_SEND = "Send";
-        STR_CHAT_EMOTE_EMPTY = "This emote list is empty";
-        STR_CHAT_FOLLOWER_ONLY = "Chat is Followers-only mode, and you are not a follower of ";
-        STR_CHAT_FOLLOWER_ONLY = "Chat is Followers-only mode, and you are not a follower of ";
-        STR_CHAT_FOLLOWER_ONLY_USER_TIME = "and you are only fallowing for ";
-        STR_CHAT_EMOTE_ONLY = "Twitch Emote-only mode";
-        STR_CHAT_CHOOSE = "Choose with chat to write to or press return to close this";
-        STR_CHAT_OPTIONS_TITLE = "Write to chat options";
-        STR_CHAT_OPTIONS_EMOTE_SORT = "Emotes sorting";
-        STR_CHAT_OPTIONS_EMOTE_SORT_SUMMARY = "If this is disabled, the lists of emotes will be showed in the order provider by the server";
-        STR_CHAT_OPTIONS_FORCE_SHOW = "Force show chat";
-        STR_CHAT_OPTIONS_FORCE_SHOW_SUMMARY = "If you wanna see the chat when write to chat is used, enable this";
-        STR_NOKEY_CHAT_WARN = "Add an user authorization key to be able to logging and write to chat" + STR_NOKEY_GENERAL_WARN;
-        STR_CHAT_NOT_READY = "Chat not ready to send! Try again is a second or two.";
-        STR_CHAT_REDEEMED_MESSAGE_HIGH = "Redeemed Highlight My Message";
-        STR_CHAT_REDEEMED_MESSAGE_SUB = "Redeemed Send a Message in Sub-Only Mode";
-        STR_CHAT_OPTIONS = "Chat options";
-        STR_CHAT_HIGHLIGHT_REDEEMED = "Highlight rewards messages (Purple background message only)";
-        STR_CHAT_HIGHLIGHT_STREAMER = "Highlight @streamer messages (Dark red background, the @ is blue)";
-        STR_CHAT_HIGHLIGHT_USER = "Highlight yours @username messages (Dark Green background, the @ is blue)";
-        STR_CHAT_HIGHLIGHT_USER_SEND = "Highlight yours sended messages (Dark Green background)";
-        STR_CHAT_SHOW_SUB = "Show Sub messages in chat (Dark orange background)";
-        STR_CHAT_HIGHLIGHT_BIT = "Highlight Bits message (Dark Yellow background)";
-        STR_CHAT_HIGHLIGHT_ACTIONS = "Show Actions messages (Usually this are from stream Bots)";
+        STR_GIFT_SUB = ' has gift you a sub!';
+        STR_ANONYMOUS_USER = 'Anonymous';
+        STR_GIFT_ANONYMOUS = 'An ' + STR_ANONYMOUS_USER;
+        STR_CHAT_BANNED = 'You are permanently banned from talking in  ';
+        STR_CHAT_WRITE = 'Write to chat';
+        STR_CHAT_EXTRA = 'Chat extra settings';
+        STR_PLACEHOLDER_CHAT = 'When this seleceted, press enter to show onscreen keyboard, If you have a physical keyboard connected press return or esc to hide the onscreen keyboard';
+        STR_CHAT_ROOMSTATE = 'Chat ROOMSTATE:';
+        STR_CHAT_NO_RESTRICTIONS = 'No restrictions';
+        STR_OPTIONS = 'Options';
+        STR_CHAT_DELL_ALL = 'Delete all';
+        STR_CHAT_UNICODE_EMOJI = 'Unicode Emoji';
+        STR_CHAT_TW_EMOTES = 'Twitch emotes';
+        STR_CHAT_BTTV_GLOBAL = 'BTTV global';
+        STR_CHAT_BTTV_STREAM = 'BTTV streamer';
+        STR_CHAT_FFZ_GLOBAL = 'FFZ global';
+        STR_CHAT_FFZ_STREAM = 'FFZ streamer';
+        STR_CHAT_SEVENTV_GLOBAL = '7TV global';
+        STR_CHAT_SEVENTV_STREAM = '7TV streamer';
+        STR_CHAT_AT_STREAM = '@streamer';
+        STR_CHAT_RESULT = 'In Chat expected result:';
+        STR_CHAT_SEND = 'Send';
+        STR_CHAT_EMOTE_EMPTY = 'This emote list is empty';
+        STR_CHAT_FOLLOWER_ONLY = 'Chat is Followers-only mode, and you are not a follower of ';
+        STR_CHAT_FOLLOWER_ONLY = 'Chat is Followers-only mode, and you are not a follower of ';
+        STR_CHAT_FOLLOWER_ONLY_USER_TIME = 'and you are only fallowing for ';
+        STR_CHAT_EMOTE_ONLY = 'Twitch Emote-only mode';
+        STR_CHAT_CHOOSE = 'Choose with chat to write to or press return to close this';
+        STR_CHAT_OPTIONS_TITLE = 'Write to chat options';
+        STR_CHAT_OPTIONS_EMOTE_SORT = 'Emotes sorting';
+        STR_CHAT_OPTIONS_EMOTE_SORT_SUMMARY = 'If this is disabled, the lists of emotes will be showed in the order provider by the server';
+        STR_CHAT_OPTIONS_FORCE_SHOW = 'Force show chat';
+        STR_CHAT_OPTIONS_FORCE_SHOW_SUMMARY = 'If you wanna see the chat when write to chat is used, enable this';
+        STR_NOKEY_CHAT_WARN = 'Add an user authorization key to be able to logging and write to chat' + STR_NOKEY_GENERAL_WARN;
+        STR_CHAT_NOT_READY = 'Chat not ready to send! Try again is a second or two.';
+        STR_CHAT_REDEEMED_MESSAGE_HIGH = 'Redeemed Highlight My Message';
+        STR_CHAT_REDEEMED_MESSAGE_SUB = 'Redeemed Send a Message in Sub-Only Mode';
+        STR_CHAT_OPTIONS = 'Chat options';
+        STR_CHAT_HIGHLIGHT_REDEEMED = 'Highlight rewards messages (Purple background message only)';
+        STR_CHAT_HIGHLIGHT_STREAMER = 'Highlight @streamer messages (Dark red background, the @ is blue)';
+        STR_CHAT_HIGHLIGHT_USER = 'Highlight yours @username messages (Dark Green background, the @ is blue)';
+        STR_CHAT_HIGHLIGHT_USER_SEND = 'Highlight yours sended messages (Dark Green background)';
+        STR_CHAT_SHOW_SUB = 'Show Sub messages in chat (Dark orange background)';
+        STR_CHAT_HIGHLIGHT_BIT = 'Highlight Bits message (Dark Yellow background)';
+        STR_CHAT_HIGHLIGHT_ACTIONS = 'Show Actions messages (Usually this are from stream Bots)';
         STR_CHAT_HIGHLIGHT_ACTIONS_SUMMARY = 'This messages are usually equal to Sub messages but sended via a stream bot, so if you have "Show sub..." enable this is redundant';
-        STR_CHAT_INDIVIDUAL_BACKGROUND = "Individual messages background color difference";
-        STR_CHAT_INDIVIDUAL_BACKGROUND_SUMMARY = "Modes are disable, enable (auto mode), Bright or Darker, In auto mode if the chat is above the stream it odd message will have a darker background accent color from the even, if the chat is not above (side by side for example) the color will be brigh";
-        STR_CHAT_INDIVIDUAL_LINE = "Insert a line to separate it individual chat messages";
-        STR_CHAT_LOGGING = "Logging in chat with current user";
-        STR_CHAT_LOGGING_SUMMARY = "The app will always logging to chat using current user when a authorization key is provided, unless chat is disable on player bottom controls, but if this option if set to NO it will prevent logging using current username and instead will logging as anonymous, even if providing a authorization key. This doesn't prevent from send chat message for this user if a key ws added but prevents form know if you are banned on the chat and prevent knowing the chat ROOMSTATE";
-        STR_CHAT_TIMESTAMP = "Show message timestamp";
-        STR_CHAT_NICK_COLOR = "Readable nick colors";
+        STR_CHAT_INDIVIDUAL_BACKGROUND = 'Individual messages background color difference';
+        STR_CHAT_INDIVIDUAL_BACKGROUND_SUMMARY =
+            'Modes are disable, enable (auto mode), Bright or Darker, In auto mode if the chat is above the stream it odd message will have a darker background accent color from the even, if the chat is not above (side by side for example) the color will be brigh';
+        STR_CHAT_INDIVIDUAL_LINE = 'Insert a line to separate it individual chat messages';
+        STR_CHAT_LOGGING = 'Logging in chat with current user';
+        STR_CHAT_LOGGING_SUMMARY =
+            "The app will always logging to chat using current user when a authorization key is provided, unless chat is disable on player bottom controls, but if this option if set to NO it will prevent logging using current username and instead will logging as anonymous, even if providing a authorization key. This doesn't prevent from send chat message for this user if a key ws added but prevents form know if you are banned on the chat and prevent knowing the chat ROOMSTATE";
+        STR_CHAT_TIMESTAMP = 'Show message timestamp';
+        STR_CHAT_NICK_COLOR = 'Readable nick colors';
         STR_CHAT_NICK_COLOR_SUMMARY = "Instead of using the default nick color that some times can't be readable on a dark background, use a custom easy to read color";
-        STR_CHAT_CLEAR_MSG = "Clear chat, delete user’s message’s";
-        STR_CHAT_MESSAGE_DELETED = "This single user message was requested to be deleted";
-        STR_CHAT_MESSAGE_DELETED_ALL = "All messages from this user was requested to be deleted";
+        STR_CHAT_CLEAR_MSG = 'Clear chat, delete user’s message’s';
+        STR_CHAT_MESSAGE_DELETED = 'This single user message was requested to be deleted';
+        STR_CHAT_MESSAGE_DELETED_ALL = 'All messages from this user was requested to be deleted';
         STR_CHAT_MESSAGE_DELETED_TIMEOUT = ", they've be timeout for ";
-        STR_CHAT_CLEAR_MSG_SUMMARY = 'Delete chat messages from a specific user (typically after they received a timeout or ban), deleted messages will always have a blue background, the message will be deleted if this is set to yes, if not only the background color will change';
-        STR_DARK_MODE = "Dark mode";
-        STR_BRIGHT_MODE = "Bright mode";
-        STR_CHAT_CLEAR_MSG_SUMMARY = 'Delete chat messages from a specific user (typically after they received a timeout or ban), deleted messages will always have a blue background, the message will be removed if this is set to yes if not only';
-        STR_IN_CHAT = " In chat";
-        STR_SHOW_IN_CHAT = "Show total logged in user on top of the chat or viewers";
-        STR_SHOW_IN_CHAT_SUMMARY = "This is very helpfully to know for example if the offline chat has any user to talk to, also let the user know the difference from total viewer VS total chat user";
+        STR_CHAT_CLEAR_MSG_SUMMARY =
+            'Delete chat messages from a specific user (typically after they received a timeout or ban), deleted messages will always have a blue background, the message will be deleted if this is set to yes, if not only the background color will change';
+        STR_DARK_MODE = 'Dark mode';
+        STR_BRIGHT_MODE = 'Bright mode';
+        STR_CHAT_CLEAR_MSG_SUMMARY =
+            'Delete chat messages from a specific user (typically after they received a timeout or ban), deleted messages will always have a blue background, the message will be removed if this is set to yes if not only';
+        STR_IN_CHAT = ' In chat';
+        STR_SHOW_IN_CHAT = 'Show total logged in user on top of the chat or viewers';
+        STR_SHOW_IN_CHAT_SUMMARY = 'This is very helpfully to know for example if the offline chat has any user to talk to, also let the user know the difference from total viewer VS total chat user';
         STR_SHOW_IN_CHAT_VIEWERS = 'Show viewers';
         STR_SHOW_IN_CHAT_CHATTERS = 'Show chatters';
-        STR_UNKNOWN = "Unknown";
-        STR_LOADING_CHAT = "Chat: Connecting to";
-        STR_LOADING_FAIL = "Connecting timeout, Fail to logging...";
-        STR_CHAT_CONNECTED = "Chat: Connected";
-        STR_CHAT_SEND_DELAY = "Message send, chat delay enabled, message will show in chat after";
-        STR_CHAT_DELAY = "Chat: delay";
+        STR_UNKNOWN = 'Unknown';
+        STR_LOADING_CHAT = 'Chat: Connecting to';
+        STR_LOADING_FAIL = 'Connecting timeout, Fail to logging...';
+        STR_CHAT_CONNECTED = 'Chat: Connected';
+        STR_CHAT_SEND_DELAY = 'Message send, chat delay enabled, message will show in chat after';
+        STR_CHAT_DELAY = 'Chat: delay';
 
-        STR_WARNING_NEW = "Twitch is shutting down some of they API, making necessary to update all app API calls to they new API, the new API is different because of that it demands a lot of work.<br><br>Because of that the app is going thru a update phase, during this time some app content may not work.<br><br>Be aware with this new Twitch API is necessary to add a User and a Authentication key, if you don’t you may not have access to any content in future updates or after Twitch completely shutting they old API.<br><br>Some users may need to reinstall the app...If you have problem after see this warning, hold channel key up until you see a warning, now hold key down until the app restar, if that doesn't work, reinstall  the app.<br><br>This dialog will auto hide in 1 minute, or press any key to hide it";
-
+        STR_WARNING_NEW =
+            "Twitch is shutting down some of they API, making necessary to update all app API calls to they new API, the new API is different because of that it demands a lot of work.<br><br>Because of that the app is going thru a update phase, during this time some app content may not work.<br><br>Be aware with this new Twitch API is necessary to add a User and a Authentication key, if you don’t you may not have access to any content in future updates or after Twitch completely shutting they old API.<br><br>Some users may need to reinstall the app...If you have problem after see this warning, hold channel key up until you see a warning, now hold key down until the app restar, if that doesn't work, reinstall  the app.<br><br>This dialog will auto hide in 1 minute, or press any key to hide it";
     }
     /*
      * Copyright (c) 2017-2020 Felipe de Leon <fglfgl27@gmail.com>
@@ -962,19 +1087,27 @@
     //https://github.com/kevinfaguiar/vue-twemoji-picker/tree/master/emoji-data/en
     //https://emojipedia.org/
     //But removed not working or not needed as is too much
-    var emojis_string = '[{"unicode":"😀","code":"grin","id":"0_grin","4x":"https://twemoji.maxcdn.com/2/72x72/1f600.png"},{"unicode":"😃","code":"smile","id":"1_smile","4x":"https://twemoji.maxcdn.com/2/72x72/1f603.png"},{"unicode":"😄","code":"smile2","id":"2_smile2","4x":"https://twemoji.maxcdn.com/2/72x72/1f604.png"},{"unicode":"😁","code":"smile3","id":"3_smile3","4x":"https://twemoji.maxcdn.com/2/72x72/1f601.png"},{"unicode":"😆","code":"satisfied","id":"4_satisfied","4x":"https://twemoji.maxcdn.com/2/72x72/1f606.png"},{"unicode":"😅","code":"sweat","id":"5_sweat","4x":"https://twemoji.maxcdn.com/2/72x72/1f605.png"},{"unicode":"🤣","code":"rolling","id":"6_rolling","4x":"https://twemoji.maxcdn.com/2/72x72/1f923.png"},{"unicode":"😂","code":"tear","id":"7_tear","4x":"https://twemoji.maxcdn.com/2/72x72/1f602.png"},{"unicode":"🙂","code":"smile4","id":"8_smile4","4x":"https://twemoji.maxcdn.com/2/72x72/1f642.png"},{"unicode":"🙃","code":"smile-upside-down","id":"9_smile-upside-down","4x":"https://twemoji.maxcdn.com/2/72x72/1f643.png"},{"unicode":"😉","code":"wink","id":"10_wink","4x":"https://twemoji.maxcdn.com/2/72x72/1f609.png"},{"unicode":"😊","code":"smile-blush","id":"11_smile-blush","4x":"https://twemoji.maxcdn.com/2/72x72/1f60a.png"},{"unicode":"😇","code":"angel","id":"12_angel","4x":"https://twemoji.maxcdn.com/2/72x72/1f607.png"},{"unicode":"🥰","code":"adore","id":"13_adore","4x":"https://twemoji.maxcdn.com/2/72x72/1f970.png"},{"unicode":"😍","code":"smile-love","id":"14_smile-love","4x":"https://twemoji.maxcdn.com/2/72x72/1f60d.png"},{"unicode":"🤩","code":"smile-star","id":"15_smile-star","4x":"https://twemoji.maxcdn.com/2/72x72/1f929.png"},{"unicode":"😘","code":"kiss","id":"16_kiss","4x":"https://twemoji.maxcdn.com/2/72x72/1f618.png"},{"unicode":"😗","code":"kiss2","id":"17_kiss2","4x":"https://twemoji.maxcdn.com/2/72x72/1f617.png"},{"unicode":"☺️","code":"relaxed","id":"18_relaxed","4x":"https://twemoji.maxcdn.com/2/72x72/263a.png"},{"unicode":"😚","code":"kiss3","id":"19_kiss3","4x":"https://twemoji.maxcdn.com/2/72x72/1f61a.png"},{"unicode":"😙","code":"kis4","id":"20_kis4","4x":"https://twemoji.maxcdn.com/2/72x72/1f619.png"},{"unicode":"😋","code":"delicious","id":"21_delicious","4x":"https://twemoji.maxcdn.com/2/72x72/1f60b.png"},{"unicode":"😛","code":"tongue","id":"22_tongue","4x":"https://twemoji.maxcdn.com/2/72x72/1f61b.png"},{"unicode":"😜","code":"tongue-wink","id":"23_tongue-wink","4x":"https://twemoji.maxcdn.com/2/72x72/1f61c.png"},{"unicode":"🤪","code":"goofy","id":"24_goofy","4x":"https://twemoji.maxcdn.com/2/72x72/1f92a.png"},{"unicode":"😝","code":"tongue-><","id":"25_tongue-><","4x":"https://twemoji.maxcdn.com/2/72x72/1f61d.png"},{"unicode":"🤑","code":"face-money","id":"26_face-money","4x":"https://twemoji.maxcdn.com/2/72x72/1f911.png"},{"unicode":"🤗","code":"hugging","id":"27_hugging","4x":"https://twemoji.maxcdn.com/2/72x72/1f917.png"},{"unicode":"🤭","code":"whoops","id":"28_whoops","4x":"https://twemoji.maxcdn.com/2/72x72/1f92d.png"},{"unicode":"🤫","code":"quiet","id":"29_quiet","4x":"https://twemoji.maxcdn.com/2/72x72/1f92b.png"},{"unicode":"🤔","code":"thinking","id":"30_thinking","4x":"https://twemoji.maxcdn.com/2/72x72/1f914.png"},{"unicode":"🤐","code":"zipper","id":"31_zipper","4x":"https://twemoji.maxcdn.com/2/72x72/1f910.png"},{"unicode":"🤨","code":"skeptic","id":"32_skeptic","4x":"https://twemoji.maxcdn.com/2/72x72/1f928.png"},{"unicode":"😑","code":"unexpressive","id":"33_unexpressive","4x":"https://twemoji.maxcdn.com/2/72x72/1f611.png"},{"unicode":"😶","code":"silent","id":"34_silent","4x":"https://twemoji.maxcdn.com/2/72x72/1f636.png"},{"unicode":"😏","code":"smirk","id":"35_smirk","4x":"https://twemoji.maxcdn.com/2/72x72/1f60f.png"},{"unicode":"😒","code":"unhappy","id":"36_unhappy","4x":"https://twemoji.maxcdn.com/2/72x72/1f612.png"},{"unicode":"🙄","code":"eyeroll","id":"37_eyeroll","4x":"https://twemoji.maxcdn.com/2/72x72/1f644.png"},{"unicode":"😬","code":"grimace","id":"38_grimace","4x":"https://twemoji.maxcdn.com/2/72x72/1f62c.png"},{"unicode":"🤥","code":"pinocchio","id":"39_pinocchio","4x":"https://twemoji.maxcdn.com/2/72x72/1f925.png"},{"unicode":"😌","code":"relieved","id":"40_relieved","4x":"https://twemoji.maxcdn.com/2/72x72/1f60c.png"},{"unicode":"😔","code":"pensive","id":"41_pensive","4x":"https://twemoji.maxcdn.com/2/72x72/1f614.png"},{"unicode":"😪","code":"sleep","id":"42_sleep","4x":"https://twemoji.maxcdn.com/2/72x72/1f62a.png"},{"unicode":"🤤","code":"drooling-face","id":"43_drooling-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f924.png"},{"unicode":"😴","code":"sleep-face","id":"44_sleep-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f634.png"},{"unicode":"😷","code":"cold-face","id":"45_cold-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f637.png"},{"unicode":"🤒","code":"sick-face","id":"46_sick-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f912.png"},{"unicode":"🤕","code":"bandage-face","id":"47_bandage-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f915.png"},{"unicode":"🤢","code":"nauseated-face","id":"48_nauseated-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f922.png"},{"unicode":"🤮","code":"sick-face","id":"49_sick-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f92e.png"},{"unicode":"🤧","code":"sneeze","id":"50_sneeze","4x":"https://twemoji.maxcdn.com/2/72x72/1f927.png"},{"unicode":"🥵","code":"feverish","id":"51_feverish","4x":"https://twemoji.maxcdn.com/2/72x72/1f975.png"},{"unicode":"🥶","code":"blue-faced","id":"52_blue-faced","4x":"https://twemoji.maxcdn.com/2/72x72/1f976.png"},{"unicode":"🥴","code":"intoxicated","id":"53_intoxicated","4x":"https://twemoji.maxcdn.com/2/72x72/1f974.png"},{"unicode":"😵","code":"dizzy","id":"54_dizzy","4x":"https://twemoji.maxcdn.com/2/72x72/1f635.png"},{"unicode":"🤯","code":"mind blown","id":"55_mind blown","4x":"https://twemoji.maxcdn.com/2/72x72/1f92f.png"},{"unicode":"🤠","code":"cowboy","id":"56_cowboy","4x":"https://twemoji.maxcdn.com/2/72x72/1f920.png"},{"unicode":"🥳","code":"celebration","id":"57_celebration","4x":"https://twemoji.maxcdn.com/2/72x72/1f973.png"},{"unicode":"😎","code":"cool-face","id":"58_cool-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f60e.png"},{"unicode":"🤓","code":"cool","id":"59_cool","4x":"https://twemoji.maxcdn.com/2/72x72/1f913.png"},{"unicode":"🧐","code":"stuffy","id":"60_stuffy","4x":"https://twemoji.maxcdn.com/2/72x72/1f9d0.png"},{"unicode":"😕","code":"confused","id":"61_confused","4x":"https://twemoji.maxcdn.com/2/72x72/1f615.png"},{"unicode":"😟","code":"worried","id":"62_worried","4x":"https://twemoji.maxcdn.com/2/72x72/1f61f.png"},{"unicode":"🙁","code":"frown","id":"63_frown","4x":"https://twemoji.maxcdn.com/2/72x72/1f641.png"},{"unicode":"☹️","code":"frown","id":"64_frown","4x":"https://twemoji.maxcdn.com/2/72x72/2639.png"},{"unicode":"😮","code":"mouth-open","id":"65_mouth-open","4x":"https://twemoji.maxcdn.com/2/72x72/1f62e.png"},{"unicode":"😯","code":"surprised","id":"66_surprised","4x":"https://twemoji.maxcdn.com/2/72x72/1f62f.png"},{"unicode":"😲","code":"astonished","id":"67_astonished","4x":"https://twemoji.maxcdn.com/2/72x72/1f632.png"},{"unicode":"😳","code":"dazed","id":"68_dazed","4x":"https://twemoji.maxcdn.com/2/72x72/1f633.png"},{"unicode":"🥺","code":"puppy eyes","id":"69_puppy eyes","4x":"https://twemoji.maxcdn.com/2/72x72/1f97a.png"},{"unicode":"😦","code":"frown","id":"70_frown","4x":"https://twemoji.maxcdn.com/2/72x72/1f626.png"},{"unicode":"😧","code":"anguished","id":"71_anguished","4x":"https://twemoji.maxcdn.com/2/72x72/1f627.png"},{"unicode":"😨","code":"fearful","id":"72_fearful","4x":"https://twemoji.maxcdn.com/2/72x72/1f628.png"},{"unicode":"😰","code":"fearful2","id":"73_fearful2","4x":"https://twemoji.maxcdn.com/2/72x72/1f630.png"},{"unicode":"😥","code":"disappointed","id":"74_disappointed","4x":"https://twemoji.maxcdn.com/2/72x72/1f625.png"},{"unicode":"😢","code":"cry-face","id":"75_cry-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f622.png"},{"unicode":"😭","code":"cry-face2","id":"76_cry-face2","4x":"https://twemoji.maxcdn.com/2/72x72/1f62d.png"},{"unicode":"😱","code":"fear-face","id":"77_fear-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f631.png"},{"unicode":"😖","code":"confounded","id":"78_confounded","4x":"https://twemoji.maxcdn.com/2/72x72/1f616.png"},{"unicode":"😣","code":"persevere","id":"79_persevere","4x":"https://twemoji.maxcdn.com/2/72x72/1f623.png"},{"unicode":"😞","code":"disappointed","id":"80_disappointed","4x":"https://twemoji.maxcdn.com/2/72x72/1f61e.png"},{"unicode":"😓","code":"cold","id":"81_cold","4x":"https://twemoji.maxcdn.com/2/72x72/1f613.png"},{"unicode":"😩","code":"weary","id":"82_weary","4x":"https://twemoji.maxcdn.com/2/72x72/1f629.png"},{"unicode":"😫","code":"tired","id":"83_tired","4x":"https://twemoji.maxcdn.com/2/72x72/1f62b.png"},{"unicode":"😤","code":"triumph","id":"84_triumph","4x":"https://twemoji.maxcdn.com/2/72x72/1f624.png"},{"unicode":"😡","code":"angry","id":"85_angry","4x":"https://twemoji.maxcdn.com/2/72x72/1f621.png"},{"unicode":"😠","code":"mad","id":"86_mad","4x":"https://twemoji.maxcdn.com/2/72x72/1f620.png"},{"unicode":"🤬","code":"swearing","id":"87_swearing","4x":"https://twemoji.maxcdn.com/2/72x72/1f92c.png"},{"unicode":"😈","code":"devil","id":"88_devil","4x":"https://twemoji.maxcdn.com/2/72x72/1f608.png"},{"unicode":"👿","code":"demon","id":"89_demon","4x":"https://twemoji.maxcdn.com/2/72x72/1f47f.png"},{"unicode":"💀","code":"death","id":"90_death","4x":"https://twemoji.maxcdn.com/2/72x72/1f480.png"},{"unicode":"☠️","code":"crossbones","id":"91_crossbones","4x":"https://twemoji.maxcdn.com/2/72x72/2620.png"},{"unicode":"💩","code":"poop","id":"92_poop","4x":"https://twemoji.maxcdn.com/2/72x72/1f4a9.png"},{"unicode":"🤡","code":"clown","id":"93_clown","4x":"https://twemoji.maxcdn.com/2/72x72/1f921.png"},{"unicode":"👹","code":"creature","id":"94_creature","4x":"https://twemoji.maxcdn.com/2/72x72/1f479.png"},{"unicode":"👺","code":"creature2","id":"95_creature2","4x":"https://twemoji.maxcdn.com/2/72x72/1f47a.png"},{"unicode":"👻","code":"ghost","id":"96_ghost","4x":"https://twemoji.maxcdn.com/2/72x72/1f47b.png"},{"unicode":"👾","code":"alien","id":"97_alien","4x":"https://twemoji.maxcdn.com/2/72x72/1f47e.png"},{"unicode":"🤖","code":"robot","id":"98_robot","4x":"https://twemoji.maxcdn.com/2/72x72/1f916.png"},{"unicode":"😺","code":"cat-face","id":"99_cat-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f63a.png"},{"unicode":"😸","code":"cat-smile","id":"100_cat-smile","4x":"https://twemoji.maxcdn.com/2/72x72/1f638.png"},{"unicode":"😹","code":"cat-tear","id":"101_cat-tear","4x":"https://twemoji.maxcdn.com/2/72x72/1f639.png"},{"unicode":"😻","code":"cat-heart","id":"102_cat-heart","4x":"https://twemoji.maxcdn.com/2/72x72/1f63b.png"},{"unicode":"😼","code":"cat-ironic","id":"103_cat-ironic","4x":"https://twemoji.maxcdn.com/2/72x72/1f63c.png"},{"unicode":"😽","code":"cat-kiss","id":"104_cat-kiss","4x":"https://twemoji.maxcdn.com/2/72x72/1f63d.png"},{"unicode":"🙀","code":"cat-surprised","id":"105_cat-surprised","4x":"https://twemoji.maxcdn.com/2/72x72/1f640.png"},{"unicode":"😿","code":"cat-sad","id":"106_cat-sad","4x":"https://twemoji.maxcdn.com/2/72x72/1f63f.png"},{"unicode":"😾","code":"cat-pouting","id":"107_cat-pouting","4x":"https://twemoji.maxcdn.com/2/72x72/1f63e.png"},{"unicode":"👋","code":"hand-wave","id":"108_hand-wave","4x":"https://twemoji.maxcdn.com/2/72x72/1f44b.png"},{"unicode":"🤚","code":"backhand","id":"109_backhand","4x":"https://twemoji.maxcdn.com/2/72x72/1f91a.png"},{"unicode":"🖐️","code":"hand-open-finger","id":"110_hand-open-finger","4x":"https://twemoji.maxcdn.com/2/72x72/1f590.png"},{"unicode":"✋","code":"hand","id":"111_hand","4x":"https://twemoji.maxcdn.com/2/72x72/270b.png"},{"unicode":"🖖","code":"hand-vulcan","id":"112_hand-vulcan","4x":"https://twemoji.maxcdn.com/2/72x72/1f596.png"},{"unicode":"👌","code":"hand-ok","id":"113_hand-ok","4x":"https://twemoji.maxcdn.com/2/72x72/1f44c.png"},{"unicode":"✌️","code":"hand-v","id":"114_hand-v","4x":"https://twemoji.maxcdn.com/2/72x72/270c.png"},{"unicode":"🤞","code":"hand-cross","id":"115_hand-cross","4x":"https://twemoji.maxcdn.com/2/72x72/1f91e.png"},{"unicode":"🤟","code":"hand-ily","id":"116_hand-ily","4x":"https://twemoji.maxcdn.com/2/72x72/1f91f.png"},{"unicode":"🤘","code":"hand-horns","id":"117_hand-horns","4x":"https://twemoji.maxcdn.com/2/72x72/1f918.png"},{"unicode":"🤙","code":"hand-call","id":"118_hand-call","4x":"https://twemoji.maxcdn.com/2/72x72/1f919.png"},{"unicode":"🖕","code":"hand-finger","id":"119_hand-finger","4x":"https://twemoji.maxcdn.com/2/72x72/1f595.png"},{"unicode":"👈","code":"hand-point","id":"120_hand-point","4x":"https://twemoji.maxcdn.com/2/72x72/1f448.png"},{"unicode":"👇","code":"hand-poin2","id":"121_hand-poin2","4x":"https://twemoji.maxcdn.com/2/72x72/1f447.png"},{"unicode":"☝️","code":"hand-point3","id":"122_hand-point3","4x":"https://twemoji.maxcdn.com/2/72x72/261d.png"},{"unicode":"👍","code":"hand-thumb-up","id":"123_hand-thumb-up","4x":"https://twemoji.maxcdn.com/2/72x72/1f44d.png"},{"unicode":"👎","code":"hand-thumb-down","id":"124_hand-thumb-down","4x":"https://twemoji.maxcdn.com/2/72x72/1f44e.png"},{"unicode":"✊","code":"hand-punch","id":"125_hand-punch","4x":"https://twemoji.maxcdn.com/2/72x72/270a.png"},{"unicode":"👊","code":"hand-punch2","id":"126_hand-punch2","4x":"https://twemoji.maxcdn.com/2/72x72/1f44a.png"},{"unicode":"🤛","code":"hand-punch3","id":"127_hand-punch3","4x":"https://twemoji.maxcdn.com/2/72x72/1f91b.png"},{"unicode":"🤜","code":"hand-punch4","id":"128_hand-punch4","4x":"https://twemoji.maxcdn.com/2/72x72/1f91c.png"},{"unicode":"👏","code":"hand-clap","id":"129_hand-clap","4x":"https://twemoji.maxcdn.com/2/72x72/1f44f.png"},{"unicode":"🙌","code":"hand-celebration","id":"130_hand-celebration","4x":"https://twemoji.maxcdn.com/2/72x72/1f64c.png"},{"unicode":"👐","code":"hand-open","id":"131_hand-open","4x":"https://twemoji.maxcdn.com/2/72x72/1f450.png"},{"unicode":"🤲","code":"hand-prayer","id":"132_hand-prayer","4x":"https://twemoji.maxcdn.com/2/72x72/1f932.png"},{"unicode":"🤝","code":"hand-agreement","id":"133_hand-agreement","4x":"https://twemoji.maxcdn.com/2/72x72/1f91d.png"},{"unicode":"🙏","code":"hand-please","id":"134_hand-please","4x":"https://twemoji.maxcdn.com/2/72x72/1f64f.png"},{"unicode":"✍️","code":"hand-write","id":"135_hand-write","4x":"https://twemoji.maxcdn.com/2/72x72/270d.png"},{"unicode":"💅","code":"cosmetics","id":"136_cosmetics","4x":"https://twemoji.maxcdn.com/2/72x72/1f485.png"},{"unicode":"🤳","code":"self","id":"137_self","4x":"https://twemoji.maxcdn.com/2/72x72/1f933.png"},{"unicode":"💪","code":"muscle","id":"138_muscle","4x":"https://twemoji.maxcdn.com/2/72x72/1f4aa.png"},{"unicode":"🦵","code":"kick","id":"139_kick","4x":"https://twemoji.maxcdn.com/2/72x72/1f9b5.png"},{"unicode":"🦶","code":"kick2","id":"140_kick2","4x":"https://twemoji.maxcdn.com/2/72x72/1f9b6.png"},{"unicode":"👂","code":"ear","id":"141_ear","4x":"https://twemoji.maxcdn.com/2/72x72/1f442.png"},{"unicode":"👃","code":"nose","id":"142_nose","4x":"https://twemoji.maxcdn.com/2/72x72/1f443.png"},{"unicode":"🧠","code":"brain","id":"143_brain","4x":"https://twemoji.maxcdn.com/2/72x72/1f9e0.png"},{"unicode":"🦷","code":"tooth","id":"144_tooth","4x":"https://twemoji.maxcdn.com/2/72x72/1f9b7.png"},{"unicode":"👀","code":"eyes","id":"145_eyes","4x":"https://twemoji.maxcdn.com/2/72x72/1f440.png"},{"unicode":"👁️","code":"eye","id":"146_eye","4x":"https://twemoji.maxcdn.com/2/72x72/1f441.png"},{"unicode":"👅","code":"tongue2","id":"147_tongue2","4x":"https://twemoji.maxcdn.com/2/72x72/1f445.png"},{"unicode":"👄","code":"lips","id":"148_lips","4x":"https://twemoji.maxcdn.com/2/72x72/1f444.png"},{"unicode":"👶","code":"baby","id":"149_baby","4x":"https://twemoji.maxcdn.com/2/72x72/1f476.png"},{"unicode":"👨‍🦲","code":"bald","id":"150_bald","4x":"https://twemoji.maxcdn.com/2/72x72/1f468-200d-1f9b2.png"},{"unicode":"👴","code":"old-man","id":"151_old-man","4x":"https://twemoji.maxcdn.com/2/72x72/1f474.png"},{"unicode":"👵","code":"old-woman","id":"152_old-woman","4x":"https://twemoji.maxcdn.com/2/72x72/1f475.png"},{"unicode":"🔥","code":"fire","id":"153_fire","4x":"https://twemoji.maxcdn.com/2/72x72/1f525.png"},{"unicode":"👨‍🚒","code":"firefighter","id":"154_firefighter","4x":"https://twemoji.maxcdn.com/2/72x72/1f468-200d-1f692.png"},{"unicode":"👩‍🚒","code":"firefighter2","id":"155_firefighter2","4x":"https://twemoji.maxcdn.com/2/72x72/1f469-200d-1f692.png"},{"unicode":"👮‍♂️","code":"police-officer","id":"156_police-officer","4x":"https://twemoji.maxcdn.com/2/72x72/1f46e-200d-2642-fe0f.png"},{"unicode":"👮‍♀️","code":"police-officer-woman","id":"157_police-officer-woman","4x":"https://twemoji.maxcdn.com/2/72x72/1f46e-200d-2640-fe0f.png"},{"unicode":"👨‍👩‍👧‍👦","code":"family","id":"158_family","4x":"https://twemoji.maxcdn.com/2/72x72/1f468-200d-1f469-200d-1f467-200d-1f466.png"},{"unicode":"🙈","code":"monkey-see","id":"159_monkey-see","4x":"https://twemoji.maxcdn.com/2/72x72/1f648.png"},{"unicode":"🙉","code":"monkey-hear","id":"160_monkey-hear","4x":"https://twemoji.maxcdn.com/2/72x72/1f649.png"},{"unicode":"🙊","code":"monkey-speak","id":"161_monkey-speak","4x":"https://twemoji.maxcdn.com/2/72x72/1f64a.png"},{"unicode":"💋","code":"kiss-lips","id":"162_kiss-lips","4x":"https://twemoji.maxcdn.com/2/72x72/1f48b.png"},{"unicode":"💌","code":"heart-letter","id":"163_heart-letter","4x":"https://twemoji.maxcdn.com/2/72x72/1f48c.png"},{"unicode":"💘","code":"arrow-cupid","id":"164_arrow-cupid","4x":"https://twemoji.maxcdn.com/2/72x72/1f498.png"},{"unicode":"💝","code":"valentine","id":"165_valentine","4x":"https://twemoji.maxcdn.com/2/72x72/1f49d.png"},{"unicode":"💖","code":"sparkle-heart","id":"166_sparkle-heart","4x":"https://twemoji.maxcdn.com/2/72x72/1f496.png"},{"unicode":"💗","code":"pulse","id":"167_pulse","4x":"https://twemoji.maxcdn.com/2/72x72/1f497.png"},{"unicode":"💓","code":"beating","id":"168_beating","4x":"https://twemoji.maxcdn.com/2/72x72/1f493.png"},{"unicode":"💞","code":"revolving","id":"169_revolving","4x":"https://twemoji.maxcdn.com/2/72x72/1f49e.png"},{"unicode":"💕","code":"love","id":"170_love","4x":"https://twemoji.maxcdn.com/2/72x72/1f495.png"},{"unicode":"❣️","code":"exclamation","id":"171_exclamation","4x":"https://twemoji.maxcdn.com/2/72x72/2763.png"},{"unicode":"💔","code":"broken-heart","id":"172_broken-heart","4x":"https://twemoji.maxcdn.com/2/72x72/1f494.png"},{"unicode":"💟","code":"heart-Decoration","id":"173_heart-Decoration","4x":"https://twemoji.maxcdn.com/2/72x72/1f49f.png"},{"unicode":"🖤","code":"heart-black","id":"174_heart-black","4x":"https://twemoji.maxcdn.com/2/72x72/1f5a4.png"},{"unicode":"🤎","code":"heart-brown","id":"175_heart-brown","4x":"https://twemoji.maxcdn.com/2/72x72/1f90e.png"},{"unicode":"💙","code":"heart-blue","id":"176_heart-blue","4x":"https://twemoji.maxcdn.com/2/72x72/1f499.png"},{"unicode":"💚","code":"heart-green","id":"177_heart-green","4x":"https://twemoji.maxcdn.com/2/72x72/1f49a.png"},{"unicode":"🧡","code":"heart-orange","id":"178_heart-orange","4x":"https://twemoji.maxcdn.com/2/72x72/1f9e1.png"},{"unicode":"💜","code":"heart-purple","id":"179_heart-purple","4x":"https://twemoji.maxcdn.com/2/72x72/1f49c.png"},{"unicode":"❤️","code":"heart-red","id":"180_heart-red","4x":"https://twemoji.maxcdn.com/2/72x72/2764.png"},{"unicode":"🤍","code":"black-white","id":"181_black-white","4x":"https://twemoji.maxcdn.com/2/72x72/1f90d.png"},{"unicode":"💛","code":"heart-yellow","id":"182_heart-yellow","4x":"https://twemoji.maxcdn.com/2/72x72/1f49b.png"},{"unicode":"💯","code":"hundred","id":"183_hundred","4x":"https://twemoji.maxcdn.com/2/72x72/1f4af.png"},{"unicode":"💢","code":"mad","id":"184_mad","4x":"https://twemoji.maxcdn.com/2/72x72/1f4a2.png"},{"unicode":"💥","code":"boom","id":"185_boom","4x":"https://twemoji.maxcdn.com/2/72x72/1f4a5.png"},{"unicode":"💫","code":"stars","id":"186_stars","4x":"https://twemoji.maxcdn.com/2/72x72/1f4ab.png"},{"unicode":"💦","code":"splashing","id":"187_splashing","4x":"https://twemoji.maxcdn.com/2/72x72/1f4a6.png"},{"unicode":"💨","code":"comic-dash","id":"188_comic-dash","4x":"https://twemoji.maxcdn.com/2/72x72/1f4a8.png"},{"unicode":"🕳️","code":"hole","id":"189_hole","4x":"https://twemoji.maxcdn.com/2/72x72/1f573.png"},{"unicode":"💬","code":"balloon-dialog","id":"190_balloon-dialog","4x":"https://twemoji.maxcdn.com/2/72x72/1f4ac.png"},{"unicode":"🗨️","code":"dialog","id":"191_dialog","4x":"https://twemoji.maxcdn.com/2/72x72/1f5e8.png"},{"unicode":"🗯️","code":"angry-balloon","id":"192_angry-balloon","4x":"https://twemoji.maxcdn.com/2/72x72/1f5ef.png"},{"unicode":"💭","code":"balloon-bubble","id":"193_balloon-bubble","4x":"https://twemoji.maxcdn.com/2/72x72/1f4ad.png"},{"unicode":"💤","code":"comic-sleep","id":"194_comic-sleep","4x":"https://twemoji.maxcdn.com/2/72x72/1f4a4.png"},{"unicode":"🕶️","code":"glasses-dark","id":"195_glasses-dark","4x":"https://twemoji.maxcdn.com/2/72x72/1f576.png"},{"unicode":"🥽","code":"glasses-swimming","id":"196_glasses-swimming","4x":"https://twemoji.maxcdn.com/2/72x72/1f97d.png"},{"unicode":"🥼","code":"scientist","id":"197_scientist","4x":"https://twemoji.maxcdn.com/2/72x72/1f97c.png"},{"unicode":"👔","code":"tie","id":"198_tie","4x":"https://twemoji.maxcdn.com/2/72x72/1f454.png"},{"unicode":"👕","code":"tshirt","id":"199_tshirt","4x":"https://twemoji.maxcdn.com/2/72x72/1f455.png"},{"unicode":"👖","code":"pants","id":"200_pants","4x":"https://twemoji.maxcdn.com/2/72x72/1f456.png"},{"unicode":"🧣","code":"neck","id":"201_neck","4x":"https://twemoji.maxcdn.com/2/72x72/1f9e3.png"},{"unicode":"🧤","code":"hand","id":"202_hand","4x":"https://twemoji.maxcdn.com/2/72x72/1f9e4.png"},{"unicode":"🧥","code":"jacket","id":"203_jacket","4x":"https://twemoji.maxcdn.com/2/72x72/1f9e5.png"},{"unicode":"🧦","code":"stocking","id":"204_stocking","4x":"https://twemoji.maxcdn.com/2/72x72/1f9e6.png"},{"unicode":"👗","code":"clothing","id":"205_clothing","4x":"https://twemoji.maxcdn.com/2/72x72/1f457.png"},{"unicode":"👘","code":"clothing2","id":"206_clothing2","4x":"https://twemoji.maxcdn.com/2/72x72/1f458.png"},{"unicode":"👙","code":"swim-clothing","id":"207_swim-clothing","4x":"https://twemoji.maxcdn.com/2/72x72/1f459.png"},{"unicode":"👚","code":"woman-clothing","id":"208_woman-clothing","4x":"https://twemoji.maxcdn.com/2/72x72/1f45a.png"},{"unicode":"👛","code":"coin-clothing","id":"209_coin-clothing","4x":"https://twemoji.maxcdn.com/2/72x72/1f45b.png"},{"unicode":"👜","code":"purse","id":"210_purse","4x":"https://twemoji.maxcdn.com/2/72x72/1f45c.png"},{"unicode":"👝","code":"pouch","id":"211_pouch","4x":"https://twemoji.maxcdn.com/2/72x72/1f45d.png"},{"unicode":"🛍️","code":"shopping-bag","id":"212_shopping-bag","4x":"https://twemoji.maxcdn.com/2/72x72/1f6cd.png"},{"unicode":"🎒","code":"school-bag","id":"213_school-bag","4x":"https://twemoji.maxcdn.com/2/72x72/1f392.png"},{"unicode":"👞","code":"shoe","id":"214_shoe","4x":"https://twemoji.maxcdn.com/2/72x72/1f45e.png"},{"unicode":"👟","code":"sneaker","id":"215_sneaker","4x":"https://twemoji.maxcdn.com/2/72x72/1f45f.png"},{"unicode":"🥾","code":"hiking-boot","id":"216_hiking-boot","4x":"https://twemoji.maxcdn.com/2/72x72/1f97e.png"},{"unicode":"🥿","code":"ballet flat","id":"217_ballet flat","4x":"https://twemoji.maxcdn.com/2/72x72/1f97f.png"},{"unicode":"👠","code":"woman-shoe","id":"218_woman-shoe","4x":"https://twemoji.maxcdn.com/2/72x72/1f460.png"},{"unicode":"👡","code":"woman-shoe2","id":"219_woman-shoe2","4x":"https://twemoji.maxcdn.com/2/72x72/1f461.png"},{"unicode":"👢","code":"woman-boot","id":"220_woman-boot","4x":"https://twemoji.maxcdn.com/2/72x72/1f462.png"},{"unicode":"👑","code":"king","id":"221_king","4x":"https://twemoji.maxcdn.com/2/72x72/1f451.png"},{"unicode":"👒","code":"hat","id":"222_hat","4x":"https://twemoji.maxcdn.com/2/72x72/1f452.png"},{"unicode":"🎩","code":"tophat","id":"223_tophat","4x":"https://twemoji.maxcdn.com/2/72x72/1f3a9.png"},{"unicode":"🧢","code":"baseball cap","id":"224_baseball cap","4x":"https://twemoji.maxcdn.com/2/72x72/1f9e2.png"},{"unicode":"⛑️","code":"aid","id":"225_aid","4x":"https://twemoji.maxcdn.com/2/72x72/26d1.png"},{"unicode":"📿","code":"beads","id":"226_beads","4x":"https://twemoji.maxcdn.com/2/72x72/1f4ff.png"},{"unicode":"💄","code":"lipstick","id":"227_lipstick","4x":"https://twemoji.maxcdn.com/2/72x72/1f484.png"},{"unicode":"💍","code":"diamond-ring","id":"228_diamond-ring","4x":"https://twemoji.maxcdn.com/2/72x72/1f48d.png"},{"unicode":"💎","code":"diamond","id":"229_diamond","4x":"https://twemoji.maxcdn.com/2/72x72/1f48e.png"},{"unicode":"🔇","code":"mute","id":"230_mute","4x":"https://twemoji.maxcdn.com/2/72x72/1f507.png"},{"unicode":"🔉","code":"medium","id":"231_medium","4x":"https://twemoji.maxcdn.com/2/72x72/1f509.png"},{"unicode":"🔊","code":"loud","id":"232_loud","4x":"https://twemoji.maxcdn.com/2/72x72/1f50a.png"},{"unicode":"📢","code":"loud2","id":"233_loud2","4x":"https://twemoji.maxcdn.com/2/72x72/1f4e2.png"},{"unicode":"📣","code":"cheering","id":"234_cheering","4x":"https://twemoji.maxcdn.com/2/72x72/1f4e3.png"},{"unicode":"📯","code":"horn","id":"235_horn","4x":"https://twemoji.maxcdn.com/2/72x72/1f4ef.png"},{"unicode":"🔔","code":"bell","id":"236_bell","4x":"https://twemoji.maxcdn.com/2/72x72/1f514.png"},{"unicode":"🔕","code":"bell","id":"237_bell","4x":"https://twemoji.maxcdn.com/2/72x72/1f515.png"},{"unicode":"🎼","code":"music-score","id":"238_music-score","4x":"https://twemoji.maxcdn.com/2/72x72/1f3bc.png"},{"unicode":"🎵","code":"music-note","id":"239_music-note","4x":"https://twemoji.maxcdn.com/2/72x72/1f3b5.png"},{"unicode":"🎶","code":"music-notes","id":"240_music-notes","4x":"https://twemoji.maxcdn.com/2/72x72/1f3b6.png"},{"unicode":"🎙️","code":"microphone","id":"241_microphone","4x":"https://twemoji.maxcdn.com/2/72x72/1f399.png"},{"unicode":"🎤","code":"microphone2","id":"242_microphone2","4x":"https://twemoji.maxcdn.com/2/72x72/1f3a4.png"},{"unicode":"🎷","code":"sax","id":"243_sax","4x":"https://twemoji.maxcdn.com/2/72x72/1f3b7.png"},{"unicode":"🎸","code":"guitar","id":"244_guitar","4x":"https://twemoji.maxcdn.com/2/72x72/1f3b8.png"},{"unicode":"🎹","code":"piano-keys","id":"245_piano-keys","4x":"https://twemoji.maxcdn.com/2/72x72/1f3b9.png"},{"unicode":"🎺","code":"trumpet","id":"246_trumpet","4x":"https://twemoji.maxcdn.com/2/72x72/1f3ba.png"},{"unicode":"🎻","code":"violin","id":"247_violin","4x":"https://twemoji.maxcdn.com/2/72x72/1f3bb.png"},{"unicode":"🥁","code":"drumsticks","id":"248_drumsticks","4x":"https://twemoji.maxcdn.com/2/72x72/1f941.png"},{"unicode":"📱","code":"cellphone","id":"249_cellphone","4x":"https://twemoji.maxcdn.com/2/72x72/1f4f1.png"},{"unicode":"☎️","code":"phone","id":"250_phone","4x":"https://twemoji.maxcdn.com/2/72x72/260e.png"},{"unicode":"📞","code":"phone2","id":"251_phone2","4x":"https://twemoji.maxcdn.com/2/72x72/1f4de.png"},{"unicode":"📠","code":"fax","id":"252_fax","4x":"https://twemoji.maxcdn.com/2/72x72/1f4e0.png"},{"unicode":"🔋","code":"battery","id":"253_battery","4x":"https://twemoji.maxcdn.com/2/72x72/1f50b.png"},{"unicode":"🔌","code":"plug","id":"254_plug","4x":"https://twemoji.maxcdn.com/2/72x72/1f50c.png"},{"unicode":"🖥️","code":"computer-desktop","id":"255_computer-desktop","4x":"https://twemoji.maxcdn.com/2/72x72/1f5a5.png"},{"unicode":"🖨️","code":"printer","id":"256_printer","4x":"https://twemoji.maxcdn.com/2/72x72/1f5a8.png"},{"unicode":"⌨️","code":"keyboard","id":"257_keyboard","4x":"https://twemoji.maxcdn.com/2/72x72/2328.png"},{"unicode":"🖱️","code":"mouse-computer","id":"258_mouse-computer","4x":"https://twemoji.maxcdn.com/2/72x72/1f5b1.png"},{"unicode":"💽","code":"computer-disk","id":"259_computer-disk","4x":"https://twemoji.maxcdn.com/2/72x72/1f4bd.png"},{"unicode":"💾","code":"floppy-disk","id":"260_floppy-disk","4x":"https://twemoji.maxcdn.com/2/72x72/1f4be.png"},{"unicode":"📀","code":"blu-ray","id":"261_blu-ray","4x":"https://twemoji.maxcdn.com/2/72x72/1f4c0.png"},{"unicode":"🧮","code":"calculation","id":"262_calculation","4x":"https://twemoji.maxcdn.com/2/72x72/1f9ee.png"},{"unicode":"🎥","code":"camera","id":"263_camera","4x":"https://twemoji.maxcdn.com/2/72x72/1f3a5.png"},{"unicode":"🎞️","code":"cinema","id":"264_cinema","4x":"https://twemoji.maxcdn.com/2/72x72/1f39e.png"},{"unicode":"📽️","code":"cinema2","id":"265_cinema2","4x":"https://twemoji.maxcdn.com/2/72x72/1f4fd.png"},{"unicode":"📸","code":"camera-flash","id":"266_camera-flash","4x":"https://twemoji.maxcdn.com/2/72x72/1f4f8.png"},{"unicode":"📼","code":"vhs-tape","id":"267_vhs-tape","4x":"https://twemoji.maxcdn.com/2/72x72/1f4fc.png"},{"unicode":"🔎","code":"magnifying","id":"268_magnifying","4x":"https://twemoji.maxcdn.com/2/72x72/1f50e.png"},{"unicode":"🕯️","code":"light","id":"269_light","4x":"https://twemoji.maxcdn.com/2/72x72/1f56f.png"},{"unicode":"💡","code":"bulb","id":"270_bulb","4x":"https://twemoji.maxcdn.com/2/72x72/1f4a1.png"},{"unicode":"🔦","code":"electric-torch","id":"271_electric-torch","4x":"https://twemoji.maxcdn.com/2/72x72/1f526.png"},{"unicode":"📒","code":"notebook","id":"272_notebook","4x":"https://twemoji.maxcdn.com/2/72x72/1f4d2.png"},{"unicode":"📃","code":"note","id":"273_note","4x":"https://twemoji.maxcdn.com/2/72x72/1f4c3.png"},{"unicode":"📰","code":"newspaper","id":"274_newspaper","4x":"https://twemoji.maxcdn.com/2/72x72/1f4f0.png"},{"unicode":"🗞️","code":"newspaper-rolled","id":"275_newspaper-rolled","4x":"https://twemoji.maxcdn.com/2/72x72/1f5de.png"},{"unicode":"💴","code":"money-rolled","id":"276_money-rolled","4x":"https://twemoji.maxcdn.com/2/72x72/1f4b4.png"},{"unicode":"💲","code":"dollar-sign","id":"277_dollar-sign","4x":"https://twemoji.maxcdn.com/2/72x72/1f4b2.png"},{"unicode":"✉️","code":"email","id":"278_email","4x":"https://twemoji.maxcdn.com/2/72x72/2709.png"},{"unicode":"✏️","code":"pencil","id":"279_pencil","4x":"https://twemoji.maxcdn.com/2/72x72/270f.png"},{"unicode":"✒️","code":"pen","id":"280_pen","4x":"https://twemoji.maxcdn.com/2/72x72/2712.png"},{"unicode":"📝","code":"note-pencil","id":"281_note-pencil","4x":"https://twemoji.maxcdn.com/2/72x72/1f4dd.png"},{"unicode":"💼","code":"briefcase","id":"282_briefcase","4x":"https://twemoji.maxcdn.com/2/72x72/1f4bc.png"},{"unicode":"🗓️","code":"calendar","id":"283_calendar","4x":"https://twemoji.maxcdn.com/2/72x72/1f5d3.png"},{"unicode":"📌","code":"pin","id":"284_pin","4x":"https://twemoji.maxcdn.com/2/72x72/1f4cc.png"},{"unicode":"📍","code":"pin2","id":"285_pin2","4x":"https://twemoji.maxcdn.com/2/72x72/1f4cd.png"},{"unicode":"📎","code":"paperclip","id":"286_paperclip","4x":"https://twemoji.maxcdn.com/2/72x72/1f4ce.png"},{"unicode":"📏","code":"ruler","id":"287_ruler","4x":"https://twemoji.maxcdn.com/2/72x72/1f4cf.png"},{"unicode":"📐","code":"ruler2","id":"288_ruler2","4x":"https://twemoji.maxcdn.com/2/72x72/1f4d0.png"},{"unicode":"✂️","code":"cutting","id":"289_cutting","4x":"https://twemoji.maxcdn.com/2/72x72/2702.png"},{"unicode":"🗑️","code":"wastebasket","id":"290_wastebasket","4x":"https://twemoji.maxcdn.com/2/72x72/1f5d1.png"},{"unicode":"🔑","code":"key","id":"291_key","4x":"https://twemoji.maxcdn.com/2/72x72/1f511.png"},{"unicode":"🗝️","code":"key-old","id":"292_key-old","4x":"https://twemoji.maxcdn.com/2/72x72/1f5dd.png"},{"unicode":"🔨","code":"hammer","id":"293_hammer","4x":"https://twemoji.maxcdn.com/2/72x72/1f528.png"},{"unicode":"⛏️","code":"pickaxe","id":"294_pickaxe","4x":"https://twemoji.maxcdn.com/2/72x72/26cf.png"},{"unicode":"⚒️","code":"hammer2","id":"295_hammer2","4x":"https://twemoji.maxcdn.com/2/72x72/2692.png"},{"unicode":"🛠️","code":"hammer-wrench","id":"296_hammer-wrench","4x":"https://twemoji.maxcdn.com/2/72x72/1f6e0.png"},{"unicode":"🗡️","code":"knife","id":"297_knife","4x":"https://twemoji.maxcdn.com/2/72x72/1f5e1.png"},{"unicode":"⚔️","code":"swords","id":"298_swords","4x":"https://twemoji.maxcdn.com/2/72x72/2694.png"},{"unicode":"🔫","code":"gun-tool","id":"299_gun-tool","4x":"https://twemoji.maxcdn.com/2/72x72/1f52b.png"},{"unicode":"🏹","code":"archer","id":"300_archer","4x":"https://twemoji.maxcdn.com/2/72x72/1f3f9.png"},{"unicode":"🛡️","code":"shield","id":"301_shield","4x":"https://twemoji.maxcdn.com/2/72x72/1f6e1.png"},{"unicode":"🔧","code":"spanner","id":"302_spanner","4x":"https://twemoji.maxcdn.com/2/72x72/1f527.png"},{"unicode":"🔩","code":"bolt","id":"303_bolt","4x":"https://twemoji.maxcdn.com/2/72x72/1f529.png"},{"unicode":"⚙️","code":"cog","id":"304_cog","4x":"https://twemoji.maxcdn.com/2/72x72/2699.png"},{"unicode":"⚖️","code":"balance","id":"305_balance","4x":"https://twemoji.maxcdn.com/2/72x72/2696.png"},{"unicode":"🔗","code":"link","id":"306_link","4x":"https://twemoji.maxcdn.com/2/72x72/1f517.png"},{"unicode":"🧲","code":"magnetic","id":"307_magnetic","4x":"https://twemoji.maxcdn.com/2/72x72/1f9f2.png"},{"unicode":"⚗️","code":"chemistry","id":"308_chemistry","4x":"https://twemoji.maxcdn.com/2/72x72/2697.png"},{"unicode":"🧪","code":"chemist","id":"309_chemist","4x":"https://twemoji.maxcdn.com/2/72x72/1f9ea.png"},{"unicode":"🧬","code":"gene","id":"310_gene","4x":"https://twemoji.maxcdn.com/2/72x72/1f9ec.png"},{"unicode":"🔬","code":"microscope","id":"311_microscope","4x":"https://twemoji.maxcdn.com/2/72x72/1f52c.png"},{"unicode":"🔭","code":"telescope","id":"312_telescope","4x":"https://twemoji.maxcdn.com/2/72x72/1f52d.png"},{"unicode":"📡","code":"antenna-dish","id":"313_antenna-dish","4x":"https://twemoji.maxcdn.com/2/72x72/1f4e1.png"},{"unicode":"💉","code":"medicine","id":"314_medicine","4x":"https://twemoji.maxcdn.com/2/72x72/1f489.png"},{"unicode":"💊","code":"medicine","id":"315_medicine","4x":"https://twemoji.maxcdn.com/2/72x72/1f48a.png"},{"unicode":"🚪","code":"door","id":"316_door","4x":"https://twemoji.maxcdn.com/2/72x72/1f6aa.png"},{"unicode":"🛏️","code":"hotel-bed","id":"317_hotel-bed","4x":"https://twemoji.maxcdn.com/2/72x72/1f6cf.png"},{"unicode":"🚽","code":"toilet","id":"318_toilet","4x":"https://twemoji.maxcdn.com/2/72x72/1f6bd.png"},{"unicode":"🚿","code":"shower","id":"319_shower","4x":"https://twemoji.maxcdn.com/2/72x72/1f6bf.png"},{"unicode":"🛁","code":"bath","id":"320_bath","4x":"https://twemoji.maxcdn.com/2/72x72/1f6c1.png"},{"unicode":"🧴","code":"lotion","id":"321_lotion","4x":"https://twemoji.maxcdn.com/2/72x72/1f9f4.png"},{"unicode":"🧷","code":"diaper","id":"322_diaper","4x":"https://twemoji.maxcdn.com/2/72x72/1f9f7.png"},{"unicode":"🧹","code":"sweeping","id":"323_sweeping","4x":"https://twemoji.maxcdn.com/2/72x72/1f9f9.png"},{"unicode":"🧺","code":"farming","id":"324_farming","4x":"https://twemoji.maxcdn.com/2/72x72/1f9fa.png"},{"unicode":"🧻","code":"toilet paper","id":"325_toilet paper","4x":"https://twemoji.maxcdn.com/2/72x72/1f9fb.png"},{"unicode":"🧯","code":"extinguisher","id":"326_extinguisher","4x":"https://twemoji.maxcdn.com/2/72x72/1f9ef.png"},{"unicode":"🛒","code":"shopping-cart","id":"327_shopping-cart","4x":"https://twemoji.maxcdn.com/2/72x72/1f6d2.png"},{"unicode":"🚬","code":"smoking","id":"328_smoking","4x":"https://twemoji.maxcdn.com/2/72x72/1f6ac.png"},{"unicode":"✔️","code":"check","id":"329_check","4x":"https://twemoji.maxcdn.com/2/72x72/2714.png"},{"unicode":"⚰️","code":"death","id":"330_death","4x":"https://twemoji.maxcdn.com/2/72x72/26b0.png"},{"unicode":"🗿","code":"statue-face","id":"331_statue-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f5ff.png"},{"unicode":"🐵","code":"monkey-face","id":"332_monkey-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f435.png"},{"unicode":"🐒","code":"monkey","id":"333_monkey","4x":"https://twemoji.maxcdn.com/2/72x72/1f412.png"},{"unicode":"🦍","code":"gorilla","id":"334_gorilla","4x":"https://twemoji.maxcdn.com/2/72x72/1f98d.png"},{"unicode":"🐶","code":"dog-face","id":"335_dog-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f436.png"},{"unicode":"🐩","code":"dog","id":"336_dog","4x":"https://twemoji.maxcdn.com/2/72x72/1f429.png"},{"unicode":"🐺","code":"face","id":"337_face","4x":"https://twemoji.maxcdn.com/2/72x72/1f43a.png"},{"unicode":"🦊","code":"face","id":"338_face","4x":"https://twemoji.maxcdn.com/2/72x72/1f98a.png"},{"unicode":"🦝","code":"curious","id":"339_curious","4x":"https://twemoji.maxcdn.com/2/72x72/1f99d.png"},{"unicode":"🐱","code":"cat","id":"340_cat","4x":"https://twemoji.maxcdn.com/2/72x72/1f431.png"},{"unicode":"🦁","code":"lion-face","id":"341_lion-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f981.png"},{"unicode":"🐯","code":"tiger-face","id":"342_tiger-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f42f.png"},{"unicode":"🐅","code":"tiger","id":"343_tiger","4x":"https://twemoji.maxcdn.com/2/72x72/1f405.png"},{"unicode":"🐆","code":"leopard","id":"344_leopard","4x":"https://twemoji.maxcdn.com/2/72x72/1f406.png"},{"unicode":"🐴","code":"horse-face","id":"345_horse-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f434.png"},{"unicode":"🐎","code":"racehorse","id":"346_racehorse","4x":"https://twemoji.maxcdn.com/2/72x72/1f40e.png"},{"unicode":"🦄","code":"unicorn-face","id":"347_unicorn-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f984.png"},{"unicode":"🦓","code":"zebra","id":"348_zebra","4x":"https://twemoji.maxcdn.com/2/72x72/1f993.png"},{"unicode":"🦌","code":"deer","id":"349_deer","4x":"https://twemoji.maxcdn.com/2/72x72/1f98c.png"},{"unicode":"🐮","code":"cow","id":"350_cow","4x":"https://twemoji.maxcdn.com/2/72x72/1f42e.png"},{"unicode":"🐂","code":"bull","id":"351_bull","4x":"https://twemoji.maxcdn.com/2/72x72/1f402.png"},{"unicode":"🐃","code":"buffalo","id":"352_buffalo","4x":"https://twemoji.maxcdn.com/2/72x72/1f403.png"},{"unicode":"🐄","code":"cow","id":"353_cow","4x":"https://twemoji.maxcdn.com/2/72x72/1f404.png"},{"unicode":"🐷","code":"pig-face","id":"354_pig-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f437.png"},{"unicode":"🐖","code":"sow","id":"355_sow","4x":"https://twemoji.maxcdn.com/2/72x72/1f416.png"},{"unicode":"🐗","code":"pig","id":"356_pig","4x":"https://twemoji.maxcdn.com/2/72x72/1f417.png"},{"unicode":"🐽","code":"pig-nose","id":"357_pig-nose","4x":"https://twemoji.maxcdn.com/2/72x72/1f43d.png"},{"unicode":"🐏","code":"aries","id":"358_aries","4x":"https://twemoji.maxcdn.com/2/72x72/1f40f.png"},{"unicode":"🐑","code":"sheep","id":"359_sheep","4x":"https://twemoji.maxcdn.com/2/72x72/1f411.png"},{"unicode":"🐐","code":"capricorn","id":"360_capricorn","4x":"https://twemoji.maxcdn.com/2/72x72/1f410.png"},{"unicode":"🐪","code":"dromedary","id":"361_dromedary","4x":"https://twemoji.maxcdn.com/2/72x72/1f42a.png"},{"unicode":"🐫","code":"camel","id":"362_camel","4x":"https://twemoji.maxcdn.com/2/72x72/1f42b.png"},{"unicode":"🦙","code":"alpaca","id":"363_alpaca","4x":"https://twemoji.maxcdn.com/2/72x72/1f999.png"},{"unicode":"🦒","code":"spots","id":"364_spots","4x":"https://twemoji.maxcdn.com/2/72x72/1f992.png"},{"unicode":"🐘","code":"elephant","id":"365_elephant","4x":"https://twemoji.maxcdn.com/2/72x72/1f418.png"},{"unicode":"🦏","code":"rhinoceros","id":"366_rhinoceros","4x":"https://twemoji.maxcdn.com/2/72x72/1f98f.png"},{"unicode":"🦛","code":"hippo","id":"367_hippo","4x":"https://twemoji.maxcdn.com/2/72x72/1f99b.png"},{"unicode":"🐭","code":"mouse-face","id":"368_mouse-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f42d.png"},{"unicode":"🐁","code":"mouse","id":"369_mouse","4x":"https://twemoji.maxcdn.com/2/72x72/1f401.png"},{"unicode":"🐀","code":"rat","id":"370_rat","4x":"https://twemoji.maxcdn.com/2/72x72/1f400.png"},{"unicode":"🐹","code":"pet-face","id":"371_pet-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f439.png"},{"unicode":"🐰","code":"bunny-face","id":"372_bunny-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f430.png"},{"unicode":"🐇","code":"bunny","id":"373_bunny","4x":"https://twemoji.maxcdn.com/2/72x72/1f407.png"},{"unicode":"🐿️","code":"squirrel","id":"374_squirrel","4x":"https://twemoji.maxcdn.com/2/72x72/1f43f.png"},{"unicode":"🦔","code":"spiny","id":"375_spiny","4x":"https://twemoji.maxcdn.com/2/72x72/1f994.png"},{"unicode":"🦇","code":"vampire","id":"376_vampire","4x":"https://twemoji.maxcdn.com/2/72x72/1f987.png"},{"unicode":"🐻","code":"face","id":"377_face","4x":"https://twemoji.maxcdn.com/2/72x72/1f43b.png"},{"unicode":"🐨","code":"bear","id":"378_bear","4x":"https://twemoji.maxcdn.com/2/72x72/1f428.png"},{"unicode":"🐼","code":"panda-face","id":"379_panda-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f43c.png"},{"unicode":"🦘","code":"marsupial","id":"380_marsupial","4x":"https://twemoji.maxcdn.com/2/72x72/1f998.png"},{"unicode":"🦡","code":"honey badger","id":"381_honey badger","4x":"https://twemoji.maxcdn.com/2/72x72/1f9a1.png"},{"unicode":"🐾","code":"paw","id":"382_paw","4x":"https://twemoji.maxcdn.com/2/72x72/1f43e.png"},{"unicode":"🦃","code":"bird","id":"383_bird","4x":"https://twemoji.maxcdn.com/2/72x72/1f983.png"},{"unicode":"🐔","code":"chicken","id":"384_chicken","4x":"https://twemoji.maxcdn.com/2/72x72/1f414.png"},{"unicode":"🐓","code":"rooster","id":"385_rooster","4x":"https://twemoji.maxcdn.com/2/72x72/1f413.png"},{"unicode":"🐣","code":"baby-bird","id":"386_baby-bird","4x":"https://twemoji.maxcdn.com/2/72x72/1f423.png"},{"unicode":"🐤","code":"baby-chick","id":"387_baby-chick","4x":"https://twemoji.maxcdn.com/2/72x72/1f424.png"},{"unicode":"🐥","code":"baby-chick2","id":"388_baby-chick2","4x":"https://twemoji.maxcdn.com/2/72x72/1f425.png"},{"unicode":"🐧","code":"penguin","id":"389_penguin","4x":"https://twemoji.maxcdn.com/2/72x72/1f427.png"},{"unicode":"🕊️","code":"bird-fly","id":"390_bird-fly","4x":"https://twemoji.maxcdn.com/2/72x72/1f54a.png"},{"unicode":"🦅","code":"eagle","id":"391_eagle","4x":"https://twemoji.maxcdn.com/2/72x72/1f985.png"},{"unicode":"🦆","code":"duck","id":"392_duck","4x":"https://twemoji.maxcdn.com/2/72x72/1f986.png"},{"unicode":"🦢","code":"swan","id":"393_swan","4x":"https://twemoji.maxcdn.com/2/72x72/1f9a2.png"},{"unicode":"🦉","code":"owl","id":"394_owl","4x":"https://twemoji.maxcdn.com/2/72x72/1f989.png"},{"unicode":"🦚","code":"peahen","id":"395_peahen","4x":"https://twemoji.maxcdn.com/2/72x72/1f99a.png"},{"unicode":"🦜","code":"macaw","id":"396_macaw","4x":"https://twemoji.maxcdn.com/2/72x72/1f99c.png"},{"unicode":"🐸","code":"frog-face","id":"397_frog-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f438.png"},{"unicode":"🐊","code":"crocodile","id":"398_crocodile","4x":"https://twemoji.maxcdn.com/2/72x72/1f40a.png"},{"unicode":"🐢","code":"turtle","id":"399_turtle","4x":"https://twemoji.maxcdn.com/2/72x72/1f422.png"},{"unicode":"🦎","code":"reptile","id":"400_reptile","4x":"https://twemoji.maxcdn.com/2/72x72/1f98e.png"},{"unicode":"🐍","code":"snake","id":"401_snake","4x":"https://twemoji.maxcdn.com/2/72x72/1f40d.png"},{"unicode":"🐲","code":"dragon-face","id":"402_dragon-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f432.png"},{"unicode":"🐉","code":"dragon","id":"403_dragon","4x":"https://twemoji.maxcdn.com/2/72x72/1f409.png"},{"unicode":"🦕","code":"brontosaurus","id":"404_brontosaurus","4x":"https://twemoji.maxcdn.com/2/72x72/1f995.png"},{"unicode":"🦖","code":"t-rex","id":"405_t-rex","4x":"https://twemoji.maxcdn.com/2/72x72/1f996.png"},{"unicode":"🐳","code":"whale","id":"406_whale","4x":"https://twemoji.maxcdn.com/2/72x72/1f433.png"},{"unicode":"🐋","code":"whale2","id":"407_whale2","4x":"https://twemoji.maxcdn.com/2/72x72/1f40b.png"},{"unicode":"🐬","code":"flipper","id":"408_flipper","4x":"https://twemoji.maxcdn.com/2/72x72/1f42c.png"},{"unicode":"🐠","code":"tropical-fish","id":"409_tropical-fish","4x":"https://twemoji.maxcdn.com/2/72x72/1f420.png"},{"unicode":"🐡","code":"fish","id":"410_fish","4x":"https://twemoji.maxcdn.com/2/72x72/1f421.png"},{"unicode":"🦈","code":"shark","id":"411_shark","4x":"https://twemoji.maxcdn.com/2/72x72/1f988.png"},{"unicode":"🐙","code":"octopus","id":"412_octopus","4x":"https://twemoji.maxcdn.com/2/72x72/1f419.png"},{"unicode":"🐚","code":"shell","id":"413_shell","4x":"https://twemoji.maxcdn.com/2/72x72/1f41a.png"},{"unicode":"🐌","code":"snail","id":"414_snail","4x":"https://twemoji.maxcdn.com/2/72x72/1f40c.png"},{"unicode":"🦋","code":"butterfly","id":"415_butterfly","4x":"https://twemoji.maxcdn.com/2/72x72/1f98b.png"},{"unicode":"🐛","code":"insect","id":"416_insect","4x":"https://twemoji.maxcdn.com/2/72x72/1f41b.png"},{"unicode":"🐜","code":"insect","id":"417_insect","4x":"https://twemoji.maxcdn.com/2/72x72/1f41c.png"},{"unicode":"🐝","code":"bee","id":"418_bee","4x":"https://twemoji.maxcdn.com/2/72x72/1f41d.png"},{"unicode":"🐞","code":"ladybug","id":"419_ladybug","4x":"https://twemoji.maxcdn.com/2/72x72/1f41e.png"},{"unicode":"🦗","code":"grasshopper","id":"420_grasshopper","4x":"https://twemoji.maxcdn.com/2/72x72/1f997.png"},{"unicode":"🕷️","code":"insect","id":"421_insect","4x":"https://twemoji.maxcdn.com/2/72x72/1f577.png"},{"unicode":"🕸️","code":"spider-web","id":"422_spider-web","4x":"https://twemoji.maxcdn.com/2/72x72/1f578.png"},{"unicode":"🦂","code":"scorpio","id":"423_scorpio","4x":"https://twemoji.maxcdn.com/2/72x72/1f982.png"},{"unicode":"🦟","code":"mosquito","id":"424_mosquito","4x":"https://twemoji.maxcdn.com/2/72x72/1f99f.png"},{"unicode":"🦠","code":"amoeba","id":"425_amoeba","4x":"https://twemoji.maxcdn.com/2/72x72/1f9a0.png"},{"unicode":"💐","code":"flower","id":"426_flower","4x":"https://twemoji.maxcdn.com/2/72x72/1f490.png"},{"unicode":"🌸","code":"blossom","id":"427_blossom","4x":"https://twemoji.maxcdn.com/2/72x72/1f338.png"},{"unicode":"🌹","code":"flower","id":"428_flower","4x":"https://twemoji.maxcdn.com/2/72x72/1f339.png"},{"unicode":"🥀","code":"flower-wilted","id":"429_flower-wilted","4x":"https://twemoji.maxcdn.com/2/72x72/1f940.png"},{"unicode":"🌺","code":"flower2","id":"430_flower2","4x":"https://twemoji.maxcdn.com/2/72x72/1f33a.png"},{"unicode":"🌻","code":"sun-flower","id":"431_sun-flower","4x":"https://twemoji.maxcdn.com/2/72x72/1f33b.png"},{"unicode":"🌼","code":"flower3","id":"432_flower3","4x":"https://twemoji.maxcdn.com/2/72x72/1f33c.png"},{"unicode":"🌷","code":"flower4","id":"433_flower4","4x":"https://twemoji.maxcdn.com/2/72x72/1f337.png"},{"unicode":"🌱","code":"young-tree","id":"434_young-tree","4x":"https://twemoji.maxcdn.com/2/72x72/1f331.png"},{"unicode":"🌲","code":"tree","id":"435_tree","4x":"https://twemoji.maxcdn.com/2/72x72/1f332.png"},{"unicode":"🌳","code":"big-tree","id":"436_big-tree","4x":"https://twemoji.maxcdn.com/2/72x72/1f333.png"},{"unicode":"🌵","code":"plant","id":"437_plant","4x":"https://twemoji.maxcdn.com/2/72x72/1f335.png"},{"unicode":"🌿","code":"leaf","id":"438_leaf","4x":"https://twemoji.maxcdn.com/2/72x72/1f33f.png"},{"unicode":"☘️","code":"three-leaf clover","id":"439_three-leaf clover","4x":"https://twemoji.maxcdn.com/2/72x72/2618.png"},{"unicode":"🍀","code":"four-leaf clover","id":"440_four-leaf clover","4x":"https://twemoji.maxcdn.com/2/72x72/1f340.png"},{"unicode":"🍁","code":"falling-leaf","id":"441_falling-leaf","4x":"https://twemoji.maxcdn.com/2/72x72/1f341.png"},{"unicode":"🏁","code":"checkered","id":"442_checkered","4x":"https://twemoji.maxcdn.com/2/72x72/1f3c1.png"},{"unicode":"🚩","code":"post","id":"443_post","4x":"https://twemoji.maxcdn.com/2/72x72/1f6a9.png"},{"unicode":"🎌","code":"japanese-celebration","id":"444_japanese-celebration","4x":"https://twemoji.maxcdn.com/2/72x72/1f38c.png"},{"unicode":"🏴","code":"flag-black","id":"445_flag-black","4x":"https://twemoji.maxcdn.com/2/72x72/1f3f4.png"},{"unicode":"🏳️","code":"flag-white","id":"446_flag-white","4x":"https://twemoji.maxcdn.com/2/72x72/1f3f3.png"},{"unicode":"🏳️‍🌈","code":"flag-pride","id":"447_flag-pride","4x":"https://twemoji.maxcdn.com/2/72x72/1f3f3-fe0f-200d-1f308.png"},{"unicode":"🏴‍☠️","code":"flag-pirate","id":"448_flag-pirate","4x":"https://twemoji.maxcdn.com/2/72x72/1f3f4-200d-2620-fe0f.png"},{"unicode":"🇦🇷","code":"AR","id":"449_AR","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e6-1f1f7.png"},{"unicode":"🇦🇺","code":"AU","id":"450_AU","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e6-1f1fa.png"},{"unicode":"🇧🇬","code":"BG","id":"451_BG","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e7-1f1ec.png"},{"unicode":"🇧🇷","code":"BR","id":"452_BR","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e7-1f1f7.png"},{"unicode":"🇨🇦","code":"CA","id":"453_CA","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e8-1f1e6.png"},{"unicode":"🇨🇳","code":"CN","id":"454_CN","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e8-1f1f3.png"},{"unicode":"🇨🇿","code":"CZ","id":"455_CZ","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e8-1f1ff.png"},{"unicode":"🇩🇪","code":"DE","id":"456_DE","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e9-1f1ea.png"},{"unicode":"🇩🇰","code":"DK","id":"457_DK","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e9-1f1f0.png"},{"unicode":"🇩🇲","code":"DM","id":"458_DM","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e9-1f1f2.png"},{"unicode":"🇩🇴","code":"DO","id":"459_DO","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e9-1f1f4.png"},{"unicode":"🇩🇿","code":"DZ","id":"460_DZ","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e9-1f1ff.png"},{"unicode":"🇪🇦","code":"EA","id":"461_EA","4x":"https://twemoji.maxcdn.com/2/72x72/1f1ea-1f1e6.png"},{"unicode":"🇪🇨","code":"EC","id":"462_EC","4x":"https://twemoji.maxcdn.com/2/72x72/1f1ea-1f1e8.png"},{"unicode":"🇪🇸","code":"ES","id":"463_ES","4x":"https://twemoji.maxcdn.com/2/72x72/1f1ea-1f1f8.png"},{"unicode":"🇫🇮","code":"FI","id":"464_FI","4x":"https://twemoji.maxcdn.com/2/72x72/1f1eb-1f1ee.png"},{"unicode":"🇫🇷","code":"FR","id":"465_FR","4x":"https://twemoji.maxcdn.com/2/72x72/1f1eb-1f1f7.png"},{"unicode":"🇬🇧","code":"GB","id":"466_GB","4x":"https://twemoji.maxcdn.com/2/72x72/1f1ec-1f1e7.png"},{"unicode":"🇭🇰","code":"HK","id":"467_HK","4x":"https://twemoji.maxcdn.com/2/72x72/1f1ed-1f1f0.png"},{"unicode":"🇮🇱","code":"IL","id":"468_IL","4x":"https://twemoji.maxcdn.com/2/72x72/1f1ee-1f1f1.png"},{"unicode":"🇮🇹","code":"IT","id":"469_IT","4x":"https://twemoji.maxcdn.com/2/72x72/1f1ee-1f1f9.png"},{"unicode":"🇯🇵","code":"JA","id":"470_JA","4x":"https://twemoji.maxcdn.com/2/72x72/1f1ef-1f1f5.png"},{"unicode":"🇰🇵","code":"KP","id":"471_KP","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f0-1f1f5.png"},{"unicode":"🇰🇷","code":"KR","id":"472_KR","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f0-1f1f7.png"},{"unicode":"🇳🇱","code":"NL","id":"473_NL","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f3-1f1f1.png"},{"unicode":"🇳🇴","code":"NO","id":"474_NO","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f3-1f1f4.png"},{"unicode":"🇵🇱","code":"PL","id":"475_PL","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f5-1f1f1.png"},{"unicode":"🇵🇹","code":"PT","id":"476_PT","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f5-1f1f9.png"},{"unicode":"🇷🇴","code":"RO","id":"477_RO","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f7-1f1f4.png"},{"unicode":"🇷🇺","code":"RU","id":"478_RU","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f7-1f1fa.png"},{"unicode":"🇸🇰","code":"SK","id":"479_SK","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f8-1f1f0.png"},{"unicode":"🇸🇻","code":"SV","id":"480_SV","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f8-1f1fb.png"},{"unicode":"🇹🇭","code":"TH","id":"481_TH","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f9-1f1ed.png"},{"unicode":"🇹🇷","code":"TR","id":"482_TR","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f9-1f1f7.png"},{"unicode":"🇻🇮","code":"VI","id":"483_VI","4x":"https://twemoji.maxcdn.com/2/72x72/1f1fb-1f1ee.png"}]'; //Spacing for release maker not trow erros from jshint
-    var IMG_404_GAME = "data:image/png;base64,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";
+    var emojis_string =
+        '[{"unicode":"😀","code":"grin","id":"0_grin","4x":"https://twemoji.maxcdn.com/2/72x72/1f600.png"},{"unicode":"😃","code":"smile","id":"1_smile","4x":"https://twemoji.maxcdn.com/2/72x72/1f603.png"},{"unicode":"😄","code":"smile2","id":"2_smile2","4x":"https://twemoji.maxcdn.com/2/72x72/1f604.png"},{"unicode":"😁","code":"smile3","id":"3_smile3","4x":"https://twemoji.maxcdn.com/2/72x72/1f601.png"},{"unicode":"😆","code":"satisfied","id":"4_satisfied","4x":"https://twemoji.maxcdn.com/2/72x72/1f606.png"},{"unicode":"😅","code":"sweat","id":"5_sweat","4x":"https://twemoji.maxcdn.com/2/72x72/1f605.png"},{"unicode":"🤣","code":"rolling","id":"6_rolling","4x":"https://twemoji.maxcdn.com/2/72x72/1f923.png"},{"unicode":"😂","code":"tear","id":"7_tear","4x":"https://twemoji.maxcdn.com/2/72x72/1f602.png"},{"unicode":"🙂","code":"smile4","id":"8_smile4","4x":"https://twemoji.maxcdn.com/2/72x72/1f642.png"},{"unicode":"🙃","code":"smile-upside-down","id":"9_smile-upside-down","4x":"https://twemoji.maxcdn.com/2/72x72/1f643.png"},{"unicode":"😉","code":"wink","id":"10_wink","4x":"https://twemoji.maxcdn.com/2/72x72/1f609.png"},{"unicode":"😊","code":"smile-blush","id":"11_smile-blush","4x":"https://twemoji.maxcdn.com/2/72x72/1f60a.png"},{"unicode":"😇","code":"angel","id":"12_angel","4x":"https://twemoji.maxcdn.com/2/72x72/1f607.png"},{"unicode":"🥰","code":"adore","id":"13_adore","4x":"https://twemoji.maxcdn.com/2/72x72/1f970.png"},{"unicode":"😍","code":"smile-love","id":"14_smile-love","4x":"https://twemoji.maxcdn.com/2/72x72/1f60d.png"},{"unicode":"🤩","code":"smile-star","id":"15_smile-star","4x":"https://twemoji.maxcdn.com/2/72x72/1f929.png"},{"unicode":"😘","code":"kiss","id":"16_kiss","4x":"https://twemoji.maxcdn.com/2/72x72/1f618.png"},{"unicode":"😗","code":"kiss2","id":"17_kiss2","4x":"https://twemoji.maxcdn.com/2/72x72/1f617.png"},{"unicode":"☺️","code":"relaxed","id":"18_relaxed","4x":"https://twemoji.maxcdn.com/2/72x72/263a.png"},{"unicode":"😚","code":"kiss3","id":"19_kiss3","4x":"https://twemoji.maxcdn.com/2/72x72/1f61a.png"},{"unicode":"😙","code":"kis4","id":"20_kis4","4x":"https://twemoji.maxcdn.com/2/72x72/1f619.png"},{"unicode":"😋","code":"delicious","id":"21_delicious","4x":"https://twemoji.maxcdn.com/2/72x72/1f60b.png"},{"unicode":"😛","code":"tongue","id":"22_tongue","4x":"https://twemoji.maxcdn.com/2/72x72/1f61b.png"},{"unicode":"😜","code":"tongue-wink","id":"23_tongue-wink","4x":"https://twemoji.maxcdn.com/2/72x72/1f61c.png"},{"unicode":"🤪","code":"goofy","id":"24_goofy","4x":"https://twemoji.maxcdn.com/2/72x72/1f92a.png"},{"unicode":"😝","code":"tongue-><","id":"25_tongue-><","4x":"https://twemoji.maxcdn.com/2/72x72/1f61d.png"},{"unicode":"🤑","code":"face-money","id":"26_face-money","4x":"https://twemoji.maxcdn.com/2/72x72/1f911.png"},{"unicode":"🤗","code":"hugging","id":"27_hugging","4x":"https://twemoji.maxcdn.com/2/72x72/1f917.png"},{"unicode":"🤭","code":"whoops","id":"28_whoops","4x":"https://twemoji.maxcdn.com/2/72x72/1f92d.png"},{"unicode":"🤫","code":"quiet","id":"29_quiet","4x":"https://twemoji.maxcdn.com/2/72x72/1f92b.png"},{"unicode":"🤔","code":"thinking","id":"30_thinking","4x":"https://twemoji.maxcdn.com/2/72x72/1f914.png"},{"unicode":"🤐","code":"zipper","id":"31_zipper","4x":"https://twemoji.maxcdn.com/2/72x72/1f910.png"},{"unicode":"🤨","code":"skeptic","id":"32_skeptic","4x":"https://twemoji.maxcdn.com/2/72x72/1f928.png"},{"unicode":"😑","code":"unexpressive","id":"33_unexpressive","4x":"https://twemoji.maxcdn.com/2/72x72/1f611.png"},{"unicode":"😶","code":"silent","id":"34_silent","4x":"https://twemoji.maxcdn.com/2/72x72/1f636.png"},{"unicode":"😏","code":"smirk","id":"35_smirk","4x":"https://twemoji.maxcdn.com/2/72x72/1f60f.png"},{"unicode":"😒","code":"unhappy","id":"36_unhappy","4x":"https://twemoji.maxcdn.com/2/72x72/1f612.png"},{"unicode":"🙄","code":"eyeroll","id":"37_eyeroll","4x":"https://twemoji.maxcdn.com/2/72x72/1f644.png"},{"unicode":"😬","code":"grimace","id":"38_grimace","4x":"https://twemoji.maxcdn.com/2/72x72/1f62c.png"},{"unicode":"🤥","code":"pinocchio","id":"39_pinocchio","4x":"https://twemoji.maxcdn.com/2/72x72/1f925.png"},{"unicode":"😌","code":"relieved","id":"40_relieved","4x":"https://twemoji.maxcdn.com/2/72x72/1f60c.png"},{"unicode":"😔","code":"pensive","id":"41_pensive","4x":"https://twemoji.maxcdn.com/2/72x72/1f614.png"},{"unicode":"😪","code":"sleep","id":"42_sleep","4x":"https://twemoji.maxcdn.com/2/72x72/1f62a.png"},{"unicode":"🤤","code":"drooling-face","id":"43_drooling-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f924.png"},{"unicode":"😴","code":"sleep-face","id":"44_sleep-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f634.png"},{"unicode":"😷","code":"cold-face","id":"45_cold-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f637.png"},{"unicode":"🤒","code":"sick-face","id":"46_sick-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f912.png"},{"unicode":"🤕","code":"bandage-face","id":"47_bandage-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f915.png"},{"unicode":"🤢","code":"nauseated-face","id":"48_nauseated-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f922.png"},{"unicode":"🤮","code":"sick-face","id":"49_sick-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f92e.png"},{"unicode":"🤧","code":"sneeze","id":"50_sneeze","4x":"https://twemoji.maxcdn.com/2/72x72/1f927.png"},{"unicode":"🥵","code":"feverish","id":"51_feverish","4x":"https://twemoji.maxcdn.com/2/72x72/1f975.png"},{"unicode":"🥶","code":"blue-faced","id":"52_blue-faced","4x":"https://twemoji.maxcdn.com/2/72x72/1f976.png"},{"unicode":"🥴","code":"intoxicated","id":"53_intoxicated","4x":"https://twemoji.maxcdn.com/2/72x72/1f974.png"},{"unicode":"😵","code":"dizzy","id":"54_dizzy","4x":"https://twemoji.maxcdn.com/2/72x72/1f635.png"},{"unicode":"🤯","code":"mind blown","id":"55_mind blown","4x":"https://twemoji.maxcdn.com/2/72x72/1f92f.png"},{"unicode":"🤠","code":"cowboy","id":"56_cowboy","4x":"https://twemoji.maxcdn.com/2/72x72/1f920.png"},{"unicode":"🥳","code":"celebration","id":"57_celebration","4x":"https://twemoji.maxcdn.com/2/72x72/1f973.png"},{"unicode":"😎","code":"cool-face","id":"58_cool-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f60e.png"},{"unicode":"🤓","code":"cool","id":"59_cool","4x":"https://twemoji.maxcdn.com/2/72x72/1f913.png"},{"unicode":"🧐","code":"stuffy","id":"60_stuffy","4x":"https://twemoji.maxcdn.com/2/72x72/1f9d0.png"},{"unicode":"😕","code":"confused","id":"61_confused","4x":"https://twemoji.maxcdn.com/2/72x72/1f615.png"},{"unicode":"😟","code":"worried","id":"62_worried","4x":"https://twemoji.maxcdn.com/2/72x72/1f61f.png"},{"unicode":"🙁","code":"frown","id":"63_frown","4x":"https://twemoji.maxcdn.com/2/72x72/1f641.png"},{"unicode":"☹️","code":"frown","id":"64_frown","4x":"https://twemoji.maxcdn.com/2/72x72/2639.png"},{"unicode":"😮","code":"mouth-open","id":"65_mouth-open","4x":"https://twemoji.maxcdn.com/2/72x72/1f62e.png"},{"unicode":"😯","code":"surprised","id":"66_surprised","4x":"https://twemoji.maxcdn.com/2/72x72/1f62f.png"},{"unicode":"😲","code":"astonished","id":"67_astonished","4x":"https://twemoji.maxcdn.com/2/72x72/1f632.png"},{"unicode":"😳","code":"dazed","id":"68_dazed","4x":"https://twemoji.maxcdn.com/2/72x72/1f633.png"},{"unicode":"🥺","code":"puppy eyes","id":"69_puppy eyes","4x":"https://twemoji.maxcdn.com/2/72x72/1f97a.png"},{"unicode":"😦","code":"frown","id":"70_frown","4x":"https://twemoji.maxcdn.com/2/72x72/1f626.png"},{"unicode":"😧","code":"anguished","id":"71_anguished","4x":"https://twemoji.maxcdn.com/2/72x72/1f627.png"},{"unicode":"😨","code":"fearful","id":"72_fearful","4x":"https://twemoji.maxcdn.com/2/72x72/1f628.png"},{"unicode":"😰","code":"fearful2","id":"73_fearful2","4x":"https://twemoji.maxcdn.com/2/72x72/1f630.png"},{"unicode":"😥","code":"disappointed","id":"74_disappointed","4x":"https://twemoji.maxcdn.com/2/72x72/1f625.png"},{"unicode":"😢","code":"cry-face","id":"75_cry-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f622.png"},{"unicode":"😭","code":"cry-face2","id":"76_cry-face2","4x":"https://twemoji.maxcdn.com/2/72x72/1f62d.png"},{"unicode":"😱","code":"fear-face","id":"77_fear-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f631.png"},{"unicode":"😖","code":"confounded","id":"78_confounded","4x":"https://twemoji.maxcdn.com/2/72x72/1f616.png"},{"unicode":"😣","code":"persevere","id":"79_persevere","4x":"https://twemoji.maxcdn.com/2/72x72/1f623.png"},{"unicode":"😞","code":"disappointed","id":"80_disappointed","4x":"https://twemoji.maxcdn.com/2/72x72/1f61e.png"},{"unicode":"😓","code":"cold","id":"81_cold","4x":"https://twemoji.maxcdn.com/2/72x72/1f613.png"},{"unicode":"😩","code":"weary","id":"82_weary","4x":"https://twemoji.maxcdn.com/2/72x72/1f629.png"},{"unicode":"😫","code":"tired","id":"83_tired","4x":"https://twemoji.maxcdn.com/2/72x72/1f62b.png"},{"unicode":"😤","code":"triumph","id":"84_triumph","4x":"https://twemoji.maxcdn.com/2/72x72/1f624.png"},{"unicode":"😡","code":"angry","id":"85_angry","4x":"https://twemoji.maxcdn.com/2/72x72/1f621.png"},{"unicode":"😠","code":"mad","id":"86_mad","4x":"https://twemoji.maxcdn.com/2/72x72/1f620.png"},{"unicode":"🤬","code":"swearing","id":"87_swearing","4x":"https://twemoji.maxcdn.com/2/72x72/1f92c.png"},{"unicode":"😈","code":"devil","id":"88_devil","4x":"https://twemoji.maxcdn.com/2/72x72/1f608.png"},{"unicode":"👿","code":"demon","id":"89_demon","4x":"https://twemoji.maxcdn.com/2/72x72/1f47f.png"},{"unicode":"💀","code":"death","id":"90_death","4x":"https://twemoji.maxcdn.com/2/72x72/1f480.png"},{"unicode":"☠️","code":"crossbones","id":"91_crossbones","4x":"https://twemoji.maxcdn.com/2/72x72/2620.png"},{"unicode":"💩","code":"poop","id":"92_poop","4x":"https://twemoji.maxcdn.com/2/72x72/1f4a9.png"},{"unicode":"🤡","code":"clown","id":"93_clown","4x":"https://twemoji.maxcdn.com/2/72x72/1f921.png"},{"unicode":"👹","code":"creature","id":"94_creature","4x":"https://twemoji.maxcdn.com/2/72x72/1f479.png"},{"unicode":"👺","code":"creature2","id":"95_creature2","4x":"https://twemoji.maxcdn.com/2/72x72/1f47a.png"},{"unicode":"👻","code":"ghost","id":"96_ghost","4x":"https://twemoji.maxcdn.com/2/72x72/1f47b.png"},{"unicode":"👾","code":"alien","id":"97_alien","4x":"https://twemoji.maxcdn.com/2/72x72/1f47e.png"},{"unicode":"🤖","code":"robot","id":"98_robot","4x":"https://twemoji.maxcdn.com/2/72x72/1f916.png"},{"unicode":"😺","code":"cat-face","id":"99_cat-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f63a.png"},{"unicode":"😸","code":"cat-smile","id":"100_cat-smile","4x":"https://twemoji.maxcdn.com/2/72x72/1f638.png"},{"unicode":"😹","code":"cat-tear","id":"101_cat-tear","4x":"https://twemoji.maxcdn.com/2/72x72/1f639.png"},{"unicode":"😻","code":"cat-heart","id":"102_cat-heart","4x":"https://twemoji.maxcdn.com/2/72x72/1f63b.png"},{"unicode":"😼","code":"cat-ironic","id":"103_cat-ironic","4x":"https://twemoji.maxcdn.com/2/72x72/1f63c.png"},{"unicode":"😽","code":"cat-kiss","id":"104_cat-kiss","4x":"https://twemoji.maxcdn.com/2/72x72/1f63d.png"},{"unicode":"🙀","code":"cat-surprised","id":"105_cat-surprised","4x":"https://twemoji.maxcdn.com/2/72x72/1f640.png"},{"unicode":"😿","code":"cat-sad","id":"106_cat-sad","4x":"https://twemoji.maxcdn.com/2/72x72/1f63f.png"},{"unicode":"😾","code":"cat-pouting","id":"107_cat-pouting","4x":"https://twemoji.maxcdn.com/2/72x72/1f63e.png"},{"unicode":"👋","code":"hand-wave","id":"108_hand-wave","4x":"https://twemoji.maxcdn.com/2/72x72/1f44b.png"},{"unicode":"🤚","code":"backhand","id":"109_backhand","4x":"https://twemoji.maxcdn.com/2/72x72/1f91a.png"},{"unicode":"🖐️","code":"hand-open-finger","id":"110_hand-open-finger","4x":"https://twemoji.maxcdn.com/2/72x72/1f590.png"},{"unicode":"✋","code":"hand","id":"111_hand","4x":"https://twemoji.maxcdn.com/2/72x72/270b.png"},{"unicode":"🖖","code":"hand-vulcan","id":"112_hand-vulcan","4x":"https://twemoji.maxcdn.com/2/72x72/1f596.png"},{"unicode":"👌","code":"hand-ok","id":"113_hand-ok","4x":"https://twemoji.maxcdn.com/2/72x72/1f44c.png"},{"unicode":"✌️","code":"hand-v","id":"114_hand-v","4x":"https://twemoji.maxcdn.com/2/72x72/270c.png"},{"unicode":"🤞","code":"hand-cross","id":"115_hand-cross","4x":"https://twemoji.maxcdn.com/2/72x72/1f91e.png"},{"unicode":"🤟","code":"hand-ily","id":"116_hand-ily","4x":"https://twemoji.maxcdn.com/2/72x72/1f91f.png"},{"unicode":"🤘","code":"hand-horns","id":"117_hand-horns","4x":"https://twemoji.maxcdn.com/2/72x72/1f918.png"},{"unicode":"🤙","code":"hand-call","id":"118_hand-call","4x":"https://twemoji.maxcdn.com/2/72x72/1f919.png"},{"unicode":"🖕","code":"hand-finger","id":"119_hand-finger","4x":"https://twemoji.maxcdn.com/2/72x72/1f595.png"},{"unicode":"👈","code":"hand-point","id":"120_hand-point","4x":"https://twemoji.maxcdn.com/2/72x72/1f448.png"},{"unicode":"👇","code":"hand-poin2","id":"121_hand-poin2","4x":"https://twemoji.maxcdn.com/2/72x72/1f447.png"},{"unicode":"☝️","code":"hand-point3","id":"122_hand-point3","4x":"https://twemoji.maxcdn.com/2/72x72/261d.png"},{"unicode":"👍","code":"hand-thumb-up","id":"123_hand-thumb-up","4x":"https://twemoji.maxcdn.com/2/72x72/1f44d.png"},{"unicode":"👎","code":"hand-thumb-down","id":"124_hand-thumb-down","4x":"https://twemoji.maxcdn.com/2/72x72/1f44e.png"},{"unicode":"✊","code":"hand-punch","id":"125_hand-punch","4x":"https://twemoji.maxcdn.com/2/72x72/270a.png"},{"unicode":"👊","code":"hand-punch2","id":"126_hand-punch2","4x":"https://twemoji.maxcdn.com/2/72x72/1f44a.png"},{"unicode":"🤛","code":"hand-punch3","id":"127_hand-punch3","4x":"https://twemoji.maxcdn.com/2/72x72/1f91b.png"},{"unicode":"🤜","code":"hand-punch4","id":"128_hand-punch4","4x":"https://twemoji.maxcdn.com/2/72x72/1f91c.png"},{"unicode":"👏","code":"hand-clap","id":"129_hand-clap","4x":"https://twemoji.maxcdn.com/2/72x72/1f44f.png"},{"unicode":"🙌","code":"hand-celebration","id":"130_hand-celebration","4x":"https://twemoji.maxcdn.com/2/72x72/1f64c.png"},{"unicode":"👐","code":"hand-open","id":"131_hand-open","4x":"https://twemoji.maxcdn.com/2/72x72/1f450.png"},{"unicode":"🤲","code":"hand-prayer","id":"132_hand-prayer","4x":"https://twemoji.maxcdn.com/2/72x72/1f932.png"},{"unicode":"🤝","code":"hand-agreement","id":"133_hand-agreement","4x":"https://twemoji.maxcdn.com/2/72x72/1f91d.png"},{"unicode":"🙏","code":"hand-please","id":"134_hand-please","4x":"https://twemoji.maxcdn.com/2/72x72/1f64f.png"},{"unicode":"✍️","code":"hand-write","id":"135_hand-write","4x":"https://twemoji.maxcdn.com/2/72x72/270d.png"},{"unicode":"💅","code":"cosmetics","id":"136_cosmetics","4x":"https://twemoji.maxcdn.com/2/72x72/1f485.png"},{"unicode":"🤳","code":"self","id":"137_self","4x":"https://twemoji.maxcdn.com/2/72x72/1f933.png"},{"unicode":"💪","code":"muscle","id":"138_muscle","4x":"https://twemoji.maxcdn.com/2/72x72/1f4aa.png"},{"unicode":"🦵","code":"kick","id":"139_kick","4x":"https://twemoji.maxcdn.com/2/72x72/1f9b5.png"},{"unicode":"🦶","code":"kick2","id":"140_kick2","4x":"https://twemoji.maxcdn.com/2/72x72/1f9b6.png"},{"unicode":"👂","code":"ear","id":"141_ear","4x":"https://twemoji.maxcdn.com/2/72x72/1f442.png"},{"unicode":"👃","code":"nose","id":"142_nose","4x":"https://twemoji.maxcdn.com/2/72x72/1f443.png"},{"unicode":"🧠","code":"brain","id":"143_brain","4x":"https://twemoji.maxcdn.com/2/72x72/1f9e0.png"},{"unicode":"🦷","code":"tooth","id":"144_tooth","4x":"https://twemoji.maxcdn.com/2/72x72/1f9b7.png"},{"unicode":"👀","code":"eyes","id":"145_eyes","4x":"https://twemoji.maxcdn.com/2/72x72/1f440.png"},{"unicode":"👁️","code":"eye","id":"146_eye","4x":"https://twemoji.maxcdn.com/2/72x72/1f441.png"},{"unicode":"👅","code":"tongue2","id":"147_tongue2","4x":"https://twemoji.maxcdn.com/2/72x72/1f445.png"},{"unicode":"👄","code":"lips","id":"148_lips","4x":"https://twemoji.maxcdn.com/2/72x72/1f444.png"},{"unicode":"👶","code":"baby","id":"149_baby","4x":"https://twemoji.maxcdn.com/2/72x72/1f476.png"},{"unicode":"👨‍🦲","code":"bald","id":"150_bald","4x":"https://twemoji.maxcdn.com/2/72x72/1f468-200d-1f9b2.png"},{"unicode":"👴","code":"old-man","id":"151_old-man","4x":"https://twemoji.maxcdn.com/2/72x72/1f474.png"},{"unicode":"👵","code":"old-woman","id":"152_old-woman","4x":"https://twemoji.maxcdn.com/2/72x72/1f475.png"},{"unicode":"🔥","code":"fire","id":"153_fire","4x":"https://twemoji.maxcdn.com/2/72x72/1f525.png"},{"unicode":"👨‍🚒","code":"firefighter","id":"154_firefighter","4x":"https://twemoji.maxcdn.com/2/72x72/1f468-200d-1f692.png"},{"unicode":"👩‍🚒","code":"firefighter2","id":"155_firefighter2","4x":"https://twemoji.maxcdn.com/2/72x72/1f469-200d-1f692.png"},{"unicode":"👮‍♂️","code":"police-officer","id":"156_police-officer","4x":"https://twemoji.maxcdn.com/2/72x72/1f46e-200d-2642-fe0f.png"},{"unicode":"👮‍♀️","code":"police-officer-woman","id":"157_police-officer-woman","4x":"https://twemoji.maxcdn.com/2/72x72/1f46e-200d-2640-fe0f.png"},{"unicode":"👨‍👩‍👧‍👦","code":"family","id":"158_family","4x":"https://twemoji.maxcdn.com/2/72x72/1f468-200d-1f469-200d-1f467-200d-1f466.png"},{"unicode":"🙈","code":"monkey-see","id":"159_monkey-see","4x":"https://twemoji.maxcdn.com/2/72x72/1f648.png"},{"unicode":"🙉","code":"monkey-hear","id":"160_monkey-hear","4x":"https://twemoji.maxcdn.com/2/72x72/1f649.png"},{"unicode":"🙊","code":"monkey-speak","id":"161_monkey-speak","4x":"https://twemoji.maxcdn.com/2/72x72/1f64a.png"},{"unicode":"💋","code":"kiss-lips","id":"162_kiss-lips","4x":"https://twemoji.maxcdn.com/2/72x72/1f48b.png"},{"unicode":"💌","code":"heart-letter","id":"163_heart-letter","4x":"https://twemoji.maxcdn.com/2/72x72/1f48c.png"},{"unicode":"💘","code":"arrow-cupid","id":"164_arrow-cupid","4x":"https://twemoji.maxcdn.com/2/72x72/1f498.png"},{"unicode":"💝","code":"valentine","id":"165_valentine","4x":"https://twemoji.maxcdn.com/2/72x72/1f49d.png"},{"unicode":"💖","code":"sparkle-heart","id":"166_sparkle-heart","4x":"https://twemoji.maxcdn.com/2/72x72/1f496.png"},{"unicode":"💗","code":"pulse","id":"167_pulse","4x":"https://twemoji.maxcdn.com/2/72x72/1f497.png"},{"unicode":"💓","code":"beating","id":"168_beating","4x":"https://twemoji.maxcdn.com/2/72x72/1f493.png"},{"unicode":"💞","code":"revolving","id":"169_revolving","4x":"https://twemoji.maxcdn.com/2/72x72/1f49e.png"},{"unicode":"💕","code":"love","id":"170_love","4x":"https://twemoji.maxcdn.com/2/72x72/1f495.png"},{"unicode":"❣️","code":"exclamation","id":"171_exclamation","4x":"https://twemoji.maxcdn.com/2/72x72/2763.png"},{"unicode":"💔","code":"broken-heart","id":"172_broken-heart","4x":"https://twemoji.maxcdn.com/2/72x72/1f494.png"},{"unicode":"💟","code":"heart-Decoration","id":"173_heart-Decoration","4x":"https://twemoji.maxcdn.com/2/72x72/1f49f.png"},{"unicode":"🖤","code":"heart-black","id":"174_heart-black","4x":"https://twemoji.maxcdn.com/2/72x72/1f5a4.png"},{"unicode":"🤎","code":"heart-brown","id":"175_heart-brown","4x":"https://twemoji.maxcdn.com/2/72x72/1f90e.png"},{"unicode":"💙","code":"heart-blue","id":"176_heart-blue","4x":"https://twemoji.maxcdn.com/2/72x72/1f499.png"},{"unicode":"💚","code":"heart-green","id":"177_heart-green","4x":"https://twemoji.maxcdn.com/2/72x72/1f49a.png"},{"unicode":"🧡","code":"heart-orange","id":"178_heart-orange","4x":"https://twemoji.maxcdn.com/2/72x72/1f9e1.png"},{"unicode":"💜","code":"heart-purple","id":"179_heart-purple","4x":"https://twemoji.maxcdn.com/2/72x72/1f49c.png"},{"unicode":"❤️","code":"heart-red","id":"180_heart-red","4x":"https://twemoji.maxcdn.com/2/72x72/2764.png"},{"unicode":"🤍","code":"black-white","id":"181_black-white","4x":"https://twemoji.maxcdn.com/2/72x72/1f90d.png"},{"unicode":"💛","code":"heart-yellow","id":"182_heart-yellow","4x":"https://twemoji.maxcdn.com/2/72x72/1f49b.png"},{"unicode":"💯","code":"hundred","id":"183_hundred","4x":"https://twemoji.maxcdn.com/2/72x72/1f4af.png"},{"unicode":"💢","code":"mad","id":"184_mad","4x":"https://twemoji.maxcdn.com/2/72x72/1f4a2.png"},{"unicode":"💥","code":"boom","id":"185_boom","4x":"https://twemoji.maxcdn.com/2/72x72/1f4a5.png"},{"unicode":"💫","code":"stars","id":"186_stars","4x":"https://twemoji.maxcdn.com/2/72x72/1f4ab.png"},{"unicode":"💦","code":"splashing","id":"187_splashing","4x":"https://twemoji.maxcdn.com/2/72x72/1f4a6.png"},{"unicode":"💨","code":"comic-dash","id":"188_comic-dash","4x":"https://twemoji.maxcdn.com/2/72x72/1f4a8.png"},{"unicode":"🕳️","code":"hole","id":"189_hole","4x":"https://twemoji.maxcdn.com/2/72x72/1f573.png"},{"unicode":"💬","code":"balloon-dialog","id":"190_balloon-dialog","4x":"https://twemoji.maxcdn.com/2/72x72/1f4ac.png"},{"unicode":"🗨️","code":"dialog","id":"191_dialog","4x":"https://twemoji.maxcdn.com/2/72x72/1f5e8.png"},{"unicode":"🗯️","code":"angry-balloon","id":"192_angry-balloon","4x":"https://twemoji.maxcdn.com/2/72x72/1f5ef.png"},{"unicode":"💭","code":"balloon-bubble","id":"193_balloon-bubble","4x":"https://twemoji.maxcdn.com/2/72x72/1f4ad.png"},{"unicode":"💤","code":"comic-sleep","id":"194_comic-sleep","4x":"https://twemoji.maxcdn.com/2/72x72/1f4a4.png"},{"unicode":"🕶️","code":"glasses-dark","id":"195_glasses-dark","4x":"https://twemoji.maxcdn.com/2/72x72/1f576.png"},{"unicode":"🥽","code":"glasses-swimming","id":"196_glasses-swimming","4x":"https://twemoji.maxcdn.com/2/72x72/1f97d.png"},{"unicode":"🥼","code":"scientist","id":"197_scientist","4x":"https://twemoji.maxcdn.com/2/72x72/1f97c.png"},{"unicode":"👔","code":"tie","id":"198_tie","4x":"https://twemoji.maxcdn.com/2/72x72/1f454.png"},{"unicode":"👕","code":"tshirt","id":"199_tshirt","4x":"https://twemoji.maxcdn.com/2/72x72/1f455.png"},{"unicode":"👖","code":"pants","id":"200_pants","4x":"https://twemoji.maxcdn.com/2/72x72/1f456.png"},{"unicode":"🧣","code":"neck","id":"201_neck","4x":"https://twemoji.maxcdn.com/2/72x72/1f9e3.png"},{"unicode":"🧤","code":"hand","id":"202_hand","4x":"https://twemoji.maxcdn.com/2/72x72/1f9e4.png"},{"unicode":"🧥","code":"jacket","id":"203_jacket","4x":"https://twemoji.maxcdn.com/2/72x72/1f9e5.png"},{"unicode":"🧦","code":"stocking","id":"204_stocking","4x":"https://twemoji.maxcdn.com/2/72x72/1f9e6.png"},{"unicode":"👗","code":"clothing","id":"205_clothing","4x":"https://twemoji.maxcdn.com/2/72x72/1f457.png"},{"unicode":"👘","code":"clothing2","id":"206_clothing2","4x":"https://twemoji.maxcdn.com/2/72x72/1f458.png"},{"unicode":"👙","code":"swim-clothing","id":"207_swim-clothing","4x":"https://twemoji.maxcdn.com/2/72x72/1f459.png"},{"unicode":"👚","code":"woman-clothing","id":"208_woman-clothing","4x":"https://twemoji.maxcdn.com/2/72x72/1f45a.png"},{"unicode":"👛","code":"coin-clothing","id":"209_coin-clothing","4x":"https://twemoji.maxcdn.com/2/72x72/1f45b.png"},{"unicode":"👜","code":"purse","id":"210_purse","4x":"https://twemoji.maxcdn.com/2/72x72/1f45c.png"},{"unicode":"👝","code":"pouch","id":"211_pouch","4x":"https://twemoji.maxcdn.com/2/72x72/1f45d.png"},{"unicode":"🛍️","code":"shopping-bag","id":"212_shopping-bag","4x":"https://twemoji.maxcdn.com/2/72x72/1f6cd.png"},{"unicode":"🎒","code":"school-bag","id":"213_school-bag","4x":"https://twemoji.maxcdn.com/2/72x72/1f392.png"},{"unicode":"👞","code":"shoe","id":"214_shoe","4x":"https://twemoji.maxcdn.com/2/72x72/1f45e.png"},{"unicode":"👟","code":"sneaker","id":"215_sneaker","4x":"https://twemoji.maxcdn.com/2/72x72/1f45f.png"},{"unicode":"🥾","code":"hiking-boot","id":"216_hiking-boot","4x":"https://twemoji.maxcdn.com/2/72x72/1f97e.png"},{"unicode":"🥿","code":"ballet flat","id":"217_ballet flat","4x":"https://twemoji.maxcdn.com/2/72x72/1f97f.png"},{"unicode":"👠","code":"woman-shoe","id":"218_woman-shoe","4x":"https://twemoji.maxcdn.com/2/72x72/1f460.png"},{"unicode":"👡","code":"woman-shoe2","id":"219_woman-shoe2","4x":"https://twemoji.maxcdn.com/2/72x72/1f461.png"},{"unicode":"👢","code":"woman-boot","id":"220_woman-boot","4x":"https://twemoji.maxcdn.com/2/72x72/1f462.png"},{"unicode":"👑","code":"king","id":"221_king","4x":"https://twemoji.maxcdn.com/2/72x72/1f451.png"},{"unicode":"👒","code":"hat","id":"222_hat","4x":"https://twemoji.maxcdn.com/2/72x72/1f452.png"},{"unicode":"🎩","code":"tophat","id":"223_tophat","4x":"https://twemoji.maxcdn.com/2/72x72/1f3a9.png"},{"unicode":"🧢","code":"baseball cap","id":"224_baseball cap","4x":"https://twemoji.maxcdn.com/2/72x72/1f9e2.png"},{"unicode":"⛑️","code":"aid","id":"225_aid","4x":"https://twemoji.maxcdn.com/2/72x72/26d1.png"},{"unicode":"📿","code":"beads","id":"226_beads","4x":"https://twemoji.maxcdn.com/2/72x72/1f4ff.png"},{"unicode":"💄","code":"lipstick","id":"227_lipstick","4x":"https://twemoji.maxcdn.com/2/72x72/1f484.png"},{"unicode":"💍","code":"diamond-ring","id":"228_diamond-ring","4x":"https://twemoji.maxcdn.com/2/72x72/1f48d.png"},{"unicode":"💎","code":"diamond","id":"229_diamond","4x":"https://twemoji.maxcdn.com/2/72x72/1f48e.png"},{"unicode":"🔇","code":"mute","id":"230_mute","4x":"https://twemoji.maxcdn.com/2/72x72/1f507.png"},{"unicode":"🔉","code":"medium","id":"231_medium","4x":"https://twemoji.maxcdn.com/2/72x72/1f509.png"},{"unicode":"🔊","code":"loud","id":"232_loud","4x":"https://twemoji.maxcdn.com/2/72x72/1f50a.png"},{"unicode":"📢","code":"loud2","id":"233_loud2","4x":"https://twemoji.maxcdn.com/2/72x72/1f4e2.png"},{"unicode":"📣","code":"cheering","id":"234_cheering","4x":"https://twemoji.maxcdn.com/2/72x72/1f4e3.png"},{"unicode":"📯","code":"horn","id":"235_horn","4x":"https://twemoji.maxcdn.com/2/72x72/1f4ef.png"},{"unicode":"🔔","code":"bell","id":"236_bell","4x":"https://twemoji.maxcdn.com/2/72x72/1f514.png"},{"unicode":"🔕","code":"bell","id":"237_bell","4x":"https://twemoji.maxcdn.com/2/72x72/1f515.png"},{"unicode":"🎼","code":"music-score","id":"238_music-score","4x":"https://twemoji.maxcdn.com/2/72x72/1f3bc.png"},{"unicode":"🎵","code":"music-note","id":"239_music-note","4x":"https://twemoji.maxcdn.com/2/72x72/1f3b5.png"},{"unicode":"🎶","code":"music-notes","id":"240_music-notes","4x":"https://twemoji.maxcdn.com/2/72x72/1f3b6.png"},{"unicode":"🎙️","code":"microphone","id":"241_microphone","4x":"https://twemoji.maxcdn.com/2/72x72/1f399.png"},{"unicode":"🎤","code":"microphone2","id":"242_microphone2","4x":"https://twemoji.maxcdn.com/2/72x72/1f3a4.png"},{"unicode":"🎷","code":"sax","id":"243_sax","4x":"https://twemoji.maxcdn.com/2/72x72/1f3b7.png"},{"unicode":"🎸","code":"guitar","id":"244_guitar","4x":"https://twemoji.maxcdn.com/2/72x72/1f3b8.png"},{"unicode":"🎹","code":"piano-keys","id":"245_piano-keys","4x":"https://twemoji.maxcdn.com/2/72x72/1f3b9.png"},{"unicode":"🎺","code":"trumpet","id":"246_trumpet","4x":"https://twemoji.maxcdn.com/2/72x72/1f3ba.png"},{"unicode":"🎻","code":"violin","id":"247_violin","4x":"https://twemoji.maxcdn.com/2/72x72/1f3bb.png"},{"unicode":"🥁","code":"drumsticks","id":"248_drumsticks","4x":"https://twemoji.maxcdn.com/2/72x72/1f941.png"},{"unicode":"📱","code":"cellphone","id":"249_cellphone","4x":"https://twemoji.maxcdn.com/2/72x72/1f4f1.png"},{"unicode":"☎️","code":"phone","id":"250_phone","4x":"https://twemoji.maxcdn.com/2/72x72/260e.png"},{"unicode":"📞","code":"phone2","id":"251_phone2","4x":"https://twemoji.maxcdn.com/2/72x72/1f4de.png"},{"unicode":"📠","code":"fax","id":"252_fax","4x":"https://twemoji.maxcdn.com/2/72x72/1f4e0.png"},{"unicode":"🔋","code":"battery","id":"253_battery","4x":"https://twemoji.maxcdn.com/2/72x72/1f50b.png"},{"unicode":"🔌","code":"plug","id":"254_plug","4x":"https://twemoji.maxcdn.com/2/72x72/1f50c.png"},{"unicode":"🖥️","code":"computer-desktop","id":"255_computer-desktop","4x":"https://twemoji.maxcdn.com/2/72x72/1f5a5.png"},{"unicode":"🖨️","code":"printer","id":"256_printer","4x":"https://twemoji.maxcdn.com/2/72x72/1f5a8.png"},{"unicode":"⌨️","code":"keyboard","id":"257_keyboard","4x":"https://twemoji.maxcdn.com/2/72x72/2328.png"},{"unicode":"🖱️","code":"mouse-computer","id":"258_mouse-computer","4x":"https://twemoji.maxcdn.com/2/72x72/1f5b1.png"},{"unicode":"💽","code":"computer-disk","id":"259_computer-disk","4x":"https://twemoji.maxcdn.com/2/72x72/1f4bd.png"},{"unicode":"💾","code":"floppy-disk","id":"260_floppy-disk","4x":"https://twemoji.maxcdn.com/2/72x72/1f4be.png"},{"unicode":"📀","code":"blu-ray","id":"261_blu-ray","4x":"https://twemoji.maxcdn.com/2/72x72/1f4c0.png"},{"unicode":"🧮","code":"calculation","id":"262_calculation","4x":"https://twemoji.maxcdn.com/2/72x72/1f9ee.png"},{"unicode":"🎥","code":"camera","id":"263_camera","4x":"https://twemoji.maxcdn.com/2/72x72/1f3a5.png"},{"unicode":"🎞️","code":"cinema","id":"264_cinema","4x":"https://twemoji.maxcdn.com/2/72x72/1f39e.png"},{"unicode":"📽️","code":"cinema2","id":"265_cinema2","4x":"https://twemoji.maxcdn.com/2/72x72/1f4fd.png"},{"unicode":"📸","code":"camera-flash","id":"266_camera-flash","4x":"https://twemoji.maxcdn.com/2/72x72/1f4f8.png"},{"unicode":"📼","code":"vhs-tape","id":"267_vhs-tape","4x":"https://twemoji.maxcdn.com/2/72x72/1f4fc.png"},{"unicode":"🔎","code":"magnifying","id":"268_magnifying","4x":"https://twemoji.maxcdn.com/2/72x72/1f50e.png"},{"unicode":"🕯️","code":"light","id":"269_light","4x":"https://twemoji.maxcdn.com/2/72x72/1f56f.png"},{"unicode":"💡","code":"bulb","id":"270_bulb","4x":"https://twemoji.maxcdn.com/2/72x72/1f4a1.png"},{"unicode":"🔦","code":"electric-torch","id":"271_electric-torch","4x":"https://twemoji.maxcdn.com/2/72x72/1f526.png"},{"unicode":"📒","code":"notebook","id":"272_notebook","4x":"https://twemoji.maxcdn.com/2/72x72/1f4d2.png"},{"unicode":"📃","code":"note","id":"273_note","4x":"https://twemoji.maxcdn.com/2/72x72/1f4c3.png"},{"unicode":"📰","code":"newspaper","id":"274_newspaper","4x":"https://twemoji.maxcdn.com/2/72x72/1f4f0.png"},{"unicode":"🗞️","code":"newspaper-rolled","id":"275_newspaper-rolled","4x":"https://twemoji.maxcdn.com/2/72x72/1f5de.png"},{"unicode":"💴","code":"money-rolled","id":"276_money-rolled","4x":"https://twemoji.maxcdn.com/2/72x72/1f4b4.png"},{"unicode":"💲","code":"dollar-sign","id":"277_dollar-sign","4x":"https://twemoji.maxcdn.com/2/72x72/1f4b2.png"},{"unicode":"✉️","code":"email","id":"278_email","4x":"https://twemoji.maxcdn.com/2/72x72/2709.png"},{"unicode":"✏️","code":"pencil","id":"279_pencil","4x":"https://twemoji.maxcdn.com/2/72x72/270f.png"},{"unicode":"✒️","code":"pen","id":"280_pen","4x":"https://twemoji.maxcdn.com/2/72x72/2712.png"},{"unicode":"📝","code":"note-pencil","id":"281_note-pencil","4x":"https://twemoji.maxcdn.com/2/72x72/1f4dd.png"},{"unicode":"💼","code":"briefcase","id":"282_briefcase","4x":"https://twemoji.maxcdn.com/2/72x72/1f4bc.png"},{"unicode":"🗓️","code":"calendar","id":"283_calendar","4x":"https://twemoji.maxcdn.com/2/72x72/1f5d3.png"},{"unicode":"📌","code":"pin","id":"284_pin","4x":"https://twemoji.maxcdn.com/2/72x72/1f4cc.png"},{"unicode":"📍","code":"pin2","id":"285_pin2","4x":"https://twemoji.maxcdn.com/2/72x72/1f4cd.png"},{"unicode":"📎","code":"paperclip","id":"286_paperclip","4x":"https://twemoji.maxcdn.com/2/72x72/1f4ce.png"},{"unicode":"📏","code":"ruler","id":"287_ruler","4x":"https://twemoji.maxcdn.com/2/72x72/1f4cf.png"},{"unicode":"📐","code":"ruler2","id":"288_ruler2","4x":"https://twemoji.maxcdn.com/2/72x72/1f4d0.png"},{"unicode":"✂️","code":"cutting","id":"289_cutting","4x":"https://twemoji.maxcdn.com/2/72x72/2702.png"},{"unicode":"🗑️","code":"wastebasket","id":"290_wastebasket","4x":"https://twemoji.maxcdn.com/2/72x72/1f5d1.png"},{"unicode":"🔑","code":"key","id":"291_key","4x":"https://twemoji.maxcdn.com/2/72x72/1f511.png"},{"unicode":"🗝️","code":"key-old","id":"292_key-old","4x":"https://twemoji.maxcdn.com/2/72x72/1f5dd.png"},{"unicode":"🔨","code":"hammer","id":"293_hammer","4x":"https://twemoji.maxcdn.com/2/72x72/1f528.png"},{"unicode":"⛏️","code":"pickaxe","id":"294_pickaxe","4x":"https://twemoji.maxcdn.com/2/72x72/26cf.png"},{"unicode":"⚒️","code":"hammer2","id":"295_hammer2","4x":"https://twemoji.maxcdn.com/2/72x72/2692.png"},{"unicode":"🛠️","code":"hammer-wrench","id":"296_hammer-wrench","4x":"https://twemoji.maxcdn.com/2/72x72/1f6e0.png"},{"unicode":"🗡️","code":"knife","id":"297_knife","4x":"https://twemoji.maxcdn.com/2/72x72/1f5e1.png"},{"unicode":"⚔️","code":"swords","id":"298_swords","4x":"https://twemoji.maxcdn.com/2/72x72/2694.png"},{"unicode":"🔫","code":"gun-tool","id":"299_gun-tool","4x":"https://twemoji.maxcdn.com/2/72x72/1f52b.png"},{"unicode":"🏹","code":"archer","id":"300_archer","4x":"https://twemoji.maxcdn.com/2/72x72/1f3f9.png"},{"unicode":"🛡️","code":"shield","id":"301_shield","4x":"https://twemoji.maxcdn.com/2/72x72/1f6e1.png"},{"unicode":"🔧","code":"spanner","id":"302_spanner","4x":"https://twemoji.maxcdn.com/2/72x72/1f527.png"},{"unicode":"🔩","code":"bolt","id":"303_bolt","4x":"https://twemoji.maxcdn.com/2/72x72/1f529.png"},{"unicode":"⚙️","code":"cog","id":"304_cog","4x":"https://twemoji.maxcdn.com/2/72x72/2699.png"},{"unicode":"⚖️","code":"balance","id":"305_balance","4x":"https://twemoji.maxcdn.com/2/72x72/2696.png"},{"unicode":"🔗","code":"link","id":"306_link","4x":"https://twemoji.maxcdn.com/2/72x72/1f517.png"},{"unicode":"🧲","code":"magnetic","id":"307_magnetic","4x":"https://twemoji.maxcdn.com/2/72x72/1f9f2.png"},{"unicode":"⚗️","code":"chemistry","id":"308_chemistry","4x":"https://twemoji.maxcdn.com/2/72x72/2697.png"},{"unicode":"🧪","code":"chemist","id":"309_chemist","4x":"https://twemoji.maxcdn.com/2/72x72/1f9ea.png"},{"unicode":"🧬","code":"gene","id":"310_gene","4x":"https://twemoji.maxcdn.com/2/72x72/1f9ec.png"},{"unicode":"🔬","code":"microscope","id":"311_microscope","4x":"https://twemoji.maxcdn.com/2/72x72/1f52c.png"},{"unicode":"🔭","code":"telescope","id":"312_telescope","4x":"https://twemoji.maxcdn.com/2/72x72/1f52d.png"},{"unicode":"📡","code":"antenna-dish","id":"313_antenna-dish","4x":"https://twemoji.maxcdn.com/2/72x72/1f4e1.png"},{"unicode":"💉","code":"medicine","id":"314_medicine","4x":"https://twemoji.maxcdn.com/2/72x72/1f489.png"},{"unicode":"💊","code":"medicine","id":"315_medicine","4x":"https://twemoji.maxcdn.com/2/72x72/1f48a.png"},{"unicode":"🚪","code":"door","id":"316_door","4x":"https://twemoji.maxcdn.com/2/72x72/1f6aa.png"},{"unicode":"🛏️","code":"hotel-bed","id":"317_hotel-bed","4x":"https://twemoji.maxcdn.com/2/72x72/1f6cf.png"},{"unicode":"🚽","code":"toilet","id":"318_toilet","4x":"https://twemoji.maxcdn.com/2/72x72/1f6bd.png"},{"unicode":"🚿","code":"shower","id":"319_shower","4x":"https://twemoji.maxcdn.com/2/72x72/1f6bf.png"},{"unicode":"🛁","code":"bath","id":"320_bath","4x":"https://twemoji.maxcdn.com/2/72x72/1f6c1.png"},{"unicode":"🧴","code":"lotion","id":"321_lotion","4x":"https://twemoji.maxcdn.com/2/72x72/1f9f4.png"},{"unicode":"🧷","code":"diaper","id":"322_diaper","4x":"https://twemoji.maxcdn.com/2/72x72/1f9f7.png"},{"unicode":"🧹","code":"sweeping","id":"323_sweeping","4x":"https://twemoji.maxcdn.com/2/72x72/1f9f9.png"},{"unicode":"🧺","code":"farming","id":"324_farming","4x":"https://twemoji.maxcdn.com/2/72x72/1f9fa.png"},{"unicode":"🧻","code":"toilet paper","id":"325_toilet paper","4x":"https://twemoji.maxcdn.com/2/72x72/1f9fb.png"},{"unicode":"🧯","code":"extinguisher","id":"326_extinguisher","4x":"https://twemoji.maxcdn.com/2/72x72/1f9ef.png"},{"unicode":"🛒","code":"shopping-cart","id":"327_shopping-cart","4x":"https://twemoji.maxcdn.com/2/72x72/1f6d2.png"},{"unicode":"🚬","code":"smoking","id":"328_smoking","4x":"https://twemoji.maxcdn.com/2/72x72/1f6ac.png"},{"unicode":"✔️","code":"check","id":"329_check","4x":"https://twemoji.maxcdn.com/2/72x72/2714.png"},{"unicode":"⚰️","code":"death","id":"330_death","4x":"https://twemoji.maxcdn.com/2/72x72/26b0.png"},{"unicode":"🗿","code":"statue-face","id":"331_statue-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f5ff.png"},{"unicode":"🐵","code":"monkey-face","id":"332_monkey-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f435.png"},{"unicode":"🐒","code":"monkey","id":"333_monkey","4x":"https://twemoji.maxcdn.com/2/72x72/1f412.png"},{"unicode":"🦍","code":"gorilla","id":"334_gorilla","4x":"https://twemoji.maxcdn.com/2/72x72/1f98d.png"},{"unicode":"🐶","code":"dog-face","id":"335_dog-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f436.png"},{"unicode":"🐩","code":"dog","id":"336_dog","4x":"https://twemoji.maxcdn.com/2/72x72/1f429.png"},{"unicode":"🐺","code":"face","id":"337_face","4x":"https://twemoji.maxcdn.com/2/72x72/1f43a.png"},{"unicode":"🦊","code":"face","id":"338_face","4x":"https://twemoji.maxcdn.com/2/72x72/1f98a.png"},{"unicode":"🦝","code":"curious","id":"339_curious","4x":"https://twemoji.maxcdn.com/2/72x72/1f99d.png"},{"unicode":"🐱","code":"cat","id":"340_cat","4x":"https://twemoji.maxcdn.com/2/72x72/1f431.png"},{"unicode":"🦁","code":"lion-face","id":"341_lion-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f981.png"},{"unicode":"🐯","code":"tiger-face","id":"342_tiger-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f42f.png"},{"unicode":"🐅","code":"tiger","id":"343_tiger","4x":"https://twemoji.maxcdn.com/2/72x72/1f405.png"},{"unicode":"🐆","code":"leopard","id":"344_leopard","4x":"https://twemoji.maxcdn.com/2/72x72/1f406.png"},{"unicode":"🐴","code":"horse-face","id":"345_horse-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f434.png"},{"unicode":"🐎","code":"racehorse","id":"346_racehorse","4x":"https://twemoji.maxcdn.com/2/72x72/1f40e.png"},{"unicode":"🦄","code":"unicorn-face","id":"347_unicorn-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f984.png"},{"unicode":"🦓","code":"zebra","id":"348_zebra","4x":"https://twemoji.maxcdn.com/2/72x72/1f993.png"},{"unicode":"🦌","code":"deer","id":"349_deer","4x":"https://twemoji.maxcdn.com/2/72x72/1f98c.png"},{"unicode":"🐮","code":"cow","id":"350_cow","4x":"https://twemoji.maxcdn.com/2/72x72/1f42e.png"},{"unicode":"🐂","code":"bull","id":"351_bull","4x":"https://twemoji.maxcdn.com/2/72x72/1f402.png"},{"unicode":"🐃","code":"buffalo","id":"352_buffalo","4x":"https://twemoji.maxcdn.com/2/72x72/1f403.png"},{"unicode":"🐄","code":"cow","id":"353_cow","4x":"https://twemoji.maxcdn.com/2/72x72/1f404.png"},{"unicode":"🐷","code":"pig-face","id":"354_pig-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f437.png"},{"unicode":"🐖","code":"sow","id":"355_sow","4x":"https://twemoji.maxcdn.com/2/72x72/1f416.png"},{"unicode":"🐗","code":"pig","id":"356_pig","4x":"https://twemoji.maxcdn.com/2/72x72/1f417.png"},{"unicode":"🐽","code":"pig-nose","id":"357_pig-nose","4x":"https://twemoji.maxcdn.com/2/72x72/1f43d.png"},{"unicode":"🐏","code":"aries","id":"358_aries","4x":"https://twemoji.maxcdn.com/2/72x72/1f40f.png"},{"unicode":"🐑","code":"sheep","id":"359_sheep","4x":"https://twemoji.maxcdn.com/2/72x72/1f411.png"},{"unicode":"🐐","code":"capricorn","id":"360_capricorn","4x":"https://twemoji.maxcdn.com/2/72x72/1f410.png"},{"unicode":"🐪","code":"dromedary","id":"361_dromedary","4x":"https://twemoji.maxcdn.com/2/72x72/1f42a.png"},{"unicode":"🐫","code":"camel","id":"362_camel","4x":"https://twemoji.maxcdn.com/2/72x72/1f42b.png"},{"unicode":"🦙","code":"alpaca","id":"363_alpaca","4x":"https://twemoji.maxcdn.com/2/72x72/1f999.png"},{"unicode":"🦒","code":"spots","id":"364_spots","4x":"https://twemoji.maxcdn.com/2/72x72/1f992.png"},{"unicode":"🐘","code":"elephant","id":"365_elephant","4x":"https://twemoji.maxcdn.com/2/72x72/1f418.png"},{"unicode":"🦏","code":"rhinoceros","id":"366_rhinoceros","4x":"https://twemoji.maxcdn.com/2/72x72/1f98f.png"},{"unicode":"🦛","code":"hippo","id":"367_hippo","4x":"https://twemoji.maxcdn.com/2/72x72/1f99b.png"},{"unicode":"🐭","code":"mouse-face","id":"368_mouse-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f42d.png"},{"unicode":"🐁","code":"mouse","id":"369_mouse","4x":"https://twemoji.maxcdn.com/2/72x72/1f401.png"},{"unicode":"🐀","code":"rat","id":"370_rat","4x":"https://twemoji.maxcdn.com/2/72x72/1f400.png"},{"unicode":"🐹","code":"pet-face","id":"371_pet-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f439.png"},{"unicode":"🐰","code":"bunny-face","id":"372_bunny-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f430.png"},{"unicode":"🐇","code":"bunny","id":"373_bunny","4x":"https://twemoji.maxcdn.com/2/72x72/1f407.png"},{"unicode":"🐿️","code":"squirrel","id":"374_squirrel","4x":"https://twemoji.maxcdn.com/2/72x72/1f43f.png"},{"unicode":"🦔","code":"spiny","id":"375_spiny","4x":"https://twemoji.maxcdn.com/2/72x72/1f994.png"},{"unicode":"🦇","code":"vampire","id":"376_vampire","4x":"https://twemoji.maxcdn.com/2/72x72/1f987.png"},{"unicode":"🐻","code":"face","id":"377_face","4x":"https://twemoji.maxcdn.com/2/72x72/1f43b.png"},{"unicode":"🐨","code":"bear","id":"378_bear","4x":"https://twemoji.maxcdn.com/2/72x72/1f428.png"},{"unicode":"🐼","code":"panda-face","id":"379_panda-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f43c.png"},{"unicode":"🦘","code":"marsupial","id":"380_marsupial","4x":"https://twemoji.maxcdn.com/2/72x72/1f998.png"},{"unicode":"🦡","code":"honey badger","id":"381_honey badger","4x":"https://twemoji.maxcdn.com/2/72x72/1f9a1.png"},{"unicode":"🐾","code":"paw","id":"382_paw","4x":"https://twemoji.maxcdn.com/2/72x72/1f43e.png"},{"unicode":"🦃","code":"bird","id":"383_bird","4x":"https://twemoji.maxcdn.com/2/72x72/1f983.png"},{"unicode":"🐔","code":"chicken","id":"384_chicken","4x":"https://twemoji.maxcdn.com/2/72x72/1f414.png"},{"unicode":"🐓","code":"rooster","id":"385_rooster","4x":"https://twemoji.maxcdn.com/2/72x72/1f413.png"},{"unicode":"🐣","code":"baby-bird","id":"386_baby-bird","4x":"https://twemoji.maxcdn.com/2/72x72/1f423.png"},{"unicode":"🐤","code":"baby-chick","id":"387_baby-chick","4x":"https://twemoji.maxcdn.com/2/72x72/1f424.png"},{"unicode":"🐥","code":"baby-chick2","id":"388_baby-chick2","4x":"https://twemoji.maxcdn.com/2/72x72/1f425.png"},{"unicode":"🐧","code":"penguin","id":"389_penguin","4x":"https://twemoji.maxcdn.com/2/72x72/1f427.png"},{"unicode":"🕊️","code":"bird-fly","id":"390_bird-fly","4x":"https://twemoji.maxcdn.com/2/72x72/1f54a.png"},{"unicode":"🦅","code":"eagle","id":"391_eagle","4x":"https://twemoji.maxcdn.com/2/72x72/1f985.png"},{"unicode":"🦆","code":"duck","id":"392_duck","4x":"https://twemoji.maxcdn.com/2/72x72/1f986.png"},{"unicode":"🦢","code":"swan","id":"393_swan","4x":"https://twemoji.maxcdn.com/2/72x72/1f9a2.png"},{"unicode":"🦉","code":"owl","id":"394_owl","4x":"https://twemoji.maxcdn.com/2/72x72/1f989.png"},{"unicode":"🦚","code":"peahen","id":"395_peahen","4x":"https://twemoji.maxcdn.com/2/72x72/1f99a.png"},{"unicode":"🦜","code":"macaw","id":"396_macaw","4x":"https://twemoji.maxcdn.com/2/72x72/1f99c.png"},{"unicode":"🐸","code":"frog-face","id":"397_frog-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f438.png"},{"unicode":"🐊","code":"crocodile","id":"398_crocodile","4x":"https://twemoji.maxcdn.com/2/72x72/1f40a.png"},{"unicode":"🐢","code":"turtle","id":"399_turtle","4x":"https://twemoji.maxcdn.com/2/72x72/1f422.png"},{"unicode":"🦎","code":"reptile","id":"400_reptile","4x":"https://twemoji.maxcdn.com/2/72x72/1f98e.png"},{"unicode":"🐍","code":"snake","id":"401_snake","4x":"https://twemoji.maxcdn.com/2/72x72/1f40d.png"},{"unicode":"🐲","code":"dragon-face","id":"402_dragon-face","4x":"https://twemoji.maxcdn.com/2/72x72/1f432.png"},{"unicode":"🐉","code":"dragon","id":"403_dragon","4x":"https://twemoji.maxcdn.com/2/72x72/1f409.png"},{"unicode":"🦕","code":"brontosaurus","id":"404_brontosaurus","4x":"https://twemoji.maxcdn.com/2/72x72/1f995.png"},{"unicode":"🦖","code":"t-rex","id":"405_t-rex","4x":"https://twemoji.maxcdn.com/2/72x72/1f996.png"},{"unicode":"🐳","code":"whale","id":"406_whale","4x":"https://twemoji.maxcdn.com/2/72x72/1f433.png"},{"unicode":"🐋","code":"whale2","id":"407_whale2","4x":"https://twemoji.maxcdn.com/2/72x72/1f40b.png"},{"unicode":"🐬","code":"flipper","id":"408_flipper","4x":"https://twemoji.maxcdn.com/2/72x72/1f42c.png"},{"unicode":"🐠","code":"tropical-fish","id":"409_tropical-fish","4x":"https://twemoji.maxcdn.com/2/72x72/1f420.png"},{"unicode":"🐡","code":"fish","id":"410_fish","4x":"https://twemoji.maxcdn.com/2/72x72/1f421.png"},{"unicode":"🦈","code":"shark","id":"411_shark","4x":"https://twemoji.maxcdn.com/2/72x72/1f988.png"},{"unicode":"🐙","code":"octopus","id":"412_octopus","4x":"https://twemoji.maxcdn.com/2/72x72/1f419.png"},{"unicode":"🐚","code":"shell","id":"413_shell","4x":"https://twemoji.maxcdn.com/2/72x72/1f41a.png"},{"unicode":"🐌","code":"snail","id":"414_snail","4x":"https://twemoji.maxcdn.com/2/72x72/1f40c.png"},{"unicode":"🦋","code":"butterfly","id":"415_butterfly","4x":"https://twemoji.maxcdn.com/2/72x72/1f98b.png"},{"unicode":"🐛","code":"insect","id":"416_insect","4x":"https://twemoji.maxcdn.com/2/72x72/1f41b.png"},{"unicode":"🐜","code":"insect","id":"417_insect","4x":"https://twemoji.maxcdn.com/2/72x72/1f41c.png"},{"unicode":"🐝","code":"bee","id":"418_bee","4x":"https://twemoji.maxcdn.com/2/72x72/1f41d.png"},{"unicode":"🐞","code":"ladybug","id":"419_ladybug","4x":"https://twemoji.maxcdn.com/2/72x72/1f41e.png"},{"unicode":"🦗","code":"grasshopper","id":"420_grasshopper","4x":"https://twemoji.maxcdn.com/2/72x72/1f997.png"},{"unicode":"🕷️","code":"insect","id":"421_insect","4x":"https://twemoji.maxcdn.com/2/72x72/1f577.png"},{"unicode":"🕸️","code":"spider-web","id":"422_spider-web","4x":"https://twemoji.maxcdn.com/2/72x72/1f578.png"},{"unicode":"🦂","code":"scorpio","id":"423_scorpio","4x":"https://twemoji.maxcdn.com/2/72x72/1f982.png"},{"unicode":"🦟","code":"mosquito","id":"424_mosquito","4x":"https://twemoji.maxcdn.com/2/72x72/1f99f.png"},{"unicode":"🦠","code":"amoeba","id":"425_amoeba","4x":"https://twemoji.maxcdn.com/2/72x72/1f9a0.png"},{"unicode":"💐","code":"flower","id":"426_flower","4x":"https://twemoji.maxcdn.com/2/72x72/1f490.png"},{"unicode":"🌸","code":"blossom","id":"427_blossom","4x":"https://twemoji.maxcdn.com/2/72x72/1f338.png"},{"unicode":"🌹","code":"flower","id":"428_flower","4x":"https://twemoji.maxcdn.com/2/72x72/1f339.png"},{"unicode":"🥀","code":"flower-wilted","id":"429_flower-wilted","4x":"https://twemoji.maxcdn.com/2/72x72/1f940.png"},{"unicode":"🌺","code":"flower2","id":"430_flower2","4x":"https://twemoji.maxcdn.com/2/72x72/1f33a.png"},{"unicode":"🌻","code":"sun-flower","id":"431_sun-flower","4x":"https://twemoji.maxcdn.com/2/72x72/1f33b.png"},{"unicode":"🌼","code":"flower3","id":"432_flower3","4x":"https://twemoji.maxcdn.com/2/72x72/1f33c.png"},{"unicode":"🌷","code":"flower4","id":"433_flower4","4x":"https://twemoji.maxcdn.com/2/72x72/1f337.png"},{"unicode":"🌱","code":"young-tree","id":"434_young-tree","4x":"https://twemoji.maxcdn.com/2/72x72/1f331.png"},{"unicode":"🌲","code":"tree","id":"435_tree","4x":"https://twemoji.maxcdn.com/2/72x72/1f332.png"},{"unicode":"🌳","code":"big-tree","id":"436_big-tree","4x":"https://twemoji.maxcdn.com/2/72x72/1f333.png"},{"unicode":"🌵","code":"plant","id":"437_plant","4x":"https://twemoji.maxcdn.com/2/72x72/1f335.png"},{"unicode":"🌿","code":"leaf","id":"438_leaf","4x":"https://twemoji.maxcdn.com/2/72x72/1f33f.png"},{"unicode":"☘️","code":"three-leaf clover","id":"439_three-leaf clover","4x":"https://twemoji.maxcdn.com/2/72x72/2618.png"},{"unicode":"🍀","code":"four-leaf clover","id":"440_four-leaf clover","4x":"https://twemoji.maxcdn.com/2/72x72/1f340.png"},{"unicode":"🍁","code":"falling-leaf","id":"441_falling-leaf","4x":"https://twemoji.maxcdn.com/2/72x72/1f341.png"},{"unicode":"🏁","code":"checkered","id":"442_checkered","4x":"https://twemoji.maxcdn.com/2/72x72/1f3c1.png"},{"unicode":"🚩","code":"post","id":"443_post","4x":"https://twemoji.maxcdn.com/2/72x72/1f6a9.png"},{"unicode":"🎌","code":"japanese-celebration","id":"444_japanese-celebration","4x":"https://twemoji.maxcdn.com/2/72x72/1f38c.png"},{"unicode":"🏴","code":"flag-black","id":"445_flag-black","4x":"https://twemoji.maxcdn.com/2/72x72/1f3f4.png"},{"unicode":"🏳️","code":"flag-white","id":"446_flag-white","4x":"https://twemoji.maxcdn.com/2/72x72/1f3f3.png"},{"unicode":"🏳️‍🌈","code":"flag-pride","id":"447_flag-pride","4x":"https://twemoji.maxcdn.com/2/72x72/1f3f3-fe0f-200d-1f308.png"},{"unicode":"🏴‍☠️","code":"flag-pirate","id":"448_flag-pirate","4x":"https://twemoji.maxcdn.com/2/72x72/1f3f4-200d-2620-fe0f.png"},{"unicode":"🇦🇷","code":"AR","id":"449_AR","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e6-1f1f7.png"},{"unicode":"🇦🇺","code":"AU","id":"450_AU","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e6-1f1fa.png"},{"unicode":"🇧🇬","code":"BG","id":"451_BG","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e7-1f1ec.png"},{"unicode":"🇧🇷","code":"BR","id":"452_BR","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e7-1f1f7.png"},{"unicode":"🇨🇦","code":"CA","id":"453_CA","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e8-1f1e6.png"},{"unicode":"🇨🇳","code":"CN","id":"454_CN","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e8-1f1f3.png"},{"unicode":"🇨🇿","code":"CZ","id":"455_CZ","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e8-1f1ff.png"},{"unicode":"🇩🇪","code":"DE","id":"456_DE","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e9-1f1ea.png"},{"unicode":"🇩🇰","code":"DK","id":"457_DK","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e9-1f1f0.png"},{"unicode":"🇩🇲","code":"DM","id":"458_DM","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e9-1f1f2.png"},{"unicode":"🇩🇴","code":"DO","id":"459_DO","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e9-1f1f4.png"},{"unicode":"🇩🇿","code":"DZ","id":"460_DZ","4x":"https://twemoji.maxcdn.com/2/72x72/1f1e9-1f1ff.png"},{"unicode":"🇪🇦","code":"EA","id":"461_EA","4x":"https://twemoji.maxcdn.com/2/72x72/1f1ea-1f1e6.png"},{"unicode":"🇪🇨","code":"EC","id":"462_EC","4x":"https://twemoji.maxcdn.com/2/72x72/1f1ea-1f1e8.png"},{"unicode":"🇪🇸","code":"ES","id":"463_ES","4x":"https://twemoji.maxcdn.com/2/72x72/1f1ea-1f1f8.png"},{"unicode":"🇫🇮","code":"FI","id":"464_FI","4x":"https://twemoji.maxcdn.com/2/72x72/1f1eb-1f1ee.png"},{"unicode":"🇫🇷","code":"FR","id":"465_FR","4x":"https://twemoji.maxcdn.com/2/72x72/1f1eb-1f1f7.png"},{"unicode":"🇬🇧","code":"GB","id":"466_GB","4x":"https://twemoji.maxcdn.com/2/72x72/1f1ec-1f1e7.png"},{"unicode":"🇭🇰","code":"HK","id":"467_HK","4x":"https://twemoji.maxcdn.com/2/72x72/1f1ed-1f1f0.png"},{"unicode":"🇮🇱","code":"IL","id":"468_IL","4x":"https://twemoji.maxcdn.com/2/72x72/1f1ee-1f1f1.png"},{"unicode":"🇮🇹","code":"IT","id":"469_IT","4x":"https://twemoji.maxcdn.com/2/72x72/1f1ee-1f1f9.png"},{"unicode":"🇯🇵","code":"JA","id":"470_JA","4x":"https://twemoji.maxcdn.com/2/72x72/1f1ef-1f1f5.png"},{"unicode":"🇰🇵","code":"KP","id":"471_KP","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f0-1f1f5.png"},{"unicode":"🇰🇷","code":"KR","id":"472_KR","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f0-1f1f7.png"},{"unicode":"🇳🇱","code":"NL","id":"473_NL","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f3-1f1f1.png"},{"unicode":"🇳🇴","code":"NO","id":"474_NO","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f3-1f1f4.png"},{"unicode":"🇵🇱","code":"PL","id":"475_PL","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f5-1f1f1.png"},{"unicode":"🇵🇹","code":"PT","id":"476_PT","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f5-1f1f9.png"},{"unicode":"🇷🇴","code":"RO","id":"477_RO","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f7-1f1f4.png"},{"unicode":"🇷🇺","code":"RU","id":"478_RU","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f7-1f1fa.png"},{"unicode":"🇸🇰","code":"SK","id":"479_SK","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f8-1f1f0.png"},{"unicode":"🇸🇻","code":"SV","id":"480_SV","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f8-1f1fb.png"},{"unicode":"🇹🇭","code":"TH","id":"481_TH","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f9-1f1ed.png"},{"unicode":"🇹🇷","code":"TR","id":"482_TR","4x":"https://twemoji.maxcdn.com/2/72x72/1f1f9-1f1f7.png"},{"unicode":"🇻🇮","code":"VI","id":"483_VI","4x":"https://twemoji.maxcdn.com/2/72x72/1f1fb-1f1ee.png"}]';
+    //Spacing for release maker not trow erros from jshint
+    var IMG_404_GAME =
+        'data:image/png;base64,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';
 
-    var IMG_404_LOGO = "data:image/png;base64,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";
+    var IMG_404_LOGO =
+        'data:image/png;base64,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';
 
-    var IMG_404_VIDEO = "data:image/png;base64,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";
+    var IMG_404_VIDEO =
+        'data:image/png;base64,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';
 
-    var IMG_404_BANNER = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==";
+    var IMG_404_BANNER = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
 
-    var IMG_404_LOGO_TEMP = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAYAAAB5fY51AAAABHNCSVQICAgIfAhkiAAAAXRJREFUeJztwTEBAAAAwqD1T20MH6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/gZ/twABJJA/XAAAAABJRU5ErkJggg==";
+    var IMG_404_LOGO_TEMP =
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAYAAAB5fY51AAAABHNCSVQICAgIfAhkiAAAAXRJREFUeJztwTEBAAAAwqD1T20MH6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/gZ/twABJJA/XAAAAABJRU5ErkJggg==';
 
-    var IMG_PARTNER = "data:image/png;base64,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";
-    //empty// Adapted from:
+    var IMG_PARTNER =
+        'data:image/png;base64,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';
+    //empty
+    // Adapted from:
     // https://developer.tizen.org/community/tip-tech/using-css3-units-support-low-and-high-density-screens
 
     // BodyfontSize is used for px to em calculation used by scroll functions
@@ -985,7 +1118,7 @@
         var initialFontSize = 29 + Settings_value.global_font_offset.values[Main_getItemInt('global_font_offset', Settings_value.global_font_offset.defaultValue) - 1],
             initialWidth = 1920,
             initialHeight = 1080,
-            doc = document.getElementById("body_container"),
+            doc = document.getElementById('body_container'),
             currentHeight,
             scaleFactor,
             scaledWidth;
@@ -1000,7 +1133,7 @@
         // Calculate scaled body/divs size.
         scaledWidth = initialWidth * scaleFactor;
 
-        //Set new body width/height recalculated to 16 by 9 and scaled fontSize 
+        //Set new body width/height recalculated to 16 by 9 and scaled fontSize
         doc.style.width = scaledWidth + 'px';
         doc.style.height = currentHeight + 'px';
         document.body.style.fontSize = BodyfontSize + 'px';
@@ -1011,7 +1144,8 @@
 
     function calculateFontSizeTizen() {
         if (!Main_IsNotBrowser) calculateFontSize();
-    } // more keys at https://developer.samsung.com/smarttv/develop/guides/user-interaction/remote-control.html
+    }
+    // more keys at https://developer.samsung.com/smarttv/develop/guides/user-interaction/remote-control.html
     var KEY_PAUSE = 19;
     var KEY_PLAY = 415;
     var KEY_PLAYPAUSE = 10252;
@@ -1092,7 +1226,6 @@
         KEY_MEDIAREWIND = 79; //key O
         KEY_MEDIAFASTFORWARD = 80; //key P
     }
-
     //Variable initialization
     var AddCode_loadingDataTry = 0;
     var AddCode_loadingDataTryMax = 5;
@@ -1105,12 +1238,7 @@
     var AddCode_PlayRequest = false;
     var AddCode_Channel_id = '';
 
-    var AddCode_Scopes = [
-        'user:read:follows',
-        'user:read:subscriptions',
-        'chat:edit',
-        'chat:read'
-    ];
+    var AddCode_Scopes = ['user:read:follows', 'user:read:subscriptions', 'chat:edit', 'chat:read'];
 
     var AddCode_UrlToken = 'https://id.twitch.tv/oauth2/token?';
     //Variable initialization end
@@ -1122,15 +1250,20 @@
         ScreensObj_SetTopLable(STR_USER_CODE);
         Main_AddCodeInput.placeholder = STR_PLACEHOLDER_OAUTH;
         Main_ShowElement('oauth_scroll');
-        Main_innerHTML("oauth_text", STR_OAUTH_IN +
+        Main_innerHTML(
+            'oauth_text',
+            STR_OAUTH_IN +
             '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-family: \'Roboto-Bold\';">' +
-            AddUser_UsernameArray[Main_values.Users_AddcodePosition].name + '</div>' + STR_OAUTH_EXPLAIN);
+            AddUser_UsernameArray[Main_values.Users_AddcodePosition].name +
+            '</div>' +
+            STR_OAUTH_EXPLAIN
+        );
         AddCode_inputFocus();
     }
 
     function AddCode_exit() {
         AddCode_RemoveinputFocus(false);
-        document.body.removeEventListener("keydown", AddCode_handleKeyDown);
+        document.body.removeEventListener('keydown', AddCode_handleKeyDown);
         Main_HideElement('oauth_scroll');
     }
 
@@ -1159,8 +1292,8 @@
     }
 
     function AddCode_inputFocus() {
-        document.body.removeEventListener("keydown", AddCode_handleKeyDown);
-        document.body.addEventListener("keydown", AddCode_KeyboardEvent, false);
+        document.body.removeEventListener('keydown', AddCode_handleKeyDown);
+        document.body.addEventListener('keydown', AddCode_KeyboardEvent, false);
         Main_AddCodeInput.placeholder = STR_PLACEHOLDER_OAUTH;
         Main_AddCodeInput.focus();
         AddCode_keyBoardOn = true;
@@ -1169,10 +1302,10 @@
     function AddCode_RemoveinputFocus(EnaKeydown) {
         Main_AddCodeInput.blur();
         AddCode_removeEventListener();
-        document.body.removeEventListener("keydown", AddCode_KeyboardEvent);
+        document.body.removeEventListener('keydown', AddCode_KeyboardEvent);
         Main_AddCodeInput.placeholder = STR_PLACEHOLDER_PRESS + STR_PLACEHOLDER_OAUTH;
 
-        if (EnaKeydown) document.body.addEventListener("keydown", AddCode_handleKeyDown, false);
+        if (EnaKeydown) document.body.addEventListener('keydown', AddCode_handleKeyDown, false);
         window.setTimeout(function() {
             AddCode_keyBoardOn = false;
         }, 250);
@@ -1182,7 +1315,7 @@
         if (Main_AddCodeInput !== null) {
             var elClone = Main_AddCodeInput.cloneNode(true);
             Main_AddCodeInput.parentNode.replaceChild(elClone, Main_AddCodeInput);
-            Main_AddCodeInput = document.getElementById("oauth_input");
+            Main_AddCodeInput = document.getElementById('oauth_input');
         }
     }
 
@@ -1233,7 +1366,7 @@
 
         var url = 'https://id.twitch.tv/oauth2/validate';
 
-        xmlHttp.open("GET", url, true);
+        xmlHttp.open('GET', url, true);
         xmlHttp.setRequestHeader(Main_Authorization, Main_Bearer + AddCode_main_token);
         xmlHttp.timeout = AddCode_loadingDataTimeout;
         xmlHttp.ontimeout = function() {};
@@ -1241,15 +1374,12 @@
         xmlHttp.onreadystatechange = function() {
             if (xmlHttp.readyState === 4) {
                 if (xmlHttp.status === 200) {
-
                     callbackFunc();
 
                     var data = JSON.parse(xmlHttp.responseText);
 
                     window.setTimeout(function() {
-
                         AddCode_AppToken(0, null, null);
-
                     }, (parseInt(data.expires_in) - 60) * 1000);
                 } else if (xmlHttp.status === 401) {
                     callbackFuncNOK();
@@ -1269,14 +1399,11 @@
     }
 
     function AddCode_AppToken(tryes, callbackFunc, callbackFuncNOK) {
-
         var xmlHttp = new XMLHttpRequest();
 
-        var url = 'https://id.twitch.tv/oauth2/token?client_id=' + AddCode_clientId +
-            '&client_secret=' + AddCode_client_token +
-            '&grant_type=client_credentials';
+        var url = 'https://id.twitch.tv/oauth2/token?client_id=' + AddCode_clientId + '&client_secret=' + AddCode_client_token + '&grant_type=client_credentials';
 
-        xmlHttp.open("POST", url, true);
+        xmlHttp.open('POST', url, true);
         xmlHttp.timeout = AddCode_loadingDataTimeout;
         xmlHttp.ontimeout = function() {};
 
@@ -1321,12 +1448,18 @@
 
         var xmlHttp = new XMLHttpRequest();
 
-        var url = AddCode_UrlToken + 'grant_type=refresh_token&client_id=' +
-            encodeURIComponent(AddCode_clientId) + '&client_secret=' + encodeURIComponent(AddCode_client_token) +
-            '&refresh_token=' + encodeURIComponent(AddUser_UsernameArray[position].refresh_token) +
-            '&redirect_uri=' + AddCode_redirect_uri;
+        var url =
+            AddCode_UrlToken +
+            'grant_type=refresh_token&client_id=' +
+            encodeURIComponent(AddCode_clientId) +
+            '&client_secret=' +
+            encodeURIComponent(AddCode_client_token) +
+            '&refresh_token=' +
+            encodeURIComponent(AddUser_UsernameArray[position].refresh_token) +
+            '&redirect_uri=' +
+            AddCode_redirect_uri;
 
-        xmlHttp.open("POST", url, true);
+        xmlHttp.open('POST', url, true);
         xmlHttp.timeout = AddCode_loadingDataTimeout;
         xmlHttp.ontimeout = function() {};
 
@@ -1369,7 +1502,6 @@
             AddUser_SaveUserArray();
 
             AddCode_Refreshtimeout(position);
-
         } else AddCode_requestTokensFailRunning(position);
 
         if (callbackFunc) callbackFunc();
@@ -1377,7 +1509,6 @@
 
     //Check if has all scopes, in canse they change
     function AddCode_TokensCheckScope(scope) {
-
         var i = 0,
             len = AddCode_Scopes.length;
 
@@ -1389,9 +1520,16 @@
     }
 
     function AddCode_requestTokens() {
-        var theUrl = AddCode_UrlToken + 'grant_type=authorization_code&client_id=' +
-            encodeURIComponent(AddCode_clientId) + '&client_secret=' + encodeURIComponent(AddCode_client_token) +
-            '&code=' + encodeURIComponent(AddCode_Code) + '&redirect_uri=' + AddCode_redirect_uri;
+        var theUrl =
+            AddCode_UrlToken +
+            'grant_type=authorization_code&client_id=' +
+            encodeURIComponent(AddCode_clientId) +
+            '&client_secret=' +
+            encodeURIComponent(AddCode_client_token) +
+            '&code=' +
+            encodeURIComponent(AddCode_Code) +
+            '&redirect_uri=' +
+            AddCode_redirect_uri;
 
         AddCode_BasexmlHttpGet(theUrl, 'POST', 0, null, AddCode_requestTokensReady);
     }
@@ -1410,7 +1548,6 @@
         if (AddCode_loadingDataTry < AddCode_loadingDataTryMax) {
             AddCode_requestTokens();
         } else AddCode_requestTokensFail();
-
     }
 
     function AddCode_requestTokensFail() {
@@ -1460,8 +1597,7 @@
 
     function AddCode_CheckOauthTokenSucess(response) {
         var token = JSON.parse(response);
-        if (token.login &&
-            token.login.indexOf(AddUser_UsernameArray[Main_values.Users_AddcodePosition].name) !== -1) {
+        if (token.login && token.login.indexOf(AddUser_UsernameArray[Main_values.Users_AddcodePosition].name) !== -1) {
             AddUser_SaveUserArray();
             Main_newUsercode = 0;
             Main_HideLoadDialog();
@@ -1507,7 +1643,8 @@
     function AddCode_CheckTokenReady(xmlHttp, position, tryes) {
         if (xmlHttp.readyState === 4) {
             if (xmlHttp.status === 200) AddCode_CheckTokenSuccess(xmlHttp.responseText, position);
-            else if (xmlHttp.status === 401 || xmlHttp.status === 403) { //token expired
+            else if (xmlHttp.status === 401 || xmlHttp.status === 403) {
+                //token expired
                 AddCode_refreshTokens(position, 0, null, null);
             } else AddCode_CheckTokenError(position, tryes);
         }
@@ -1527,9 +1664,7 @@
 
         if (AddUser_UsernameArray[position].access_token) {
             AddUser_UsernameArray[position].timeout_id = window.setTimeout(function() {
-
                 AddCode_refreshTokens(position, 0, null, null);
-
             }, (parseInt(AddUser_UsernameArray[position].expires_in) - 60) * 1000);
         }
     }
@@ -1553,11 +1688,14 @@
 
     function AddCode_RequestCheckFollowReady(xmlHttp) {
         if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) { //yes
+            if (xmlHttp.status === 200) {
+                //yes
                 AddCode_RequestCheckFollowOK();
-            } else if (xmlHttp.status === 404) { //no
+            } else if (xmlHttp.status === 404) {
+                //no
                 AddCode_RequestCheckFollowNOK(xmlHttp.responseText);
-            } else { // internet error
+            } else {
+                // internet error
                 AddCode_RequestCheckFollowError();
             }
         }
@@ -1602,12 +1740,14 @@
 
     function AddCode_FollowRequestReady(xmlHttp) {
         if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) { //success user now is following the channel
+            if (xmlHttp.status === 200) {
+                //success user now is following the channel
                 AddCode_IsFollowing = true;
                 if (AddCode_PlayRequest) Play_setFollow();
                 else ChannelContent_setFollow();
                 return;
-            } else if (xmlHttp.status === 401 || xmlHttp.status === 403) { //token expired
+            } else if (xmlHttp.status === 401 || xmlHttp.status === 403) {
+                //token expired
                 AddCode_refreshTokens(0, 0, AddCode_Follow, null);
             } else {
                 AddCode_FollowRequestError();
@@ -1633,12 +1773,14 @@
 
     function AddCode_UnFollowRequestReady(xmlHttp) {
         if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 204) { //success user is now not following the channel
+            if (xmlHttp.status === 204) {
+                //success user is now not following the channel
                 AddCode_IsFollowing = false;
                 if (AddCode_PlayRequest) Play_setFollow();
                 else ChannelContent_setFollow();
                 return;
-            } else if (xmlHttp.status === 401 || xmlHttp.status === 403) { //token expired
+            } else if (xmlHttp.status === 401 || xmlHttp.status === 403) {
+                //token expired
                 AddCode_refreshTokens(0, 0, AddCode_UnFollow, null);
             } else {
                 AddCode_UnFollowRequestError();
@@ -1665,21 +1807,26 @@
 
     function AddCode_RequestCheckSubReady(xmlHttp) {
         if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) { //success yes user is a SUB
+            if (xmlHttp.status === 200) {
+                //success yes user is a SUB
                 AddCode_IsSub = true;
                 PlayVod_isSub();
-            } else if (xmlHttp.status === 422) { //channel does not have a subscription program
+            } else if (xmlHttp.status === 422) {
+                //channel does not have a subscription program
                 AddCode_RequestCheckSubfail();
-            } else if (xmlHttp.status === 404) { //success no user is not a sub
+            } else if (xmlHttp.status === 404) {
+                //success no user is not a sub
                 var response = JSON.parse(xmlHttp.responseText);
                 if (response.error) {
                     if ((response.error + '').indexOf('Not Found') !== -1) {
                         AddCode_RequestCheckSubfail();
                     } else AddCode_RequestCheckSubError();
                 } else AddCode_RequestCheckSubError();
-            } else if (xmlHttp.status === 401 || xmlHttp.status === 403) { //token expired
+            } else if (xmlHttp.status === 401 || xmlHttp.status === 403) {
+                //token expired
                 AddCode_refreshTokens(0, 0, AddCode_CheckSub, AddCode_RequestCheckSubfail);
-            } else { // internet error
+            } else {
+                // internet error
                 AddCode_RequestCheckSubError();
             }
         }
@@ -1715,7 +1862,8 @@
                 AddCode_loadingDataTry = 0;
                 AddCode_RequestFollowGame();
                 return;
-            } else { // internet error
+            } else {
+                // internet error
                 AddCode_GetGameIdError();
             }
         }
@@ -1727,21 +1875,23 @@
     }
 
     function AddCode_RequestFollowGame() {
-        var theUrl = Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/follows/games/' +
-            Main_values.Main_gameSelected_id + Main_TwithcV5Flag_I;
+        var theUrl = Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/follows/games/' + Main_values.Main_gameSelected_id + Main_TwithcV5Flag_I;
 
         AddCode_BasexmlHttpGet(theUrl, 'PUT', 3, Main_OAuth + AddUser_UsernameArray[0].access_token, AddCode_RequestFollowGameReady);
     }
 
     function AddCode_RequestFollowGameReady(xmlHttp) {
         if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) { //success we now follow the game
+            if (xmlHttp.status === 200) {
+                //success we now follow the game
                 AGame_following = true;
                 AGame_setFollow();
                 return;
-            } else if (xmlHttp.status === 401 || xmlHttp.status === 403) { //token expired
+            } else if (xmlHttp.status === 401 || xmlHttp.status === 403) {
+                //token expired
                 AddCode_refreshTokens(0, 0, AddCode_FollowGame, null);
-            } else { // internet error
+            } else {
+                // internet error
                 AddCode_FollowGameRequestError();
             }
         }
@@ -1758,27 +1908,35 @@
     }
 
     function AddCode_RequestUnFollowGame() {
-        var theUrl = 'https://api.twitch.tv/api/users/' + AddUser_UsernameArray[0].name +
-            '/follows/games/' + encodeURIComponent(Main_values.Main_gameSelected) + '?oauth_token=' +
-            AddUser_UsernameArray[0].access_token + Main_TwithcV5Flag;
+        var theUrl =
+            'https://api.twitch.tv/api/users/' +
+            AddUser_UsernameArray[0].name +
+            '/follows/games/' +
+            encodeURIComponent(Main_values.Main_gameSelected) +
+            '?oauth_token=' +
+            AddUser_UsernameArray[0].access_token +
+            Main_TwithcV5Flag;
 
         AddCode_BasexmlHttpGet(theUrl, 'DELETE', 2, null, AddCode_UnFollowGameRequestReady);
     }
 
     function AddCode_UnFollowGameRequestReady(xmlHttp) {
         if (xmlHttp.readyState === 4) {
-
-            if (xmlHttp.status === 404 || xmlHttp.status === 204) { // success we now unfollow the game
-                if (xmlHttp.status === 204) { // success we now unfollow the game
+            if (xmlHttp.status === 404 || xmlHttp.status === 204) {
+                // success we now unfollow the game
+                if (xmlHttp.status === 204) {
+                    // success we now unfollow the game
                     AGame_following = false;
                     AGame_setFollow();
                 } else if (JSON.parse(xmlHttp.responseText).message.indexOf('does not follow') !== -1) {
                     AGame_following = false;
                     AGame_setFollow();
                 } else AddCode_UnFollowGameRequestError();
-            } else if (xmlHttp.status === 401 || xmlHttp.status === 403) { //token expired
+            } else if (xmlHttp.status === 401 || xmlHttp.status === 403) {
+                //token expired
                 AddCode_refreshTokens(0, 0, AddCode_UnFollowGame, null);
-            } else { // internet error
+            } else {
+                // internet error
                 AddCode_UnFollowGameRequestError();
             }
         }
@@ -1801,8 +1959,7 @@
 
         Main_Headers[2][1] = access_token;
 
-        for (var i = 0; i < HeaderQuatity; i++)
-            xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
+        for (var i = 0; i < HeaderQuatity; i++) xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
 
         xmlHttp.ontimeout = function() {};
 
@@ -1821,8 +1978,7 @@
 
         Main_Headers_Backup[2][1] = access_token;
 
-        for (var i = 0; i < HeaderQuatity; i++)
-            xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
+        for (var i = 0; i < HeaderQuatity; i++) xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
 
         xmlHttp.ontimeout = function() {};
 
@@ -1838,7 +1994,7 @@
 
         var xmlHttp = new XMLHttpRequest();
 
-        xmlHttp.open("GET", theUrl, true);
+        xmlHttp.open('GET', theUrl, true);
         xmlHttp.setRequestHeader(Main_Authorization, Main_Bearer + AddUser_UsernameArray[position].access_token);
 
         xmlHttp.timeout = 10000;
@@ -1853,7 +2009,7 @@
 
     var AddCode_redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githubio/login/twitch.html';
     //Get yours client id and secret from https://docs.aws.amazon.com/lumberyard/latest/userguide/chatplay-generate-twitch-client-id.html
-    var AddCode_clientId = "1mknxvmcmbynqcg2xvd1v2sydxfbjx"; //public but get yours link above is free
+    var AddCode_clientId = '1mknxvmcmbynqcg2xvd1v2sydxfbjx'; //public but get yours link above is free
     var AddCode_client_token; //none public get yours link above is free
     var AddCode_client_backup;
     var AddCode_main_token;
@@ -1883,8 +2039,8 @@
 
     function AddUser_exit() {
         AddUser_RemoveinputFocus(false);
-        document.body.removeEventListener("keydown", AddUser_handleKeyDown);
-        document.body.removeEventListener("keydown", AddUser_KeyboardEvent);
+        document.body.removeEventListener('keydown', AddUser_handleKeyDown);
+        document.body.removeEventListener('keydown', AddUser_KeyboardEvent);
         Main_HideElement('add_user_scroll');
     }
 
@@ -1916,8 +2072,8 @@
     }
 
     function AddUser_inputFocus() {
-        document.body.removeEventListener("keydown", AddUser_handleKeyDown);
-        document.body.addEventListener("keydown", AddUser_KeyboardEvent, false);
+        document.body.removeEventListener('keydown', AddUser_handleKeyDown);
+        document.body.addEventListener('keydown', AddUser_KeyboardEvent, false);
         Main_AddUserInput.placeholder = STR_PLACEHOLDER_USER;
 
         Main_AddUserInput.focus();
@@ -1928,17 +2084,17 @@
         if (Main_AddUserInput !== null) {
             var elClone = Main_AddUserInput.cloneNode(true);
             Main_AddUserInput.parentNode.replaceChild(elClone, Main_AddUserInput);
-            Main_AddUserInput = document.getElementById("user_input");
+            Main_AddUserInput = document.getElementById('user_input');
         }
     }
 
     function AddUser_RemoveinputFocus(EnaKeydown) {
         Main_AddUserInput.blur();
         AddUser_removeEventListener();
-        document.body.removeEventListener("keydown", AddUser_KeyboardEvent);
+        document.body.removeEventListener('keydown', AddUser_KeyboardEvent);
         Main_AddUserInput.placeholder = STR_PLACEHOLDER_PRESS + STR_PLACEHOLDER_USER;
 
-        if (EnaKeydown) document.body.addEventListener("keydown", AddUser_handleKeyDown, false);
+        if (EnaKeydown) document.body.addEventListener('keydown', AddUser_handleKeyDown, false);
         window.setTimeout(function() {
             Main_ready(function() {
                 AddUser_keyBoardOn = false;
@@ -1968,7 +2124,6 @@
             case KEY_KEYBOARD_CANCEL:
             case KEY_DOWN:
                 if (Main_AddUserInput.value !== '' && Main_AddUserInput.value !== null) {
-
                     AddUser_Username = Main_AddUserInput.value;
 
                     if (!AddUser_UserCodeExist(AddUser_Username)) {
@@ -1980,7 +2135,7 @@
                         AddUser_loadDataRequest();
                     } else {
                         Main_HideLoadDialog();
-                        Main_showWarningDialog(STR_USER + " " + AddUser_Username + STR_USER_SET);
+                        Main_showWarningDialog(STR_USER + ' ' + AddUser_Username + STR_USER_SET);
                         window.setTimeout(function() {
                             Main_HideWarningDialog();
                             AddUser_inputFocus();
@@ -2003,23 +2158,13 @@
     function AddUser_loadDataRequest() {
         var theUrl = Main_helix_api + 'users?login=' + encodeURIComponent(AddUser_Username);
 
-        BasexmlHttpGet(
-            theUrl,
-            AddUser_loadingDataTimeout,
-            2,
-            null,
-            AddUser_loadDataRequestSuccess,
-            AddUser_loadDataError,
-            false,
-            null,
-            true
-        );
+        BasexmlHttpGet(theUrl, AddUser_loadingDataTimeout, 2, null, AddUser_loadDataRequestSuccess, AddUser_loadDataError, false, null, true);
     }
 
     function AddUser_loadDataRequestSuccess(response) {
         if (JSON.parse(response).data.length) {
             Main_AddUserInput.value = '';
-            document.body.removeEventListener("keydown", AddUser_handleKeyDown);
+            document.body.removeEventListener('keydown', AddUser_handleKeyDown);
             AddUser_SaveNewUser(response);
         } else AddUser_loadDataNoUser();
     }
@@ -2052,7 +2197,6 @@
 
                 if (!i) AddUser_UpdateSidepanel();
                 AddUser_UpdateUser(i, 0);
-
             }
         } else AddUser_UpdateSidepanelDefault();
     }
@@ -2066,13 +2210,13 @@
     }
 
     function AddUser_UpdateSidepanelSize(logo, username) {
-        Main_innerHTML("side_panel_new_0_img", '<img class="side_panel_new_img" alt="" src="' + logo + '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'">');
+        Main_innerHTML('side_panel_new_0_img', '<img class="side_panel_new_img" alt="" src="' + logo + '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'">');
         Sidepannel_SetUserlable(username);
 
         var size = username.length,
             doc = document.getElementById('side_panel_movel');
 
-        size = (size > 11 ? size - 11 : 0);
+        size = size > 11 ? size - 11 : 0;
 
         doc.style.marginLeft = 'calc(-' + Sidepannel_MoveldefaultMargin + '% - ' + size + 'ch)';
         doc.style.width = 'calc(' + Sidepannel_MoveldefaultWidth + '% + ' + size + 'ch)';
@@ -2085,17 +2229,7 @@
     function AddUser_UpdateUser(position, tryes) {
         var theUrl = Main_helix_api + 'users?login=' + encodeURIComponent(AddUser_UsernameArray[position].name);
 
-        BasexmlHttpGet(
-            theUrl,
-            AddUser_loadingDataTimeout,
-            2,
-            null,
-            AddUser_UpdateUsertSuccess,
-            AddUser_UpdateUserError,
-            position,
-            tryes,
-            true
-        );
+        BasexmlHttpGet(theUrl, AddUser_loadingDataTimeout, 2, null, AddUser_UpdateUsertSuccess, AddUser_UpdateUserError, position, tryes, true);
     }
 
     function AddUser_UpdateUsertSuccess(response, position) {
@@ -2124,7 +2258,7 @@
             access_token: 0,
             refresh_token: 0,
             expires_in: 0,
-            timeout_id: null,
+            timeout_id: null
         });
 
         AddUser_SaveUserArray();
@@ -2167,7 +2301,7 @@
             //Remove first user alphabetical sort and add first back
             var mainuser = AddUser_UsernameArray.splice(0, 1);
             AddUser_UsernameArray.sort(function(a, b) {
-                return (a.display_name).toLowerCase().localeCompare((b.display_name).toLowerCase());
+                return a.display_name.toLowerCase().localeCompare(b.display_name.toLowerCase());
             });
             AddUser_UsernameArray.splice(0, 0, mainuser[0]);
         }
@@ -2190,9 +2324,11 @@
     }
 
     function AddUser_UserCodeExist(user) {
-        return AddUser_UsernameArray.filter(function(array) {
-            return array.name === user;
-        }).length > 0;
+        return (
+            AddUser_UsernameArray.filter(function(array) {
+                return array.name === user;
+            }).length > 0
+        );
     }
 
     function AddUser_UserFindpos(user) {
@@ -2237,7 +2373,7 @@
         if (ChannelContent_ChannelValueIsset && !Main_values.Search_isSearching && Main_values.Main_selectedChannel_id) ChannelContent_RestoreChannelValue();
         if (ChannelContent_lastselectedChannel !== Main_values.Main_selectedChannel) ChannelContent_status = false;
         Main_cleanTopLabel();
-        document.body.addEventListener("keydown", ChannelContent_handleKeyDown, false);
+        document.body.addEventListener('keydown', ChannelContent_handleKeyDown, false);
         AddCode_PlayRequest = false;
 
         Main_innerHTML('top_lable', Main_values.Main_selectedChannelDisplayname);
@@ -2260,7 +2396,7 @@
 
     function ChannelContent_exit() {
         Main_RestoreTopLabel();
-        document.body.removeEventListener("keydown", ChannelContent_handleKeyDown);
+        document.body.removeEventListener('keydown', ChannelContent_handleKeyDown);
         Main_HideElement(ChannelContent_ids[10]);
         Main_values.My_channel = false;
         ChannelContent_removeFocus();
@@ -2294,16 +2430,17 @@
     }
 
     function ChannelContent_loadDataRequest() {
-        var theUrl = Main_kraken_api + 'streams/' +
-            encodeURIComponent(ChannelContent_TargetId !== undefined ? ChannelContent_TargetId : Main_values.Main_selectedChannel_id) +
-            Main_TwithcV5Flag_I;
+        // Changed to Get Streams https://dev.twitch.tv/docs/api/reference#get-streams
+        var theUrl = Main_helix_api + 'streams?user_id=' + encodeURIComponent(ChannelContent_TargetId !== undefined ? ChannelContent_TargetId : Main_values.Main_selectedChannel_id);
 
-        BasexmlHttpGet(theUrl, ChannelContent_loadingDataTimeout, 2, null, ChannelContent_loadDataRequestSuccess, ChannelContent_loadDataError);
+        BasexmlHttpGet(theUrl, ChannelContent_loadingDataTimeout, 2, null, ChannelContent_loadDataRequestSuccess, ChannelContent_loadDataError, false, null, true);
     }
 
     function ChannelContent_loadDataRequestSuccess(response) {
-        if (JSON.parse(response).stream) {
-            ChannelContent_responseText = response;
+        var obj = JSON.parse(response);
+
+        if (obj.data && obj.data.length) {
+            ChannelContent_responseText = obj.data;
             ChannelContent_loadDataPrepare();
             ChannelContent_GetStreamerInfo();
         } else if (!ChannelContent_TargetId) {
@@ -2322,23 +2459,16 @@
             ChannelContent_loadingDataTimeout += 500;
             ChannelContent_loadDataRequest();
         } else {
-
             ChannelContent_loadDataCheckHostError();
-
         }
     }
 
     var ChannelContent_loadDataCheckHostId;
 
     function ChannelContent_loadDataCheckHost() {
+        ChannelContent_loadDataCheckHostId = new Date().getTime();
 
-        ChannelContent_loadDataCheckHostId = (new Date().getTime());
-
-        Main_GetHost(
-            ChannelContent_CheckHost,
-            ChannelContent_loadDataCheckHostId,
-            Main_values.Main_selectedChannel
-        );
+        Main_GetHost(ChannelContent_CheckHost, ChannelContent_loadDataCheckHostId, Main_values.Main_selectedChannel);
     }
 
     function ChannelContent_loadDataCheckHostError() {
@@ -2348,15 +2478,11 @@
     }
 
     function ChannelContent_CheckHost(responseObj, id) {
-
         if (ChannelContent_loadDataCheckHostId === id) {
-
             if (responseObj.status === 200) {
-
                 var data = JSON.parse(responseObj.responseText).data;
 
                 if (data.user && data.user.hosting) {
-
                     var response = data.user.hosting;
 
                     ChannelContent_TargetId = parseInt(response.id);
@@ -2367,28 +2493,34 @@
             }
 
             ChannelContent_loadDataCheckHostError();
-
         }
     }
 
     function ChannelContent_GetStreamerInfo() {
-        var theUrl = Main_kraken_api + 'channels/' + Main_values.Main_selectedChannel_id + Main_TwithcV5Flag_I;
+        // https://dev.twitch.tv/docs/api/reference#get-users
+        var theUrl = Main_helix_api + 'users?id=' + Main_values.Main_selectedChannel_id;
 
-        BasexmlHttpGet(theUrl, PlayVod_loadingInfoDataTimeout, 2, null, ChannelContent_GetStreamerInfoSuccess, ChannelContent_GetStreamerInfoError);
+        BasexmlHttpGet(theUrl, PlayVod_loadingInfoDataTimeout, 2, null, ChannelContent_GetStreamerInfoSuccess, ChannelContent_GetStreamerInfoError, false, null, true);
     }
 
     function ChannelContent_GetStreamerInfoSuccess(responseText) {
-        var channel = JSON.parse(responseText);
-        ChannelContent_offline_image = channel.video_banner;
-        ChannelContent_offline_image = ChannelContent_offline_image ? ChannelContent_offline_image.replace("1920x1080", Main_VideoSize) : ChannelContent_offline_image;
-        ChannelContent_profile_banner = channel.profile_banner ? channel.profile_banner : IMG_404_BANNER;
-        ChannelContent_selectedChannelViews = channel.views;
-        ChannelContent_selectedChannelFollower = channel.followers;
-        ChannelContent_description = channel.description;
-        Main_values.Main_selectedChannelLogo = channel.logo;
-        Main_values.Main_selectedChannelPartner = channel.partner;
+        var obj = JSON.parse(responseText);
 
-        ChannelContent_loadDataSuccess();
+        if (obj.data && obj.data.length) {
+            var channel = obj.data[0];
+            ChannelContent_offline_image = channel.offline_image_url;
+            ChannelContent_offline_image = ChannelContent_offline_image ? ChannelContent_offline_image.replace('1920x1080', Main_VideoSize) : ChannelContent_offline_image;
+            //ChannelContent_profile_banner = channel.profile_image_url ? channel.profile_image_url : IMG_404_BANNER;
+            ChannelContent_selectedChannelViews = channel.view_count;
+            //ChannelContent_selectedChannelFollower = channel.followers;
+            ChannelContent_description = channel.description;
+            Main_values.Main_selectedChannelLogo = channel.profile_image_url;
+            Main_values.Main_selectedChannelPartner = channel.broadcaster_type === 'partner';
+
+            ChannelContent_loadDataSuccess();
+        } else {
+            ChannelContent_loadDataError();
+        }
     }
 
     function ChannelContent_GetStreamerInfoError() {
@@ -2408,87 +2540,113 @@
     }
 
     function ChannelContent_setFollow() {
-        if (AddCode_IsFollowing) Main_innerHTML("channel_content_titley_2", '<i class="icon-heart" style="color: #6441a4; font-size: 100%;"></i>' + STR_SPACE + STR_SPACE + STR_FOLLOWING);
-        else Main_innerHTML("channel_content_titley_2", '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + (AddUser_UserIsSet() ? STR_FOLLOW : STR_NOKEY));
+        if (AddCode_IsFollowing) Main_innerHTML('channel_content_titley_2', '<i class="icon-heart" style="color: #6441a4; font-size: 100%;"></i>' + STR_SPACE + STR_SPACE + STR_FOLLOWING);
+        else Main_innerHTML('channel_content_titley_2', '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + (AddUser_UserIsSet() ? STR_FOLLOW : STR_NOKEY));
     }
 
     function ChannelContent_loadDataSuccess() {
         if (!Main_values.Main_selectedChannelLogo) Main_values.Main_selectedChannelLogo = IMG_404_LOGO;
 
-        Main_innerHTML("channel_content_thumbdiv0_1", '<img class="stream_img_channel_logo" alt="" src="' + Main_values.Main_selectedChannelLogo.replace("300x300", '600x600') + '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'">');
+        Main_innerHTML(
+            'channel_content_thumbdiv0_1',
+            '<img class="stream_img_channel_logo" alt="" src="' + Main_values.Main_selectedChannelLogo.replace('300x300', '600x600') + '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'">'
+        );
 
-        Main_innerHTML("channel_content_img0_1", '<img class="stream_img_channel" alt="" src="' + ChannelContent_profile_banner + '" onerror="this.onerror=null;this.src=\'' + IMG_404_BANNER + '\'">');
+        Main_innerHTML('channel_content_img0_1', '<img class="stream_img_channel" alt="" src="' + ChannelContent_profile_banner + '" onerror="this.onerror=null;this.src=\'' + IMG_404_BANNER + '\'">');
 
         var streamer_bio = Main_values.Main_selectedChannelDisplayname;
 
-        streamer_bio += (Main_values.Main_selectedChannelPartner ? STR_SPACE + STR_SPACE + '<img style="display: inline-block; width: 2ch; vertical-align: middle;" alt="" src="' + IMG_PARTNER + '">' : "");
+        streamer_bio += Main_values.Main_selectedChannelPartner ? STR_SPACE + STR_SPACE + '<img style="display: inline-block; width: 2ch; vertical-align: middle;" alt="" src="' + IMG_PARTNER + '">' : '';
 
-        streamer_bio += ChannelContent_selectedChannelViews !== '' ?
-            STR_BR + Main_addCommas(ChannelContent_selectedChannelViews) + STR_VIEWS : '';
+        streamer_bio += ChannelContent_selectedChannelViews !== '' ? STR_BR + Main_addCommas(ChannelContent_selectedChannelViews) + STR_VIEWS : '';
 
-        streamer_bio += ChannelContent_selectedChannelFollower !== '' ?
-            STR_BR + Main_addCommas(ChannelContent_selectedChannelFollower) + STR_FOLLOWERS : '';
+        streamer_bio += ChannelContent_selectedChannelFollower !== '' ? STR_BR + Main_addCommas(ChannelContent_selectedChannelFollower) + STR_FOLLOWERS : '';
 
-        streamer_bio += ChannelContent_description !== '' ?
-            STR_BR + STR_BR + STR_ABOUT + ':' + STR_BR + twemoji.parse(ChannelContent_description) : '';
+        streamer_bio += ChannelContent_description !== '' ? STR_BR + STR_BR + STR_ABOUT + ':' + STR_BR + twemoji.parse(ChannelContent_description) : '';
 
-        Main_innerHTML("channel_content_infodiv0_1", streamer_bio);
+        Main_innerHTML('channel_content_infodiv0_1', streamer_bio);
 
         if (ChannelContent_responseText) {
+            if (ChannelContent_responseText.length) {
+                var hosting = ChannelContent_TargetId !== undefined ? Main_values.Main_selectedChannelDisplayname + STR_USER_HOSTING : '';
 
-            var response = JSON.parse(ChannelContent_responseText);
-            if (response.stream) {
+                var stream = ChannelContent_responseText[0];
 
-                var hosting = ChannelContent_TargetId !== undefined ? Main_values.Main_selectedChannelDisplayname +
-                    STR_USER_HOSTING : '';
-
-                var stream = response.stream;
-
-                ChannelContent_createCell(stream.channel.name, stream.channel._id, stream.preview.template,
-                    twemoji.parse(stream.channel.status), stream.game,
-                    hosting + stream.channel.display_name,
-                    STR_SINCE + Play_streamLiveAt(stream.created_at) + STR_SPACE + STR_FOR +
-                    Main_addCommas(stream.viewers) + STR_SPACE + STR_VIEWER,
-                    Main_videoqualitylang(stream.video_height, stream.average_fps, stream.channel.broadcaster_language),
-                    Main_is_rerun(stream.broadcast_platform));
+                ChannelContent_createCell(
+                    stream.user_name,
+                    stream.id,
+                    stream.thumbnail_url,
+                    twemoji.parse(stream.title),
+                    stream.game_name,
+                    hosting + stream.user_name,
+                    STR_SINCE + Play_streamLiveAt(stream.started_at) + STR_SPACE + STR_FOR + Main_addCommas(stream.viewer_count) + STR_SPACE + STR_VIEWER,
+                    Main_lang(stream.language),
+                    Main_is_rerun(stream.type)
+                );
 
                 ChannelContent_cursorX = 1;
-
             } else ChannelContent_createCellOffline();
-
         } else ChannelContent_createCellOffline();
 
         ChannelContent_loadDataSuccessFinish();
     }
 
-    function ChannelContent_createCell(channel_name, channel_id, preview_thumbnail, stream_title, stream_game, channel_display_name, viwers, quality, rerun) {
-
+    function ChannelContent_createCell(channel_name, channel_id, preview_thumbnail, stream_title, stream_game, channel_display_name, viewers, quality, rerun) {
         var ishosting = ChannelContent_TargetId !== undefined;
         if (!preview_thumbnail) preview_thumbnail = IMG_404_VIDEO;
 
         document.getElementById('channel_content_cell0_1').setAttribute(Main_DataAttribute, JSON.stringify([channel_name, channel_id, rerun, channel_display_name]));
 
-        Main_innerHTML("channel_content_thumbdiv0_0", '<div class="stream_thumbnail_live_img"><img class="stream_img" alt="" src="' + preview_thumbnail.replace("{width}x{height}", Main_VideoSize) + Main_randomimg +
-            '" onerror="this.onerror=null;this.src=\'' + IMG_404_VIDEO +
-            '\'"></div><div class="stream_thumbnail_live_text_holder"><div class="stream_text_holder"><div id="channel_content_cell0_3" style="line-height: 1.6ch;"><div class="stream_info_live_name" style="width:' + (ishosting ? 99 : 66) + '%; display: inline-block;">' +
-            '<i class="icon-' + (rerun ? 'refresh' : 'circle') + ' live_icon strokedeline" style="color: ' +
+        Main_innerHTML(
+            'channel_content_thumbdiv0_0',
+            '<div class="stream_thumbnail_live_img"><img class="stream_img" alt="" src="' +
+            preview_thumbnail.replace('{width}x{height}', Main_VideoSize) +
+            Main_randomimg +
+            '" onerror="this.onerror=null;this.src=\'' +
+            IMG_404_VIDEO +
+            '\'"></div><div class="stream_thumbnail_live_text_holder"><div class="stream_text_holder"><div id="channel_content_cell0_3" style="line-height: 1.6ch;"><div class="stream_info_live_name" style="width:' +
+            (ishosting ? 99 : 66) +
+            '%; display: inline-block;">' +
+            '<i class="icon-' +
+            (rerun ? 'refresh' : 'circle') +
+            ' live_icon strokedeline" style="color: ' +
             (rerun ? '#FFFFFF' : ishosting ? '#FED000' : 'red') +
-            ';"></i> ' + channel_display_name + '</div><div class="stream_info_live" style="width:' +
-            (ishosting ? 0 : 33) + '%; float: right; text-align: right; display: inline-block;">' +
-            (ishosting ? '' : quality) + '</div></div>' +
-            '<div class="stream_info_live_title">' + stream_title + '</div>' +
-            '<div id="channel_content_cell0_5" class="stream_info_live">' + (stream_game !== "" ? STR_PLAYING + stream_game : "") +
-            '</div>' + '<div class="stream_info_live">' + viwers + '</div></div></div>');
+            ';"></i> ' +
+            channel_display_name +
+            '</div><div class="stream_info_live" style="width:' +
+            (ishosting ? 0 : 33) +
+            '%; float: right; text-align: right; display: inline-block;">' +
+            (ishosting ? '' : quality) +
+            '</div></div>' +
+            '<div class="stream_info_live_title">' +
+            stream_title +
+            '</div>' +
+            '<div id="channel_content_cell0_5" class="stream_info_live">' +
+            (stream_game !== '' ? STR_PLAYING + stream_game : '') +
+            '</div>' +
+            '<div class="stream_info_live">' +
+            viewers +
+            '</div></div></div>'
+        );
     }
 
     function ChannelContent_createCellOffline() {
         ChannelContent_isoffline = true;
-        Main_innerHTML("channel_content_thumbdiv0_0", '<div class="stream_thumbnail_live_img"><img class="stream_img" alt="" src="' + ChannelContent_offline_image + Main_randomimg +
-            '" onerror="this.onerror=null;this.src=\'' + IMG_404_VIDEO +
+        Main_innerHTML(
+            'channel_content_thumbdiv0_0',
+            '<div class="stream_thumbnail_live_img"><img class="stream_img" alt="" src="' +
+            ChannelContent_offline_image +
+            Main_randomimg +
+            '" onerror="this.onerror=null;this.src=\'' +
+            IMG_404_VIDEO +
             '\'"></div><div class="stream_thumbnail_live_text_holder"><div class="stream_text_holder" style="font-size: 150%;"><div style="line-height: 1.6ch;"><div class="stream_info_live_name" style="width:99%; display: inline-block;">' +
-            Main_values.Main_selectedChannelDisplayname + '</div><div class="stream_info_live" style="width:0%; float: right; text-align: right; display: inline-block;"></div></div>' +
-            '<div class="stream_info_live">' + STR_CH_IS_OFFLINE + '</div></div>' +
-            '</div>');
+            Main_values.Main_selectedChannelDisplayname +
+            '</div><div class="stream_info_live" style="width:0%; float: right; text-align: right; display: inline-block;"></div></div>' +
+            '<div class="stream_info_live">' +
+            STR_CH_IS_OFFLINE +
+            '</div></div>' +
+            '</div>'
+        );
     }
 
     function ChannelContent_loadDataSuccessFinish() {
@@ -2528,7 +2686,7 @@
     }
 
     function ChannelContent_removeFocus() {
-        if (ChannelContent_cursorY) Main_RemoveClass("channel_content_thumbdiv0_0", Main_classThumb);
+        if (ChannelContent_cursorY) Main_RemoveClass('channel_content_thumbdiv0_0', Main_classThumb);
         else Main_RemoveClass('channel_content_thumbdivy_' + ChannelContent_cursorX, 'stream_switch_focused');
     }
 
@@ -2541,7 +2699,7 @@
     function ChannelContent_keyEnter() {
         if (!ChannelContent_cursorY) {
             if (!ChannelContent_cursorX) {
-                document.body.removeEventListener("keydown", ChannelContent_handleKeyDown);
+                document.body.removeEventListener('keydown', ChannelContent_handleKeyDown);
                 Main_HideElement(ChannelContent_ids[10]);
                 ChannelContent_removeFocus();
                 Main_ready(function() {
@@ -2549,7 +2707,7 @@
                     Screens_init();
                 });
             } else if (ChannelContent_cursorX === 1) {
-                document.body.removeEventListener("keydown", ChannelContent_handleKeyDown);
+                document.body.removeEventListener('keydown', ChannelContent_handleKeyDown);
                 Main_HideElement(ChannelContent_ids[10]);
                 ChannelContent_removeFocus();
                 Main_ready(function() {
@@ -2570,7 +2728,7 @@
                 window.setTimeout(Main_HideWarningDialog, 2000);
             }
         } else {
-            document.body.removeEventListener("keydown", ChannelContent_handleKeyDown);
+            document.body.removeEventListener('keydown', ChannelContent_handleKeyDown);
             Main_HideElement(ChannelContent_ids[10]);
 
             Main_values.Play_selectedChannel = JSON.parse(document.getElementById('channel_content_cell0_1').getAttribute(Main_DataAttribute));
@@ -2588,7 +2746,7 @@
             } else Main_values.Play_selectedChannel_id = Main_values.Main_selectedChannel_id;
 
             var playing = document.getElementById('channel_content_cell0_5').textContent;
-            Main_values.Play_gameSelected = playing.indexOf(STR_PLAYING) !== -1 ? playing.split(STR_PLAYING)[1] : "";
+            Main_values.Play_gameSelected = playing.indexOf(STR_PLAYING) !== -1 ? playing.split(STR_PLAYING)[1] : '';
 
             Main_ready(Main_openStream);
         }
@@ -2596,12 +2754,12 @@
 
     function ChannelContent_SetChannelValue() {
         ChannelContent_ChannelValue = {
-            "Main_values.Main_selectedChannel_id": Main_values.Main_selectedChannel_id,
-            "Main_values.Main_selectedChannelLogo": Main_values.Main_selectedChannelLogo,
-            "Main_values.Main_selectedChannel": Main_values.Main_selectedChannel,
-            "Main_values.Main_selectedChannelDisplayname": Main_values.Main_selectedChannelDisplayname,
-            "ChannelContent_UserChannels": ChannelContent_UserChannels,
-            "Main_values.Main_BeforeChannel": Main_values.Main_BeforeChannel
+            'Main_values.Main_selectedChannel_id': Main_values.Main_selectedChannel_id,
+            'Main_values.Main_selectedChannelLogo': Main_values.Main_selectedChannelLogo,
+            'Main_values.Main_selectedChannel': Main_values.Main_selectedChannel,
+            'Main_values.Main_selectedChannelDisplayname': Main_values.Main_selectedChannelDisplayname,
+            ChannelContent_UserChannels: ChannelContent_UserChannels,
+            'Main_values.Main_BeforeChannel': Main_values.Main_BeforeChannel
         };
     }
 
@@ -2625,8 +2783,8 @@
 
     function ChannelContent_handleKeyUpClear() {
         window.clearTimeout(ChannelContent_KeyEnterID);
-        document.body.removeEventListener("keyup", ChannelContent_handleKeyUp);
-        document.body.addEventListener("keydown", ChannelContent_handleKeyDown, false);
+        document.body.removeEventListener('keyup', ChannelContent_handleKeyUp);
+        document.body.addEventListener('keydown', ChannelContent_handleKeyDown, false);
     }
 
     function ChannelContent_handleKeyDown(event) {
@@ -2641,7 +2799,7 @@
                 else if (Main_isAboutDialogShown()) Main_HideAboutDialog();
                 else {
                     ChannelContent_removeFocus();
-                    document.body.removeEventListener("keydown", ChannelContent_handleKeyDown);
+                    document.body.removeEventListener('keydown', ChannelContent_handleKeyDown);
                     Main_values.Main_Go = Main_values.Main_BeforeChannel;
                     Main_values.Main_BeforeChannel = Main_Live;
                     ChannelContent_exit();
@@ -2657,7 +2815,7 @@
                     if (ChannelContent_cursorX < 0) ChannelContent_cursorX = 2;
                     ChannelContent_addFocus();
                 } else {
-                    document.body.removeEventListener("keydown", ChannelContent_handleKeyDown);
+                    document.body.removeEventListener('keydown', ChannelContent_handleKeyDown);
                     Sidepannel_Start(ChannelContent_handleKeyDown);
                 }
                 break;
@@ -2698,9 +2856,9 @@
                 ChannelContent_keyEnter();
                 break;
             case KEY_ENTER:
-                if (!Settings_Obj_default("enter_refresh")) {
-                    document.body.removeEventListener("keydown", ChannelContent_handleKeyDown, false);
-                    document.body.addEventListener("keyup", ChannelContent_handleKeyUp, false);
+                if (!Settings_Obj_default('enter_refresh')) {
+                    document.body.removeEventListener('keydown', ChannelContent_handleKeyDown, false);
+                    document.body.addEventListener('keyup', ChannelContent_handleKeyUp, false);
                     ChannelContent_clear = false;
                     ChannelContent_KeyEnterID = window.setTimeout(Main_ReloadScreen, 500);
                 } else ChannelContent_keyEnter();
@@ -2782,8 +2940,8 @@
             return;
         }
 
-        Main_removeEventListener("keydown", Play_handleKeyDown);
-        Main_addEventListener("keydown", ChatLiveControls_handleKeyDown);
+        Main_removeEventListener('keydown', Play_handleKeyDown);
+        Main_addEventListener('keydown', ChatLiveControls_handleKeyDown);
         Main_ChatLiveInput.placeholder = STR_PLACEHOLDER_CHAT;
         ChatLiveControls_SetRoomState();
         Main_ShowElement('chat_send');
@@ -2797,8 +2955,7 @@
         if (Main_ChatLiveInput.value !== '' && Main_ChatLiveInput.value !== null) ChatLiveControls_UpdateResultText();
         else ChatLiveControls_UpdateResultTextEmpty();
 
-        if (OptionsShowObj.force_show_chat_write.defaultValue && !Play_isChatShown())
-            Play_controls[Play_controlsChat].enterKey(1);
+        if (OptionsShowObj.force_show_chat_write.defaultValue && !Play_isChatShown()) Play_controls[Play_controlsChat].enterKey(1);
 
         ChatLiveControls_inputFocus();
     }
@@ -2806,12 +2963,12 @@
     function ChatLiveControls_Hide() {
         ChatLiveControls_Channel = 0;
         ChatLiveControls_PreventInputClear();
-        Main_removeEventListener("keydown", ChatLiveControls_KeyboardEvent);
-        Main_removeEventListener("keydown", ChatLiveControls_handleKeyDown);
-        Main_removeEventListener("keydown", ChatLiveControls_EmotesEvent);
-        Main_removeEventListener("keydown", ChatLiveControls_OptionsKeyDown);
+        Main_removeEventListener('keydown', ChatLiveControls_KeyboardEvent);
+        Main_removeEventListener('keydown', ChatLiveControls_handleKeyDown);
+        Main_removeEventListener('keydown', ChatLiveControls_EmotesEvent);
+        Main_removeEventListener('keydown', ChatLiveControls_OptionsKeyDown);
 
-        Main_addEventListener("keydown", Play_handleKeyDown);
+        Main_addEventListener('keydown', Play_handleKeyDown);
 
         Main_HideElement('chat_send');
         Main_HideElement('chat_emotes_holder');
@@ -2833,46 +2990,43 @@
 
         if (!ChatLive_RoomState[ChatLiveControls_Channel]) text = STR_UNKNOWN;
         else {
-
             var tags = ChatLive_RoomState[ChatLiveControls_Channel];
 
-            if (tags.hasOwnProperty('emote-only') && tags['emote-only']) text += "Emote-only, ";
+            if (tags.hasOwnProperty('emote-only') && tags['emote-only']) text += 'Emote-only, ';
 
             if (tags.hasOwnProperty('rk9') && tags.rk9) text += 'R9K messages with more than 9 characters must be unique, ';
 
             if (tags.hasOwnProperty('slow') && tags.slow) {
-                text += "Slow" + (tags.slow ? (' wait ' + tags.slow + ' second(s)  between sending messages') : '') + ', ';
+                text += 'Slow' + (tags.slow ? ' wait ' + tags.slow + ' second(s)  between sending messages' : '') + ', ';
             }
 
             if (tags.hasOwnProperty('subs-only') && tags['subs-only']) text += 'Subscribers-only, ';
 
             //TODO convert this to strings
             if (tags.hasOwnProperty('followers-only') && tags['followers-only'] !== -1) {
-                text += "Followers-only" + (tags['followers-only'] ? (' minimum ' + tags['followers-only'] + ' minute(s) fallowing') : '') + ', ';
+                text += 'Followers-only' + (tags['followers-only'] ? ' minimum ' + tags['followers-only'] + ' minute(s) fallowing' : '') + ', ';
             }
 
             text = text.slice(0, -2);
         }
 
         var streamer = Main_values.Play_selectedChannelDisplayname;
-        Main_innerHTML("chat_state", streamer + STR_SPACE + STR_CHAT_ROOMSTATE + STR_BR + (text === '' ? STR_CHAT_NO_RESTRICTIONS : text));
+        Main_innerHTML('chat_state', streamer + STR_SPACE + STR_CHAT_ROOMSTATE + STR_BR + (text === '' ? STR_CHAT_NO_RESTRICTIONS : text));
     }
 
     function ChatLiveControls_inputFocus() {
         if (ChatLiveControls_CanSend()) {
             ChatLiveControls_resetInputFocusTools();
-            Main_removeEventListener("keydown", ChatLiveControls_handleKeyDown);
+            Main_removeEventListener('keydown', ChatLiveControls_handleKeyDown);
             Main_ChatLiveInput.placeholder = STR_PLACEHOLDER_CHAT;
 
             ChatLiveControls_inputFocusId = Main_setTimeout(
                 function() {
-
                     Main_AddClassWitEle(Main_ChatLiveInput, 'chat_input_class_focus');
                     Main_ChatLiveInput.focus();
 
                     ChatLiveControls_keyBoardOn = true;
-                    Main_addEventListener("keydown", ChatLiveControls_KeyboardEvent);
-
+                    Main_addEventListener('keydown', ChatLiveControls_KeyboardEvent);
                 },
                 200,
                 ChatLiveControls_inputFocusId
@@ -2886,22 +3040,21 @@
         if (Main_ChatLiveInput !== null) {
             var elClone = Main_ChatLiveInput.cloneNode(true);
             Main_ChatLiveInput.parentNode.replaceChild(elClone, Main_ChatLiveInput);
-            Main_ChatLiveInput = Main_getElementById("chat_send_input");
+            Main_ChatLiveInput = Main_getElementById('chat_send_input');
         }
     }
 
     function ChatLiveControls_RemoveinputFocus(EnaKeydown) {
-
         Main_clearTimeout(ChatLiveControls_inputFocusId);
 
         Main_RemoveClassWithEle(Main_ChatLiveInput, 'chat_input_class_focus');
         Main_ChatLiveInput.blur();
         ChatLiveControls_removeEventListener();
-        Main_removeEventListener("keydown", ChatLiveControls_KeyboardEvent);
+        Main_removeEventListener('keydown', ChatLiveControls_KeyboardEvent);
         Main_ChatLiveInput.placeholder = STR_PLACEHOLDER_CHAT;
 
         if (EnaKeydown) {
-            Main_addEventListener("keydown", ChatLiveControls_handleKeyDown);
+            Main_addEventListener('keydown', ChatLiveControls_handleKeyDown);
         }
 
         ChatLiveControls_keyBoardOn = false;
@@ -2920,150 +3073,86 @@
     }
 
     function ChatLiveControls_resetInputFocusTools() {
-        for (var i = 0; i < (ChatLiveControls_cursor_size + 1); i++)
-            Main_RemoveClass('chat_send_button' + i, 'button_chat_focused');
+        for (var i = 0; i < ChatLiveControls_cursor_size + 1; i++) Main_RemoveClass('chat_send_button' + i, 'button_chat_focused');
     }
 
     var ChatLiveControls_showWarningDialogId;
 
     function ChatLiveControls_showWarningDialog(text, timeout) {
-
-        Main_innerHTML("dialog_warning_chat_text", text);
+        Main_innerHTML('dialog_warning_chat_text', text);
         Main_ShowElement('dialog_warning_chat');
 
         Main_clearTimeout(ChatLiveControls_showWarningDialogId);
 
         if (timeout) {
-
-            ChatLiveControls_showWarningDialogId = Main_setTimeout(
-                function() {
-                    Main_HideElement('dialog_warning_chat');
-                },
-                timeout
-            );
-
+            ChatLiveControls_showWarningDialogId = Main_setTimeout(function() {
+                Main_HideElement('dialog_warning_chat');
+            }, timeout);
         }
     }
 
     function ChatLiveControls_HandleKeyEnter() {
-
         switch (ChatLiveControls_cursor) {
             case ChatLiveControls_Cursor_Options:
-
                 ChatLiveControls_OptionsShow();
 
                 break;
             case ChatLiveControls_Cursor_Delete:
-
                 Main_ChatLiveInput.value = '';
                 ChatLiveControls_UpdateResultTextEmpty();
 
                 break;
             case ChatLiveControls_Cursor_Emojis:
-
-                ChatLiveControls_SetEmotesDiv(
-                    emojis,
-                    STR_CHAT_UNICODE_EMOJI,
-                    'unicode'
-                );
+                ChatLiveControls_SetEmotesDiv(emojis, STR_CHAT_UNICODE_EMOJI, 'unicode');
 
                 break;
             case ChatLiveControls_Cursor_BTTV_Global:
-
-                ChatLiveControls_SetEmotesDiv(
-                    extraEmotesDone.bttvGlobal,
-                    STR_CHAT_BTTV_GLOBAL,
-                    'code'
-                );
+                ChatLiveControls_SetEmotesDiv(extraEmotesDone.bttvGlobal, STR_CHAT_BTTV_GLOBAL, 'code');
 
                 break;
             case ChatLiveControls_Cursor_FFZ_Global:
-
-                ChatLiveControls_SetEmotesDiv(
-                    extraEmotesDone.ffzGlobal,
-                    STR_CHAT_FFZ_GLOBAL,
-                    'code'
-                );
+                ChatLiveControls_SetEmotesDiv(extraEmotesDone.ffzGlobal, STR_CHAT_FFZ_GLOBAL, 'code');
 
                 break;
             case ChatLiveControls_Cursor_7TV_Global:
-
-                ChatLiveControls_SetEmotesDiv(
-                    extraEmotesDone.seven_tvGlobal,
-                    STR_CHAT_SEVENTV_GLOBAL,
-                    'code'
-                );
+                ChatLiveControls_SetEmotesDiv(extraEmotesDone.seven_tvGlobal, STR_CHAT_SEVENTV_GLOBAL, 'code');
 
                 break;
             case ChatLiveControls_Cursor_SEND:
-
                 if (Main_ChatLiveInput.value !== '' && Main_ChatLiveInput.value !== null) {
-
                     if (ChatLiveControls_CanSend()) {
-
                         if (ChatLive_SendMessage(Main_ChatLiveInput.value, ChatLiveControls_Channel)) {
-
                             Main_ChatLiveInput.value = '';
                             ChatLiveControls_UpdateResultTextEmpty();
-
                         } else {
-
                             ChatLiveControls_showWarningDialog(STR_CHAT_NOT_READY, 1500);
-
                         }
-
                     } else {
-
                         ChatLiveControls_CantSend();
-
                     }
-
                 } else {
-
                     ChatLiveControls_showWarningDialog(STR_SEARCH_EMPTY, 1000);
-
                 }
 
                 break;
             case ChatLiveControls_Cursor_AT_STREAMER:
-
                 ChatLiveControls_UpdateTextInput('@' + Main_values.Play_selectedChannelDisplayname);
 
                 break;
             case ChatLiveControls_Cursor_Twitch_Emotes:
-
-                ChatLiveControls_SetEmotesDiv(
-                    userEmote[AddUser_UsernameArray[0].id],
-                    STR_CHAT_TW_EMOTES,
-                    'code'
-                );
+                ChatLiveControls_SetEmotesDiv(userEmote[AddUser_UsernameArray[0].id], STR_CHAT_TW_EMOTES, 'code');
 
                 break;
             case ChatLiveControls_Cursor_BTTV_STREAMER:
-
-                ChatLiveControls_SetEmotesDiv(
-                    extraEmotesDone.bttv[ChatLive_selectedChannel_id[ChatLiveControls_Channel]],
-                    STR_CHAT_BTTV_STREAM,
-                    'code'
-                );
+                ChatLiveControls_SetEmotesDiv(extraEmotesDone.bttv[ChatLive_selectedChannel_id[ChatLiveControls_Channel]], STR_CHAT_BTTV_STREAM, 'code');
 
                 break;
             case ChatLiveControls_Cursor_FFZ_STREAMER:
-
-                ChatLiveControls_SetEmotesDiv(
-                    extraEmotesDone.ffz[ChatLive_selectedChannel_id[ChatLiveControls_Channel]],
-                    STR_CHAT_FFZ_STREAM,
-                    'code'
-                );
+                ChatLiveControls_SetEmotesDiv(extraEmotesDone.ffz[ChatLive_selectedChannel_id[ChatLiveControls_Channel]], STR_CHAT_FFZ_STREAM, 'code');
 
                 break;
             case ChatLiveControls_Cursor_7TV_STREAMER:
-
-                ChatLiveControls_SetEmotesDiv(
-                    extraEmotesDone.seven_tv[ChatLive_selectedChannel_id[ChatLiveControls_Channel]],
-                    STR_CHAT_SEVENTV_STREAM,
-                    'code'
-                );
+                ChatLiveControls_SetEmotesDiv(extraEmotesDone.seven_tv[ChatLive_selectedChannel_id[ChatLiveControls_Channel]], STR_CHAT_SEVENTV_STREAM, 'code');
 
                 break;
             default:
@@ -3087,7 +3176,7 @@
                 ChatLiveControls_refreshInputFocusTools();
                 break;
             case KEY_UP:
-                if (ChatLiveControls_cursor > (ChatLiveControls_cursor_half_size - 1)) {
+                if (ChatLiveControls_cursor > ChatLiveControls_cursor_half_size - 1) {
                     ChatLiveControls_cursor -= ChatLiveControls_cursor_half_size;
                     ChatLiveControls_refreshInputFocusTools();
                 } else {
@@ -3123,7 +3212,6 @@
             case KEY_KEYBOARD_CANCEL:
             case KEY_DOWN:
             case KEY_UP:
-
                 ChatLiveControls_KeyboardDismiss();
                 break;
             default:
@@ -3143,7 +3231,7 @@
         }
 
         if (array.length > 1) {
-            Main_textContent("chat_emotes_text", text);
+            Main_textContent('chat_emotes_text', text);
         } else {
             ChatLiveControls_showWarningDialog(STR_CHAT_EMOTE_EMPTY, 1000);
             return;
@@ -3151,18 +3239,16 @@
 
         var direction = OptionsShowObj.emote_sorting.defaultValue;
 
-        if (direction === 1) { //a-z
-            array.sort(
-                function(a, b) {
-                    return (a.code < b.code ? -1 : (a.code > b.code ? 1 : 0));
-                }
-            );
-        } else if (direction === 2) { //z-a
-            array.sort(
-                function(a, b) {
-                    return (a.code > b.code ? -1 : (a.code < b.code ? 1 : 0));
-                }
-            );
+        if (direction === 1) {
+            //a-z
+            array.sort(function(a, b) {
+                return a.code < b.code ? -1 : a.code > b.code ? 1 : 0;
+            });
+        } else if (direction === 2) {
+            //z-a
+            array.sort(function(a, b) {
+                return a.code > b.code ? -1 : a.code < b.code ? 1 : 0;
+            });
         }
 
         var div_holder = Main_getElementById('chat_emotes'),
@@ -3180,76 +3266,48 @@
         var len = Math.min(ChatLiveControls_EmotesTotal, 39);
 
         for (i; i < len; i++) {
-
-            ChatLiveControls_CreateEmoteDiv(
-                array,
-                i,
-                create_elements,
-                prop,
-                div_holder
-            );
-
+            ChatLiveControls_CreateEmoteDiv(array, i, create_elements, prop, div_holder);
         }
 
         ChatLiveControls_ShowEmotes();
 
         if (i < ChatLiveControls_EmotesTotal) {
-
-            Main_setTimeout(
-                function() {
-
-                    for (i; i < ChatLiveControls_EmotesTotal; i++) {
-
-                        ChatLiveControls_CreateEmoteDiv(
-                            array,
-                            i,
-                            create_elements,
-                            prop,
-                            div_holder
-                        );
-
-                    }
-
-                },
-                10
-            );
-
+            Main_setTimeout(function() {
+                for (i; i < ChatLiveControls_EmotesTotal; i++) {
+                    ChatLiveControls_CreateEmoteDiv(array, i, create_elements, prop, div_holder);
+                }
+            }, 10);
         }
-
     }
 
     function ChatLiveControls_CreateEmoteDiv(array, pos, create_elements, prop, div_holder) {
-
         ChatLiveControls_EmotesArray.push(array[pos].id);
 
         if (create_elements) {
-
-            array[pos].div = ChatLiveControls_SetEmoteDiv(
-                array[pos]['4x'],
-                array[pos].id,
-                array[pos][prop],
-                array[pos].code
-            );
-
+            array[pos].div = ChatLiveControls_SetEmoteDiv(array[pos]['4x'], array[pos].id, array[pos][prop], array[pos].code);
         }
 
-        div_holder.appendChild(
-            array[pos].div
-        );
+        div_holder.appendChild(array[pos].div);
     }
 
     function ChatLiveControls_SetEmoteDiv(url, id, code, name) {
-
         var div = document.createElement('div');
         div.setAttribute('id', 'chat_emotes' + id);
         div.setAttribute(Main_DataAttribute, code);
         div.classList.add('chat_emotes_img_holder');
 
-        div.innerHTML = '<div id="chat_emotes_img' + id +
-            '" class="chat_emotes_img_div" ><img alt="" class="chat_emotes_img" src="' + url +
-            '" onerror="this.onerror=null;this.src=\'' + IMG_404_BANNER +
-            '\';"></div><div class="chat_emotes_name_holder"><div id="chat_emotes_name' + id +
-            '" class="chat_emotes_name opacity_zero">' + name + '</div></div>';
+        div.innerHTML =
+            '<div id="chat_emotes_img' +
+            id +
+            '" class="chat_emotes_img_div" ><img alt="" class="chat_emotes_img" src="' +
+            url +
+            '" onerror="this.onerror=null;this.src=\'' +
+            IMG_404_BANNER +
+            '\';"></div><div class="chat_emotes_name_holder"><div id="chat_emotes_name' +
+            id +
+            '" class="chat_emotes_name opacity_zero">' +
+            name +
+            '</div></div>';
 
         return div;
     }
@@ -3270,10 +3328,10 @@
 
     function ChatLiveControls_ShowEmotes() {
         Main_ready(function() {
-            Main_removeEventListener("keydown", ChatLiveControls_KeyboardEvent);
-            Main_removeEventListener("keydown", ChatLiveControls_handleKeyDown);
+            Main_removeEventListener('keydown', ChatLiveControls_KeyboardEvent);
+            Main_removeEventListener('keydown', ChatLiveControls_handleKeyDown);
 
-            Main_addEventListener("keydown", ChatLiveControls_EmotesEvent);
+            Main_addEventListener('keydown', ChatLiveControls_EmotesEvent);
 
             Main_getElementById('chat_emotes').style.transform = '';
             ChatLiveControls_EmotesUpdateCounter(0);
@@ -3283,8 +3341,8 @@
     }
 
     function ChatLiveControls_HideEmotes() {
-        Main_removeEventListener("keydown", ChatLiveControls_EmotesEvent);
-        Main_addEventListener("keydown", ChatLiveControls_handleKeyDown);
+        Main_removeEventListener('keydown', ChatLiveControls_EmotesEvent);
+        Main_addEventListener('keydown', ChatLiveControls_handleKeyDown);
 
         Main_HideElement('chat_emotes_holder');
         ChatLiveControls_EmotesRemoveFocus(ChatLiveControls_EmotesPos);
@@ -3335,13 +3393,13 @@
     }
 
     function ChatLiveControls_EmotesChangeFocus(position, adder) {
-
-        if (ChatLiveControls_EmotesArray[(position + adder)]) {
+        if (ChatLiveControls_EmotesArray[position + adder]) {
             ChatLiveControls_EmotesRemoveFocus(position);
             ChatLiveControls_EmotesPos += adder;
             ChatLiveControls_EmotesAddFocus(ChatLiveControls_EmotesPos);
             ChatLiveControls_EmotesScroll(ChatLiveControls_EmotesPos);
-        } else if (adder > 0) { //go to last of next line
+        } else if (adder > 0) {
+            //go to last of next line
             var postion_now = parseInt(position / 20);
             var postion_down = (postion_now + 1) * 20;
 
@@ -3352,17 +3410,14 @@
                 ChatLiveControls_EmotesScroll(ChatLiveControls_EmotesPos);
             }
         }
-
     }
 
     function ChatLiveControls_EmotesUpdateCounter(position) {
-        Main_textContent('chat_emotes_counter', (position + 1) + '/' + ChatLiveControls_EmotesTotal);
+        Main_textContent('chat_emotes_counter', position + 1 + '/' + ChatLiveControls_EmotesTotal);
     }
 
     function ChatLiveControls_EmotesScroll(position) {
-
         if (position > 39) {
-
             var postion_now = parseInt(position / 20);
             var postion_down = (postion_now + 2) * 20;
             var postion_up = (postion_now - 1) * 20;
@@ -3370,9 +3425,7 @@
             var how_much = Main_getElementById('chat_emotes' + ChatLiveControls_EmotesArray[postion_up]).offsetHeight;
 
             if (ChatLiveControls_EmotesArray[postion_down]) {
-
-                Main_getElementById('chat_emotes').style.transform = 'translateY(-' + (how_much * (postion_now - 1)) + 'px)';
-
+                Main_getElementById('chat_emotes').style.transform = 'translateY(-' + how_much * (postion_now - 1) + 'px)';
             }
         } else Main_getElementById('chat_emotes').style.transform = '';
     }
@@ -3386,17 +3439,12 @@
     var ChatLiveControls_UpdateResultTextId;
 
     function ChatLiveControls_UpdateResultText() {
-
         // delay the check to prevent lag on fun call spaming
         ChatLiveControls_UpdateResultTextId = Main_setTimeout(
             function() {
-
                 if (Main_ChatLiveInput.value !== '' && Main_ChatLiveInput.value !== null) {
-
-                    Main_innerHTML("chat_result_text", ChatLiveControls_extraMessageTokenize([Main_ChatLiveInput.value]));
-
+                    Main_innerHTML('chat_result_text', ChatLiveControls_extraMessageTokenize([Main_ChatLiveInput.value]));
                 } else ChatLiveControls_UpdateResultTextEmpty();
-
             },
             10,
             ChatLiveControls_UpdateResultTextId
@@ -3404,11 +3452,10 @@
     }
 
     function ChatLiveControls_UpdateResultTextEmpty() {
-        Main_textContent("chat_result_text", '');
+        Main_textContent('chat_result_text', '');
     }
 
     function ChatLiveControls_extraMessageTokenize(message) {
-
         var i = 0,
             len = message.length;
         for (i; i < len; i++) {
@@ -3419,20 +3466,15 @@
     }
 
     function ChatLiveControls_CanSendAnyEmote() {
-
         var tags = ChatLive_RoomState[ChatLiveControls_Channel];
 
         if (tags && tags.hasOwnProperty('emote-only') && tags['emote-only']) {
-
             ChatLiveControls_showWarningDialog(STR_CHAT_EMOTE_ONLY, 1500);
             return false;
-
         }
 
         return true;
     }
-
-
 
     // function ChatLiveControls_EmotesOnlyEnabled(position) {
     //     var tags = ChatLive_RoomState[position];
@@ -3484,28 +3526,23 @@
             ChatLiveControls_RemoveinputFocus(true);
             ChatLiveControls_refreshInputFocusTools();
         }
-
     }
 
     var ChatLiveControls_CanSendText = '';
     var ChatLiveControls_CanSendBool = true;
 
     function ChatLiveControls_CanSend() {
-
         ChatLiveControls_CanSendText = '';
         ChatLiveControls_CanSendBool = true;
         var streamer = Main_values.Play_selectedChannelDisplayname;
 
         if (ChatLive_Banned[ChatLiveControls_Channel]) {
-
             ChatLiveControls_CanSendText = STR_CHAT_BANNED + streamer;
             ChatLiveControls_CanSendBool = false;
             ChatLiveControls_PreventInput();
 
             return false;
-
         } else if (ChatLive_RoomState[ChatLiveControls_Channel]) {
-
             var tags = ChatLive_RoomState[ChatLiveControls_Channel];
             var user_fallow = ChatLive_FollowState[ChatLiveControls_Channel];
 
@@ -3513,7 +3550,6 @@
             var user_issub = user_sub && user_sub.hasOwnProperty('state') && !user_sub.state;
 
             if (tags.hasOwnProperty('subs-only') && tags['subs-only'] && user_issub) {
-
                 ChatLiveControls_CanSendText = 'Chat Subscribers-only mode ' + STR_IS_SUB_NOT_SUB;
                 ChatLiveControls_CanSendBool = false;
                 ChatLiveControls_PreventInput();
@@ -3522,21 +3558,22 @@
             }
 
             if (tags.hasOwnProperty('followers-only') && tags['followers-only'] !== -1 && user_fallow) {
-
-                if ((tags['followers-only'] > -1) && user_fallow.hasOwnProperty('follows') && !user_fallow.follows) {
-
+                if (tags['followers-only'] > -1 && user_fallow.hasOwnProperty('follows') && !user_fallow.follows) {
                     ChatLiveControls_CanSendText = STR_CHAT_FOLLOWER_ONLY + streamer;
                     ChatLiveControls_CanSendBool = false;
                     ChatLiveControls_PreventInput();
 
                     return false;
-
-                } else if (tags['followers-only'] && user_fallow.hasOwnProperty('created_at') && (tags['followers-only'] > ChatLive_GetMinutes(user_fallow.created_at))) {
-
+                } else if (tags['followers-only'] && user_fallow.hasOwnProperty('created_at') && tags['followers-only'] > ChatLive_GetMinutes(user_fallow.created_at)) {
                     var time = ChatLive_GetMinutes(user_fallow.created_at);
 
-                    ChatLiveControls_CanSendText = "Followers-only" + (tags['followers-only'] ? (' minimum ' + tags['followers-only'] + ' minute(s) fallowing') : '') +
-                        ' ' + STR_CHAT_FOLLOWER_ONLY_USER_TIME + time + (time > 1 ? STR_MINUTES : STR_MINUTE);
+                    ChatLiveControls_CanSendText =
+                        'Followers-only' +
+                        (tags['followers-only'] ? ' minimum ' + tags['followers-only'] + ' minute(s) fallowing' : '') +
+                        ' ' +
+                        STR_CHAT_FOLLOWER_ONLY_USER_TIME +
+                        time +
+                        (time > 1 ? STR_MINUTES : STR_MINUTE);
 
                     ChatLiveControls_CanSendBool = false;
                     ChatLiveControls_PreventInput();
@@ -3544,7 +3581,6 @@
                     return false;
                 }
             }
-
         }
 
         ChatLiveControls_PreventInputClear();
@@ -3579,7 +3615,7 @@
     }
 
     function ChatLiveControls_OptionsShow() {
-        Main_removeEventListener("keydown", ChatLiveControls_handleKeyDown);
+        Main_removeEventListener('keydown', ChatLiveControls_handleKeyDown);
 
         OptionsShowObj = {
             emote_sorting: {
@@ -3593,9 +3629,8 @@
                 values: [STR_DISABLED, STR_ENABLED],
                 title: STR_CHAT_OPTIONS_FORCE_SHOW,
                 summary: STR_CHAT_OPTIONS_FORCE_SHOW_SUMMARY
-            },
+            }
         };
-
 
         var dialogContent = STR_CHAT_OPTIONS_TITLE + STR_BR;
         OptionsShowArray = [];
@@ -3605,7 +3640,7 @@
             dialogContent += ChatLiveControls_DivOptionWithSummary(property, OptionsShowObj[property].title + STR_BR, OptionsShowObj[property].summary);
         }
 
-        Main_innerHTML("chat_options_text", dialogContent + STR_DIV_TITLE + STR_CLOSE_THIS + '</div>');
+        Main_innerHTML('chat_options_text', dialogContent + STR_DIV_TITLE + STR_CLOSE_THIS + '</div>');
 
         ChatLiveControls_OptionsY = 0;
         Main_AddClass(OptionsShowArray[0], 'settings_value_focus');
@@ -3613,39 +3648,57 @@
         ChatLiveControls_SetarrowsKey(OptionsShowArray[0]);
 
         Main_ShowElement('chat_options');
-        Main_addEventListener("keydown", ChatLiveControls_OptionsKeyDown);
+        Main_addEventListener('keydown', ChatLiveControls_OptionsKeyDown);
     }
 
     function ChatLiveControls_DivOptionWithSummary(key, string_title, string_summary) {
-        return '<div id="' + key + '_div" class="settings_div"><div id="' + key + '_name" class="settings_name">' +
-            string_title + '<div id="' + key + '_summary" class="settings_summary" style="font-size: 73%;">' + string_summary + '</div></div>' +
-            '<div class="settings_arraw_div"><div id="' + key + 'arrow_left" class="left"></div></div>' +
-            '<div id="' + key + '" class="strokedeline settings_value">' + OptionsShowObj[key].values[OptionsShowObj[key].defaultValue] + '</div>' +
-            '<div class="settings_arraw_div"><div id="' + key + 'arrow_right" class="right"></div></div></div>';
+        return (
+            '<div id="' +
+            key +
+            '_div" class="settings_div"><div id="' +
+            key +
+            '_name" class="settings_name">' +
+            string_title +
+            '<div id="' +
+            key +
+            '_summary" class="settings_summary" style="font-size: 73%;">' +
+            string_summary +
+            '</div></div>' +
+            '<div class="settings_arraw_div"><div id="' +
+            key +
+            'arrow_left" class="left"></div></div>' +
+            '<div id="' +
+            key +
+            '" class="strokedeline settings_value">' +
+            OptionsShowObj[key].values[OptionsShowObj[key].defaultValue] +
+            '</div>' +
+            '<div class="settings_arraw_div"><div id="' +
+            key +
+            'arrow_right" class="right"></div></div></div>'
+        );
     }
 
     function ChatLiveControls_SetarrowsKey(key) {
-
         var currentValue = OptionsShowObj[key].defaultValue;
         var maxValue = OptionsShowObj[key].values.length - 1;
 
         if (currentValue > 0 && currentValue < maxValue) {
-            Main_getElementById(key + "arrow_left").style.opacity = "1";
-            Main_getElementById(key + "arrow_right").style.opacity = "1";
+            Main_getElementById(key + 'arrow_left').style.opacity = '1';
+            Main_getElementById(key + 'arrow_right').style.opacity = '1';
         } else if (currentValue === maxValue) {
-            Main_getElementById(key + "arrow_left").style.opacity = "1";
-            Main_getElementById(key + "arrow_right").style.opacity = "0.2";
+            Main_getElementById(key + 'arrow_left').style.opacity = '1';
+            Main_getElementById(key + 'arrow_right').style.opacity = '0.2';
         } else {
-            Main_getElementById(key + "arrow_left").style.opacity = "0.2";
-            Main_getElementById(key + "arrow_right").style.opacity = "1";
+            Main_getElementById(key + 'arrow_left').style.opacity = '0.2';
+            Main_getElementById(key + 'arrow_right').style.opacity = '1';
         }
     }
 
     function ChatLiveControls_Optionshide() {
         Settings_RemoveinputFocusKey(OptionsShowArray[ChatLiveControls_OptionsY]);
         Main_HideElement('chat_options');
-        Main_removeEventListener("keydown", ChatLiveControls_OptionsKeyDown);
-        Main_addEventListener("keydown", ChatLiveControls_handleKeyDown);
+        Main_removeEventListener('keydown', ChatLiveControls_OptionsKeyDown);
+        Main_addEventListener('keydown', ChatLiveControls_handleKeyDown);
     }
 
     function ChatLiveControls_OptionsKeyDown(event) {
@@ -3662,13 +3715,13 @@
                 break;
             case KEY_RIGHT:
                 key = OptionsShowArray[ChatLiveControls_OptionsY];
-                if (OptionsShowObj[key].defaultValue < (OptionsShowObj[key].values.length - 1)) ChatLiveControls_OptionsRigthLeft(1);
+                if (OptionsShowObj[key].defaultValue < OptionsShowObj[key].values.length - 1) ChatLiveControls_OptionsRigthLeft(1);
                 break;
             case KEY_UP:
                 if (ChatLiveControls_OptionsY > 0) ChatLiveControls_OptionsUpDown(-1);
                 break;
             case KEY_DOWN:
-                if (ChatLiveControls_OptionsY < (OptionsShowArray.length - 1)) ChatLiveControls_OptionsUpDown(1);
+                if (ChatLiveControls_OptionsY < OptionsShowArray.length - 1) ChatLiveControls_OptionsUpDown(1);
                 break;
             default:
                 break;
@@ -3689,14 +3742,13 @@
     }
 
     function ChatLiveControls_RemoveinputFocusKey(key) {
-        Main_getElementById(key + "arrow_left").style.opacity = "0";
-        Main_getElementById(key + "arrow_right").style.opacity = "0";
+        Main_getElementById(key + 'arrow_left').style.opacity = '0';
+        Main_getElementById(key + 'arrow_right').style.opacity = '0';
         Main_RemoveClass(key, 'settings_value_focus');
         Main_RemoveClass(key + '_div', 'settings_div_focus');
     }
 
     function ChatLiveControls_OptionsRigthLeft(offset) {
-
         var key = OptionsShowArray[ChatLiveControls_OptionsY];
 
         OptionsShowObj[key].defaultValue += offset;
@@ -3761,29 +3813,29 @@
     var ChatLive_sub_replace = new RegExp('\\\\s', 'gi');
 
     var emoteReplace = {
-        "B-?\\)": "B)",
-        "\\:-?\\)": ":)",
-        "\\:-?\\(": ":(",
-        "\\:-?(p|P)": ":P",
-        "\\;-?(p|P)": ";P",
-        "\\:-?[\\\\/]": ":/",
-        "\\;-?\\)": ";)",
-        "R-?\\)": "R)",
-        ":>": ":>",
-        "\\:\\&gt\\;": ":>",
-        "[oO](_|\\.)[oO]": "O_O",
-        "\\:-?D": ":D",
-        "\\:-?(o|O)": ":O",
-        ">\\\\(": ">(",
-        ":-?(?:7|L)": ":7",
-        "\\:-?(S|s)": ":s",
-        "#-?[\\\\/]": "#/",
-        "<\\]": "<]",
-        "<3": "<3",
-        "\\&lt\\;3": "<3",
-        "\\&lt\\;\\]": "<]",
-        "\\&gt\\;\\(": ">(",
-        "\\:-?[z|Z|\\|]": ":Z",
+        'B-?\\)': 'B)',
+        '\\:-?\\)': ':)',
+        '\\:-?\\(': ':(',
+        '\\:-?(p|P)': ':P',
+        '\\;-?(p|P)': ';P',
+        '\\:-?[\\\\/]': ':/',
+        '\\;-?\\)': ';)',
+        'R-?\\)': 'R)',
+        ':>': ':>',
+        '\\:\\&gt\\;': ':>',
+        '[oO](_|\\.)[oO]': 'O_O',
+        '\\:-?D': ':D',
+        '\\:-?(o|O)': ':O',
+        '>\\\\(': '>(',
+        ':-?(?:7|L)': ':7',
+        '\\:-?(S|s)': ':s',
+        '#-?[\\\\/]': '#/',
+        '<\\]': '<]',
+        '<3': '<3',
+        '\\&lt\\;3': '<3',
+        '\\&lt\\;\\]': '<]',
+        '\\&gt\\;\\(': '>(',
+        '\\:-?[z|Z|\\|]': ':Z'
     };
 
     var ChatLive_ROOMSTATE_Regex = /emote-only=(\d+).*followers-only=(-1|\d+).*r9k=(\d+).*slow=(\d+).*subs-only=(\d+).*/;
@@ -3803,11 +3855,7 @@
 
         Chat_loadBadgesGlobal();
 
-        ChatLive_SetOptions(
-            chat_number,
-            Main_values.Play_selectedChannel_id,
-            Main_values.Play_selectedChannel
-        );
+        ChatLive_SetOptions(chat_number, Main_values.Play_selectedChannel_id, Main_values.Play_selectedChannel);
 
         ChatLive_PreLoadChat(chat_number, Chat_Id[chat_number]);
 
@@ -3843,13 +3891,11 @@
     var ChatLive_ClearChat;
 
     function ChatLive_SetOptions(chat_number, Channel_id, selectedChannel) {
-
-        Chat_Id[chat_number] = (new Date()).getTime();
+        Chat_Id[chat_number] = new Date().getTime();
 
         ChatLive_selectedChannel_id[chat_number] = Channel_id;
         ChatLive_selectedChannel[chat_number] = selectedChannel;
-        if (ChatLive_selectedChannel[chat_number])
-            ChatLive_selectedChannel[chat_number] = ChatLive_selectedChannel[chat_number].toLowerCase();
+        if (ChatLive_selectedChannel[chat_number]) ChatLive_selectedChannel[chat_number] = ChatLive_selectedChannel[chat_number].toLowerCase();
 
         ChatLive_User_Set = AddUser_IsUserSet();
 
@@ -3868,12 +3914,12 @@
         ChatLive_ClearChat = Settings_value.clear_chat.defaultValue;
         ChatLive_Individual_Background_flip[chat_number] = 0;
 
-        ChatLive_Channel_Regex_Search[chat_number] = new RegExp('@' + ChatLive_selectedChannel[chat_number] + '(?=\\s|$)', "i");
-        ChatLive_Channel_Regex_Replace[chat_number] = new RegExp('@' + ChatLive_selectedChannel[chat_number], "gi");
+        ChatLive_Channel_Regex_Search[chat_number] = new RegExp('@' + ChatLive_selectedChannel[chat_number] + '(?=\\s|$)', 'i');
+        ChatLive_Channel_Regex_Replace[chat_number] = new RegExp('@' + ChatLive_selectedChannel[chat_number], 'gi');
 
         if (ChatLive_User_Set) {
-            ChatLive_User_Regex_Search = new RegExp('@' + AddUser_UsernameArray[0].name + '(?=\\s|$)', "i");
-            ChatLive_User_Regex_Replace = new RegExp('@' + AddUser_UsernameArray[0].name, "gi");
+            ChatLive_User_Regex_Search = new RegExp('@' + AddUser_UsernameArray[0].name + '(?=\\s|$)', 'i');
+            ChatLive_User_Regex_Replace = new RegExp('@' + AddUser_UsernameArray[0].name, 'gi');
         }
 
         ChatLive_loadEmotesChannelbttv(chat_number, Chat_Id[chat_number]);
@@ -3882,7 +3928,6 @@
 
         ChatLive_loadBadgesChannel(chat_number, Chat_Id[chat_number]);
         ChatLive_loadCheersChannel(chat_number, Chat_Id[chat_number]);
-
     }
 
     function ChatLive_checkFallow(chat_number, id) {
@@ -3891,17 +3936,7 @@
         ChatLive_FollowState[chat_number] = {};
         var theUrl = Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/follows/channels/' + ChatLive_selectedChannel_id[chat_number] + Main_TwithcV5Flag_I;
 
-        BasexmlHttpGet(
-            theUrl,
-            DefaultHttpGetTimeout * 2,
-            2,
-            null,
-            ChatLive_checkFallowSuccess,
-            ChatLive_RequestCheckFollowNOK,
-            chat_number,
-            id
-        );
-
+        BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2, 2, null, ChatLive_checkFallowSuccess, ChatLive_RequestCheckFollowNOK, chat_number, id);
     }
 
     function ChatLive_checkFallowSuccess(responseText, chat_number, id) {
@@ -3925,8 +3960,9 @@
         ChatLive_FollowState[chat_number].follows = false;
     }
 
-    function ChatLive_GetMinutes(time) { // "2020-04-17T21:03:42Z"
-        time = (new Date().getTime()) - (new Date(time).getTime());
+    function ChatLive_GetMinutes(time) {
+        // "2020-04-17T21:03:42Z"
+        time = new Date().getTime() - new Date(time).getTime();
         return Math.floor(Math.floor(parseInt(time / 1000)) / 60);
     }
 
@@ -3940,24 +3976,13 @@
 
         var theUrl = Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/subscriptions/' + ChatLive_selectedChannel_id[chat_number] + Main_TwithcV5Flag_I;
 
-        BasexmlHttpGet(
-            theUrl,
-            DefaultHttpGetTimeout * 2,
-            3,
-            Main_OAuth + AddUser_UsernameArray[0].access_token,
-            ChatLive_checkSubSucess,
-            ChatLive_checkSubFail,
-            chat_number,
-            id
-        );
-
+        BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2, 3, Main_OAuth + AddUser_UsernameArray[0].access_token, ChatLive_checkSubSucess, ChatLive_checkSubFail, chat_number, id);
     }
 
     function ChatLive_checkSubSucess(responseText, chat_number, id) {
         if (id !== Chat_Id[chat_number]) return;
 
         ChatLive_SubState[chat_number].state = true;
-
     }
 
     function ChatLive_checkSubFail(chat_number, id) {
@@ -3970,7 +3995,6 @@
         if (id !== Chat_Id[chat_number]) return;
 
         if (!extraEmotesDone.BadgesChannel[ChatLive_selectedChannel_id[chat_number]]) {
-
             BasexmlHttpGet(
                 'https://badges.twitch.tv/v1/badges/channels/' + ChatLive_selectedChannel_id[chat_number] + '/display',
                 DefaultHttpGetTimeout * 2,
@@ -3981,14 +4005,8 @@
                 chat_number,
                 id
             );
-
         } else {
-
-            Chat_tagCSS(
-                extraEmotesDone.BadgesChannel[ChatLive_selectedChannel_id[chat_number]][chat_number],
-                Chat_div[chat_number]
-            );
-
+            Chat_tagCSS(extraEmotesDone.BadgesChannel[ChatLive_selectedChannel_id[chat_number]][chat_number], Chat_div[chat_number]);
         }
     }
 
@@ -3997,10 +4015,7 @@
 
         extraEmotesDone.BadgesChannel[ChatLive_selectedChannel_id[chat_number]] = Chat_loadBadgesTransform(JSON.parse(responseText), true);
 
-        Chat_tagCSS(
-            extraEmotesDone.BadgesChannel[ChatLive_selectedChannel_id[chat_number]][chat_number],
-            Chat_div[chat_number]
-        );
+        Chat_tagCSS(extraEmotesDone.BadgesChannel[ChatLive_selectedChannel_id[chat_number]][chat_number], Chat_div[chat_number]);
     }
 
     function ChatLive_resetChatters(chat_number) {
@@ -4011,26 +4026,19 @@
     }
 
     function ChatLive_loadChatters(chat_number, id) {
-
         if (Settings_value.show_chatters.defaultValue) {
-
-            Main_innerHTML(
-                "chat_loggedin" + chat_number,
-                '...' + (Settings_value.show_chatters.defaultValue === 1 ? STR_IN_CHAT : STR_VIEWER)
-            );
+            Main_innerHTML('chat_loggedin' + chat_number, '...' + (Settings_value.show_chatters.defaultValue === 1 ? STR_IN_CHAT : STR_VIEWER));
             Main_RemoveClass('chat_loggedin' + chat_number, 'hide');
 
             //Tizen < 2.4 maybe newer don't accept 'calc(100% - 2.9vh)'
             var height = window.innerHeight;
-            Main_getElementById('chat_box_holder' + chat_number).style.height = 'calc(100% - ' + (height * 0.029) + 'px)';
+            Main_getElementById('chat_box_holder' + chat_number).style.height = 'calc(100% - ' + height * 0.029 + 'px)';
 
             ChatLive_loadChattersCheckType(chat_number, id);
         }
-
     }
 
     function ChatLive_loadChattersCheckType(chat_number, id) {
-
         if (Settings_value.show_chatters.defaultValue === 1 && Main_IsNotBrowser) ChatLive_loadChattersLoad(chat_number, id);
         else ChatLive_loadChattersViewers(chat_number, id);
 
@@ -4042,78 +4050,39 @@
             5 * 60 * 1000, //5 min
             ChatLive_loadChattersId[chat_number]
         );
-
     }
 
     function ChatLive_loadChattersViewers(chat_number, id) {
-
         var theUrl = Main_helix_api + 'streams/?user_id=' + ChatLive_selectedChannel_id[chat_number];
 
-        BasexmlHttpGet(
-            theUrl,
-            DefaultHttpGetTimeout * 2,
-            2,
-            null,
-            ChatLive_loadChattersViewersSuccess,
-            noop_fun,
-            chat_number,
-            id,
-            true
-        );
-
+        BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2, 2, null, ChatLive_loadChattersViewersSuccess, noop_fun, chat_number, id, true);
     }
 
     function ChatLive_loadChattersViewersSuccess(responseText, chat_number, id) {
         try {
-
             if (id === Chat_Id[chat_number]) {
-
                 var resultObj = JSON.parse(responseText);
 
                 if (resultObj.data && resultObj.data.length) {
-
-                    Main_innerHTML(
-                        "chat_loggedin" + chat_number,
-                        Main_addCommas(resultObj.data[0].viewer_count) + STR_SPACE + STR_VIEWER
-                    );
+                    Main_innerHTML('chat_loggedin' + chat_number, Main_addCommas(resultObj.data[0].viewer_count) + STR_SPACE + STR_VIEWER);
                 }
-
             }
-
         } catch (e) {
             Main_Log('ChatLive_loadChattersSuccess ' + e);
         }
     }
 
     function ChatLive_loadChattersLoad(chat_number, id) {
-
-        BasexmlHttpGet(
-            ChatLive_Base_chat_url + 'group/user/' + ChatLive_selectedChannel[chat_number],
-            DefaultHttpGetTimeout,
-            0,
-            null,
-            ChatLive_loadChattersSuccess,
-            noop_fun,
-            chat_number,
-            id
-        );
-
+        BasexmlHttpGet(ChatLive_Base_chat_url + 'group/user/' + ChatLive_selectedChannel[chat_number], DefaultHttpGetTimeout, 0, null, ChatLive_loadChattersSuccess, noop_fun, chat_number, id);
     }
 
     function ChatLive_loadChattersSuccess(responseText, chat_number, id) {
         try {
-
             if (id === Chat_Id[chat_number]) {
-
                 var resultObj = JSON.parse(responseText);
 
-                Main_innerHTML(
-                    "chat_loggedin" + chat_number,
-                    Main_addCommas(resultObj.chatter_count) + STR_IN_CHAT
-                );
-
+                Main_innerHTML('chat_loggedin' + chat_number, Main_addCommas(resultObj.chatter_count) + STR_IN_CHAT);
             }
-
         } catch (e) {
             Main_Log('ChatLive_loadChattersSuccess ' + e);
         }
@@ -4121,7 +4090,6 @@
 
     function ChatLive_loadEmotesUser() {
         if (AddUser_IsUserSet() && AddUser_UsernameArray[0].access_token) {
-
             BasexmlHttpGet(
                 Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/emotes',
                 DefaultHttpGetTimeout * 2,
@@ -4132,14 +4100,11 @@
                 0,
                 0
             );
-
         }
     }
 
-
     function ChatLive_loadEmotesUserSuccess(result) {
         try {
-
             var data = JSON.parse(result);
             if (!userEmote.hasOwnProperty(AddUser_UsernameArray[0].id)) userEmote[AddUser_UsernameArray[0].id] = {};
 
@@ -4148,9 +4113,7 @@
             Object.keys(data.emoticon_sets).forEach(function(set) {
                 set = data.emoticon_sets[set];
                 if (Array.isArray(set)) {
-
                     set.forEach(function(emoticon) {
-
                         if (!emoticon.code || !emoticon.id) return;
                         if (typeof emoticon.code !== 'string' || typeof emoticon.id !== 'number') return;
 
@@ -4173,11 +4136,9 @@
                             id: id,
                             '4x': url
                         };
-
                     });
                 }
             });
-
         } catch (e) {
             Main_Log('ChatLive_loadEmotesUserSuccess ' + e);
         }
@@ -4187,7 +4148,6 @@
         if (id !== Chat_Id[chat_number]) return;
 
         if (!extraEmotesDone.bttv[ChatLive_selectedChannel_id[chat_number]]) {
-
             BasexmlHttpGet(
                 'https://api.betterttv.net/3/cached/users/twitch/' + encodeURIComponent(ChatLive_selectedChannel_id[chat_number]),
                 DefaultHttpGetTimeout * 2,
@@ -4198,11 +4158,8 @@
                 chat_number,
                 id
             );
-
         } else {
-
             ChatLive_updateExtraEmotes(extraEmotesDone.bttv[ChatLive_selectedChannel_id[chat_number]]);
-
         }
     }
 
@@ -4221,16 +4178,13 @@
         } catch (e) {
             Main_Log('ChatLive_loadEmotesbttv ' + e);
         }
-
     }
 
     function ChatLive_loadEmotesbttvChannel(data, chat_number) {
-
         var url, chat_div, id;
 
         try {
             data.forEach(function(emote) {
-
                 url = ChatLive_Base_BTTV_url + emote.id + '/3x';
                 chat_div = emoteTemplate(url);
                 id = emote.code + emote.id;
@@ -4248,19 +4202,16 @@
                     chat_div: chat_div,
                     '4x': url
                 };
-
             });
         } catch (e) {
             Main_Log('ChatLive_loadEmotesbttvChannel ' + e);
         }
-
     }
 
     function ChatLive_loadCheersChannel(chat_number, id) {
         if (id !== Chat_Id[chat_number]) return;
 
         if (!extraEmotesDone.cheers[ChatLive_selectedChannel_id[chat_number]]) {
-
             BasexmlHttpGet(
                 'https://api.twitch.tv/v5/bits/actions?channel_id=' + encodeURIComponent(ChatLive_selectedChannel_id[chat_number]),
                 DefaultHttpGetTimeout * 2,
@@ -4271,7 +4222,6 @@
                 chat_number,
                 id
             );
-
         }
     }
 
@@ -4282,24 +4232,18 @@
         var data = JSON.parse(responseText);
 
         try {
-            data.actions.forEach(
-                function(action) {
+            data.actions.forEach(function(action) {
+                cheers[ChatLive_selectedChannel_id[chat_number]][action.prefix] = {};
 
-                    cheers[ChatLive_selectedChannel_id[chat_number]][action.prefix] = {};
-
-                    action.tiers.forEach(
-                        function(tier) {
-                            cheers[ChatLive_selectedChannel_id[chat_number]][action.prefix][tier.min_bits] = emoteTemplate(tier.images.light.animated['4']);
-                        }
-                    );
-                }
-            );
+                action.tiers.forEach(function(tier) {
+                    cheers[ChatLive_selectedChannel_id[chat_number]][action.prefix][tier.min_bits] = emoteTemplate(tier.images.light.animated['4']);
+                });
+            });
 
             extraEmotesDone.cheers[ChatLive_selectedChannel_id[chat_number]] = 1;
         } catch (e) {
             Main_Log('ChatLive_loadCheersChannelSuccess ' + e);
         }
-
     }
 
     function ChatLive_updateExtraEmotes(obj) {
@@ -4318,7 +4262,6 @@
         if (id !== Chat_Id[chat_number]) return;
 
         if (!extraEmotesDone.ffz[ChatLive_selectedChannel_id[chat_number]]) {
-
             BasexmlHttpGet(
                 'https://api.frankerfacez.com/v1/room/' + encodeURIComponent(ChatLive_selectedChannel[chat_number]),
                 DefaultHttpGetTimeout * 2,
@@ -4329,7 +4272,6 @@
                 chat_number,
                 id
             );
-
         } else {
             ChatLive_updateExtraEmotes(extraEmotesDone.ffz[ChatLive_selectedChannel_id[chat_number]]);
         }
@@ -4351,9 +4293,7 @@
             Object.keys(data.sets).forEach(function(set) {
                 set = data.sets[set];
                 if (set.emoticons || Array.isArray(set.emoticons)) {
-
                     set.emoticons.forEach(function(emoticon) {
-
                         if (!emoticon.name || !emoticon.id) return;
                         if (typeof emoticon.name !== 'string' || typeof emoticon.id !== 'number') return;
 
@@ -4389,23 +4329,20 @@
                                 '4x': url
                             };
                         }
-
                     });
                 }
             });
         } catch (e) {
             Main_Log('ChatLive_loadEmotesffz ' + e);
         }
-
     }
 
     function ChatLive_loadEmotesChannelseven_tv(chat_number, id) {
         if (id !== Chat_Id[chat_number]) return;
 
         if (!extraEmotesDone.seven_tv[ChatLive_selectedChannel_id[chat_number]]) {
-
             BasexmlHttpGet(
-                'https://api.7tv.app/v2/users/' + encodeURIComponent(ChatLive_selectedChannel_id[chat_number]) + "/emotes",
+                'https://api.7tv.app/v2/users/' + encodeURIComponent(ChatLive_selectedChannel_id[chat_number]) + '/emotes',
                 DefaultHttpGetTimeout * 2,
                 0,
                 null,
@@ -4414,11 +4351,8 @@
                 chat_number,
                 id
             );
-
         } else {
-
             ChatLive_updateExtraEmotes(extraEmotesDone.seven_tv[ChatLive_selectedChannel_id[chat_number]]);
-
         }
     }
 
@@ -4435,7 +4369,6 @@
 
         try {
             data.forEach(function(emote) {
-
                 url = emote.urls[3][1];
                 chat_div = emoteTemplate(url);
                 id = emote.name + emote.id;
@@ -4463,16 +4396,13 @@
                         '4x': url
                     };
                 }
-
             });
         } catch (e) {
             Main_Log('ChatLive_loadEmotesseven_tvChannel ' + e);
         }
-
     }
 
     function ChatLive_PreLoadChat(chat_number, id) {
-
         BasexmlHttpGet(
             'https://recent-messages.robotty.de/api/v2/recent-messages/' + ChatLive_selectedChannel[chat_number] + '?limit=30&hide_moderation_messages=true',
             DefaultHttpGetTimeout * 2,
@@ -4483,7 +4413,6 @@
             chat_number,
             id
         );
-
     }
 
     function ChatLive_GetTimeStamp(time) {
@@ -4493,7 +4422,6 @@
     }
 
     function ChatLive_PreLoadChatSuccess(data, chat_number, id) {
-
         if (id !== Chat_Id[chat_number]) return;
 
         var obj = JSON.parse(data),
@@ -4502,17 +4430,12 @@
             message;
 
         for (i; i >= 0; i--) {
-
             message = window.parseIRC(obj.messages[i].trim());
 
-            if (message.command === "PRIVMSG") {
-
+            if (message.command === 'PRIVMSG') {
                 ChatLive_loadChatSuccess(message, chat_number, true);
-
             }
-
         }
-
     }
 
     var useToken = [];
@@ -4554,7 +4477,6 @@
         };
 
         ChatLive_socket[chat_number].onmessage = function(data) {
-
             if (!data.data) return;
 
             var message = window.parseIRC(data.data.trim());
@@ -4567,25 +4489,22 @@
             // }
 
             switch (message.command) {
-                case "PRIVMSG":
+                case 'PRIVMSG':
                     //Main_Log(JSON.stringify(message));
                     ChatLive_loadChatSuccess(message, chat_number);
                     break;
-                case "PING":
+                case 'PING':
                     //Main_Log('ChatLive_socket[chat_number] ' + chat_number + ' PING');
                     //Main_Log(JSON.stringify(message));
                     ChatLive_socket[chat_number].send('PONG ' + message.params[0]);
                     break;
-                case "001":
-                    if (useToken[chat_number] &&
-                        Main_A_includes_B(message.params[1], AddUser_UsernameArray[0].name.toLowerCase())) {
-
+                case '001':
+                    if (useToken[chat_number] && Main_A_includes_B(message.params[1], AddUser_UsernameArray[0].name.toLowerCase())) {
                         ChatLive_SetCheck(chat_number, id);
                         ChatLive_socket[chat_number].send('CAP REQ :twitch.tv/tags twitch.tv/commands');
-
                     }
                     break;
-                case "CAP":
+                case 'CAP':
                     if (useToken[chat_number]) {
                         //Delay the joing so the cap get fully accepted
                         ChatLive_JoinID[chat_number] = Main_setTimeout(
@@ -4597,15 +4516,14 @@
                         );
                     }
                     break;
-                case "JOIN":
+                case 'JOIN':
                     //Main_Log("JOIN");
                     if (!ChatLive_loaded[chat_number]) {
                         ChatLive_loaded[chat_number] = true;
 
                         ChatLive_LineAdd({
                             chat_number: chat_number,
-                            message: ChatLive_LineAddSimple(STR_CHAT_CONNECTED + " as " +
-                                (useToken[chat_number] ? AddUser_UsernameArray[0].display_name : STR_ANONYMOUS_USER))
+                            message: ChatLive_LineAddSimple(STR_CHAT_CONNECTED + ' as ' + (useToken[chat_number] ? AddUser_UsernameArray[0].display_name : STR_ANONYMOUS_USER))
                         });
 
                         if (Play_ChatDelayPosition) {
@@ -4616,10 +4534,8 @@
 
                             ChatLive_LineAdd({
                                 chat_number: chat_number,
-                                message: ChatLive_LineAddSimple(STR_CHAT_DELAY + ' ' +
-                                    Play_controls[Play_controlsChatDelay].values[Play_controls[Play_controlsChatDelay].defaultValue] + stringSec)
+                                message: ChatLive_LineAddSimple(STR_CHAT_DELAY + ' ' + Play_controls[Play_controlsChatDelay].values[Play_controls[Play_controlsChatDelay].defaultValue] + stringSec)
                             });
-
                         }
 
                         //On old implementation of webview or malfunction implementations, there is the need to send a a "heartbeat"
@@ -4627,20 +4543,19 @@
                         //On that device the onclose is automatic call after 60 seconds of inactivity
                         ChatLive_PingId[chat_number] = Main_setInterval(
                             function() {
-                                if (ChatLive_socket[chat_number] && ChatLive_socket[chat_number].readyState === 1)
-                                    ChatLive_socket[chat_number].send('PONG tmi.twitch.tv');
+                                if (ChatLive_socket[chat_number] && ChatLive_socket[chat_number].readyState === 1) ChatLive_socket[chat_number].send('PONG tmi.twitch.tv');
                             },
-                            30 * 1000, //30 
+                            30 * 1000, //30
                             ChatLive_PingId[chat_number]
                         );
                     }
                     ChatLive_CheckRoomState(message, chat_number, true);
 
                     break;
-                case "USERNOTICE":
+                case 'USERNOTICE':
                     ChatLive_CheckIfSub(message, chat_number);
                     break;
-                case "USERSTATE":
+                case 'USERSTATE':
                     //Main_Log('USERSTATE chat ' + chat_number);
                     //Main_Log(message);
                     ChatLive_CheckRoomState(message, chat_number);
@@ -4657,7 +4572,7 @@
                     // subscriber: "0"
                     // user-type: true
                     break;
-                case "NOTICE":
+                case 'NOTICE':
                     if (useToken[chat_number]) {
                         ChatLive_UserNoticeCheck(message, chat_number, id);
                     }
@@ -4672,7 +4587,7 @@
                     // tags:
                     // msg-id: "msg_banned"
                     break;
-                case "ROOMSTATE":
+                case 'ROOMSTATE':
                     ChatLive_UpdateRoomState(message, chat_number);
                     // command: "ROOMSTATE"
                     // params: Array(6)
@@ -4701,17 +4616,17 @@
                     // __proto__: Object
                     // __proto__: Object
                     break;
-                case "PART":
+                case 'PART':
                     if (ChatLive_socket[chat_number]) {
                         ChatLive_reset(chat_number);
                         ChatLive_socket[chat_number].close(1000);
                     }
                     break;
-                case "CLEARCHAT":
+                case 'CLEARCHAT':
                     //Main_Log(JSON.stringify(message));
                     ChatLive_CleanUser(chat_number, message);
                     break;
-                case "CLEARMSG":
+                case 'CLEARMSG':
                     //Main_Log(JSON.stringify(message));
                     ChatLive_CleanMessage(message);
                     break;
@@ -4720,21 +4635,19 @@
             }
         };
 
-        ChatLive_socket[chat_number].onclose =
-            function(event) {
-                if (!Main_isReleased) Main_Log(JSON.stringify(event) + ' onclose main ');
-                ChatLive_LineAddErro('Websocket closed remotely... ' + JSON.stringify(event), chat_number);
-                ChatLive_loaded[chat_number] = false;
-                ChatLive_Check(chat_number, id, ChatLive_ReTryDelay, true);
-            };
+        ChatLive_socket[chat_number].onclose = function(event) {
+            if (!Main_isReleased) Main_Log(JSON.stringify(event) + ' onclose main ');
+            ChatLive_LineAddErro('Websocket closed remotely... ' + JSON.stringify(event), chat_number);
+            ChatLive_loaded[chat_number] = false;
+            ChatLive_Check(chat_number, id, ChatLive_ReTryDelay, true);
+        };
 
-        ChatLive_socket[chat_number].onerror =
-            function(error) {
-                if (!Main_isReleased) Main_Log(JSON.stringify(error) + ' erro main');
-                ChatLive_LineAddErro('Error... ' + JSON.stringify(error), chat_number);
-                ChatLive_loaded[chat_number] = false;
-                ChatLive_Check(chat_number, id, ChatLive_ReTryDelay, true);
-            };
+        ChatLive_socket[chat_number].onerror = function(error) {
+            if (!Main_isReleased) Main_Log(JSON.stringify(error) + ' erro main');
+            ChatLive_LineAddErro('Error... ' + JSON.stringify(error), chat_number);
+            ChatLive_loaded[chat_number] = false;
+            ChatLive_Check(chat_number, id, ChatLive_ReTryDelay, true);
+        };
 
         ChatLive_SetCheck(chat_number, id);
     }
@@ -4761,9 +4674,7 @@
 
     function ChatLive_Close(chat_number) {
         if (ChatLive_socket[chat_number]) {
-
-            if (ChatLive_socket[chat_number].readyState === 1)
-                ChatLive_socket[chat_number].send('PART #' + ChatLive_selectedChannel[chat_number]);
+            if (ChatLive_socket[chat_number].readyState === 1) ChatLive_socket[chat_number].send('PART #' + ChatLive_selectedChannel[chat_number]);
 
             ChatLive_reset(chat_number);
             ChatLive_socket[chat_number].close(1000);
@@ -4808,14 +4719,13 @@
             ChatLive_ROOMSTATE_Regex.lastIndex = 0; //Reset index after use,only need for /g ... may not be using it but force reset in case I change and forget it
 
             if (array && array.length === 6) {
-
                 Main_clearTimeout(ChatLive_JoinID[chat_number]);
                 ChatLive_SetRoomState(array, chat_number);
                 return;
-
             }
 
-            if (retry) { //Don't retry for USERSTATE only on join
+            if (retry) {
+                //Don't retry for USERSTATE only on join
                 //try a join again so the ROOMSTATE get send
                 ChatLive_JoinID[chat_number] = Main_setTimeout(
                     function() {
@@ -4849,7 +4759,6 @@
         //Main_Log('ChatLive_UpdateRoomState');
         //Main_Log(message);
         if (message.tags) {
-
             if (!ChatLive_RoomState[chat_number]) ChatLive_RoomState[chat_number] = {};
 
             var tags = message.tags;
@@ -4870,12 +4779,9 @@
         if (id !== Chat_Id[chat_number]) return;
 
         if (!chat_number) {
-            if (!ChatLive_Banned[chat_number] && AddUser_IsUserSet() && AddUser_UsernameArray[0].access_token)
-                ChatLive_SendPrepared(chat_number, id);
-            else
-                ChatLive_SendClose();
+            if (!ChatLive_Banned[chat_number] && AddUser_IsUserSet() && AddUser_UsernameArray[0].access_token) ChatLive_SendPrepared(chat_number, id);
+            else ChatLive_SendClose();
         }
-
     }
 
     var ChatLive_socketSend;
@@ -4896,7 +4802,6 @@
         };
 
         ChatLive_socketSend.onmessage = function(data) {
-
             if (!data.data) return;
 
             var message = window.parseIRC(data.data.trim());
@@ -4907,18 +4812,18 @@
             //Main_Log(JSON.stringify(message));
 
             switch (message.command) {
-                case "PING":
+                case 'PING':
                     //Main_Log('ChatLive_socketSend PING');
                     //Main_Log(message);
                     ChatLive_socketSend.send('PONG ' + message.params[0]);
                     break;
-                case "001":
+                case '001':
                     if (Main_A_includes_B(message.params[1], AddUser_UsernameArray[0].name.toLowerCase())) {
                         ChatLive_socketSendSetCheck(chat_number, id);
                         ChatLive_socketSend.send('CAP REQ :twitch.tv/tags twitch.tv/commands');
                     }
                     break;
-                case "CAP":
+                case 'CAP':
                     ChatLive_socketSendJoin = true;
 
                     //On old implementation of webview or malfunction implementations, there is the need to send a a "heartbeat"
@@ -4926,26 +4831,23 @@
                     //On that device the onclose is automatic call after 60 seconds of inactivity
                     ChatLive_SendPingId = Main_setInterval(
                         function() {
-                            if (ChatLive_socketSend && ChatLive_socketSend.readyState === 1)
-                                ChatLive_socketSend.send('PONG tmi.twitch.tv');
+                            if (ChatLive_socketSend && ChatLive_socketSend.readyState === 1) ChatLive_socketSend.send('PONG tmi.twitch.tv');
                         },
                         30 * 1000, //30 sec
                         ChatLive_SendPingId
                     );
                     break;
-                case "NOTICE":
+                case 'NOTICE':
                     if (message.params && message.params[1] && Main_A_includes_B(message.params[1] + '', 'authentication failed')) {
-
                         ChatLive_LineAddErro(message.params[1], 0, true);
                         if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) AddCode_refreshTokens(0, null, null);
-
                     } else ChatLive_UserNoticeWarn(message);
                     break;
                     // case "USERSTATE":
                     //     Main_Log('USERSTATE send');
                     //     Main_Log(message);
                     //     break;
-                case "PART":
+                case 'PART':
                     if (ChatLive_socketSend) {
                         ChatLive_SendReset();
                         ChatLive_socketSend.close(1000);
@@ -4956,21 +4858,19 @@
             }
         };
 
-        ChatLive_socketSend.onclose =
-            function(event) {
-                if (!Main_isReleased) Main_Log(JSON.stringify(event) + ' onclose send');
-                ChatLive_LineAddErro('Websocket closed remotely... ' + JSON.stringify(event), 0, true);
-                ChatLive_socketSendJoin = false;
-                ChatLive_socketSendCheck(chat_number, id, ChatLive_ReTryDelay, true);
-            };
+        ChatLive_socketSend.onclose = function(event) {
+            if (!Main_isReleased) Main_Log(JSON.stringify(event) + ' onclose send');
+            ChatLive_LineAddErro('Websocket closed remotely... ' + JSON.stringify(event), 0, true);
+            ChatLive_socketSendJoin = false;
+            ChatLive_socketSendCheck(chat_number, id, ChatLive_ReTryDelay, true);
+        };
 
-        ChatLive_socketSend.onerror =
-            function(error) {
-                if (!Main_isReleased) Main_Log(JSON.stringify(error) + ' error send');
-                ChatLive_LineAddErro('Error... ' + JSON.stringify(error), 0, true);
-                ChatLive_socketSendJoin = false;
-                ChatLive_socketSendCheck(chat_number, id, ChatLive_ReTryDelay, true);
-            };
+        ChatLive_socketSend.onerror = function(error) {
+            if (!Main_isReleased) Main_Log(JSON.stringify(error) + ' error send');
+            ChatLive_LineAddErro('Error... ' + JSON.stringify(error), 0, true);
+            ChatLive_socketSendJoin = false;
+            ChatLive_socketSendCheck(chat_number, id, ChatLive_ReTryDelay, true);
+        };
 
         ChatLive_socketSendSetCheck(chat_number, id);
     }
@@ -4987,7 +4887,6 @@
             if (ChatLive_socketSend.readyState === 1) ChatLive_socketSend.send('PART ');
             ChatLive_SendReset();
             ChatLive_socketSend.close(1000);
-
         }
         ChatLive_socketSendJoin = false;
         Main_clearInterval(ChatLive_SendPingId);
@@ -5015,16 +4914,13 @@
                 timeout ? timeout : 0,
                 ChatLive_socketSendCheckID
             );
-
         }
-
     }
 
     function ChatLive_UserNoticeCheck(message, chat_number, id) {
         //Main_Log(message);
 
-        if (message.tags && message.tags.hasOwnProperty('msg-id') && Main_A_includes_B(message.tags['msg-id'] + '', "msg_banned")) {
-
+        if (message.tags && message.tags.hasOwnProperty('msg-id') && Main_A_includes_B(message.tags['msg-id'] + '', 'msg_banned')) {
             var text = message.params && message.params[1] ? message.params[1] : STR_CHAT_BANNED + ChatLive_selectedChannel[chat_number];
             ChatLive_Warn(text, 3500);
 
@@ -5033,22 +4929,17 @@
             Main_clearTimeout(ChatLive_CheckId[chat_number]);
             ChatLive_Check(chat_number, id, 0);
         } else if (message.params && message.params[1] && Main_A_includes_B(message.params[1] + '', 'authentication failed')) {
-
             ChatLive_LineAddErro(message.params[1], chat_number);
             if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) AddCode_refreshTokens(0, null, null);
-
         } else ChatLive_UserNoticeWarn(message);
-
     }
 
     function ChatLive_UserNoticeWarn(message) {
         //Main_Log(message);
 
-        if (message.params[1] && !Main_A_includes_B(message.params[1], "NICK already set")) {
-
+        if (message.params[1] && !Main_A_includes_B(message.params[1], 'NICK already set')) {
             //Main_Log(message.params[1]);
             ChatLive_Warn(message.params[1], 3500);
-
         }
     }
 
@@ -5067,10 +4958,7 @@
             if (Play_ChatDelayPosition) {
                 var time = Play_controls[Play_controlsChatDelay].defaultValue;
 
-                ChatLiveControls_showWarningDialog(
-                    STR_CHAT_SEND_DELAY + STR_SPACE + time + (time > 1 ? STR_SECONDS : STR_SECOND),
-                    5000
-                );
+                ChatLiveControls_showWarningDialog(STR_CHAT_SEND_DELAY + STR_SPACE + time + (time > 1 ? STR_SECONDS : STR_SECOND), 5000);
             }
 
             return true;
@@ -5113,68 +5001,59 @@
 
         var gifter_Or_Sub_name = tags['display-name'] || null,
             msgid = tags['msg-id'] || null,
-            recipient = tags['msg-param-recipient-display-name'] || tags["msg-param-recipient-user-name"] || null,
+            recipient = tags['msg-param-recipient-display-name'] || tags['msg-param-recipient-user-name'] || null,
             recipientId = tags['msg-param-recipient-id'] || null,
             msg = tags['system-msg'] || null;
 
         if (msg && msgid) {
-
             var isAnon = Main_A_includes_B(msgid + '', 'anon');
 
             msg = msg.replace(ChatLive_sub_replace, ' ');
 
             //who sub or gift a sub
             if (gifter_Or_Sub_name) {
-
                 msg = msg.replace(gifter_Or_Sub_name, "<span style='color: #0fffff; font-weight: bold'>$&</span>");
-
             }
 
             //who received a sub
             if (recipient) {
-
                 msg = msg.replace(recipient, "<span style='color: #0fffff; font-weight: bold'>$&</span>");
-
             }
 
             //who sub or gift a sub message
             if (params && params[1]) {
-
-                msg += (params && params[1] ? STR_BR + STR_BR + ChatLive_GetBadges(tags, chat_number) +
-                    "<span style='color: #0fffff; font-weight: bold'>" + (isAnon || !gifter_Or_Sub_name ? STR_ANONYMOUS_USER : gifter_Or_Sub_name) + "</span>: " +
-                    ChatLive_extraMessageTokenize(
-                        emoticonize(params[1], ChatLive_checkEmotes(tags)),
-                        chat_number,
-                        0
-                    ) : '');
+                msg +=
+                    params && params[1] ?
+                    STR_BR +
+                    STR_BR +
+                    ChatLive_GetBadges(tags, chat_number) +
+                    "<span style='color: #0fffff; font-weight: bold'>" +
+                    (isAnon || !gifter_Or_Sub_name ? STR_ANONYMOUS_USER : gifter_Or_Sub_name) +
+                    '</span>: ' +
+                    ChatLive_extraMessageTokenize(emoticonize(params[1], ChatLive_checkEmotes(tags)), chat_number, 0) :
+                    '';
             }
 
-            ChatLive_CheckIfSubSend(
-                msg,
-                chat_number
-            );
+            ChatLive_CheckIfSubSend(msg, chat_number);
 
             //check if who received a sub is current active user
-            if (ChatLive_User_Set && recipient && recipientId &&
-                (Main_A_equals_B(recipient + '', AddUser_UsernameArray[0].id + '') ||
-                    Main_A_equals_B(recipientId.toLowerCase() + '', AddUser_UsernameArray[0].name.toLowerCase() + ''))) {
-
+            if (
+                ChatLive_User_Set &&
+                recipient &&
+                recipientId &&
+                (Main_A_equals_B(recipient + '', AddUser_UsernameArray[0].id + '') || Main_A_equals_B(recipientId.toLowerCase() + '', AddUser_UsernameArray[0].name.toLowerCase() + ''))
+            ) {
                 ChatLive_Warn((isAnon ? STR_GIFT_ANONYMOUS : tags['display-name']) + STR_GIFT_SUB, 10000);
-
             }
-
         }
-
     }
 
     function ChatLive_CheckIfSubSend(message, chat_number) {
-        ChatLive_LineAddCheckDelay(
-            chat_number, {
-                chat_number: chat_number,
-                message: '<span class="message">' + message + '</span>',
-                sub: 1,
-            }
-        );
+        ChatLive_LineAddCheckDelay(chat_number, {
+            chat_number: chat_number,
+            message: '<span class="message">' + message + '</span>',
+            sub: 1
+        });
     }
 
     function ChatLive_loadChatSuccess(message, chat_number, addToStart) {
@@ -5194,22 +5073,16 @@
         }
 
         if (ChatLive_Highlight_Rewards && tags.hasOwnProperty('msg-id')) {
-
             //Stringfy to prevent crashes
             tags['msg-id'] = tags['msg-id'] + '';
 
-            if (Main_A_includes_B(tags['msg-id'], "highlighted-message")) {
-
+            if (Main_A_includes_B(tags['msg-id'], 'highlighted-message')) {
                 highlighted = ' chat_highlighted ';
                 extraMessage = STR_CHAT_REDEEMED_MESSAGE_HIGH;
-
-            } else if (Main_A_includes_B(tags['msg-id'], "skip-subs-mode-message")) {
-
+            } else if (Main_A_includes_B(tags['msg-id'], 'skip-subs-mode-message')) {
                 highlighted = ' chat_highlighted ';
                 extraMessage = STR_CHAT_REDEEMED_MESSAGE_SUB;
-
             }
-
         }
 
         if (ChatLive_Show_TimeStamp) {
@@ -5229,63 +5102,55 @@
             if (!ChatLive_Highlight_Actions) return;
 
             action = true;
-            mmessage = mmessage.replace(/^\x01ACTION/, '').replace(/\x01$/, '').trim();
+            mmessage = mmessage
+                .replace(/^\x01ACTION/, '')
+                .replace(/\x01$/, '')
+                .trim();
         }
 
         if (ChatLive_Highlight_AtStreamer && ChatLive_Channel_Regex_Search[chat_number].test(mmessage)) {
-
             atstreamer = true;
-
         } else if (ChatLive_Highlight_AtUser && ChatLive_User_Regex_Search.test(mmessage)) {
-
             atuser = true;
-
-        } else if (ChatLive_Highlight_User_send &&
-            Main_A_includes_B(tags['display-name'].toLowerCase(), (AddUser_UsernameArray[0].display_name).toLowerCase())) {
-
+        } else if (ChatLive_Highlight_User_send && Main_A_includes_B(tags['display-name'].toLowerCase(), AddUser_UsernameArray[0].display_name.toLowerCase())) {
             atuser = true;
-
         }
 
-        hasbits = (tags.hasOwnProperty('bits') && cheers.hasOwnProperty(ChatLive_selectedChannel_id[chat_number]));
+        hasbits = tags.hasOwnProperty('bits') && cheers.hasOwnProperty(ChatLive_selectedChannel_id[chat_number]);
 
         //Add nick
         nick = tags['display-name'];
         if (atstreamer || (ChatLive_Highlight_Bits && hasbits)) {
-
             nickColor = chat_Line_highlight_green;
-
         } else if (atuser) {
-
             nickColor = chat_Line_highlight_blue;
-
         } else {
-
-            if (!ChatLive_Custom_Nick_Color && (typeof tags.color !== "boolean")) {
-
+            if (!ChatLive_Custom_Nick_Color && typeof tags.color !== 'boolean') {
                 nickColor = 'style="color: ' + tags.color + ';"';
-
             } else {
-
-                nickColor = 'style="color: ' + (defaultColors[(nick).charCodeAt(0) % defaultColorsLength]) + ';"';
-
+                nickColor = 'style="color: ' + defaultColors[nick.charCodeAt(0) % defaultColorsLength] + ';"';
             }
         }
         div += '<span ' + (action ? 'class="class_bold" ' : '') + nickColor + '>' + nick + '</span>' + (action ? '' : '&#58;') + '&nbsp;';
 
-        div += '<span ' + (tags.id ? 'id="' + tags.id + '"' : '') + ' class="' + (tags['user-id'] ? tags['user-id'] : '') + ' message' + highlighted + (action ? (' class_bold" ' + nickColor) : '"') + '>' +
-            ChatLive_extraMessageTokenize(
-                emoticonize(mmessage, ChatLive_checkEmotes(tags)),
-                chat_number,
-                (hasbits ? parseInt(tags.bits) : 0)
-            ) + '</span>';
+        div +=
+            '<span ' +
+            (tags.id ? 'id="' + tags.id + '"' : '') +
+            ' class="' +
+            (tags['user-id'] ? tags['user-id'] : '') +
+            ' message' +
+            highlighted +
+            (action ? ' class_bold" ' + nickColor : '"') +
+            '>' +
+            ChatLive_extraMessageTokenize(emoticonize(mmessage, ChatLive_checkEmotes(tags)), chat_number, hasbits ? parseInt(tags.bits) : 0) +
+            '</span>';
 
         var messageObj = {
             chat_number: chat_number,
             message: div,
             atstreamer: atstreamer,
             atuser: atuser,
-            hasbits: (hasbits && ChatLive_Highlight_Bits),
+            hasbits: hasbits && ChatLive_Highlight_Bits,
             extraMessage: extraMessage,
             addToStart: addToStart
         };
@@ -5294,27 +5159,19 @@
     }
 
     function ChatLive_LineAddCheckDelay(chat_number, messageObj) {
-
         if (!Play_ChatDelayPosition) ChatLive_LineAdd(messageObj);
         else ChatLive_LineAddDelay(chat_number, Chat_Id[chat_number], messageObj);
-
     }
 
     function ChatLive_LineAddDelay(chat_number, id, messageObj) {
-        Main_setTimeout(
-            function() {
-                if (id === Chat_Id[chat_number]) ChatLive_LineAdd(messageObj);
-            },
-            (Play_controls[Play_controlsChatDelay].values[Play_controls[Play_controlsChatDelay].defaultValue] * 1000)
-        );
+        Main_setTimeout(function() {
+            if (id === Chat_Id[chat_number]) ChatLive_LineAdd(messageObj);
+        }, Play_controls[Play_controlsChatDelay].values[Play_controls[Play_controlsChatDelay].defaultValue] * 1000);
     }
 
     function ChatLive_GetBadges(tags, chat_number) {
-
         if (tags.hasOwnProperty('badges')) {
-
             if (typeof tags.badges === 'string') {
-
                 var badges = tags.badges.split(','),
                     badge,
                     ret = '';
@@ -5327,20 +5184,16 @@
 
                 return ret;
             }
-
         }
 
         return '';
-
     }
 
     function ChatLive_checkEmotes(tags) {
         var emotes = null;
 
         if (tags.hasOwnProperty('emotes')) {
-
             if (typeof tags.emotes === 'string') {
-
                 tags.emotes = tags.emotes.split('/');
 
                 var emote, replacements, replacement, j, len_j;
@@ -5366,17 +5219,11 @@
     }
 
     function ChatLive_extraMessageTokenize(tokenizedMessage, chat_number, tags) {
-
         for (var i = 0, len = tokenizedMessage.length; i < len; i++) {
-
             if (typeof tokenizedMessage[i] === 'string') {
-
                 tokenizedMessage[i] = extraMessageTokenize(tokenizedMessage[i], chat_number, tags);
-
             } else {
-
                 tokenizedMessage[i] = tokenizedMessage[i][0];
-
             }
         }
 
@@ -5389,18 +5236,14 @@
 
     function ChatLive_LineAdd(messageObj) {
         if (ChatLive_Playing) {
-
             ChatLive_ElemntAdd(messageObj);
 
             if (ChatLive_LineAddCounter[messageObj.chat_number]++ > Chat_CleanMax) {
                 ChatLive_LineAddCounter[messageObj.chat_number] = 0;
                 Chat_Clean(messageObj.chat_number);
             }
-
         } else {
-
             ChatLive_Messages[messageObj.chat_number].push(messageObj);
-
         }
     }
 
@@ -5416,47 +5259,30 @@
     // };
 
     function ChatLive_ElemntAdd(messageObj) {
-
         var elem = document.createElement('div');
         var classname = 'chat_line';
 
         if (messageObj.atstreamer) {
-
             classname += ' chat_atstreamer';
 
             messageObj.message = messageObj.message.replace(ChatLive_Channel_Regex_Replace[messageObj.chat_number], "<span style='color: #34B5FF; font-weight: bold'>$&</span>");
-
         } else if (messageObj.atuser) {
-
             classname += ' chat_atuser';
 
             messageObj.message = messageObj.message.replace(ChatLive_User_Regex_Replace, "<span style='color: #34B5FF; font-weight: bold'>$&</span>");
-
         } else if (messageObj.hasbits) {
-
             classname += ' chat_bits';
-
         } else if (messageObj.sub) {
-
             classname += ' chat_sub';
-
         } else if (ChatLive_Individual_Background) {
-
             if (ChatLive_Individual_Background_flip[messageObj.chat_number]) {
-
                 if (ChatLive_Individual_Background === 1) {
-
                     var color = !Play_isFullScreen ? '100,100,100,' : '0, 0, 0,';
                     elem.style.backgroundColor = 'rgba(' + color + ' ' + Play_ChatBackground + ')';
-
                 } else if (ChatLive_Individual_Background === 2) {
-
                     elem.style.backgroundColor = 'rgba(100,100,100, ' + Play_ChatBackground + ')';
-
                 } else if (ChatLive_Individual_Background === 3) {
-
                     elem.style.backgroundColor = 'rgba(0,0,0, ' + Play_ChatBackground + ')';
-
                 }
             }
 
@@ -5469,8 +5295,6 @@
         elem.className = classname;
         elem.innerHTML = messageObj.message;
 
-
-
         // <div class="chat_line chat_line_ind">
         // <span style="color: #D463FF;">USER Name</span>:&nbsp;
         // <span id="msg-id" class="user-id message">message <img class="emoticon" alt="" src="https://cdn.betterttv.net/emote/60007afdc96152314ad6629f/3x">
@@ -5478,21 +5302,17 @@
         // </div>
 
         if (!messageObj.addToStart) {
-
             ChatLive_ElemntAddCheckExtra(messageObj);
             Chat_div[messageObj.chat_number].appendChild(elem);
-
         } else {
-
             Chat_div[messageObj.chat_number].insertBefore(elem, Chat_div[messageObj.chat_number].childNodes[0]);
             ChatLive_ElemntAddCheckExtra(messageObj);
-
         }
     }
 
     function ChatLive_ElemntAddCheckExtra(messageObj) {
-
-        if (messageObj.extraMessage) { //REDEEMED_MESSAGE or etc related
+        if (messageObj.extraMessage) {
+            //REDEEMED_MESSAGE or etc related
 
             ChatLive_ElemntAdd({
                 chat_number: messageObj.chat_number,
@@ -5500,9 +5320,7 @@
                 skip_addline: 1,
                 addToStart: messageObj.addToStart
             });
-
         }
-
     }
 
     function ChatLive_MessagesRunAfterPause() {
@@ -5512,14 +5330,11 @@
             len = ChatLive_Messages[i].length;
 
             for (j = 0; j < len; j++) {
-
                 ChatLive_LineAdd(ChatLive_Messages[i][j]);
-
             }
 
             ChatLive_Messages[i] = [];
         }
-
     }
 
     function ChatLive_ClearIds(chat_number) {
@@ -5552,7 +5367,6 @@
         if (!chat_number) {
             ChatLive_SendClose();
         }
-
     }
 
     // {
@@ -5569,41 +5383,32 @@
     // }
 
     function ChatLive_CleanUser(chat_number, message) {
-
         if (message.tags && message.tags.hasOwnProperty('target-user-id')) {
-
             var duration = message.tags['ban-duration'] || 0,
                 msg = STR_CHAT_MESSAGE_DELETED_ALL,
                 classId = message.tags['target-user-id'],
                 array = Chat_div[chat_number].getElementsByClassName(classId); //The user id is added as a class
 
             if (duration) {
-
                 msg += STR_CHAT_MESSAGE_DELETED_TIMEOUT + duration + (duration > 1 ? STR_SECONDS : STR_SECOND);
-
             }
 
             try {
                 //Array.prototype maybe not supported by all browsers
-                Array.prototype.forEach.call(array,
-                    function(el) {
-                        if (el) {
+                Array.prototype.forEach.call(array, function(el) {
+                    if (el) {
+                        if (ChatLive_ClearChat) el.innerHTML = msg;
+                        else el.innerHTML += STR_BR + STR_BR + msg;
 
-                            if (ChatLive_ClearChat) el.innerHTML = msg;
-                            else el.innerHTML += STR_BR + STR_BR + msg;
-
-                            Main_AddClassWitEle(el.parentElement, 'chat_purged');
-                            //Prevent duplicate removal
-                            Main_RemoveClassWithEle(el, classId);
-
-                        }
+                        Main_AddClassWitEle(el.parentElement, 'chat_purged');
+                        //Prevent duplicate removal
+                        Main_RemoveClassWithEle(el, classId);
                     }
-                );
+                });
             } catch (e) {
                 Main_Log('ChatLive_Clean Array.prototype message ' + JSON.stringify(message) + ' e ' + e);
             }
         }
-
     }
 
     // {
@@ -5620,13 +5425,11 @@
     // }
 
     function ChatLive_CleanMessage(message) {
-
         if (message.tags && message.tags.hasOwnProperty('target-msg-id')) {
             //Elem may not be there anymore
             var el = Main_getElementById(message.tags['target-msg-id']);
 
             if (el) {
-
                 if (ChatLive_ClearChat) el.innerHTML = STR_CHAT_MESSAGE_DELETED;
                 else el.innerHTML += STR_BR + STR_BR + STR_CHAT_MESSAGE_DELETED;
 
@@ -5635,7 +5438,6 @@
                 el.id = '_';
             }
         }
-
     }
     /*
      * Copyright (c) 2017-2020 Felipe de Leon <fglfgl27@gmail.com>
@@ -5667,9 +5469,24 @@
     var Chat_offset = 0;
     var Chat_title = '';
     var defaultColors = [
-        "#FC4F4F", "#ff8736", "#ffd830", "#ffff35", "#81ff2c", "#2dff2d",
-        "#21ff7a", "#0fffc0", "#0fffff", "#20cfff", "#4d9bff", "#ff74ff",
-        "#ff93ff", "#ff63ab", "#63FFBF", "#A363FF", "#B3FF63", "#D463FF"
+        '#FC4F4F',
+        '#ff8736',
+        '#ffd830',
+        '#ffff35',
+        '#81ff2c',
+        '#2dff2d',
+        '#21ff7a',
+        '#0fffc0',
+        '#0fffff',
+        '#20cfff',
+        '#4d9bff',
+        '#ff74ff',
+        '#ff93ff',
+        '#ff63ab',
+        '#63FFBF',
+        '#A363FF',
+        '#B3FF63',
+        '#D463FF'
     ];
 
     var defaultColorsLength = defaultColors.length;
@@ -5698,11 +5515,7 @@
 
         Chat_loadBadgesGlobal();
 
-        ChatLive_SetOptions(
-            0,
-            Main_values.Main_selectedChannel_id,
-            Main_values.Main_selectedChannel
-        );
+        ChatLive_SetOptions(0, Main_values.Main_selectedChannel_id, Main_values.Main_selectedChannel);
 
         Chat_loadChat(Chat_Id[0]);
     }
@@ -5720,26 +5533,11 @@
     }
 
     function Chat_BaseLoadUrl(theUrl, tryes, callbackSucess, calbackError) {
-
-        BasexmlHttpGet(
-            theUrl,
-            (DefaultHttpGetTimeout * 2) + (tryes * DefaultHttpGetTimeoutPlus),
-            0,
-            null,
-            callbackSucess,
-            calbackError,
-            tryes
-        );
-
+        BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2 + tryes * DefaultHttpGetTimeoutPlus, 0, null, callbackSucess, calbackError, tryes);
     }
 
     function Chat_loadBadgesGlobalRequest(tryes) {
-        Chat_BaseLoadUrl(
-            'https://badges.twitch.tv/v1/badges/global/display',
-            tryes,
-            Chat_loadBadgesGlobalSuccess,
-            Chat_loadBadgesGlobalError
-        );
+        Chat_BaseLoadUrl('https://badges.twitch.tv/v1/badges/global/display', tryes, Chat_loadBadgesGlobalSuccess, Chat_loadBadgesGlobalError);
     }
 
     function Chat_loadBadgesGlobalError(tryes) {
@@ -5747,7 +5545,11 @@
     }
 
     function Chat_loadBadgesGlobalSuccess(responseText) {
-        var versions, property, version, url, innerHTML = '';
+        var versions,
+            property,
+            version,
+            url,
+            innerHTML = '';
 
         var responseObjt = JSON.parse(responseText);
 
@@ -5764,7 +5566,11 @@
     }
 
     function Chat_loadBadgesTransform(responseText, checkSubMissing) {
-        var versions, property, version, url, innerHTML = [],
+        var versions,
+            property,
+            version,
+            url,
+            innerHTML = [],
             versionInt;
 
         innerHTML[0] = '';
@@ -5779,16 +5585,12 @@
 
                 //some channel may be missing 0 3 6 12 etc badges but they have 2000 2003 etc
                 if (checkSubMissing) {
-
-                    versionInt = parseInt(version) -
-                        parseInt(version.toString()[0]) * Math.pow(10, version.length - 1);
+                    versionInt = parseInt(version) - parseInt(version.toString()[0]) * Math.pow(10, version.length - 1);
 
                     if (versionInt > -1 && !versions.hasOwnProperty(versionInt)) {
-
                         innerHTML[0] += Chat_BasetagCSS(property + 0, versionInt, url);
                         innerHTML[1] += Chat_BasetagCSS(property + 1, versionInt, url);
                     }
-
                 }
             }
         }
@@ -5798,31 +5600,24 @@
 
     function Chat_BasetagCSS(type, version, url) {
         //a prevent class starting with numbers
-        return ('.a' + type + '-' + version + url);
+        return '.a' + type + '-' + version + url;
     }
 
     function Chat_BasetagCSSUrl(url) {
         //a prevent class starting with numbers
-        return (' { background-image: url("' + url.replace('http:', 'https:') + '"); }');
+        return ' { background-image: url("' + url.replace('http:', 'https:') + '"); }';
     }
 
     function Chat_tagCSS(content, doc) {
         Main_ready(function() {
-
             var style = document.createElement('style');
             style.innerHTML = content;
             doc.appendChild(style);
-
         });
     }
 
     function Chat_loadBTTVGlobalEmotes(tryes) {
-        Chat_BaseLoadUrl(
-            'https://api.betterttv.net/3/cached/emotes/global',
-            tryes,
-            Chat_loadEmotesSuccessBttv,
-            Chat_loadEmotesBttvError
-        );
+        Chat_BaseLoadUrl('https://api.betterttv.net/3/cached/emotes/global', tryes, Chat_loadEmotesSuccessBttv, Chat_loadEmotesBttvError);
     }
 
     function Chat_loadEmotesBttvError(tryes) {
@@ -5840,7 +5635,6 @@
 
         try {
             data.forEach(function(emote) {
-
                 url = ChatLive_Base_BTTV_url + emote.id + '/3x';
                 chat_div = emoteTemplate(url);
                 id = emote.code + emote.id;
@@ -5862,34 +5656,22 @@
         } catch (e) {
             Main_Log('Chat_loadEmotesbttvGlobal ' + e);
         }
-
     }
 
     function Chat_loadSeven_tvGlobalEmotes(tryes) {
-        Chat_BaseLoadUrl(
-            'https://api.7tv.app/v2/emotes/global',
-            tryes,
-            Chat_loadEmotesSuccessSeven_tv,
-            Chat_loadEmotesErrorSeven_tv
-        );
+        Chat_BaseLoadUrl('https://api.7tv.app/v2/emotes/global', tryes, Chat_loadEmotesSuccessSeven_tv, Chat_loadEmotesErrorSeven_tv);
     }
 
     function Chat_loadEmotesErrorSeven_tv(tryes) {
         if (tryes < DefaultHttpGetReTryMax) Chat_loadSeven_tvGlobalEmotes(tryes + 1);
     }
 
-
     function Chat_loadEmotesSuccessSeven_tv(data) {
         ChatLive_loadEmotesseven_tv(JSON.parse(data), 0, true);
     }
 
     function Chat_loadEmotesffz(tryes) {
-        Chat_BaseLoadUrl(
-            'https://api.frankerfacez.com/v1/set/global',
-            tryes,
-            Chat_loadEmotesSuccessffz,
-            Chat_loadEmotesErrorffz
-        );
+        Chat_BaseLoadUrl('https://api.frankerfacez.com/v1/set/global', tryes, Chat_loadEmotesSuccessffz, Chat_loadEmotesErrorffz);
     }
 
     function Chat_loadEmotesErrorffz(tryes) {
@@ -5905,27 +5687,17 @@
     }
 
     function Chat_loadChatRequest(id) {
+        var theUrl =
+            'https://api.twitch.tv/v5/videos/' + Main_values.ChannelVod_vodId + '/comments?client_id=' + AddCode_client_backup + (Chat_offset ? '&content_offset_seconds=' + parseInt(Chat_offset) : '');
 
-        var theUrl = 'https://api.twitch.tv/v5/videos/' + Main_values.ChannelVod_vodId +
-            '/comments?client_id=' + AddCode_clientId + (Chat_offset ? '&content_offset_seconds=' + parseInt(Chat_offset) : '');
-
-        BasexmlHttpGet(
-            theUrl,
-            DefaultHttpGetTimeout * 2,
-            0,
-            null,
-            Chat_loadChatSuccess,
-            Chat_loadChatError,
-            id
-        );
+        BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2, 0, null, Chat_loadChatSuccess, Chat_loadChatError, id);
     }
 
     function Chat_loadChatError(id) {
         if (Chat_Id[0] === id) {
-
             Chat_loadChatId = Main_setTimeout(
                 function() {
-                    var time = (PlayVod_currentTime / 1000);
+                    var time = PlayVod_currentTime / 1000;
                     if (time && time < Chat_offset) Chat_offset = time;
 
                     Chat_loadChatRequest(id, 0);
@@ -5933,41 +5705,42 @@
                 2500,
                 Chat_loadChatId
             );
-
         }
     }
 
     function Chat_loadChatSuccess(responseText, id) {
-
         if (Chat_hasEnded || Chat_Id[0] !== id) return;
 
         responseText = JSON.parse(responseText);
         var div,
-            mmessage, null_next = (Chat_next === null),
+            mmessage,
+            null_next = Chat_next === null,
             nickColor,
             atstreamer,
             atuser,
             hasbits,
             message_text,
-            comments, badges, fragment,
-            i, len, j, len_j,
+            comments,
+            badges,
+            fragment,
+            i,
+            len,
+            j,
+            len_j,
             messageObj;
 
         if (null_next) {
-
             Chat_MessageVector({
                 chat_number: 0,
                 time: 0,
                 message: '<span class="message">' + STR_LOADING_CHAT + STR_SPACE + Main_values.Main_selectedChannelDisplayname + STR_SPACE + Chat_title + '</span>'
             });
 
-
             Chat_MessageVector({
                 chat_number: 0,
                 time: 0,
                 message: '<span class="message">' + STR_CHAT_CONNECTED + '</span>'
             });
-
         }
         Chat_offset = 0;
         Chat_next = responseText._next;
@@ -5975,7 +5748,6 @@
         comments = responseText.comments || [];
 
         for (i = 0, len = comments.length; i < len; i++) {
-
             atstreamer = false;
             atuser = false;
             hasbits = false;
@@ -5992,80 +5764,60 @@
 
             //Add badges
             if (mmessage.hasOwnProperty('user_badges')) {
-
                 for (j = 0, len_j = mmessage.user_badges.length; j < len_j; j++) {
                     badges = mmessage.user_badges[j];
 
-                    div += '<span class="a' + badges._id + "0-" + badges.version + ' tag"></span>';
-
+                    div += '<span class="a' + badges._id + '0-' + badges.version + ' tag"></span>';
                 }
             }
 
             hasbits = mmessage.hasOwnProperty('bits_spent') && cheers.hasOwnProperty(ChatLive_selectedChannel_id[0]);
 
             if (mmessage.fragments) {
-
                 for (j = 0, len_j = mmessage.fragments.length; j < len_j; j++) {
                     fragment = mmessage.fragments[j];
 
                     if (fragment.hasOwnProperty('emoticon')) message_text += emoteTemplate(emoteURL(fragment.emoticon.emoticon_id));
                     else {
-
-                        message_text +=
-                            ChatLive_extraMessageTokenize(
-                                [fragment.text],
-                                0,
-                                (hasbits ? mmessage.bits_spent : 0)
-                            );
+                        message_text += ChatLive_extraMessageTokenize([fragment.text], 0, hasbits ? mmessage.bits_spent : 0);
 
                         if (!atstreamer && ChatLive_Highlight_AtStreamer && ChatLive_Channel_Regex_Search[0].test(fragment.text)) {
-
                             atstreamer = true;
-
                         } else if (!atuser && ChatLive_Highlight_AtUser && ChatLive_User_Regex_Search.test(fragment.text)) {
-
                             atuser = true;
-
                         }
                     }
-
                 }
             }
 
-            if (ChatLive_Highlight_User_send &&
-                Main_A_includes_B((comments[i].commenter.display_name).toLowerCase(), (AddUser_UsernameArray[0].display_name).toLowerCase())) {
-
+            if (ChatLive_Highlight_User_send && Main_A_includes_B(comments[i].commenter.display_name.toLowerCase(), AddUser_UsernameArray[0].display_name.toLowerCase())) {
                 atuser = true;
-
             }
 
             //Add nick
             if (atstreamer || (ChatLive_Highlight_Bits && hasbits)) {
-
                 nickColor = chat_Line_highlight_green;
-
             } else if (atuser) {
-
                 nickColor = chat_Line_highlight_blue;
-
             } else {
-
                 if (!ChatLive_Custom_Nick_Color && mmessage.hasOwnProperty('user_color')) {
-
                     nickColor = 'style="color: ' + mmessage.user_color + ';"';
-
                 } else {
-
-                    nickColor = 'style="color: ' + (defaultColors[(comments[i].commenter.display_name).charCodeAt(0) % defaultColorsLength]) + ';"';
-
+                    nickColor = 'style="color: ' + defaultColors[comments[i].commenter.display_name.charCodeAt(0) % defaultColorsLength] + ';"';
                 }
-
             }
-            div += '<span ' + (mmessage.is_action ? ('class="class_bold" ' + nickColor) : '') + nickColor + '>' +
-                comments[i].commenter.display_name + '</span>' + (mmessage.is_action ? '' : '&#58;') + '&nbsp;';
+            div +=
+                '<span ' +
+                (mmessage.is_action ? 'class="class_bold" ' + nickColor : '') +
+                nickColor +
+                '>' +
+                comments[i].commenter.display_name +
+                '</span>' +
+                (mmessage.is_action ? '' : '&#58;') +
+                '&nbsp;';
 
             //Add mesage
-            div += '<span class="message' + (mmessage.is_action ? (' class_bold" ' + nickColor) : '"') + '>' + message_text + '</span>';
+            div += '<span class="message' + (mmessage.is_action ? ' class_bold" ' + nickColor : '"') + '>' + message_text + '</span>';
 
             messageObj = {
                 chat_number: 0,
@@ -6073,12 +5825,11 @@
                 message: div,
                 atstreamer: atstreamer,
                 atuser: atuser,
-                hasbits: (hasbits && ChatLive_Highlight_Bits)
+                hasbits: hasbits && ChatLive_Highlight_Bits
             };
 
             if (null_next) Chat_MessageVector(messageObj);
             else if (Chat_next !== undefined) Chat_MessageVectorNext(messageObj);
-
         }
 
         if (null_next && Chat_Id[0] === id) {
@@ -6130,15 +5881,14 @@
     }
 
     function Main_Addline(id) {
-        var i, len = Chat_Messages.length;
+        var i,
+            len = Chat_Messages.length;
 
-        if (Chat_Position < (len - 1)) {
+        if (Chat_Position < len - 1) {
             i = Chat_Position;
             for (i; i < len; i++, Chat_Position++) {
-                if (Chat_Messages[i].time < (PlayVod_currentTime / 1000)) {
-
+                if (Chat_Messages[i].time < PlayVod_currentTime / 1000) {
                     ChatLive_ElemntAdd(Chat_Messages[i]);
-
                 } else {
                     break;
                 }
@@ -6155,12 +5905,13 @@
 
                 if (Chat_Id[0] === id) Chat_loadChatNext(id);
                 Chat_Clean(0);
-            } else { //Chat has eneded
+            } else {
+                //Chat has eneded
 
                 if (!Chat_hasEnded) {
                     ChatLive_ElemntAdd({
                         chat_number: 0,
-                        message: '&nbsp;<span class="message">' + STR_BR + STR_BR + STR_CHAT_END + STR_BR + STR_BR + '</span>',
+                        message: '&nbsp;<span class="message">' + STR_BR + STR_BR + STR_CHAT_END + STR_BR + STR_BR + '</span>'
                     });
                 }
 
@@ -6175,23 +5926,13 @@
     }
 
     function Chat_loadChatNextRequest(id) {
-        var theUrl = 'https://api.twitch.tv/v5/videos/' + Main_values.ChannelVod_vodId +
-            '/comments?client_id=' + AddCode_clientId + (Chat_next !== null ? '&cursor=' + Chat_next : '');
+        var theUrl = 'https://api.twitch.tv/v5/videos/' + Main_values.ChannelVod_vodId + '/comments?client_id=' + AddCode_client_backup + (Chat_next !== null ? '&cursor=' + Chat_next : '');
 
-        BasexmlHttpGet(
-            theUrl,
-            DefaultHttpGetTimeout * 2,
-            0,
-            null,
-            Chat_loadChatSuccess,
-            Chat_loadChatNextError,
-            id
-        );
+        BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2, 0, null, Chat_loadChatSuccess, Chat_loadChatNextError, id);
     }
 
     function Chat_loadChatNextError(id) {
         if (Chat_Id[0] === id) {
-
             Chat_loadChatNextId = Main_setTimeout(
                 function() {
                     Chat_loadChatNextRequest(id, 0);
@@ -6199,7 +5940,6 @@
                 2500,
                 Chat_loadChatNextId
             );
-
         }
     }
 
@@ -6228,16 +5968,14 @@
 
     function Chat_Clean(chat_number) {
         //delete old lines out of view
-        var linesToDelete = Chat_div[chat_number].getElementsByClassName("chat_line"),
+        var linesToDelete = Chat_div[chat_number].getElementsByClassName('chat_line'),
             i = 0,
-            len = (linesToDelete.length - Chat_CleanMax);
+            len = linesToDelete.length - Chat_CleanMax;
 
         if (len > 0) {
-
             for (i; i < len; i++) {
                 Chat_div[chat_number].removeChild(linesToDelete[0]);
             }
-
         }
     }
     //Variable initialization
@@ -6270,49 +6008,47 @@
 
     var Main_GoBefore = '';
     var Main_values = {
-        "Main_Go": 1,
-        "Main_Before": 1,
-        "Main_BeforeSearch": 1,
-        "Main_BeforeChannel": 1,
-        "Main_BeforeAgame": Main_games,
-        "Main_BeforeChannelisSet": false,
-        "Main_BeforeAgameisSet": false,
-        "Main_selectedChannel": '',
-        "Main_selectedChannelDisplayname": '',
-        "Main_selectedChannelLogo": '',
-        "Main_selectedChannel_id": '',
-        "Main_gameSelected": '',
-        "Main_gameSelected_id": '',
-        "Main_OldgameSelected": null,
-        "Play_isHost": false,
-        "Play_DisplaynameHost": '',
-        "Play_selectedChannelDisplayname": '',
-        "Play_selectedChannel": '',
-        "Play_gameSelected": '',
-        "Play_gameSelected_id": null,
-        "Users_AddcodePosition": 0,
-        "Play_WasPlaying": 0,
-        "ChannelVod_vodId": '',
-        "vodOffset": 0,
-        "Search_data": '',
-        "gameSelectedOld": null,
-        "Games_return": false,
-        "Search_isSearching": false,
-        "Play_ChatForceDisable": false,
-        "Never_run_new": true,
-        "Chat_font_size_new": 75,
-        "ChatBackground": 10,
-        "IsRerun": false,
-        "Main_selectedChannelPartner": false,
-        "Sidepannel_Pos": 2,
-        "Sidepannel_IsUser": false,
-        "My_channel": false,
-        "DeviceBitrateCheck": false,
-        "warning_new_api2": true,
-        "AddCode_main_token": null,
+        Main_Go: 1,
+        Main_Before: 1,
+        Main_BeforeSearch: 1,
+        Main_BeforeChannel: 1,
+        Main_BeforeAgame: Main_games,
+        Main_BeforeChannelisSet: false,
+        Main_BeforeAgameisSet: false,
+        Main_selectedChannel: '',
+        Main_selectedChannelDisplayname: '',
+        Main_selectedChannelLogo: '',
+        Main_selectedChannel_id: '',
+        Main_gameSelected: '',
+        Main_gameSelected_id: '',
+        Main_OldgameSelected: null,
+        Play_isHost: false,
+        Play_DisplaynameHost: '',
+        Play_selectedChannelDisplayname: '',
+        Play_selectedChannel: '',
+        Play_gameSelected: '',
+        Play_gameSelected_id: null,
+        Users_AddcodePosition: 0,
+        Play_WasPlaying: 0,
+        ChannelVod_vodId: '',
+        vodOffset: 0,
+        Search_data: '',
+        gameSelectedOld: null,
+        Games_return: false,
+        Search_isSearching: false,
+        Play_ChatForceDisable: false,
+        Never_run_new: true,
+        Chat_font_size_new: 75,
+        ChatBackground: 10,
+        IsRerun: false,
+        Main_selectedChannelPartner: false,
+        Sidepannel_Pos: 2,
+        Sidepannel_IsUser: false,
+        My_channel: false,
+        DeviceBitrateCheck: false,
+        warning_new_api2: true,
+        AddCode_main_token: null
     };
-
-
 
     var Main_Headers = [];
     var Main_Headers_Backup = [];
@@ -6328,7 +6064,7 @@
     var Main_AddCodeInput;
     var Main_ChatLiveInput;
     var Main_updateclockId;
-    var Main_ContentLang = "";
+    var Main_ContentLang = '';
     var Main_Periods = [];
     var Main_addFocusVideoOffset = 0;
     var Main_FirstRun = true;
@@ -6341,15 +6077,15 @@
 
     var Main_ItemsLimitVideo = 45;
     var Main_ColoumnsCountVideo = 3;
-    var Main_ItemsReloadLimitVideo = Math.floor((Main_ItemsLimitVideo / Main_ColoumnsCountVideo) / Main_ReloadLimitOffsetVideos);
+    var Main_ItemsReloadLimitVideo = Math.floor(Main_ItemsLimitVideo / Main_ColoumnsCountVideo / Main_ReloadLimitOffsetVideos);
 
     var Main_ItemsLimitGame = 45;
     var Main_ColoumnsCountGame = 5;
-    var Main_ItemsReloadLimitGame = Math.floor((Main_ItemsLimitGame / Main_ColoumnsCountGame) / Main_ReloadLimitOffsetGames);
+    var Main_ItemsReloadLimitGame = Math.floor(Main_ItemsLimitGame / Main_ColoumnsCountGame / Main_ReloadLimitOffsetGames);
 
     var Main_ItemsLimitChannel = 48;
     var Main_ColoumnsCountChannel = 6;
-    var Main_ItemsReloadLimitChannel = Math.floor((Main_ItemsLimitChannel / Main_ColoumnsCountChannel) / Main_ReloadLimitOffsetVideos);
+    var Main_ItemsReloadLimitChannel = Math.floor(Main_ItemsLimitChannel / Main_ColoumnsCountChannel / Main_ReloadLimitOffsetVideos);
 
     var Main_AcceptHeader = 'Accept';
     var Main_TwitchV5Json = 'application/vnd.twitchtv.v5+json';
@@ -6396,41 +6132,38 @@
 
     function Main_Start() {
         Main_Reset();
-        if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", function() {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
                 Main_loadTranslations(window.navigator.userLanguage || window.navigator.language);
             });
-        } else { // `DOMContentLoaded` already fired
+        } else {
+            // `DOMContentLoaded` already fired
             Main_loadTranslations(window.navigator.userLanguage || window.navigator.language);
         }
     }
 
     function Main_Reset() {
-        document.body.addEventListener("keydown", Main_ResetDown, false);
-        document.body.addEventListener("keyup", Main_handleKeyUp, false);
+        document.body.addEventListener('keydown', Main_ResetDown, false);
+        document.body.addEventListener('keyup', Main_handleKeyUp, false);
     }
 
     function Main_ResetUP(e) {
         if (e.keyCode === KEY_PG_UP || e.keyCode === KEY_PG_DOWN) {
             window.clearTimeout(Main_ResetDownId);
             window.clearTimeout(Main_ResetAppId);
-            document.body.removeEventListener("keyup", Main_ResetUP);
-            document.body.addEventListener("keydown", Main_ResetDown, false);
+            document.body.removeEventListener('keyup', Main_ResetUP);
+            document.body.addEventListener('keydown', Main_ResetDown, false);
 
-            window.setTimeout(
-                function() {
-                    Main_AddClass('rest_warning', 'hide');
-                },
-                1500
-            );
-
+            window.setTimeout(function() {
+                Main_AddClass('rest_warning', 'hide');
+            }, 1500);
         }
     }
 
     function Main_ResetDown(e) {
         if (e.keyCode === KEY_PG_UP || e.keyCode === KEY_PG_DOWN) {
-            document.body.removeEventListener("keydown", Main_ResetDown, false);
-            document.body.addEventListener("keyup", Main_ResetUP, false);
+            document.body.removeEventListener('keydown', Main_ResetDown, false);
+            document.body.addEventListener('keyup', Main_ResetUP, false);
             Main_ResetDownId = window.setTimeout(Main_ResetWarning, 10 * 1000);
         }
     }
@@ -6439,10 +6172,7 @@
         window.clearTimeout(Main_ResetDownId);
         window.clearTimeout(Main_ResetAppId);
 
-        Main_innerHTML(
-            'rest_warning',
-            STR_HOLD_RESET
-        );
+        Main_innerHTML('rest_warning', STR_HOLD_RESET);
         Main_RemoveClass('rest_warning', 'hide');
 
         Main_ResetDownUPHold = true;
@@ -6458,19 +6188,12 @@
             localStorage.removeItem(key);
         }
 
-        Main_innerHTML(
-            'rest_warning',
-            STR_RESET_DONE
-        );
+        Main_innerHTML('rest_warning', STR_RESET_DONE);
 
-        window.setTimeout(
-            function() {
-                window.location.reload(true);
-            },
-            1500
-        );
+        window.setTimeout(function() {
+            window.location.reload(true);
+        }, 1500);
     }
-
 
     function Main_loadTranslations(language) {
         Main_Checktylesheet();
@@ -6488,7 +6211,7 @@
                 } catch (e) {
                     Main_IsNotBrowserVersion = '1.0.0';
                     Main_IsNotBrowser = 0;
-                    Main_body.style.backgroundColor = "rgba(155, 155, 155, 1)"; //default rgba(0, 0, 0, 1)
+                    Main_body.style.backgroundColor = 'rgba(155, 155, 155, 1)'; //default rgba(0, 0, 0, 1)
                     Main_isDebug = true;
                     console.log('Main_isReleased: ' + Main_isReleased);
                     console.log('Main_isDebug: ' + Main_isDebug);
@@ -6515,13 +6238,13 @@
                 //if (lang.indexOf('pt_') !== -1) pt_BRLang();
                 //else if (lang.indexOf('it_') !== -1) it_ITLang();
 
-                console.log("language is " + language);
+                console.log('language is ' + language);
                 DefaultLang();
 
-                Main_SearchInput = document.getElementById("search_input");
-                Main_AddUserInput = document.getElementById("user_input");
-                Main_AddCodeInput = document.getElementById("oauth_input");
-                Main_ChatLiveInput = Main_getElementById("chat_send_input");
+                Main_SearchInput = document.getElementById('search_input');
+                Main_AddUserInput = document.getElementById('user_input');
+                Main_AddCodeInput = document.getElementById('oauth_input');
+                Main_ChatLiveInput = Main_getElementById('chat_send_input');
 
                 AddUser_RestoreUsers();
                 Main_RestoreValues();
@@ -6536,7 +6259,6 @@
                 AddCode_AppTokenCheck(0, Main_initWindowsCheck, Main_initWindowsCheckFail);
             });
         });
-
     }
 
     function Main_initWindowsCheckFail() {
@@ -6549,7 +6271,6 @@
     }
 
     function Main_initWindows() {
-
         Main_SetStringsMain(true);
 
         Main_GoBefore = Main_values.Main_Go;
@@ -6567,11 +6288,11 @@
                 window.clearInterval(Main_updateUserFeedId);
                 Main_updateUserFeedId = window.setInterval(Main_updateUserFeed, 600000);
             }
-            document.body.addEventListener("keyup", Main_handleKeyUp, false);
+            document.body.addEventListener('keyup', Main_handleKeyUp, false);
             Screens_InitScreens();
 
-            document.getElementById("side_panel").style.marginLeft = '';
-            document.getElementById("user_feed_notify").style.marginTop = '';
+            document.getElementById('side_panel').style.marginLeft = '';
+            document.getElementById('user_feed_notify').style.marginTop = '';
 
             Main_checkVersion();
 
@@ -6589,7 +6310,7 @@
             inUseObj = Live;
             Main_ready(function() {
                 Screens_init();
-                Sidepannel_UpdateThumbDoc = document.getElementById("feed_thumb_img");
+                Sidepannel_UpdateThumbDoc = document.getElementById('feed_thumb_img');
             });
         });
     }
@@ -6598,21 +6319,26 @@
         Main_updateclock();
 
         //set top bar labels
-        Main_IconLoad('label_refresh', 'icon-refresh', STR_REFRESH + ":" + STR_GUIDE);
-        Main_innerHTML('label_update', '<div style="vertical-align: middle; display: inline-block;"><i class="icon-globe" style="color: #FF0000;"></i></div><div style="vertical-align: middle; display: inline-block; color: #FF0000">' + STR_SPACE + STR_UPDATE_AVAILABLE + '</div>');
+        Main_IconLoad('label_refresh', 'icon-refresh', STR_REFRESH + ':' + STR_GUIDE);
+        Main_innerHTML(
+            'label_update',
+            '<div style="vertical-align: middle; display: inline-block;"><i class="icon-globe" style="color: #FF0000;"></i></div><div style="vertical-align: middle; display: inline-block; color: #FF0000">' +
+            STR_SPACE +
+            STR_UPDATE_AVAILABLE +
+            '</div>'
+        );
 
         Main_IconLoad('label_side_panel', 'icon-arrow-left', STR_GOBACK);
         UserLiveFeed_SetFeedPicText();
 
         Sidepannel_SetDefaultLables();
 
-        Main_textContent("dialog_end_next_text", STR_PLAY_NEXT);
-        Main_textContent("dialog_end_replay_text", STR_REPLAY);
-        Main_textContent("dialog_end_vod_text", STR_OPEN_BROADCAST);
-        Main_textContent("dialog_end_channel_text", STR_CHANNEL_CONT);
-        Main_textContent("dialog_end_game_text", STR_GAME_CONT);
-        Main_innerHTML("dialog_about_text", STR_ABOUT_INFO_HEADER +
-            '<div id="about_runningtime"></div>' + STR_ABOUT_INFO_0);
+        Main_textContent('dialog_end_next_text', STR_PLAY_NEXT);
+        Main_textContent('dialog_end_replay_text', STR_REPLAY);
+        Main_textContent('dialog_end_vod_text', STR_OPEN_BROADCAST);
+        Main_textContent('dialog_end_channel_text', STR_CHANNEL_CONT);
+        Main_textContent('dialog_end_game_text', STR_GAME_CONT);
+        Main_innerHTML('dialog_about_text', STR_ABOUT_INFO_HEADER + '<div id="about_runningtime"></div>' + STR_ABOUT_INFO_0);
 
         Main_Periods = [STR_CLIP_DAY, STR_CLIP_WEEK, STR_CLIP_MONTH, STR_CLIP_ALL];
 
@@ -6624,7 +6350,7 @@
     }
 
     function Main_SetStringsSecondary() {
-        Main_textContent("play_dialog_exit_text", STR_EXIT_AGAIN);
+        Main_textContent('play_dialog_exit_text', STR_EXIT_AGAIN);
 
         Main_textContent('side_panel_feed_settings', STR_SIDE_PANEL_SETTINGS);
         Main_textContent('side_panel_feed_refresh', STR_REFRESH);
@@ -6638,49 +6364,57 @@
         Main_textContent('remove_cancel', STR_CANCEL);
         Main_textContent('remove_yes', STR_YES);
         Main_textContent('exit_app_minimize', STR_MINIMIZE);
-        Main_textContent("main_dialog_exit_text", STR_EXIT_MESSAGE);
+        Main_textContent('main_dialog_exit_text', STR_EXIT_MESSAGE);
 
-        Main_innerHTML("dialog_controls_text", STR_CONTROLS_MAIN_0);
+        Main_innerHTML('dialog_controls_text', STR_CONTROLS_MAIN_0);
         Main_textContent('side_panel_warn_text', STR_NO + STR_LIVE_CHANNELS);
         Main_textContent('side_panel_movel_top_text', STR_LIVE_FEED);
 
-        Main_textContent("dialog_period_text", STR_SWITCH_CLIP);
-        Main_innerHTML("dialog_period_1", Main_Periods[0]);
-        Main_innerHTML("dialog_period_2", Main_Periods[1]);
-        Main_innerHTML("dialog_period_3", Main_Periods[2]);
-        Main_innerHTML("dialog_period_4", Main_Periods[3]);
+        Main_textContent('dialog_period_text', STR_SWITCH_CLIP);
+        Main_innerHTML('dialog_period_1', Main_Periods[0]);
+        Main_innerHTML('dialog_period_2', Main_Periods[1]);
+        Main_innerHTML('dialog_period_3', Main_Periods[2]);
+        Main_innerHTML('dialog_period_4', Main_Periods[3]);
 
-        Main_innerHTML("main_dialog_user_first", STR_USER_MAKE_ONE);
-        Main_innerHTML("main_dialog_user_remove", STR_USER_REMOVE);
+        Main_innerHTML('main_dialog_user_first', STR_USER_MAKE_ONE);
+        Main_innerHTML('main_dialog_user_remove', STR_USER_REMOVE);
 
-        Main_innerHTML("dialog_OffSet_text", STR_SWITCH_POS + STR_BR);
-        Main_textContent("dialog_OffSet_text_summary", STR_SWITCH_POS_SUMMARY);
+        Main_innerHTML('dialog_OffSet_text', STR_SWITCH_POS + STR_BR);
+        Main_textContent('dialog_OffSet_text_summary', STR_SWITCH_POS_SUMMARY);
 
-        Main_textContent("dialog_vod_text", STR_VOD_HISTORY);
-        Main_innerHTML("dialog_vod_start_text", STR_FROM_START);
+        Main_textContent('dialog_vod_text', STR_VOD_HISTORY);
+        Main_innerHTML('dialog_vod_start_text', STR_FROM_START);
 
         Main_innerHTML('channel_content_titley_0', '<i class="icon-movie-play stream_channel_follow_icon"></i>' + STR_SPACE + STR_SPACE + STR_VIDEOS);
         Main_innerHTML('channel_content_titley_1', '<i class="icon-movie stream_channel_follow_icon"></i>' + STR_SPACE + STR_SPACE + STR_CLIPS);
         Main_innerHTML('channel_content_titley_2', '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + STR_FOLLOW);
 
-        Main_textContent("chat_send_button0", STR_OPTIONS);
-        Main_textContent("chat_send_button1", STR_CHAT_DELL_ALL);
-        Main_textContent("chat_send_button2", STR_CHAT_UNICODE_EMOJI);
-        Main_textContent("chat_send_button3", STR_CHAT_BTTV_GLOBAL);
-        Main_textContent("chat_send_button4", STR_CHAT_FFZ_GLOBAL);
-        Main_textContent("chat_send_button5", STR_CHAT_SEVENTV_GLOBAL);
-        Main_textContent("chat_send_button6", STR_CHAT_SEND);
-        Main_textContent("chat_send_button7", STR_CHAT_AT_STREAM);
-        Main_textContent("chat_send_button8", STR_CHAT_TW_EMOTES);
-        Main_textContent("chat_send_button9", STR_CHAT_BTTV_STREAM);
-        Main_textContent("chat_send_button10", STR_CHAT_FFZ_STREAM);
-        Main_textContent("chat_send_button11", STR_CHAT_SEVENTV_STREAM);
-        Main_textContent("chat_result", STR_CHAT_RESULT);
+        Main_textContent('chat_send_button0', STR_OPTIONS);
+        Main_textContent('chat_send_button1', STR_CHAT_DELL_ALL);
+        Main_textContent('chat_send_button2', STR_CHAT_UNICODE_EMOJI);
+        Main_textContent('chat_send_button3', STR_CHAT_BTTV_GLOBAL);
+        Main_textContent('chat_send_button4', STR_CHAT_FFZ_GLOBAL);
+        Main_textContent('chat_send_button5', STR_CHAT_SEVENTV_GLOBAL);
+        Main_textContent('chat_send_button6', STR_CHAT_SEND);
+        Main_textContent('chat_send_button7', STR_CHAT_AT_STREAM);
+        Main_textContent('chat_send_button8', STR_CHAT_TW_EMOTES);
+        Main_textContent('chat_send_button9', STR_CHAT_BTTV_STREAM);
+        Main_textContent('chat_send_button10', STR_CHAT_FFZ_STREAM);
+        Main_textContent('chat_send_button11', STR_CHAT_SEVENTV_STREAM);
+        Main_textContent('chat_result', STR_CHAT_RESULT);
         ChatLiveControls_OptionsUpdate_defautls();
     }
 
     function Main_IconLoad(lable, icon, string) {
-        Main_innerHTML(lable, '<div style="vertical-align: middle; display: inline-block;"><i class="' + icon + '" style="color: #FFFFFF;"></i></div><div style="vertical-align: middle; display: inline-block;">' + STR_SPACE + string + '</div>');
+        Main_innerHTML(
+            lable,
+            '<div style="vertical-align: middle; display: inline-block;"><i class="' +
+            icon +
+            '" style="color: #FFFFFF;"></i></div><div style="vertical-align: middle; display: inline-block;">' +
+            STR_SPACE +
+            string +
+            '</div>'
+        );
     }
 
     function Main_HideElement(element) {
@@ -6712,15 +6446,13 @@
     }
 
     function Main_replaceClassEmoji(div) {
-        var emojiel = document.getElementById(div).getElementsByClassName("emoji");
+        var emojiel = document.getElementById(div).getElementsByClassName('emoji');
         if (emojiel) {
             var i = 0;
-            for (i; i < emojiel.length; i++)
-                emojiel[i].classList.add('emoticon');
+            for (i; i < emojiel.length; i++) emojiel[i].classList.add('emoticon');
 
-            emojiel = document.getElementById(div).getElementsByClassName("emoticon");
-            for (i = 0; i < emojiel.length; i++)
-                emojiel[i].classList.remove('emoji');
+            emojiel = document.getElementById(div).getElementsByClassName('emoticon');
+            for (i = 0; i < emojiel.length; i++) emojiel[i].classList.remove('emoji');
         }
     }
 
@@ -6744,11 +6476,11 @@
     function Main_showExitDialog() {
         Main_setExitDialog();
         Main_ShowElement('main_dialog_exit');
-        document.body.addEventListener("keydown", Main_ExitDialog, false);
+        document.body.addEventListener('keydown', Main_ExitDialog, false);
     }
 
     function Main_HideExitDialog() {
-        document.body.removeEventListener("keydown", Main_ExitDialog, false);
+        document.body.removeEventListener('keydown', Main_ExitDialog, false);
         Main_SwitchScreenAction();
         Main_clearExitDialog();
         Main_HideElement('main_dialog_exit');
@@ -6770,7 +6502,7 @@
     }
 
     function Main_CounterDialog(x, y, coloumns, total) {
-        if (total > 0) Main_textContent('dialog_counter_text', (y * coloumns) + (x + 1) + '/' + (total));
+        if (total > 0) Main_textContent('dialog_counter_text', y * coloumns + (x + 1) + '/' + total);
         else Main_CounterDialogRst();
     }
 
@@ -6823,7 +6555,7 @@
     }
 
     function Main_addCommas(value) {
-        return (value + '').replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return (value + '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
 
     function Main_videoqualitylang(video_height, average_fps, language) {
@@ -6834,11 +6566,15 @@
         else if (average_fps < 32) average_fps = 30;
         else average_fps = Math.ceil(average_fps);
 
-        return video_height + 'p' + average_fps + ((language !== "") ? ' [' + language.toUpperCase() + ']' : '');
+        return video_height + 'p' + average_fps + (language !== '' ? ' [' + language.toUpperCase() + ']' : '');
+    }
+
+    function Main_lang(language) {
+        return language !== '' ? ' [' + language.toUpperCase() + ']' : '';
     }
 
     function Main_is_rerun(content) {
-        return ((content + '').indexOf('live') === -1);
+        return (content + '').indexOf('live') === -1;
     }
 
     function Main_ThumbNull(y, x, thumbnail) {
@@ -6848,7 +6584,7 @@
     function Main_ReStartScreens() {
         Main_updateclock();
         Main_SwitchScreen();
-        document.body.addEventListener("keyup", Main_handleKeyUp, false);
+        document.body.addEventListener('keyup', Main_handleKeyUp, false);
     }
 
     function Main_SwitchScreen(removekey) {
@@ -6858,9 +6594,8 @@
     }
 
     function Main_RemoveKeys() {
-
-        if (Main_values.Main_Go === Main_ChannelContent) document.body.removeEventListener("keydown", ChannelContent_handleKeyDown);
-        else if (Main_values.Main_Go === Main_Users) document.body.removeEventListener("keydown", Users_handleKeyDown);
+        if (Main_values.Main_Go === Main_ChannelContent) document.body.removeEventListener('keydown', ChannelContent_handleKeyDown);
+        else if (Main_values.Main_Go === Main_Users) document.body.removeEventListener('keydown', Users_handleKeyDown);
         else {
             if (Main_values.Main_Go === Main_Live) inUseObj = Live;
             else if (Main_values.Main_Go === Main_aGame) inUseObj = AGame;
@@ -6880,7 +6615,7 @@
             else if (Main_values.Main_Go === Main_SearchLive) inUseObj = SearchLive;
             else if (Main_values.Main_Go === Main_SearchChannels) inUseObj = SearchChannels;
 
-            document.body.removeEventListener("keydown", Screens_handleKeyDown);
+            document.body.removeEventListener('keydown', Screens_handleKeyDown);
         }
     }
 
@@ -7028,7 +6763,7 @@
     }
 
     function Main_RestoreTopLabel() {
-        Main_IconLoad('label_refresh', 'icon-refresh', STR_REFRESH + ":" + STR_GUIDE);
+        Main_IconLoad('label_refresh', 'icon-refresh', STR_REFRESH + ':' + STR_GUIDE);
         Main_HideElement('label_side_panel');
     }
 
@@ -7036,7 +6771,8 @@
         Main_ShowElement('label_side_panel');
     }
 
-    function Main_videoCreatedAt(time) { //time in '2017-10-27T13:27:27Z'
+    function Main_videoCreatedAt(time) {
+        //time in '2017-10-27T13:27:27Z'
         time = new Date(time);
         if (Main_IsDayFirst) return time.getDate() + ' ' + STR_MONTHS[time.getMonth()] + ' ' + time.getFullYear();
         else return STR_MONTHS[time.getMonth()] + ' ' + time.getDate() + ' ' + time.getFullYear();
@@ -7053,26 +6789,47 @@
             try {
                 Appversion = tizen.application.getAppInfo().version;
                 // Retrieving Platform Information https://developer.samsung.com/tv/develop/guides/fundamentals/retrieving-platform-information
-                TizenVersion = tizen.systeminfo.getCapability("http://tizen.org/feature/platform.version");
+                TizenVersion = tizen.systeminfo.getCapability('http://tizen.org/feature/platform.version');
                 fw = webapis.productinfo.getFirmware();
                 Main_tvModel = webapis.productinfo.getModel();
                 console.log('App version: ' + Main_minversion);
             } catch (e) {}
 
             if (Appversion !== null && TizenVersion !== null && Main_tvModel !== null && fw !== null) {
-
-                Main_versionTag = 'APP ' + STR_VERSION + Appversion + '.' + Main_minversion +
-                    (Main_isReleased ? '' : '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-weight: bold;"> TEST ONLY</div><br><div style="display: inline-block; color: #FF0000; font-size: 110%; font-weight: bold;">Don\'t use this version unless you are testing or debugging... Go back to github and download the correct release zip that is only 12kb</div>') + STR_BR + 'Tizen ' + STR_VERSION +
-                    TizenVersion + STR_SPACE + STR_SPACE + '|' + STR_SPACE + STR_SPACE + 'TV: ' + Main_tvModel + STR_SPACE + STR_SPACE + '|' +
-                    STR_SPACE + STR_SPACE + 'FW: ' + fw + STR_BR;
-                Appversion = Appversion.split(".");
+                Main_versionTag =
+                    'APP ' +
+                    STR_VERSION +
+                    Appversion +
+                    '.' +
+                    Main_minversion +
+                    (Main_isReleased ?
+                        '' :
+                        '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-weight: bold;"> TEST ONLY</div><br><div style="display: inline-block; color: #FF0000; font-size: 110%; font-weight: bold;">Don\'t use this version unless you are testing or debugging... Go back to github and download the correct release zip that is only 12kb</div>') +
+                    STR_BR +
+                    'Tizen ' +
+                    STR_VERSION +
+                    TizenVersion +
+                    STR_SPACE +
+                    STR_SPACE +
+                    '|' +
+                    STR_SPACE +
+                    STR_SPACE +
+                    'TV: ' +
+                    Main_tvModel +
+                    STR_SPACE +
+                    STR_SPACE +
+                    '|' +
+                    STR_SPACE +
+                    STR_SPACE +
+                    'FW: ' +
+                    fw +
+                    STR_BR;
+                Appversion = Appversion.split('.');
                 value = parseInt(Appversion[0] + Appversion[1] + Appversion[2]);
 
-                Main_innerHTML("dialog_about_text", STR_ABOUT_INFO_HEADER + Main_versionTag +
-                    '<div id="about_runningtime"></div>' + STR_ABOUT_INFO_0);
+                Main_innerHTML('dialog_about_text', STR_ABOUT_INFO_HEADER + Main_versionTag + '<div id="about_runningtime"></div>' + STR_ABOUT_INFO_0);
 
-                if (!Main_isReleased) console.log('Tizen ' + STR_VERSION + TizenVersion + ' | ' +
-                    'TV: ' + Main_tvModel + ' | ' + 'FW: ' + fw);
+                if (!Main_isReleased) console.log('Tizen ' + STR_VERSION + TizenVersion + ' | ' + 'TV: ' + Main_tvModel + ' | ' + 'FW: ' + fw);
 
                 if (value < Main_version) Main_ShowElement('label_update');
             }
@@ -7125,7 +6882,7 @@
 
     function Main_OpenLiveStream(id, idsArray, handleKeyDownFunction) {
         if (Main_ThumbOpenIsNull(id, idsArray[0])) return;
-        document.body.removeEventListener("keydown", handleKeyDownFunction);
+        document.body.removeEventListener('keydown', handleKeyDownFunction);
         Main_values.Play_selectedChannel = JSON.parse(document.getElementById(idsArray[8] + id).getAttribute(Main_DataAttribute));
 
         Main_values.Play_selectedChannel_id = Main_values.Play_selectedChannel[1];
@@ -7139,15 +6896,15 @@
         } else Main_values.Play_selectedChannelDisplayname = document.getElementById(idsArray[3] + id).textContent;
 
         var playing = document.getElementById(idsArray[5] + id).textContent;
-        Main_values.Play_gameSelected = playing.indexOf(STR_PLAYING) !== -1 ? playing.split(STR_PLAYING)[1] : "";
+        Main_values.Play_gameSelected = playing.indexOf(STR_PLAYING) !== -1 ? playing.split(STR_PLAYING)[1] : '';
 
         if (Main_values.Main_Go === Main_aGame) Main_values.Main_OldgameSelected = Main_values.Main_gameSelected;
         Main_openStream();
     }
 
     function Main_openStream() {
-        document.body.removeEventListener("keydown", Play_handleKeyDown);
-        document.body.addEventListener("keydown", Play_handleKeyDown, false);
+        document.body.removeEventListener('keydown', Play_handleKeyDown);
+        document.body.addEventListener('keydown', Play_handleKeyDown, false);
         Main_HideElement('scene1');
         Main_ShowElement('scene2');
         Play_hidePanel();
@@ -7157,7 +6914,7 @@
 
     function Main_OpenClip(id, idsArray, handleKeyDownFunction) {
         if (Main_ThumbOpenIsNull(id, idsArray[0])) return;
-        document.body.removeEventListener("keydown", handleKeyDownFunction);
+        document.body.removeEventListener('keydown', handleKeyDownFunction);
         ChannelClip_playUrl = JSON.parse(document.getElementById(idsArray[8] + id).getAttribute(Main_DataAttribute));
 
         PlayClip_DurationSeconds = parseInt(ChannelClip_playUrl[1]);
@@ -7172,14 +6929,14 @@
 
         ChannelClip_title = ChannelClip_playUrl[9];
         ChannelClip_language = ChannelClip_playUrl[10];
-        ChannelClip_game = (ChannelClip_playUrl[2] !== "" ? STR_PLAYING + ChannelClip_playUrl[2] : "");
+        ChannelClip_game = ChannelClip_playUrl[2] !== '' ? STR_PLAYING + ChannelClip_playUrl[2] : '';
         ChannelClip_createdAt = ChannelClip_playUrl[11];
         ChannelClip_views = ChannelClip_playUrl[12];
 
-        ChannelClip_playUrl2 = ChannelClip_playUrl[13].split("-preview")[0] + ".mp4";
+        ChannelClip_playUrl2 = ChannelClip_playUrl[13].split('-preview')[0] + '.mp4';
         ChannelClip_playUrl = ChannelClip_playUrl[0];
 
-        document.body.addEventListener("keydown", PlayClip_handleKeyDown, false);
+        document.body.addEventListener('keydown', PlayClip_handleKeyDown, false);
         Main_HideElement('scene1');
         Main_ShowElement('scene2');
         Play_hideChat();
@@ -7191,7 +6948,7 @@
 
     function Main_OpenVod(id, idsArray, handleKeyDownFunction) {
         if (Main_ThumbOpenIsNull(id, idsArray[0])) return;
-        document.body.removeEventListener("keydown", handleKeyDownFunction);
+        document.body.removeEventListener('keydown', handleKeyDownFunction);
         Main_values.ChannelVod_vodId = JSON.parse(document.getElementById(idsArray[8] + id).getAttribute(Main_DataAttribute));
 
         ChannelVod_DurationSeconds = parseInt(Main_values.ChannelVod_vodId[6]);
@@ -7200,12 +6957,12 @@
         ChannelVod_language = Main_values.ChannelVod_vodId[9];
         Main_values.Play_gameSelected = Main_values.ChannelVod_vodId[10];
 
-        if (Main_values.Play_gameSelected === null) Main_values.Play_gameSelected = "";
+        if (Main_values.Play_gameSelected === null) Main_values.Play_gameSelected = '';
 
         Main_values.Main_selectedChannelDisplayname = Main_values.ChannelVod_vodId[1];
         ChannelVod_createdAt = Main_values.ChannelVod_vodId[2];
         ChannelVod_title = Main_values.ChannelVod_vodId[3];
-        ChannelVod_game = (Main_values.Play_gameSelected !== "" && Main_values.Play_gameSelected !== null ? STR_STARTED + STR_PLAYING + Main_values.Play_gameSelected : "");
+        ChannelVod_game = Main_values.Play_gameSelected !== '' && Main_values.Play_gameSelected !== null ? STR_STARTED + STR_PLAYING + Main_values.Play_gameSelected : '';
         ChannelVod_views = Main_values.ChannelVod_vodId[4];
         Main_values.Play_gameSelected_id = null;
 
@@ -7216,13 +6973,12 @@
         Main_values.Main_selectedChannel = Main_values.ChannelVod_vodId[11];
         Play_IncrementView = Main_values.ChannelVod_vodId[12];
 
-        Main_values.ChannelVod_vodId = Main_values.ChannelVod_vodId[8].substr(1);
-
+        Main_values.ChannelVod_vodId = Main_values.ChannelVod_vodId[8];
         Main_openVod();
     }
 
     function Main_openVod() {
-        document.body.addEventListener("keydown", PlayVod_handleKeyDown, false);
+        document.body.addEventListener('keydown', PlayVod_handleKeyDown, false);
         Main_HideElement('scene1');
         Main_ShowElement('scene2');
         PlayVod_hidePanel();
@@ -7233,12 +6989,12 @@
     }
 
     function Main_ScrollTable(id, position) {
-        document.getElementById(id).style.top = position ? (position / BodyfontSize) + "em" : "";
+        document.getElementById(id).style.top = position ? position / BodyfontSize + 'em' : '';
         window.setTimeout(Main_handleKeyUp, 10);
     }
 
     function Main_ScrollTableCalc(id, position, percentage) {
-        document.getElementById(id).style.top = 'calc(' + percentage + '% + ' + (position / BodyfontSize) + 'em)';
+        document.getElementById(id).style.top = 'calc(' + percentage + '% + ' + position / BodyfontSize + 'em)';
         window.setTimeout(Main_handleKeyUp, 10);
     }
 
@@ -7271,22 +7027,19 @@
     }
 
     function Main_LoadStylesheet(path) {
-        var link = document.createElement("link");
-        link.rel = "stylesheet";
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
         link.href = path;
 
-        document.getElementsByTagName("head")[0].appendChild(link);
+        document.getElementsByTagName('head')[0].appendChild(link);
     }
 
     //adapted from https://code.jquery.com/jquery-3.3.1.js
     function Main_ready(func) {
-        if (document.readyState === "complete" ||
-            (document.readyState !== "loading" && !document.documentElement.doScroll)) {
-
+        if (document.readyState === 'complete' || (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
             // Handle it asynchronously to allow scripts the opportunity to delay ready
             window.setTimeout(func);
-
-        } else document.addEventListener("DOMContentLoaded", func);
+        } else document.addEventListener('DOMContentLoaded', func);
     }
 
     var Main_clock_H_M = '';
@@ -7404,9 +7157,7 @@
     }
 
     function Main_setItem(item, value) {
-
         if (!preventSave) localStorage.setItem(item, value);
-
     }
 
     function Main_getItemInt(item, default_value) {
@@ -7429,49 +7180,42 @@
     // To see supported fonts and etc info about the unknown char
     function Main_PrintUnicode(string) {
         console.log(string);
-        for (var i = 0; i < string.length; i++)
-            console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
+        for (var i = 0; i < string.length; i++) console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
     }
 
     function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, key, id, use_helix, skip_user_token) {
         var xmlHttp = new XMLHttpRequest();
 
-        xmlHttp.open("GET", theUrl, true);
+        xmlHttp.open('GET', theUrl, true);
         xmlHttp.timeout = Timeout;
         var i = 0,
             userToken = false,
             appToken = false;
 
         if (use_helix) {
-
             if (!skip_user_token && AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
                 userToken = true;
 
                 Main_Bearer_User_Headers[1][1] = Main_Bearer + AddUser_UsernameArray[0].access_token;
 
-                for (i; i < Main_Bearer_User_Headers.length; i++)
-                    xmlHttp.setRequestHeader(Main_Bearer_User_Headers[i][0], Main_Bearer_User_Headers[i][1]);
-
+                for (i; i < Main_Bearer_User_Headers.length; i++) xmlHttp.setRequestHeader(Main_Bearer_User_Headers[i][0], Main_Bearer_User_Headers[i][1]);
             } else {
                 appToken = true;
-                for (i; i < Main_Bearer_Headers.length; i++)
-                    xmlHttp.setRequestHeader(Main_Bearer_Headers[i][0], Main_Bearer_Headers[i][1]);
+                for (i; i < Main_Bearer_Headers.length; i++) xmlHttp.setRequestHeader(Main_Bearer_Headers[i][0], Main_Bearer_Headers[i][1]);
             }
         } else {
             Main_Headers[2][1] = access_token;
 
-            for (i; i < HeaderQuatity; i++)
-                xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
-
+            for (i; i < HeaderQuatity; i++) xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
         }
         xmlHttp.ontimeout = function() {};
 
         xmlHttp.onreadystatechange = function() {
             if (xmlHttp.readyState === 4) {
-
                 if (xmlHttp.status === 200) {
                     callbackSucess(xmlHttp.responseText, key, id);
-                } else if ((HeaderQuatity > 2 || use_helix) && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
+                } else if ((HeaderQuatity > 2 || use_helix) && (xmlHttp.status === 401 || xmlHttp.status === 403)) {
+                    //token expired, only Screens HeaderQuatity will be > 2
                     var erroFun = function() {
                         calbackError(key, id);
                     };
@@ -7494,22 +7238,21 @@
     function BasexmlHttpGetBack(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
         var xmlHttp = new XMLHttpRequest();
 
-        xmlHttp.open("GET", theUrl, true);
+        xmlHttp.open('GET', theUrl, true);
         xmlHttp.timeout = Timeout;
 
         Main_Headers_Backup[2][1] = access_token;
 
-        for (var i = 0; i < HeaderQuatity; i++)
-            xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
+        for (var i = 0; i < HeaderQuatity; i++) xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
 
         xmlHttp.ontimeout = function() {};
 
         xmlHttp.onreadystatechange = function() {
             if (xmlHttp.readyState === 4) {
-
                 if (xmlHttp.status === 200) {
                     callbackSucess(xmlHttp.responseText);
-                } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired, only Screens HeaderQuatity will be > 2
+                } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) {
+                    //token expired, only Screens HeaderQuatity will be > 2
                     AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
                 } else {
                     calbackError();
@@ -7520,13 +7263,13 @@
         xmlHttp.send(null);
     }
 
-    var Main_GetHostBaseUrl = '{"operationName":"UseHosting","variables":{"channelLogin":\"%x\"},"extensions":{"persistedQuery":{"version": 1,"sha256Hash":"427f55a3daca510f726c02695a898ef3a0de4355b39af328848876052ea6b337"}}}';
+    var Main_GetHostBaseUrl =
+        '{"operationName":"UseHosting","variables":{"channelLogin":"%x"},"extensions":{"persistedQuery":{"version": 1,"sha256Hash":"427f55a3daca510f726c02695a898ef3a0de4355b39af328848876052ea6b337"}}}';
 
     function Main_GetHost(callbackSucess, checkResult, channel) {
-
         var xmlHttp = new XMLHttpRequest();
 
-        xmlHttp.open("POST", PlayClip_BaseClipUrl, true);
+        xmlHttp.open('POST', PlayClip_BaseClipUrl, true);
         xmlHttp.timeout = 25000;
         xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
         xmlHttp.setRequestHeader('Content-Type', 'application/json');
@@ -7535,24 +7278,21 @@
 
         xmlHttp.onreadystatechange = function() {
             if (this.readyState === 4) {
-
                 callbackSucess(this, checkResult);
-
             }
         };
 
         xmlHttp.send(
             Main_GetHostBaseUrl.replace('%x', channel) //postMessage, null for get
         );
-
     }
 
-    var Main_VideoSizeAll = ["384x216", "512x288", "640x360", "896x504", "1280x720"];
-    var Main_GameSizeAll = ["179x250", "272x380", "340x475", "476x665", "773x1080"];
-    var Main_SidePannelSizeAll = ["640x360", "896x504", "1280x720", "1536x864", "1920x1080"];
-    var Main_SidePannelSize = "1280x720";
-    var Main_VideoSize = "640x360";
-    var Main_GameSize = "340x475";
+    var Main_VideoSizeAll = ['384x216', '512x288', '640x360', '896x504', '1280x720'];
+    var Main_GameSizeAll = ['179x250', '272x380', '340x475', '476x665', '773x1080'];
+    var Main_SidePannelSizeAll = ['640x360', '896x504', '1280x720', '1536x864', '1920x1080'];
+    var Main_SidePannelSize = '1280x720';
+    var Main_VideoSize = '640x360';
+    var Main_GameSize = '340x475';
 
     function Main_SetThumb() {
         Main_VideoSize = Main_VideoSizeAll[Settings_value.thumb_quality.defaultValue];
@@ -7678,9 +7418,9 @@
         Main_innerHTML('dialog_warning_extra_text', text);
         Main_ShowElement('dialog_warning_extra');
 
-        window.addEventListener("keydown", Main_PreventClickfun, true);
-        window.addEventListener("keyup", Main_PreventClickfun, true);
-        window.addEventListener("keypress", Main_PreventClickfun, true);
+        window.addEventListener('keydown', Main_PreventClickfun, true);
+        window.addEventListener('keyup', Main_PreventClickfun, true);
+        window.addEventListener('keypress', Main_PreventClickfun, true);
 
         Main_setTimeout(function() {
             Main_PreventClickfunEnd();
@@ -7694,11 +7434,11 @@
 
     function Main_PreventClickfunEnd() {
         Main_HideElement('dialog_warning_extra');
-        window.removeEventListener("keydown", Main_PreventClickfun, true);
-        window.removeEventListener("keyup", Main_PreventClickfun, true);
-        window.removeEventListener("keypress", Main_PreventClickfun, true);
-
-    } //Variable initialization
+        window.removeEventListener('keydown', Main_PreventClickfun, true);
+        window.removeEventListener('keyup', Main_PreventClickfun, true);
+        window.removeEventListener('keypress', Main_PreventClickfun, true);
+    }
+    //Variable initialization
     var PlayClip_PlayerTime = 0;
     var PlayClip_streamCheckId = null;
     var PlayClip_PlayerCheckCount = 0;
@@ -7751,13 +7491,13 @@
         } else Chat_NoVod();
 
         Play_LoadLogo(document.getElementById('stream_info_icon'), Main_values.Main_selectedChannelLogo);
-        Main_textContent("stream_info_name", Main_values.Main_selectedChannelDisplayname);
-        Main_innerHTML("stream_info_title", ChannelClip_title);
-        Main_innerHTML("stream_info_game", ChannelClip_game);
+        Main_textContent('stream_info_name', Main_values.Main_selectedChannelDisplayname);
+        Main_innerHTML('stream_info_title', ChannelClip_title);
+        Main_innerHTML('stream_info_game', ChannelClip_game);
 
-        Main_innerHTML("stream_live_time", ChannelClip_createdAt + ',' + STR_SPACE + ChannelClip_views);
-        Main_textContent("stream_live_viewers", '');
-        Main_textContent("stream_watching_time", '');
+        Main_innerHTML('stream_live_time', ChannelClip_createdAt + ',' + STR_SPACE + ChannelClip_views);
+        Main_textContent('stream_live_viewers', '');
+        Main_textContent('stream_watching_time', '');
 
         Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
         Play_DefaultjumpTimers = PlayClip_jumpTimers;
@@ -7808,15 +7548,15 @@
         else PlayClip_qualityChanged();
         PlayClip_replay = false;
 
-        document.body.removeEventListener("keyup", Main_handleKeyUp);
+        document.body.removeEventListener('keyup', Main_handleKeyUp);
 
         PlayClip_loadingtreamerInfoTry = 0;
         PlayClip_GetStreamerInfo();
         PlayVod_loadingInfoDataTry = 0;
         if (PlayClip_HasVOD) PlayClip_updateVodInfo();
         else {
-            Main_textContent("end_vod_name_text", '');
-            Main_innerHTML("end_vod_title_text", '');
+            Main_textContent('end_vod_name_text', '');
+            Main_innerHTML('end_vod_title_text', '');
             Play_controls[Play_controlsOpenVod].setLable('');
         }
         Play_controls[Play_controlsChanelCont].setLable(Main_values.Main_selectedChannelDisplayname);
@@ -7846,7 +7586,7 @@
 
     function PlayClip_updateVodInfoSucess(response) {
         ChannelVod_title = twemoji.parse(JSON.parse(response).title, false, false);
-        Main_innerHTML("end_vod_title_text", ChannelVod_title);
+        Main_innerHTML('end_vod_title_text', ChannelVod_title);
         Play_controls[Play_controlsOpenVod].setLable(ChannelVod_title);
     }
 
@@ -7882,13 +7622,13 @@
     }
 
     var PlayClip_BaseClipUrl = 'https://gql.twitch.tv/gql';
-    var PlayClip_postMessage = '{"operationName":"VideoAccessToken_Clip","variables":{"slug":"%x"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"36b89d2507fce29e5ca551df756d27c1cfe079e2609642b4390aa4c35796eb11"}}}';
+    var PlayClip_postMessage =
+        '{"operationName":"VideoAccessToken_Clip","variables":{"slug":"%x"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"36b89d2507fce29e5ca551df756d27c1cfe079e2609642b4390aa4c35796eb11"}}}';
 
     function PlayClip_loadDataRequest() {
-
         var xmlHttp = new XMLHttpRequest();
 
-        xmlHttp.open("POST", PlayClip_BaseClipUrl, true);
+        xmlHttp.open('POST', PlayClip_BaseClipUrl, true);
         xmlHttp.timeout = PlayClip_loadingDataTimeout;
         xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
         xmlHttp.setRequestHeader('Content-Type', 'application/json');
@@ -7917,8 +7657,8 @@
     function PlayClip_loadDataSuccess410() {
         PlayClip_qualities = [];
         PlayClip_qualities.push({
-            'id': 'Auto | mp4',
-            'url': ChannelClip_playUrl2
+            id: 'Auto | mp4',
+            url: ChannelClip_playUrl2
         });
 
         PlayClip_state = PlayClip_STATE_PLAYING;
@@ -7952,7 +7692,7 @@
             PlayClip_PlayerCheckCount = 0;
             Play_PlayerCheckTimer = Play_Buffer;
             PlayClip_PlayerCheckQualityChanged = true;
-            if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + (new Date()));
+            if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + new Date());
         },
         onbufferingcomplete: function() {
             Play_HideBufferDialog();
@@ -7962,7 +7702,7 @@
             PlayClip_PlayerCheckCount = 0;
             Play_PlayerCheckTimer = Play_Buffer;
             PlayClip_PlayerCheckQualityChanged = true;
-            if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + (new Date()));
+            if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + new Date());
         },
         onbufferingprogress: function(percent) {
             if (percent < 5) PlayClip_PlayerCheckCount = 0;
@@ -7980,7 +7720,7 @@
                 Play_bufferingcomplete = true;
                 // reset the values after using
                 PlayClip_offsettime = 0;
-                if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + (new Date()));
+                if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + new Date());
             }
         },
         oncurrentplaytime: function(currentTime) {
@@ -7990,9 +7730,8 @@
             Play_PannelEndStart(3);
         },
         onerror: function(eventType) {
-            if (!Main_isReleased) console.log('onerror:', 'date: ' + (new Date()) + ' eventType: ' + eventType);
-            if (eventType === "PLAYER_ERROR_CONNECTION_FAILED" || eventType === "PLAYER_ERROR_INVALID_URI")
-                Play_PannelEndStart(3);
+            if (!Main_isReleased) console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
+            if (eventType === 'PLAYER_ERROR_CONNECTION_FAILED' || eventType === 'PLAYER_ERROR_INVALID_URI') Play_PannelEndStart(3);
         }
     };
 
@@ -8003,20 +7742,19 @@
         var token;
 
         if (response && response.hasOwnProperty('data') && response.data.hasOwnProperty('clip')) {
-            token = "?sig=" + encodeURIComponent(response.data.clip.playbackAccessToken.signature) + "&token=" + encodeURIComponent(response.data.clip.playbackAccessToken.value);
+            token = '?sig=' + encodeURIComponent(response.data.clip.playbackAccessToken.signature) + '&token=' + encodeURIComponent(response.data.clip.playbackAccessToken.value);
             response = response.data.clip.videoQualities;
 
             for (var i = 0; i < response.length; i++) {
-
                 if (!PlayClip_qualities.length) {
                     PlayClip_qualities.push({
-                        'id': response[i].quality + 'p' + PlayClip_FrameRate(response[i].frameRate) + ' | source | mp4',
-                        'url': response[i].sourceURL + token
+                        id: response[i].quality + 'p' + PlayClip_FrameRate(response[i].frameRate) + ' | source | mp4',
+                        url: response[i].sourceURL + token
                     });
                 } else {
                     PlayClip_qualities.push({
-                        'id': response[i].quality + 'p' + PlayClip_FrameRate(response[i].frameRate) + ' | mp4',
-                        'url': response[i].sourceURL + token
+                        id: response[i].quality + 'p' + PlayClip_FrameRate(response[i].frameRate) + ' | mp4',
+                        url: response[i].sourceURL + token
                     });
                 }
             }
@@ -8041,7 +7779,8 @@
                 PlayClip_qualityIndex = i;
                 PlayClip_playingUrl = PlayClip_qualities[i].url;
                 break;
-            } else if (PlayClip_qualities[i].id.indexOf(PlayClip_quality) !== -1) { //make shore to set a value before break out
+            } else if (PlayClip_qualities[i].id.indexOf(PlayClip_quality) !== -1) {
+                //make shore to set a value before break out
                 PlayClip_qualityIndex = i;
                 PlayClip_playingUrl = PlayClip_qualities[i].url;
             }
@@ -8063,7 +7802,7 @@
         Play_showBufferDialog();
 
         if (!Main_isReleased) {
-            console.log('PlayClip_onPlayer:', 'date: ' + (new Date()));
+            console.log('PlayClip_onPlayer:', 'date: ' + new Date());
             console.log('PlayClip_onPlayer:', '\n' + '\n"' + PlayClip_playingUrl + '"\n');
         }
 
@@ -8085,39 +7824,40 @@
                 Play_clearPause();
             }
 
-            Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_PLAY", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayClip_Buffer);
-            Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_RESUME", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayClip_Buffer);
+            Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_PLAY', 'PLAYER_BUFFER_SIZE_IN_SECOND', PlayClip_Buffer);
+            Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_RESUME', 'PLAYER_BUFFER_SIZE_IN_SECOND', PlayClip_Buffer);
             Play_SetFullScreen(Play_isFullScreen);
             Play_avplay.setListener(PlayClip_listener);
 
-            Play_avplay.prepareAsync(function() { //successCallback
+            Play_avplay.prepareAsync(
+                function() {
+                    //successCallback
 
-                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip OK:', 'date: ' + (new Date()));
+                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip OK:', 'date: ' + new Date());
 
-                Play_avplay.play();
-                PlayClip_DurationSeconds = Play_avplay.getDuration() / 1000;
-                Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
-                if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+                    Play_avplay.play();
+                    PlayClip_DurationSeconds = Play_avplay.getDuration() / 1000;
+                    Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
+                    if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
 
-                PlayClip_PlayerCheckCount = 0;
-                Play_PlayerCheckTimer = 1 + (PlayClip_Buffer * 2);
-                PlayClip_PlayerCheckQualityChanged = false;
-                window.clearInterval(PlayClip_streamCheckId);
-                PlayClip_streamCheckId = window.setInterval(PlayClip_PlayerCheck, Play_PlayerCheckInterval);
+                    PlayClip_PlayerCheckCount = 0;
+                    Play_PlayerCheckTimer = 1 + PlayClip_Buffer * 2;
+                    PlayClip_PlayerCheckQualityChanged = false;
+                    window.clearInterval(PlayClip_streamCheckId);
+                    PlayClip_streamCheckId = window.setInterval(PlayClip_PlayerCheck, Play_PlayerCheckInterval);
+                },
+                function() {
+                    //errorCallback
 
-            }, function() { //errorCallback
-
-                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip NOK:', 'date: ' + (new Date()));
-                Play_onPlayerCounter++;
-                if (Play_onPlayerCounter < 5) PlayClip_onPlayer();
-                else {
-                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip fail too mutch exit:', 'date: ' + (new Date()));
-                    Play_EndStart(false, 3);
+                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip NOK:', 'date: ' + new Date());
+                    Play_onPlayerCounter++;
+                    if (Play_onPlayerCounter < 5) PlayClip_onPlayer();
+                    else {
+                        if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip fail too mutch exit:', 'date: ' + new Date());
+                        Play_EndStart(false, 3);
+                    }
                 }
-
-            });
-
-
+            );
         }
     }
 
@@ -8129,9 +7869,8 @@
         if (PlayClip_isOn && PlayClip_PlayerTime === PlayClip_currentTime && Play_isIdleOrPlaying()) {
             PlayClip_PlayerCheckCount++;
             if (PlayClip_PlayerCheckCount > Play_PlayerCheckTimer) {
-
                 //Don't change the first time only retry
-                if (PlayClip_PlayerCheckQualityChanged && PlayClip_PlayerCheckRun && (PlayClip_qualityIndex < PlayClip_getQualitiesCount() - 1)) PlayClip_qualityIndex++;
+                if (PlayClip_PlayerCheckQualityChanged && PlayClip_PlayerCheckRun && PlayClip_qualityIndex < PlayClip_getQualitiesCount() - 1) PlayClip_qualityIndex++;
                 else if (!PlayClip_PlayerCheckQualityChanged && PlayClip_PlayerCheckRun) PlayClip_PlayerCheckCounter++;
 
                 if (!navigator.onLine) Play_EndStart(false, 3);
@@ -8142,20 +7881,17 @@
                     PlayClip_qualityChanged();
                     PlayClip_PlayerCheckRun = true;
                 }
-
             } // else we try for too long let the listener onerror catch it
         } else {
             PlayClip_PlayerCheckCounter = 0;
             PlayClip_PlayerCheckCount = 0;
             PlayClip_PlayerCheckRun = false;
-
         }
 
         PlayClip_PlayerTime = PlayClip_currentTime;
     }
 
     function PlayClip_DropOneQuality(ConnectionDrop) {
-
         if (!ConnectionDrop) {
             if (PlayClip_qualityIndex < PlayClip_getQualitiesCount() - 1) PlayClip_qualityIndex++;
             else {
@@ -8173,13 +7909,12 @@
 
     function PlayClip_updateCurrentTime(currentTime) {
         PlayClip_currentTime = currentTime;
-        if (PlayClip_HasVOD) PlayVod_currentTime = PlayClip_currentTime + (ChannelVod_vodOffset * 1000);
+        if (PlayClip_HasVOD) PlayVod_currentTime = PlayClip_currentTime + ChannelVod_vodOffset * 1000;
 
         if (!Play_IsWarning && Play_WarningDialogVisible()) Play_HideWarningDialog();
         if (PlayClip_bufferingcomplete && Play_BufferDialogVisible()) Play_HideBufferDialog();
 
-        if (Play_isPanelShown() && !Play_BufferDialogVisible())
-            PlayVod_ProgresBarrUpdate((PlayClip_currentTime / 1000), PlayClip_DurationSeconds, !PlayVod_IsJumping);
+        if (Play_isPanelShown() && !Play_BufferDialogVisible()) PlayVod_ProgresBarrUpdate(PlayClip_currentTime / 1000, PlayClip_DurationSeconds, !PlayVod_IsJumping);
     }
 
     function PlayClip_shutdownStream() {
@@ -8200,7 +7935,7 @@
         Chat_Clear();
         Play_ClearPlayer();
         UserLiveFeed_Hide(true);
-        document.body.removeEventListener("keydown", PlayClip_handleKeyDown);
+        document.body.removeEventListener('keydown', PlayClip_handleKeyDown);
         document.removeEventListener('visibilitychange', PlayClip_Resume);
         ChannelVod_vodOffset = 0;
     }
@@ -8216,11 +7951,11 @@
         if (nextid) {
             PlayClip_HasNext = true;
             text = JSON.parse(document.getElementById(inUseObj.ids[8] + nextid).getAttribute(Main_DataAttribute));
-            Main_textContent("next_button_text_name", text[4]);
-            Main_innerHTML("next_button_text_title", text[9]);
+            Main_textContent('next_button_text_name', text[4]);
+            Main_innerHTML('next_button_text_title', text[9]);
 
-            Main_textContent("end_next_button_text_name", text[4]);
-            Main_innerHTML("end_next_button_text_title", text[9]);
+            Main_textContent('end_next_button_text_name', text[4]);
+            Main_innerHTML('end_next_button_text_title', text[9]);
 
             PlayClip_HideShowNext(0, 1);
         } else PlayClip_HideShowNext(0, 0);
@@ -8228,17 +7963,15 @@
         if (backid) {
             PlayClip_HasBack = true;
             text = JSON.parse(document.getElementById(inUseObj.ids[8] + backid).getAttribute(Main_DataAttribute));
-            Main_textContent("back_button_text_name", text[4]);
-            Main_innerHTML("back_button_text_title", text[9]);
+            Main_textContent('back_button_text_name', text[4]);
+            Main_innerHTML('back_button_text_title', text[9]);
             PlayClip_HideShowNext(1, 1);
         } else PlayClip_HideShowNext(1, 0);
     }
 
     function PlayClip_getIdNext(y, x) {
-        if (Main_ThumbNull((inUseObj.posY), (inUseObj.posX + y), inUseObj.ids[0]))
-            return inUseObj.posY + '_' + (inUseObj.posX + y);
-        else if (Main_ThumbNull((inUseObj.posY + y), x, inUseObj.ids[0]))
-            return (inUseObj.posY + y) + '_' + x;
+        if (Main_ThumbNull(inUseObj.posY, inUseObj.posX + y, inUseObj.ids[0])) return inUseObj.posY + '_' + (inUseObj.posX + y);
+        else if (Main_ThumbNull(inUseObj.posY + y, x, inUseObj.ids[0])) return inUseObj.posY + y + '_' + x;
 
         return null;
     }
@@ -8284,13 +8017,13 @@
         Play_clearHidePanel();
         PlayClip_quality = PlayClip_qualityPlaying;
         Play_ForceHidePannel();
-        PlayVod_ProgresBarrUpdate((PlayClip_currentTime / 1000), PlayClip_DurationSeconds, true);
+        PlayVod_ProgresBarrUpdate(PlayClip_currentTime / 1000, PlayClip_DurationSeconds, true);
         Main_innerHTML('progress_bar_jump_to', STR_SPACE);
         document.getElementById('progress_bar_steps').style.display = 'none';
     }
 
     function PlayClip_showPanel() {
-        PlayVod_ProgresBarrUpdate((PlayClip_currentTime / 1000), PlayClip_DurationSeconds, true);
+        PlayVod_ProgresBarrUpdate(PlayClip_currentTime / 1000, PlayClip_DurationSeconds, true);
         Play_clock();
         Play_CleanHideExit();
         PlayVod_IconsBottonResetFocus();
@@ -8307,7 +8040,8 @@
             if (PlayClip_qualities[i].id === PlayClip_quality) {
                 PlayClip_qualityIndex = i;
                 break;
-            } else if (PlayClip_qualities[i].id.indexOf(PlayClip_quality) !== -1) { //make shore to set a value before break out
+            } else if (PlayClip_qualities[i].id.indexOf(PlayClip_quality) !== -1) {
+                //make shore to set a value before break out
                 PlayClip_qualityIndex = i;
             }
         }
@@ -8319,17 +8053,17 @@
 
     function PlayClip_qualityDisplay() {
         if (PlayClip_getQualitiesCount() === 1) {
-            document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "0";
-            document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "0";
+            document.getElementById('control_arrow_up_' + Play_controlsQuality).style.opacity = '0';
+            document.getElementById('control_arrow_down' + Play_controlsQuality).style.opacity = '0';
         } else if (!PlayClip_qualityIndex) {
-            document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "0.2";
-            document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "1";
+            document.getElementById('control_arrow_up_' + Play_controlsQuality).style.opacity = '0.2';
+            document.getElementById('control_arrow_down' + Play_controlsQuality).style.opacity = '1';
         } else if (PlayClip_qualityIndex === PlayClip_getQualitiesCount() - 1) {
-            document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "1";
-            document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "0.2";
+            document.getElementById('control_arrow_up_' + Play_controlsQuality).style.opacity = '1';
+            document.getElementById('control_arrow_down' + Play_controlsQuality).style.opacity = '0.2';
         } else {
-            document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "1";
-            document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "1";
+            document.getElementById('control_arrow_up_' + Play_controlsQuality).style.opacity = '1';
+            document.getElementById('control_arrow_down' + Play_controlsQuality).style.opacity = '1';
         }
 
         PlayClip_SetHtmlQuality('controls_name_' + Play_controlsQuality);
@@ -8341,7 +8075,7 @@
         PlayClip_quality = PlayClip_qualities[PlayClip_qualityIndex].id;
 
         var quality_string = PlayClip_quality;
-        if (PlayClip_quality.indexOf('source') !== -1) quality_string = quality_string.replace("source", STR_SOURCE);
+        if (PlayClip_quality.indexOf('source') !== -1) quality_string = quality_string.replace('source', STR_SOURCE);
 
         Main_textContent(element, PlayClip_quality);
     }
@@ -8358,7 +8092,7 @@
         if (PlayClip_HasVOD) {
             Main_values.vodOffset = ChannelVod_vodOffset;
             PlayClip_PreshutdownStream();
-            document.body.addEventListener("keydown", PlayVod_handleKeyDown, false);
+            document.body.addEventListener('keydown', PlayVod_handleKeyDown, false);
             Play_IconsResetFocus();
             Main_ready(PlayVod_Start);
         } else {
@@ -8435,7 +8169,7 @@
                     break;
                 case KEY_RIGHT:
                     if (UserLiveFeed_isFeedShow() && (!Play_EndFocus || !Play_isEndDialogVisible())) {
-                        if (Play_FeedPos < (UserLiveFeed_GetSize() - 1) && !UserLiveFeed_loadingData) {
+                        if (Play_FeedPos < UserLiveFeed_GetSize() - 1 && !UserLiveFeed_loadingData) {
                             UserLiveFeed_FeedRemoveFocus();
                             Play_FeedPos++;
                             UserLiveFeed_FeedAddFocus();
@@ -8474,8 +8208,8 @@
                 case KEY_UP:
                     if (Play_isEndDialogVisible()) {
                         Play_EndTextClear();
-                        document.body.removeEventListener("keydown", PlayClip_handleKeyDown, false);
-                        document.body.addEventListener("keyup", Play_handleKeyUp, false);
+                        document.body.removeEventListener('keydown', PlayClip_handleKeyDown, false);
+                        document.body.addEventListener('keyup', Play_handleKeyUp, false);
                         Play_EndUpclear = false;
                         Play_EndUpclearCalback = PlayClip_handleKeyDown;
                         Play_EndUpclearID = window.setTimeout(Play_keyUpEnd, 250);
@@ -8621,7 +8355,7 @@
     var Play_LowLatency = false;
     var Play_CanLowLatency = true;
     var Play_PanelHideID = null;
-    var Play_quality = "source";
+    var Play_quality = 'source';
     var Play_qualityPlaying = Play_quality;
     var Play_isFullScreen = true;
     var Play_ChatPositionsBF;
@@ -8717,68 +8451,82 @@
     //counterclockwise movement, Vertical/horizontal Play_ChatPositions
     //sizeOffset in relation to the size
     var Play_ChatPositionVal = [{
-        "top": 51.8, // Bottom/right 0
-        "left": 75.1,
-        "sizeOffset": [31, 16, 0, -25.2, 0] // top - sizeOffset is the defaul top for it chat position
-    }, {
-        "top": 33, // Middle/right 1
-        "left": 75.1,
-        "sizeOffset": [12.5, 0, -6.25, -19.5, 0]
-    }, {
-        "top": 0.2, // Top/right 2
-        "left": 75.1,
-        "sizeOffset": [0, 0, 0, 0, 0]
-    }, {
-        "top": 0.2, // Top/center 3
-        "left": 38.3,
-        "sizeOffset": [0, 0, 0, 0, 0]
-    }, {
-        "top": 0.2, // Top/left 4
-        "left": 0.2,
-        "sizeOffset": [0, 0, 0, 0, 0]
-    }, {
-        "top": 33, // Middle/left 5
-        "left": 0.2,
-        "sizeOffset": [12.5, 0, -6.25, -19.5, 0]
-    }, {
-        "top": 51.8, // Bottom/left 6
-        "left": 0.2,
-        "sizeOffset": [31, 16, 0, -25.2, 0]
-    }, {
-        "top": 51.8, // Bottom/center 7
-        "left": 38.3,
-        "sizeOffset": [31, 16, 0, -25.2, 0]
-    }];
+            top: 51.8, // Bottom/right 0
+            left: 75.1,
+            sizeOffset: [31, 16, 0, -25.2, 0] // top - sizeOffset is the defaul top for it chat position
+        },
+        {
+            top: 33, // Middle/right 1
+            left: 75.1,
+            sizeOffset: [12.5, 0, -6.25, -19.5, 0]
+        },
+        {
+            top: 0.2, // Top/right 2
+            left: 75.1,
+            sizeOffset: [0, 0, 0, 0, 0]
+        },
+        {
+            top: 0.2, // Top/center 3
+            left: 38.3,
+            sizeOffset: [0, 0, 0, 0, 0]
+        },
+        {
+            top: 0.2, // Top/left 4
+            left: 0.2,
+            sizeOffset: [0, 0, 0, 0, 0]
+        },
+        {
+            top: 33, // Middle/left 5
+            left: 0.2,
+            sizeOffset: [12.5, 0, -6.25, -19.5, 0]
+        },
+        {
+            top: 51.8, // Bottom/left 6
+            left: 0.2,
+            sizeOffset: [31, 16, 0, -25.2, 0]
+        },
+        {
+            top: 51.8, // Bottom/center 7
+            left: 38.3,
+            sizeOffset: [31, 16, 0, -25.2, 0]
+        }
+    ];
 
     //Conversion between chat at 100% and bellow 50%
     var Play_ChatPositionsBefore = [0, 0, 0, 1, 2, 2, 2, 1]; //Chat positions size 50 to 100%
-    var Play_ChatPositionsAfter = [ //Chat positions size 100 to 50%
+    var Play_ChatPositionsAfter = [
+        //Chat positions size 100 to 50%
         [0, 1, 2, 2, 2, 1, 0, 0],
         [7, 3, 3, 3, 3, 3, 7, 7],
         [6, 5, 4, 4, 4, 5, 6, 6]
     ];
 
     var Play_ChatSizeVal = [{
-        "containerHeight": 17, // 12.5%
-        "percentage": '12.5%',
-        "dialogTop": -25
-    }, {
-        "containerHeight": 32, // 25%
-        "percentage": '25%',
-        "dialogTop": -40
-    }, {
-        "containerHeight": 48, // 50%
-        "percentage": '50%',
-        "dialogTop": -60
-    }, {
-        "containerHeight": 73, // 75%
-        "percentage": '75%',
-        "dialogTop": -80
-    }, {
-        "containerHeight": 99.6, // 100%
-        "percentage": '100%',
-        "dialogTop": -120
-    }];
+            containerHeight: 17, // 12.5%
+            percentage: '12.5%',
+            dialogTop: -25
+        },
+        {
+            containerHeight: 32, // 25%
+            percentage: '25%',
+            dialogTop: -40
+        },
+        {
+            containerHeight: 48, // 50%
+            percentage: '50%',
+            dialogTop: -60
+        },
+        {
+            containerHeight: 73, // 75%
+            percentage: '75%',
+            dialogTop: -80
+        },
+        {
+            containerHeight: 99.6, // 100%
+            percentage: '100%',
+            dialogTop: -120
+        }
+    ];
 
     var Play_ChatFontObj = [];
 
@@ -8798,11 +8546,11 @@
             avplay.setAttribute('style', 'width:100%; height:100%; position: absolute;');
             document.getElementById('scene2').appendChild(avplay);
             Play_avplay = (window.tizen && window.webapis.avplay) || {};
-            Play_TizenVersion = tizen.systeminfo.getCapability("http://tizen.org/feature/platform.version");
+            Play_TizenVersion = tizen.systeminfo.getCapability('http://tizen.org/feature/platform.version');
         }
 
-        Play_chat_container = document.getElementById("chat_container0");
-        Play_ProgresBarrElm = document.getElementById("inner_progress_bar");
+        Play_chat_container = document.getElementById('chat_container0');
+        Play_ProgresBarrElm = document.getElementById('inner_progress_bar');
         Play_dialog_warning_play_middle_text = Main_getElementById('dialog_warning_play_middle_text');
         Play_dialog_warning_play_middle = Main_getElementById('dialog_warning_play_middle');
 
@@ -8831,16 +8579,17 @@
         for (i; i < max; i++) {
             Play_ChatFontObj.push(i);
         }
-        if (Main_values.Chat_font_size_new > (Play_ChatFontObj.length - 1)) Main_values.Chat_font_size_new = Play_ChatFontObj.length - 1;
+        if (Main_values.Chat_font_size_new > Play_ChatFontObj.length - 1) Main_values.Chat_font_size_new = Play_ChatFontObj.length - 1;
 
         Play_ClearPlayer();
         Play_ChatSize(false);
         Play_ChatBackgroundChange(false);
         Play_SetChatFont();
 
-        Main_innerHTML('user_feed_notify_img_holder',
-            '<img id="user_feed_notify_img" alt="" class="notify_img" src="' + IMG_404_LOGO +
-            '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'" >');
+        Main_innerHTML(
+            'user_feed_notify_img_holder',
+            '<img id="user_feed_notify_img" alt="" class="notify_img" src="' + IMG_404_LOGO + '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'" >'
+        );
 
         var Main_clientIdHeader = 'Client-ID';
 
@@ -8855,7 +8604,6 @@
             [Main_AcceptHeader, Main_TwitchV5Json],
             [Main_Authorization, null]
         ];
-
     }
 
     //this are the global set option that need to be set only once
@@ -8864,9 +8612,9 @@
         try {
             Play_avplay.stop();
             Play_avplay.close();
-            Play_avplay.open("https://fgl27.github.io/smarttv-twitch/release/githubio/images/temp.mp4");
+            Play_avplay.open('https://fgl27.github.io/smarttv-twitch/release/githubio/images/temp.mp4');
         } catch (e) {
-            console.log(e + " Play_SetAvPlayGlobal()");
+            console.log(e + ' Play_SetAvPlayGlobal()');
         }
         Play_SetFullScreen(Play_isFullScreen);
         Play_avplay.setListener(PlayStart_listener);
@@ -8879,7 +8627,7 @@
                 Play_avplay.stop();
                 Play_avplay.close();
             } catch (e) {
-                console.log(e + " PlayStart_listener");
+                console.log(e + ' PlayStart_listener');
             }
         }
     };
@@ -8920,50 +8668,37 @@
     function Play_setDisplayRect(isfull) {
         var res, Is_4_by_3;
 
-        if (Play_isOn)
-            res = Play_qualities[Play_qualityIndex].resolution.split('x');
-        else if (PlayVod_isOn)
-            res = PlayVod_qualities[PlayVod_qualityIndex].resolution.split('x');
+        if (Play_isOn) res = Play_qualities[Play_qualityIndex].resolution.split('x');
+        else if (PlayVod_isOn) res = PlayVod_qualities[PlayVod_qualityIndex].resolution.split('x');
         // for clips there is no info about resolution that can be used here
 
-        if (res)
-            Is_4_by_3 = (parseInt(res[0]) / parseInt(res[1])) < 1.7;
+        if (res) Is_4_by_3 = parseInt(res[0]) / parseInt(res[1]) < 1.7;
 
         try {
-            Play_avplay.setDisplayMethod(
-                Is_4_by_3 ?
-                "PLAYER_DISPLAY_MODE_LETTER_BOX" : "PLAYER_DISPLAY_MODE_FULL_SCREEN"
-            );
+            Play_avplay.setDisplayMethod(Is_4_by_3 ? 'PLAYER_DISPLAY_MODE_LETTER_BOX' : 'PLAYER_DISPLAY_MODE_FULL_SCREEN');
         } catch (e) {
-            console.log("setDisplayMethod Is_4_by_3 " + Is_4_by_3 + " e " + e);
+            console.log('setDisplayMethod Is_4_by_3 ' + Is_4_by_3 + ' e ' + e);
         }
 
         if (isfull) {
-
             try {
                 Play_avplay.setDisplayRect(0, 0, screen.width, screen.height);
             } catch (e) {
-                console.log(e + " Play_SetFullScreen true");
+                console.log(e + ' Play_SetFullScreen true');
             }
-
         } else {
-
             // Chat is 25% of the screen, resize to 75% and center left
             try {
-                if (Is_4_by_3)
-                    Play_avplay.setDisplayRect(0, 0, screen.width * 0.75, screen.height);
-                else
-                    Play_avplay.setDisplayRect(0, (screen.height * 0.25) / 2, screen.width * 0.75, screen.height * 0.75);
-
+                if (Is_4_by_3) Play_avplay.setDisplayRect(0, 0, screen.width * 0.75, screen.height);
+                else Play_avplay.setDisplayRect(0, (screen.height * 0.25) / 2, screen.width * 0.75, screen.height * 0.75);
             } catch (e) {
-                console.log(e + " Play_SetFullScreen false");
+                console.log(e + ' Play_SetFullScreen false');
             }
-
         }
     }
 
     function Play_SetChatFont() {
-        Main_getElementById('chat_inner_container').style.fontSize = (Play_ChatFontObj[Main_values.Chat_font_size_new] * 0.76) + '%';
+        Main_getElementById('chat_inner_container').style.fontSize = Play_ChatFontObj[Main_values.Chat_font_size_new] * 0.76 + '%';
     }
 
     function Play_Start() {
@@ -8999,10 +8734,10 @@
 
         Play_currentTime = 0;
         Play_watching_time = 0;
-        Main_textContent("stream_watching_time", STR_WATCHING + Play_timeS(0));
+        Main_textContent('stream_watching_time', STR_WATCHING + Play_timeS(0));
         Play_created = Play_timeMs(0);
 
-        Main_textContent("stream_live_time", Play_created);
+        Main_textContent('stream_live_time', Play_created);
         Main_HideElement('progress_bar_div');
 
         Play_offsettimeMinus = 0;
@@ -9028,7 +8763,7 @@
         Play_Playing = false;
         Play_state = Play_STATE_LOADING_TOKEN;
         document.addEventListener('visibilitychange', Play_Resume, false);
-        document.body.removeEventListener("keyup", Main_handleKeyUp);
+        document.body.removeEventListener('keyup', Main_handleKeyUp);
         Play_updateStreamInfoStart();
         Play_loadData();
         window.clearInterval(Play_streamInfoTimerId);
@@ -9061,24 +8796,15 @@
         Play_CheckIfIsLive();
     }
 
-
     function Play_CheckIfIsLive() {
-
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open(
-            "POST",
-            'https://gql.twitch.tv/gql',
-            true
-        );
+        xmlHttp.open('POST', 'https://gql.twitch.tv/gql', true);
         xmlHttp.timeout = Play_loadingDataTimeout;
 
         if (Play_Headers && Play_Headers.length) {
-
             var len = Play_Headers.length;
 
-            for (var i = 0; i < len; i++)
-                xmlHttp.setRequestHeader(Play_Headers[i][0], Play_Headers[i][1]);
-
+            for (var i = 0; i < len; i++) xmlHttp.setRequestHeader(Play_Headers[i][0], Play_Headers[i][1]);
         }
 
         xmlHttp.ontimeout = function() {};
@@ -9086,7 +8812,6 @@
         xmlHttp.onreadystatechange = function() {
             if (xmlHttp.readyState === 4) {
                 if (xmlHttp.status === 200) {
-
                     try {
                         Play_tokenResponse = JSON.parse(xmlHttp.responseText).data.streamPlaybackAccessToken;
 
@@ -9095,19 +8820,15 @@
                             Play_CheckIfIsLiveStartCounter = 0;
                             Play_CheckIfIsLiveLink();
                         }
-
                     } catch (e) {
                         console.log('Play_CheckIfIsLive e ' + e);
                         Play_CheckIfIsLiveError();
                     }
-
                 } else Play_CheckIfIsLiveError();
             }
         };
 
-        xmlHttp.send(
-            Play_live_token.replace('%x', Play_CheckIfIsLiveStartChannel)
-        );
+        xmlHttp.send(Play_live_token.replace('%x', Play_CheckIfIsLiveStartChannel));
     }
 
     function Play_CheckIfIsLiveError() {
@@ -9136,11 +8857,15 @@
     function Play_CheckIfIsLiveLink() {
         var theUrl;
         try {
-
-            theUrl = 'https://usher.ttvnw.net/api/channel/hls/' + Play_CheckIfIsLiveStartChannel +
-                '.m3u8?&token=' + encodeURIComponent(Play_tokenResponse.value) + '&sig=' + Play_tokenResponse.signature +
-                '&reassignments_supported=true&playlist_include_framerate=true&allow_source=true&p=' + Main_RandomInt();
-
+            theUrl =
+                'https://usher.ttvnw.net/api/channel/hls/' +
+                Play_CheckIfIsLiveStartChannel +
+                '.m3u8?&token=' +
+                encodeURIComponent(Play_tokenResponse.value) +
+                '&sig=' +
+                Play_tokenResponse.signature +
+                '&reassignments_supported=true&playlist_include_framerate=true&allow_source=true&p=' +
+                Main_RandomInt();
         } catch (e) {
             console.log('Play_CheckIfIsLiveLink e ' + e);
             Play_CheckIfIsLiveLinkError();
@@ -9148,7 +8873,7 @@
         }
 
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open("GET", theUrl, true);
+        xmlHttp.open('GET', theUrl, true);
         xmlHttp.timeout = Play_loadingDataTimeout;
         xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
 
@@ -9227,7 +8952,6 @@
     function Play_updateStreamLogoValues(response) {
         response = JSON.parse(response);
         if (response.data && response.data.length) {
-
             response.stream = response.data[0];
 
             Play_partnerIcon(Play_isHost ? Main_values.Play_DisplaynameHost : Main_values.Play_selectedChannelDisplayname, response.stream.broadcaster_type === 'partner', true, Play_Lang); //response.stream.channel.partner
@@ -9253,19 +8977,26 @@
     }
 
     function Play_partnerIcon(name, partner, islive, lang) {
-        var div = '<div class="partnericon_div"> ' + name + STR_SPACE + STR_SPACE + '</div>' +
-            (partner ? ('<img class="partnericon_img" alt="" src="' +
-                IMG_PARTNER + '">') : "");
+        var div = '<div class="partnericon_div"> ' + name + STR_SPACE + STR_SPACE + '</div>' + (partner ? '<img class="partnericon_img" alt="" src="' + IMG_PARTNER + '">' : '');
 
         if (islive) {
-            div += STR_SPACE + STR_SPACE + '<div class="partnericon_text" style="background: #' +
-                (Main_values.IsRerun ? 'FFFFFF; color: #000000;' : 'E21212;') + '">' +
-                STR_SPACE + STR_SPACE + (Main_values.IsRerun ? STR_NOT_LIVE : STR_LIVE) + STR_SPACE + STR_SPACE + '</div>';
+            div +=
+                STR_SPACE +
+                STR_SPACE +
+                '<div class="partnericon_text" style="background: #' +
+                (Main_values.IsRerun ? 'FFFFFF; color: #000000;' : 'E21212;') +
+                '">' +
+                STR_SPACE +
+                STR_SPACE +
+                (Main_values.IsRerun ? STR_NOT_LIVE : STR_LIVE) +
+                STR_SPACE +
+                STR_SPACE +
+                '</div>';
         }
 
         div += '<div class="lang_text" ">' + STR_SPACE + STR_SPACE + lang + '</div>';
 
-        Main_innerHTML("stream_info_name", div);
+        Main_innerHTML('stream_info_name', div);
     }
 
     function Play_updateStreamInfoStartValues(response) {
@@ -9281,16 +9012,16 @@
 
             Main_values.IsRerun = Main_is_rerun(response.stream.type);
 
-            Main_innerHTML("stream_info_title", twemoji.parse(response.stream.title, false, true));
+            Main_innerHTML('stream_info_title', twemoji.parse(response.stream.title, false, true));
             Main_values.Play_gameSelected = response.stream.game_name;
-            Play_Lang = ' [' + (response.stream.language).toUpperCase() + ']';
+            Play_Lang = ' [' + response.stream.language.toUpperCase() + ']';
 
             Play_partnerIcon(Play_isHost ? Main_values.Play_DisplaynameHost : Main_values.Play_selectedChannelDisplayname, false, true, Play_Lang); //response.stream.channel.partner
 
-            var playing = (Main_values.Play_gameSelected !== "" ? STR_PLAYING + Main_values.Play_gameSelected : "");
-            Main_textContent("stream_info_game", playing);
+            var playing = Main_values.Play_gameSelected !== '' ? STR_PLAYING + Main_values.Play_gameSelected : '';
+            Main_textContent('stream_info_game', playing);
 
-            Main_innerHTML("stream_live_viewers", STR_SPACE + STR_FOR + Main_addCommas(response.stream.viewer_count) + STR_SPACE + STR_VIEWER);
+            Main_innerHTML('stream_live_viewers', STR_SPACE + STR_FOR + Main_addCommas(response.stream.viewer_count) + STR_SPACE + STR_VIEWER);
 
             Play_created = response.stream.started_at;
 
@@ -9324,12 +9055,11 @@
         if (response.data && response.data.length) {
             response.stream = response.data[0];
 
-            Main_innerHTML("stream_info_title", twemoji.parse(response.stream.title, false, true));
+            Main_innerHTML('stream_info_title', twemoji.parse(response.stream.title, false, true));
             Main_values.Play_gameSelected = response.stream.game_name;
-            Main_textContent("stream_info_game", STR_PLAYING + Main_values.Play_gameSelected);
+            Main_textContent('stream_info_game', STR_PLAYING + Main_values.Play_gameSelected);
 
-            Main_innerHTML("stream_live_viewers", STR_SPACE + STR_FOR + Main_addCommas(response.stream.viewer_count) +
-                STR_SPACE + STR_VIEWER);
+            Main_innerHTML('stream_live_viewers', STR_SPACE + STR_FOR + Main_addCommas(response.stream.viewer_count) + STR_SPACE + STR_VIEWER);
 
             if (!Play_LoadLogoSucess) {
                 Play_loadingInfoDataTry = 0;
@@ -9370,22 +9100,13 @@
     var Play_410ERROR = true;
 
     function Play_loadDataRequest() {
-
         try {
-
             var theUrl;
             var xmlHttp = new XMLHttpRequest();
 
             if (Play_state === Play_STATE_LOADING_TOKEN) {
-
-                xmlHttp.open(
-                    "POST",
-                    'https://gql.twitch.tv/gql',
-                    true
-                );
-
+                xmlHttp.open('POST', 'https://gql.twitch.tv/gql', true);
             } else {
-
                 if (!Play_tokenResponse.hasOwnProperty('value') || !Play_tokenResponse.hasOwnProperty('signature')) {
                     Play_410ERROR = true;
                     if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
@@ -9393,27 +9114,25 @@
                     return;
                 }
 
-                theUrl = 'https://usher.ttvnw.net/api/channel/hls/' + Main_values.Play_selectedChannel +
-                    '.m3u8?&token=' + encodeURIComponent(Play_tokenResponse.value) + '&sig=' + Play_tokenResponse.signature +
-                    '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true&fast_bread=true&cdm=wv&p=' + Main_RandomInt();
+                theUrl =
+                    'https://usher.ttvnw.net/api/channel/hls/' +
+                    Main_values.Play_selectedChannel +
+                    '.m3u8?&token=' +
+                    encodeURIComponent(Play_tokenResponse.value) +
+                    '&sig=' +
+                    Play_tokenResponse.signature +
+                    '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true&fast_bread=true&cdm=wv&p=' +
+                    Main_RandomInt();
 
-                xmlHttp.open(
-                    "GET",
-                    theUrl,
-                    true
-                );
-
+                xmlHttp.open('GET', theUrl, true);
             }
 
             xmlHttp.timeout = Play_loadingDataTimeout;
 
             if (Play_Headers && Play_Headers.length) {
-
                 var len = Play_Headers.length;
 
-                for (var i = 0; i < len; i++)
-                    xmlHttp.setRequestHeader(Play_Headers[i][0], Play_Headers[i][1]);
-
+                for (var i = 0; i < len; i++) xmlHttp.setRequestHeader(Play_Headers[i][0], Play_Headers[i][1]);
             }
 
             xmlHttp.ontimeout = function() {};
@@ -9424,7 +9143,8 @@
                         Play_loadingDataTry = 0;
                         if (Play_isOn) Play_loadDataSuccess(xmlHttp.responseText);
                         //Play_410ERROR = false;
-                    } else if (xmlHttp.status === 403 || xmlHttp.status === 404) { //forbidden access
+                    } else if (xmlHttp.status === 403 || xmlHttp.status === 404) {
+                        //forbidden access
                         //404 = off line
                         //403 = forbidden access
                         //410 = api v3 is gone use v5 bug
@@ -9441,17 +9161,11 @@
                 }
             };
 
-            xmlHttp.send(
-                (Play_state === Play_STATE_LOADING_TOKEN) ?
-                Play_live_token.replace('%x', Main_values.Play_selectedChannel) :
-                null
-            );
-
+            xmlHttp.send(Play_state === Play_STATE_LOADING_TOKEN ? Play_live_token.replace('%x', Main_values.Play_selectedChannel) : null);
         } catch (e) {
             console.log('Play_loadDataRequest e ' + e);
             Play_loadDataError();
         }
-
     }
 
     function Play_loadDataErrorLog(xmlHttp) {
@@ -9464,7 +9178,7 @@
     function Play_loadDataError() {
         if (Play_isOn && Play_isLive) {
             Play_loadingDataTry++;
-            if (Play_loadingDataTry < (Play_loadingDataTryMax + (Play_RestoreFromResume ? 7 : 0))) {
+            if (Play_loadingDataTry < Play_loadingDataTryMax + (Play_RestoreFromResume ? 7 : 0)) {
                 Play_loadingDataTimeout += 250;
                 if (Play_RestoreFromResume) window.setTimeout(Play_loadDataRequest, 500);
                 else Play_loadDataRequest();
@@ -9480,12 +9194,11 @@
             Play_EndDialogEnter = 0;
             Play_HideBufferDialog();
 
-            document.body.removeEventListener("keydown", Play_handleKeyDown);
-            document.body.addEventListener("keydown", Play_EndUpclearCalback, false);
+            document.body.removeEventListener('keydown', Play_handleKeyDown);
+            document.body.addEventListener('keydown', Play_EndUpclearCalback, false);
             Play_state = Play_STATE_PLAYING;
 
-            Play_showWarningDialog(error_410 ? STR_410_ERROR :
-                Main_values.Play_selectedChannelDisplayname + ' ' + STR_LIVE + STR_IS_OFFLINE);
+            Play_showWarningDialog(error_410 ? STR_410_ERROR : Main_values.Play_selectedChannelDisplayname + ' ' + STR_LIVE + STR_IS_OFFLINE);
 
             window.setTimeout(function() {
                 Play_HideWarningDialog();
@@ -9496,7 +9209,6 @@
         } else if (Play_selectedChannel_id_Old !== null) Play_RestorePlayData(error_410);
         else if (Isforbiden) Play_ForbiddenLive();
         else Play_CheckHostStart(error_410);
-
     }
 
     function Play_ForbiddenLive() {
@@ -9509,47 +9221,47 @@
 
     //Browsers crash trying to get the streams link
     var tempQualities = [{
-            'id': 'Auto',
-            'band': 0,
-            'codec': 'avc',
-            'resolution': 'auto',
-            'url': 'https://auto'
+            id: 'Auto',
+            band: 0,
+            codec: 'avc',
+            resolution: 'auto',
+            url: 'https://auto'
         },
         {
-            'id': '1080p60 | source ',
-            'band': '| 10.00Mbps',
-            'codec': ' | avc',
-            'resolution': '1920x1080',
-            'url': 'https://souce'
+            id: '1080p60 | source ',
+            band: '| 10.00Mbps',
+            codec: ' | avc',
+            resolution: '1920x1080',
+            url: 'https://souce'
         },
         {
-            'id': '720p60',
-            'band': ' | 5.00Mbps',
-            'codec': ' | avc',
-            'resolution': '1920x1080',
-            'url': 'https://720p60'
+            id: '720p60',
+            band: ' | 5.00Mbps',
+            codec: ' | avc',
+            resolution: '1920x1080',
+            url: 'https://720p60'
         },
         {
-            'id': '720p',
-            'band': ' | 2.50Mbps',
-            'codec': ' | avc',
-            'resolution': '1280x720',
-            'url': 'https://720'
+            id: '720p',
+            band: ' | 2.50Mbps',
+            codec: ' | avc',
+            resolution: '1280x720',
+            url: 'https://720'
         },
         {
-            'id': '480p',
-            'band': ' | 2.50Mbps',
-            'codec': ' | avc',
-            'resolution': '640x480',
-            'url': 'https://480'
+            id: '480p',
+            band: ' | 2.50Mbps',
+            codec: ' | avc',
+            resolution: '640x480',
+            url: 'https://480'
         },
         {
-            'id': '320p',
-            'band': ' | 2.50Mbps',
-            'codec': ' | avc',
-            'resolution': '480x320',
-            'url': 'https://320'
-        },
+            id: '320p',
+            band: ' | 2.50Mbps',
+            codec: ' | avc',
+            resolution: '480x320',
+            url: 'https://320'
+        }
     ];
 
     function Play_loadDataSuccessFake() {
@@ -9560,11 +9272,9 @@
 
     function Play_loadDataSuccess(responseText) {
         if (Play_state === Play_STATE_LOADING_TOKEN) {
-
             try {
                 Play_tokenResponse = JSON.parse(responseText).data.streamPlaybackAccessToken;
             } catch (e) {
-
                 Play_tokenResponse = null;
                 console.log('Play_loadDataSuccess e ' + e);
             }
@@ -9572,7 +9282,6 @@
             Play_state = Play_STATE_LOADING_PLAYLIST;
 
             Play_loadData();
-
         } else if (Play_state === Play_STATE_LOADING_PLAYLIST) {
             UserLiveFeed_Hide(true);
 
@@ -9592,12 +9301,10 @@
 
             UserLiveFeed_PreventHide = false;
             ChatLive_Playing = true;
-
         }
     }
 
     function Play_extractQualities(input) {
-
         var Band,
             codec,
             result = [],
@@ -9608,7 +9315,6 @@
         var streams = Play_extractStreamDeclarations(input);
 
         for (var i = 0; i < streams.length; i++) {
-
             TempId = streams[i].split('NAME="')[1].split('"')[0];
             Band = Play_extractBand(streams[i].split('BANDWIDTH=')[1].split(',')[0]);
             codec = Play_extractCodec(streams[i].split('CODECS="')[1].split('.')[0]);
@@ -9618,19 +9324,19 @@
                 if (TempId.indexOf('ource') === -1) TempId = TempId + ' | source';
                 else TempId = TempId.replace('(', ' | ').replace(')', '');
                 result.push({
-                    'id': TempId,
-                    'band': Band,
-                    'codec': codec,
-                    'resolution': Resolution,
-                    'url': streams[i].split("\n")[2]
+                    id: TempId,
+                    band: Band,
+                    codec: codec,
+                    resolution: Resolution,
+                    url: streams[i].split('\n')[2]
                 });
             } else if (result[i - tempCount].id !== TempId && result[i - tempCount].id !== TempId + ' | source') {
                 result.push({
-                    'id': TempId,
-                    'band': Band,
-                    'codec': codec,
-                    'resolution': Resolution,
-                    'url': streams[i].split("\n")[2]
+                    id: TempId,
+                    band: Band,
+                    codec: codec,
+                    resolution: Resolution,
+                    url: streams[i].split('\n')[2]
                 });
             } else tempCount++;
         }
@@ -9670,7 +9376,8 @@
                 Play_qualityIndex = i;
                 Play_playingUrl = Play_qualities[i].url;
                 break;
-            } else if (Play_qualities[i].id.indexOf(Play_quality) !== -1) { //make shore to set a value before break out
+            } else if (Play_qualities[i].id.indexOf(Play_quality) !== -1) {
+                //make shore to set a value before break out
                 Play_qualityIndex = i;
                 Play_playingUrl = Play_qualities[i].url;
             }
@@ -9699,7 +9406,7 @@
             Play_PlayerCheckTimer = Play_Buffer;
             Play_PlayerCheckQualityChanged = true;
             // sync chat and stream
-            if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + (new Date()));
+            if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + new Date());
         },
         onbufferingcomplete: function() {
             Play_HideBufferDialog();
@@ -9708,7 +9415,7 @@
             Play_PlayerCheckCount = 0;
             Play_PlayerCheckTimer = Play_Buffer;
             Play_PlayerCheckQualityChanged = true;
-            if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + (new Date()));
+            if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + new Date());
         },
         onbufferingprogress: function(percent) {
             if (percent < 5) Play_PlayerCheckCount = 0;
@@ -9722,7 +9429,7 @@
                 Play_BufferPercentage = 0;
                 Play_HideBufferDialog();
                 Play_bufferingcomplete = true;
-                if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + (new Date()));
+                if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + new Date());
             }
             Play_RestoreFromResume = false;
         },
@@ -9731,12 +9438,11 @@
         },
         onstreamcompleted: function() {
             Play_CheckHostStart();
-            if (!Main_isReleased) console.log('onstreamcompleted:', 'date: ' + (new Date()));
+            if (!Main_isReleased) console.log('onstreamcompleted:', 'date: ' + new Date());
         },
         onerror: function(eventType) {
-            if (!Main_isReleased) console.log('onerror:', 'date: ' + (new Date()) + ' eventType: ' + eventType);
-            if (eventType === "PLAYER_ERROR_CONNECTION_FAILED" || eventType === "PLAYER_ERROR_INVALID_URI")
-                Play_CheckHostStart();
+            if (!Main_isReleased) console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
+            if (eventType === 'PLAYER_ERROR_CONNECTION_FAILED' || eventType === 'PLAYER_ERROR_INVALID_URI') Play_CheckHostStart();
         }
     };
 
@@ -9747,7 +9453,7 @@
 
         var quality_string = '';
 
-        if (Play_quality.indexOf('source') !== -1) quality_string = Play_quality.replace("source", STR_SOURCE);
+        if (Play_quality.indexOf('source') !== -1) quality_string = Play_quality.replace('source', STR_SOURCE);
         else quality_string = Play_quality;
 
         quality_string += Play_qualities[Play_qualityIndex].band + Play_qualities[Play_qualityIndex].codec;
@@ -9758,7 +9464,7 @@
     function Play_onPlayer() {
         Play_showBufferDialog();
         if (!Main_isReleased) {
-            console.log('Play_onPlayer:', 'date: ' + (new Date()));
+            console.log('Play_onPlayer:', 'date: ' + new Date());
             console.log('Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
         }
 
@@ -9773,8 +9479,8 @@
                 console.log('Play_onPlayer open ' + e);
             }
 
-            Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_PLAY", "PLAYER_BUFFER_SIZE_IN_SECOND", Play_Buffer);
-            Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_RESUME", "PLAYER_BUFFER_SIZE_IN_SECOND", Play_Buffer);
+            Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_PLAY', 'PLAYER_BUFFER_SIZE_IN_SECOND', Play_Buffer);
+            Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_RESUME', 'PLAYER_BUFFER_SIZE_IN_SECOND', Play_Buffer);
 
             //Old 4k check no longer used because causes problem
             //leave it here to be recheck on a future 4k streams from twitch
@@ -9787,38 +9493,41 @@
             Play_avplay.setListener(Play_listener);
             Play_offsettime = Play_oldcurrentTime;
 
-            if (!Main_isReleased) console.log('Before Play_avplay.prepareAsync:', 'date: ' + (new Date()));
+            if (!Main_isReleased) console.log('Before Play_avplay.prepareAsync:', 'date: ' + new Date());
 
             //Use prepareAsync as prepare() only can freeze up the app
-            Play_avplay.prepareAsync(function() { //successCallback
+            Play_avplay.prepareAsync(
+                function() {
+                    //successCallback
 
-                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live OK:', 'date: ' + (new Date()));
+                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live OK:', 'date: ' + new Date());
 
-                try {
-                    //GET_LIVE_DURATION not supported by all TVs
-                    if (Play_LowLatency) Play_avplay.seekTo(Play_avplay.getStreamingProperty("GET_LIVE_DURATION").split('|')[1] - 3000);
-                } catch (e) {}
+                    try {
+                        //GET_LIVE_DURATION not supported by all TVs
+                        if (Play_LowLatency) Play_avplay.seekTo(Play_avplay.getStreamingProperty('GET_LIVE_DURATION').split('|')[1] - 3000);
+                    } catch (e) {}
 
-                Play_avplay.play();
-                Play_Playing = true;
-                if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+                    Play_avplay.play();
+                    Play_Playing = true;
+                    if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
 
-                Play_PlayerCheckCount = 0;
-                Play_PlayerCheckTimer = 1 + (Play_Buffer * 2);
-                Play_PlayerCheckQualityChanged = false;
-                window.clearInterval(Play_streamCheckId);
-                Play_streamCheckId = window.setInterval(Play_PlayerCheck, Play_PlayerCheckInterval);
-
-            }, function() { //errorCallback
-                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live NOK:', 'date: ' + (new Date()));
-                Play_onPlayerCounter++;
-                if (Play_onPlayerCounter < 5) Play_onPlayer();
-                else {
-                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live fail too mutch exit:', 'date: ' + (new Date()));
-                    Play_EndStart(false, 1);
+                    Play_PlayerCheckCount = 0;
+                    Play_PlayerCheckTimer = 1 + Play_Buffer * 2;
+                    Play_PlayerCheckQualityChanged = false;
+                    window.clearInterval(Play_streamCheckId);
+                    Play_streamCheckId = window.setInterval(Play_PlayerCheck, Play_PlayerCheckInterval);
+                },
+                function() {
+                    //errorCallback
+                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live NOK:', 'date: ' + new Date());
+                    Play_onPlayerCounter++;
+                    if (Play_onPlayerCounter < 5) Play_onPlayer();
+                    else {
+                        if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live fail too mutch exit:', 'date: ' + new Date());
+                        Play_EndStart(false, 1);
+                    }
                 }
-            });
-
+            );
         } else Play_loadChat();
     }
 
@@ -9833,14 +9542,10 @@
 
     function Play_PlayerCheck() {
         if (Play_PlayerTime === Play_currentTime && Play_isIdleOrPlaying()) {
-
             Play_PlayerCheckCount++;
             if (Play_PlayerCheckCount > Play_PlayerCheckTimer) {
-
                 //Don't change the first time only retry, and don't change if in Auto mode
-                if (Play_PlayerCheckQualityChanged && Play_PlayerCheckRun &&
-                    (Play_qualityIndex < Play_getQualitiesCount() - 1) && (Play_qualityPlaying.indexOf("Auto") === -1))
-                    Play_qualityIndex++;
+                if (Play_PlayerCheckQualityChanged && Play_PlayerCheckRun && Play_qualityIndex < Play_getQualitiesCount() - 1 && Play_qualityPlaying.indexOf('Auto') === -1) Play_qualityIndex++;
                 else if (!Play_PlayerCheckQualityChanged && Play_PlayerCheckRun) Play_PlayerCheckCounter++;
 
                 if (!navigator.onLine) Play_EndStart(false, 1);
@@ -9850,7 +9555,6 @@
                     Play_qualityChanged();
                     Play_PlayerCheckRun = true;
                 }
-
             }
         } else {
             Play_PlayerCheckCounter = 0;
@@ -9871,7 +9575,6 @@
     }
 
     function Play_DropOneQuality(ConnectionDrop) {
-
         if (!ConnectionDrop) {
             if (Play_qualityIndex < Play_getQualitiesCount() - 1) Play_qualityIndex++;
             else {
@@ -9896,7 +9599,7 @@
     function Play_CheckConnection(counter, PlayVodClip, DropOneQuality) {
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.timeout = 1000;
-        xmlHttp.open("GET", 'https://static-cdn.jtvnw.net/jtv-static/404_preview-10x10.png?' + Math.random(), true);
+        xmlHttp.open('GET', 'https://static-cdn.jtvnw.net/jtv-static/404_preview-10x10.png?' + Math.random(), true);
 
         xmlHttp.onreadystatechange = function() {
             if (xmlHttp.readyState === 4) {
@@ -9916,12 +9619,12 @@
 
     function Play_clock() {
         var clock = Main_getclock();
-        Main_textContent("stream_clock", clock);
+        Main_textContent('stream_clock', clock);
         Main_textContent('label_clock', clock);
     }
 
     function Play_lessthanten(time) {
-        return (time < 10) ? "0" + time : time;
+        return time < 10 ? '0' + time : time;
     }
 
     function Play_timeS(time) {
@@ -9938,7 +9641,23 @@
         hours = Play_lessthanten(time);
 
         //final time 00:00 or 00:00:00
-        return (!time) ? (minutes + ":" + seconds) : (hours + ":" + minutes + ":" + seconds);
+        return !time ? minutes + ':' + seconds : hours + ':' + minutes + ':' + seconds;
+    }
+
+    function Play_timeHMS(time) {
+        var hourIndex = time.indexOf('h');
+        var minuteIndex = time.indexOf('m');
+        var secondIndex = time.indexOf('s');
+
+        var hour = time.substring(0, hourIndex);
+        var minute = time.substring(hourIndex + 1, minuteIndex);
+        var second = time.substring(minuteIndex + 1, secondIndex);
+
+        var hourInt = hour ? parseInt(hour) * 3600 : 0;
+        var minuteInt = minute ? parseInt(minute) * 60 : 0;
+        var secondInt = second ? parseInt(second) : 0;
+
+        return hourInt + minuteInt + secondInt;
     }
 
     function Play_timeMs(time) {
@@ -9948,8 +9667,9 @@
         return Play_timeS(parseInt(time / 1000));
     }
 
-    function Play_streamLiveAt(time) { //time in '2017-10-27T13:27:27Z'
-        return Play_timeMs((new Date().getTime()) - (new Date(time).getTime()));
+    function Play_streamLiveAt(time) {
+        //time in '2017-10-27T13:27:27Z'
+        return Play_timeMs(new Date().getTime() - new Date(time).getTime());
     }
 
     function Play_timeDay(time) {
@@ -9964,7 +9684,7 @@
         days = Math.floor(time / 24);
 
         //final time 0m or 23h 59m or 1d 23h 59m
-        return (days ? days + 'd ' : '') + (hours ? hours + 'h ' : '') + minutes + "m";
+        return (days ? days + 'd ' : '') + (hours ? hours + 'h ' : '') + minutes + 'm';
     }
 
     function Play_shutdownStream() {
@@ -9998,7 +9718,6 @@
     }
 
     function Play_exitMain() {
-
         if (AddUser_UserIsSet()) {
             AddCode_IsFollowing = false;
             Play_setFollow();
@@ -10028,32 +9747,31 @@
         if (!Play_EndDialogEnter) Play_HideEndDialog();
         Play_IncrementView = '';
 
-        if (Play_qualities[0] && Play_qualityIndex === (Play_getQualitiesCount() - 1)) {
+        if (Play_qualities[0] && Play_qualityIndex === Play_getQualitiesCount() - 1) {
             if (Play_qualities[0].hasOwnProperty('id')) {
                 Play_quality = Play_qualities[0].id;
                 Play_qualityPlaying = Play_quality;
             }
         }
 
-        if (PlayVod_qualities[0] && PlayVod_qualityIndex === (PlayVod_getQualitiesCount() - 1)) {
+        if (PlayVod_qualities[0] && PlayVod_qualityIndex === PlayVod_getQualitiesCount() - 1) {
             if (PlayVod_qualities[0].hasOwnProperty('id')) {
                 PlayVod_quality = PlayVod_qualities[0].id;
                 PlayVod_qualityPlaying = PlayVod_quality;
             }
         }
 
-        if (PlayClip_qualities[0] && PlayClip_qualityIndex === (PlayClip_getQualitiesCount() - 1)) {
+        if (PlayClip_qualities[0] && PlayClip_qualityIndex === PlayClip_getQualitiesCount() - 1) {
             if (PlayClip_qualities[0].hasOwnProperty('id')) {
                 PlayClip_quality = PlayClip_qualities[0].id;
                 PlayClip_qualityPlaying = PlayClip_quality;
             }
         }
-
     }
 
     function Play_ClearPlay(clearChat) {
         Play_Playing = false;
-        document.body.removeEventListener("keydown", Play_handleKeyDown);
+        document.body.removeEventListener('keydown', Play_handleKeyDown);
         document.removeEventListener('visibilitychange', Play_Resume);
         if (clearChat) ChatLive_Clear();
         Play_offsettime = 0;
@@ -10081,7 +9799,7 @@
     }
 
     function Play_showWarningDialog(text) {
-        Main_innerHTML("dialog_warning_play_text", text);
+        Main_innerHTML('dialog_warning_play_text', text);
         Main_ShowElement('dialog_warning_play');
     }
 
@@ -10127,7 +9845,7 @@
     }
 
     function Play_isPanelShown() {
-        return document.getElementById("scene_channel_panel").style.opacity === '1';
+        return document.getElementById('scene_channel_panel').style.opacity === '1';
     }
 
     function Play_hidePanel() {
@@ -10151,21 +9869,19 @@
     }
 
     function Play_ForceShowPannel() {
-        document.getElementById("scene_channel_panel").style.opacity = "1";
+        document.getElementById('scene_channel_panel').style.opacity = '1';
         Main_ShowElement('playsideinfo');
     }
 
     function Play_ForceHidePannel() {
-        document.getElementById("scene_channel_panel").style.opacity = "0";
+        document.getElementById('scene_channel_panel').style.opacity = '0';
         Main_HideElement('playsideinfo');
     }
 
     function Play_RefreshWatchingtime() {
-        Main_innerHTML("stream_watching_time", "," + STR_SPACE + STR_SPACE +
-            STR_WATCHING + Play_timeMs(Play_oldcurrentTime));
+        Main_innerHTML('stream_watching_time', ',' + STR_SPACE + STR_SPACE + STR_WATCHING + Play_timeMs(Play_oldcurrentTime));
 
-        Main_innerHTML("stream_live_time", STR_SINCE +
-            (('00:00').indexOf(Play_created) !== -1 ? '00:00' : Play_streamLiveAt(Play_created)));
+        Main_innerHTML('stream_live_time', STR_SINCE + ('00:00'.indexOf(Play_created) !== -1 ? '00:00' : Play_streamLiveAt(Play_created)));
     }
 
     function Play_clearHidePanel() {
@@ -10201,7 +9917,7 @@
     function Play_ChatSize(showDialog) {
         if (Play_ChatSizeValue > Play_MaxChatSizeValue) Play_ChatSizeValue = Play_MaxChatSizeValue;
         Play_chat_container.style.height = Play_ChatSizeVal[Play_ChatSizeValue].containerHeight + '%';
-        document.getElementById("play_chat_dialog").style.marginTop = Play_ChatSizeVal[Play_ChatSizeValue].dialogTop + '%';
+        document.getElementById('play_chat_dialog').style.marginTop = Play_ChatSizeVal[Play_ChatSizeValue].dialogTop + '%';
         Play_ChatPosition();
 
         if (showDialog) Play_showChatBackgroundDialog(STR_SIZE + Play_ChatSizeVal[Play_ChatSizeValue].percentage);
@@ -10213,7 +9929,7 @@
     }
 
     function Play_ChatBackgroundChange(showDialog) {
-        Play_chat_container.style.backgroundColor = "rgba(0, 0, 0, " + Play_ChatBackground + ")";
+        Play_chat_container.style.backgroundColor = 'rgba(0, 0, 0, ' + Play_ChatBackground + ')';
         if (showDialog) Play_showChatBackgroundDialog(STR_BRIGHTNESS + (Play_ChatBackground * 100).toFixed(0) + '%');
     }
 
@@ -10225,15 +9941,14 @@
     }
 
     function Play_ChatPosition() {
-        var bool = (Play_ChatSizeValue === Play_MaxChatSizeValue);
+        var bool = Play_ChatSizeValue === Play_MaxChatSizeValue;
 
-        if (Play_ChatPositions < 0) Play_ChatPositions = (bool ? 2 : 7);
+        if (Play_ChatPositions < 0) Play_ChatPositions = bool ? 2 : 7;
         else if (Play_ChatPositions > (bool ? 2 : 7)) Play_ChatPositions = 0;
 
-        Play_chat_container.style.top = (bool ? 0.2 : (Play_ChatPositionVal[Play_ChatPositions].top + Play_ChatPositionVal[Play_ChatPositions].sizeOffset[Play_ChatSizeValue])) + '%';
+        Play_chat_container.style.top = (bool ? 0.2 : Play_ChatPositionVal[Play_ChatPositions].top + Play_ChatPositionVal[Play_ChatPositions].sizeOffset[Play_ChatSizeValue]) + '%';
 
-        Play_chat_container.style.left =
-            Play_ChatPositionVal[Play_ChatPositions + (bool ? 2 : 0)].left + '%';
+        Play_chat_container.style.left = Play_ChatPositionVal[Play_ChatPositions + (bool ? 2 : 0)].left + '%';
 
         //if (Chat_div) Chat_div.scrollTop = Chat_div.scrollHeight;
         Main_setItem('ChatPositionsValue', Play_ChatPositions);
@@ -10241,7 +9956,7 @@
 
     function Play_showChatBackgroundDialog(DialogText) {
         window.clearTimeout(Play_ChatBackgroundID);
-        Main_textContent("play_chat_dialog_text", DialogText);
+        Main_textContent('play_chat_dialog_text', DialogText);
         Main_ShowElement('play_chat_dialog');
         Play_ChatBackgroundID = window.setTimeout(Play_hideChatBackgroundDialog, 1000);
     }
@@ -10364,7 +10079,8 @@
         else if (PlayVodClip === 2) Play_DialogEndText = Main_values.Main_selectedChannelDisplayname + STR_VIDEO;
         else if (PlayVodClip === 3) Play_DialogEndText = Main_values.Main_selectedChannelDisplayname + STR_CLIP;
 
-        if (Play_EndTextCounter === -2) { //disable
+        if (Play_EndTextCounter === -2) {
+            //disable
             Play_state = Play_STATE_PLAYING;
             PlayVod_state = Play_STATE_PLAYING;
             PlayClip_state = PlayClip_STATE_PLAYING;
@@ -10372,8 +10088,15 @@
             return;
         }
 
-        Main_innerHTML("dialog_end_stream_text", Play_DialogEndText + STR_IS_OFFLINE + STR_BR +
-            ((PlayVodClip === 3 && PlayClip_HasNext && (PlayClip_All || PlayClip_All_Forced)) ? STR_PLAY_NEXT_IN : STR_STREAM_END) + Play_EndTextCounter + '...');
+        Main_innerHTML(
+            'dialog_end_stream_text',
+            Play_DialogEndText +
+            STR_IS_OFFLINE +
+            STR_BR +
+            (PlayVodClip === 3 && PlayClip_HasNext && (PlayClip_All || PlayClip_All_Forced) ? STR_PLAY_NEXT_IN : STR_STREAM_END) +
+            Play_EndTextCounter +
+            '...'
+        );
 
         if (Play_isEndDialogVisible()) {
             Play_EndTextCounter--;
@@ -10382,8 +10105,7 @@
             PlayClip_state = PlayClip_STATE_PLAYING;
 
             if (Play_EndTextCounter === -1) {
-                Main_innerHTML("dialog_end_stream_text", Play_DialogEndText + STR_IS_OFFLINE + STR_BR + STR_STREAM_END +
-                    '0...');
+                Main_innerHTML('dialog_end_stream_text', Play_DialogEndText + STR_IS_OFFLINE + STR_BR + STR_STREAM_END + '0...');
                 Play_CleanHideExit();
                 Play_hideChat();
 
@@ -10393,7 +10115,6 @@
                     if (PlayClip_HasNext && (PlayClip_All || PlayClip_All_Forced) && !document.hidden) PlayClip_PlayNext();
                     else PlayClip_shutdownStream();
                 }
-
             } else {
                 Play_EndTextID = window.setTimeout(function() {
                     Play_EndText(PlayVodClip);
@@ -10408,7 +10129,7 @@
 
     function Play_EndTextClear() {
         window.clearTimeout(Play_EndTextID);
-        Main_innerHTML("dialog_end_stream_text", Play_DialogEndText + STR_IS_OFFLINE + STR_BR + STR_STREAM_END_EXIT);
+        Main_innerHTML('dialog_end_stream_text', Play_DialogEndText + STR_IS_OFFLINE + STR_BR + STR_STREAM_END_EXIT);
     }
 
     function Play_EndDialogPressed(PlayVodClip) {
@@ -10453,7 +10174,7 @@
                 Main_values.Play_selectedChannelDisplayname = Play_TargetHost.displayName;
                 Main_values.Play_DisplaynameHost = Main_values.Play_DisplaynameHost + Main_values.Play_selectedChannelDisplayname;
                 Play_PreshutdownStream(false);
-                document.body.addEventListener("keydown", Play_handleKeyDown, false);
+                document.body.addEventListener('keydown', Play_handleKeyDown, false);
 
                 Main_values.Play_selectedChannel_id = Play_TargetHost.id;
                 Main_ready(Play_Start);
@@ -10476,19 +10197,21 @@
     }
 
     function Play_EndSet(PlayVodClip) {
-        if (!PlayVodClip) { // Play is hosting
+        if (!PlayVodClip) {
+            // Play is hosting
             Play_EndIconsRemoveFocus();
             Play_Endcounter = 1;
             Play_EndIconsAddFocus();
             document.getElementById('dialog_end_-1').style.display = 'none';
             document.getElementById('dialog_end_0').style.display = 'none';
             document.getElementById('dialog_end_1').style.display = 'inline-block';
-            Main_textContent("dialog_end_vod_text", STR_OPEN_HOST);
+            Main_textContent('dialog_end_vod_text', STR_OPEN_HOST);
 
             Play_EndTextsReset();
-            Main_innerHTML("end_channel_name_text", Main_values.Play_selectedChannelDisplayname);
-            Main_innerHTML("end_vod_title_text", Main_values.Play_selectedChannelDisplayname + STR_IS_NOW + STR_USER_HOSTING + Play_TargetHost.displayName);
-        } else if (PlayVodClip === 1) { // play
+            Main_innerHTML('end_channel_name_text', Main_values.Play_selectedChannelDisplayname);
+            Main_innerHTML('end_vod_title_text', Main_values.Play_selectedChannelDisplayname + STR_IS_NOW + STR_USER_HOSTING + Play_TargetHost.displayName);
+        } else if (PlayVodClip === 1) {
+            // play
             Play_EndIconsRemoveFocus();
             Play_Endcounter = 2;
             Play_EndIconsAddFocus();
@@ -10497,47 +10220,49 @@
             document.getElementById('dialog_end_1').style.display = 'none';
 
             Play_EndTextsReset();
-            Main_innerHTML("end_channel_name_text", Main_values.Play_selectedChannelDisplayname);
-        } else if (PlayVodClip === 2) { // vod
+            Main_innerHTML('end_channel_name_text', Main_values.Play_selectedChannelDisplayname);
+        } else if (PlayVodClip === 2) {
+            // vod
             Play_EndIconsResetFocus();
             document.getElementById('dialog_end_-1').style.display = 'none';
             document.getElementById('dialog_end_0').style.display = 'inline-block';
             document.getElementById('dialog_end_1').style.display = 'none';
 
-            Main_innerHTML("end_replay_name_text", Main_values.Main_selectedChannelDisplayname);
-            Main_innerHTML("end_replay_title_text", ChannelVod_title);
+            Main_innerHTML('end_replay_name_text', Main_values.Main_selectedChannelDisplayname);
+            Main_innerHTML('end_replay_title_text', ChannelVod_title);
 
-            Main_textContent("end_vod_name_text", '');
-            Main_textContent("end_vod_title_text", '');
+            Main_textContent('end_vod_name_text', '');
+            Main_textContent('end_vod_title_text', '');
 
-            Main_innerHTML("end_channel_name_text", Main_values.Main_selectedChannelDisplayname);
-        } else if (PlayVodClip === 3) { // clip
+            Main_innerHTML('end_channel_name_text', Main_values.Main_selectedChannelDisplayname);
+        } else if (PlayVodClip === 3) {
+            // clip
             Play_EndIconsResetFocus();
             document.getElementById('dialog_end_-1').style.display = PlayClip_HasNext ? 'inline-block' : 'none';
             document.getElementById('dialog_end_0').style.display = 'inline-block';
             document.getElementById('dialog_end_1').style.display = 'inline-block';
-            Main_textContent("dialog_end_vod_text", PlayClip_HasVOD ? STR_OPEN_BROADCAST : STR_NO_BROADCAST);
+            Main_textContent('dialog_end_vod_text', PlayClip_HasVOD ? STR_OPEN_BROADCAST : STR_NO_BROADCAST);
 
-            Main_innerHTML("end_replay_name_text", Main_values.Main_selectedChannelDisplayname);
-            Main_innerHTML("end_replay_title_text", ChannelClip_title);
+            Main_innerHTML('end_replay_name_text', Main_values.Main_selectedChannelDisplayname);
+            Main_innerHTML('end_replay_title_text', ChannelClip_title);
 
-            Main_innerHTML("end_vod_name_text", Main_values.Main_selectedChannelDisplayname);
+            Main_innerHTML('end_vod_name_text', Main_values.Main_selectedChannelDisplayname);
 
-            Main_innerHTML("end_channel_name_text", Main_values.Main_selectedChannelDisplayname);
+            Main_innerHTML('end_channel_name_text', Main_values.Main_selectedChannelDisplayname);
         }
-        Main_textContent("end_game_name_text", Main_values.Play_gameSelected);
+        Main_textContent('end_game_name_text', Main_values.Play_gameSelected);
     }
 
     function Play_EndTextsReset() {
-        Main_textContent("end_replay_name_text", '');
-        Main_textContent("end_replay_title_text", '');
-        Main_textContent("end_vod_name_text", '');
-        Main_textContent("end_vod_title_text", '');
+        Main_textContent('end_replay_name_text', '');
+        Main_textContent('end_replay_title_text', '');
+        Main_textContent('end_vod_name_text', '');
+        Main_textContent('end_vod_title_text', '');
     }
 
     function Play_OpenChannel(PlayVodClip) {
         if (!Main_values.Main_BeforeChannelisSet && Main_values.Main_Go !== Main_ChannelVod && Main_values.Main_Go !== Main_ChannelClip) {
-            Main_values.Main_BeforeChannel = (Main_values.Main_BeforeAgameisSet && Main_values.Main_Go !== Main_aGame) ? Main_values.Main_BeforeAgame : Main_values.Main_Go;
+            Main_values.Main_BeforeChannel = Main_values.Main_BeforeAgameisSet && Main_values.Main_Go !== Main_aGame ? Main_values.Main_BeforeAgame : Main_values.Main_Go;
             Main_values.Main_BeforeChannelisSet = true;
         }
 
@@ -10584,7 +10309,10 @@
         }
 
         if (!Main_values.Main_BeforeAgameisSet && Main_values.Main_Go !== Main_AGameVod && Main_values.Main_Go !== Main_AGameClip) {
-            Main_values.Main_BeforeAgame = (Main_values.Main_BeforeChannelisSet && Main_values.Main_Go !== Main_ChannelContent && Main_values.Main_Go !== Main_ChannelVod && Main_values.Main_Go !== Main_ChannelClip) ? Main_values.Main_BeforeChannel : Main_values.Main_Go;
+            Main_values.Main_BeforeAgame =
+                Main_values.Main_BeforeChannelisSet && Main_values.Main_Go !== Main_ChannelContent && Main_values.Main_Go !== Main_ChannelVod && Main_values.Main_Go !== Main_ChannelClip ?
+                Main_values.Main_BeforeChannel :
+                Main_values.Main_Go;
             Main_values.Main_BeforeAgameisSet = true;
         }
 
@@ -10622,8 +10350,8 @@
     }
 
     function Play_qualityDisplay(getQualitiesCount, qualityIndex, callback) {
-        var doc_up = document.getElementById("control_arrow_up_" + Play_controlsQuality),
-            doc_down = document.getElementById("control_arrow_down" + Play_controlsQuality);
+        var doc_up = document.getElementById('control_arrow_up_' + Play_controlsQuality),
+            doc_down = document.getElementById('control_arrow_down' + Play_controlsQuality);
 
         if (getQualitiesCount() === 1) {
             doc_up.classList.add('hide');
@@ -10632,20 +10360,20 @@
             doc_up.classList.remove('hide');
             doc_down.classList.remove('hide');
 
-            doc_up.style.opacity = "0.2";
-            doc_down.style.opacity = "1";
+            doc_up.style.opacity = '0.2';
+            doc_down.style.opacity = '1';
         } else if (qualityIndex === getQualitiesCount() - 1) {
             doc_up.classList.remove('hide');
             doc_down.classList.remove('hide');
 
-            doc_up.style.opacity = "1";
-            doc_down.style.opacity = "0.2";
+            doc_up.style.opacity = '1';
+            doc_down.style.opacity = '0.2';
         } else {
             doc_up.classList.remove('hide');
             doc_down.classList.remove('hide');
 
-            doc_up.style.opacity = "1";
-            doc_down.style.opacity = "1";
+            doc_up.style.opacity = '1';
+            doc_down.style.opacity = '1';
         }
 
         callback('controls_name_' + Play_controlsQuality);
@@ -10657,7 +10385,8 @@
             if (Play_qualities[i].id === Play_quality) {
                 Play_qualityIndex = i;
                 break;
-            } else if (Play_qualities[i].id.indexOf(Play_quality) !== -1) { //make shore to set a value before break out
+            } else if (Play_qualities[i].id.indexOf(Play_quality) !== -1) {
+                //make shore to set a value before break out
                 Play_qualityIndex = i;
             }
         }
@@ -10665,7 +10394,8 @@
 
     //called by android PlayerActivity TODO check this
     function Play_PannelEndStart(PlayVodClip) {
-        if (PlayVodClip === 1) { //live
+        if (PlayVodClip === 1) {
+            //live
             window.clearInterval(Play_streamCheckId);
             Play_CheckHostStart();
         } else {
@@ -10679,15 +10409,14 @@
         window.clearInterval(PlayVod_streamCheckId);
 
         Play_PrepareshowEndDialog(PlayVodClip);
-        Play_EndTextCounter = (!Play_EndSettingsCounter ? -2 : Play_EndSettingsCounter);
+        Play_EndTextCounter = !Play_EndSettingsCounter ? -2 : Play_EndSettingsCounter;
 
         Play_EndText(PlayVodClip);
         Play_showEndDialog();
     }
 
     function Play_CheckHostStart(error_410) {
-        if (Main_IsNotBrowser)
-            webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_OFF);
+        if (Main_IsNotBrowser) webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_OFF);
 
         if (error_410) {
             Play_IsWarning = true;
@@ -10738,22 +10467,14 @@
     var Play_loadDataCheckHostId;
 
     function Play_loadDataCheckHost() {
+        Play_loadDataCheckHostId = new Date().getTime();
 
-        Play_loadDataCheckHostId = (new Date().getTime());
-
-        Main_GetHost(
-            Play_CheckHost,
-            Play_loadDataCheckHostId,
-            Main_values.Main_selectedChannel
-        );
+        Main_GetHost(Play_CheckHost, Play_loadDataCheckHostId, Main_values.Main_selectedChannel);
     }
 
     function Play_CheckHost(responseObj, id) {
-
         if (Play_isOn && Play_loadDataCheckHostId === id) {
-
             if (responseObj.status === 200) {
-
                 var data = JSON.parse(responseObj.responseText).data;
 
                 if (data.user && data.user.hosting) {
@@ -10775,15 +10496,12 @@
 
                     return;
                 }
-
             }
 
             Play_EndSet(1);
             Main_values.Play_isHost = false;
             Play_PlayEndStart(1);
-
         }
-
     }
 
     function Play_setFollow() {
@@ -10843,12 +10561,11 @@
 
     function Play_handleKeyUpEndClear() {
         window.clearTimeout(Play_EndUpclearID);
-        document.body.removeEventListener("keyup", Play_handleKeyUp);
-        document.body.addEventListener("keydown", Play_EndUpclearCalback, false);
+        document.body.removeEventListener('keyup', Play_handleKeyUp);
+        document.body.addEventListener('keydown', Play_EndUpclearCalback, false);
     }
 
     function Play_EndDialogUpDown() {
-
         Play_EndTextClear();
         if (UserLiveFeed_loadingData || !AddUser_UserIsSet()) return;
 
@@ -10878,8 +10595,7 @@
         Play_HideBufferDialog();
         Play_state = Play_STATE_PLAYING;
 
-        Play_showWarningDialog(error_410 ? STR_410_ERROR :
-            Main_values.Play_selectedChannelDisplayname + ' ' + STR_LIVE + STR_IS_OFFLINE);
+        Play_showWarningDialog(error_410 ? STR_410_ERROR : Main_values.Play_selectedChannelDisplayname + ' ' + STR_LIVE + STR_IS_OFFLINE);
 
         window.setTimeout(function() {
             Play_HideWarningDialog();
@@ -10946,7 +10662,7 @@
                     break;
                 case KEY_RIGHT:
                     if (UserLiveFeed_isFeedShow() && (!Play_EndFocus || !Play_isEndDialogVisible())) {
-                        if (Play_FeedPos < (UserLiveFeed_GetSize() - 1) && !UserLiveFeed_loadingData) {
+                        if (Play_FeedPos < UserLiveFeed_GetSize() - 1 && !UserLiveFeed_loadingData) {
                             UserLiveFeed_FeedRemoveFocus();
                             Play_FeedPos++;
                             UserLiveFeed_FeedAddFocus();
@@ -10959,7 +10675,7 @@
                         Play_EndTextClear();
                         Play_EndIconsRemoveFocus();
                         Play_Endcounter++;
-                        if (Play_Endcounter > 3) Play_Endcounter = (Main_values.Play_isHost ? 1 : 2);
+                        if (Play_Endcounter > 3) Play_Endcounter = Main_values.Play_isHost ? 1 : 2;
                         Play_EndIconsAddFocus();
                     } else {
                         Play_showPanel();
@@ -10978,8 +10694,8 @@
                     } else if (!UserLiveFeed_isFeedShow() && AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) UserLiveFeed_ShowFeed();
                     else if (Play_isEndDialogVisible()) {
                         Play_EndTextClear();
-                        document.body.removeEventListener("keydown", Play_handleKeyDown, false);
-                        document.body.addEventListener("keyup", Play_handleKeyUp, false);
+                        document.body.removeEventListener('keydown', Play_handleKeyDown, false);
+                        document.body.addEventListener('keyup', Play_handleKeyUp, false);
                         Play_EndUpclear = false;
                         Play_EndUpclearCalback = Play_handleKeyDown;
                         Play_EndUpclearID = window.setTimeout(Play_keyUpEnd, 250);
@@ -11096,9 +10812,9 @@
     var Play_Panelcounter = Play_controlsDefault;
 
     function Play_MakeControls() {
-
-        Play_controls[Play_controlsSearch] = { //Search
-            icons: "search",
+        Play_controls[Play_controlsSearch] = {
+            //Search
+            icons: 'search',
             string: STR_SEARCH,
             values: null,
             defaultValue: null,
@@ -11106,11 +10822,12 @@
             enterKey: function(PlayVodClip) {
                 Play_ForceHidePannel();
                 Play_OpenSearch(PlayVodClip);
-            },
+            }
         };
 
-        Play_controls[Play_controlsChanelCont] = { //channel content
-            icons: "filmstrip",
+        Play_controls[Play_controlsChanelCont] = {
+            //channel content
+            icons: 'filmstrip',
             string: STR_CHANNEL_CONT,
             values: '',
             defaultValue: null,
@@ -11120,14 +10837,13 @@
                 Play_OpenChannel(PlayVodClip);
             },
             setLable: function(title) {
-                Main_innerHTML('extra_button_' + this.position,
-                    '<div style="max-width: 27%; text-overflow: ellipsis; overflow: hidden; transform: translate(135.5%, 0);">' +
-                    title + '</div>');
-            },
+                Main_innerHTML('extra_button_' + this.position, '<div style="max-width: 27%; text-overflow: ellipsis; overflow: hidden; transform: translate(135.5%, 0);">' + title + '</div>');
+            }
         };
 
-        Play_controls[Play_controlsGameCont] = { //game content
-            icons: "gamepad",
+        Play_controls[Play_controlsGameCont] = {
+            //game content
+            icons: 'gamepad',
             string: STR_GAME_CONT,
             values: '',
             defaultValue: null,
@@ -11137,14 +10853,13 @@
                 Play_OpenGame(PlayVodClip);
             },
             setLable: function(title) {
-                Main_innerHTML('extra_button_' + this.position,
-                    '<div style="max-width: 40%; text-overflow: ellipsis; overflow: hidden; transform: translate(75%, 0);">' +
-                    title + '</div>');
-            },
+                Main_innerHTML('extra_button_' + this.position, '<div style="max-width: 40%; text-overflow: ellipsis; overflow: hidden; transform: translate(75%, 0);">' + title + '</div>');
+            }
         };
 
-        Play_controls[Play_controlsOpenVod] = { //open vod
-            icons: "movie-play",
+        Play_controls[Play_controlsOpenVod] = {
+            //open vod
+            icons: 'movie-play',
             string: STR_OPEN_BROADCAST,
             values: '',
             defaultValue: null,
@@ -11154,22 +10869,19 @@
                 PlayClip_OpenVod();
             },
             setLable: function(title) {
-                Main_innerHTML('extra_button_' + this.position,
-                    '<div style="max-width: 60%; text-overflow: ellipsis; overflow: hidden; transform: translate(33%, 0);">' +
-                    title + '</div>');
-            },
+                Main_innerHTML('extra_button_' + this.position, '<div style="max-width: 60%; text-overflow: ellipsis; overflow: hidden; transform: translate(33%, 0);">' + title + '</div>');
+            }
         };
 
-
-        Play_controls[Play_controlsFollow] = { //following
-            icons: "heart-o",
+        Play_controls[Play_controlsFollow] = {
+            //following
+            icons: 'heart-o',
             string: STR_FOLLOW,
             values: '',
             defaultValue: null,
             opacity: 0,
             enterKey: function(PlayVodClip) {
-
-                AddCode_Channel_id = (PlayVodClip === 1 ? Main_values.Play_selectedChannel_id : Main_values.Main_selectedChannel_id);
+                AddCode_Channel_id = PlayVodClip === 1 ? Main_values.Play_selectedChannel_id : Main_values.Main_selectedChannel_id;
                 Play_FollowUnfollow();
 
                 Play_Resetpanel(PlayVodClip);
@@ -11180,20 +10892,21 @@
                 Main_textContent('extra_button_' + this.position, AddCode_IsFollowing ? STR_CLICK_UNFOLLOW : STR_CLICK_FOLLOW);
             },
             setIcon: function(AddCode_IsFollowing) {
-                Main_innerHTML('controls_icon_' + this.position, '<i class="pause_button3d icon-' +
-                    (AddCode_IsFollowing ? "heart" : "heart-o") +
-                    '" style="color: #' + (AddCode_IsFollowing ? "6441a4" : "FFFFFF") + ';" ></i>');
-            },
+                Main_innerHTML(
+                    'controls_icon_' + this.position,
+                    '<i class="pause_button3d icon-' + (AddCode_IsFollowing ? 'heart' : 'heart-o') + '" style="color: #' + (AddCode_IsFollowing ? '6441a4' : 'FFFFFF') + ';" ></i>'
+                );
+            }
         };
 
-        Play_controls[Play_controlsQuality] = { //quality
-            icons: "videocamera",
+        Play_controls[Play_controlsQuality] = {
+            //quality
+            icons: 'videocamera',
             string: STR_QUALITY,
             values: ['1080p60 | Source | 10.00Mbps'],
             defaultValue: 0,
             opacity: 0,
             enterKey: function(PlayVodClip) {
-
                 if (PlayVodClip === 1) {
                     Play_hidePanel();
                     Play_quality = Play_qualities[Play_qualityIndex].id;
@@ -11219,45 +10932,37 @@
                 Play_clearPause();
             },
             updown: function(adder, PlayVodClip) {
-
                 if (PlayVodClip === 1) {
                     //TODO fix this reversed logic
                     Play_qualityIndex += adder * -1;
 
-                    if (Play_qualityIndex > (Play_getQualitiesCount() - 1))
-                        Play_qualityIndex = (Play_getQualitiesCount() - 1);
-                    else if (Play_qualityIndex < 0)
-                        Play_qualityIndex = 0;
+                    if (Play_qualityIndex > Play_getQualitiesCount() - 1) Play_qualityIndex = Play_getQualitiesCount() - 1;
+                    else if (Play_qualityIndex < 0) Play_qualityIndex = 0;
 
                     Play_qualityDisplay(Play_getQualitiesCount, Play_qualityIndex, Play_SetHtmlQuality);
                 } else if (PlayVodClip === 2) {
                     //TODO fix this reversed logic
                     PlayVod_qualityIndex += adder * -1;
 
-                    if (PlayVod_qualityIndex > (PlayVod_getQualitiesCount() - 1))
-                        PlayVod_qualityIndex = (PlayVod_getQualitiesCount() - 1);
-                    else if (PlayVod_qualityIndex < 0)
-                        PlayVod_qualityIndex = 0;
+                    if (PlayVod_qualityIndex > PlayVod_getQualitiesCount() - 1) PlayVod_qualityIndex = PlayVod_getQualitiesCount() - 1;
+                    else if (PlayVod_qualityIndex < 0) PlayVod_qualityIndex = 0;
 
                     Play_qualityDisplay(PlayVod_getQualitiesCount, PlayVod_qualityIndex, PlayVod_SetHtmlQuality);
                 } else if (PlayVodClip === 3) {
                     //TODO fix this reversed logic
                     PlayClip_qualityIndex += adder * -1;
 
-                    if (PlayClip_qualityIndex > (PlayClip_getQualitiesCount() - 1))
-                        PlayClip_qualityIndex = (PlayClip_getQualitiesCount() - 1);
-                    else if (PlayClip_qualityIndex < 0)
-                        PlayClip_qualityIndex = 0;
+                    if (PlayClip_qualityIndex > PlayClip_getQualitiesCount() - 1) PlayClip_qualityIndex = PlayClip_getQualitiesCount() - 1;
+                    else if (PlayClip_qualityIndex < 0) PlayClip_qualityIndex = 0;
 
                     Play_qualityDisplay(PlayClip_getQualitiesCount, PlayClip_qualityIndex, PlayClip_SetHtmlQuality);
-
                 }
-
-            },
+            }
         };
 
-        Play_controls[Play_controlsLowLatency] = { //quality
-            icons: "history",
+        Play_controls[Play_controlsLowLatency] = {
+            //quality
+            icons: 'history',
             string: STR_LOW_LATENCY,
             values: null,
             defaultValue: 0,
@@ -11278,12 +10983,13 @@
                 this.setLable();
             },
             setLable: function() {
-                Main_textContent('extra_button_' + this.position, "(" + (Play_LowLatency ? STR_ENABLED : STR_DISABLED) + ")");
-            },
+                Main_textContent('extra_button_' + this.position, '(' + (Play_LowLatency ? STR_ENABLED : STR_DISABLED) + ')');
+            }
         };
 
-        Play_controls[Play_controlsChat] = { //chat enable disable
-            icons: "chat",
+        Play_controls[Play_controlsChat] = {
+            //chat enable disable
+            icons: 'chat',
             string: STR_CHAT,
             values: null,
             defaultValue: null,
@@ -11301,11 +11007,11 @@
                 this.setLable();
             },
             setLable: function() {
-                var string = (Play_isChatShown() ? STR_YES : STR_NO);
+                var string = Play_isChatShown() ? STR_YES : STR_NO;
                 if (!Play_isFullScreen) string = STR_CHAT_SIDE;
 
                 Main_textContent('extra_button_' + this.position, '(' + string + ')');
-            },
+            }
         };
 
         Play_controls[Play_controlsChatSend] = {
@@ -11319,7 +11025,7 @@
             ShowInAudioMulti: false,
             ShowInPreview: false,
             ShowInStay: true,
-            icons: "keyboard",
+            icons: 'keyboard',
             string: STR_CHAT_WRITE,
             opacity: 0,
             values: null,
@@ -11334,12 +11040,12 @@
                 }
 
                 ChatLiveControls_Show();
-
             }
         };
 
-        Play_controls[Play_controlsChatSide] = { //chat side
-            icons: Play_isFullScreen ? "resize-down" : "resize-up",
+        Play_controls[Play_controlsChatSide] = {
+            //chat side
+            icons: Play_isFullScreen ? 'resize-down' : 'resize-up',
             string: STR_CHAT_VIDEO_MODE,
             values: null,
             defaultValue: null,
@@ -11357,13 +11063,13 @@
                 Play_controls[Play_controlsChat].setLable();
             },
             setIcon: function() {
-                Main_innerHTML('controls_icon_' + this.position, '<i class="pause_button3d icon-' +
-                    (Play_isFullScreen ? "resize-down" : "resize-up") + '" ></i>');
-            },
+                Main_innerHTML('controls_icon_' + this.position, '<i class="pause_button3d icon-' + (Play_isFullScreen ? 'resize-down' : 'resize-up') + '" ></i>');
+            }
         };
 
-        Play_controls[Play_controlsChatPos] = { //chat position
-            icons: "chat-pos",
+        Play_controls[Play_controlsChatPos] = {
+            //chat position
+            icons: 'chat-pos',
             string: STR_CHAT_POS,
             values: [1, 2, 3, 4, 5, 6, 7, 8],
             defaultValue: Play_ChatPositions,
@@ -11372,10 +11078,8 @@
             updown: function(adder) {
                 if (!Play_isChatShown() || !Play_isFullScreen) return;
                 this.defaultValue += adder;
-                if (this.defaultValue < 0)
-                    this.defaultValue = (this.values.length - 1);
-                else if (this.defaultValue > (this.values.length - 1))
-                    this.defaultValue = 0;
+                if (this.defaultValue < 0) this.defaultValue = this.values.length - 1;
+                else if (this.defaultValue > this.values.length - 1) this.defaultValue = 0;
 
                 Play_ChatPositions += adder;
 
@@ -11387,29 +11091,29 @@
             },
             setLable: function() {
                 Main_textContent('controls_name_' + this.position, this.values[this.defaultValue]);
-            },
+            }
         };
 
-        Play_controls[Play_controlsChatSize] = { //chat size
-            icons: "chat-size",
+        Play_controls[Play_controlsChatSize] = {
+            //chat size
+            icons: 'chat-size',
             string: STR_CHAT_SIZE,
-            values: ["12.5%", "25%", "50%", "75%", "100%"],
+            values: ['12.5%', '25%', '50%', '75%', '100%'],
             defaultValue: Play_ChatSizeValue,
             opacity: 0,
             isChat: true,
             updown: function(adder) {
                 if (!Play_isChatShown() || !Play_isFullScreen) return;
                 this.defaultValue += adder;
-                if (this.defaultValue < 0)
-                    this.defaultValue = 0;
-                else if (this.defaultValue > (this.values.length - 1)) {
-                    this.defaultValue = (this.values.length - 1);
+                if (this.defaultValue < 0) this.defaultValue = 0;
+                else if (this.defaultValue > this.values.length - 1) {
+                    this.defaultValue = this.values.length - 1;
                     return;
                 }
                 this.bottomArrows();
                 Play_ChatSizeValue = this.defaultValue;
 
-                if (Play_ChatSizeValue === (Play_MaxChatSizeValue - 1) && adder === -1) {
+                if (Play_ChatSizeValue === Play_MaxChatSizeValue - 1 && adder === -1) {
                     Play_ChatPositionConvert(false);
                 } else if (Play_ChatSizeValue === Play_MaxChatSizeValue) Play_ChatPositionConvert(true);
 
@@ -11419,31 +11123,26 @@
                 this.setLable();
             },
             setLable: function() {
-                Main_textContent('controls_name_' + Play_controlsChatPos,
-                    Play_controls[Play_controlsChatPos].values[Play_controls[Play_controlsChatPos].defaultValue]);
+                Main_textContent('controls_name_' + Play_controlsChatPos, Play_controls[Play_controlsChatPos].values[Play_controls[Play_controlsChatPos].defaultValue]);
             },
             bottomArrows: function() {
                 Play_BottomArrows(this.position);
-            },
+            }
         };
 
-        Play_controls[Play_controlsChatBright] = { //chat_brightness
-            icons: "chat-brig",
+        Play_controls[Play_controlsChatBright] = {
+            //chat_brightness
+            icons: 'chat-brig',
             string: STR_CHAT_BRIGHTNESS,
-            values: ["0%", "5%", "10%", "15%", "20%",
-                "25%", "30%", "35%", "40%", "45%",
-                "50%", "55%", "60%", "65%", "70%",
-                "75%", "80%", "85%", "90%", "95%", "100%"
-            ],
+            values: ['0%', '5%', '10%', '15%', '20%', '25%', '30%', '35%', '40%', '45%', '50%', '55%', '60%', '65%', '70%', '75%', '80%', '85%', '90%', '95%', '100%'],
             defaultValue: Main_values.ChatBackground,
             opacity: 0,
             isChat: true,
             updown: function(adder) {
                 if (!Play_isChatShown() || !Play_isFullScreen) return;
                 this.defaultValue += adder;
-                if (this.defaultValue < 0)
-                    this.defaultValue = 0;
-                else if (this.defaultValue > (this.values.length - 1)) this.defaultValue = (this.values.length - 1);
+                if (this.defaultValue < 0) this.defaultValue = 0;
+                else if (this.defaultValue > this.values.length - 1) this.defaultValue = this.values.length - 1;
                 Main_values.ChatBackground = this.defaultValue;
 
                 Play_ChatBackground = (this.defaultValue * 0.05).toFixed(2);
@@ -11454,15 +11153,15 @@
                 Main_SaveValues();
             },
             setLable: function() {
-                Main_textContent('controls_name_' + this.position,
-                    this.values[this.defaultValue]);
+                Main_textContent('controls_name_' + this.position, this.values[this.defaultValue]);
             },
             bottomArrows: function() {
                 Play_BottomArrows(this.position);
-            },
+            }
         };
 
-        Play_controls[Play_controlsChatFont] = { //Chat font size
+        Play_controls[Play_controlsChatFont] = {
+            //Chat font size
             ShowInLive: false,
             ShowInVod: false,
             ShowInClip: false,
@@ -11473,7 +11172,7 @@
             ShowInAudioMulti: false,
             ShowInPreview: false,
             ShowInStay: false,
-            icons: "chat-font",
+            icons: 'chat-font',
             string: STR_CHAT_FONT,
             opacity: 0,
             values: Play_ChatFontObj,
@@ -11483,9 +11182,8 @@
                 if (!Play_isChatShown()) return;
 
                 this.defaultValue += adder;
-                if (this.defaultValue < 0)
-                    this.defaultValue = 0;
-                else if (this.defaultValue > (this.values.length - 1)) this.defaultValue = (this.values.length - 1);
+                if (this.defaultValue < 0) this.defaultValue = 0;
+                else if (this.defaultValue > this.values.length - 1) this.defaultValue = this.values.length - 1;
                 Main_values.Chat_font_size_new = this.defaultValue;
 
                 Play_SetChatFont();
@@ -11498,25 +11196,22 @@
             },
             bottomArrows: function() {
                 Play_BottomArrows(this.position);
-            },
+            }
         };
 
-        Play_controls[Play_controlsChatDelay] = { //chat delay
-            icons: "chat-delay",
+        Play_controls[Play_controlsChatDelay] = {
+            //chat delay
+            icons: 'chat-delay',
             string: STR_CHAT_DELAY,
-            values: [STR_DISABLE, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-                20, 25, 30, 45, 60, 90, 120, 150, 180, 240, 300
-            ],
+            values: [STR_DISABLE, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 20, 25, 30, 45, 60, 90, 120, 150, 180, 240, 300],
             defaultValue: Play_ChatDelayPosition,
             opacity: 0,
             isChat: false,
             updown: function(adder) {
                 this.defaultValue += adder;
 
-                if (this.defaultValue < 0)
-                    this.defaultValue = 0;
-                else if (this.defaultValue > (this.values.length - 1))
-                    this.defaultValue = (this.values.length - 1);
+                if (this.defaultValue < 0) this.defaultValue = 0;
+                else if (this.defaultValue > this.values.length - 1) this.defaultValue = this.values.length - 1;
 
                 Play_ChatDelayPosition = this.defaultValue;
 
@@ -11534,11 +11229,12 @@
             },
             bottomArrows: function() {
                 Play_BottomArrows(this.position);
-            },
+            }
         };
 
-        Play_controls[Play_controlsChatForceDis] = { //force disable chat
-            icons: "chat-stop",
+        Play_controls[Play_controlsChatForceDis] = {
+            //force disable chat
+            icons: 'chat-stop',
             string: STR_F_DISABLE_CHAT,
             values: null,
             defaultValue: null,
@@ -11553,29 +11249,25 @@
                 Main_SaveValues();
             },
             setLable: function() {
-                Main_textContent('extra_button_' + this.position, '(' +
-                    (Main_values.Play_ChatForceDisable ? STR_YES : STR_NO) + ')');
-            },
+                Main_textContent('extra_button_' + this.position, '(' + (Main_values.Play_ChatForceDisable ? STR_YES : STR_NO) + ')');
+            }
         };
     }
 
     function Play_IconsAddFocus() {
         Main_AddClass('controls_button_' + Play_Panelcounter, 'progress_bar_div_focus');
-        document.getElementById('controls_button_text_' + Play_Panelcounter).style.opacity = "1";
+        document.getElementById('controls_button_text_' + Play_Panelcounter).style.opacity = '1';
 
-        if (Play_controls[Play_Panelcounter].isChat && (!Play_isChatShown() || !Play_isFullScreen))
-            document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = "1";
-        else if (Play_Panelcounter !== Play_controlsChat && !Play_controls[Play_Panelcounter].isChat)
-            document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = "0";
+        if (Play_controls[Play_Panelcounter].isChat && (!Play_isChatShown() || !Play_isFullScreen)) document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = '1';
+        else if (Play_Panelcounter !== Play_controlsChat && !Play_controls[Play_Panelcounter].isChat) document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = '0';
     }
 
     function Play_IconsRemoveFocus() {
         Main_RemoveClass('controls_button_' + Play_Panelcounter, 'progress_bar_div_focus');
-        document.getElementById('controls_button_text_' + Play_Panelcounter).style.opacity = "0";
+        document.getElementById('controls_button_text_' + Play_Panelcounter).style.opacity = '0';
         //in case chat is disable and the warning is showing because some chat option was selected
-        document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = "0";
+        document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = '0';
     }
-
 
     function Play_KeyChatSizeChage() {
         Play_ChatSizeValue++;
@@ -11631,8 +11323,8 @@
     }
 
     function Play_BottomArrows(position) {
-        var doc_up = document.getElementById("control_arrow_up_" + position),
-            doc_down = document.getElementById("control_arrow_down" + position);
+        var doc_up = document.getElementById('control_arrow_up_' + position),
+            doc_down = document.getElementById('control_arrow_down' + position);
 
         if (Play_controls[position].values.length === 1) {
             doc_up.classList.add('hide');
@@ -11641,41 +11333,53 @@
             doc_up.classList.remove('hide');
             doc_down.classList.remove('hide');
 
-            doc_up.style.opacity = "1";
-            doc_down.style.opacity = "0.2";
-        } else if (Play_controls[position].defaultValue === (Play_controls[position].values.length - 1)) {
+            doc_up.style.opacity = '1';
+            doc_down.style.opacity = '0.2';
+        } else if (Play_controls[position].defaultValue === Play_controls[position].values.length - 1) {
             doc_up.classList.remove('hide');
             doc_down.classList.remove('hide');
 
-            doc_up.style.opacity = "0.2";
-            doc_down.style.opacity = "1";
+            doc_up.style.opacity = '0.2';
+            doc_down.style.opacity = '1';
         } else {
             doc_up.classList.remove('hide');
             doc_down.classList.remove('hide');
 
-            doc_up.style.opacity = "1";
-            doc_down.style.opacity = "1";
+            doc_up.style.opacity = '1';
+            doc_down.style.opacity = '1';
         }
 
         Main_textContent('controls_name_' + position, Play_controls[position].values[Play_controls[position].defaultValue]);
     }
 
     function Play_SetControls() {
-        var div, doc = document.getElementById('controls_holder');
+        var div,
+            doc = document.getElementById('controls_holder');
         for (var key in Play_controls) {
             div = document.createElement('div');
             div.classList.add('controls_button_holder');
             div.setAttribute('id', 'controls_' + key);
 
-            div.innerHTML = '<div id="controls_button_' + key +
-                '" class="controls_button"><div id="controls_icon_' + key +
-                '"><i class="pause_button3d icon-' + Play_controls[key].icons +
-                '" ></i></div></div><div id="controls_button_text_' + key +
-                '" class="extra_button_text_holder" style="opacity: ' + Play_controls[key].opacity +
-                ';"><div id="extra_button_text' + key + '" class="extra_button_text strokedeline" >' +
-                Play_controls[key].string + '</div><div id="extra_button_' + key +
+            div.innerHTML =
+                '<div id="controls_button_' +
+                key +
+                '" class="controls_button"><div id="controls_icon_' +
+                key +
+                '"><i class="pause_button3d icon-' +
+                Play_controls[key].icons +
+                '" ></i></div></div><div id="controls_button_text_' +
+                key +
+                '" class="extra_button_text_holder" style="opacity: ' +
+                Play_controls[key].opacity +
+                ';"><div id="extra_button_text' +
+                key +
                 '" class="extra_button_text strokedeline" >' +
-                (Play_controls[key].values ? Play_SetControlsArrows(key) : STR_SPACE) + '</div></div></div>';
+                Play_controls[key].string +
+                '</div><div id="extra_button_' +
+                key +
+                '" class="extra_button_text strokedeline" >' +
+                (Play_controls[key].values ? Play_SetControlsArrows(key) : STR_SPACE) +
+                '</div></div></div>';
 
             doc.appendChild(div);
             Play_controlsSize++;
@@ -11686,7 +11390,19 @@
     }
 
     function Play_SetControlsArrows(key) {
-        return '<div id="controls_arrows_' + key + '" style="font-size: 50%; display: inline-block; vertical-align: middle;"><div style="display: inline-block;"><div id="control_arrow_up_' + key + '" class="up"></div><div id="control_arrow_down' + key + '" class="down"></div></div></div>&nbsp;<div id="controls_name_' + key + '" class="arrows_text">' + Play_controls[key].values[Play_controls[key].defaultValue] + '</div>';
+        return (
+            '<div id="controls_arrows_' +
+            key +
+            '" style="font-size: 50%; display: inline-block; vertical-align: middle;"><div style="display: inline-block;"><div id="control_arrow_up_' +
+            key +
+            '" class="up"></div><div id="control_arrow_down' +
+            key +
+            '" class="down"></div></div></div>&nbsp;<div id="controls_name_' +
+            key +
+            '" class="arrows_text">' +
+            Play_controls[key].values[Play_controls[key].defaultValue] +
+            '</div>'
+        );
     }
 
     var Play_dialog_warning_play_middle;
@@ -11715,7 +11431,8 @@
     function Play_HideWarningMidleDialog() {
         Main_HideElementWithEle(Play_dialog_warning_play_middle);
         Main_clearTimeout(Play_showWarningMidleDialogId);
-    } //Variable initialization
+    }
+    //Variable initialization
     var PlayVod_quality = 'Auto';
     var PlayVod_qualityPlaying = PlayVod_quality;
 
@@ -11774,8 +11491,8 @@
         Play_showBufferDialog();
         Play_HideEndDialog();
         PlayVod_currentTime = 0;
-        Main_textContent("stream_live_time", '');
-        Main_textContent("stream_watching_time", '');
+        Main_textContent('stream_live_time', '');
+        Main_textContent('stream_watching_time', '');
         Main_textContent('progress_bar_current_time', Play_timeS(0));
         Chat_title = STR_PAST_BROA + '.';
         Main_innerHTML('pause_button', '<div ><i class="pause_button3d icon-pause"></i> </div>');
@@ -11805,19 +11522,21 @@
         PlayClip_HideShowNext(0, 0);
         PlayClip_HideShowNext(1, 0);
 
-        if (Main_values.vodOffset) { // this is a vod coming from a clip or from restore playback
+        if (Main_values.vodOffset) {
+            // this is a vod coming from a clip or from restore playback
             PlayVod_PrepareLoad();
-            PlayVod_updateVodInfo();
         } else {
             PlayVod_updateStreamerInfoValues();
-            Main_innerHTML("stream_info_title", ChannelVod_title);
-            Main_textContent("stream_info_game", ChannelVod_game);
-            Main_innerHTML("stream_live_time", ChannelVod_createdAt + ',' + STR_SPACE + ChannelVod_views);
-            Main_textContent("stream_live_viewers", '');
-            Main_textContent("stream_watching_time", '');
+            Main_innerHTML('stream_info_title', ChannelVod_title);
+            Main_textContent('stream_info_game', ChannelVod_game);
+            Main_innerHTML('stream_live_time', ChannelVod_createdAt + ',' + STR_SPACE + ChannelVod_views);
+            Main_textContent('stream_live_viewers', '');
+            Main_textContent('stream_watching_time', '');
 
             Main_replaceClassEmoji('stream_info_title');
         }
+
+        PlayVod_updateStreamLogo();
 
         if (PlayVod_VodIds['#' + Main_values.ChannelVod_vodId] && !Main_values.vodOffset) {
             Play_HideBufferDialog();
@@ -11870,7 +11589,7 @@
         }
 
         Play_EndSet(2);
-        document.body.removeEventListener("keyup", Main_handleKeyUp);
+        document.body.removeEventListener('keyup', Main_handleKeyUp);
 
         Play_controls[Play_controlsChanelCont].setLable(Main_values.Main_selectedChannelDisplayname);
         Play_controls[Play_controlsGameCont].setLable(Main_values.Play_gameSelected);
@@ -11882,10 +11601,29 @@
         PlayVod_loadingInfoDataTimeout = 10000;
     }
 
+    function PlayVod_updateStreamLogo() {
+        var theUrl = Main_helix_api + 'users?id=' + Main_values.Main_selectedChannel_id;
+
+        BasexmlHttpGet(theUrl, PlayVod_loadingInfoDataTimeout, 2, null, PlayVod_updateStreamLogoValues, noop_fun, false, null, true);
+    }
+
+    function PlayVod_updateStreamLogoValues(responseText) {
+        var response = JSON.parse(responseText);
+
+        if (response.data && response.data.length) {
+            //TODO update this with a API that provides logo and is partner
+            var objData = response.data[0];
+
+            Main_values.Main_selectedChannelPartner = objData.broadcaster_type === 'partner';
+            Play_LoadLogo(Main_getElementById('stream_info_icon'), objData.profile_image_url);
+        }
+
+        PlayVod_updateVodInfo();
+    }
+
     function PlayVod_updateStreamerInfoValues() {
         Play_LoadLogo(document.getElementById('stream_info_icon'), Main_values.Main_selectedChannelLogo);
-        Play_partnerIcon(Main_values.Main_selectedChannelDisplayname, Main_values.Main_selectedChannelPartner, false, ' [' + (ChannelVod_language).toUpperCase() + ']');
-
+        Play_partnerIcon(Main_values.Main_selectedChannelDisplayname, Main_values.Main_selectedChannelPartner, false, ' [' + ChannelVod_language.toUpperCase() + ']');
 
         //The chat init will happens after user click on vod dialog
         if (!PlayVod_VodIds['#' + Main_values.ChannelVod_vodId]) Chat_Init();
@@ -11898,8 +11636,9 @@
     }
 
     function PlayVod_updateVodInfo() {
-        var theUrl = Main_kraken_api + 'videos/' + Main_values.ChannelVod_vodId + Main_TwithcV5Flag_I;
-        BasexmlHttpGet(theUrl, PlayVod_loadingInfoDataTimeout, 2, null, PlayVod_updateVodInfoPannel, PlayVod_updateVodInfoError, false);
+        // https://dev.twitch.tv/docs/api/reference#get-videos
+        var theUrl = Main_helix_api + 'videos?id=' + Main_values.ChannelVod_vodId;
+        BasexmlHttpGet(theUrl, PlayVod_loadingInfoDataTimeout, 2, null, PlayVod_updateVodInfoPannel, PlayVod_updateVodInfoError, false, null, true);
     }
 
     function PlayVod_updateVodInfoError() {
@@ -11913,37 +11652,39 @@
     function PlayVod_updateVodInfoPannel(response) {
         response = JSON.parse(response);
 
-        ChannelVod_title = twemoji.parse(response.title, false, true);
+        if (response.data && response.data.length) {
+            response = response.data[0];
 
-        //TODO add a warning about muted segments
-        //if (response.muted_segments) console.log(response.muted_segments);
+            ChannelVod_title = twemoji.parse(response.title, false, true);
 
-        Main_values.Main_selectedChannelPartner = response.channel.partner;
-        Play_partnerIcon(Main_values.Main_selectedChannelDisplayname, Main_values.Main_selectedChannelPartner, false,
-            '[' + (response.channel.broadcaster_language).toUpperCase() + ']');
+            //TODO add a warning about muted segments
+            //if (response.muted_segments) console.log(response.muted_segments);
 
-        Main_innerHTML("stream_info_title", ChannelVod_title);
-        Main_innerHTML("stream_info_game", (response.game !== "" && response.game !== null ? STR_STARTED + STR_PLAYING +
-            response.game : ""));
+            //Main_values.Main_selectedChannelPartner = response.channel.partner;
+            Play_partnerIcon(Main_values.Main_selectedChannelDisplayname, Main_values.Main_selectedChannelPartner, false, '[' + response.language.toUpperCase() + ']');
 
-        Main_innerHTML("stream_live_time", STR_STREAM_ON + Main_videoCreatedAt(response.created_at) + ',' + STR_SPACE + Main_addCommas(response.views) + STR_VIEWS);
-        Main_textContent("stream_live_viewers", '');
-        Main_textContent("stream_watching_time", '');
+            Main_innerHTML('stream_info_title', ChannelVod_title);
+            //Main_innerHTML('stream_info_game', response.game !== '' && response.game !== null ? STR_STARTED + STR_PLAYING + response.game : '');
 
-        ChannelVod_DurationSeconds = parseInt(response.length);
-        Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
+            Main_innerHTML('stream_live_time', STR_STREAM_ON + Main_videoCreatedAt(response.created_at) + ',' + STR_SPACE + Main_addCommas(response.view_count) + STR_VIEWS);
+            Main_textContent('stream_live_viewers', '');
+            Main_textContent('stream_watching_time', '');
 
-        PlayVod_currentTime = Main_values.vodOffset * 1000;
-        PlayVod_ProgresBarrUpdate(Main_values.vodOffset, ChannelVod_DurationSeconds, true);
+            ChannelVod_DurationSeconds = Play_timeHMS(response.duration);
+            Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
 
-        Main_values.Main_selectedChannelDisplayname = response.channel.display_name;
-        //Main_textContent("stream_info_name", Main_values.Main_selectedChannelDisplayname);
+            PlayVod_currentTime = Main_values.vodOffset * 1000;
+            PlayVod_ProgresBarrUpdate(Main_values.vodOffset, ChannelVod_DurationSeconds, true);
 
-        Main_values.Main_selectedChannelLogo = response.channel.logo;
-        Play_LoadLogo(document.getElementById('stream_info_icon'), Main_values.Main_selectedChannelLogo);
+            Main_values.Main_selectedChannelDisplayname = response.user_name;
+            //Main_textContent("stream_info_name", Main_values.Main_selectedChannelDisplayname);
 
-        Main_values.Main_selectedChannel_id = response.channel._id;
-        Main_values.Main_selectedChannel = response.channel.name;
+            //Main_values.Main_selectedChannelLogo = response.channel.logo;
+            //Play_LoadLogo(document.getElementById('stream_info_icon'), Main_values.Main_selectedChannelLogo);
+
+            Main_values.Main_selectedChannel_id = response.user_id;
+            Main_values.Main_selectedChannel = response.user_login;
+        }
 
         if (AddUser_UserIsSet()) {
             AddCode_PlayRequest = true;
@@ -12012,7 +11753,6 @@
         }
     }
 
-
     function PlayVod_loadData() {
         PlayVod_loadingDataTry = 0;
         PlayVod_loadingDataTimeout = 2000;
@@ -12025,19 +11765,10 @@
 
         var xmlHttp = new XMLHttpRequest();
 
-
         try {
-
             if (state) {
-
-                xmlHttp.open(
-                    "POST",
-                    'https://gql.twitch.tv/gql',
-                    true
-                );
-
+                xmlHttp.open('POST', 'https://gql.twitch.tv/gql', true);
             } else {
-
                 if (!PlayVod_tokenResponse.hasOwnProperty('value') || !PlayVod_tokenResponse.hasOwnProperty('signature')) {
                     Play_410ERROR = true;
                     if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
@@ -12045,28 +11776,26 @@
                     return;
                 }
 
-                theUrl = 'https://usher.ttvnw.net/vod/' + Main_values.ChannelVod_vodId +
-                    '.m3u8?&nauth=' + encodeURIComponent(PlayVod_tokenResponse.value) + '&nauthsig=' + PlayVod_tokenResponse.signature +
+                theUrl =
+                    'https://usher.ttvnw.net/vod/' +
+                    Main_values.ChannelVod_vodId +
+                    '.m3u8?&nauth=' +
+                    encodeURIComponent(PlayVod_tokenResponse.value) +
+                    '&nauthsig=' +
+                    PlayVod_tokenResponse.signature +
                     '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true' +
-                    (Main_vp9supported ? '&preferred_codecs=vp09' : '') + '&p=' + Main_RandomInt();
+                    (Main_vp9supported ? '&preferred_codecs=vp09' : '') +
+                    '&p=' +
+                    Main_RandomInt();
 
-                xmlHttp.open(
-                    "GET",
-                    theUrl,
-                    true
-                );
-
+                xmlHttp.open('GET', theUrl, true);
             }
-
 
             xmlHttp.timeout = Play_loadingDataTimeout;
             if (Play_Headers && Play_Headers.length) {
-
                 var len = Play_Headers.length;
 
-                for (var i = 0; i < len; i++)
-                    xmlHttp.setRequestHeader(Play_Headers[i][0], Play_Headers[i][1]);
-
+                for (var i = 0; i < len; i++) xmlHttp.setRequestHeader(Play_Headers[i][0], Play_Headers[i][1]);
             }
 
             xmlHttp.ontimeout = function() {};
@@ -12086,18 +11815,11 @@
                 }
             };
 
-            xmlHttp.send(
-                state ?
-                Play_vod_token.replace('%x', Main_values.ChannelVod_vodId) :
-                null
-            );
-
+            xmlHttp.send(state ? Play_vod_token.replace('%x', Main_values.ChannelVod_vodId) : null);
         } catch (e) {
-
             PlayVod_loadDataError();
             console.log('PlayVod_loadDataRequest e ' + e);
         }
-
     }
 
     function PlayVod_loadDataError() {
@@ -12105,7 +11827,6 @@
             var mjson;
 
             try {
-
                 if (PlayVod_tokenResponse.value) mjson = JSON.parse(PlayVod_tokenResponse.value);
 
                 if (mjson) {
@@ -12114,7 +11835,6 @@
                         return;
                     }
                 }
-
             } catch (e) {
                 console.log('PlayVod_loadDataError e ' + e);
             }
@@ -12142,11 +11862,8 @@
 
     function PlayVod_loadDataSuccess(responseText) {
         if (PlayVod_state === Play_STATE_LOADING_TOKEN) {
-
             try {
-
                 PlayVod_tokenResponse = JSON.parse(responseText).data.videoPlaybackAccessToken;
-
             } catch (e) {
                 PlayVod_tokenResponse = null;
                 console.log('PlayVod_loadDataSuccess e ' + e);
@@ -12154,7 +11871,6 @@
 
             PlayVod_state = Play_STATE_LOADING_PLAYLIST;
             PlayVod_loadData();
-
         } else if (PlayVod_state === Play_STATE_LOADING_PLAYLIST) {
             PlayVod_playlistResponse = responseText;
             PlayVod_qualities = Play_extractQualities(PlayVod_playlistResponse);
@@ -12211,7 +11927,8 @@
                 PlayVod_qualityIndex = i;
                 PlayVod_playingUrl = PlayVod_qualities[i].url;
                 break;
-            } else if (PlayVod_qualities[i].id.indexOf(PlayVod_quality) !== -1) { //make shore to set a value before break out
+            } else if (PlayVod_qualities[i].id.indexOf(PlayVod_quality) !== -1) {
+                //make shore to set a value before break out
                 PlayVod_qualityIndex = i;
                 PlayVod_playingUrl = PlayVod_qualities[i].url;
             }
@@ -12233,7 +11950,7 @@
             PlayVod_PlayerCheckCount = 0;
             Play_PlayerCheckTimer = PlayVod_Buffer;
             PlayVod_PlayerCheckQualityChanged = true;
-            if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + (new Date()));
+            if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + new Date());
         },
         onbufferingcomplete: function() {
             Play_HideBufferDialog();
@@ -12243,7 +11960,7 @@
             PlayVod_PlayerCheckCount = 0;
             Play_PlayerCheckTimer = PlayVod_Buffer;
             PlayVod_PlayerCheckQualityChanged = true;
-            if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + (new Date()));
+            if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + new Date());
         },
         onbufferingprogress: function(percent) {
             if (percent < 5) PlayVod_PlayerCheckCount = 0;
@@ -12260,7 +11977,7 @@
                 Play_bufferingcomplete = true;
                 // reset the values after using
                 Main_values.vodOffset = 0;
-                if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + (new Date()));
+                if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + new Date());
             }
         },
         oncurrentplaytime: function(currentTime) {
@@ -12270,9 +11987,8 @@
             Play_PannelEndStart(2);
         },
         onerror: function(eventType) {
-            if (!Main_isReleased) console.log('onerror:', 'date: ' + (new Date()) + ' eventType: ' + eventType);
-            if (eventType === "PLAYER_ERROR_CONNECTION_FAILED" || eventType === "PLAYER_ERROR_INVALID_URI")
-                Play_PannelEndStart(2);
+            if (!Main_isReleased) console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
+            if (eventType === 'PLAYER_ERROR_CONNECTION_FAILED' || eventType === 'PLAYER_ERROR_INVALID_URI') Play_PannelEndStart(2);
         }
     };
 
@@ -12280,7 +11996,7 @@
         Play_showBufferDialog();
 
         if (!Main_isReleased) {
-            console.log('PlayVod_onPlayer:', 'date: ' + (new Date()));
+            console.log('PlayVod_onPlayer:', 'date: ' + new Date());
             console.log('PlayVod_onPlayer:', '\n' + '\n"' + PlayVod_playingUrl + '"\n');
         }
 
@@ -12302,37 +12018,38 @@
             }
             PlayVod_replay = false;
 
-            Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_PLAY", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayVod_Buffer);
-            Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_RESUME", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayVod_Buffer);
+            Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_PLAY', 'PLAYER_BUFFER_SIZE_IN_SECOND', PlayVod_Buffer);
+            Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_RESUME', 'PLAYER_BUFFER_SIZE_IN_SECOND', PlayVod_Buffer);
             Play_SetFullScreen(Play_isFullScreen);
             Play_avplay.setListener(PlayVod_listener);
 
-            Play_avplay.prepareAsync(function() { //successCallback
-                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Vod OK:', 'date: ' + (new Date()));
-                Play_avplay.play();
-                ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;
-                Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
-                if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+            Play_avplay.prepareAsync(
+                function() {
+                    //successCallback
+                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Vod OK:', 'date: ' + new Date());
+                    Play_avplay.play();
+                    ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;
+                    Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
+                    if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
 
-                PlayVod_PlayerCheckCount = 0;
-                Play_PlayerCheckTimer = 3 + (PlayVod_Buffer * 2);
-                PlayVod_PlayerCheckQualityChanged = false;
-                window.clearInterval(PlayVod_streamCheckId);
-                PlayVod_streamCheckId = window.setInterval(PlayVod_PlayerCheck, Play_PlayerCheckInterval);
+                    PlayVod_PlayerCheckCount = 0;
+                    Play_PlayerCheckTimer = 3 + PlayVod_Buffer * 2;
+                    PlayVod_PlayerCheckQualityChanged = false;
+                    window.clearInterval(PlayVod_streamCheckId);
+                    PlayVod_streamCheckId = window.setInterval(PlayVod_PlayerCheck, Play_PlayerCheckInterval);
+                },
+                function() {
+                    //errorCallback
 
-            }, function() { //errorCallback
-
-                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Vod NOK:', 'date: ' + (new Date()));
-                Play_onPlayerCounter++;
-                if (Play_onPlayerCounter < 5) PlayVod_onPlayer();
-                else {
-                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Vod fail too mutch exit:', 'date: ' + (new Date()));
-                    Play_EndStart(false, 2);
+                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Vod NOK:', 'date: ' + new Date());
+                    Play_onPlayerCounter++;
+                    if (Play_onPlayerCounter < 5) PlayVod_onPlayer();
+                    else {
+                        if (!Main_isReleased) console.log('Play_avplay.prepareAsync Vod fail too mutch exit:', 'date: ' + new Date());
+                        Play_EndStart(false, 2);
+                    }
                 }
-
-            });
-
-
+            );
         }
     }
 
@@ -12340,11 +12057,8 @@
         if (PlayVod_isOn && PlayVod_PlayerTime === PlayVod_currentTime && Play_isIdleOrPlaying()) {
             PlayVod_PlayerCheckCount++;
             if (PlayVod_PlayerCheckCount > Play_PlayerCheckTimer) {
-
                 //Don't change the first time only retry, and don't change if in Auto mode
-                if (PlayVod_PlayerCheckQualityChanged && PlayVod_PlayerCheckRun &&
-                    (PlayVod_qualityIndex < PlayVod_getQualitiesCount() - 1) && (PlayVod_quality.indexOf("Auto") === -1))
-                    PlayVod_qualityIndex++;
+                if (PlayVod_PlayerCheckQualityChanged && PlayVod_PlayerCheckRun && PlayVod_qualityIndex < PlayVod_getQualitiesCount() - 1 && PlayVod_quality.indexOf('Auto') === -1) PlayVod_qualityIndex++;
                 else if (!PlayVod_PlayerCheckQualityChanged && PlayVod_PlayerCheckRun) PlayVod_PlayerCheckCounter++;
 
                 if (!navigator.onLine) Play_EndStart(false, 2);
@@ -12355,7 +12069,6 @@
                     PlayVod_qualityChanged();
                     PlayVod_PlayerCheckRun = true;
                 }
-
             } // else we try for too long let the listener onerror catch it
         } else {
             PlayVod_PlayerCheckCounter = 0;
@@ -12372,8 +12085,7 @@
         if (!Play_IsWarning && Play_WarningDialogVisible()) Play_HideWarningDialog();
         if (PlayVod_bufferingcomplete && Play_BufferDialogVisible()) Play_HideBufferDialog();
 
-        if (Play_isPanelShown() && !Play_BufferDialogVisible())
-            PlayVod_ProgresBarrUpdate((PlayVod_currentTime / 1000), ChannelVod_DurationSeconds, !PlayVod_IsJumping);
+        if (Play_isPanelShown() && !Play_BufferDialogVisible()) PlayVod_ProgresBarrUpdate(PlayVod_currentTime / 1000, ChannelVod_DurationSeconds, !PlayVod_IsJumping);
     }
 
     function PlayVod_DropOneQuality(ConnectionDrop) {
@@ -12416,7 +12128,7 @@
     }
 
     function PlayVod_ClearVod() {
-        document.body.removeEventListener("keydown", PlayVod_handleKeyDown);
+        document.body.removeEventListener('keydown', PlayVod_handleKeyDown);
         document.removeEventListener('visibilitychange', PlayVod_Resume);
         Main_values.vodOffset = 0;
         window.clearInterval(PlayVod_streamInfoTimerId);
@@ -12430,14 +12142,14 @@
         PlayVod_addToJump = 0;
         Play_clearHidePanel();
         Play_ForceHidePannel();
-        PlayVod_ProgresBarrUpdate((PlayVod_currentTime / 1000), ChannelVod_DurationSeconds, true);
+        PlayVod_ProgresBarrUpdate(PlayVod_currentTime / 1000, ChannelVod_DurationSeconds, true);
         Main_innerHTML('progress_bar_jump_to', STR_SPACE);
         document.getElementById('progress_bar_steps').style.display = 'none';
         PlayVod_quality = PlayVod_qualityPlaying;
     }
 
     function PlayVod_showPanel(autoHide) {
-        PlayVod_ProgresBarrUpdate((PlayVod_currentTime / 1000), ChannelVod_DurationSeconds, true);
+        PlayVod_ProgresBarrUpdate(PlayVod_currentTime / 1000, ChannelVod_DurationSeconds, true);
         Play_clock();
         Play_CleanHideExit();
         if (autoHide) {
@@ -12467,26 +12179,32 @@
         Main_RemoveClass('back_button', 'progress_bar_div_focus');
         Main_RemoveClass('progress_bar_div', 'progress_bar_div_focus');
 
-        if (!PlayVod_PanelY) { //progress_bar
+        if (!PlayVod_PanelY) {
+            //progress_bar
             Main_AddClass('progress_bar_div', 'progress_bar_div_focus');
             Play_IconsRemoveFocus();
             if (PlayVod_addToJump) {
                 PlayVod_jumpTime();
                 document.getElementById('progress_bar_steps').style.display = 'inline-block';
             }
-        } else if (PlayVod_PanelY === 1) { //pause/next/back buttons
-            if (!PlayClip_EnterPos) { //pause
+        } else if (PlayVod_PanelY === 1) {
+            //pause/next/back buttons
+            if (!PlayClip_EnterPos) {
+                //pause
                 Main_AddClass('pause_button', 'progress_bar_div_focus');
-            } else if (PlayClip_EnterPos === 1) { //next
+            } else if (PlayClip_EnterPos === 1) {
+                //next
                 Main_AddClass('next_button', 'progress_bar_div_focus');
-            } else if (PlayClip_EnterPos === -1) { //back
+            } else if (PlayClip_EnterPos === -1) {
+                //back
                 Main_AddClass('back_button', 'progress_bar_div_focus');
             }
 
             Play_IconsRemoveFocus();
             Main_innerHTML('progress_bar_jump_to', STR_SPACE);
             document.getElementById('progress_bar_steps').style.display = 'none';
-        } else if (PlayVod_PanelY === 2) { //botton icons
+        } else if (PlayVod_PanelY === 2) {
+            //botton icons
             Play_IconsAddFocus();
             Main_innerHTML('progress_bar_jump_to', STR_SPACE);
             document.getElementById('progress_bar_steps').style.display = 'none';
@@ -12503,7 +12221,8 @@
             if (PlayVod_qualities[i].id === PlayVod_quality) {
                 PlayVod_qualityIndex = i;
                 break;
-            } else if (PlayVod_qualities[i].id.indexOf(PlayVod_quality) !== -1) { //make shore to set a value before break out
+            } else if (PlayVod_qualities[i].id.indexOf(PlayVod_quality) !== -1) {
+                //make shore to set a value before break out
                 PlayVod_qualityIndex = i;
             }
         }
@@ -12511,17 +12230,17 @@
 
     function PlayVod_qualityDisplay() {
         if (PlayVod_getQualitiesCount() === 1) {
-            document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "0";
-            document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "0";
+            document.getElementById('control_arrow_up_' + Play_controlsQuality).style.opacity = '0';
+            document.getElementById('control_arrow_down' + Play_controlsQuality).style.opacity = '0';
         } else if (!PlayVod_qualityIndex) {
-            document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "0.2";
-            document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "1";
+            document.getElementById('control_arrow_up_' + Play_controlsQuality).style.opacity = '0.2';
+            document.getElementById('control_arrow_down' + Play_controlsQuality).style.opacity = '1';
         } else if (PlayVod_qualityIndex === PlayVod_getQualitiesCount() - 1) {
-            document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "1";
-            document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "0.2";
+            document.getElementById('control_arrow_up_' + Play_controlsQuality).style.opacity = '1';
+            document.getElementById('control_arrow_down' + Play_controlsQuality).style.opacity = '0.2';
         } else {
-            document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "1";
-            document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "1";
+            document.getElementById('control_arrow_up_' + Play_controlsQuality).style.opacity = '1';
+            document.getElementById('control_arrow_down' + Play_controlsQuality).style.opacity = '1';
         }
 
         PlayVod_SetHtmlQuality('controls_name_' + Play_controlsQuality);
@@ -12533,7 +12252,7 @@
         PlayVod_quality = PlayVod_qualities[PlayVod_qualityIndex].id;
 
         var quality_string = '';
-        if (PlayVod_quality.indexOf('source') !== -1) quality_string = PlayVod_quality.replace("source", STR_SOURCE);
+        if (PlayVod_quality.indexOf('source') !== -1) quality_string = PlayVod_quality.replace('source', STR_SOURCE);
         else quality_string = PlayVod_quality;
 
         quality_string += PlayVod_qualities[PlayVod_qualityIndex].band + PlayVod_qualities[PlayVod_qualityIndex].codec;
@@ -12547,7 +12266,7 @@
 
     function PlayVod_ProgresBarrUpdate(current_time_seconds, duration_seconds, update_bar) {
         Main_textContent('progress_bar_current_time', Play_timeS(current_time_seconds));
-        if (update_bar) Play_ProgresBarrElm.style.width = ((current_time_seconds / duration_seconds) * 100) + '%';
+        if (update_bar) Play_ProgresBarrElm.style.width = (current_time_seconds / duration_seconds) * 100 + '%';
     }
 
     function PlayVod_jump() {
@@ -12566,7 +12285,7 @@
             if (Play_isIdleOrPlaying()) Play_avplay.pause();
 
             try {
-                Play_avplay.seekTo((PlayVod_TimeToJump > 0) ? (PlayVod_TimeToJump * 1000) : 0);
+                Play_avplay.seekTo(PlayVod_TimeToJump > 0 ? PlayVod_TimeToJump * 1000 : 0);
             } catch (e) {
                 Play_HideWarningDialog();
                 console.log('PlayVod_jump ' + e);
@@ -12585,7 +12304,6 @@
 
             if (PlayClip_HasVOD) Chat_Init();
             if (!Play_isIdleOrPlaying()) Play_avplay.play();
-
         }
         Main_innerHTML('progress_bar_jump_to', STR_SPACE);
         document.getElementById('progress_bar_steps').style.display = 'none';
@@ -12604,12 +12322,9 @@
 
     function PlayVod_jumpSteps(duration_seconds) {
         if (PlayVod_addToJump && !PlayVod_PanelY) document.getElementById('progress_bar_steps').style.display = 'inline-block';
-        if (Math.abs(duration_seconds) > 60)
-            Main_textContent('progress_bar_steps', STR_JUMPING_STEP + (duration_seconds / 60) + STR_MINUTES);
-        else if (duration_seconds)
-            Main_textContent('progress_bar_steps', STR_JUMPING_STEP + duration_seconds + STR_SECONDS);
-        else
-            Main_textContent('progress_bar_steps', STR_JUMPING_STEP + Play_DefaultjumpTimers[1] + STR_SECONDS);
+        if (Math.abs(duration_seconds) > 60) Main_textContent('progress_bar_steps', STR_JUMPING_STEP + duration_seconds / 60 + STR_MINUTES);
+        else if (duration_seconds) Main_textContent('progress_bar_steps', STR_JUMPING_STEP + duration_seconds + STR_SECONDS);
+        else Main_textContent('progress_bar_steps', STR_JUMPING_STEP + Play_DefaultjumpTimers[1] + STR_SECONDS);
     }
 
     function PlayVod_jumpTime() {
@@ -12617,12 +12332,12 @@
     }
 
     function PlayVod_jumpStart(multiplier, duration_seconds) {
-        var currentTime = Main_IsNotBrowser ? (Play_avplay.getCurrentTime() / 1000) : 0;
+        var currentTime = Main_IsNotBrowser ? Play_avplay.getCurrentTime() / 1000 : 0;
 
         window.clearTimeout(PlayVod_SizeClearID);
         PlayVod_IsJumping = true;
 
-        if (PlayVod_jumpCount < (Play_DefaultjumpTimers.length - 1) && (PlayVod_StepsCount++ % 6) === 0) PlayVod_jumpCount++;
+        if (PlayVod_jumpCount < Play_DefaultjumpTimers.length - 1 && PlayVod_StepsCount++ % 6 === 0) PlayVod_jumpCount++;
 
         PlayVod_addToJump += Play_DefaultjumpTimers[PlayVod_jumpCount] * multiplier;
         PlayVod_TimeToJump = currentTime + PlayVod_addToJump;
@@ -12643,7 +12358,7 @@
         }
 
         PlayVod_jumpTime();
-        Play_ProgresBarrElm.style.width = ((PlayVod_TimeToJump / duration_seconds) * 100) + '%';
+        Play_ProgresBarrElm.style.width = (PlayVod_TimeToJump / duration_seconds) * 100 + '%';
         PlayVod_jumpSteps(Play_DefaultjumpTimers[PlayVod_jumpCount] * multiplier);
 
         PlayVod_SizeClearID = window.setTimeout(PlayVod_SizeClear, 1000);
@@ -12654,16 +12369,15 @@
 
         var vod_id = '#' + Main_values.ChannelVod_vodId; // prevent only numeric key, that makes the obj be shorted
 
-        if (time > 300 && time < (ChannelVod_DurationSeconds - 300)) { //time too small don't save
+        if (time > 300 && time < ChannelVod_DurationSeconds - 300) {
+            //time too small don't save
 
             //delete before save to add this to the end, and prevent loose it in restorevodids
             if (PlayVod_VodIds[vod_id]) delete PlayVod_VodIds[vod_id];
 
             PlayVod_VodIds[vod_id] = time;
             Main_setItem('PlayVod_VodIds', JSON.stringify(PlayVod_VodIds));
-
-        } else if (time > (ChannelVod_DurationSeconds - 300) && PlayVod_VodIds[vod_id]) {
-
+        } else if (time > ChannelVod_DurationSeconds - 300 && PlayVod_VodIds[vod_id]) {
             //if ended or almost delete
             delete PlayVod_VodIds[vod_id];
 
@@ -12701,7 +12415,7 @@
         Main_HideElement('controls_holder');
         PlayVod_showPanel(false);
         Main_textContent('stream_quality', '');
-        Main_innerHTML("dialog_vod_saved_text", STR_FROM + Play_timeMs(PlayVod_VodIds['#' + Main_values.ChannelVod_vodId] * 1000));
+        Main_innerHTML('dialog_vod_saved_text', STR_FROM + Play_timeMs(PlayVod_VodIds['#' + Main_values.ChannelVod_vodId] * 1000));
         Main_ShowElement('dialog_vod_start');
     }
 
@@ -12811,7 +12525,7 @@
                     break;
                 case KEY_RIGHT:
                     if (UserLiveFeed_isFeedShow() && (!Play_EndFocus || !Play_isEndDialogVisible())) {
-                        if (Play_FeedPos < (UserLiveFeed_GetSize() - 1) && !UserLiveFeed_loadingData) {
+                        if (Play_FeedPos < UserLiveFeed_GetSize() - 1 && !UserLiveFeed_loadingData) {
                             UserLiveFeed_FeedRemoveFocus();
                             Play_FeedPos++;
                             UserLiveFeed_FeedAddFocus();
@@ -12849,8 +12563,8 @@
                 case KEY_UP:
                     if (Play_isEndDialogVisible()) {
                         Play_EndTextClear();
-                        document.body.removeEventListener("keydown", PlayVod_handleKeyDown, false);
-                        document.body.addEventListener("keyup", Play_handleKeyUp, false);
+                        document.body.removeEventListener('keydown', PlayVod_handleKeyDown, false);
+                        document.body.addEventListener('keyup', Play_handleKeyUp, false);
                         Play_EndUpclear = false;
                         Play_EndUpclearCalback = PlayVod_handleKeyDown;
                         Play_EndUpclearID = window.setTimeout(Play_keyUpEnd, 250);
@@ -13026,7 +12740,8 @@
 
     //TODO cleanup not used when finished migrate all
     function Screens_ScreenIds(base) {
-        return [base + '_thumbdiv',
+        return [
+            base + '_thumbdiv',
             base + '_img',
             base + '_infodiv',
             base + '_title',
@@ -13047,13 +12762,10 @@
             i = 0,
             j;
         for (i; i < arguments.length; i += 1) {
-
             var obj = arguments[i],
                 keys = Object.keys(obj);
 
-            for (j = 0; j < keys.length; j += 1)
-                ret[keys[j]] = obj[keys[j]];
-
+            for (j = 0; j < keys.length; j += 1) ret[keys[j]] = obj[keys[j]];
         }
         return ret;
     }
@@ -13065,7 +12777,7 @@
         Main_values.Main_Go = inUseObj.screen;
         inUseObj.label_init();
 
-        document.body.addEventListener("keydown", Screens_handleKeyDown, false);
+        document.body.addEventListener('keydown', Screens_handleKeyDown, false);
         Main_ShowElement(inUseObj.ids[10]);
 
         if (inUseObj.status) {
@@ -13078,7 +12790,7 @@
     function Screens_exit() {
         Main_addFocusVideoOffset = 0;
         if (inUseObj.label_exit) inUseObj.label_exit();
-        document.body.removeEventListener("keydown", Screens_handleKeyDown);
+        document.body.removeEventListener('keydown', Screens_handleKeyDown);
         Main_HideElement(inUseObj.ids[10]);
         Main_HideWarningDialog();
         Screens_ClearAnimation();
@@ -13128,10 +12840,19 @@
 
     function Screens_loadDataRequest() {
         inUseObj.set_url();
-        if (inUseObj.use_hls)
-            BasexmlHttpGetBack(inUseObj.url + Main_TwithcV5Flag, inUseObj.loadingDataTimeout, inUseObj.HeaderQuatity, inUseObj.token, Screens_concatenate, Screens_loadDataError);
+        if (inUseObj.use_hls) BasexmlHttpGetBack(inUseObj.url + Main_TwithcV5Flag, inUseObj.loadingDataTimeout, inUseObj.HeaderQuatity, inUseObj.token, Screens_concatenate, Screens_loadDataError);
         else
-            BasexmlHttpGet(inUseObj.url + (inUseObj.use_helix ? '' : Main_TwithcV5Flag), inUseObj.loadingDataTimeout, inUseObj.HeaderQuatity, inUseObj.token, Screens_concatenate, Screens_loadDataError, null, null, inUseObj.use_helix);
+            BasexmlHttpGet(
+                inUseObj.url + (inUseObj.use_helix ? '' : Main_TwithcV5Flag),
+                inUseObj.loadingDataTimeout,
+                inUseObj.HeaderQuatity,
+                inUseObj.token,
+                Screens_concatenate,
+                Screens_loadDataError,
+                null,
+                null,
+                inUseObj.use_helix
+            );
     }
 
     function Screens_loadDataError() {
@@ -13146,7 +12867,6 @@
         inUseObj.loadingData = false;
 
         if (!inUseObj.itemsCount) {
-
             Sidepannel_SetTopOpacity(Main_values.Main_Go);
             inUseObj.FirstLoad = false;
             Main_HideLoadDialog();
@@ -13155,13 +12875,10 @@
             Main_ShowElement('side_panel_new_holder');
 
             if (inUseObj.HasSwitches) {
-
                 inUseObj.emptyContent = true;
                 inUseObj.addSwitches();
                 Screens_loadDataSuccessFinish();
-
             } else inUseObj.key_exit();
-
         } else inUseObj.dataEnded = true;
     }
 
@@ -13170,7 +12887,7 @@
     }
 
     function Screens_loadDataSuccess() {
-        var response_items = (inUseObj.data.length - inUseObj.data_cursor);
+        var response_items = inUseObj.data.length - inUseObj.data_cursor;
 
         //Use appendDiv only if is the intention to add on it run of loadDataSuccess to the row less content then ColoumnsCount,
         //with will make the row not be full, intentionally to add more in a new run of loadDataSuccess to that same row
@@ -13186,7 +12903,6 @@
         if (inUseObj.HasSwitches && !inUseObj.TopRowCreated) inUseObj.addSwitches();
 
         if (response_items) {
-
             if (!inUseObj.row_id) {
                 inUseObj.row = document.createElement('div');
                 if (inUseObj.rowClass) inUseObj.row.classList.add(inUseObj.rowClass);
@@ -13198,7 +12914,6 @@
             var max_row = inUseObj.row_id + response_rows;
 
             for (inUseObj.row_id; inUseObj.row_id < max_row;) {
-
                 if (inUseObj.coloumn_id === inUseObj.ColoumnsCount) {
                     inUseObj.row = document.createElement('div');
                     if (inUseObj.rowClass) inUseObj.row.classList.add(inUseObj.rowClass);
@@ -13208,7 +12923,10 @@
 
                 for (inUseObj.coloumn_id; inUseObj.coloumn_id < inUseObj.ColoumnsCount && inUseObj.data_cursor < inUseObj.data.length; inUseObj.data_cursor++) {
                     //TODO understand and fix before the code reaches this point way a cell is undefined some times
-                    if (inUseObj.data[inUseObj.data_cursor]) inUseObj.addCell(inUseObj.data[inUseObj.data_cursor]);
+
+                    if (inUseObj.data[inUseObj.data_cursor]) {
+                        inUseObj.addCell(inUseObj.data[inUseObj.data_cursor]);
+                    }
                 }
 
                 //doc.appendChild(inUseObj.row);
@@ -13241,75 +12959,176 @@
         return Screens_createCell(
             idArray[8] + id,
             valuesArray,
-            '<div id="' + idArray[0] + id + '" class="stream_thumbnail_channel" ><div class="stream_thumbnail_channel_img"><img id="' + idArray[1] +
-            id + '" alt="" class="stream_img" src="' + valuesArray[2] +
-            '" onerror="this.onerror=null;this.src=\'' + inUseObj.img_404 + '\'"></div>' +
-            '<div id="' + idArray[2] + id + '" class="stream_thumbnail_channel_text_holder">' +
-            '<div id="' + idArray[3] + id + '" class="stream_info_channel_name">' + valuesArray[3] +
-            (valuesArray[4] ? STR_SPACE + STR_SPACE +
-                '</div><div class="stream_info_channel_partner_icon"><img style="width: 2ch;" alt="" src="' +
-                IMG_PARTNER + '">' : "") + '</div></div></div>');
+            '<div id="' +
+            idArray[0] +
+            id +
+            '" class="stream_thumbnail_channel" ><div class="stream_thumbnail_channel_img"><img id="' +
+            idArray[1] +
+            id +
+            '" alt="" class="stream_img" src="' +
+            valuesArray[2] +
+            '" onerror="this.onerror=null;this.src=\'' +
+            inUseObj.img_404 +
+            '\'"></div>' +
+            '<div id="' +
+            idArray[2] +
+            id +
+            '" class="stream_thumbnail_channel_text_holder">' +
+            '<div id="' +
+            idArray[3] +
+            id +
+            '" class="stream_info_channel_name">' +
+            valuesArray[3] +
+            (valuesArray[4] ? STR_SPACE + STR_SPACE + '</div><div class="stream_info_channel_partner_icon"><img style="width: 2ch;" alt="" src="' + IMG_PARTNER + '">' : '') +
+            '</div></div></div>'
+        );
     }
 
     function Screens_createCellGame(id, idArray, valuesArray) {
         return Screens_createCell(
             idArray[5] + id,
             valuesArray,
-            '<div id="' + idArray[0] + id + '" class="stream_thumbnail_game"><div class="stream_thumbnail_live_game"><img id="' +
-            idArray[1] + id + '" class="stream_img" alt="" src="' + valuesArray[0] +
-            '" onerror="this.onerror=null;this.src=\'' + inUseObj.img_404 + '\'"></div><div id="' +
-            idArray[2] + id +
+            '<div id="' +
+            idArray[0] +
+            id +
+            '" class="stream_thumbnail_game"><div class="stream_thumbnail_live_game"><img id="' +
+            idArray[1] +
+            id +
+            '" class="stream_img" alt="" src="' +
+            valuesArray[0] +
+            '" onerror="this.onerror=null;this.src=\'' +
+            inUseObj.img_404 +
+            '\'"></div><div id="' +
+            idArray[2] +
+            id +
             '" class="stream_thumbnail_game_text_holder"><div class="stream_text_holder"><div id="<div id="' +
-            idArray[3] + id + '" class="stream_info_game_name">' + valuesArray[1] + '</div>' +
-            (valuesArray[2] !== '' ? '<div id="' + idArray[4] + id +
-                '"class="stream_info_live" style="width: 100%; display: inline-block;">' + valuesArray[2] +
-                '</div>' : '') + '</div></div></div>');
+            idArray[3] +
+            id +
+            '" class="stream_info_game_name">' +
+            valuesArray[1] +
+            '</div>' +
+            (valuesArray[2] !== '' ? '<div id="' + idArray[4] + id + '"class="stream_info_live" style="width: 100%; display: inline-block;">' + valuesArray[2] + '</div>' : '') +
+            '</div></div></div>'
+        );
     }
 
     function Screens_createCellClip(id, idArray, valuesArray) {
-        var playing = (valuesArray[2] !== "" ? STR_PLAYING + valuesArray[2] : "");
+        var playing = valuesArray[2] !== '' ? STR_PLAYING + valuesArray[2] : '';
 
         return Screens_createCell(
             idArray[8] + id,
             valuesArray,
-            '<div id="' + idArray[0] + id + '" class="stream_thumbnail_live"><div class="stream_thumbnail_live_img"><img id="' +
-            idArray[1] + id + '" class="stream_img" alt="" src="' + valuesArray[13] +
-            '" onerror="this.onerror=null;this.src=\'' + inUseObj.img_404 + '\'"></div><div id="' +
-            idArray[2] + id +
+            '<div id="' +
+            idArray[0] +
+            id +
+            '" class="stream_thumbnail_live"><div class="stream_thumbnail_live_img"><img id="' +
+            idArray[1] +
+            id +
+            '" class="stream_img" alt="" src="' +
+            valuesArray[13] +
+            '" onerror="this.onerror=null;this.src=\'' +
+            inUseObj.img_404 +
+            '\'"></div><div id="' +
+            idArray[2] +
+            id +
             '" class="stream_thumbnail_live_text_holder"><div class="stream_text_holder"><div style="line-height: 1.6ch;"><div id="' +
-            idArray[3] + id + '" class="stream_info_live_name" style="width: 72%; display: inline-block;">' +
-            valuesArray[4] + '</div><div id="' + idArray[7] + id +
+            idArray[3] +
+            id +
+            '" class="stream_info_live_name" style="width: 72%; display: inline-block;">' +
+            valuesArray[4] +
+            '</div><div id="' +
+            idArray[7] +
+            id +
             '"class="stream_info_live" style="width:27%; float: right; text-align: right; display: inline-block;">' +
-            valuesArray[10] + '</div></div><div id="' + idArray[11] + id + '"class="stream_info_live_title">' +
-            valuesArray[9] + '</div>' +
-            '<div id="' + idArray[4] + id + '"class="stream_info_live">' + playing + '</div>' +
-            '<div style="line-height: 1.3ch;"><div id="' + idArray[6] + id +
-            '"class="stream_info_live" style="width: auto; display: inline-block;">' + valuesArray[11] + ',' + STR_SPACE +
-            valuesArray[12] + '</div><div id="' + idArray[5] + id +
+            valuesArray[10] +
+            '</div></div><div id="' +
+            idArray[11] +
+            id +
+            '"class="stream_info_live_title">' +
+            valuesArray[9] +
+            '</div>' +
+            '<div id="' +
+            idArray[4] +
+            id +
+            '"class="stream_info_live">' +
+            playing +
+            '</div>' +
+            '<div style="line-height: 1.3ch;"><div id="' +
+            idArray[6] +
+            id +
+            '"class="stream_info_live" style="width: auto; display: inline-block;">' +
+            valuesArray[11] +
+            ',' +
+            STR_SPACE +
+            valuesArray[12] +
+            '</div><div id="' +
+            idArray[5] +
+            id +
             '"class="stream_info_live" style="width: 6ch; display: inline-block; float: right; text-align: right;">' +
-            Play_timeS(valuesArray[1]) + '</div></div></div></div></div></div>');
+            Play_timeS(valuesArray[1]) +
+            '</div></div></div></div></div></div>'
+        );
     }
 
     function Screens_createCellVod(id, idArray, valuesArray) {
         return Screens_createCell(
             idArray[8] + id,
             valuesArray,
-            '<div id="' + idArray[0] + id + '" class="stream_thumbnail_live"><div id="' + idArray[6] + id + '" class="stream_thumbnail_live_img" ' +
+            '<div id="' +
+            idArray[0] +
+            id +
+            '" class="stream_thumbnail_live"><div id="' +
+            idArray[6] +
+            id +
+            '" class="stream_thumbnail_live_img" ' +
             (valuesArray[7] ? ' style="width: 100%; padding-bottom: 56.25%; background-size: 0 0; background-image: url(' + valuesArray[7] + ');"' : '') +
-            '><img id="' + idArray[1] + id + '" class="stream_img" alt="" src="' + valuesArray[0] +
-            '" onerror="this.onerror=null;this.src=\'' + inUseObj.img_404 + '\'"></div><div id="' +
-            idArray[2] + id +
+            '><img id="' +
+            idArray[1] +
+            id +
+            '" class="stream_img" alt="" src="' +
+            valuesArray[0] +
+            '" onerror="this.onerror=null;this.src=\'' +
+            inUseObj.img_404 +
+            '\'"></div><div id="' +
+            idArray[2] +
+            id +
             '" class="stream_thumbnail_live_text_holder"><div class="stream_text_holder"><div style="line-height: 1.6ch;"><div id="' +
-            idArray[3] + id + '" class="stream_info_live_name" style="width: 72%; display: inline-block;">' +
-            valuesArray[1] + '</div><div id="' + idArray[7] + id +
-            '"class="stream_info_live" style="width:27%; float: right; text-align: right; display: inline-block;">' + valuesArray[5] +
-            '</div></div><div id="' + idArray[11] + id + '"class="stream_info_live_title">' + valuesArray[3] + '</div>' +
-            '<div id="' + idArray[9] + id + '"class="stream_info_live">' +
-            (valuesArray[10] !== "" && valuesArray[10] !== null ? STR_STARTED + STR_PLAYING + valuesArray[10] : "") + '</div>' +
-            '<div style="line-height: 1.3ch;"><div id="' + idArray[4] + id + '"class="stream_info_live" style="width: auto; display: inline-block;">' +
-            valuesArray[2] + ',' + STR_SPACE + valuesArray[4] + '</div><div id="' + idArray[5] + id +
-            '"class="stream_info_live" style="width: 9ch; display: inline-block; float: right; text-align: right;">' +
-            Play_timeS(valuesArray[6]) + '</div></div></div></div></div>');
+            idArray[3] +
+            id +
+            '" class="stream_info_live_name" style="width: 72%; display: inline-block;">' +
+            valuesArray[1] +
+            '</div><div id="' +
+            idArray[7] +
+            id +
+            '"class="stream_info_live" style="width:27%; float: right; text-align: right; display: inline-block;">' +
+            valuesArray[5] +
+            '</div></div><div id="' +
+            idArray[11] +
+            id +
+            '"class="stream_info_live_title">' +
+            valuesArray[3] +
+            '</div>' +
+            '<div id="' +
+            idArray[9] +
+            id +
+            '"class="stream_info_live">' +
+            (valuesArray[10] !== '' && valuesArray[10] ? STR_STARTED + STR_PLAYING + valuesArray[10] : '') +
+            '</div>' +
+            '<div style="line-height: 1.3ch;"><div id="' +
+            idArray[4] +
+            id +
+            '"class="stream_info_live" style="width: auto; display: inline-block;">' +
+            valuesArray[2] +
+            ',' +
+            STR_SPACE +
+            valuesArray[4] +
+            '</div><div id="' +
+            idArray[5] +
+            id +
+            '"class="stream_info_live" style="width: 12ch; display: inline-block; float: right; text-align: right;">' +
+            valuesArray[6] +
+            '</div></div></div></div></div>'
+        );
     }
 
     function Screens_createCellLive(id, data, idArray, valuesArray) {
@@ -13318,32 +13137,68 @@
         return Screens_createCell(
             idArray[8] + id,
             data,
-            '<div id="' + idArray[0] + id + '" class="stream_thumbnail_live"><div class="stream_thumbnail_live_img"><img id="' +
-            idArray[1] + id + '" class="stream_img" alt="" src="' + valuesArray[0] + Main_randomimg +
-            '" onerror="this.onerror=null;this.src=\'' + inUseObj.img_404 + '\'"></div><div id="' +
-            idArray[2] + id +
+            '<div id="' +
+            idArray[0] +
+            id +
+            '" class="stream_thumbnail_live"><div class="stream_thumbnail_live_img"><img id="' +
+            idArray[1] +
+            id +
+            '" class="stream_img" alt="" src="' +
+            valuesArray[0] +
+            Main_randomimg +
+            '" onerror="this.onerror=null;this.src=\'' +
+            inUseObj.img_404 +
+            '\'"></div><div id="' +
+            idArray[2] +
+            id +
             '" class="stream_thumbnail_live_text_holder"><div class="stream_text_holder"><div style="line-height: 1.6ch;"><div id="' +
-            idArray[3] + id + '" class="stream_info_live_name" style="width:' + (ishosting ? 99 : 66) + '%; display: inline-block;">' +
-            '<i class="icon-' + (data[2] ? 'refresh' : 'circle') + ' live_icon strokedeline" style="color: ' +
+            idArray[3] +
+            id +
+            '" class="stream_info_live_name" style="width:' +
+            (ishosting ? 99 : 66) +
+            '%; display: inline-block;">' +
+            '<i class="icon-' +
+            (data[2] ? 'refresh' : 'circle') +
+            ' live_icon strokedeline" style="color: ' +
             (data[2] ? '#FFFFFF' : ishosting ? '#FED000' : 'red') +
-            ';"></i> ' + valuesArray[1] + '</div><div id="' + idArray[7] + id +
-            '"class="stream_info_live" style="width:' + (ishosting ? 0 : 33) + '%; float: right; text-align: right; display: inline-block;">' +
-            valuesArray[5] + '</div></div>' +
-            '<div id="' + idArray[4] + id + '"class="stream_info_live_title">' + twemoji.parse(valuesArray[2]) + '</div>' +
-            '<div id="' + idArray[5] + id + '"class="stream_info_live">' + (valuesArray[3] !== "" ? STR_PLAYING + valuesArray[3] : "") +
-            '</div>' + '<div id="' + idArray[6] + id + '"class="stream_info_live">' + valuesArray[4] + '</div></div></div></div>');
+            ';"></i> ' +
+            valuesArray[1] +
+            '</div><div id="' +
+            idArray[7] +
+            id +
+            '"class="stream_info_live" style="width:' +
+            (ishosting ? 0 : 33) +
+            '%; float: right; text-align: right; display: inline-block;">' +
+            valuesArray[5] +
+            '</div></div>' +
+            '<div id="' +
+            idArray[4] +
+            id +
+            '"class="stream_info_live_title">' +
+            twemoji.parse(valuesArray[2]) +
+            '</div>' +
+            '<div id="' +
+            idArray[5] +
+            id +
+            '"class="stream_info_live">' +
+            (valuesArray[3] !== '' ? STR_PLAYING + valuesArray[3] : '') +
+            '</div>' +
+            '<div id="' +
+            idArray[6] +
+            id +
+            '"class="stream_info_live">' +
+            valuesArray[4] +
+            '</div></div></div></div>'
+        );
     }
 
     function Screens_loadDataSuccessFinish() {
         if (!inUseObj.status) {
-
             if (inUseObj.emptyContent) Main_showWarningDialog(inUseObj.empty_str());
             else {
                 inUseObj.status = true;
                 var doc = document.getElementById(inUseObj.table);
-                for (var i = 0; i < (inUseObj.Cells.length < inUseObj.visiblerows ? inUseObj.Cells.length : inUseObj.visiblerows); i++)
-                    doc.appendChild(inUseObj.Cells[i]);
-
+                for (var i = 0; i < (inUseObj.Cells.length < inUseObj.visiblerows ? inUseObj.Cells.length : inUseObj.visiblerows); i++) doc.appendChild(inUseObj.Cells[i]);
             }
             inUseObj.FirstLoad = false;
             //TODO improve this check
@@ -13361,7 +13216,6 @@
                 Main_values.warning_new_api2 = false;
 
                 if (Settings_value.restor_playback.defaultValue && Main_values.Play_WasPlaying && inUseObj.status) {
-
                     Main_ExitCurrent(Main_values.Main_Go);
                     Main_values.Main_Go = Main_GoBefore;
                     if (!Main_values.vodOffset) Main_values.vodOffset = 1;
@@ -13379,8 +13233,7 @@
                         }, 2000);
                         Screens_loadDataSuccessFinishEnd();
                     });
-                } else if (Main_GoBefore !== Main_Live && Main_GoBefore !== Main_addUser &&
-                    Main_GoBefore !== Main_Search) {
+                } else if (Main_GoBefore !== Main_Live && Main_GoBefore !== Main_addUser && Main_GoBefore !== Main_Search) {
                     Main_HideElement(inUseObj.ids[10]);
                     Main_ready(function() {
                         Main_ExitCurrent(Main_values.Main_Go);
@@ -13424,8 +13277,8 @@
             case KEY_RETURN:
                 Main_HideControlsDialog();
                 Main_HideAboutDialog();
-                document.body.addEventListener("keydown", Screens_handleKeyDown, false);
-                document.body.removeEventListener("keydown", Screens_handleKeyControls);
+                document.body.addEventListener('keydown', Screens_handleKeyDown, false);
+                document.body.removeEventListener('keydown', Screens_handleKeyControls);
                 Screens_addFocus(true);
                 break;
             default:
@@ -13462,9 +13315,9 @@
         }
 
         //Load more as the data is getting used
-        if ((inUseObj.posY > 2) && (inUseObj.data_cursor + Main_ItemsLimitMax) > inUseObj.data.length && !inUseObj.dataEnded && !inUseObj.loadingData) {
+        if (inUseObj.posY > 2 && inUseObj.data_cursor + Main_ItemsLimitMax > inUseObj.data.length && !inUseObj.dataEnded && !inUseObj.loadingData) {
             Screens_loadDataRequestStart();
-        } else if ((inUseObj.posY + inUseObj.ItemsReloadLimit) > (inUseObj.itemsCount / inUseObj.ColoumnsCount) && inUseObj.data_cursor < inUseObj.data.length) {
+        } else if (inUseObj.posY + inUseObj.ItemsReloadLimit > inUseObj.itemsCount / inUseObj.ColoumnsCount && inUseObj.data_cursor < inUseObj.data.length) {
             inUseObj.loadDataSuccess();
         }
 
@@ -13475,20 +13328,21 @@
         return document.getElementById(thumbnail) !== null;
     }
 
-
     function Screens_addrowChannel(forceScroll, y) {
-        if (inUseObj.currY < y) { // down
+        if (inUseObj.currY < y) {
+            // down
             inUseObj.currY = inUseObj.posY;
             if (y > 2) Screens_addrowChannelDown(y);
-        } else if (inUseObj.currY > y) { // Up
+        } else if (inUseObj.currY > y) {
+            // Up
             inUseObj.currY = inUseObj.posY;
-            if (y > 1 && (inUseObj.Cells.length) > (y + 3)) {
+            if (y > 1 && inUseObj.Cells.length > y + 3) {
                 var doc = document.getElementById(inUseObj.table);
                 doc.insertBefore(inUseObj.Cells[y - 2], doc.childNodes[0]);
                 document.getElementById(inUseObj.ids[12] + (y - 2)).classList.add('animate_height');
 
-                if (Screens_ChangeFocusAnimationFinished && Screens_SettingDoAnimations &&
-                    !Screens_ChangeFocusAnimationFast) { //If with animation
+                if (Screens_ChangeFocusAnimationFinished && Screens_SettingDoAnimations && !Screens_ChangeFocusAnimationFast) {
+                    //If with animation
                     Screens_ChangeFocusAnimationFinished = false;
                     Screens_ChangeFocusAnimationFast = true;
 
@@ -13499,7 +13353,6 @@
                     window.setTimeout(function() {
                         Screens_RemoveElement(inUseObj.ids[12] + (y + 3));
                         Screens_ChangeFocusAnimationFinished = true;
-
                     }, Screens_ScrollAnimationTimeout);
                 } else {
                     document.getElementById(inUseObj.ids[12] + (y - 2)).classList.remove('animate_height');
@@ -13516,8 +13369,8 @@
             document.getElementById(inUseObj.table).appendChild(inUseObj.Cells[y + 2]);
 
             if (Screens_ThumbNotNull(inUseObj.ids[12] + (y - 3))) {
-                if (Screens_ChangeFocusAnimationFinished && Screens_SettingDoAnimations &&
-                    !Screens_ChangeFocusAnimationFast) { //If with animation
+                if (Screens_ChangeFocusAnimationFinished && Screens_SettingDoAnimations && !Screens_ChangeFocusAnimationFast) {
+                    //If with animation
                     Screens_ChangeFocusAnimationFinished = false;
                     Screens_ChangeFocusAnimationFast = true;
 
@@ -13527,10 +13380,8 @@
                         Screens_RemoveElement(inUseObj.ids[12] + (y - 3));
                         Screens_ChangeFocusAnimationFinished = true;
                     }, Screens_ScrollAnimationTimeout);
-
                 } else Screens_RemoveElement(inUseObj.ids[12] + (y - 3));
             }
-
         } else if (inUseObj.loadingData) {
             //Technically we will not get here because
             //Key down or right (inUseObj.Cells.length - 1) >= (inUseObj.posY + 3) will hold the screen
@@ -13543,18 +13394,20 @@
     }
 
     function Screens_addrow(forceScroll, y) {
-        if (inUseObj.currY < y) { // down
+        if (inUseObj.currY < y) {
+            // down
             inUseObj.currY = inUseObj.posY;
             Screens_addrowDown(y);
-        } else if (inUseObj.currY > y) { // Up
+        } else if (inUseObj.currY > y) {
+            // Up
             inUseObj.currY = inUseObj.posY;
-            if (y && (inUseObj.Cells.length) > (y + 1) && inUseObj.Cells[y + 2]) {
+            if (y && inUseObj.Cells.length > y + 1 && inUseObj.Cells[y + 2]) {
                 var doc = document.getElementById(inUseObj.table);
                 doc.insertBefore(inUseObj.Cells[y - 1], doc.childNodes[inUseObj.HasSwitches ? 1 : 0]);
                 document.getElementById(inUseObj.ids[12] + (y - 1)).classList.add('animate_height');
 
-                if (Screens_ChangeFocusAnimationFinished && Screens_SettingDoAnimations &&
-                    !Screens_ChangeFocusAnimationFast) { //If with animation
+                if (Screens_ChangeFocusAnimationFinished && Screens_SettingDoAnimations && !Screens_ChangeFocusAnimationFast) {
+                    //If with animation
                     Screens_ChangeFocusAnimationFinished = false;
                     Screens_ChangeFocusAnimationFast = true;
 
@@ -13565,13 +13418,11 @@
                     window.setTimeout(function() {
                         Screens_RemoveElement(inUseObj.ids[12] + (y + 2));
                         Screens_ChangeFocusAnimationFinished = true;
-
                     }, Screens_ScrollAnimationTimeout);
                 } else {
                     document.getElementById(inUseObj.ids[12] + (y - 1)).classList.remove('animate_height');
                     Screens_RemoveElement(inUseObj.ids[12] + (y + 2));
                 }
-
             }
         }
         Screens_addrowEnd(forceScroll);
@@ -13582,8 +13433,8 @@
             document.getElementById(inUseObj.table).appendChild(inUseObj.Cells[y + 1]);
 
             if (Screens_ThumbNotNull(inUseObj.ids[12] + (y - 2))) {
-                if (Screens_ChangeFocusAnimationFinished && Screens_SettingDoAnimations &&
-                    !Screens_ChangeFocusAnimationFast) { //If with animation
+                if (Screens_ChangeFocusAnimationFinished && Screens_SettingDoAnimations && !Screens_ChangeFocusAnimationFast) {
+                    //If with animation
                     Screens_ChangeFocusAnimationFinished = false;
                     Screens_ChangeFocusAnimationFast = true;
 
@@ -13593,7 +13444,6 @@
                         Screens_RemoveElement(inUseObj.ids[12] + (y - 2));
                         Screens_ChangeFocusAnimationFinished = true;
                     }, Screens_ScrollAnimationTimeout);
-
                 } else Screens_RemoveElement(inUseObj.ids[12] + (y - 2));
             }
         } else if (inUseObj.loadingData) {
@@ -13621,7 +13471,7 @@
 
     function Screens_setOffset(pos, y) {
         if (!inUseObj.offsettop || inUseObj.offsettopFontsize !== Settings_Obj_default('global_font_offset')) {
-            pos = !y ? (y + pos) : y;
+            pos = !y ? y + pos : y;
             if (inUseObj.Cells[pos]) {
                 inUseObj.offsettop = document.getElementById(inUseObj.ids[0] + pos + '_0').offsetTop / BodyfontSize;
                 inUseObj.offsettopFontsize = Settings_Obj_default('global_font_offset');
@@ -13633,25 +13483,18 @@
         Screens_setOffset(2, y);
 
         if (Main_YchangeAddFocus(y) || forceScroll) {
-
             if (y > 1) {
-
                 //Channels is a odd screen as thumb are small it need a minor workaround to get all working
                 //TODO revise this for a simple implementeation
                 if (inUseObj.Cells.length < 6) {
-                    if (inUseObj.Cells[y + 1] && (y + 2) < inUseObj.Cells.length || inUseObj.Cells.length === 4)
+                    if ((inUseObj.Cells[y + 1] && y + 2 < inUseObj.Cells.length) || inUseObj.Cells.length === 4)
                         document.getElementById(idArray[10]).style.top = 'calc(39% - ' + inUseObj.offsettop + 'em)';
-                    else if (inUseObj.Cells.length > 3)
-                        document.getElementById(idArray[10]).style.top = 'calc(39% - ' + (inUseObj.offsettop * 3 / 2) + 'em)';
+                    else if (inUseObj.Cells.length > 3) document.getElementById(idArray[10]).style.top = 'calc(39% - ' + (inUseObj.offsettop * 3) / 2 + 'em)';
                 } else {
-                    if (inUseObj.Cells[y + 2])
-                        document.getElementById(idArray[10]).style.top = 'calc(39% - ' + inUseObj.offsettop + 'em)';
-                    else
-                        document.getElementById(idArray[10]).style.top = 'calc(39% - ' + (inUseObj.offsettop * 3 / 2) + 'em)';
+                    if (inUseObj.Cells[y + 2]) document.getElementById(idArray[10]).style.top = 'calc(39% - ' + inUseObj.offsettop + 'em)';
+                    else document.getElementById(idArray[10]).style.top = 'calc(39% - ' + (inUseObj.offsettop * 3) / 2 + 'em)';
                 }
-
             } else document.getElementById(idArray[10]).style.top = '';
-
         }
         Main_handleKeyUp();
     }
@@ -13661,10 +13504,9 @@
 
         if (Main_YchangeAddFocus(y) || forceScroll) {
             if (y > 0) {
-
-                if (Main_ThumbNull((y + 1), 0, idArray[0])) //We didn't reach the bottom yet
+                if (Main_ThumbNull(y + 1, 0, idArray[0]))
+                    //We didn't reach the bottom yet
                     document.getElementById(idArray[10]).style.top = 'calc(7.65% - ' + inUseObj.offsettop + 'em)';
-
             } else document.getElementById(idArray[10]).style.top = '';
         }
 
@@ -13676,10 +13518,9 @@
 
         if (Main_YchangeAddFocus(y) || forceScroll) {
             if (y > 0) {
-
-                if (Main_ThumbNull((y + 1), 0, idArray[0])) //We didn't reach the bottom yet
+                if (Main_ThumbNull(y + 1, 0, idArray[0]))
+                    //We didn't reach the bottom yet
                     document.getElementById(idArray[10]).style.top = 'calc(4.5% - ' + inUseObj.offsettop + 'em)';
-
             } else document.getElementById(idArray[10]).style.top = '';
         }
 
@@ -13726,13 +13567,13 @@
             inUseObj.posY = -1;
             if (inUseObj.posX > inUseObj.SwitchesIcons.length - 1) inUseObj.posX = 1;
             Screens_addFocusFollow();
-        } else if (inUseObj.HasSwitches && (inUseObj.posY) === -1 && (Main_ThumbNull(0, inUseObj.posX, inUseObj.ids[0]))) {
+        } else if (inUseObj.HasSwitches && inUseObj.posY === -1 && Main_ThumbNull(0, inUseObj.posX, inUseObj.ids[0])) {
             inUseObj.posY = 0;
             Screens_addFocus();
             Screens_removeFocusFollow();
         } else {
             for (var i = 0; i < inUseObj.ColoumnsCount; i++) {
-                if (Main_ThumbNull((inUseObj.posY + y), (inUseObj.posX - i), inUseObj.ids[0])) {
+                if (Main_ThumbNull(inUseObj.posY + y, inUseObj.posX - i, inUseObj.ids[0])) {
                     Screens_ChangeFocus(y, inUseObj.posX - i);
                     return;
                 }
@@ -13751,19 +13592,17 @@
         if (inUseObj.HasSwitches && inUseObj.posY === -1) {
             inUseObj.posY = -1;
             Screens_removeFocusFollow();
-            inUseObj.posX += (!x ? 1 : -1);
+            inUseObj.posX += !x ? 1 : -1;
             Screens_addFocusFollow();
-        } else if (Main_ThumbNull((inUseObj.posY), (inUseObj.posX + y), inUseObj.ids[0]))
-            Screens_ChangeFocus(0, (inUseObj.posX + y));
-        else if (Main_ThumbNull((inUseObj.posY + y), x, inUseObj.ids[0]))
-            Screens_ChangeFocus(y, x);
+        } else if (Main_ThumbNull(inUseObj.posY, inUseObj.posX + y, inUseObj.ids[0])) Screens_ChangeFocus(0, inUseObj.posX + y);
+        else if (Main_ThumbNull(inUseObj.posY + y, x, inUseObj.ids[0])) Screens_ChangeFocus(y, x);
     }
 
     function Screens_OpenSidePanel() {
         Screens_RemoveAllFocus();
         if (Main_values.Main_Go === Main_aGame) Main_values.Main_OldgameSelected = Main_values.Main_gameSelected;
         Screens_ClearAnimation();
-        document.body.removeEventListener("keydown", Screens_handleKeyDown);
+        document.body.removeEventListener('keydown', Screens_handleKeyDown);
         Sidepannel_Start(Screens_handleKeyDown);
     }
 
@@ -13786,11 +13625,11 @@
 
     function Screens_handleKeyUpClear() {
         window.clearTimeout(Screens_KeyEnterID);
-        document.body.removeEventListener("keyup", Screens_handleKeyUp);
-        document.body.addEventListener("keydown", Screens_handleKeyDown, false);
+        document.body.removeEventListener('keyup', Screens_handleKeyUp);
+        document.body.addEventListener('keydown', Screens_handleKeyDown, false);
     }
 
-    document.body.addEventListener("keyup", Screens_handleKeyUpAnimationFast);
+    document.body.addEventListener('keyup', Screens_handleKeyUpAnimationFast);
 
     function Screens_handleKeyUpAnimationFast() {
         Screens_ChangeFocusAnimationFast = false;
@@ -13804,16 +13643,14 @@
             case KEY_PG_UP:
                 if (!inUseObj.loadingData && inUseObj.key_pgUp) {
                     Screens_RemoveAllFocus();
-                    if (inUseObj.screen === Main_UserChannels)
-                        Sidepannel_Go(!AddUser_UsernameArray[0].access_token ? inUseObj.key_pgUpNext : inUseObj.key_pgUp);
+                    if (inUseObj.screen === Main_UserChannels) Sidepannel_Go(!AddUser_UsernameArray[0].access_token ? inUseObj.key_pgUpNext : inUseObj.key_pgUp);
                     else Sidepannel_Go(inUseObj.key_pgUp);
                 }
                 break;
             case KEY_PG_DOWN:
                 if (!inUseObj.loadingData && inUseObj.key_pgDown) {
                     Screens_RemoveAllFocus();
-                    if (inUseObj.screen === Main_usergames)
-                        Sidepannel_Go(!AddUser_UsernameArray[0].access_token ? inUseObj.key_pgDownNext : inUseObj.key_pgDown);
+                    if (inUseObj.screen === Main_usergames) Sidepannel_Go(!AddUser_UsernameArray[0].access_token ? inUseObj.key_pgDownNext : inUseObj.key_pgDown);
                     else Sidepannel_Go(inUseObj.key_pgDown);
                 }
                 break;
@@ -13830,10 +13667,8 @@
             case KEY_RIGHT:
                 //Prevent scroll too fast out of inUseObj.Cells.length
                 //here (inUseObj.posY + 3) the 3 is 1 bigger then the 2 in Screens_addrow*Down (inUseObj.Cells[y + 2])
-                if (inUseObj.dataEnded ||
-                    inUseObj.posX < (inUseObj.ColoumnsCount - 1) ||
-                    (inUseObj.Cells.length - 1) >= (inUseObj.posY + 1)) {
-                    if (inUseObj.posX === (inUseObj.ColoumnsCount - 1)) {
+                if (inUseObj.dataEnded || inUseObj.posX < inUseObj.ColoumnsCount - 1 || inUseObj.Cells.length - 1 >= inUseObj.posY + 1) {
+                    if (inUseObj.posX === inUseObj.ColoumnsCount - 1) {
                         if (Screens_ChangeFocusAnimationFinished) Screens_KeyLeftRight(1, 0);
                     } else Screens_KeyLeftRight(1, 0);
                 } else Screens_addFocus(true);
@@ -13844,8 +13679,7 @@
             case KEY_DOWN:
                 //Prevent scroll too fast out of inUseObj.Cells.length
                 //here (inUseObj.posY + 3) the 3 is 1 bigger then the 2 in Screens_addrow*Down (inUseObj.Cells[y + 2])
-                if (inUseObj.dataEnded ||
-                    (inUseObj.Cells.length - 1) >= (inUseObj.posY + 1)) {
+                if (inUseObj.dataEnded || inUseObj.Cells.length - 1 >= inUseObj.posY + 1) {
                     if (Screens_ChangeFocusAnimationFinished) Screens_KeyUpDown(1);
                 } else {
                     Screens_addFocus(true);
@@ -13858,9 +13692,9 @@
                 inUseObj.key_play();
                 break;
             case KEY_ENTER:
-                if (!Settings_Obj_default("enter_refresh")) {
-                    document.body.removeEventListener("keydown", Screens_handleKeyDown, false);
-                    document.body.addEventListener("keyup", Screens_handleKeyUp, false);
+                if (!Settings_Obj_default('enter_refresh')) {
+                    document.body.removeEventListener('keydown', Screens_handleKeyDown, false);
+                    document.body.addEventListener('keyup', Screens_handleKeyUp, false);
                     Screens_clear = false;
                     Screens_KeyEnterID = window.setTimeout(Main_ReloadScreen, 400);
                 } else inUseObj.key_play();
@@ -13901,7 +13735,7 @@
             inUseObj.posX = 0;
             Main_AddClass(inUseObj.ids[0] + '0_' + inUseObj.posX, Main_classThumb);
         }
-        document.body.removeEventListener("keydown", Screens_handleKeyDown);
+        document.body.removeEventListener('keydown', Screens_handleKeyDown);
         Main_HideElement(inUseObj.ids[10]);
     }
 
@@ -13919,8 +13753,8 @@
     }
 
     function AGame_setFollow() {
-        if (AGame_following) Main_innerHTML(AGame.ids[3] + "y_2", '<i class="icon-heart" style="color: #6441a4; font-size: 100%;"></i>' + STR_SPACE + STR_SPACE + STR_FOLLOWING);
-        else Main_innerHTML(AGame.ids[3] + "y_2", '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + (AddUser_UserIsSet() ? STR_FOLLOW : STR_NOKEY));
+        if (AGame_following) Main_innerHTML(AGame.ids[3] + 'y_2', '<i class="icon-heart" style="color: #6441a4; font-size: 100%;"></i>' + STR_SPACE + STR_SPACE + STR_FOLLOWING);
+        else Main_innerHTML(AGame.ids[3] + 'y_2', '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + (AddUser_UserIsSet() ? STR_FOLLOW : STR_NOKEY));
     }
 
     var Screens_PeriodDialogID;
@@ -13929,8 +13763,8 @@
     function Screens_PeriodStart() {
         Screens_setPeriodDialog();
         Main_ShowElement('dialog_period');
-        document.body.removeEventListener("keydown", Screens_handleKeyDown);
-        document.body.addEventListener("keydown", Screens_PeriodhandleKeyDown, false);
+        document.body.removeEventListener('keydown', Screens_handleKeyDown);
+        document.body.addEventListener('keydown', Screens_PeriodhandleKeyDown, false);
     }
 
     function Screens_clearPeriodDialogId() {
@@ -13951,8 +13785,8 @@
     function Screens_PeriodDialogHide() {
         Screens_clearPeriodDialogId();
         Screens_PeriodRemoveFocus(Screens_PeriodDialogPos);
-        document.body.removeEventListener("keydown", Screens_PeriodhandleKeyDown, false);
-        document.body.addEventListener("keydown", Screens_handleKeyDown, false);
+        document.body.removeEventListener('keydown', Screens_PeriodhandleKeyDown, false);
+        document.body.addEventListener('keydown', Screens_handleKeyDown, false);
         Main_HideElement('dialog_period');
     }
 
@@ -14011,8 +13845,8 @@
         inUseObj.OffSetPos = inUseObj.extraoffset / 100;
         Screens_setOffSetDialog();
         Main_ShowElement('dialog_OffSet');
-        document.body.removeEventListener("keydown", Screens_handleKeyDown);
-        document.body.addEventListener("keydown", Screens_OffSethandleKeyDown, false);
+        document.body.removeEventListener('keydown', Screens_handleKeyDown);
+        document.body.addEventListener('keydown', Screens_OffSethandleKeyDown, false);
     }
 
     function Screens_clearOffSetDialogId() {
@@ -14031,24 +13865,24 @@
 
     function Screens_OffSetDialogHide() {
         Screens_clearOffSetDialogId();
-        document.body.removeEventListener("keydown", Screens_OffSethandleKeyDown, false);
-        document.body.addEventListener("keydown", Screens_handleKeyDown, false);
+        document.body.removeEventListener('keydown', Screens_OffSethandleKeyDown, false);
+        document.body.addEventListener('keydown', Screens_handleKeyDown, false);
         Main_HideElement('dialog_OffSet');
     }
 
     function Screens_OffSetAddFocus(pos) {
-        Main_textContent("dialog_OffSet_val", pos);
+        Main_textContent('dialog_OffSet_val', pos);
         var maxValue = 5000;
 
         if (pos > 0 && pos < maxValue) {
-            document.getElementById("dialog_OffSet_left").style.opacity = "1";
-            document.getElementById("dialog_OffSet_right").style.opacity = "1";
+            document.getElementById('dialog_OffSet_left').style.opacity = '1';
+            document.getElementById('dialog_OffSet_right').style.opacity = '1';
         } else if (pos === maxValue) {
-            document.getElementById("dialog_OffSet_left").style.opacity = "1";
-            document.getElementById("dialog_OffSet_right").style.opacity = "0.2";
+            document.getElementById('dialog_OffSet_left').style.opacity = '1';
+            document.getElementById('dialog_OffSet_right').style.opacity = '0.2';
         } else {
-            document.getElementById("dialog_OffSet_left").style.opacity = "0.2";
-            document.getElementById("dialog_OffSet_right").style.opacity = "1";
+            document.getElementById('dialog_OffSet_left').style.opacity = '0.2';
+            document.getElementById('dialog_OffSet_right').style.opacity = '1';
         }
     }
 
@@ -14161,10 +13995,11 @@
         data_cursor: 0,
         loadDataSuccess: Screens_loadDataSuccess,
         addrow: Screens_addrow,
-        key_exit: function(goSidepanel) { //TODO overwrite this on if object
+        key_exit: function(goSidepanel) {
+            //TODO overwrite this on if object
             Screens_RemoveAllFocus();
 
-            if ((this.screen === Main_aGame) && !goSidepanel) {
+            if (this.screen === Main_aGame && !goSidepanel) {
                 if (Main_values.Games_return) {
                     Main_values.Main_Go = Main_SearchGames;
                     Main_values.Main_gameSelected = Main_values.gameSelectedOld;
@@ -14175,8 +14010,7 @@
                 }
                 Screens_BasicExit(Main_values.Main_Go);
                 Main_SwitchScreenAction();
-            } else if ((this.screen === Main_SearchLive || this.screen === Main_SearchGames ||
-                    this.screen === Main_SearchChannels) && !goSidepanel) {
+            } else if ((this.screen === Main_SearchLive || this.screen === Main_SearchGames || this.screen === Main_SearchChannels) && !goSidepanel) {
                 if (Main_values.Main_Go === Main_values.Main_BeforeSearch) Main_values.Main_Go = Main_Live;
                 else Main_values.Main_Go = Main_values.Main_BeforeSearch;
                 Main_values.Search_isSearching = false;
@@ -14191,9 +14025,7 @@
             } else Screens_OpenSidePanel();
         },
         concatenate: function(responseText) {
-
             if (this.data) {
-
                 responseText = JSON.parse(responseText);
 
                 if (responseText[this.object]) {
@@ -14203,12 +14035,10 @@
 
                 this.setMax(responseText);
             } else {
-
                 responseText = JSON.parse(responseText);
 
                 this.data = responseText[this.object];
                 if (this.data) {
-
                     this.offset = this.data.length;
                     this.setMax(responseText);
                 } else this.data = [];
@@ -14230,7 +14060,10 @@
             Screens_addFocusVideo(y, x, idArray, forceScroll);
         },
         setMax: function(tempObj) {
-            if (tempObj[this.object].length < (Main_ItemsLimitMax - 5)) this.dataEnded = true;
+            if (this.use_helix) {
+                this.cursor = tempObj.pagination.cursor;
+                if (!this.cursor || this.cursor === '') this.dataEnded = true;
+            } else if (tempObj[this.object].length < Main_ItemsLimitMax - 5) this.dataEnded = true;
         },
         img_404: IMG_404_VIDEO,
         HasSwitches: true,
@@ -14251,43 +14084,41 @@
             this.Vod_newImg.onload = function() {
                 this.onload = null;
                 Main_HideElement(screen.ids[1] + screen.posY + '_' + screen.posX);
-                div.style.backgroundSize = div.offsetWidth + "px";
+                div.style.backgroundSize = div.offsetWidth + 'px';
                 var frame = 0;
                 screen.AnimateThumbId = window.setInterval(function() {
                     // 10 = quantity of frames in the preview img
-                    div.style.backgroundPosition = "0px " + ((++frame % 10) * (-div.offsetHeight)) + "px";
+                    div.style.backgroundPosition = '0px ' + (++frame % 10) * -div.offsetHeight + 'px';
                 }, 650);
             };
 
-            this.Vod_newImg.src = div.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, "$1");
+            this.Vod_newImg.src = div.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
         },
         addCellBase: function(cell, thubnail) {
-            if (!this.idObject[cell._id] && (thubnail + '').indexOf('404_processing') === -1) {
-
+            if (!this.idObject[cell.id] && (thubnail + '').indexOf('404_processing') === -1) {
                 this.itemsCount++;
-                this.idObject[cell._id] = 1;
+                this.idObject[cell.id] = 1;
 
                 this.row.appendChild(
-                    Screens_createCellVod(
-                        this.row_id + '_' + this.coloumn_id,
-                        this.ids,
-                        [thubnail.replace("{width}x{height}", Main_VideoSize),
-                            cell.channel.display_name,
-                            STR_STREAM_ON + Main_videoCreatedAt(cell.created_at),
-                            twemoji.parse(cell.title),
-                            Main_addCommas(cell.views) + STR_VIEWS,
-                            cell.resolutions.chunked ? Main_videoqualitylang(cell.resolutions.chunked.slice(-4), (parseInt(cell.fps.chunked) || 0), cell.channel.broadcaster_language) : '',
-                            cell.length,
-                            cell.animated_preview_url,
-                            cell._id,
-                            cell.channel.broadcaster_language,
-                            cell.game,
-                            cell.channel.name,
-                            cell.increment_view_count_url,
-                            cell.channel._id,
-                            cell.channel.logo,
-                            cell.channel.partner
-                        ]));
+                    Screens_createCellVod(this.row_id + '_' + this.coloumn_id, this.ids, [
+                        thubnail.replace('%{width}x%{height}', Main_VideoSize),
+                        cell.user_name,
+                        STR_STREAM_ON + Main_videoCreatedAt(cell.created_at),
+                        twemoji.parse(cell.title),
+                        Main_addCommas(cell.view_count) + STR_VIEWS,
+                        cell.language ? Main_lang(cell.language) : '',
+                        cell.duration,
+                        null,
+                        cell.id,
+                        cell.language,
+                        null,
+                        cell.user_login,
+                        null,
+                        cell.user_id,
+                        null,
+                        null
+                    ])
+                );
 
                 this.coloumn_id++;
             }
@@ -14299,160 +14130,195 @@
 
     function ScreensObj_InitVod() {
         Vod = Screens_assign({
-            periodMaxPos: 4,
-            HeaderQuatity: 2,
-            key_pgDown: Main_Clip,
-            key_pgUp: Main_games,
-            object: 'vods',
-            ids: Screens_ScreenIds('Vod'),
-            table: 'stream_table_vod',
-            screen: Main_Vod,
-            highlightSTR: 'Vod_highlight',
-            highlight: Main_getItemBool('Vod_highlight', false),
-            periodPos: Main_getItemInt('vod_periodPos', 2),
-            base_url: Main_kraken_api + 'videos/top?limit=' + Main_ItemsLimitMax,
-            set_url: function() {
-                this.url = this.base_url + '&broadcast_type=' + (this.highlight ? 'highlight' : 'archive') +
-                    '&sort=views&offset=' + this.offset + '&period=' + this.period[this.periodPos - 1] +
-                    (Main_ContentLang !== "" ? ('&language=' + Main_ContentLang) : '');
-            },
-            key_play: function() {
-                if (this.posY === -1) {
-                    if (this.posX === 0) {
-                        this.highlight = !this.highlight;
-                        this.SetPeriod();
-                        Screens_StartLoad();
-                        Main_setItem(this.highlightSTR, this.highlight ? 'true' : 'false');
-                    } else Screens_PeriodStart();
-                } else Main_OpenVod(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
-            },
-            SwitchesIcons: ['movie-play', 'history'],
-            addSwitches: function() {
-                this.TopRowCreated = true;
-                this.row = document.createElement('div');
-                var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_CLIP];
-                var thumbfollow, div, i = 0;
+                periodMaxPos: 4,
+                HeaderQuatity: 2,
+                key_pgDown: Main_Clip,
+                key_pgUp: Main_games,
+                object: 'vods',
+                ids: Screens_ScreenIds('Vod'),
+                table: 'stream_table_vod',
+                screen: Main_Vod,
+                highlightSTR: 'Vod_highlight',
+                highlight: Main_getItemBool('Vod_highlight', false),
+                periodPos: Main_getItemInt('vod_periodPos', 2),
+                base_url: Main_kraken_api + 'videos/top?limit=' + Main_ItemsLimitMax,
+                set_url: function() {
+                    this.url =
+                        this.base_url +
+                        '&broadcast_type=' +
+                        (this.highlight ? 'highlight' : 'archive') +
+                        '&sort=views&offset=' +
+                        this.offset +
+                        '&period=' +
+                        this.period[this.periodPos - 1] +
+                        (Main_ContentLang !== '' ? '&language=' + Main_ContentLang : '');
+                },
+                key_play: function() {
+                    if (this.posY === -1) {
+                        if (this.posX === 0) {
+                            this.highlight = !this.highlight;
+                            this.SetPeriod();
+                            Screens_StartLoad();
+                            Main_setItem(this.highlightSTR, this.highlight ? 'true' : 'false');
+                        } else Screens_PeriodStart();
+                    } else Main_OpenVod(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
+                },
+                SwitchesIcons: ['movie-play', 'history'],
+                addSwitches: function() {
+                    this.TopRowCreated = true;
+                    this.row = document.createElement('div');
+                    var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_CLIP];
+                    var thumbfollow,
+                        div,
+                        i = 0;
 
-                for (i; i < SwitchesStrings.length; i++) {
-                    thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
-                    div = document.createElement('div');
-                    div.setAttribute('id', this.ids[8] + 'y_' + i);
-                    div.className = 'stream_cell_period';
-                    div.innerHTML = '<div id="' + this.ids[0] +
-                        'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                        'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
-                    this.row.appendChild(div);
+                    for (i; i < SwitchesStrings.length; i++) {
+                        thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
+                        div = document.createElement('div');
+                        div.setAttribute('id', this.ids[8] + 'y_' + i);
+                        div.className = 'stream_cell_period';
+                        div.innerHTML =
+                            '<div id="' +
+                            this.ids[0] +
+                            'y_' +
+                            i +
+                            '" class="stream_thumbnail_channel_vod" ><div id="' +
+                            this.ids[3] +
+                            'y_' +
+                            i +
+                            '" class="stream_channel_follow_game">' +
+                            thumbfollow +
+                            '</div></div>';
+                        this.row.appendChild(div);
+                    }
+                    document.getElementById(this.table).appendChild(this.row);
+                },
+                label_init: function() {
+                    Sidepannel_SetDefaultLables();
+                    Main_values.Sidepannel_IsUser = false;
+                    Sidepannel_SetTopOpacity(this.screen);
+                    this.SetPeriod();
+                },
+                SetPeriod: function() {
+                    Main_setItem('vod_periodPos', this.periodPos);
+                    ScreensObj_SetTopLable(STR_VIDEOS, (this.highlight ? STR_PAST_HIGHL : STR_PAST_BROA) + STR_SPACE + Main_Periods[this.periodPos - 1]);
                 }
-                document.getElementById(this.table).appendChild(this.row);
             },
-            label_init: function() {
-                Sidepannel_SetDefaultLables();
-                Main_values.Sidepannel_IsUser = false;
-                Sidepannel_SetTopOpacity(this.screen);
-                this.SetPeriod();
-            },
-            SetPeriod: function() {
-                Main_setItem('vod_periodPos', this.periodPos);
-                ScreensObj_SetTopLable(STR_VIDEOS, (this.highlight ? STR_PAST_HIGHL : STR_PAST_BROA) +
-                    STR_SPACE + Main_Periods[this.periodPos - 1]);
-            },
-        }, Base_obj);
+            Base_obj
+        );
 
         Vod = Screens_assign(Vod, Base_Vod_obj);
     }
 
     function ScreensObj_InitChannelVod() {
         ChannelVod = Screens_assign({
-            periodMaxPos: 2,
-            HeaderQuatity: 2,
-            key_pgDown: Main_ChannelClip,
-            object: 'videos',
-            ids: Screens_ScreenIds('ChannelVod'),
-            table: 'stream_table_channel_vod',
-            screen: Main_ChannelVod,
-            time: ['time', 'views'],
-            extraoffset: 0,
-            OffSetPos: 0,
-            highlightSTR: 'ChannelVod_highlight',
-            highlight: Main_getItemBool('ChannelVod_highlight', false),
-            periodPos: Main_getItemInt('ChannelVod_periodPos', 1),
-            base_url: Main_kraken_api + 'channels/',
-            set_url: function() {
-                this.url = this.base_url +
-                    encodeURIComponent(Main_values.Main_selectedChannel_id) + '/videos?limit=' + Main_ItemsLimitMax +
-                    '&broadcast_type=' + (this.highlight ? 'highlight' : 'archive') + '&sort=' +
-                    this.time[this.periodPos - 1] + '&offset=' + (this.offset + this.extraoffset);
-            },
-            key_play: function() {
-                if (this.posY === -1) {
-                    if (this.posX === 0) {
-                        this.highlight = !this.highlight;
-                        this.SetPeriod();
-                        Screens_StartLoad();
-                        Main_setItem(this.highlightSTR, this.highlight ? 'true' : 'false');
-                    } else if (this.posX === 1) {
-                        this.periodPos++;
-                        if (this.periodPos > this.periodMaxPos) this.periodPos = 1;
-                        this.SetPeriod();
-                        Screens_StartLoad();
-                    } else Screens_OffSetStart();
-                } else Main_OpenVod(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
-            },
-            SwitchesIcons: ['movie-play', 'history', 'offset'],
-            addSwitches: function() {
-                this.TopRowCreated = true;
-                this.row = document.createElement('div');
-                var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_TYPE, STR_SPACE + STR_SPACE + STR_SWITCH_POS];
-                var thumbfollow, div, i = 0;
+                periodMaxPos: 2,
+                HeaderQuatity: 2,
+                key_pgDown: Main_ChannelClip,
+                object: 'data',
+                ids: Screens_ScreenIds('ChannelVod'),
+                table: 'stream_table_channel_vod',
+                screen: Main_ChannelVod,
+                time: ['time', 'views'],
+                extraoffset: 0,
+                OffSetPos: 0,
+                highlightSTR: 'ChannelVod_highlight',
+                highlight: Main_getItemBool('ChannelVod_highlight', false),
+                periodPos: Main_getItemInt('ChannelVod_periodPos', 1),
+                use_helix: true,
+                base_url: Main_helix_api + 'videos?first=' + Main_ItemsLimitMax + '&user_id=',
+                set_url: function() {
+                    // https://dev.twitch.tv/docs/api/reference#get-videos
+                    this.url =
+                        this.base_url +
+                        encodeURIComponent(Main_values.Main_selectedChannel_id) +
+                        '&type=' +
+                        (this.highlight ? 'highlight' : 'archive') +
+                        '&sort=' +
+                        this.time[this.periodPos - 1] +
+                        (this.cursor ? '&after=' + this.cursor : '');
+                },
+                key_play: function() {
+                    if (this.posY === -1) {
+                        if (this.posX === 0) {
+                            this.highlight = !this.highlight;
+                            this.SetPeriod();
+                            Screens_StartLoad();
+                            Main_setItem(this.highlightSTR, this.highlight ? 'true' : 'false');
+                        } else if (this.posX === 1) {
+                            this.periodPos++;
+                            if (this.periodPos > this.periodMaxPos) this.periodPos = 1;
+                            this.SetPeriod();
+                            Screens_StartLoad();
+                        } else Screens_OffSetStart();
+                    } else Main_OpenVod(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
+                },
+                SwitchesIcons: ['movie-play', 'history'],
+                addSwitches: function() {
+                    this.TopRowCreated = true;
+                    this.row = document.createElement('div');
+                    var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_TYPE];
+                    var thumbfollow,
+                        div,
+                        i = 0;
 
-                for (i; i < SwitchesStrings.length; i++) {
-                    thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
-                    div = document.createElement('div');
-                    div.setAttribute('id', this.ids[8] + 'y_' + i);
-                    div.className = 'stream_cell_period';
-                    div.innerHTML = '<div id="' + this.ids[0] +
-                        'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                        'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
-                    this.row.appendChild(div);
+                    for (i; i < SwitchesStrings.length; i++) {
+                        thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
+                        div = document.createElement('div');
+                        div.setAttribute('id', this.ids[8] + 'y_' + i);
+                        div.className = 'stream_cell_period';
+                        div.innerHTML =
+                            '<div id="' +
+                            this.ids[0] +
+                            'y_' +
+                            i +
+                            '" class="stream_thumbnail_channel_vod" ><div id="' +
+                            this.ids[3] +
+                            'y_' +
+                            i +
+                            '" class="stream_channel_follow_game">' +
+                            thumbfollow +
+                            '</div></div>';
+                        this.row.appendChild(div);
+                    }
+                    document.getElementById(this.table).appendChild(this.row);
+                },
+                lastselectedChannel: '',
+                label_init: function() {
+                    if (!Main_values.Search_isSearching && Main_values.Main_selectedChannel_id) ChannelContent_RestoreChannelValue();
+                    if (Main_values.Main_selectedChannel !== this.lastselectedChannel) {
+                        this.OffSetPos = 0;
+                        this.extraoffset = 0;
+                        this.status = false;
+                    }
+                    this.lastselectedChannel = Main_values.Main_selectedChannel;
+                    Main_cleanTopLabel();
+                    Main_ShowElement('label_side_panel');
+                    this.SetPeriod();
+                },
+                SetPeriod: function() {
+                    Main_setItem('UserVod_periodPos', this.periodPos);
+
+                    ScreensObj_SetTopLable(
+                        Main_values.Main_selectedChannelDisplayname,
+                        (this.highlight ? STR_PAST_HIGHL : STR_PAST_BROA) + (this.periodPos === 1 ? STR_TIME : STR_VIWES) //+ ', Offset ' + inUseObj.extraoffset
+                    );
+                },
+                label_exit: function() {
+                    Main_RestoreTopLabel();
                 }
-                document.getElementById(this.table).appendChild(this.row);
             },
-            lastselectedChannel: '',
-            label_init: function() {
-                if (!Main_values.Search_isSearching && Main_values.Main_selectedChannel_id) ChannelContent_RestoreChannelValue();
-                if (Main_values.Main_selectedChannel !== this.lastselectedChannel) {
-                    this.OffSetPos = 0;
-                    this.extraoffset = 0;
-                    this.status = false;
-                }
-                this.lastselectedChannel = Main_values.Main_selectedChannel;
-                Main_cleanTopLabel();
-                Main_ShowElement('label_side_panel');
-                this.SetPeriod();
-            },
-            SetPeriod: function() {
-                Main_setItem('UserVod_periodPos', this.periodPos);
-
-                ScreensObj_SetTopLable(Main_values.Main_selectedChannelDisplayname,
-                    (this.highlight ? STR_PAST_HIGHL : STR_PAST_BROA) +
-                    (this.periodPos === 1 ? STR_TIME : STR_VIWES) + ", Offset " + inUseObj.extraoffset);
-
-            },
-            label_exit: function() {
-                Main_RestoreTopLabel();
-            }
-        }, Base_obj);
+            Base_obj
+        );
 
         ChannelVod = Screens_assign(ChannelVod, Base_Vod_obj);
 
         ChannelVod.addCell = function(cell) {
-
-            var thumbnail = cell.preview.template;
+            var thumbnail = cell.thumbnail_url;
 
             // video content can be null sometimes, in that case the preview will be 404_processing
             // but if the video is from the stream that has not yet ended it can also be 404_processing and not be a null video
-            if (!this.row_id && (thumbnail + '').indexOf('404_processing') !== -1)
-                thumbnail = (ChannelContent_offline_image !== null ? ChannelContent_offline_image : this.img_404);
+            if (!this.row_id && (thumbnail + '').indexOf('404_processing') !== -1) thumbnail = ChannelContent_offline_image !== null ? ChannelContent_offline_image : this.img_404;
 
             this.addCellBase(cell, thumbnail);
         };
@@ -14460,135 +14326,166 @@
 
     function ScreensObj_InitAGameVod() {
         AGameVod = Screens_assign({
-            periodMaxPos: 4,
-            HeaderQuatity: 2,
-            object: 'vods',
-            key_pgDown: Main_Vod,
-            key_pgUp: Main_Featured,
-            ids: Screens_ScreenIds('AGameVod'),
-            table: 'stream_table_a_game_vod',
-            screen: Main_AGameVod,
-            highlightSTR: 'AGameVod_highlight',
-            highlight: Main_getItemBool('AGameVod_highlight', false),
-            periodPos: Main_getItemInt('AGameVod_periodPos', 2),
-            base_url: Main_kraken_api + 'videos/top?game=',
-            set_url: function() {
-                this.url = this.base_url + encodeURIComponent(Main_values.Main_gameSelected) + '&limit=' +
-                    Main_ItemsLimitMax + '&broadcast_type=' + (this.highlight ? 'highlight' : 'archive') +
-                    '&sort=views&offset=' + this.offset + '&period=' + this.period[this.periodPos - 1] +
-                    (Main_ContentLang !== "" ? ('&language=' + Main_ContentLang) : '');
-            },
-            key_play: function() {
-                if (this.posY === -1) {
-                    if (this.posX === 0) {
-                        this.highlight = !this.highlight;
-                        this.SetPeriod();
-                        Screens_StartLoad();
-                        Main_setItem(this.highlightSTR, this.highlight ? 'true' : 'false');
-                    } else Screens_PeriodStart();
-                } else Main_OpenVod(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
-            },
-            SwitchesIcons: ['movie-play', 'history'],
-            addSwitches: function() {
-                this.TopRowCreated = true;
-                this.row = document.createElement('div');
-                var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_CLIP];
-                var thumbfollow, div, i = 0;
+                use_helix: true,
+                periodMaxPos: 4,
+                HeaderQuatity: 2,
+                object: 'data',
+                key_pgDown: Main_Vod,
+                key_pgUp: Main_Featured,
+                ids: Screens_ScreenIds('AGameVod'),
+                table: 'stream_table_a_game_vod',
+                screen: Main_AGameVod,
+                highlightSTR: 'AGameVod_highlight',
+                highlight: Main_getItemBool('AGameVod_highlight', false),
+                periodPos: Main_getItemInt('AGameVod_periodPos', 2),
+                base_url: Main_helix_api + 'videos?first=' + Main_ItemsLimitMax + '&game_id=',
+                set_url: function() {
+                    this.url =
+                        this.base_url +
+                        Main_values.Main_gameSelected_id +
+                        '&type=' +
+                        (this.highlight ? 'highlight' : 'archive') +
+                        '&sort=views' +
+                        '&period=' +
+                        this.period[this.periodPos - 1] +
+                        (this.cursor ? '&after=' + this.cursor : '') +
+                        (Main_ContentLang !== '' ? '&language=' + Main_ContentLang : '');
+                },
+                key_play: function() {
+                    if (this.posY === -1) {
+                        if (this.posX === 0) {
+                            this.highlight = !this.highlight;
+                            this.SetPeriod();
+                            Screens_StartLoad();
+                            Main_setItem(this.highlightSTR, this.highlight ? 'true' : 'false');
+                        } else Screens_PeriodStart();
+                    } else Main_OpenVod(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
+                },
+                SwitchesIcons: ['movie-play', 'history'],
+                addSwitches: function() {
+                    this.TopRowCreated = true;
+                    this.row = document.createElement('div');
+                    var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_CLIP];
+                    var thumbfollow,
+                        div,
+                        i = 0;
 
-                for (i; i < SwitchesStrings.length; i++) {
-                    thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
-                    div = document.createElement('div');
-                    div.setAttribute('id', this.ids[8] + 'y_' + i);
-                    div.className = 'stream_cell_period';
-                    div.innerHTML = '<div id="' + this.ids[0] +
-                        'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                        'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
-                    this.row.appendChild(div);
+                    for (i; i < SwitchesStrings.length; i++) {
+                        thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
+                        div = document.createElement('div');
+                        div.setAttribute('id', this.ids[8] + 'y_' + i);
+                        div.className = 'stream_cell_period';
+                        div.innerHTML =
+                            '<div id="' +
+                            this.ids[0] +
+                            'y_' +
+                            i +
+                            '" class="stream_thumbnail_channel_vod" ><div id="' +
+                            this.ids[3] +
+                            'y_' +
+                            i +
+                            '" class="stream_channel_follow_game">' +
+                            thumbfollow +
+                            '</div></div>';
+                        this.row.appendChild(div);
+                    }
+                    document.getElementById(this.table).appendChild(this.row);
+                },
+                OldgameSelected: '',
+                label_init: function() {
+                    ScreensObj_TopLableAgameInit();
+                    this.SetPeriod();
+                },
+                label_exit: ScreensObj_TopLableAgameExit,
+                SetPeriod: function() {
+                    Main_setItem('AGameVod_periodPos', this.periodPos);
+
+                    ScreensObj_SetTopLable(Main_values.Main_gameSelected, (this.highlight ? STR_PAST_HIGHL : STR_PAST_BROA) + STR_SPACE + Main_Periods[this.periodPos - 1]);
                 }
-                document.getElementById(this.table).appendChild(this.row);
             },
-            OldgameSelected: '',
-            label_init: function() {
-                ScreensObj_TopLableAgameInit();
-                this.SetPeriod();
-            },
-            label_exit: ScreensObj_TopLableAgameExit,
-            SetPeriod: function() {
-                Main_setItem('AGameVod_periodPos', this.periodPos);
-
-                ScreensObj_SetTopLable(Main_values.Main_gameSelected, (this.highlight ? STR_PAST_HIGHL : STR_PAST_BROA) + STR_SPACE + Main_Periods[this.periodPos - 1]);
-            }
-        }, Base_obj);
+            Base_obj
+        );
 
         AGameVod = Screens_assign(AGameVod, Base_Vod_obj);
     }
 
     function ScreensObj_InitUserVod() {
         UserVod = Screens_assign({
-            periodMaxPos: 2,
-            HeaderQuatity: 3,
-            object: 'videos',
-            key_pgDown: Main_UserChannels,
-            key_pgUp: Main_usergames,
-            ids: Screens_ScreenIds('UserVod'),
-            table: 'stream_table_user_vod',
-            screen: Main_UserVod,
-            time: ['time', 'views'],
-            highlightSTR: 'UserVod_highlight',
-            highlight: Main_getItemBool('UserVod_highlight', false),
-            periodPos: Main_getItemInt('UserVod_periodPos', 1),
-            base_url: Main_kraken_api + 'videos/followed?limit=' + Main_ItemsLimitMax,
-            set_url: function() {
-                this.token = Main_OAuth + AddUser_UsernameArray[0].access_token;
+                periodMaxPos: 2,
+                HeaderQuatity: 3,
+                object: 'videos',
+                key_pgDown: Main_UserChannels,
+                key_pgUp: Main_usergames,
+                ids: Screens_ScreenIds('UserVod'),
+                table: 'stream_table_user_vod',
+                screen: Main_UserVod,
+                time: ['time', 'views'],
+                highlightSTR: 'UserVod_highlight',
+                highlight: Main_getItemBool('UserVod_highlight', false),
+                periodPos: Main_getItemInt('UserVod_periodPos', 1),
+                base_url: Main_kraken_api + 'videos/followed?limit=' + Main_ItemsLimitMax,
+                set_url: function() {
+                    this.token = Main_OAuth + AddUser_UsernameArray[0].access_token;
 
-                this.url = this.base_url + '&broadcast_type=' + (this.highlight ? 'highlight' : 'archive') +
-                    '&sort=' + this.time[this.periodPos - 1] + '&offset=' + this.offset;
-            },
-            key_play: function() {
-                if (this.posY === -1) {
-                    if (this.posX === 0) {
-                        this.highlight = !this.highlight;
-                        this.SetPeriod();
-                        Screens_StartLoad();
-                        Main_setItem(this.highlightSTR, this.highlight ? 'true' : 'false');
-                    } else {
-                        this.periodPos++;
-                        if (this.periodPos > this.periodMaxPos) this.periodPos = 1;
-                        this.SetPeriod();
-                        Screens_StartLoad();
+                    this.url = this.base_url + '&broadcast_type=' + (this.highlight ? 'highlight' : 'archive') + '&sort=' + this.time[this.periodPos - 1] + '&offset=' + this.offset;
+                },
+                key_play: function() {
+                    if (this.posY === -1) {
+                        if (this.posX === 0) {
+                            this.highlight = !this.highlight;
+                            this.SetPeriod();
+                            Screens_StartLoad();
+                            Main_setItem(this.highlightSTR, this.highlight ? 'true' : 'false');
+                        } else {
+                            this.periodPos++;
+                            if (this.periodPos > this.periodMaxPos) this.periodPos = 1;
+                            this.SetPeriod();
+                            Screens_StartLoad();
+                        }
+                    } else Main_OpenVod(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
+                },
+                SwitchesIcons: ['movie-play', 'history'],
+                addSwitches: function() {
+                    this.TopRowCreated = true;
+                    this.row = document.createElement('div');
+                    var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_TYPE];
+                    var thumbfollow,
+                        div,
+                        i = 0;
+
+                    for (i; i < SwitchesStrings.length; i++) {
+                        thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
+                        div = document.createElement('div');
+                        div.setAttribute('id', this.ids[8] + 'y_' + i);
+                        div.className = 'stream_cell_period';
+                        div.innerHTML =
+                            '<div id="' +
+                            this.ids[0] +
+                            'y_' +
+                            i +
+                            '" class="stream_thumbnail_channel_vod" ><div id="' +
+                            this.ids[3] +
+                            'y_' +
+                            i +
+                            '" class="stream_channel_follow_game">' +
+                            thumbfollow +
+                            '</div></div>';
+                        this.row.appendChild(div);
                     }
-                } else Main_OpenVod(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
-            },
-            SwitchesIcons: ['movie-play', 'history'],
-            addSwitches: function() {
-                this.TopRowCreated = true;
-                this.row = document.createElement('div');
-                var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_TYPE];
-                var thumbfollow, div, i = 0;
+                    document.getElementById(this.table).appendChild(this.row);
+                },
+                label_init: function() {
+                    this.SetPeriod();
+                    Sidepannel_SetTopOpacity(this.screen);
+                },
+                SetPeriod: function() {
+                    Main_setItem('UserVod_periodPos', this.periodPos);
 
-                for (i; i < SwitchesStrings.length; i++) {
-                    thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
-                    div = document.createElement('div');
-                    div.setAttribute('id', this.ids[8] + 'y_' + i);
-                    div.className = 'stream_cell_period';
-                    div.innerHTML = '<div id="' + this.ids[0] +
-                        'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                        'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
-                    this.row.appendChild(div);
+                    ScreensObj_SetTopLable(STR_USER, (this.highlight ? STR_PAST_HIGHL : STR_PAST_BROA) + (this.periodPos === 1 ? STR_TIME : STR_VIWES));
                 }
-                document.getElementById(this.table).appendChild(this.row);
             },
-            label_init: function() {
-                this.SetPeriod();
-                Sidepannel_SetTopOpacity(this.screen);
-            },
-            SetPeriod: function() {
-                Main_setItem('UserVod_periodPos', this.periodPos);
-
-                ScreensObj_SetTopLable(STR_USER, (this.highlight ? STR_PAST_HIGHL : STR_PAST_BROA) +
-                    (this.periodPos === 1 ? STR_TIME : STR_VIWES));
-            }
-        }, Base_obj);
+            Base_obj
+        );
 
         UserVod = Screens_assign(UserVod, Base_Vod_obj);
     }
@@ -14603,10 +14500,8 @@
         img_404: IMG_404_VIDEO,
         setMax: function(tempObj) {
             if (this.use_helix) {
-
                 this.cursor = tempObj.pagination.cursor;
                 if (!this.cursor || this.cursor === '') this.dataEnded = true;
-
             } else {
                 this.MaxOffset = tempObj._total;
 
@@ -14619,9 +14514,7 @@
             }
         },
         check_offset: function() {
-            if ((this.offset >= 900) ||
-                ((typeof this.MaxOffset !== 'undefined') &&
-                    this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset)) this.dataEnded = true;
+            if (this.offset >= 900 || (typeof this.MaxOffset !== 'undefined' && this.offset && this.offset + Main_ItemsLimitMax > this.MaxOffset)) this.dataEnded = true;
         },
         empty_str: function() {
             return STR_NO + STR_SPACE + STR_LIVE_CHANNELS;
@@ -14630,113 +14523,104 @@
             this.addCellTemp(cell);
         },
         addCellTemp: function(cell) {
-
             var id_cell = this.use_helix ? cell.user_id : cell.channel._id;
 
             if (!this.idObject[id_cell]) {
-
                 this.itemsCount++;
                 this.idObject[id_cell] = 1;
                 if (this.use_helix) {
-
                     this.row.appendChild(
-                        Screens_createCellLive(
-                            this.row_id + '_' + this.coloumn_id,
-                            [cell.user_login, cell.user_id, Main_is_rerun(cell.type), cell.game_id],
-                            this.ids,
-                            [cell.thumbnail_url.replace("{width}x{height}", Main_VideoSize),
-                                cell.user_name,
-                                cell.title,
-                                cell.game_name,
-                                STR_SINCE + Play_streamLiveAt(cell.started_at) + STR_SPACE + STR_FOR + Main_addCommas(cell.viewer_count) +
-                                STR_SPACE + STR_VIEWER,
-                                '[' + cell.language.toUpperCase() + ']'
-                            ]));
+                        Screens_createCellLive(this.row_id + '_' + this.coloumn_id, [cell.user_login, cell.user_id, Main_is_rerun(cell.type), cell.game_id], this.ids, [
+                            cell.thumbnail_url.replace('{width}x{height}', Main_VideoSize),
+                            cell.user_name,
+                            cell.title,
+                            cell.game_name,
+                            STR_SINCE + Play_streamLiveAt(cell.started_at) + STR_SPACE + STR_FOR + Main_addCommas(cell.viewer_count) + STR_SPACE + STR_VIEWER,
+                            '[' + cell.language.toUpperCase() + ']'
+                        ])
+                    );
                 } else {
-
                     this.row.appendChild(
-                        Screens_createCellLive(
-                            this.row_id + '_' + this.coloumn_id,
-                            [cell.channel.name, cell.channel._id, Main_is_rerun(cell.broadcast_platform)],
-                            this.ids,
-                            [cell.preview.template.replace("{width}x{height}", Main_VideoSize),
-                                cell.channel.display_name,
-                                cell.channel.status,
-                                cell.game,
-                                STR_SINCE + Play_streamLiveAt(cell.created_at) + STR_SPACE + STR_FOR + Main_addCommas(cell.viewers) +
-                                STR_SPACE + STR_VIEWER,
-                                Main_videoqualitylang(cell.video_height, cell.average_fps, cell.channel.broadcaster_language)
-                            ]));
+                        Screens_createCellLive(this.row_id + '_' + this.coloumn_id, [cell.channel.name, cell.channel._id, Main_is_rerun(cell.broadcast_platform)], this.ids, [
+                            cell.preview.template.replace('{width}x{height}', Main_VideoSize),
+                            cell.channel.display_name,
+                            cell.channel.status,
+                            cell.game,
+                            STR_SINCE + Play_streamLiveAt(cell.created_at) + STR_SPACE + STR_FOR + Main_addCommas(cell.viewers) + STR_SPACE + STR_VIEWER,
+                            Main_videoqualitylang(cell.video_height, cell.average_fps, cell.channel.broadcaster_language)
+                        ])
+                    );
                 }
                 this.coloumn_id++;
             }
-        },
+        }
     };
-
 
     function ScreensObj_InitLive() {
         Live = Screens_assign({
-            HeaderQuatity: 2,
-            ids: Screens_ScreenIds('Live'),
-            table: 'stream_table_live',
-            screen: Main_Live,
-            object: 'data',
-            key_pgDown: Main_Featured,
-            key_pgUp: Main_Clip,
-            use_helix: true,
-            base_url: Main_helix_api + 'streams?first=' + Main_ItemsLimitMax,
-            set_url: function() {
-                //this.check_offset();
+                HeaderQuatity: 2,
+                ids: Screens_ScreenIds('Live'),
+                table: 'stream_table_live',
+                screen: Main_Live,
+                object: 'data',
+                key_pgDown: Main_Featured,
+                key_pgUp: Main_Clip,
+                use_helix: true,
+                base_url: Main_helix_api + 'streams?first=' + Main_ItemsLimitMax,
+                set_url: function() {
+                    //this.check_offset();
 
-                this.url = this.base_url + (this.cursor ? '&after=' + this.cursor : '') +
-                    (Main_ContentLang !== "" ? ('&language=' + Main_ContentLang) : '');
-            },
-            label_init: function() {
-                Sidepannel_SetDefaultLables();
-                Main_values.Sidepannel_IsUser = false;
-                Sidepannel_SetTopOpacity(this.screen);
+                    this.url = this.base_url + (this.cursor ? '&after=' + this.cursor : '') + (Main_ContentLang !== '' ? '&language=' + Main_ContentLang : '');
+                },
+                label_init: function() {
+                    Sidepannel_SetDefaultLables();
+                    Main_values.Sidepannel_IsUser = false;
+                    Sidepannel_SetTopOpacity(this.screen);
 
-                ScreensObj_SetTopLable(STR_LIVE);
+                    ScreensObj_SetTopLable(STR_LIVE);
+                },
+                key_play: function() {
+                    Main_OpenLiveStream(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
+                }
             },
-            key_play: function() {
-                Main_OpenLiveStream(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
-            }
-        }, Base_obj);
+            Base_obj
+        );
 
         Live = Screens_assign(Live, Base_Live_obj);
     }
 
     function ScreensObj_InitSearchLive() {
         SearchLive = Screens_assign({
-            HeaderQuatity: 2,
-            ids: Screens_ScreenIds('SearchLive'),
-            table: 'stream_table_search_live',
-            screen: Main_SearchLive,
-            object: 'streams',
-            base_url: Main_kraken_api + 'search/streams?limit=' + Main_ItemsLimitMax + '&query=',
-            set_url: function() {
-                this.check_offset();
+                HeaderQuatity: 2,
+                ids: Screens_ScreenIds('SearchLive'),
+                table: 'stream_table_search_live',
+                screen: Main_SearchLive,
+                object: 'streams',
+                base_url: Main_kraken_api + 'search/streams?limit=' + Main_ItemsLimitMax + '&query=',
+                set_url: function() {
+                    this.check_offset();
 
-                this.url = this.base_url + encodeURIComponent(Main_values.Search_data) +
-                    '&offset=' + this.offset;
-            },
-            label_init: function() {
-                Main_values.Search_isSearching = true;
-                Main_cleanTopLabel();
-                if (this.lastData !== Main_values.Search_data) this.status = false;
-                this.lastData = Main_values.Search_data;
-                Sidepannel_SetTopOpacity(this.screen);
+                    this.url = this.base_url + encodeURIComponent(Main_values.Search_data) + '&offset=' + this.offset;
+                },
+                label_init: function() {
+                    Main_values.Search_isSearching = true;
+                    Main_cleanTopLabel();
+                    if (this.lastData !== Main_values.Search_data) this.status = false;
+                    this.lastData = Main_values.Search_data;
+                    Sidepannel_SetTopOpacity(this.screen);
 
-                ScreensObj_SetTopLable(STR_SEARCH + STR_SPACE + STR_LIVE, "'" + Main_values.Search_data + "'");
+                    ScreensObj_SetTopLable(STR_SEARCH + STR_SPACE + STR_LIVE, "'" + Main_values.Search_data + "'");
+                },
+                label_exit: function() {
+                    Main_values.Search_isSearching = false;
+                    if (!Main_values.Search_isSearching) Main_RestoreTopLabel();
+                },
+                key_play: function() {
+                    Main_OpenLiveStream(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
+                }
             },
-            label_exit: function() {
-                Main_values.Search_isSearching = false;
-                if (!Main_values.Search_isSearching) Main_RestoreTopLabel();
-            },
-            key_play: function() {
-                Main_OpenLiveStream(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
-            }
-        }, Base_obj);
+            Base_obj
+        );
 
         SearchLive = Screens_assign(SearchLive, Base_Live_obj);
 
@@ -14749,124 +14633,141 @@
 
     function ScreensObj_InitUserLive() {
         UserLive = Screens_assign({
-            HeaderQuatity: 3,
-            ids: Screens_ScreenIds('UserLive'),
-            table: 'stream_table_user_live',
-            screen: Main_UserLive,
-            object: 'data',
-            key_pgDown: Main_usergames,
-            key_pgUp: Main_UserChannels,
-            base_url: Main_helix_api + 'streams/',
-            loadChannelOffsset: 0,
-            followerChannels: '',
-            followerChannelsDone: false,
-            use_helix: true,
-            set_url: function() {
-                //this.check_offset();
+                HeaderQuatity: 3,
+                ids: Screens_ScreenIds('UserLive'),
+                table: 'stream_table_user_live',
+                screen: Main_UserLive,
+                object: 'data',
+                key_pgDown: Main_usergames,
+                key_pgUp: Main_UserChannels,
+                base_url: Main_helix_api + 'streams/',
+                loadChannelOffsset: 0,
+                followerChannels: '',
+                followerChannelsDone: false,
+                use_helix: true,
+                set_url: function() {
+                    //this.check_offset();
 
-                //this.token = Main_Bearer + AddUser_UsernameArray[0].access_token;
-                this.url = this.base_url + 'followed?user_id=' + AddUser_UsernameArray[0].id + '&first=' + Main_ItemsLimitMax +
-                    (this.cursor ? '&after=' + this.cursor : '');
-
+                    //this.token = Main_Bearer + AddUser_UsernameArray[0].access_token;
+                    this.url = this.base_url + 'followed?user_id=' + AddUser_UsernameArray[0].id + '&first=' + Main_ItemsLimitMax + (this.cursor ? '&after=' + this.cursor : '');
+                },
+                label_init: function() {
+                    ScreensObj_TopLableUserInit();
+                    ScreensObj_SetTopLable(STR_USER, STR_LIVE_CHANNELS);
+                },
+                key_play: function() {
+                    Main_OpenLiveStream(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
+                }
             },
-            label_init: function() {
-                ScreensObj_TopLableUserInit();
-                ScreensObj_SetTopLable(STR_USER, STR_LIVE_CHANNELS);
-            },
-            key_play: function() {
-                Main_OpenLiveStream(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
-            }
-        }, Base_obj);
+            Base_obj
+        );
 
         UserLive = Screens_assign(UserLive, Base_Live_obj);
-
     }
 
     function ScreensObj_InitAGame() {
         AGame = Screens_assign({
-            HeaderQuatity: 2,
-            ids: Screens_ScreenIds('AGame'),
-            table: 'stream_table_a_game',
-            screen: Main_aGame,
-            object: 'data',
-            key_pgDown: Main_Vod,
-            key_pgUp: Main_Featured,
-            use_helix: true,
-            base_url: Main_helix_api + 'streams?game_id=',
-            set_url: function() {
-                //this.check_offset();
-                this.url = this.base_url + encodeURIComponent(Main_values.Main_gameSelected_id) +
-                    '&first=' + Main_ItemsLimitMax + (this.cursor ? '&after=' + this.cursor : '') +
-                    (Main_ContentLang !== "" ? ('&language=' + Main_ContentLang) : '');
-            },
-            label_init: function() {
-                ScreensObj_TopLableAgameInit();
+                HeaderQuatity: 2,
+                ids: Screens_ScreenIds('AGame'),
+                table: 'stream_table_a_game',
+                screen: Main_aGame,
+                object: 'data',
+                key_pgDown: Main_Vod,
+                key_pgUp: Main_Featured,
+                use_helix: true,
+                base_url: Main_helix_api + 'streams?game_id=',
+                set_url: function() {
+                    //this.check_offset();
+                    this.url =
+                        this.base_url +
+                        encodeURIComponent(Main_values.Main_gameSelected_id) +
+                        '&first=' +
+                        Main_ItemsLimitMax +
+                        (this.cursor ? '&after=' + this.cursor : '') +
+                        (Main_ContentLang !== '' ? '&language=' + Main_ContentLang : '');
+                },
+                label_init: function() {
+                    ScreensObj_TopLableAgameInit();
 
-                if (Main_values.Search_isSearching) { //Reset label as the app may be restoring from background
-                    Main_cleanTopLabel();
-                } else Main_values.gameSelectedOld = null;
+                    if (Main_values.Search_isSearching) {
+                        //Reset label as the app may be restoring from background
+                        Main_cleanTopLabel();
+                    } else Main_values.gameSelectedOld = null;
 
-                ScreensObj_SetTopLable(Main_values.Main_gameSelected, STR_LIVE);
-            },
-            label_exit: ScreensObj_TopLableAgameExit,
-            HasSwitches: true,
-            SwitchesIcons: ['movie-play', 'movie'],
-            addSwitches: function() {
-                this.TopRowCreated = true;
-                this.row = document.createElement('div');
-                var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_VIDEOS, STR_SPACE + STR_SPACE + STR_CLIPS];
-                var thumbfollow, div, i = 0;
+                    ScreensObj_SetTopLable(Main_values.Main_gameSelected, STR_LIVE);
+                },
+                label_exit: ScreensObj_TopLableAgameExit,
+                HasSwitches: true,
+                SwitchesIcons: ['movie-play', 'movie'],
+                addSwitches: function() {
+                    this.TopRowCreated = true;
+                    this.row = document.createElement('div');
+                    var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_VIDEOS, STR_SPACE + STR_SPACE + STR_CLIPS];
+                    var thumbfollow,
+                        div,
+                        i = 0;
 
-                for (i; i < SwitchesStrings.length; i++) {
-                    thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
-                    div = document.createElement('div');
-                    div.setAttribute('id', this.ids[8] + 'y_' + i);
-                    div.className = 'stream_cell_period';
-                    div.innerHTML = '<div id="' + this.ids[0] +
-                        'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                        'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
-                    this.row.appendChild(div);
+                    for (i; i < SwitchesStrings.length; i++) {
+                        thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
+                        div = document.createElement('div');
+                        div.setAttribute('id', this.ids[8] + 'y_' + i);
+                        div.className = 'stream_cell_period';
+                        div.innerHTML =
+                            '<div id="' +
+                            this.ids[0] +
+                            'y_' +
+                            i +
+                            '" class="stream_thumbnail_channel_vod" ><div id="' +
+                            this.ids[3] +
+                            'y_' +
+                            i +
+                            '" class="stream_channel_follow_game">' +
+                            thumbfollow +
+                            '</div></div>';
+                        this.row.appendChild(div);
+                    }
+                    document.getElementById(this.table).appendChild(this.row);
+                },
+                key_play: function() {
+                    if (this.posY !== -1) {
+                        Main_OpenLiveStream(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
+                    } else AGame_headerOptions();
                 }
-                document.getElementById(this.table).appendChild(this.row);
             },
-            key_play: function() {
-                if (this.posY !== -1) {
-                    Main_OpenLiveStream(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
-                } else AGame_headerOptions();
-            },
-        }, Base_obj);
+            Base_obj
+        );
 
         AGame = Screens_assign(AGame, Base_Live_obj);
     }
 
     function ScreensObj_InitFeatured() {
         Featured = Screens_assign({
-            HeaderQuatity: 2,
-            ids: Screens_ScreenIds('Featured'),
-            table: 'stream_table_featured',
-            screen: Main_Featured,
-            key_pgDown: Main_games,
-            key_pgUp: Main_Live,
-            base_url: Main_kraken_api + 'streams/featured?limit=' + Main_ItemsLimitMax,
-            set_url: function() {
-                this.check_offset();
+                HeaderQuatity: 2,
+                ids: Screens_ScreenIds('Featured'),
+                table: 'stream_table_featured',
+                screen: Main_Featured,
+                key_pgDown: Main_games,
+                key_pgUp: Main_Live,
+                base_url: Main_kraken_api + 'streams/featured?limit=' + Main_ItemsLimitMax,
+                set_url: function() {
+                    this.check_offset();
 
-                this.url = this.base_url + '&offset=' + this.offset +
-                    (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token ? '&oauth_token=' +
-                        AddUser_UsernameArray[0].access_token : '');
-            },
-            label_init: function() {
-                Sidepannel_SetDefaultLables();
-                Main_values.Sidepannel_IsUser = false;
-                Sidepannel_SetTopOpacity(this.screen);
+                    this.url = this.base_url + '&offset=' + this.offset + (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token ? '&oauth_token=' + AddUser_UsernameArray[0].access_token : '');
+                },
+                label_init: function() {
+                    Sidepannel_SetDefaultLables();
+                    Main_values.Sidepannel_IsUser = false;
+                    Sidepannel_SetTopOpacity(this.screen);
 
-                ScreensObj_SetTopLable(STR_FEATURED);
+                    ScreensObj_SetTopLable(STR_FEATURED);
+                },
+                object: 'featured',
+                key_play: function() {
+                    Main_OpenLiveStream(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
+                }
             },
-            object: 'featured',
-            key_play: function() {
-                Main_OpenLiveStream(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
-            }
-        }, Base_obj);
+            Base_obj
+        );
 
         Featured = Screens_assign(Featured, Base_Live_obj);
 
@@ -14898,25 +14799,34 @@
             this.TopRowCreated = true;
             this.row = document.createElement('div');
             var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_CLIP, STR_SPACE + STR_SPACE + STR_PLAY_ALL];
-            var thumbfollow, div, i = 0;
+            var thumbfollow,
+                div,
+                i = 0;
 
             for (i; i < SwitchesStrings.length; i++) {
                 thumbfollow = '<i class="icon-' + this.SwitchesIcons[i] + ' stream_channel_follow_icon"></i>' + SwitchesStrings[i];
                 div = document.createElement('div');
                 div.setAttribute('id', this.ids[8] + 'y_' + i);
                 div.className = 'stream_cell_period';
-                div.innerHTML = '<div id="' + this.ids[0] +
-                    'y_' + i + '" class="stream_thumbnail_channel_vod" ><div id="' + this.ids[3] +
-                    'y_' + i + '" class="stream_channel_follow_game">' + thumbfollow + '</div></div>';
+                div.innerHTML =
+                    '<div id="' +
+                    this.ids[0] +
+                    'y_' +
+                    i +
+                    '" class="stream_thumbnail_channel_vod" ><div id="' +
+                    this.ids[3] +
+                    'y_' +
+                    i +
+                    '" class="stream_channel_follow_game">' +
+                    thumbfollow +
+                    '</div></div>';
                 this.row.appendChild(div);
             }
             document.getElementById(this.table).appendChild(this.row);
         },
         setMax: function(tempObj) {
-
             this.cursor = this.use_helix ? tempObj.pagination.cursor : tempObj._cursor;
             if (!this.cursor || this.cursor === '') this.dataEnded = true;
-
         },
         key_play: function() {
             if (this.posY === -1) {
@@ -14939,24 +14849,23 @@
                 this.idObject[cell.tracking_id] = 1;
 
                 this.row.appendChild(
-                    Screens_createCellClip(
-                        this.row_id + '_' + this.coloumn_id,
-                        this.ids,
-                        [cell.slug,
-                            cell.duration,
-                            cell.game,
-                            cell.broadcaster.name,
-                            cell.broadcaster.display_name,
-                            cell.broadcaster.logo.replace("150x150", "300x300"),
-                            cell.broadcaster.id,
-                            (cell.vod !== null ? cell.vod.id : null),
-                            (cell.vod !== null ? cell.vod.offset : null),
-                            twemoji.parse(cell.title),
-                            '[' + cell.language.toUpperCase() + ']',
-                            STR_CREATED_AT + Main_videoCreatedAt(cell.created_at),
-                            Main_addCommas(cell.views) + STR_VIEWS,
-                            cell.thumbnails.medium
-                        ]));
+                    Screens_createCellClip(this.row_id + '_' + this.coloumn_id, this.ids, [
+                        cell.slug,
+                        cell.duration,
+                        cell.game,
+                        cell.broadcaster.name,
+                        cell.broadcaster.display_name,
+                        cell.broadcaster.logo.replace('150x150', '300x300'),
+                        cell.broadcaster.id,
+                        cell.vod !== null ? cell.vod.id : null,
+                        cell.vod !== null ? cell.vod.offset : null,
+                        twemoji.parse(cell.title),
+                        '[' + cell.language.toUpperCase() + ']',
+                        STR_CREATED_AT + Main_videoCreatedAt(cell.created_at),
+                        Main_addCommas(cell.views) + STR_VIEWS,
+                        cell.thumbnails.medium
+                    ])
+                );
 
                 this.coloumn_id++;
             }
@@ -14965,99 +14874,113 @@
 
     function ScreensObj_InitClip() {
         Clip = Screens_assign({
-            ids: Screens_ScreenIds('Clip'),
-            table: 'stream_table_clip',
-            screen: Main_Clip,
-            key_pgDown: Main_Live,
-            key_pgUp: Main_Vod,
-            periodPos: Main_getItemInt('Clip_periodPos', 2),
-            base_url: Main_kraken_api + 'clips/top?limit=' + Main_ItemsLimitMax,
-            set_url: function() {
-                this.url = this.base_url + '&period=' + this.period[this.periodPos - 1] +
-                    (this.cursor ? '&cursor=' + this.cursor : '') +
-                    (Main_ContentLang !== "" ?
-                        ('&language=' + (Languages_Extra[Main_ContentLang] ? Languages_Extra[Main_ContentLang] : Main_ContentLang)) : '');
+                ids: Screens_ScreenIds('Clip'),
+                table: 'stream_table_clip',
+                screen: Main_Clip,
+                key_pgDown: Main_Live,
+                key_pgUp: Main_Vod,
+                periodPos: Main_getItemInt('Clip_periodPos', 2),
+                base_url: Main_kraken_api + 'clips/top?limit=' + Main_ItemsLimitMax,
+                set_url: function() {
+                    this.url =
+                        this.base_url +
+                        '&period=' +
+                        this.period[this.periodPos - 1] +
+                        (this.cursor ? '&cursor=' + this.cursor : '') +
+                        (Main_ContentLang !== '' ? '&language=' + (Languages_Extra[Main_ContentLang] ? Languages_Extra[Main_ContentLang] : Main_ContentLang) : '');
+                },
+                SetPeriod: function() {
+                    Main_setItem('Clip_periodPos', this.periodPos);
+                    ScreensObj_SetTopLable(STR_CLIPS, Main_Periods[this.periodPos - 1]);
+                },
+                label_init: function() {
+                    this.SetPeriod();
+                    Sidepannel_SetDefaultLables();
+                    Main_values.Sidepannel_IsUser = false;
+                    Sidepannel_SetTopOpacity(this.screen);
+                },
+                label_exit: function() {
+                    Main_RestoreTopLabel();
+                }
             },
-            SetPeriod: function() {
-                Main_setItem('Clip_periodPos', this.periodPos);
-                ScreensObj_SetTopLable(STR_CLIPS, Main_Periods[this.periodPos - 1]);
-            },
-            label_init: function() {
-                this.SetPeriod();
-                Sidepannel_SetDefaultLables();
-                Main_values.Sidepannel_IsUser = false;
-                Sidepannel_SetTopOpacity(this.screen);
-
-            },
-            label_exit: function() {
-                Main_RestoreTopLabel();
-            },
-        }, Base_obj);
+            Base_obj
+        );
 
         Clip = Screens_assign(Clip, Base_Clip_obj);
     }
 
     function ScreensObj_InitChannelClip() {
         ChannelClip = Screens_assign({
-            ids: Screens_ScreenIds('ChannelClip'),
-            table: 'stream_table_channel_clip',
-            screen: Main_ChannelClip,
-            key_pgUp: Main_ChannelVod,
-            periodPos: Main_getItemInt('ChannelClip_periodPos', 2),
-            base_url: Main_kraken_api + 'clips/top?channel=',
-            set_url: function() {
-                this.url = this.base_url + encodeURIComponent(Main_values.Main_selectedChannel) +
-                    '&limit=' + Main_ItemsLimitMax + '&period=' +
-                    this.period[this.periodPos - 1] + (this.cursor ? '&cursor=' + this.cursor : '');
-            },
-            SetPeriod: function() {
-                Main_setItem('ChannelClip_periodPos', this.periodPos);
+                ids: Screens_ScreenIds('ChannelClip'),
+                table: 'stream_table_channel_clip',
+                screen: Main_ChannelClip,
+                key_pgUp: Main_ChannelVod,
+                periodPos: Main_getItemInt('ChannelClip_periodPos', 2),
+                base_url: Main_kraken_api + 'clips/top?channel=',
+                set_url: function() {
+                    this.url =
+                        this.base_url +
+                        encodeURIComponent(Main_values.Main_selectedChannel) +
+                        '&limit=' +
+                        Main_ItemsLimitMax +
+                        '&period=' +
+                        this.period[this.periodPos - 1] +
+                        (this.cursor ? '&cursor=' + this.cursor : '');
+                },
+                SetPeriod: function() {
+                    Main_setItem('ChannelClip_periodPos', this.periodPos);
 
-                ScreensObj_SetTopLable(Main_values.Main_selectedChannelDisplayname, STR_CLIPS + STR_SPACE +
-                    Main_Periods[this.periodPos - 1]);
+                    ScreensObj_SetTopLable(Main_values.Main_selectedChannelDisplayname, STR_CLIPS + STR_SPACE + Main_Periods[this.periodPos - 1]);
+                },
+                label_init: function() {
+                    if (!Main_values.Search_isSearching && Main_values.Main_selectedChannel_id) ChannelContent_RestoreChannelValue();
+                    if (Main_values.Main_selectedChannel !== this.lastselectedChannel) this.status = false;
+                    Main_cleanTopLabel();
+                    this.SetPeriod();
+                    Main_ShowElement('label_side_panel');
+                    this.lastselectedChannel = Main_values.Main_selectedChannel;
+                },
+                label_exit: Main_RestoreTopLabel
             },
-            label_init: function() {
-                if (!Main_values.Search_isSearching && Main_values.Main_selectedChannel_id)
-                    ChannelContent_RestoreChannelValue();
-                if (Main_values.Main_selectedChannel !== this.lastselectedChannel) this.status = false;
-                Main_cleanTopLabel();
-                this.SetPeriod();
-                Main_ShowElement('label_side_panel');
-                this.lastselectedChannel = Main_values.Main_selectedChannel;
-            },
-            label_exit: Main_RestoreTopLabel,
-        }, Base_obj);
+            Base_obj
+        );
 
         ChannelClip = Screens_assign(ChannelClip, Base_Clip_obj);
     }
 
     function ScreensObj_InitAGameClip() {
         AGameClip = Screens_assign({
-            ids: Screens_ScreenIds('AGameClip'),
-            table: 'stream_table_a_game_clip',
-            screen: Main_AGameClip,
-            key_pgDown: Main_Vod,
-            key_pgUp: Main_Featured,
-            periodPos: Main_getItemInt('AGameClip_periodPos', 2),
-            base_url: Main_kraken_api + 'clips/top?game=',
-            set_url: function() {
-                this.url = this.base_url + encodeURIComponent(Main_values.Main_gameSelected) + '&limit=' + Main_ItemsLimitMax +
-                    '&period=' + this.period[this.periodPos - 1] + (this.cursor ? '&cursor=' + this.cursor : '') +
-                    (Main_ContentLang !== "" ?
-                        ('&language=' + (Languages_Extra[Main_ContentLang] ? Languages_Extra[Main_ContentLang] : Main_ContentLang)) : '');
-            },
-            SetPeriod: function() {
-                Main_setItem('AGameClip_periodPos', this.periodPos);
+                ids: Screens_ScreenIds('AGameClip'),
+                table: 'stream_table_a_game_clip',
+                screen: Main_AGameClip,
+                key_pgDown: Main_Vod,
+                key_pgUp: Main_Featured,
+                periodPos: Main_getItemInt('AGameClip_periodPos', 2),
+                base_url: Main_kraken_api + 'clips/top?game=',
+                set_url: function() {
+                    this.url =
+                        this.base_url +
+                        encodeURIComponent(Main_values.Main_gameSelected) +
+                        '&limit=' +
+                        Main_ItemsLimitMax +
+                        '&period=' +
+                        this.period[this.periodPos - 1] +
+                        (this.cursor ? '&cursor=' + this.cursor : '') +
+                        (Main_ContentLang !== '' ? '&language=' + (Languages_Extra[Main_ContentLang] ? Languages_Extra[Main_ContentLang] : Main_ContentLang) : '');
+                },
+                SetPeriod: function() {
+                    Main_setItem('AGameClip_periodPos', this.periodPos);
 
-                ScreensObj_SetTopLable(Main_values.Main_gameSelected, STR_CLIPS + STR_SPACE +
-                    Main_Periods[this.periodPos - 1]);
+                    ScreensObj_SetTopLable(Main_values.Main_gameSelected, STR_CLIPS + STR_SPACE + Main_Periods[this.periodPos - 1]);
+                },
+                label_init: function() {
+                    ScreensObj_TopLableAgameInit();
+                    this.SetPeriod();
+                },
+                label_exit: ScreensObj_TopLableAgameExit
             },
-            label_init: function() {
-                ScreensObj_TopLableAgameInit();
-                this.SetPeriod();
-            },
-            label_exit: ScreensObj_TopLableAgameExit,
-        }, Base_obj);
+            Base_obj
+        );
 
         AGameClip = Screens_assign(AGameClip, Base_Clip_obj);
     }
@@ -15081,13 +15004,13 @@
             Main_values.Main_gameSelected_id = Main_values.Main_gameSelected[3];
             Main_values.Main_gameSelected = Main_values.Main_gameSelected[1];
 
-            document.body.removeEventListener("keydown", Screens_handleKeyDown);
+            document.body.removeEventListener('keydown', Screens_handleKeyDown);
             Main_values.Main_BeforeAgame = this.screen;
             Main_values.Main_Go = Main_aGame;
             Main_values.Main_BeforeAgameisSet = true;
 
             Main_addFocusVideoOffset = 0;
-            document.body.removeEventListener("keydown", Screens_handleKeyDown);
+            document.body.removeEventListener('keydown', Screens_handleKeyDown);
             Main_HideElement(this.ids[10]);
 
             Main_SwitchScreenAction();
@@ -15100,40 +15023,27 @@
                 this.MaxOffset = tempObj._total;
                 if (this.data.length >= this.MaxOffset) this.dataEnded = true;
             }
-
-
-
         },
         addCell: function(cell) {
-
             var hasLive = this.isLive || this.screen === Main_games;
             var game = this.hasGameProp ? cell.game : cell;
 
             var id_cell = this.use_helix ? game.id : game._id;
 
             if (!this.idObject[id_cell]) {
-
                 this.itemsCount++;
                 this.idObject[id_cell] = 1;
                 if (this.use_helix) {
-                    this.row.appendChild(
-                        Screens_createCellGame(
-                            this.row_id + '_' + this.coloumn_id,
-                            this.ids, [game.box_art_url.replace("{width}x{height}", Main_GameSize),
-                                game.name,
-                                '',
-                                id_cell
-                            ]));
+                    this.row.appendChild(Screens_createCellGame(this.row_id + '_' + this.coloumn_id, this.ids, [game.box_art_url.replace('{width}x{height}', Main_GameSize), game.name, '', id_cell]));
                 } else {
                     this.row.appendChild(
-                        Screens_createCellGame(
-                            this.row_id + '_' + this.coloumn_id,
-                            this.ids, [game.box.template.replace("{width}x{height}", Main_GameSize),
-                                game.name,
-                                hasLive ? Main_addCommas(cell.channels) + STR_SPACE + STR_CHANNELS + STR_BR + STR_FOR +
-                                Main_addCommas(cell.viewers) + STR_SPACE + STR_VIEWER : '',
-                                id_cell
-                            ]));
+                        Screens_createCellGame(this.row_id + '_' + this.coloumn_id, this.ids, [
+                            game.box.template.replace('{width}x{height}', Main_GameSize),
+                            game.name,
+                            hasLive ? Main_addCommas(cell.channels) + STR_SPACE + STR_CHANNELS + STR_BR + STR_FOR + Main_addCommas(cell.viewers) + STR_SPACE + STR_VIEWER : '',
+                            id_cell
+                        ])
+                    );
                 }
 
                 this.coloumn_id++;
@@ -15143,95 +15053,96 @@
 
     function ScreensObj_InitGame() {
         Game = Screens_assign({
-            ids: Screens_ScreenIds('Game'),
-            table: 'stream_table_games',
-            screen: Main_games,
-            key_pgDown: Main_Vod,
-            key_pgUp: Main_Featured,
-            object: 'data',
-            use_helix: true,
-            base_url: Main_helix_api + 'games/top?first=' + Main_ItemsLimitMax,
-            set_url: function() {
+                ids: Screens_ScreenIds('Game'),
+                table: 'stream_table_games',
+                screen: Main_games,
+                key_pgDown: Main_Vod,
+                key_pgUp: Main_Featured,
+                object: 'data',
+                use_helix: true,
+                base_url: Main_helix_api + 'games/top?first=' + Main_ItemsLimitMax,
+                set_url: function() {
+                    if (!this.use_helix && this.offset && this.offset + Main_ItemsLimitMax > this.MaxOffset) this.dataEnded = true;
+                    this.url = this.base_url + (this.cursor ? '&after=' + this.cursor : '');
+                },
+                label_init: function() {
+                    Sidepannel_SetDefaultLables();
+                    Main_values.Sidepannel_IsUser = false;
+                    Sidepannel_SetTopOpacity(this.screen);
 
-                if (!this.use_helix && this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
-                this.url = this.base_url + (this.cursor ? '&after=' + this.cursor : '');
-
+                    ScreensObj_SetTopLable(STR_GAMES);
+                }
             },
-            label_init: function() {
-                Sidepannel_SetDefaultLables();
-                Main_values.Sidepannel_IsUser = false;
-                Sidepannel_SetTopOpacity(this.screen);
-
-                ScreensObj_SetTopLable(STR_GAMES);
-            }
-        }, Base_obj);
+            Base_obj
+        );
 
         Game = Screens_assign(Game, Base_Game_obj);
     }
 
     function ScreensObj_InitUserGames() {
         UserGames = Screens_assign({
-            ids: Screens_ScreenIds('UserGames'),
-            table: 'stream_table_user_games',
-            screen: Main_usergames,
-            key_pgDownNext: Main_UserChannels,
-            key_pgDown: Main_UserVod,
-            key_pgUp: Main_UserLive,
-            isLive: false,
-            hasGameProp: true,
-            OldUserName: '',
-            object: 'follows',
-            base_url: Main_kraken_api + 'users/',
-            set_url: function() {
+                ids: Screens_ScreenIds('UserGames'),
+                table: 'stream_table_user_games',
+                screen: Main_usergames,
+                key_pgDownNext: Main_UserChannels,
+                key_pgDown: Main_UserVod,
+                key_pgUp: Main_UserLive,
+                isLive: false,
+                hasGameProp: true,
+                OldUserName: '',
+                object: 'follows',
+                base_url: Main_kraken_api + 'users/',
+                set_url: function() {
+                    if (this.offset && this.offset + Main_ItemsLimitMax > this.MaxOffset) this.dataEnded = true;
 
-                if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
-
-                this.url = this.base_url + encodeURIComponent(AddUser_UsernameArray[0].id) +
-                    '/follows/games?limit=' + Main_ItemsLimitMax + '&offset=' + this.offset;
-
+                    this.url = this.base_url + encodeURIComponent(AddUser_UsernameArray[0].id) + '/follows/games?limit=' + Main_ItemsLimitMax + '&offset=' + this.offset;
+                },
+                label_init: function() {
+                    ScreensObj_TopLableUserInit();
+                    ScreensObj_SetTopLable(STR_USER, STR_FOLLOW_GAMES);
+                },
+                label_exit: function() {
+                    Main_IconLoad('label_refresh', 'icon-refresh', STR_REFRESH + ':' + STR_GUIDE);
+                }
             },
-            label_init: function() {
-                ScreensObj_TopLableUserInit();
-                ScreensObj_SetTopLable(STR_USER, STR_FOLLOW_GAMES);
-            },
-            label_exit: function() {
-                Main_IconLoad('label_refresh', 'icon-refresh', STR_REFRESH + ":" + STR_GUIDE);
-            },
-        }, Base_obj);
+            Base_obj
+        );
 
         UserGames = Screens_assign(UserGames, Base_Game_obj);
     }
 
     function ScreensObj_InitSearchGames() {
         SearchGames = Screens_assign({
-            ids: Screens_ScreenIds('SearchGames'),
-            table: 'stream_table_search_game',
-            screen: Main_SearchGames,
-            isLive: false,
-            OldUserName: '',
-            object: 'games',
-            lastData: '',
-            base_url: Main_kraken_api + 'search/games?query=',
-            set_url: function() {
-                this.dataEnded = true;
-                this.url = this.base_url + encodeURIComponent(Main_values.Search_data);
-            },
-            label_init: function() {
-                if (!Main_values.gameSelectedOld) Main_values.gameSelectedOld = Main_values.Main_gameSelected;
-                Main_values.Search_isSearching = true;
-                Main_cleanTopLabel();
-                if (this.lastData !== Main_values.Search_data) this.status = false;
-                this.lastData = Main_values.Search_data;
-                Sidepannel_SetTopOpacity(this.screen);
+                ids: Screens_ScreenIds('SearchGames'),
+                table: 'stream_table_search_game',
+                screen: Main_SearchGames,
+                isLive: false,
+                OldUserName: '',
+                object: 'games',
+                lastData: '',
+                base_url: Main_kraken_api + 'search/games?query=',
+                set_url: function() {
+                    this.dataEnded = true;
+                    this.url = this.base_url + encodeURIComponent(Main_values.Search_data);
+                },
+                label_init: function() {
+                    if (!Main_values.gameSelectedOld) Main_values.gameSelectedOld = Main_values.Main_gameSelected;
+                    Main_values.Search_isSearching = true;
+                    Main_cleanTopLabel();
+                    if (this.lastData !== Main_values.Search_data) this.status = false;
+                    this.lastData = Main_values.Search_data;
+                    Sidepannel_SetTopOpacity(this.screen);
 
-                ScreensObj_SetTopLable(STR_SEARCH + STR_SPACE + STR_GAMES, "'" + Main_values.Search_data + "'");
+                    ScreensObj_SetTopLable(STR_SEARCH + STR_SPACE + STR_GAMES, "'" + Main_values.Search_data + "'");
+                },
+                label_exit: function() {
+                    Main_values.Main_gameSelected = Main_values.gameSelectedOld;
+                    if (!Main_values.Search_isSearching) Main_RestoreTopLabel();
+                    Main_values.Games_return = false;
+                }
             },
-            label_exit: function() {
-                Main_values.Main_gameSelected = Main_values.gameSelectedOld;
-                if (!Main_values.Search_isSearching) Main_RestoreTopLabel();
-                Main_values.Games_return = false;
-            },
-        }, Base_obj);
+            Base_obj
+        );
 
         SearchGames = Screens_assign(SearchGames, Base_Game_obj);
         SearchGames.ItemsLimit = 100;
@@ -15253,66 +15164,63 @@
             return STR_NO + STR_SPACE + STR_USER_CHANNEL;
         },
         addCellTemp: function(cell) {
-            if (!this.idObject[cell._id]) {
-
+            if (!this.idObject[cell.id]) {
                 this.itemsCount++;
-                this.idObject[cell._id] = 1;
+                this.idObject[cell.id] = 1;
 
-                this.row.appendChild(
-                    Screens_createCellChannel(
-                        this.row_id + '_' + this.coloumn_id,
-                        this.ids, [cell.name, cell._id, cell.logo, cell.display_name, cell.partner]));
+                this.row.appendChild(Screens_createCellChannel(this.row_id + '_' + this.coloumn_id, this.ids, [cell.broadcaster_login, cell.id, cell.thumbnail_url, cell.display_name, null]));
 
                 this.coloumn_id++;
             }
-        },
+        }
     };
 
     function ScreensObj_InitUserChannels() {
         UserChannels = Screens_assign({
-            HeaderQuatity: 2,
-            ids: Screens_ScreenIds('UserChannels'),
-            table: 'stream_table_user_channels',
-            screen: Main_UserChannels,
-            object: 'follows',
-            key_pgDown: Main_UserLive,
-            key_pgUp: Main_UserVod,
-            key_pgUpNext: Main_usergames,
-            base_url: Main_kraken_api + 'users/',
-            set_url: function() {
-                if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
-                this.url = this.base_url + encodeURIComponent(AddUser_UsernameArray[0].id) +
-                    '/follows/channels?limit=' + Main_ItemsLimitMax + '&offset=' + this.offset + '&sortby=login&direction=asc';
+                HeaderQuatity: 2,
+                ids: Screens_ScreenIds('UserChannels'),
+                table: 'stream_table_user_channels',
+                screen: Main_UserChannels,
+                object: 'follows',
+                key_pgDown: Main_UserLive,
+                key_pgUp: Main_UserVod,
+                key_pgUpNext: Main_usergames,
+                base_url: Main_kraken_api + 'users/',
+                set_url: function() {
+                    if (this.offset && this.offset + Main_ItemsLimitMax > this.MaxOffset) this.dataEnded = true;
+                    this.url = this.base_url + encodeURIComponent(AddUser_UsernameArray[0].id) + '/follows/channels?limit=' + Main_ItemsLimitMax + '&offset=' + this.offset + '&sortby=login&direction=asc';
+                },
+                label_init: function() {
+                    ScreensObj_TopLableUserInit();
+
+                    ScreensObj_SetTopLable(STR_USER, STR_USER_CHANNEL);
+                },
+                key_play: function() {
+                    if (Main_ThumbOpenIsNull(this.posY + '_' + this.posX, this.ids[0])) return;
+
+                    Main_values.Main_selectedChannel = JSON.parse(document.getElementById(this.ids[8] + this.posY + '_' + this.posX).getAttribute(Main_DataAttribute));
+
+                    Main_values.Main_selectedChannel_id = Main_values.Main_selectedChannel[1];
+                    Main_values.Main_selectedChannelDisplayname = Main_values.Main_selectedChannel[3];
+                    Main_values.Main_selectedChannelLogo = Main_values.Main_selectedChannel[2];
+                    Main_values.Main_selectedChannel = Main_values.Main_selectedChannel[0];
+
+                    document.body.removeEventListener('keydown', Screens_handleKeyDown);
+                    Main_values.Main_BeforeChannel = Main_UserChannels;
+                    Main_values.Main_Go = Main_ChannelContent;
+                    Main_values.Main_BeforeChannelisSet = true;
+                    AddCode_IsFollowing = true;
+                    ChannelContent_UserChannels = true;
+                    Screens_exit();
+                    Main_SwitchScreen();
+                },
+                addCell: function(cell) {
+                    cell = cell.channel;
+                    this.addCellTemp(cell);
+                }
             },
-            label_init: function() {
-                ScreensObj_TopLableUserInit();
-
-                ScreensObj_SetTopLable(STR_USER, STR_USER_CHANNEL);
-            },
-            key_play: function() {
-                if (Main_ThumbOpenIsNull(this.posY + '_' + this.posX, this.ids[0])) return;
-
-                Main_values.Main_selectedChannel = JSON.parse(document.getElementById(this.ids[8] + this.posY + '_' + this.posX).getAttribute(Main_DataAttribute));
-
-                Main_values.Main_selectedChannel_id = Main_values.Main_selectedChannel[1];
-                Main_values.Main_selectedChannelDisplayname = Main_values.Main_selectedChannel[3];
-                Main_values.Main_selectedChannelLogo = Main_values.Main_selectedChannel[2];
-                Main_values.Main_selectedChannel = Main_values.Main_selectedChannel[0];
-
-                document.body.removeEventListener("keydown", Screens_handleKeyDown);
-                Main_values.Main_BeforeChannel = Main_UserChannels;
-                Main_values.Main_Go = Main_ChannelContent;
-                Main_values.Main_BeforeChannelisSet = true;
-                AddCode_IsFollowing = true;
-                ChannelContent_UserChannels = true;
-                Screens_exit();
-                Main_SwitchScreen();
-            },
-            addCell: function(cell) {
-                cell = cell.channel;
-                this.addCellTemp(cell);
-            }
-        }, Base_obj);
+            Base_obj
+        );
 
         UserChannels = Screens_assign(UserChannels, Base_Channel_obj);
         UserChannels.addrow = Screens_addrowChannel;
@@ -15321,52 +15229,54 @@
 
     function ScreensObj_InitSearchChannels() {
         SearchChannels = Screens_assign({
-            HeaderQuatity: 2,
-            ids: Screens_ScreenIds('SearchChannels'),
-            table: 'stream_table_search_channel',
-            screen: Main_SearchChannels,
-            object: 'channels',
-            base_url: Main_kraken_api + 'search/channels?limit=' + Main_ItemsLimitMax + '&query=',
-            set_url: function() {
-                if (this.offset && (this.offset + Main_ItemsLimitMax) > this.MaxOffset) this.dataEnded = true;
-                this.url = this.base_url + encodeURIComponent(Main_values.Search_data) +
-                    '&offset=' + this.offset;
-            },
-            label_init: function() {
-                Main_values.Search_isSearching = true;
-                Main_cleanTopLabel();
-                if (this.lastData !== Main_values.Search_data) this.status = false;
-                this.lastData = Main_values.Search_data;
-                Sidepannel_SetTopOpacity(this.screen);
+                HeaderQuatity: 2,
+                ids: Screens_ScreenIds('SearchChannels'),
+                table: 'stream_table_search_channel',
+                screen: Main_SearchChannels,
+                object: 'data',
+                use_helix: true,
+                base_url: Main_helix_api + 'search/channels?first=' + Main_ItemsLimitMax + '&query=',
+                set_url: function() {
+                    if (this.offset && this.offset + Main_ItemsLimitMax > this.MaxOffset) this.dataEnded = true;
+                    this.url = this.base_url + encodeURIComponent(Main_values.Search_data) + '&after=' + (this.cursor ? this.cursor : ''); // offset probably still broken, the behaviour changed
+                },
+                label_init: function() {
+                    Main_values.Search_isSearching = true;
+                    Main_cleanTopLabel();
+                    if (this.lastData !== Main_values.Search_data) this.status = false;
+                    this.lastData = Main_values.Search_data;
+                    Sidepannel_SetTopOpacity(this.screen);
 
-                ScreensObj_SetTopLable(STR_SEARCH + STR_SPACE + STR_CHANNELS, "'" + Main_values.Search_data + "'");
-            },
-            label_exit: function() {
-                if (!Main_values.Search_isSearching) Main_RestoreTopLabel();
-            },
-            key_play: function() {
-                if (Main_ThumbOpenIsNull(this.posY + '_' + this.posX, this.ids[0])) return;
+                    ScreensObj_SetTopLable(STR_SEARCH + STR_SPACE + STR_CHANNELS, "'" + Main_values.Search_data + "'");
+                },
+                label_exit: function() {
+                    if (!Main_values.Search_isSearching) Main_RestoreTopLabel();
+                },
+                key_play: function() {
+                    if (Main_ThumbOpenIsNull(this.posY + '_' + this.posX, this.ids[0])) return;
 
-                Main_values.Main_selectedChannel = JSON.parse(document.getElementById(this.ids[8] + this.posY + '_' + this.posX).getAttribute(Main_DataAttribute));
+                    Main_values.Main_selectedChannel = JSON.parse(document.getElementById(this.ids[8] + this.posY + '_' + this.posX).getAttribute(Main_DataAttribute));
 
-                Main_values.Main_selectedChannel_id = Main_values.Main_selectedChannel[1];
-                Main_values.Main_selectedChannelDisplayname = Main_values.Main_selectedChannel[3];
-                Main_values.Main_selectedChannelLogo = Main_values.Main_selectedChannel[2];
-                Main_values.Main_selectedChannel = Main_values.Main_selectedChannel[0];
+                    Main_values.Main_selectedChannel_id = Main_values.Main_selectedChannel[1];
+                    Main_values.Main_selectedChannelDisplayname = Main_values.Main_selectedChannel[3];
+                    Main_values.Main_selectedChannelLogo = Main_values.Main_selectedChannel[2];
+                    Main_values.Main_selectedChannel = Main_values.Main_selectedChannel[0];
 
-                document.body.removeEventListener("keydown", Screens_handleKeyDown);
-                Main_values.Main_BeforeChannel = Main_SearchChannels;
-                Main_values.Main_Go = Main_ChannelContent;
-                Main_values.Main_BeforeChannelisSet = true;
-                AddCode_IsFollowing = false;
-                ChannelContent_UserChannels = false;
-                Screens_exit();
-                Main_SwitchScreen();
+                    document.body.removeEventListener('keydown', Screens_handleKeyDown);
+                    Main_values.Main_BeforeChannel = Main_SearchChannels;
+                    Main_values.Main_Go = Main_ChannelContent;
+                    Main_values.Main_BeforeChannelisSet = true;
+                    AddCode_IsFollowing = false;
+                    ChannelContent_UserChannels = false;
+                    Screens_exit();
+                    Main_SwitchScreen();
+                },
+                addCell: function(cell) {
+                    this.addCellTemp(cell);
+                }
             },
-            addCell: function(cell) {
-                this.addCellTemp(cell);
-            }
-        }, Base_obj);
+            Base_obj
+        );
 
         SearchChannels = Screens_assign(SearchChannels, Base_Channel_obj);
         SearchChannels.addrow = Screens_addrowChannel;
@@ -15376,8 +15286,7 @@
     function ScreensObj_TopLableAgameInit() {
         if (Main_values.Main_OldgameSelected === null) Main_values.Main_OldgameSelected = Main_values.Main_gameSelected;
         Main_ShowElement('label_side_panel');
-        if (Main_values.Main_OldgameSelected !== Main_values.Main_gameSelected ||
-            inUseObj.gameSelected !== Main_values.Main_gameSelected) inUseObj.status = false;
+        if (Main_values.Main_OldgameSelected !== Main_values.Main_gameSelected || inUseObj.gameSelected !== Main_values.Main_gameSelected) inUseObj.status = false;
         inUseObj.gameSelected = Main_values.Main_gameSelected;
         Main_values.Main_OldgameSelected = Main_values.Main_gameSelected;
 
@@ -15400,7 +15309,7 @@
     }
 
     function ScreensObj_SetTopLable(text, small_text) {
-        Main_innerHTML('top_lable', text + STR_SPACE + (small_text ? '<div style="font-size: 65%;display: inline-block;">' + small_text + '</div>' : ""));
+        Main_innerHTML('top_lable', text + STR_SPACE + (small_text ? '<div style="font-size: 65%;display: inline-block;">' + small_text + '</div>' : ''));
     }
     //Variable initialization
     var Search_cursorY = 0;
@@ -15422,7 +15331,7 @@
 
     function Search_exit() {
         Search_RemoveinputFocus(false);
-        document.body.removeEventListener("keydown", Search_handleKeyDown);
+        document.body.removeEventListener('keydown', Search_handleKeyDown);
         Search_refreshInputFocusTools();
         Main_values.Main_Go = Main_values.Main_BeforeSearch;
         Main_HideElement('label_side_panel');
@@ -15529,8 +15438,8 @@
     }
 
     function Search_inputFocus() {
-        document.body.removeEventListener("keydown", Search_handleKeyDown);
-        document.body.addEventListener("keydown", Search_KeyboardEvent, false);
+        document.body.removeEventListener('keydown', Search_handleKeyDown);
+        document.body.addEventListener('keydown', Search_KeyboardEvent, false);
         Main_SearchInput.placeholder = STR_PLACEHOLDER_SEARCH;
         Main_SearchInput.focus();
         Search_keyBoardOn = true;
@@ -15539,10 +15448,10 @@
     function Search_RemoveinputFocus(EnaKeydown) {
         Main_SearchInput.blur();
         Search_removeEventListener();
-        document.body.removeEventListener("keydown", Search_KeyboardEvent);
+        document.body.removeEventListener('keydown', Search_KeyboardEvent);
         Main_SearchInput.placeholder = STR_PLACEHOLDER_PRESS + STR_PLACEHOLDER_SEARCH;
 
-        if (EnaKeydown) document.body.addEventListener("keydown", Search_handleKeyDown, false);
+        if (EnaKeydown) document.body.addEventListener('keydown', Search_handleKeyDown, false);
         Search_keyBoardOn = false;
     }
 
@@ -15550,7 +15459,7 @@
         if (Main_SearchInput !== null) {
             var elClone = Main_SearchInput.cloneNode(true);
             Main_SearchInput.parentNode.replaceChild(elClone, Main_SearchInput);
-            Main_SearchInput = document.getElementById("search_input");
+            Main_SearchInput = document.getElementById('search_input');
         }
     }
 
@@ -15584,156 +15493,181 @@
             default:
                 break;
         }
-    } //Variable initialization
+    }
+    //Variable initialization
     var Settings_cursorY = 0;
     var Settings_value = {
-        "restor_playback": { //restor_playback
-            "values": ["no", "yes"],
-            "defaultValue": 2
+        restor_playback: {
+            //restor_playback
+            values: ['no', 'yes'],
+            defaultValue: 2
         },
-        "clip_auto_play_next": { //clip_auto_play_next
-            "values": ["no", "yes"],
-            "defaultValue": 2
+        clip_auto_play_next: {
+            //clip_auto_play_next
+            values: ['no', 'yes'],
+            defaultValue: 2
         },
-        "single_click_exit": { //single_click_exit
-            "values": ["no", "yes"],
-            "defaultValue": 1
+        single_click_exit: {
+            //single_click_exit
+            values: ['no', 'yes'],
+            defaultValue: 1
         },
-        "app_animations": { //app_animations
-            "values": ["no", "yes"],
-            "defaultValue": 1
+        app_animations: {
+            //app_animations
+            values: ['no', 'yes'],
+            defaultValue: 1
         },
-        "enter_refresh": { //enter_refresh
-            "values": ["yes", "no"],
-            "defaultValue": 1
+        enter_refresh: {
+            //enter_refresh
+            values: ['yes', 'no'],
+            defaultValue: 1
         },
-        "show_screen_counter": { //show_screen_counter
-            "values": ["no", "yes"],
-            "defaultValue": 2
+        show_screen_counter: {
+            //show_screen_counter
+            values: ['no', 'yes'],
+            defaultValue: 2
         },
-        "live_feed_sort": { //show_screen_counter
-            "values": [
-                "views_more",
-                "views_less",
-                "name_a-z",
-                "name_z-a",
-                "game_a-z",
-                "game_z-a",
-                "uptime_new",
-                "uptime_old",
-            ],
-            "defaultValue": 1
+        live_feed_sort: {
+            //show_screen_counter
+            values: ['views_more', 'views_less', 'name_a-z', 'name_z-a', 'game_a-z', 'game_z-a', 'uptime_new', 'uptime_old'],
+            defaultValue: 1
         },
-        "live_notification": { //buffer_live
-            "values": ["no", "yes"],
-            "defaultValue": 2
+        live_notification: {
+            //buffer_live
+            values: ['no', 'yes'],
+            defaultValue: 2
         },
-        "global_font_offset": { //live notification
-            "values": [-3, -2, -1, 0, 1, 2, 3],
-            "defaultValue": 4
+        global_font_offset: {
+            //live notification
+            values: [-3, -2, -1, 0, 1, 2, 3],
+            defaultValue: 4
         },
-        "live_notification_time": { //live notification
-            "values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            "defaultValue": 4
+        live_notification_time: {
+            //live notification
+            values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            defaultValue: 4
         },
-        "buffer_live": { //buffer_live
-            "values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-            "defaultValue": 4
+        buffer_live: {
+            //buffer_live
+            values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            defaultValue: 4
         },
-        "buffer_vod": { //buffer_vod
-            "values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-            "defaultValue": 5
+        buffer_vod: {
+            //buffer_vod
+            values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            defaultValue: 5
         },
-        "buffer_clip": { //buffer_clip
-            "values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-            "defaultValue": 3
+        buffer_clip: {
+            //buffer_clip
+            values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            defaultValue: 3
         },
-        "end_dialog_counter": { //end_dialog_counter
-            "values": ['disable', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-            "defaultValue": 4
+        end_dialog_counter: {
+            //end_dialog_counter
+            values: ['disable', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            defaultValue: 4
         },
-        "bitrate_min": { //bitrate_min
-            "values": ['disable', 11, 10.5, 10, 9.5, 9, 8.5, 8, 7.5, 7, 6.5, 6, 5.5, 5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1],
-            "defaultValue": 18
+        bitrate_min: {
+            //bitrate_min
+            values: ['disable', 11, 10.5, 10, 9.5, 9, 8.5, 8, 7.5, 7, 6.5, 6, 5.5, 5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1],
+            defaultValue: 18
         },
-        "videos_animation": { //videos_animation
-            "values": ["no", "yes"],
-            "defaultValue": 2
+        videos_animation: {
+            //videos_animation
+            values: ['no', 'yes'],
+            defaultValue: 2
         },
-        "thumb_quality": { //thumbnail quality
-            "values": ["very-low", "low", "normal", "high", "very-high"],
-            "defaultValue": 3
+        thumb_quality: {
+            //thumbnail quality
+            values: ['very-low', 'low', 'normal', 'high', 'very-high'],
+            defaultValue: 3
         },
-        "clock_offset": { //clock_offset
-            "values": Settings_GenerateClock(),
-            "defaultValue": 49
+        clock_offset: {
+            //clock_offset
+            values: Settings_GenerateClock(),
+            defaultValue: 49
         },
-        "content_lang": { //content_lang
-            "values": ["All"],
-            "set_values": [""],
-            "defaultValue": 1
+        content_lang: {
+            //content_lang
+            values: ['All'],
+            set_values: [''],
+            defaultValue: 1
         },
-        "chat_opt": {
-            "values": ["None"],
-            "set_values": [""],
-            "defaultValue": 1
+        chat_opt: {
+            values: ['None'],
+            set_values: [''],
+            defaultValue: 1
         },
-        "highlight_rewards": { //Migrated to dialog
-            "values": ["no", "yes"],
-            "defaultValue": 2
+        highlight_rewards: {
+            //Migrated to dialog
+            values: ['no', 'yes'],
+            defaultValue: 2
         },
-        "highlight_atstreamer": { //Migrated to dialog
-            "values": ["no", "yes"],
-            "defaultValue": 2
+        highlight_atstreamer: {
+            //Migrated to dialog
+            values: ['no', 'yes'],
+            defaultValue: 2
         },
-        "highlight_atuser": { //Migrated to dialog
-            "values": ["no", "yes"],
-            "defaultValue": 2
+        highlight_atuser: {
+            //Migrated to dialog
+            values: ['no', 'yes'],
+            defaultValue: 2
         },
-        "highlight_user_send": { //Migrated to dialog
-            "values": ["no", "yes"],
-            "defaultValue": 1
+        highlight_user_send: {
+            //Migrated to dialog
+            values: ['no', 'yes'],
+            defaultValue: 1
         },
-        "show_sub": { //Migrated to dialog
-            "values": ["no", "yes"],
-            "defaultValue": 2
+        show_sub: {
+            //Migrated to dialog
+            values: ['no', 'yes'],
+            defaultValue: 2
         },
-        "highlight_bits": { //Migrated to dialog
-            "values": ["no", "yes"],
-            "defaultValue": 2
+        highlight_bits: {
+            //Migrated to dialog
+            values: ['no', 'yes'],
+            defaultValue: 2
         },
-        "show_actions": { //Migrated to dialog
-            "values": ["no", "yes"],
-            "defaultValue": 1
+        show_actions: {
+            //Migrated to dialog
+            values: ['no', 'yes'],
+            defaultValue: 1
         },
-        "clear_chat": { //Migrated to dialog
-            "values": ["no", "yes"],
-            "defaultValue": 2
+        clear_chat: {
+            //Migrated to dialog
+            values: ['no', 'yes'],
+            defaultValue: 2
         },
-        "show_chatters": { //Migrated to dialog
-            "values": ["no", "chatters", "viewers"],
-            "defaultValue": 2
+        show_chatters: {
+            //Migrated to dialog
+            values: ['no', 'chatters', 'viewers'],
+            defaultValue: 2
         },
-        "individual_lines": { //Migrated to dialog
-            "values": ["no", "yes"],
-            "defaultValue": 2
+        individual_lines: {
+            //Migrated to dialog
+            values: ['no', 'yes'],
+            defaultValue: 2
         },
-        "chat_individual_background": { //Migrated to dialog
-            "values": ["disabled", "enabled", "bright", "dark"],
-            "defaultValue": 1
+        chat_individual_background: {
+            //Migrated to dialog
+            values: ['disabled', 'enabled', 'bright', 'dark'],
+            defaultValue: 1
         },
-        "chat_logging": { //Migrated to dialog
-            "values": ["no", "yes"],
-            "defaultValue": 2
+        chat_logging: {
+            //Migrated to dialog
+            values: ['no', 'yes'],
+            defaultValue: 2
         },
-        "chat_nickcolor": { //Migrated to dialog
-            "values": ["no", "yes"],
-            "defaultValue": 2
+        chat_nickcolor: {
+            //Migrated to dialog
+            values: ['no', 'yes'],
+            defaultValue: 2
         },
-        "chat_timestamp": { //Migrated to dialog
-            "values": ["no", "yes"],
-            "defaultValue": 1
-        },
+        chat_timestamp: {
+            //Migrated to dialog
+            values: ['no', 'yes'],
+            defaultValue: 1
+        }
     };
 
     var Settings_FeedSort = [
@@ -15753,7 +15687,7 @@
             i = 0;
 
         for (i; i < 48; i++) {
-            clock.push("-" + Play_timeS(time));
+            clock.push('-' + Play_timeS(time));
             time -= 900;
         }
 
@@ -15773,7 +15707,7 @@
     //Variable initialization end
 
     function Settings_init() {
-        document.body.addEventListener("keydown", Settings_handleKeyDown, false);
+        document.body.addEventListener('keydown', Settings_handleKeyDown, false);
         ScreensObj_SetTopLable(STR_SETTINGS);
         Main_ShowElement('settings_holder');
         Main_ShowElement('label_side_panel');
@@ -15785,7 +15719,7 @@
 
     function Settings_exit() {
         Settings_ScrollTableReset();
-        document.body.removeEventListener("keydown", Settings_handleKeyDown);
+        document.body.removeEventListener('keydown', Settings_handleKeyDown);
         Main_HideElement('label_side_panel');
         Main_ShowElement('label_refresh');
         Settings_RemoveinputFocus();
@@ -15801,97 +15735,88 @@
         div += Settings_DivTitle('general', STR_SETTINGS_GENERAL);
 
         // Content Language selection
-        key = "content_lang";
+        key = 'content_lang';
         Settings_value_keys.push(key);
         Settings_value[key].values = [STR_CONTENT_LANG_SUMARRY];
 
         div += Settings_DivOptionWithSummary(key, STR_CONTENT_LANG, '');
 
-        key = "chat_opt";
+        key = 'chat_opt';
         Settings_value_keys.push(key);
         Settings_value[key].values = [STR_CONTENT_LANG_SUMARRY];
 
         div += Settings_DivOptionNoSummary(key, STR_CHAT_OPTIONS);
 
         //live_feed_sort
-        key = "live_feed_sort";
+        key = 'live_feed_sort';
         Settings_value_keys.push(key);
-        Settings_value[key].values = [
-            STR_VIWES_MOST,
-            STR_VIWES_LOWEST,
-            STR_NAME_A_Z,
-            STR_NAME_Z_A,
-            STR_GAME_A_Z,
-            STR_GAME_Z_A,
-            STR_CREATED_NEWEST,
-            STR_CREATED_OLDEST
-        ];
+        Settings_value[key].values = [STR_VIWES_MOST, STR_VIWES_LOWEST, STR_NAME_A_Z, STR_NAME_Z_A, STR_GAME_A_Z, STR_GAME_Z_A, STR_CREATED_NEWEST, STR_CREATED_OLDEST];
 
         div += Settings_DivOptionWithSummary(key, STR_LIVE_FEED_SORT, STR_LIVE_FEED_SORT_SUMMARY);
 
         //thumb qualityes
-        key = "thumb_quality";
+        key = 'thumb_quality';
         Settings_value_keys.push(key);
         Settings_value[key].values = [STR_VERY_LOW, STR_LOW, STR_NORMAL, STR_HIGH, STR_VERY_HIGH];
 
         div += Settings_DivOptionWithSummary(key, STR_THUMB_RESOLUTION, STR_THUMB_RESOLUTION_SUMARRY);
 
-        key = "global_font_offset";
+        key = 'global_font_offset';
         Settings_value_keys.push(key);
 
         div += Settings_DivOptionWithSummary(key, STR_GLOBAL_FONT, STR_GLOBAL_FONT_SUMMARY);
 
         //Player restore playback
-        key = "restor_playback";
+        key = 'restor_playback';
         Settings_value_keys.push(key);
         Settings_value[key].values = [STR_NO, STR_YES];
 
         div += Settings_DivOptionWithSummary(key, STR_RESTORE_PLAYBACK, STR_RESTORE_PLAYBACK_SUMARRY);
 
         // Videos
-        key = "videos_animation";
+        key = 'videos_animation';
         Settings_value_keys.push(key);
         Settings_value[key].values = [STR_NO, STR_YES];
 
         div += Settings_DivOptionNoSummary(key, STR_VIDEOS_ANIMATION);
 
-        key = "app_animations";
+        key = 'app_animations';
         Settings_value_keys.push(key);
         Settings_value[key].values = [STR_NO, STR_YES];
 
         div += Settings_DivOptionNoSummary(key, STR_APP_ANIMATIONS);
 
-        key = "enter_refresh";
+        key = 'enter_refresh';
         Settings_value_keys.push(key);
         Settings_value[key].values = [STR_NO, STR_YES];
 
         div += Settings_DivOptionNoSummary(key, STR_ENTER_REFRESH);
 
-        key = "clip_auto_play_next";
+        key = 'clip_auto_play_next';
         Settings_value_keys.push(key);
-        Settings_value[key].values = [STR_YES, STR_NO];
+        Settings_value[key].values = [STR_NO, STR_YES];
 
         div += Settings_DivOptionNoSummary(key, STR_AUTO_PLAY_NEXT);
 
-        key = "live_notification";
+        key = 'live_notification';
         Settings_value_keys.push(key);
         Settings_value[key].values = [STR_NO, STR_YES];
 
         div += Settings_DivOptionNoSummary(key, STR_NOW_LIVE_SHOW);
 
-        key = "live_notification_time";
+        key = 'live_notification_time';
         Settings_value_keys.push(key);
 
         div += Settings_DivOptionNoSummary(key, STR_NOW_DURATION);
 
         // Clock offset
-        key = "clock_offset";
+        key = 'clock_offset';
         Settings_value_keys.push(key);
 
         div += Settings_DivOptionNoSummary(key, STR_CLOCK_OFFSET);
 
         // show_screen_counter
-        key = "show_screen_counter";
+        key = 'show_screen_counter';
         Settings_value_keys.push(key);
         Settings_value[key].values = [STR_NO, STR_YES];
         div += Settings_DivOptionNoSummary(key, STR_SCREEN_COUNTER);
@@ -15899,42 +15824,47 @@
         // Player settings title
         div += Settings_DivTitle('play', STR_SETTINGS_PLAYER);
 
-        key = "single_click_exit";
+        key = 'single_click_exit';
         Settings_value_keys.push(key);
         Settings_value[key].values = [STR_NO, STR_YES];
 
         div += Settings_DivOptionWithSummary(key, STR_SINGLE_EXIT, STR_SINGLE_EXIT_SUMMARY);
 
         // end_dialog_counter
-        key = "end_dialog_counter";
+        key = 'end_dialog_counter';
         Settings_value_keys.push(key);
         Settings_value[key].values[0] = STR_END_DIALOG_DISABLE;
 
         div += Settings_DivOptionWithSummary(key, STR_END_DIALOG_SETTINGS, STR_END_DIALOG_SETTINGS_SUMMARY);
 
         // Player buffer title/summary
-        div += '<div id="setting_title_buffers" class="settings_title">' + STR_SETTINGS_BUFFER_SIZE + '</div>' +
-            '<div id="setting_title_buffers_summary" class="settings_summary">' + STR_SETTINGS_BUFFER_SIZE_SUMMARY + '</div>';
+        div +=
+            '<div id="setting_title_buffers" class="settings_title">' +
+            STR_SETTINGS_BUFFER_SIZE +
+            '</div>' +
+            '<div id="setting_title_buffers_summary" class="settings_summary">' +
+            STR_SETTINGS_BUFFER_SIZE_SUMMARY +
+            '</div>';
 
         // Player buffer live
-        key = "buffer_live";
+        key = 'buffer_live';
         Settings_value_keys.push(key);
 
         div += Settings_DivOptionNoSummary(key, STR_SETTINGS_BUFFER_LIVE);
 
         // Player buffer vod
-        key = "buffer_vod";
+        key = 'buffer_vod';
         Settings_value_keys.push(key);
 
         div += Settings_DivOptionNoSummary(key, STR_SETTINGS_BUFFER_VOD);
 
         // Player buffer clip
-        key = "buffer_clip";
+        key = 'buffer_clip';
         Settings_value_keys.push(key);
 
         div += Settings_DivOptionNoSummary(key, STR_SETTINGS_BUFFER_CLIP);
 
-        Main_innerHTML("settings_main", div);
+        Main_innerHTML('settings_main', div);
         Settings_positions_length = Settings_value_keys.length;
         Languages_SetSettings();
     }
@@ -15944,24 +15874,57 @@
     }
 
     function Settings_DivOptionNoSummary(key, string) {
-        return '<div id="' + key + '_div" class="settings_div"><div id="' +
-            key + '_name" class="settings_name">' + string + '</div>' +
-            '<div class="settings_arraw_div"><div id="' + key + 'arrow_left" class="left"></div></div>' +
-            '<div id="' + key + '" class="strokedeline settings_value">' + Settings_Obj_values(key) + '</div>' +
-            '<div class="settings_arraw_div"><div id="' + key + 'arrow_right" class="right"></div></div></div>';
+        return (
+            '<div id="' +
+            key +
+            '_div" class="settings_div"><div id="' +
+            key +
+            '_name" class="settings_name">' +
+            string +
+            '</div>' +
+            '<div class="settings_arraw_div"><div id="' +
+            key +
+            'arrow_left" class="left"></div></div>' +
+            '<div id="' +
+            key +
+            '" class="strokedeline settings_value">' +
+            Settings_Obj_values(key) +
+            '</div>' +
+            '<div class="settings_arraw_div"><div id="' +
+            key +
+            'arrow_right" class="right"></div></div></div>'
+        );
     }
 
     function Settings_DivOptionWithSummary(key, string_title, string_summary) {
-        return '<div id="' + key + '_div" class="settings_div"><div id="' + key + '_name" class="settings_name">' +
-            string_title + '<div id="' + key + '_summary" class="settings_summary" style="font-size: 65%;">' + string_summary + '</div></div>' +
-            '<div class="settings_arraw_div"><div id="' + key + 'arrow_left" class="left"></div></div>' +
-            '<div id="' + key + '" class="strokedeline settings_value">' + Settings_Obj_values(key) + '</div>' +
-            '<div class="settings_arraw_div"><div id="' + key + 'arrow_right" class="right"></div></div></div>';
+        return (
+            '<div id="' +
+            key +
+            '_div" class="settings_div"><div id="' +
+            key +
+            '_name" class="settings_name">' +
+            string_title +
+            '<div id="' +
+            key +
+            '_summary" class="settings_summary" style="font-size: 65%;">' +
+            string_summary +
+            '</div></div>' +
+            '<div class="settings_arraw_div"><div id="' +
+            key +
+            'arrow_left" class="left"></div></div>' +
+            '<div id="' +
+            key +
+            '" class="strokedeline settings_value">' +
+            Settings_Obj_values(key) +
+            '</div>' +
+            '<div class="settings_arraw_div"><div id="' +
+            key +
+            'arrow_right" class="right"></div></div></div>'
+        );
     }
 
     function Settings_DivOptionChangeLang(key, string_title, string_summary) {
-        Main_innerHTML(key + '_name', string_title +
-            '<div id="' + key + '_summary" class="settings_summary" style="font-size: 65%;">' + string_summary + '</div>');
+        Main_innerHTML(key + '_name', string_title + '<div id="' + key + '_summary" class="settings_summary" style="font-size: 65%;">' + string_summary + '</div>');
     }
 
     // The order in Settings_SetStrings doesnot matter
@@ -15972,31 +15935,22 @@
         Main_textContent('setting_title_general', STR_SETTINGS_GENERAL);
 
         // Clock offset
-        key = "clock_offset";
+        key = 'clock_offset';
         Main_textContent(key + '_name', STR_CLOCK_OFFSET);
 
-        key = "show_screen_counter";
+        key = 'show_screen_counter';
         Main_textContent(key + '_name', STR_SCREEN_COUNTER);
 
         // Content Language selection
-        key = "content_lang";
+        key = 'content_lang';
         Main_textContent(key + '_name', STR_CONTENT_LANG);
         Main_textContent(key, Settings_Obj_values(key));
         Settings_value[key].values = [STR_CONTENT_LANG_SUMARRY];
 
-        key = "live_feed_sort";
+        key = 'live_feed_sort';
         Settings_DivOptionChangeLang(key, STR_LIVE_FEED_SORT, STR_LIVE_FEED_SORT_SUMMARY);
         Main_textContent(key, Settings_Obj_values(key));
-        Settings_value[key].values = [
-            STR_VIWES_MOST,
-            STR_VIWES_LOWEST,
-            STR_NAME_A_Z,
-            STR_NAME_Z_A,
-            STR_GAME_A_Z,
-            STR_GAME_Z_A,
-            STR_CREATED_NEWEST,
-            STR_CREATED_OLDEST
-        ];
+        Settings_value[key].values = [STR_VIWES_MOST, STR_VIWES_LOWEST, STR_NAME_A_Z, STR_NAME_Z_A, STR_GAME_A_Z, STR_GAME_Z_A, STR_CREATED_NEWEST, STR_CREATED_OLDEST];
 
         //Player settings
         Main_textContent('setting_title_play', STR_SETTINGS_PLAYER);
@@ -16009,63 +15963,61 @@
         Main_textContent('setting_title_buffers', STR_SETTINGS_BUFFER_SIZE);
         Main_textContent('setting_title_buffers_summary', STR_SETTINGS_BUFFER_SIZE_SUMMARY);
 
-        key = "buffer_live";
+        key = 'buffer_live';
         Main_textContent(key + '_name', STR_SETTINGS_BUFFER_LIVE);
-        key = "buffer_vod";
+        key = 'buffer_vod';
         Main_textContent(key + '_name', STR_SETTINGS_BUFFER_VOD);
-        key = "buffer_clip";
+        key = 'buffer_clip';
         Main_textContent(key + '_name', STR_SETTINGS_BUFFER_CLIP);
 
         //Player restore
-        key = "restor_playback";
+        key = 'restor_playback';
         Settings_DivOptionChangeLang(key, STR_RESTORE_PLAYBACK, STR_RESTORE_PLAYBACK_SUMARRY);
         Settings_value[key].values = [STR_YES, STR_NO];
 
         //Thumb quality
-        key = "thumb_quality";
+        key = 'thumb_quality';
         Settings_DivOptionChangeLang(key, STR_THUMB_RESOLUTION, STR_THUMB_RESOLUTION_SUMARRY);
         Settings_value[key].values = [STR_VERY_LOW, STR_LOW, STR_NORMAL, STR_HIGH, STR_VERY_HIGH];
 
-        key = "global_font_offset";
+        key = 'global_font_offset';
         Settings_DivOptionChangeLang(key, STR_GLOBAL_FONT, STR_GLOBAL_FONT_SUMMARY);
 
         // Chat size
-        key = "end_dialog_counter";
+        key = 'end_dialog_counter';
         Settings_DivOptionChangeLang(key, STR_END_DIALOG_SETTINGS, STR_END_DIALOG_SETTINGS_SUMMARY);
         Settings_value[key].values[0] = STR_END_DIALOG_DISABLE;
 
         // Videos
-        key = "videos_animation";
+        key = 'videos_animation';
         Main_textContent(key + '_name', STR_VIDEOS_ANIMATION);
         Settings_value[key].values = [STR_YES, STR_NO];
 
-        key = "clip_auto_play_next";
+        key = 'clip_auto_play_next';
         Main_textContent(key + '_name', STR_AUTO_PLAY_NEXT);
         Settings_value[key].values = [STR_NO, STR_YES];
 
-        key = "live_notification";
+        key = 'live_notification';
         Main_textContent(key + '_name', STR_NOW_LIVE_SHOW);
         Settings_value[key].values = [STR_NO, STR_YES];
 
-        key = "live_notification_time";
+        key = 'live_notification_time';
         Main_textContent(key + '_name', STR_NOW_DURATION);
 
-        key = "single_click_exit";
+        key = 'single_click_exit';
         Settings_DivOptionChangeLang(key, STR_SINGLE_EXIT, STR_SINGLE_EXIT_SUMMARY);
         Settings_value[key].values = [STR_NO, STR_YES];
 
-        key = "app_animations";
+        key = 'app_animations';
         Main_textContent(key + '_name', STR_APP_ANIMATIONS);
         Settings_value[key].values = [STR_NO, STR_YES];
 
-        key = "enter_refresh";
+        key = 'enter_refresh';
         Main_textContent(key + '_name', STR_ENTER_REFRESH);
         Settings_value[key].values = [STR_YES, STR_NO];
 
-
         for (key in Settings_value)
-            if (Settings_value.hasOwnProperty(key))
-                Main_textContent(key, Settings_Obj_values(key));
+            if (Settings_value.hasOwnProperty(key)) Main_textContent(key, Settings_Obj_values(key));
 
         Languages_SetLang();
     }
@@ -16079,14 +16031,14 @@
         Settings_SetBuffers(0);
         Settings_SetClock();
         Main_SetThumb();
-        if (!Settings_Obj_default("app_animations")) Settings_SetAnimations();
-        Vod_DoAnimateThumb = Settings_Obj_default("videos_animation");
-        PlayClip_All_Forced = Settings_Obj_default("clip_auto_play_next");
-        UserLiveFeed_Notify = Settings_Obj_default("live_notification");
-        UserLiveFeed_NotifyTimeout = Settings_Obj_values("live_notification_time") * 1000;
-        Play_SingleClickExit = Settings_Obj_default("single_click_exit");
-        Play_EndSettingsCounter = Settings_Obj_default("end_dialog_counter");
-        Settings_ShowCounter(Settings_Obj_default("show_screen_counter"));
+        if (!Settings_Obj_default('app_animations')) Settings_SetAnimations();
+        Vod_DoAnimateThumb = Settings_Obj_default('videos_animation');
+        PlayClip_All_Forced = Settings_Obj_default('clip_auto_play_next');
+        UserLiveFeed_Notify = Settings_Obj_default('live_notification');
+        UserLiveFeed_NotifyTimeout = Settings_Obj_values('live_notification_time') * 1000;
+        Play_SingleClickExit = Settings_Obj_default('single_click_exit');
+        Play_EndSettingsCounter = Settings_Obj_default('end_dialog_counter');
+        Settings_ShowCounter(Settings_Obj_default('show_screen_counter'));
     }
 
     function Settings_Obj_values(key) {
@@ -16115,8 +16067,8 @@
 
     function Settings_RemoveinputFocus() {
         var key = Settings_value_keys[Settings_cursorY];
-        document.getElementById(key + "arrow_left").style.opacity = "0";
-        document.getElementById(key + "arrow_right").style.opacity = "0";
+        document.getElementById(key + 'arrow_left').style.opacity = '0';
+        document.getElementById(key + 'arrow_right').style.opacity = '0';
         Main_RemoveClass(key, 'settings_value_focus');
         Main_RemoveClass(key + '_div', 'settings_div_focus');
     }
@@ -16138,34 +16090,34 @@
         var maxValue = Settings_Obj_length(key);
 
         if (currentValue > 0 && currentValue < maxValue) {
-            document.getElementById(key + "arrow_left").style.opacity = "1";
-            document.getElementById(key + "arrow_right").style.opacity = "1";
+            document.getElementById(key + 'arrow_left').style.opacity = '1';
+            document.getElementById(key + 'arrow_right').style.opacity = '1';
         } else if (currentValue === maxValue) {
-            document.getElementById(key + "arrow_left").style.opacity = "1";
-            document.getElementById(key + "arrow_right").style.opacity = "0.2";
+            document.getElementById(key + 'arrow_left').style.opacity = '1';
+            document.getElementById(key + 'arrow_right').style.opacity = '0.2';
         } else {
-            document.getElementById(key + "arrow_left").style.opacity = "0.2";
-            document.getElementById(key + "arrow_right").style.opacity = "1";
+            document.getElementById(key + 'arrow_left').style.opacity = '0.2';
+            document.getElementById(key + 'arrow_right').style.opacity = '1';
         }
     }
 
     function Settings_SetDefault(position) {
         position = Settings_value_keys[position];
 
-        if (position === "videos_animation") Vod_DoAnimateThumb = Settings_Obj_default("videos_animation");
-        else if (position === "clip_auto_play_next") PlayClip_All_Forced = Settings_Obj_default("clip_auto_play_next");
-        else if (position === "live_notification") UserLiveFeed_Notify = Settings_Obj_default("live_notification");
-        else if (position === "live_notification_time") UserLiveFeed_NotifyTimeout = Settings_Obj_values("live_notification_time") * 1000;
-        else if (position === "single_click_exit") Play_SingleClickExit = Settings_Obj_default("single_click_exit");
-        else if (position === "app_animations") Settings_SetAnimations();
-        else if (position === "buffer_live") Settings_SetBuffers(1);
-        else if (position === "buffer_vod") Settings_SetBuffers(2);
-        else if (position === "buffer_clip") Settings_SetBuffers(3);
-        else if (position === "end_dialog_counter") Play_EndSettingsCounter = Settings_Obj_default("end_dialog_counter");
-        else if (position === "thumb_quality") Main_SetThumb();
-        else if (position === "global_font_offset") calculateFontSize();
-        else if (position === "show_screen_counter") Settings_ShowCounter(Settings_Obj_default("show_screen_counter"));
-        else if (position === "clock_offset") {
+        if (position === 'videos_animation') Vod_DoAnimateThumb = Settings_Obj_default('videos_animation');
+        else if (position === 'clip_auto_play_next') PlayClip_All_Forced = Settings_Obj_default('clip_auto_play_next');
+        else if (position === 'live_notification') UserLiveFeed_Notify = Settings_Obj_default('live_notification');
+        else if (position === 'live_notification_time') UserLiveFeed_NotifyTimeout = Settings_Obj_values('live_notification_time') * 1000;
+        else if (position === 'single_click_exit') Play_SingleClickExit = Settings_Obj_default('single_click_exit');
+        else if (position === 'app_animations') Settings_SetAnimations();
+        else if (position === 'buffer_live') Settings_SetBuffers(1);
+        else if (position === 'buffer_vod') Settings_SetBuffers(2);
+        else if (position === 'buffer_clip') Settings_SetBuffers(3);
+        else if (position === 'end_dialog_counter') Play_EndSettingsCounter = Settings_Obj_default('end_dialog_counter');
+        else if (position === 'thumb_quality') Main_SetThumb();
+        else if (position === 'global_font_offset') calculateFontSize();
+        else if (position === 'show_screen_counter') Settings_ShowCounter(Settings_Obj_default('show_screen_counter'));
+        else if (position === 'clock_offset') {
             Settings_SetClock();
             Main_updateclock();
         }
@@ -16175,22 +16127,24 @@
         //TODO remove the try after android app update has be releaased for some time
         try {
             if (!whocall) {
-                Play_Buffer = Settings_Obj_values("buffer_live");
-                PlayVod_Buffer = Settings_Obj_values("buffer_vod");
-                PlayClip_Buffer = Settings_Obj_values("buffer_clip");
+                Play_Buffer = Settings_Obj_values('buffer_live');
+                PlayVod_Buffer = Settings_Obj_values('buffer_vod');
+                PlayClip_Buffer = Settings_Obj_values('buffer_clip');
             } else if (whocall === 1) {
-                Play_Buffer = Settings_Obj_values("buffer_live");
+                Play_Buffer = Settings_Obj_values('buffer_live');
             } else if (whocall === 2) {
-                PlayVod_Buffer = Settings_Obj_values("buffer_vod");
+                PlayVod_Buffer = Settings_Obj_values('buffer_vod');
             } else if (whocall === 3) {
-                PlayClip_Buffer = Settings_Obj_values("buffer_clip");
+                PlayClip_Buffer = Settings_Obj_values('buffer_clip');
             }
         } catch (e) {}
     }
 
     function Settings_SetAnimations() {
-        var i, array,
-            classes = ['screen_holder',
+        var i,
+            array,
+            classes = [
+                'screen_holder',
                 'screen_holder_channel',
                 'screen_holder_switch',
                 'screen_holder_user',
@@ -16207,16 +16161,13 @@
                 'side_panel',
                 'user_feed'
             ],
-            animate = Settings_Obj_default("app_animations"),
+            animate = Settings_Obj_default('app_animations'),
             mtransition = animate ? '' : 'none';
 
-        classes.forEach(
-            function(classe) {
-                array = document.getElementsByClassName(classe);
-                for (i = 0; i < array.length; i++)
-                    array[i].style.transition = mtransition;
-            }
-        );
+        classes.forEach(function(classe) {
+            array = document.getElementsByClassName(classe);
+            for (i = 0; i < array.length; i++) array[i].style.transition = mtransition;
+        });
 
         UserLiveFeed_FeedRemoveFocus();
 
@@ -16224,11 +16175,9 @@
 
         try {
             //Array.prototype maybe not supported by all TVs
-            Array.prototype.forEach.call(array,
-                function(el) {
-                    el.classList.remove(Main_classThumb);
-                }
-            );
+            Array.prototype.forEach.call(array, function(el) {
+                el.classList.remove(Main_classThumb);
+            });
         } catch (e) {}
 
         Main_classThumb = animate ? 'stream_thumbnail_focused' : 'stream_thumbnail_focused_no_ani';
@@ -16257,7 +16206,7 @@
     //}
 
     function Settings_SetClock() {
-        var time = Settings_Obj_default("clock_offset");
+        var time = Settings_Obj_default('clock_offset');
         Main_ClockOffset = time < 48 ? (48 - time) * -900000 : (time - 48) * 900000;
     }
 
@@ -16268,14 +16217,14 @@
         if (Settings_CurY < Settings_cursorY && Settings_cursorY === 13) {
             doc = document.getElementById('settings_scroll');
             doc.scrollTop = doc.scrollHeight;
-            if (Settings_Obj_default("app_animations")) {
+            if (Settings_Obj_default('app_animations')) {
                 var position = doc.scrollTop;
                 doc.scrollTop = 0;
                 scrollTo(doc, position, 450);
             }
         } else if (Settings_CurY > Settings_cursorY && Settings_cursorY === 12) {
             doc = document.getElementById('settings_scroll');
-            if (Settings_Obj_default("app_animations")) scrollTo(doc, 0, 450);
+            if (Settings_Obj_default('app_animations')) scrollTo(doc, 0, 450);
             else doc.scrollTop = 0;
         }
 
@@ -16310,9 +16259,9 @@
     //d = duration
     Math.easeInOutQuad = function(t, b, c, d) {
         t /= d / 2;
-        if (t < 1) return c / 2 * t * t + b;
+        if (t < 1) return (c / 2) * t * t + b;
         t--;
-        return -c / 2 * (t * (t - 2) - 1) + b;
+        return (-c / 2) * (t * (t - 2) - 1) + b;
     };
 
     function Settings_handleKeyDown(event) {
@@ -16350,7 +16299,7 @@
                 }
                 break;
             case KEY_DOWN:
-                if (Settings_cursorY < (Settings_positions_length - 1)) {
+                if (Settings_cursorY < Settings_positions_length - 1) {
                     Settings_RemoveinputFocus();
                     Settings_cursorY++;
                     Settings_inputFocus(Settings_cursorY);
@@ -16364,7 +16313,6 @@
                 break;
         }
     }
-
 
     function Settings_DialogShowChat() {
         var yes_no = [STR_NO, STR_YES];
@@ -16467,7 +16415,7 @@
                 values: Settings_value.show_actions.values,
                 title: STR_CHAT_HIGHLIGHT_ACTIONS,
                 summary: STR_CHAT_HIGHLIGHT_ACTIONS_SUMMARY
-            },
+            }
         };
 
         Settings_DialogShow(obj, STR_CHAT_OPTIONS);
@@ -16477,7 +16425,7 @@
     var Settings_DialogPos = 0;
 
     function Settings_DialogShow(obj, title) {
-        Main_removeEventListener("keydown", Settings_handleKeyDown);
+        Main_removeEventListener('keydown', Settings_handleKeyDown);
 
         var dialogContent = title + STR_BR + STR_BR;
         Settings_DialogValue = [];
@@ -16493,7 +16441,7 @@
             }
         }
 
-        Main_innerHTML("dialog_settings_text", dialogContent + STR_DIV_TITLE + STR_CLOSE_THIS + '</div>');
+        Main_innerHTML('dialog_settings_text', dialogContent + STR_DIV_TITLE + STR_CLOSE_THIS + '</div>');
 
         Settings_DialogPos = 0;
         Main_AddClass(Settings_DialogValue[0], 'settings_value_focus');
@@ -16501,7 +16449,7 @@
         Settings_SetarrowsKey(Settings_DialogValue[0]);
 
         Main_ShowElement('dialog_settings');
-        Main_addEventListener("keydown", Settings_DialoghandleKeyDown);
+        Main_addEventListener('keydown', Settings_DialoghandleKeyDown);
     }
 
     function Settings_SetarrowsKey(key) {
@@ -16511,14 +16459,14 @@
         var maxValue = Settings_Obj_length(key);
 
         if (currentValue > 0 && currentValue < maxValue) {
-            Main_getElementById(key + "arrow_left").style.opacity = "1";
-            Main_getElementById(key + "arrow_right").style.opacity = "1";
+            Main_getElementById(key + 'arrow_left').style.opacity = '1';
+            Main_getElementById(key + 'arrow_right').style.opacity = '1';
         } else if (currentValue === maxValue) {
-            Main_getElementById(key + "arrow_left").style.opacity = "1";
-            Main_getElementById(key + "arrow_right").style.opacity = "0.2";
+            Main_getElementById(key + 'arrow_left').style.opacity = '1';
+            Main_getElementById(key + 'arrow_right').style.opacity = '0.2';
         } else {
-            Main_getElementById(key + "arrow_left").style.opacity = "0.2";
-            Main_getElementById(key + "arrow_right").style.opacity = "1";
+            Main_getElementById(key + 'arrow_left').style.opacity = '0.2';
+            Main_getElementById(key + 'arrow_right').style.opacity = '1';
         }
     }
 
@@ -16530,8 +16478,8 @@
             case KEY_RETURN:
                 Settings_RemoveinputFocusKey(Settings_DialogValue[Settings_DialogPos]);
                 Main_HideElement('dialog_settings');
-                Main_removeEventListener("keydown", Settings_DialoghandleKeyDown);
-                Main_addEventListener("keydown", Settings_handleKeyDown);
+                Main_removeEventListener('keydown', Settings_DialoghandleKeyDown);
+                Main_addEventListener('keydown', Settings_handleKeyDown);
                 break;
             case KEY_LEFT:
                 key = Settings_DialogValue[Settings_DialogPos];
@@ -16545,7 +16493,7 @@
                 if (Settings_DialogPos > 0) Settings_DialogUpDown(-1);
                 break;
             case KEY_DOWN:
-                if (Settings_DialogPos < (Settings_DialogValue.length - 1)) Settings_DialogUpDown(1);
+                if (Settings_DialogPos < Settings_DialogValue.length - 1) Settings_DialogUpDown(1);
                 break;
             default:
                 break;
@@ -16574,8 +16522,8 @@
     }
 
     function Settings_RemoveinputFocusKey(key) {
-        Main_getElementById(key + "arrow_left").style.opacity = "0";
-        Main_getElementById(key + "arrow_right").style.opacity = "0";
+        Main_getElementById(key + 'arrow_left').style.opacity = '0';
+        Main_getElementById(key + 'arrow_right').style.opacity = '0';
         Main_RemoveClass(key, 'settings_value_focus');
         Main_RemoveClass(key + '_div', 'settings_div_focus');
     }
@@ -16584,148 +16532,149 @@
         Settings_value_keys.push(key);
         if (valuesArray) Settings_value[key].values = valuesArray;
 
-        return (STR_SUMMARY ? Settings_DivOptionWithSummary(key, STR, STR_SUMMARY) : Settings_DivOptionNoSummary(key, STR));
-    } //Variable initialization
+        return STR_SUMMARY ? Settings_DivOptionWithSummary(key, STR, STR_SUMMARY) : Settings_DivOptionNoSummary(key, STR);
+    }
+    //Variable initialization
     var Languages_cursorY = 0;
     var Languages_Selected = '';
     var Languages_value = {
-        "All": {
-            "values": ["off", "on"],
-            "defaultValue": 2,
-            "set_values": ""
+        All: {
+            values: ['off', 'on'],
+            defaultValue: 2,
+            set_values: ''
         },
-        "Bulgarian [BG]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "bg"
+        'Bulgarian [BG]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'bg'
         },
-        "Čeština [CS]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "cs"
+        'Čeština [CS]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'cs'
         },
-        "Dansk [DA]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "da"
+        'Dansk [DA]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'da'
         },
-        "Deutsch [DE]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "de"
+        'Deutsch [DE]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'de'
         },
-        "Ελληνικά [EL]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "el"
+        'Ελληνικά [EL]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'el'
         },
-        "English [EN]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "en"
+        'English [EN]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'en'
         },
-        "Español [ES]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "es"
+        'Español [ES]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'es'
         },
-        "Suomi [FI]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "fi"
+        'Suomi [FI]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'fi'
         },
-        "Français [FR]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "fr"
+        'Français [FR]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'fr'
         },
-        "Italiano [IT]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "it"
+        'Italiano [IT]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'it'
         },
-        "Magyar [HU]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "hu"
+        'Magyar [HU]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'hu'
         },
-        "日本語 [JA]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "ja"
+        '日本語 [JA]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'ja'
         },
-        "한국어 [KO]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "ko"
+        '한국어 [KO]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'ko'
         },
-        "Nederlands [NL]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "nl"
+        'Nederlands [NL]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'nl'
         },
-        "Norsk [NO]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "no"
+        'Norsk [NO]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'no'
         },
-        "Polski [PL]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "pl"
+        'Polski [PL]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'pl'
         },
-        "Português [PT]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "pt"
+        'Português [PT]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'pt'
         },
-        "Română [RO]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "ro"
+        'Română [RO]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'ro'
         },
-        "Русский [RU]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "ru"
+        'Русский [RU]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'ru'
         },
-        "Slovenčina [SK]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "sk"
+        'Slovenčina [SK]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'sk'
         },
-        "Svenska [SV]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "sv"
+        'Svenska [SV]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'sv'
         },
-        "ภาษาไทย [TH]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "th"
+        'ภาษาไทย [TH]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'th'
         },
-        "Türkçe [TR]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "tr"
+        'Türkçe [TR]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'tr'
         },
-        "Tiếng Việt [VI]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "vi"
+        'Tiếng Việt [VI]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'vi'
         },
-        "中文 [ZH]": {
-            "values": ["off", "on"],
-            "defaultValue": 1,
-            "set_values": "zh"
+        '中文 [ZH]': {
+            values: ['off', 'on'],
+            defaultValue: 1,
+            set_values: 'zh'
         }
     };
 
     //For clips the api accept a coma and extra languages
     var Languages_Extra = {
-        "en": "en,en-gb",
-        "es": "es,es-mx",
-        "pt": "pt,pt-br"
+        en: 'en,en-gb',
+        es: 'es,es-mx',
+        pt: 'pt,pt-br'
     };
 
     var Languages_value_keys = [];
@@ -16733,20 +16682,20 @@
     //Variable initialization end
 
     function Languages_init() {
-        document.body.removeEventListener("keydown", Settings_handleKeyDown);
+        document.body.removeEventListener('keydown', Settings_handleKeyDown);
         Main_HideElement('settings_main');
         Main_ShowElement('settings_lang');
         Languages_HideShowAll();
         ScreensObj_SetTopLable(STR_SETTINGS + STR_SPACE + STR_CONTENT_LANG);
-        document.body.addEventListener("keydown", Languages_handleKeyDown, false);
+        document.body.addEventListener('keydown', Languages_handleKeyDown, false);
         Languages_cursorY = 0;
         Languages_inputFocus(Languages_cursorY);
         Languages_ResetLang();
     }
 
     function Languages_exit() {
-        document.body.removeEventListener("keydown", Languages_handleKeyDown);
-        document.body.addEventListener("keydown", Settings_handleKeyDown, false);
+        document.body.removeEventListener('keydown', Languages_handleKeyDown);
+        document.body.addEventListener('keydown', Settings_handleKeyDown, false);
         Settings_ScrollTableReset();
         Main_ShowElement('settings_main');
         Main_HideElement('settings_lang');
@@ -16756,7 +16705,7 @@
     }
 
     function Languages_ResetLang() {
-        if (Main_ContentLang === "") {
+        if (Main_ContentLang === '') {
             Languages_Selected = STR_LANG_ALL;
             Languages_value.All.defaultValue = 1;
             Languages_ChangeSettigs(0);
@@ -16767,7 +16716,7 @@
     }
 
     function Languages_SetLang() {
-        Main_ContentLang = "";
+        Main_ContentLang = '';
         if (!Languages_Obj_default('All')) {
             for (var key in Languages_value) {
                 if (Languages_Obj_default(key)) Main_ContentLang += ',' + Languages_value[key].set_values;
@@ -16776,10 +16725,10 @@
             //the app allowed more then one language but twitch api block it now
             if (Main_A_includes_B(Main_ContentLang, ',')) {
                 Languages_ResetAll();
-                Main_ContentLang = "";
+                Main_ContentLang = '';
             }
         }
-        if (Main_ContentLang === "") Languages_Selected = STR_LANG_ALL;
+        if (Main_ContentLang === '') Languages_Selected = STR_LANG_ALL;
         else Languages_Selected = Main_ContentLang.toUpperCase();
     }
 
@@ -16793,16 +16742,33 @@
             div += Languages_DivOptionNoSummary(key, key);
         }
 
-        Main_innerHTML("settings_lang", div);
+        Main_innerHTML('settings_lang', div);
         Languages_positions_length = Languages_value_keys.length;
     }
 
     function Languages_DivOptionNoSummary(key, string) {
-        return '<div id="' + key + '_div" class="settings_div"><div id="' +
-            key + '_name" class="settings_name">' + string + '</div>' +
-            '<div class="settings_arraw_div"><div id="' + key + 'arrow_left" class="left"></div></div>' +
-            '<div id="' + key + '" class="' + (Languages_Obj_default(key) ? 'red_text ' : '') + 'strokedeline settings_value">' + Languages_Obj_values(key) + '</div>' +
-            '<div class="settings_arraw_div"><div id="' + key + 'arrow_right" class="right"></div></div></div>';
+        return (
+            '<div id="' +
+            key +
+            '_div" class="settings_div"><div id="' +
+            key +
+            '_name" class="settings_name">' +
+            string +
+            '</div>' +
+            '<div class="settings_arraw_div"><div id="' +
+            key +
+            'arrow_left" class="left"></div></div>' +
+            '<div id="' +
+            key +
+            '" class="' +
+            (Languages_Obj_default(key) ? 'red_text ' : '') +
+            'strokedeline settings_value">' +
+            Languages_Obj_values(key) +
+            '</div>' +
+            '<div class="settings_arraw_div"><div id="' +
+            key +
+            'arrow_right" class="right"></div></div></div>'
+        );
     }
 
     function Languages_SetDefautls() {
@@ -16839,16 +16805,14 @@
 
     function Languages_RemoveinputFocus() {
         var key = Languages_value_keys[Languages_cursorY];
-        document.getElementById(key + "arrow_left").style.opacity = "0";
-        document.getElementById(key + "arrow_right").style.opacity = "0";
+        document.getElementById(key + 'arrow_left').style.opacity = '0';
+        document.getElementById(key + 'arrow_right').style.opacity = '0';
         Main_RemoveClass(key, 'settings_value_focus');
         Main_RemoveClass(key + '_div', 'settings_div_focus');
     }
 
     function Languages_ScrollTable() {
-
-        document.getElementById('settings_scroll').scrollTop =
-            (Languages_cursorY > 7) ? document.getElementById(Languages_value_keys[Languages_cursorY - 7]).offsetTop : 0;
+        document.getElementById('settings_scroll').scrollTop = Languages_cursorY > 7 ? document.getElementById(Languages_value_keys[Languages_cursorY - 7]).offsetTop : 0;
     }
 
     function Languages_ChangeSettigs(position) {
@@ -16885,14 +16849,14 @@
         var maxValue = Languages_Obj_length(key);
 
         if (currentValue > 0 && currentValue < maxValue) {
-            document.getElementById(key + "arrow_left").style.opacity = "1";
-            document.getElementById(key + "arrow_right").style.opacity = "1";
+            document.getElementById(key + 'arrow_left').style.opacity = '1';
+            document.getElementById(key + 'arrow_right').style.opacity = '1';
         } else if (currentValue === maxValue) {
-            document.getElementById(key + "arrow_left").style.opacity = "1";
-            document.getElementById(key + "arrow_right").style.opacity = "0.2";
+            document.getElementById(key + 'arrow_left').style.opacity = '1';
+            document.getElementById(key + 'arrow_right').style.opacity = '0.2';
         } else {
-            document.getElementById(key + "arrow_left").style.opacity = "0.2";
-            document.getElementById(key + "arrow_right").style.opacity = "1";
+            document.getElementById(key + 'arrow_left').style.opacity = '0.2';
+            document.getElementById(key + 'arrow_right').style.opacity = '1';
         }
     }
 
@@ -16939,7 +16903,7 @@
                 }
                 break;
             case KEY_DOWN:
-                if (!Languages_Obj_default('All') && Languages_cursorY < (Languages_positions_length - 1)) {
+                if (!Languages_Obj_default('All') && Languages_cursorY < Languages_positions_length - 1) {
                     Languages_RemoveinputFocus();
                     Languages_cursorY++;
                     Languages_inputFocus(Languages_cursorY);
@@ -16948,7 +16912,8 @@
             default:
                 break;
         }
-    } //Spacing for reease maker not trow erros frm jshint
+    }
+    //Spacing for reease maker not trow erros frm jshint
     var Sidepannel_PosFeed = 0;
     var Sidepannel_Callback;
     var Sidepannel_UpdateThumbDoc;
@@ -16994,19 +16959,30 @@
         Main_innerHTML('feed_thum_name', Sidepannel_partnerIcon(Main_ReplaceLargeFont(info[3]), info[9], info[8]));
         Main_innerHTML('feed_thum_quality', info[7]);
         Main_innerHTML('feed_thum_title', Main_ReplaceLargeFont(twemoji.parse(info[4])));
-        Main_innerHTML('feed_thum_game', (info[5] !== "" ? STR_PLAYING + info[5] : ""));
+        Main_innerHTML('feed_thum_game', info[5] !== '' ? STR_PLAYING + info[5] : '');
         Main_innerHTML('feed_thum_views', info[6]);
 
-        if (Main_isElementShowing('side_panel_feed_holder') && Sidepannel_isShowing())
-            Main_ShowElement('side_panel_feed_thumb');
+        if (Main_isElementShowing('side_panel_feed_holder') && Sidepannel_isShowing()) Main_ShowElement('side_panel_feed_thumb');
     }
 
     function Sidepannel_partnerIcon(name, partner, isrerun) {
-        return '<div class="partnericon_div"> ' + name + STR_SPACE + STR_SPACE + '</div>' +
-            (partner ? ('<img class="partnericon_img" alt="" src="' +
-                IMG_PARTNER + '">' + STR_SPACE + STR_SPACE) : "") + '<div class="partnericon_text" style="background: #' +
-            (isrerun ? 'FFFFFF; color: #000000;' : 'E21212;') + '">' + STR_SPACE + STR_SPACE +
-            (isrerun ? STR_NOT_LIVE : STR_LIVE) + STR_SPACE + STR_SPACE + '</div>';
+        return (
+            '<div class="partnericon_div"> ' +
+            name +
+            STR_SPACE +
+            STR_SPACE +
+            '</div>' +
+            (partner ? '<img class="partnericon_img" alt="" src="' + IMG_PARTNER + '">' + STR_SPACE + STR_SPACE : '') +
+            '<div class="partnericon_text" style="background: #' +
+            (isrerun ? 'FFFFFF; color: #000000;' : 'E21212;') +
+            '">' +
+            STR_SPACE +
+            STR_SPACE +
+            (isrerun ? STR_NOT_LIVE : STR_LIVE) +
+            STR_SPACE +
+            STR_SPACE +
+            '</div>'
+        );
     }
 
     function Sidepannel_PreloadImgs() {
@@ -17033,13 +17009,11 @@
         }
 
         if (Main_values.Sidepannel_Pos === 2) {
-
             Main_values.Sidepannel_IsUser = false;
             Sidepannel_SetDefaultLables();
             Sidepannel_UnSetTopOpacity();
 
             hidepanel = false;
-
         } else if (Main_values.Sidepannel_Pos === 3) Sidepannel_Go(Main_UserLive);
         else if (Main_values.Sidepannel_Pos === 4) Sidepannel_Go(Main_usergames);
         else if (Main_values.Sidepannel_Pos === 5) Sidepannel_Go(Main_UserVod);
@@ -17063,9 +17037,13 @@
     }
 
     function Sidepannel_MainISuser() {
-        return Main_values.Main_Go === Main_UserLive ||
-            Main_values.Main_Go === Main_usergames || Main_values.Main_Go === Main_UserVod ||
-            Main_values.Main_Go === Main_UserChannels || Main_values.Main_Go === Main_ChannelContent;
+        return (
+            Main_values.Main_Go === Main_UserLive ||
+            Main_values.Main_Go === Main_usergames ||
+            Main_values.Main_Go === Main_UserVod ||
+            Main_values.Main_Go === Main_UserChannels ||
+            Main_values.Main_Go === Main_ChannelContent
+        );
     }
 
     function Sidepannel_KeyEnterBase() {
@@ -17076,23 +17054,21 @@
             else AddUser_init();
         } else if (Main_values.Sidepannel_Pos === 1) {
             if (Main_values.Main_Go !== Main_Search) {
-                if (!Main_values.Search_isSearching &&
-                    (Main_values.Main_Go === Main_ChannelContent || Main_values.Main_Go === Main_ChannelClip || Main_values.Main_Go === Main_ChannelVod))
+                if (!Main_values.Search_isSearching && (Main_values.Main_Go === Main_ChannelContent || Main_values.Main_Go === Main_ChannelClip || Main_values.Main_Go === Main_ChannelVod))
                     ChannelContent_SetChannelValue();
                 Main_OpenSearch();
-            } else document.body.addEventListener("keydown", Sidepannel_Callback, false);
+            } else document.body.addEventListener('keydown', Sidepannel_Callback, false);
         } else if (Main_values.Sidepannel_Pos === 8) {
             Main_showSettings();
         } else if (Main_values.Sidepannel_Pos === 9) {
-            document.body.removeEventListener("keydown", Sidepannel_Callback, false);
-            document.body.addEventListener("keydown", Screens_handleKeyControls);
+            document.body.removeEventListener('keydown', Sidepannel_Callback, false);
+            document.body.addEventListener('keydown', Screens_handleKeyControls);
             Main_showAboutDialog();
         } else if (Main_values.Sidepannel_Pos === 10) {
-            document.body.removeEventListener("keydown", Sidepannel_Callback, false);
-            document.body.addEventListener("keydown", Screens_handleKeyControls);
+            document.body.removeEventListener('keydown', Sidepannel_Callback, false);
+            document.body.addEventListener('keydown', Screens_handleKeyControls);
             Main_showControlsDialog();
         } else if (Main_values.Sidepannel_Pos === 11) Main_showExitDialog(Sidepannel_Callback);
-
     }
 
     function Sidepannel_KeyEnter() {
@@ -17130,7 +17106,7 @@
 
     function Sidepannel_Go(GoTo) {
         if (GoTo === Main_values.Main_Go) {
-            document.body.addEventListener("keydown", Sidepannel_Callback, false);
+            document.body.addEventListener('keydown', Sidepannel_Callback, false);
             Main_SwitchScreenAction();
         } else {
             Main_values.Main_Before = Main_values.Main_Go;
@@ -17142,7 +17118,7 @@
 
     function Sidepannel_Start(callback) {
         Sidepannel_Callback = callback;
-        document.body.removeEventListener("keydown", Sidepannel_Callback);
+        document.body.removeEventListener('keydown', Sidepannel_Callback);
         if (!Sidepannel_IsMain && AddUser_UserIsSet()) Sidepannel_StartFeed();
         else Sidepannel_StartMain();
     }
@@ -17153,13 +17129,13 @@
         Main_ShowElement('side_panel_fix');
         document.getElementById('side_panel_movel').style.marginLeft = 0;
         document.getElementById('side_panel_fix').style.marginLeft = '';
-        document.body.addEventListener("keydown", Sidepannel_handleKeyDownMain, false);
+        document.body.addEventListener('keydown', Sidepannel_handleKeyDownMain, false);
         Sidepannel_AddFocusMain();
     }
 
     function Sidepannel_StartFeed() {
         Sidepannel_IsMain = false;
-        document.body.addEventListener("keydown", Sidepannel_handleKeyDown, false);
+        document.body.addEventListener('keydown', Sidepannel_handleKeyDown, false);
         Main_RemoveClass('side_panel', 'side_panel_hide');
         Sidepannel_ShowFeed();
         Sidepannel_HideMain(true);
@@ -17170,8 +17146,7 @@
         if (Play_FeedOldUserName !== AddUser_UsernameArray[0].name) UserLiveFeed_status = false;
         Play_FeedOldUserName = AddUser_UsernameArray[0].name;
 
-        if (!UserLiveFeed_ThumbNull(0, UserLiveFeed_ids[0]) ||
-            !Main_A_equals_B(UserLiveFeed_Sort, Settings_value.live_feed_sort.defaultValue)) UserLiveFeed_status = false;
+        if (!UserLiveFeed_ThumbNull(0, UserLiveFeed_ids[0]) || !Main_A_equals_B(UserLiveFeed_Sort, Settings_value.live_feed_sort.defaultValue)) UserLiveFeed_status = false;
 
         if (!UserLiveFeed_status && !UserLiveFeed_loadingData) UserLiveFeed_StartLoad();
 
@@ -17183,12 +17158,11 @@
 
     function Sidepannel_HideMain(hideAll) {
         var size = AddUser_UsernameArray[0] ? AddUser_UsernameArray[0].display_name.length : STR_USER_ADD;
-        size = (size > 11 ? size - 11 : 0);
+        size = size > 11 ? size - 11 : 0;
 
         if (hideAll) document.getElementById('side_panel_fix').style.marginLeft = '-' + Sidepannel_FixdefaultMargin + '%';
 
-        document.getElementById('side_panel_movel').style.marginLeft =
-            'calc(-' + (hideAll ? (Sidepannel_MoveldefaultWidth + 0.5) : Sidepannel_MoveldefaultMargin) + '% - ' + size + 'ch)';
+        document.getElementById('side_panel_movel').style.marginLeft = 'calc(-' + (hideAll ? Sidepannel_MoveldefaultWidth + 0.5 : Sidepannel_MoveldefaultMargin) + '% - ' + size + 'ch)';
     }
 
     function Sidepannel_Hide() {
@@ -17201,16 +17175,15 @@
         Main_HideElement('side_panel_feed_thumb');
         Main_RemoveClass('scenefeed', Screens_SettingDoAnimations ? 'scenefeed_background' : 'scenefeed_background_no_ani');
 
-        document.body.removeEventListener("keydown", Sidepannel_handleKeyDown);
-        document.body.removeEventListener("keydown", Sidepannel_handleKeyDownMain);
+        document.body.removeEventListener('keydown', Sidepannel_handleKeyDown);
+        document.body.removeEventListener('keydown', Sidepannel_handleKeyDownMain);
     }
 
     function Sidepannel_SetTopOpacity(Main_Go) {
         if (Sidepannel_Pos_Screens[Main_Go]) Main_values.Sidepannel_Pos = Sidepannel_Pos_Screens[Main_Go];
         Sidepannel_UnSetTopOpacity();
 
-        if (Main_values.Sidepannel_Pos && Main_values.Sidepannel_Pos < 8)
-            Main_AddClass('side_panel_new_' + Main_values.Sidepannel_Pos, 'side_panel_new_icons_text');
+        if (Main_values.Sidepannel_Pos && Main_values.Sidepannel_Pos < 8) Main_AddClass('side_panel_new_' + Main_values.Sidepannel_Pos, 'side_panel_new_icons_text');
     }
 
     var Sidepannel_Pos_Screens = [
@@ -17234,7 +17207,7 @@
         0, // Main_addUser 18
         5, //Main_aGame 19
         5, //Main_AGameVod 20
-        5, //Main_AGameClip 21
+        5 //Main_AGameClip 21
     ];
 
     function Sidepannel_UnSetTopOpacity() {
@@ -17258,7 +17231,6 @@
         Sidepannel_SetIcons('side_panel_new_5', 'movie-play');
         Sidepannel_SetIcons('side_panel_new_6', 'filmstrip');
         Sidepannel_SetIcons('side_panel_new_7', 'user');
-
     }
 
     function Sidepannel_SetDefaultLables() {
@@ -17292,8 +17264,10 @@
     }
 
     function Sidepannel_SetUserlable(text) {
-        Main_innerHTML('side_panel_movel_new_0', STR_SPACE + text + STR_BR +
-            '<div style="font-size: 45%;display: inline-block; transform: translateY(-80%);">' + STR_SPACE + STR_SPACE + STR_USER_EXTRAS + '</div>');
+        Main_innerHTML(
+            'side_panel_movel_new_0',
+            STR_SPACE + text + STR_BR + '<div style="font-size: 45%;display: inline-block; transform: translateY(-80%);">' + STR_SPACE + STR_SPACE + STR_USER_EXTRAS + '</div>'
+        );
     }
 
     function Sidepannel_SetIcons(div, icon) {
@@ -17306,15 +17280,15 @@
             center = 6,
             doc = document.getElementById('side_panel_holder');
 
-        if (Sidepannel_PosFeed > center) { //Start scrolling in the middle
-            if (Sidepannel_PosFeed < (Sidepannel_GetSize() - center))
-                value = (-18.115 * (Sidepannel_PosFeed - center)) + '%';
-            else if (((Sidepannel_GetSize() - center) - center) > 0) //if we are in the 7 left
-                value = (-18.115 * (Sidepannel_GetSize() - (center * 2))) + '%';
+        if (Sidepannel_PosFeed > center) {
+            //Start scrolling in the middle
+            if (Sidepannel_PosFeed < Sidepannel_GetSize() - center) value = -18.115 * (Sidepannel_PosFeed - center) + '%';
+            else if (Sidepannel_GetSize() - center - center > 0)
+                //if we are in the 7 left
+                value = -18.115 * (Sidepannel_GetSize() - center * 2) + '%';
         }
 
-        if (!skipAnimation && Screens_ChangeFocusAnimationFinished && Screens_SettingDoAnimations &&
-            !Screens_ChangeFocusAnimationFast) {
+        if (!skipAnimation && Screens_ChangeFocusAnimationFinished && Screens_SettingDoAnimations && !Screens_ChangeFocusAnimationFast) {
             Screens_ChangeFocusAnimationFinished = false;
             Screens_ChangeFocusAnimationFast = true;
 
@@ -17324,7 +17298,6 @@
             window.setTimeout(function() {
                 Screens_ChangeFocusAnimationFinished = true;
             }, 200); //Same value as side_panel_holder_ani
-
         } else {
             if (skipAnimation) Screens_ChangeFocusAnimationFast = false;
             doc.style.transition = 'none';
@@ -17332,7 +17305,6 @@
         }
 
         doc.style.marginTop = value;
-
     }
 
     function Sidepannel_handleKeyDown(event) {
@@ -17347,7 +17319,7 @@
                 Main_AddClass('side_panel', 'side_panel_hide');
                 Main_RemoveClass('scenefeed', Screens_SettingDoAnimations ? 'scenefeed_background' : 'scenefeed_background_no_ani');
                 Main_HideElement('side_panel_feed_thumb');
-                document.body.removeEventListener("keydown", Sidepannel_handleKeyDown);
+                document.body.removeEventListener('keydown', Sidepannel_handleKeyDown);
                 Sidepannel_StartMain();
                 break;
             case KEY_INFO:
@@ -17365,7 +17337,7 @@
                 break;
             case KEY_PG_DOWN:
             case KEY_DOWN:
-                if (Screens_ChangeFocusAnimationFinished && Sidepannel_PosFeed < (Sidepannel_GetSize() - 1) && !UserLiveFeed_loadingData) {
+                if (Screens_ChangeFocusAnimationFinished && Sidepannel_PosFeed < Sidepannel_GetSize() - 1 && !UserLiveFeed_loadingData) {
                     Sidepannel_RemoveFocusFeed();
                     Sidepannel_PosFeed++;
                     Sidepannel_AddFocusFeed();
@@ -17377,14 +17349,14 @@
             case KEY_KEYBOARD_SPACE:
             case KEY_ENTER:
                 if (!UserLiveFeed_loadingData) {
-                    var doc = document.getElementById("side_panel");
+                    var doc = document.getElementById('side_panel');
                     doc.style.transition = 'none';
                     Sidepannel_Hide();
                     Main_values.Play_isHost = false;
                     Play_UserLiveFeedPressed = true;
                     Main_ready(function() {
                         Main_OpenLiveStream(Sidepannel_PosFeed, UserLiveFeed_side_ids, Sidepannel_handleKeyDown);
-                        if (Settings_Obj_default("app_animations")) doc.style.transition = '';
+                        if (Settings_Obj_default('app_animations')) doc.style.transition = '';
                     });
                 }
                 break;
@@ -17405,7 +17377,7 @@
             case KEY_LEFT:
                 if (AddUser_UserIsSet()) {
                     if (AddUser_UsernameArray[0].access_token) {
-                        document.body.removeEventListener("keydown", Sidepannel_handleKeyDownMain);
+                        document.body.removeEventListener('keydown', Sidepannel_handleKeyDownMain);
                         Main_ShowElement('side_panel_feed_thumb'); //TODO check if this is needed
                         Sidepannel_StartFeed();
                     } else {
@@ -17496,7 +17468,7 @@
             Main_empty('side_panel_holder');
             document.getElementById('side_panel_warn').style.display = 'none';
             UserLiveFeed_status = false;
-            document.getElementById('user_feed_scroll').style.left = "0.125em";
+            document.getElementById('user_feed_scroll').style.left = '0.125em';
             Main_ShowElement('dialog_loading_feed');
             Main_ShowElement('dialog_loading_side_feed');
             UserLiveFeed_loadChannelOffsset = 0;
@@ -17530,13 +17502,12 @@
 
     function UserLiveFeed_loadChannelUserLiveGet(theUrl) {
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open("GET", theUrl, true);
+        xmlHttp.open('GET', theUrl, true);
         xmlHttp.timeout = UserLiveFeed_loadingDataTimeout;
 
         Main_Bearer_User_Headers[1][1] = Main_Bearer + AddUser_UsernameArray[0].access_token;
 
-        for (var i = 0; i < Main_Bearer_Headers.length; i++)
-            xmlHttp.setRequestHeader(Main_Bearer_User_Headers[i][0], Main_Bearer_User_Headers[i][1]);
+        for (var i = 0; i < Main_Bearer_Headers.length; i++) xmlHttp.setRequestHeader(Main_Bearer_User_Headers[i][0], Main_Bearer_User_Headers[i][1]);
 
         xmlHttp.ontimeout = function() {};
 
@@ -17544,7 +17515,8 @@
             if (xmlHttp.readyState === 4) {
                 if (xmlHttp.status === 200) {
                     UserLiveFeed_loadDataSuccess(xmlHttp.responseText);
-                } else if (UserLiveFeed_token && (xmlHttp.status === 401 || xmlHttp.status === 403)) { //token expired
+                } else if (UserLiveFeed_token && (xmlHttp.status === 401 || xmlHttp.status === 403)) {
+                    //token expired
                     //Token has change or because is new or because it is invalid because user delete in twitch settings
                     // so callbackFuncOK and callbackFuncNOK must be the same to recheck the token
                     AddCode_refreshTokens(0, 0, UserLiveFeed_CheckToken, UserLiveFeed_loadDataRefreshTokenError);
@@ -17602,23 +17574,12 @@
     }
 
     function UserLiveFeed_loadDataSuccessHttpRequest() {
-        BasexmlHttpGet(
-            UserLiveFeed_loadDataSuccessUrl,
-            UserLiveFeed_loadingDataTimeout,
-            2,
-            null,
-            UserLiveFeed_loadDataSuccessUpdateMap,
-            UserLiveFeed_loadDataSuccessError,
-            false,
-            null,
-            true
-        );
+        BasexmlHttpGet(UserLiveFeed_loadDataSuccessUrl, UserLiveFeed_loadingDataTimeout, 2, null, UserLiveFeed_loadDataSuccessUpdateMap, UserLiveFeed_loadDataSuccessError, false, null, true);
     }
 
     function UserLiveFeed_loadDataSuccessUpdateMap(response) {
         response = JSON.parse(response);
         if (response.data && response.data.length) {
-
             var data = response.data;
 
             var mapLogoPartner = {};
@@ -17626,12 +17587,11 @@
             for (var i = 0; i < data.length; i++) {
                 mapLogoPartner[data[i].id] = {
                     partner: data[i].broadcaster_type === 'partner',
-                    logo: data[i].profile_image_url,
+                    logo: data[i].profile_image_url
                 };
             }
 
             UserLiveFeed_loadDataSuccessEnd(UserLiveFeed_loadDataSuccessResponse, mapLogoPartner);
-
         }
     }
 
@@ -17643,19 +17603,19 @@
         } else {
             UserLiveFeed_loadDataSuccessEnd(UserLiveFeed_loadDataSuccessResponse, {});
         }
-
     }
 
     function UserLiveFeed_loadDataSuccessEnd(response, mapLogoPartner) {
-
         //var response = JSON.parse(responseText).data;
         var response_items = response.length;
         var sorting = Settings_Obj_default('live_feed_sort');
 
         if (response_items < Main_ItemsLimitVideo) UserLiveFeed_dataEnded = true;
 
-        var stream, id, doc = document.getElementById("user_feed_scroll"),
-            docside = document.getElementById("side_panel_holder"),
+        var stream,
+            id,
+            doc = document.getElementById('user_feed_scroll'),
+            docside = document.getElementById('side_panel_holder'),
             i = 0;
 
         if (!UserLiveFeed_WasLiveidObject[AddUser_UsernameArray[0].name]) {
@@ -17671,26 +17631,22 @@
             //A-Z
             if (sorting_type1) {
                 response.sort(function(a, b) {
-                    return (a[sorting_type1][sorting_type2] < b[sorting_type1][sorting_type2] ? -1 :
-                        (a[sorting_type1][sorting_type2] > b[sorting_type1][sorting_type2] ? 1 : 0));
+                    return a[sorting_type1][sorting_type2] < b[sorting_type1][sorting_type2] ? -1 : a[sorting_type1][sorting_type2] > b[sorting_type1][sorting_type2] ? 1 : 0;
                 });
             } else {
                 response.sort(function(a, b) {
-                    return (a[sorting_type2] < b[sorting_type2] ? -1 :
-                        (a[sorting_type2] > b[sorting_type2] ? 1 : 0));
+                    return a[sorting_type2] < b[sorting_type2] ? -1 : a[sorting_type2] > b[sorting_type2] ? 1 : 0;
                 });
             }
         } else {
             //Z-A
             if (sorting_type1) {
                 response.sort(function(a, b) {
-                    return (a[sorting_type1][sorting_type2] > b[sorting_type1][sorting_type2] ? -1 :
-                        (a[sorting_type1][sorting_type2] < b[sorting_type1][sorting_type2] ? 1 : 0));
+                    return a[sorting_type1][sorting_type2] > b[sorting_type1][sorting_type2] ? -1 : a[sorting_type1][sorting_type2] < b[sorting_type1][sorting_type2] ? 1 : 0;
                 });
             } else {
                 response.sort(function(a, b) {
-                    return (a[sorting_type2] > b[sorting_type2] ? -1 :
-                        (a[sorting_type2] < b[sorting_type2] ? 1 : 0));
+                    return a[sorting_type2] > b[sorting_type2] ? -1 : a[sorting_type2] < b[sorting_type2] ? 1 : 0;
                 });
             }
         }
@@ -17700,7 +17656,6 @@
             id = stream.user_id;
 
             if (!UserLiveFeed_idObject[id]) {
-
                 //Check if was live if not notificate
                 if (!UserLiveFeed_WasLiveidObject[AddUser_UsernameArray[0].name][id]) {
                     UserLiveFeed_NotifyLiveidObject.push({
@@ -17708,7 +17663,7 @@
                         logo: mapLogoPartner[id] ? mapLogoPartner[id].logo : null,
                         title: Main_ReplaceLargeFont(twemoji.parse(stream.title)),
                         game: stream.game_name,
-                        rerun: Main_is_rerun(stream.type),
+                        rerun: Main_is_rerun(stream.type)
                     });
                 }
 
@@ -17717,41 +17672,37 @@
                     Play_FeedPos = i;
                 }
 
-                doc.appendChild(UserLiveFeed_CreatFeed(i,
-                    [stream.user_login, id, Main_is_rerun(stream.type)],
-                    [
-                        stream.thumbnail_url.replace("{width}x{height}", Main_VideoSize),
-                        stream.user_name,
-                        stream.game_name,
-                        Main_addCommas(stream.viewer_count),
-                        stream.title
-                    ]));
+                doc.appendChild(
+                    UserLiveFeed_CreatFeed(
+                        i,
+                        [stream.user_login, id, Main_is_rerun(stream.type)],
+                        [stream.thumbnail_url.replace('{width}x{height}', Main_VideoSize), stream.user_name, stream.game_name, Main_addCommas(stream.viewer_count), stream.title]
+                    )
+                );
 
                 if (UserSidePannel_LastPos !== null && UserSidePannel_LastPos === stream.user_login) {
                     Sidepannel_PosFeed = i;
                 }
 
-                docside.appendChild(UserLiveFeed_CreatSideFeed(i,
-                    [stream.user_login, id, Main_is_rerun(stream.type)],
-                    [
-                        stream.user_login, id, stream.thumbnail_url.replace("{width}x{height}", Main_SidePannelSize),
-                        stream.user_name,
-                        stream.title,
-                        stream.game_name,
-                        STR_SINCE + Play_streamLiveAt(stream.started_at) + ' ' +
-                        STR_FOR + Main_addCommas(stream.viewer_count) + STR_SPACE + STR_VIEWER,
-                        '[' + stream.language.toUpperCase() + ']',
-                        Main_is_rerun(stream.type),
-                        mapLogoPartner[id] ? mapLogoPartner[id].partner : null
-                    ],
-                    [
-                        mapLogoPartner[id] ? mapLogoPartner[id].logo : null,
-                        stream.user_name,
-                        stream.user_name,
-                        stream.game_name,
-                        Main_addCommas(stream.viewer_count)
-                    ]
-                ));
+                docside.appendChild(
+                    UserLiveFeed_CreatSideFeed(
+                        i,
+                        [stream.user_login, id, Main_is_rerun(stream.type)],
+                        [
+                            stream.user_login,
+                            id,
+                            stream.thumbnail_url.replace('{width}x{height}', Main_SidePannelSize),
+                            stream.user_name,
+                            stream.title,
+                            stream.game_name,
+                            STR_SINCE + Play_streamLiveAt(stream.started_at) + ' ' + STR_FOR + Main_addCommas(stream.viewer_count) + STR_SPACE + STR_VIEWER,
+                            '[' + stream.language.toUpperCase() + ']',
+                            Main_is_rerun(stream.type),
+                            mapLogoPartner[id] ? mapLogoPartner[id].partner : null
+                        ],
+                        [mapLogoPartner[id] ? mapLogoPartner[id].logo : null, stream.user_name, stream.user_name, stream.game_name, Main_addCommas(stream.viewer_count)]
+                    )
+                );
             }
         }
 
@@ -17789,8 +17740,7 @@
     }
 
     function UserLiveFeed_LiveNotification() {
-        if (UserLiveFeed_NotifyRunning || !UserLiveFeed_Notify ||
-            !UserLiveFeed_NotifyLiveidObject.length) {
+        if (UserLiveFeed_NotifyRunning || !UserLiveFeed_Notify || !UserLiveFeed_NotifyLiveidObject.length) {
             UserLiveFeed_NotifyLiveidObject = [];
             return;
         }
@@ -17819,7 +17769,14 @@
     }
 
     function UserLiveFeed_LiveNotificationOnload(position) {
-        Main_innerHTML('user_feed_notify_name', '<i class="icon-' + (!UserLiveFeed_NotifyLiveidObject[position].rerun ? 'circle" style="color: red;' : 'refresh" style="') + ' font-size: 75%; "></i>' + STR_SPACE + UserLiveFeed_NotifyLiveidObject[position].name);
+        Main_innerHTML(
+            'user_feed_notify_name',
+            '<i class="icon-' +
+            (!UserLiveFeed_NotifyLiveidObject[position].rerun ? 'circle" style="color: red;' : 'refresh" style="') +
+            ' font-size: 75%; "></i>' +
+            STR_SPACE +
+            UserLiveFeed_NotifyLiveidObject[position].name
+        );
 
         Main_textContent('user_feed_notify_game', UserLiveFeed_NotifyLiveidObject[position].game);
         Main_innerHTML('user_feed_notify_title', UserLiveFeed_NotifyLiveidObject[position].title);
@@ -17836,7 +17793,7 @@
     function UserLiveFeed_LiveNotificationHide(position) {
         Main_AddClass('user_feed_notify', 'user_feed_notify_hide');
 
-        if (position < (UserLiveFeed_NotifyLiveidObject.length - 1)) {
+        if (position < UserLiveFeed_NotifyLiveidObject.length - 1) {
             window.setTimeout(function() {
                 UserLiveFeed_LiveNotificationShow(position + 1);
             }, 800);
@@ -17856,42 +17813,92 @@
         div.setAttribute(Main_DataAttribute, JSON.stringify(data));
 
         div.className = 'user_feed_thumb';
-        div.innerHTML = '<div id="' + UserLiveFeed_ids[0] + id + '" class="stream_thumbnail_player_feed" >' +
-            '<div class="stream_thumbnail_live_img"><img id="' + UserLiveFeed_ids[1] + id + '" alt="" class="stream_img" src="' + valuesArray[0] +
-            Main_randomimg + '" onerror="this.onerror=null;this.src=\'' + IMG_404_VIDEO + '\'"></div>' +
-            '<div id="' + UserLiveFeed_ids[2] + id + '" class="player_live_feed_text"><div class="stream_text_holder">' +
-            '<div style="line-height: 1.6ch;"><div id="' + UserLiveFeed_ids[3] + id +
-            '" class="stream_info_live_name" style="width: 63%; display: inline-block;">' + Main_ReplaceLargeFont(valuesArray[1]) + '</div>' +
+        div.innerHTML =
+            '<div id="' +
+            UserLiveFeed_ids[0] +
+            id +
+            '" class="stream_thumbnail_player_feed" >' +
+            '<div class="stream_thumbnail_live_img"><img id="' +
+            UserLiveFeed_ids[1] +
+            id +
+            '" alt="" class="stream_img" src="' +
+            valuesArray[0] +
+            Main_randomimg +
+            '" onerror="this.onerror=null;this.src=\'' +
+            IMG_404_VIDEO +
+            '\'"></div>' +
+            '<div id="' +
+            UserLiveFeed_ids[2] +
+            id +
+            '" class="player_live_feed_text"><div class="stream_text_holder">' +
+            '<div style="line-height: 1.6ch;"><div id="' +
+            UserLiveFeed_ids[3] +
+            id +
+            '" class="stream_info_live_name" style="width: 63%; display: inline-block;">' +
+            Main_ReplaceLargeFont(valuesArray[1]) +
+            '</div>' +
             '<div "class="stream_info_live" style="width:36%; float: right; text-align: right; display: inline-block; font-size: 75%; ">' +
-            '<i class="icon-' + (!data[2] ? 'circle" style="color: red;' : 'refresh" style="') + ' font-size: 75%; "></i>' +
-            STR_SPACE + valuesArray[3] + '</div></div><div id="' + UserLiveFeed_ids[4] + id +
-            '"class="stream_info_live_title">' + Main_ReplaceLargeFont(twemoji.parse(valuesArray[4])) + '</div><div id="' +
-            UserLiveFeed_ids[5] + id + '"class="stream_info_live">' + valuesArray[2] + '</div></div></div></div>';
+            '<i class="icon-' +
+            (!data[2] ? 'circle" style="color: red;' : 'refresh" style="') +
+            ' font-size: 75%; "></i>' +
+            STR_SPACE +
+            valuesArray[3] +
+            '</div></div><div id="' +
+            UserLiveFeed_ids[4] +
+            id +
+            '"class="stream_info_live_title">' +
+            Main_ReplaceLargeFont(twemoji.parse(valuesArray[4])) +
+            '</div><div id="' +
+            UserLiveFeed_ids[5] +
+            id +
+            '"class="stream_info_live">' +
+            valuesArray[2] +
+            '</div></div></div></div>';
 
         return div;
     }
 
     function UserLiveFeed_CreatSideFeed(id, jsondata, data, valuesArray) {
-
         var div = document.createElement('div');
         div.setAttribute('id', UserLiveFeed_side_ids[8] + id);
         div.setAttribute(Main_DataAttribute, JSON.stringify(jsondata));
         div.setAttribute('side_panel_data', JSON.stringify(data));
         div.className = 'side_panel_feed';
 
-        div.innerHTML = '<div id="' + UserLiveFeed_side_ids[0] + id +
-            '" class="side_panel_div"><div id="' + UserLiveFeed_side_ids[2] + id +
-            '" style="width: 100%;"><div id="' + UserLiveFeed_side_ids[3] + id +
-            '" style="display: none;">' + valuesArray[1] +
-            '</div><div class="side_panel_iner_div1"><img id="' + UserLiveFeed_side_ids[1] + id +
-            '" class="side_panel_channel_img" src="' + valuesArray[0] +
-            '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO +
-            '\'"></div><div class="side_panel_iner_div2"><div id="' + UserLiveFeed_side_ids[4] + id +
-            '" class="side_panel_new_title">' + Main_ReplaceLargeFont(valuesArray[2]) + '</div><div id="' +
-            UserLiveFeed_side_ids[5] + id + '" class="side_panel_new_game">' + valuesArray[3] +
+        div.innerHTML =
+            '<div id="' +
+            UserLiveFeed_side_ids[0] +
+            id +
+            '" class="side_panel_div"><div id="' +
+            UserLiveFeed_side_ids[2] +
+            id +
+            '" style="width: 100%;"><div id="' +
+            UserLiveFeed_side_ids[3] +
+            id +
+            '" style="display: none;">' +
+            valuesArray[1] +
+            '</div><div class="side_panel_iner_div1"><img id="' +
+            UserLiveFeed_side_ids[1] +
+            id +
+            '" class="side_panel_channel_img" src="' +
+            valuesArray[0] +
+            '" onerror="this.onerror=null;this.src=\'' +
+            IMG_404_LOGO +
+            '\'"></div><div class="side_panel_iner_div2"><div id="' +
+            UserLiveFeed_side_ids[4] +
+            id +
+            '" class="side_panel_new_title">' +
+            Main_ReplaceLargeFont(valuesArray[2]) +
+            '</div><div id="' +
+            UserLiveFeed_side_ids[5] +
+            id +
+            '" class="side_panel_new_game">' +
+            valuesArray[3] +
             '</div></div><div class="side_panel_iner_div3"><div style="text-align: center;"><i class="icon-' +
             (!jsondata[2] ? 'circle" style="color: red;' : 'refresh" style="') +
-            ' font-size: 55%; "></i><div style="font-size: 58%;">' + valuesArray[4] + '</div></div></div></div></div></div>';
+            ' font-size: 55%; "></i><div style="font-size: 58%;">' +
+            valuesArray[4] +
+            '</div></div></div></div></div></div>';
 
         return div;
     }
@@ -17912,8 +17919,7 @@
             Play_FeedOldUserName = AddUser_UsernameArray[0].name;
         }
 
-        if (!hasuser || !UserLiveFeed_ThumbNull(0, UserLiveFeed_ids[0]) ||
-            !Main_A_equals_B(UserLiveFeed_Sort, Settings_value.live_feed_sort.defaultValue)) UserLiveFeed_status = false;
+        if (!hasuser || !UserLiveFeed_ThumbNull(0, UserLiveFeed_ids[0]) || !Main_A_equals_B(UserLiveFeed_Sort, Settings_value.live_feed_sort.defaultValue)) UserLiveFeed_status = false;
 
         if (!UserLiveFeed_status && !UserLiveFeed_loadingData) UserLiveFeed_StartLoad(PreventAddfocus);
 
@@ -17934,7 +17940,7 @@
             doc.style.transition = 'none';
             doc.classList.remove('user_feed_hide');
             Main_ready(function() {
-                if (Settings_Obj_default("app_animations")) doc.style.transition = '';
+                if (Settings_Obj_default('app_animations')) doc.style.transition = '';
             });
         } else Main_RemoveClass('user_feed', 'user_feed_hide');
     }
@@ -17945,7 +17951,7 @@
             doc.style.transition = 'none';
             doc.classList.add('user_feed_hide');
             Main_ready(function() {
-                if (Settings_Obj_default("app_animations")) doc.style.transition = '';
+                if (Settings_Obj_default('app_animations')) doc.style.transition = '';
             });
         } else Main_AddClass('user_feed', 'user_feed_hide');
     }
@@ -17985,19 +17991,16 @@
     }
 
     function UserLiveFeed_FeedRemoveFocus() {
-        if (UserLiveFeed_ThumbNull(Play_FeedPos, UserLiveFeed_ids[0]))
-            Main_RemoveClass(UserLiveFeed_ids[0] + Play_FeedPos, UserLiveFeed_FocusClass);
+        if (UserLiveFeed_ThumbNull(Play_FeedPos, UserLiveFeed_ids[0])) Main_RemoveClass(UserLiveFeed_ids[0] + Play_FeedPos, UserLiveFeed_FocusClass);
     }
 
     function UserLiveFeed_FeedGetPos() {
         var position = 0;
 
         if (Play_FeedPos < 3) position = 2.5;
-        else if (UserLiveFeed_ThumbNull((Play_FeedPos + 2), UserLiveFeed_ids[0]))
-            position = (document.getElementById(UserLiveFeed_ids[8] + (Play_FeedPos - 2)).offsetLeft * -1);
-        else if (UserLiveFeed_ThumbNull((Play_FeedPos + 1), UserLiveFeed_ids[0]))
-            position = (document.getElementById(UserLiveFeed_ids[8] + (Play_FeedPos - 3)).offsetLeft * -1);
-        else position = (document.getElementById(UserLiveFeed_ids[8] + (Play_FeedPos - (Play_FeedPos > 3 ? 4 : 3))).offsetLeft * -1);
+        else if (UserLiveFeed_ThumbNull(Play_FeedPos + 2, UserLiveFeed_ids[0])) position = document.getElementById(UserLiveFeed_ids[8] + (Play_FeedPos - 2)).offsetLeft * -1;
+        else if (UserLiveFeed_ThumbNull(Play_FeedPos + 1, UserLiveFeed_ids[0])) position = document.getElementById(UserLiveFeed_ids[8] + (Play_FeedPos - 3)).offsetLeft * -1;
+        else position = document.getElementById(UserLiveFeed_ids[8] + (Play_FeedPos - (Play_FeedPos > 3 ? 4 : 3))).offsetLeft * -1;
 
         return position;
     }
@@ -18006,8 +18009,7 @@
         var position = UserLiveFeed_FeedGetPos();
         var doc = document.getElementById('user_feed_scroll');
 
-        if (!skipAnimation && Screens_ChangeFocusAnimationFinished && Screens_SettingDoAnimations &&
-            !Screens_ChangeFocusAnimationFast) {
+        if (!skipAnimation && Screens_ChangeFocusAnimationFinished && Screens_SettingDoAnimations && !Screens_ChangeFocusAnimationFast) {
             Screens_ChangeFocusAnimationFinished = false;
             Screens_ChangeFocusAnimationFast = true;
 
@@ -18023,7 +18025,7 @@
             doc.classList.remove('user_feed_scroll_ani');
         }
 
-        if (position) doc.style.left = (position / BodyfontSize) + "em";
+        if (position) doc.style.left = position / BodyfontSize + 'em';
     }
 
     function UserLiveFeed_ThumbNull(y, thumbnail) {
@@ -18031,7 +18033,17 @@
     }
 
     function UserLiveFeed_SetFeedPicText() {
-        Main_innerHTML('icon_feed_refresh', '<div class="strokedelinebig" style="vertical-align: middle; display: inline-block;"><i class="icon-refresh" style="color: #FFFFFF; font-size: 115%; "></i></div><div class="strokedelinebig" style="vertical-align: middle; display: inline-block">' + STR_SPACE + STR_REFRESH + ':' + STR_UP + STR_SPACE + STR_SPACE + '</div>'); //<div class="strokedelinebig" style="vertical-align: middle; display: inline-block;"><i class="icon-pp" style="color: #FFFFFF; font-size: 115%; "></i></div><div class="strokedelinebig" style="vertical-align: middle; display: inline-block">' + STR_SPACE + STR_PICTURE_LIVE_FEED + '</div>');
+        Main_innerHTML(
+            'icon_feed_refresh',
+            '<div class="strokedelinebig" style="vertical-align: middle; display: inline-block;"><i class="icon-refresh" style="color: #FFFFFF; font-size: 115%; "></i></div><div class="strokedelinebig" style="vertical-align: middle; display: inline-block">' +
+            STR_SPACE +
+            STR_REFRESH +
+            ':' +
+            STR_UP +
+            STR_SPACE +
+            STR_SPACE +
+            '</div>'
+        ); //<div class="strokedelinebig" style="vertical-align: middle; display: inline-block;"><i class="icon-pp" style="color: #FFFFFF; font-size: 115%; "></i></div><div class="strokedelinebig" style="vertical-align: middle; display: inline-block">' + STR_SPACE + STR_PICTURE_LIVE_FEED + '</div>');
     }
 
     function UserLiveFeed_SetHoldUp() {
@@ -18068,8 +18080,8 @@
 
         Main_values.Main_Go = Main_Users;
         Main_HideWarningDialog();
-        ScreensObj_SetTopLable(STR_USER, STR_MAIN_USER + " " + AddUser_UsernameArray[0].display_name);
-        document.body.addEventListener("keydown", Users_handleKeyDown, false);
+        ScreensObj_SetTopLable(STR_USER, STR_MAIN_USER + ' ' + AddUser_UsernameArray[0].display_name);
+        document.body.addEventListener('keydown', Users_handleKeyDown, false);
         if (Users_status) {
             Main_YRst(Users_cursorY);
             Main_ShowElement(Users_ids[5]);
@@ -18080,9 +18092,9 @@
 
     function Users_exit() {
         Main_HideElement('label_side_panel');
-        document.body.removeEventListener("keydown", Users_handleKeyDown);
+        document.body.removeEventListener('keydown', Users_handleKeyDown);
         Main_HideElement(Users_ids[5]);
-        Main_IconLoad('label_refresh', 'icon-refresh', STR_REFRESH + ":" + STR_GUIDE);
+        Main_IconLoad('label_refresh', 'icon-refresh', STR_REFRESH + ':' + STR_GUIDE);
     }
 
     function Users_StartLoad() {
@@ -18112,16 +18124,19 @@
         div.setAttribute('id', Users_ids[4] + '0_0');
         div.classList.add('stream_thumbnail_user_icon_holder');
 
-        div.innerHTML = '<div id="' + Users_ids[0] + '0_0' +
+        div.innerHTML =
+            '<div id="' +
+            Users_ids[0] +
+            '0_0' +
             '" class="stream_thumbnail_user" ><div class="stream_thumbnail_channel_img"></div>' +
             '<div  class="stream_thumbnail_user_text_holder">' +
-            '<div class="stream_info_user_name">' + STR_USER_ADD +
+            '<div class="stream_info_user_name">' +
+            STR_USER_ADD +
             '</div><div style="color:#FFFFFF;font-size: 17vh; text-align: center; transform: translateY(-24.5vh);"><i class="icon-user-plus" ></i></div></div></div>';
 
         row.appendChild(div);
 
         for (var user = 0; user < AddUser_UsernameArray.length; user++) {
-
             row.appendChild(Users_createCell(y + '_' + x, user));
             x++;
             if (x > 5) {
@@ -18137,7 +18152,6 @@
         Users_loadDataSuccessFinish();
     }
 
-
     function Users_createCell(id, pos) {
         var div = document.createElement('div');
 
@@ -18145,12 +18159,21 @@
         div.setAttribute(Main_DataAttribute, pos);
         div.classList.add('stream_thumbnail_user_icon_holder');
 
-        div.innerHTML = '<div id="' + Users_ids[0] + id +
-            '" class="stream_thumbnail_user" ><div class="stream_thumbnail_channel_img"><img id="' + Users_ids[1] +
-            id + '" alt="" class="stream_img" src="' + AddUser_UsernameArray[pos].logo +
-            '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'"></div>' +
+        div.innerHTML =
+            '<div id="' +
+            Users_ids[0] +
+            id +
+            '" class="stream_thumbnail_user" ><div class="stream_thumbnail_channel_img"><img id="' +
+            Users_ids[1] +
+            id +
+            '" alt="" class="stream_img" src="' +
+            AddUser_UsernameArray[pos].logo +
+            '" onerror="this.onerror=null;this.src=\'' +
+            IMG_404_LOGO +
+            '\'"></div>' +
             '<div  class="stream_thumbnail_user_text_holder">' +
-            '<div class="stream_info_user_name">' + AddUser_UsernameArray[pos].display_name +
+            '<div class="stream_info_user_name">' +
+            AddUser_UsernameArray[pos].display_name +
             '</div><div class="stream_info_user_title">' +
             (AddUser_UsernameArray[pos].access_token ? STR_USER_CODE_OK : STR_USER_CODE) +
             '</div></div></div>';
@@ -18184,13 +18207,9 @@
         Main_CounterDialog(Users_cursorX, Users_cursorY, Main_ColoumnsCountChannel, AddUser_UsernameArray.length + 1);
 
         if (Main_YchangeAddFocus(Users_cursorY) || forceScroll) {
-
             if (Users_cursorY > 1) {
-
-                if (Main_ThumbNull((Users_cursorY + 1), 0, Users_ids[0]))
-                    Main_ScrollTableCalc(Users_ids[5], (document.getElementById(Users_ids[4] + Users_cursorY + '_' + Users_cursorX).offsetTop * -1), 39);
+                if (Main_ThumbNull(Users_cursorY + 1, 0, Users_ids[0])) Main_ScrollTableCalc(Users_ids[5], document.getElementById(Users_ids[4] + Users_cursorY + '_' + Users_cursorX).offsetTop * -1, 39);
             } else Main_ScrollTable(Users_ids[5], 0);
-
         } else Main_handleKeyUp();
     }
 
@@ -18204,7 +18223,7 @@
         if (!Users_cursorX && !Users_cursorY) {
             Main_values.Main_Before = Main_values.Main_Go;
             Main_HideElement(Users_ids[5]);
-            document.body.removeEventListener("keydown", Users_handleKeyDown);
+            document.body.removeEventListener('keydown', Users_handleKeyDown);
             AddUser_init();
         } else Users_showUserDialog();
     }
@@ -18224,8 +18243,8 @@
         Users_setUserDialog();
         Users_showUserDialogPos = parseInt(document.getElementById(Users_ids[4] + Users_cursorY + '_' + Users_cursorX).getAttribute(Main_DataAttribute));
 
-        Main_innerHTML("main_dialog_user_text", STR_USER_OPTION + " " + AddUser_UsernameArray[Users_showUserDialogPos].display_name);
-        Main_innerHTML("main_dialog_user_key", (AddUser_UsernameArray[Users_showUserDialogPos].access_token ? STR_USER_CODE_OK : STR_USER_CODE));
+        Main_innerHTML('main_dialog_user_text', STR_USER_OPTION + ' ' + AddUser_UsernameArray[Users_showUserDialogPos].display_name);
+        Main_innerHTML('main_dialog_user_key', AddUser_UsernameArray[Users_showUserDialogPos].access_token ? STR_USER_CODE_OK : STR_USER_CODE);
 
         Main_ShowElement('main_dialog_user');
     }
@@ -18263,11 +18282,10 @@
         Users_setRemoveDialog();
 
         if (Users_showUserDialogPos > -1) {
-            if (!Users_Isautentication) Main_innerHTML("main_dialog_remove", STR_REMOVE_USER + STR_BR + AddUser_UsernameArray[Users_showUserDialogPos].name + '?');
-            else Main_innerHTML("main_dialog_remove", STR_OAUTH_IN + ' ' + AddUser_UsernameArray[Users_showUserDialogPos].name + '?');
+            if (!Users_Isautentication) Main_innerHTML('main_dialog_remove', STR_REMOVE_USER + STR_BR + AddUser_UsernameArray[Users_showUserDialogPos].name + '?');
+            else Main_innerHTML('main_dialog_remove', STR_OAUTH_IN + ' ' + AddUser_UsernameArray[Users_showUserDialogPos].name + '?');
             Main_ShowElement('main_remove_dialog');
         }
-
     }
 
     function Users_HideRemoveDialog() {
@@ -18329,17 +18347,17 @@
                 } else if (!Users_cursorX) {
                     Users_removeFocus();
                     Sidepannel_Start(Users_handleKeyDown);
-                } else if (Main_ThumbNull((Users_cursorY), (Users_cursorX - 1), Users_ids[0])) {
+                } else if (Main_ThumbNull(Users_cursorY, Users_cursorX - 1, Users_ids[0])) {
                     Users_removeFocus();
                     Users_cursorX--;
                     Users_addFocus();
-                } else if (!Main_ThumbNull((Users_cursorY - 1), 0, Users_ids[0])) {
+                } else if (!Main_ThumbNull(Users_cursorY - 1, 0, Users_ids[0])) {
                     Users_removeFocus();
                     Users_cursorX = Users_ColoumnsCount - 1;
                     Users_addFocus();
                 } else {
-                    for (i = (Users_ColoumnsCount - 1); i > -1; i--) {
-                        if (Main_ThumbNull((Users_cursorY - 1), i, Users_ids[0])) {
+                    for (i = Users_ColoumnsCount - 1; i > -1; i--) {
+                        if (Main_ThumbNull(Users_cursorY - 1, i, Users_ids[0])) {
                             Users_removeFocus();
                             Users_cursorY--;
                             Users_cursorX = i;
@@ -18362,11 +18380,11 @@
                     Users_UserCursorSet();
                     Users_clearUserDialog();
                     Users_setUserDialog();
-                } else if (Main_ThumbNull((Users_cursorY), (Users_cursorX + 1), Users_ids[0])) {
+                } else if (Main_ThumbNull(Users_cursorY, Users_cursorX + 1, Users_ids[0])) {
                     Users_removeFocus();
                     Users_cursorX++;
                     Users_addFocus();
-                } else if (Main_ThumbNull((Users_cursorY + 1), 0, Users_ids[0])) {
+                } else if (Main_ThumbNull(Users_cursorY + 1, 0, Users_ids[0])) {
                     Users_removeFocus();
                     Users_cursorY++;
                     Users_cursorX = 0;
@@ -18381,7 +18399,7 @@
                 if (Users_isRemoveDialogShown() || Users_isUserDialogShown()) break;
                 if (Users_cursorY) {
                     for (i = 0; i < Users_ColoumnsCount; i++) {
-                        if (Main_ThumbNull((Users_cursorY - 1), (Users_cursorX - i), Users_ids[0])) {
+                        if (Main_ThumbNull(Users_cursorY - 1, Users_cursorX - i, Users_ids[0])) {
                             Users_removeFocus();
                             Users_cursorY--;
                             Users_cursorX = Users_cursorX - i;
@@ -18394,7 +18412,7 @@
             case KEY_DOWN:
                 if (Users_isRemoveDialogShown() || Users_isUserDialogShown()) break;
                 for (i = 0; i < Users_ColoumnsCount; i++) {
-                    if (Main_ThumbNull((Users_cursorY + 1), (Users_cursorX - i), Users_ids[0])) {
+                    if (Main_ThumbNull(Users_cursorY + 1, Users_cursorX - i, Users_ids[0])) {
                         Users_removeFocus();
                         Users_cursorY++;
                         Users_cursorX = Users_cursorX - i;
@@ -18414,7 +18432,7 @@
                     Users_HideRemoveDialog();
                     if (!Users_Isautentication) {
                         if (temp_RemoveCursor) {
-                            document.body.removeEventListener("keydown", Users_handleKeyDown);
+                            document.body.removeEventListener('keydown', Users_handleKeyDown);
                             Users_exit();
                             AddUser_removeUser(Users_showUserDialogPos);
                         }
@@ -18423,7 +18441,7 @@
                             Main_values.Users_AddcodePosition = Users_showUserDialogPos;
                             Main_values.Main_Before = Main_values.Main_Go;
                             Main_HideElement(Users_ids[5]);
-                            document.body.removeEventListener("keydown", Users_handleKeyDown);
+                            document.body.removeEventListener('keydown', Users_handleKeyDown);
                             Main_SaveValues();
                             AddCode_init();
                         }
@@ -18604,7 +18622,8 @@
             }
         }
         return message;
-    }; // The bellow are some function or adaptations of function from
+    };
+    // The bellow are some function or adaptations of function from
     // © NightDev 2016 https://www.nightdev.com/kapchat/
 
     function emoteURL(id) {
@@ -18627,23 +18646,17 @@
             len = SplittedMessage.length;
 
         for (i; i < len; i++) {
-
             cheer = bits ? findCheerInToken(SplittedMessage[i], chat_number) : 0;
 
             if (cheer) {
-
                 SplittedMessage[i] = cheer;
-
             } else {
-
                 emote = extraEmotes[SplittedMessage[i]];
                 SplittedMessage[i] = emote ? emote.chat_div : mescape(SplittedMessage[i]);
-
             }
-
         }
 
-        return SplittedMessage.join(' ') + (bits ? (' ' + bits + ' bits') : '');
+        return SplittedMessage.join(' ') + (bits ? ' ' + bits + ' bits' : '');
     }
 
     function findCheerInToken(message, chat_number) {
@@ -18655,16 +18668,13 @@
 
         for (i; i < len; i++) {
             //Try  case sensitive first as some prefixes start the same, but some users type without carrying about case
-            if (Main_startsWith(message, cheerPrefixes[i]))
-                return getCheer(cheerPrefixes[i], parseInt(message.substr(cheerPrefixes[i].length), 10), chat_number);
+            if (Main_startsWith(message, cheerPrefixes[i])) return getCheer(cheerPrefixes[i], parseInt(message.slice(cheerPrefixes[i].length), 10), chat_number);
 
             //Try  case insensitive after
             if (Main_startsWith(tokenLower, cheerPrefixes[i].toLowerCase())) index = i;
         }
 
-        return ((index > -1) ?
-            getCheer(cheerPrefixes[index], parseInt(tokenLower.substr(cheerPrefixes[index].toLowerCase().length), 10), chat_number) :
-            null);
+        return index > -1 ? getCheer(cheerPrefixes[index], parseInt(tokenLower.slice(cheerPrefixes[index].toLowerCase().length), 10), chat_number) : null;
     }
 
     function getCheer(prefix, amount, chat_number) {
@@ -18688,7 +18698,9 @@
             property,
             replacements = [],
             replacement,
-            emote, i, len;
+            emote,
+            i,
+            len;
 
         for (property in emotes) {
             emote = emotes[property];
@@ -18700,7 +18712,6 @@
                     last: emote[i][1]
                 });
             }
-
         }
 
         replacements.sort(function(a, b) {
@@ -18723,7 +18734,6 @@
 
             // Splice the unparsed piece of the message
             message = message.slice(0, replacement.first);
-
         }
 
         // Unshift the remaining part of the message (that contains no emotes)
@@ -18745,10 +18755,10 @@
     //     }
 
     //     for (i = 0; i < 3; i++) {
-    //         c = parseInt(color.substr(i * 2, 2), 16);
+    //         c = parseInt(color.slice(i * 2, i * 2 + 2), 16);
     //         if (c < 10) c = 10;
     //         c = Math.round(Math.min(Math.max(0, c + (c * brightness)), 255)).toString(16);
-    //         rgb += ("00" + c).substr(c.length);
+    //         rgb += ("00" + c).slice(c.length);
     //     }
 
     //     return rgb;
@@ -18759,14 +18769,9 @@
     // https://cdnjs.com/libraries/punycode
 
     (function(root) {
-
         /** Detect free variables */
         var freeGlobal = typeof global === 'object' && global;
-        if (
-            freeGlobal.global === freeGlobal ||
-            freeGlobal.window === freeGlobal ||
-            freeGlobal.self === freeGlobal
-        ) {
+        if (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal || freeGlobal.self === freeGlobal) {
             root = freeGlobal;
         }
 
@@ -18776,10 +18781,8 @@
          * @type Object
          */
         var punycode,
-
             /** Highest positive signed 32-bit float value */
             maxInt = 2147483647, // aka. 0x7FFFFFFF or 2^31-1
-
             /** Bootstring parameters */
             base = 36,
             tMin = 1,
@@ -18789,19 +18792,16 @@
             initialBias = 72,
             initialN = 128, // 0x80
             delimiter = '-', // '\x2D'
-
             /** Regular expressions */
             regexPunycode = /^xn--/,
             regexNonASCII = /[^\x20-\x7E]/, // unprintable ASCII chars + non-ASCII chars
             regexSeparators = /[\x2E\u3002\uFF0E\uFF61]/g, // RFC 3490 separators
-
             /** Error messages */
             errors = {
-                'overflow': 'Overflow: input needs wider integers to process',
+                overflow: 'Overflow: input needs wider integers to process',
                 'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
                 'invalid-input': 'Invalid input'
             },
-
             /** Convenience shortcuts */
             baseMinusTMin = base - tMin,
             floor = Math.floor,
@@ -18883,11 +18883,12 @@
                 extra;
             while (counter < length) {
                 value = string.charCodeAt(counter++);
-                if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
+                if (value >= 0xd800 && value <= 0xdbff && counter < length) {
                     // high surrogate, and there is a next character
                     extra = string.charCodeAt(counter++);
-                    if ((extra & 0xFC00) === 0xDC00) { // low surrogate
-                        output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
+                    if ((extra & 0xfc00) === 0xdc00) {
+                        // low surrogate
+                        output.push(((value & 0x3ff) << 10) + (extra & 0x3ff) + 0x10000);
                     } else {
                         // unmatched surrogate; only append this code unit, in case the next
                         // code unit is the high surrogate of a surrogate pair
@@ -18912,10 +18913,10 @@
         function ucs2encode(array) {
             return map(array, function(value) {
                 var output = '';
-                if (value > 0xFFFF) {
+                if (value > 0xffff) {
                     value -= 0x10000;
-                    output += stringFromCharCode(value >>> 10 & 0x3FF | 0xD800);
-                    value = 0xDC00 | value & 0x3FF;
+                    output += stringFromCharCode(((value >>> 10) & 0x3ff) | 0xd800);
+                    value = 0xdc00 | (value & 0x3ff);
                 }
                 output += stringFromCharCode(value);
                 return output;
@@ -18970,10 +18971,10 @@
             var k = 0;
             delta = firstTime ? floor(delta / damp) : delta >> 1;
             delta += floor(delta / numPoints);
-            for ( /* no initialization */ ; delta > baseMinusTMin * tMax >> 1; k += base) {
+            for (; /* no initialization */ delta > (baseMinusTMin * tMax) >> 1; k += base) {
                 delta = floor(delta / baseMinusTMin);
             }
-            return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
+            return floor(k + ((baseMinusTMin + 1) * delta) / (delta + skew));
         }
 
         /**
@@ -19022,15 +19023,13 @@
             // Main decoding loop: start just after the last delimiter if any basic code
             // points were copied; start at the beginning otherwise.
 
-            for (index = basic > 0 ? basic + 1 : 0; index < inputLength; /* no final expression */ ) {
-
+            for (index = basic > 0 ? basic + 1 : 0; index < inputLength /* no final expression */ ;) {
                 // `index` is the index of the next character to be consumed.
                 // Decode a generalized variable-length integer into `delta`,
                 // which gets added to `i`. The overflow checking is easier
                 // if we increase `i` as we go, then subtract off its starting
                 // value at the end to obtain `delta`.
-                for (oldi = i, w = 1, k = base; /* no condition */ ; k += base) {
-
+                for (oldi = i, w = 1, k = base /* no condition */ ;; k += base) {
                     if (index >= inputLength) {
                         error('invalid-input');
                     }
@@ -19042,7 +19041,7 @@
                     }
 
                     i += digit * w;
-                    t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
+                    t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
 
                     if (digit < t) {
                         break;
@@ -19054,7 +19053,6 @@
                     }
 
                     w *= baseMinusT;
-
                 }
 
                 out = output.length + 1;
@@ -19071,7 +19069,6 @@
 
                 // Insert `n` at position `i` of the output
                 output.splice(i++, 0, n);
-
             }
 
             return ucs2encode(output);
@@ -19135,7 +19132,6 @@
 
             // Main encoding loop:
             while (handledCPCount < inputLength) {
-
                 // All non-basic code points < n have been handled already. Find the next
                 // larger one:
                 for (m = maxInt, j = 0; j < inputLength; ++j) {
@@ -19164,16 +19160,14 @@
 
                     if (currentValue === n) {
                         // Represent delta as a generalized variable-length integer
-                        for (q = delta, k = base; /* no condition */ ; k += base) {
-                            t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
+                        for (q = delta, k = base /* no condition */ ;; k += base) {
+                            t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
                             if (q < t) {
                                 break;
                             }
                             qMinusT = q - t;
                             baseMinusT = base - t;
-                            output.push(
-                                stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0))
-                            );
+                            output.push(stringFromCharCode(digitToBasic(t + (qMinusT % baseMinusT), 0)));
                             q = floor(qMinusT / baseMinusT);
                         }
 
@@ -19186,7 +19180,6 @@
 
                 ++delta;
                 ++n;
-
             }
             return output.join('');
         }
@@ -19234,7 +19227,7 @@
              * @memberOf punycode
              * @type String
              */
-            'version': '1.4.1',
+            version: '1.4.1',
             /**
              * An object of methods to convert from JavaScript's internal character
              * representation (UCS-2) to Unicode code points, and back.
@@ -19242,221 +19235,215 @@
              * @memberOf punycode
              * @type Object
              */
-            'ucs2': {
-                'decode': ucs2decode,
-                'encode': ucs2encode
+            ucs2: {
+                decode: ucs2decode,
+                encode: ucs2encode
             },
-            'decode': decode,
-            'encode': encode,
-            'toASCII': toASCII,
-            'toUnicode': toUnicode
+            decode: decode,
+            encode: encode,
+            toASCII: toASCII,
+            toUnicode: toUnicode
         };
 
         /** Expose `punycode` */
         root.punycode = punycode;
-
-    }(this)); // https://github.com/twitter/twemoji
+    })(this);
+    // https://github.com/twitter/twemoji
 
     // This is a moded version of twemoji, I only need this from this file, check original in they github
-    var twemoji = (function(
-        /*! Copyright Twitter Inc. and other contributors. Licensed under MIT */
+    var twemoji = (function() /*! Copyright Twitter Inc. and other contributors. Licensed under MIT */
         /*
-            https://github.com/twitter/twemoji/blob/gh-pages/LICENSE
-          */
+                https://github.com/twitter/twemoji/blob/gh-pages/LICENSE
+              */
 
         // WARNING:   this file is generated automatically via
         //            `node twemoji-generator.js`
         //            please update its `createTwemoji` function
         //            at the bottom of the same file instead.
 
-    ) {
-        var
-            // the exported module object
-            twemoji = {
+        {
+            var // the exported module object
+                twemoji = {
+                    /**
+                     * Main method/logic to generate either <img> tags or HTMLImage nodes.
+                     *  "emojify" a generic text or DOM Element.
+                     *
+                     * @overloads
+                     *
+                     * String replacement for `innerHTML` or server side operations
+                     *  twemoji.parse(string);
+                     *  twemoji.parse(string, Function);
+                     *  twemoji.parse(string, Object);
+                     *
+                     * HTMLElement tree parsing for safer operations over existing DOM
+                     *  twemoji.parse(HTMLElement);
+                     *  twemoji.parse(HTMLElement, Function);
+                     *  twemoji.parse(HTMLElement, Object);
+                     *
+                     * @param   string|HTMLElement  the source to parse and enrich with emoji.
+                     *
+                     *          string              replace emoji matches with <img> tags.
+                     *                              Mainly used to inject emoji via `innerHTML`
+                     *                              It does **not** parse the string or validate it,
+                     *                              it simply replaces found emoji with a tag.
+                     *                              NOTE: be sure this won't affect security.
+                     *
+                     *          HTMLElement         walk through the DOM tree and find emoji
+                     *                              that are inside **text node only** (nodeType === 3)
+                     *                              Mainly used to put emoji in already generated DOM
+                     *                              without compromising surrounding nodes and
+                     *                              **avoiding** the usage of `innerHTML`.
+                     *                              NOTE: Using DOM elements instead of strings should
+                     *                              improve security without compromising too much
+                     *                              performance compared with a less safe `innerHTML`.
+                     *
+                     * @param   Function|Object  [optional]
+                     *                              either the callback that will be invoked or an object
+                     *                              with all properties to use per each found emoji.
+                     *
+                     *          Function            if specified, this will be invoked per each emoji
+                     *                              that has been found through the RegExp except
+                     *                              those follwed by the invariant \uFE0E ("as text").
+                     *                              Once invoked, parameters will be:
+                     *
+                     *                                iconId:string     the lower case HEX code point
+                     *                                                  i.e. "1f4a9"
+                     *
+                     *                                options:Object    all info for this parsing operation
+                     *
+                     *                                variant:char      the optional \uFE0F ("as image")
+                     *                                                  variant, in case this info
+                     *                                                  is anyhow meaningful.
+                     *                                                  By default this is ignored.
+                     *
+                     *                              If such callback will return a falsy value instead
+                     *                              of a valid `src` to use for the image, nothing will
+                     *                              actually change for that specific emoji.
+                     *
+                     *
+                     *          Object              if specified, an object containing the following properties
+                     *
+                     *            callback   Function  the callback to invoke per each found emoji.
+                     *            base       string    the base url, by default twemoji.base
+                     *            ext        string    the image extension, by default twemoji.ext
+                     *            size       string    the assets size, by default twemoji.size
+                     *
+                     * @example
+                     *
+                     *  twemoji.parse("I \u2764\uFE0F emoji!");
+                     *  // I <img class="emoji" draggable="false" alt="❤️" src="/assets/2764.gif"/> emoji!
+                     *
+                     *
+                     *  twemoji.parse("I \u2764\uFE0F emoji!", function(iconId, options) {
+                     *    return '/assets/' + iconId + '.gif';
+                     *  });
+                     *  // I <img class="emoji" draggable="false" alt="❤️" src="/assets/2764.gif"/> emoji!
+                     *
+                     *
+                     * twemoji.parse("I \u2764\uFE0F emoji!", {
+                     *   size: 72,
+                     *   callback: function(iconId, options) {
+                     *     return '/assets/' + options.size + '/' + iconId + options.ext;
+                     *   }
+                     * });
+                     *  // I <img class="emoji" draggable="false" alt="❤️" src="/assets/72x72/2764.png"/> emoji!
+                     *
+                     */
+                    parse: parse,
+                    parseIcon: parseIcon,
 
-                /**
-                 * Main method/logic to generate either <img> tags or HTMLImage nodes.
-                 *  "emojify" a generic text or DOM Element.
-                 *
-                 * @overloads
-                 *
-                 * String replacement for `innerHTML` or server side operations
-                 *  twemoji.parse(string);
-                 *  twemoji.parse(string, Function);
-                 *  twemoji.parse(string, Object);
-                 *
-                 * HTMLElement tree parsing for safer operations over existing DOM
-                 *  twemoji.parse(HTMLElement);
-                 *  twemoji.parse(HTMLElement, Function);
-                 *  twemoji.parse(HTMLElement, Object);
-                 *
-                 * @param   string|HTMLElement  the source to parse and enrich with emoji.
-                 *
-                 *          string              replace emoji matches with <img> tags.
-                 *                              Mainly used to inject emoji via `innerHTML`
-                 *                              It does **not** parse the string or validate it,
-                 *                              it simply replaces found emoji with a tag.
-                 *                              NOTE: be sure this won't affect security.
-                 *
-                 *          HTMLElement         walk through the DOM tree and find emoji
-                 *                              that are inside **text node only** (nodeType === 3)
-                 *                              Mainly used to put emoji in already generated DOM
-                 *                              without compromising surrounding nodes and
-                 *                              **avoiding** the usage of `innerHTML`.
-                 *                              NOTE: Using DOM elements instead of strings should
-                 *                              improve security without compromising too much
-                 *                              performance compared with a less safe `innerHTML`.
-                 *
-                 * @param   Function|Object  [optional]
-                 *                              either the callback that will be invoked or an object
-                 *                              with all properties to use per each found emoji.
-                 *
-                 *          Function            if specified, this will be invoked per each emoji
-                 *                              that has been found through the RegExp except
-                 *                              those follwed by the invariant \uFE0E ("as text").
-                 *                              Once invoked, parameters will be:
-                 *
-                 *                                iconId:string     the lower case HEX code point
-                 *                                                  i.e. "1f4a9"
-                 *
-                 *                                options:Object    all info for this parsing operation
-                 *
-                 *                                variant:char      the optional \uFE0F ("as image")
-                 *                                                  variant, in case this info
-                 *                                                  is anyhow meaningful.
-                 *                                                  By default this is ignored.
-                 *
-                 *                              If such callback will return a falsy value instead
-                 *                              of a valid `src` to use for the image, nothing will
-                 *                              actually change for that specific emoji.
-                 *
-                 *
-                 *          Object              if specified, an object containing the following properties
-                 *
-                 *            callback   Function  the callback to invoke per each found emoji.
-                 *            base       string    the base url, by default twemoji.base
-                 *            ext        string    the image extension, by default twemoji.ext
-                 *            size       string    the assets size, by default twemoji.size
-                 *
-                 * @example
-                 *
-                 *  twemoji.parse("I \u2764\uFE0F emoji!");
-                 *  // I <img class="emoji" draggable="false" alt="❤️" src="/assets/2764.gif"/> emoji!
-                 *
-                 *
-                 *  twemoji.parse("I \u2764\uFE0F emoji!", function(iconId, options) {
-                 *    return '/assets/' + iconId + '.gif';
-                 *  });
-                 *  // I <img class="emoji" draggable="false" alt="❤️" src="/assets/2764.gif"/> emoji!
-                 *
-                 *
-                 * twemoji.parse("I \u2764\uFE0F emoji!", {
-                 *   size: 72,
-                 *   callback: function(iconId, options) {
-                 *     return '/assets/' + options.size + '/' + iconId + options.ext;
-                 *   }
-                 * });
-                 *  // I <img class="emoji" draggable="false" alt="❤️" src="/assets/72x72/2764.png"/> emoji!
-                 *
-                 */
-                parse: parse,
-                parseIcon: parseIcon,
+                    /**
+                     * Given a string, invokes the callback argument
+                     *  per each emoji found in such string.
+                     * This is the most raw version used by
+                     *  the .parse(string) method itself.
+                     *
+                     * @param   string    generic string to parse
+                     * @param   Function  a generic callback that will be
+                     *                    invoked to replace the content.
+                     *                    This calback wil receive standard
+                     *                    String.prototype.replace(str, callback)
+                     *                    arguments such:
+                     *  callback(
+                     *    rawText,  // the emoji match
+                     *  );
+                     *
+                     *                    and others commonly received via replace.
+                     */
+                    replace: replace
+                },
+                // RegExp based on emoji's official Unicode standards
+                // http://www.unicode.org/Public/UNIDATA/EmojiSources.txt
+                re =
+                /(?:\ud83d\udc68\ud83c\udffb\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffc-\udfff]|\ud83d\udc68\ud83c\udffc\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb\udffd-\udfff]|\ud83d\udc68\ud83c\udffd\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb\udffc\udffe\udfff]|\ud83d\udc68\ud83c\udffe\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb-\udffd\udfff]|\ud83d\udc68\ud83c\udfff\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb-\udffe]|\ud83d\udc69\ud83c\udffb\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffc-\udfff]|\ud83d\udc69\ud83c\udffb\u200d\ud83e\udd1d\u200d\ud83d\udc69\ud83c[\udffc-\udfff]|\ud83d\udc69\ud83c\udffc\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb\udffd-\udfff]|\ud83d\udc69\ud83c\udffc\u200d\ud83e\udd1d\u200d\ud83d\udc69\ud83c[\udffb\udffd-\udfff]|\ud83d\udc69\ud83c\udffd\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb\udffc\udffe\udfff]|\ud83d\udc69\ud83c\udffd\u200d\ud83e\udd1d\u200d\ud83d\udc69\ud83c[\udffb\udffc\udffe\udfff]|\ud83d\udc69\ud83c\udffe\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb-\udffd\udfff]|\ud83d\udc69\ud83c\udffe\u200d\ud83e\udd1d\u200d\ud83d\udc69\ud83c[\udffb-\udffd\udfff]|\ud83d\udc69\ud83c\udfff\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb-\udffe]|\ud83d\udc69\ud83c\udfff\u200d\ud83e\udd1d\u200d\ud83d\udc69\ud83c[\udffb-\udffe]|\ud83e\uddd1\ud83c\udffb\u200d\ud83e\udd1d\u200d\ud83e\uddd1\ud83c[\udffb-\udfff]|\ud83e\uddd1\ud83c\udffc\u200d\ud83e\udd1d\u200d\ud83e\uddd1\ud83c[\udffb-\udfff]|\ud83e\uddd1\ud83c\udffd\u200d\ud83e\udd1d\u200d\ud83e\uddd1\ud83c[\udffb-\udfff]|\ud83e\uddd1\ud83c\udffe\u200d\ud83e\udd1d\u200d\ud83e\uddd1\ud83c[\udffb-\udfff]|\ud83e\uddd1\ud83c\udfff\u200d\ud83e\udd1d\u200d\ud83e\uddd1\ud83c[\udffb-\udfff]|\ud83e\uddd1\u200d\ud83e\udd1d\u200d\ud83e\uddd1|\ud83d\udc6b\ud83c[\udffb-\udfff]|\ud83d\udc6c\ud83c[\udffb-\udfff]|\ud83d\udc6d\ud83c[\udffb-\udfff]|\ud83d[\udc6b-\udc6d])|(?:\ud83d[\udc68\udc69]|\ud83e\uddd1)(?:\ud83c[\udffb-\udfff])?\u200d(?:\u2695\ufe0f|\u2696\ufe0f|\u2708\ufe0f|\ud83c[\udf3e\udf73\udf7c\udf84\udf93\udfa4\udfa8\udfeb\udfed]|\ud83d[\udcbb\udcbc\udd27\udd2c\ude80\ude92]|\ud83e[\uddaf-\uddb3\uddbc\uddbd])|(?:\ud83c[\udfcb\udfcc]|\ud83d[\udd74\udd75]|\u26f9)((?:\ud83c[\udffb-\udfff]|\ufe0f)\u200d[\u2640\u2642]\ufe0f)|(?:\ud83c[\udfc3\udfc4\udfca]|\ud83d[\udc6e\udc70\udc71\udc73\udc77\udc81\udc82\udc86\udc87\ude45-\ude47\ude4b\ude4d\ude4e\udea3\udeb4-\udeb6]|\ud83e[\udd26\udd35\udd37-\udd39\udd3d\udd3e\uddb8\uddb9\uddcd-\uddcf\uddd6-\udddd])(?:\ud83c[\udffb-\udfff])?\u200d[\u2640\u2642]\ufe0f|(?:\ud83d\udc68\u200d\u2764\ufe0f\u200d\ud83d\udc8b\u200d\ud83d\udc68|\ud83d\udc68\u200d\ud83d\udc68\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc68\u200d\ud83d\udc68\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\u2764\ufe0f\u200d\ud83d\udc8b\u200d\ud83d[\udc68\udc69]|\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\u2764\ufe0f\u200d\ud83d\udc68|\ud83d\udc68\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc68\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\ud83d\udc68\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\u2764\ufe0f\u200d\ud83d[\udc68\udc69]|\ud83d\udc69\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d[\udc66\udc67]|\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f|\ud83c\udff3\ufe0f\u200d\ud83c\udf08|\ud83c\udff4\u200d\u2620\ufe0f|\ud83d\udc15\u200d\ud83e\uddba|\ud83d\udc3b\u200d\u2744\ufe0f|\ud83d\udc41\u200d\ud83d\udde8|\ud83d\udc68\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\ud83d[\udc66\udc67]|\ud83d\udc6f\u200d\u2640\ufe0f|\ud83d\udc6f\u200d\u2642\ufe0f|\ud83e\udd3c\u200d\u2640\ufe0f|\ud83e\udd3c\u200d\u2642\ufe0f|\ud83e\uddde\u200d\u2640\ufe0f|\ud83e\uddde\u200d\u2642\ufe0f|\ud83e\udddf\u200d\u2640\ufe0f|\ud83e\udddf\u200d\u2642\ufe0f|\ud83d\udc08\u200d\u2b1b)|[#*0-9]\ufe0f?\u20e3|(?:[©®\u2122\u265f]\ufe0f)|(?:\ud83c[\udc04\udd70\udd71\udd7e\udd7f\ude02\ude1a\ude2f\ude37\udf21\udf24-\udf2c\udf36\udf7d\udf96\udf97\udf99-\udf9b\udf9e\udf9f\udfcd\udfce\udfd4-\udfdf\udff3\udff5\udff7]|\ud83d[\udc3f\udc41\udcfd\udd49\udd4a\udd6f\udd70\udd73\udd76-\udd79\udd87\udd8a-\udd8d\udda5\udda8\uddb1\uddb2\uddbc\uddc2-\uddc4\uddd1-\uddd3\udddc-\uddde\udde1\udde3\udde8\uddef\uddf3\uddfa\udecb\udecd-\udecf\udee0-\udee5\udee9\udef0\udef3]|[\u203c\u2049\u2139\u2194-\u2199\u21a9\u21aa\u231a\u231b\u2328\u23cf\u23ed-\u23ef\u23f1\u23f2\u23f8-\u23fa\u24c2\u25aa\u25ab\u25b6\u25c0\u25fb-\u25fe\u2600-\u2604\u260e\u2611\u2614\u2615\u2618\u2620\u2622\u2623\u2626\u262a\u262e\u262f\u2638-\u263a\u2640\u2642\u2648-\u2653\u2660\u2663\u2665\u2666\u2668\u267b\u267f\u2692-\u2697\u2699\u269b\u269c\u26a0\u26a1\u26a7\u26aa\u26ab\u26b0\u26b1\u26bd\u26be\u26c4\u26c5\u26c8\u26cf\u26d1\u26d3\u26d4\u26e9\u26ea\u26f0-\u26f5\u26f8\u26fa\u26fd\u2702\u2708\u2709\u270f\u2712\u2714\u2716\u271d\u2721\u2733\u2734\u2744\u2747\u2757\u2763\u2764\u27a1\u2934\u2935\u2b05-\u2b07\u2b1b\u2b1c\u2b50\u2b55\u3030\u303d\u3297\u3299])(?:\ufe0f|(?!\ufe0e))|(?:(?:\ud83c[\udfcb\udfcc]|\ud83d[\udd74\udd75\udd90]|[\u261d\u26f7\u26f9\u270c\u270d])(?:\ufe0f|(?!\ufe0e))|(?:\ud83c[\udf85\udfc2-\udfc4\udfc7\udfca]|\ud83d[\udc42\udc43\udc46-\udc50\udc66-\udc69\udc6e\udc70-\udc78\udc7c\udc81-\udc83\udc85-\udc87\udcaa\udd7a\udd95\udd96\ude45-\ude47\ude4b-\ude4f\udea3\udeb4-\udeb6\udec0\udecc]|\ud83e[\udd0c\udd0f\udd18-\udd1c\udd1e\udd1f\udd26\udd30-\udd39\udd3d\udd3e\udd77\uddb5\uddb6\uddb8\uddb9\uddbb\uddcd-\uddcf\uddd1-\udddd]|[\u270a\u270b]))(?:\ud83c[\udffb-\udfff])?|(?:\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f|\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc73\udb40\udc63\udb40\udc74\udb40\udc7f|\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc77\udb40\udc6c\udb40\udc73\udb40\udc7f|\ud83c\udde6\ud83c[\udde8-\uddec\uddee\uddf1\uddf2\uddf4\uddf6-\uddfa\uddfc\uddfd\uddff]|\ud83c\udde7\ud83c[\udde6\udde7\udde9-\uddef\uddf1-\uddf4\uddf6-\uddf9\uddfb\uddfc\uddfe\uddff]|\ud83c\udde8\ud83c[\udde6\udde8\udde9\uddeb-\uddee\uddf0-\uddf5\uddf7\uddfa-\uddff]|\ud83c\udde9\ud83c[\uddea\uddec\uddef\uddf0\uddf2\uddf4\uddff]|\ud83c\uddea\ud83c[\udde6\udde8\uddea\uddec\udded\uddf7-\uddfa]|\ud83c\uddeb\ud83c[\uddee-\uddf0\uddf2\uddf4\uddf7]|\ud83c\uddec\ud83c[\udde6\udde7\udde9-\uddee\uddf1-\uddf3\uddf5-\uddfa\uddfc\uddfe]|\ud83c\udded\ud83c[\uddf0\uddf2\uddf3\uddf7\uddf9\uddfa]|\ud83c\uddee\ud83c[\udde8-\uddea\uddf1-\uddf4\uddf6-\uddf9]|\ud83c\uddef\ud83c[\uddea\uddf2\uddf4\uddf5]|\ud83c\uddf0\ud83c[\uddea\uddec-\uddee\uddf2\uddf3\uddf5\uddf7\uddfc\uddfe\uddff]|\ud83c\uddf1\ud83c[\udde6-\udde8\uddee\uddf0\uddf7-\uddfb\uddfe]|\ud83c\uddf2\ud83c[\udde6\udde8-\udded\uddf0-\uddff]|\ud83c\uddf3\ud83c[\udde6\udde8\uddea-\uddec\uddee\uddf1\uddf4\uddf5\uddf7\uddfa\uddff]|\ud83c\uddf4\ud83c\uddf2|\ud83c\uddf5\ud83c[\udde6\uddea-\udded\uddf0-\uddf3\uddf7-\uddf9\uddfc\uddfe]|\ud83c\uddf6\ud83c\udde6|\ud83c\uddf7\ud83c[\uddea\uddf4\uddf8\uddfa\uddfc]|\ud83c\uddf8\ud83c[\udde6-\uddea\uddec-\uddf4\uddf7-\uddf9\uddfb\uddfd-\uddff]|\ud83c\uddf9\ud83c[\udde6\udde8\udde9\uddeb-\udded\uddef-\uddf4\uddf7\uddf9\uddfb\uddfc\uddff]|\ud83c\uddfa\ud83c[\udde6\uddec\uddf2\uddf3\uddf8\uddfe\uddff]|\ud83c\uddfb\ud83c[\udde6\udde8\uddea\uddec\uddee\uddf3\uddfa]|\ud83c\uddfc\ud83c[\uddeb\uddf8]|\ud83c\uddfd\ud83c\uddf0|\ud83c\uddfe\ud83c[\uddea\uddf9]|\ud83c\uddff\ud83c[\udde6\uddf2\uddfc]|\ud83c[\udccf\udd8e\udd91-\udd9a\udde6-\uddff\ude01\ude32-\ude36\ude38-\ude3a\ude50\ude51\udf00-\udf20\udf2d-\udf35\udf37-\udf7c\udf7e-\udf84\udf86-\udf93\udfa0-\udfc1\udfc5\udfc6\udfc8\udfc9\udfcf-\udfd3\udfe0-\udff0\udff4\udff8-\udfff]|\ud83d[\udc00-\udc3e\udc40\udc44\udc45\udc51-\udc65\udc6a\udc6f\udc79-\udc7b\udc7d-\udc80\udc84\udc88-\udca9\udcab-\udcfc\udcff-\udd3d\udd4b-\udd4e\udd50-\udd67\udda4\uddfb-\ude44\ude48-\ude4a\ude80-\udea2\udea4-\udeb3\udeb7-\udebf\udec1-\udec5\uded0-\uded2\uded5-\uded7\udeeb\udeec\udef4-\udefc\udfe0-\udfeb]|\ud83e[\udd0d\udd0e\udd10-\udd17\udd1d\udd20-\udd25\udd27-\udd2f\udd3a\udd3c\udd3f-\udd45\udd47-\udd76\udd78\udd7a-\uddb4\uddb7\uddba\uddbc-\uddcb\uddd0\uddde-\uddff\ude70-\ude74\ude78-\ude7a\ude80-\ude86\ude90-\udea8\udeb0-\udeb6\udec0-\udec2\uded0-\uded6]|[\u23e9-\u23ec\u23f0\u23f3\u267e\u26ce\u2705\u2728\u274c\u274e\u2753-\u2755\u2795-\u2797\u27b0\u27bf\ue50a])|\ufe0f/g,
+                // avoid runtime RegExp creation for not so smart,
+                // not JIT based, and old browsers / engines
+                UFE0Fg = /\uFE0F/g,
+                // avoid using a string literal like '\u200D' here because minifiers expand it inline
+                U200D = String.fromCharCode(0x200d);
 
-                /**
-                 * Given a string, invokes the callback argument
-                 *  per each emoji found in such string.
-                 * This is the most raw version used by
-                 *  the .parse(string) method itself.
-                 *
-                 * @param   string    generic string to parse
-                 * @param   Function  a generic callback that will be
-                 *                    invoked to replace the content.
-                 *                    This calback wil receive standard
-                 *                    String.prototype.replace(str, callback)
-                 *                    arguments such:
-                 *  callback(
-                 *    rawText,  // the emoji match
-                 *  );
-                 *
-                 *                    and others commonly received via replace.
-                 */
-                replace: replace
-            },
+            return twemoji;
 
-            // RegExp based on emoji's official Unicode standards
-            // http://www.unicode.org/Public/UNIDATA/EmojiSources.txt
-            re = /(?:\ud83d\udc68\ud83c\udffb\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffc-\udfff]|\ud83d\udc68\ud83c\udffc\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb\udffd-\udfff]|\ud83d\udc68\ud83c\udffd\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb\udffc\udffe\udfff]|\ud83d\udc68\ud83c\udffe\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb-\udffd\udfff]|\ud83d\udc68\ud83c\udfff\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb-\udffe]|\ud83d\udc69\ud83c\udffb\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffc-\udfff]|\ud83d\udc69\ud83c\udffb\u200d\ud83e\udd1d\u200d\ud83d\udc69\ud83c[\udffc-\udfff]|\ud83d\udc69\ud83c\udffc\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb\udffd-\udfff]|\ud83d\udc69\ud83c\udffc\u200d\ud83e\udd1d\u200d\ud83d\udc69\ud83c[\udffb\udffd-\udfff]|\ud83d\udc69\ud83c\udffd\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb\udffc\udffe\udfff]|\ud83d\udc69\ud83c\udffd\u200d\ud83e\udd1d\u200d\ud83d\udc69\ud83c[\udffb\udffc\udffe\udfff]|\ud83d\udc69\ud83c\udffe\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb-\udffd\udfff]|\ud83d\udc69\ud83c\udffe\u200d\ud83e\udd1d\u200d\ud83d\udc69\ud83c[\udffb-\udffd\udfff]|\ud83d\udc69\ud83c\udfff\u200d\ud83e\udd1d\u200d\ud83d\udc68\ud83c[\udffb-\udffe]|\ud83d\udc69\ud83c\udfff\u200d\ud83e\udd1d\u200d\ud83d\udc69\ud83c[\udffb-\udffe]|\ud83e\uddd1\ud83c\udffb\u200d\ud83e\udd1d\u200d\ud83e\uddd1\ud83c[\udffb-\udfff]|\ud83e\uddd1\ud83c\udffc\u200d\ud83e\udd1d\u200d\ud83e\uddd1\ud83c[\udffb-\udfff]|\ud83e\uddd1\ud83c\udffd\u200d\ud83e\udd1d\u200d\ud83e\uddd1\ud83c[\udffb-\udfff]|\ud83e\uddd1\ud83c\udffe\u200d\ud83e\udd1d\u200d\ud83e\uddd1\ud83c[\udffb-\udfff]|\ud83e\uddd1\ud83c\udfff\u200d\ud83e\udd1d\u200d\ud83e\uddd1\ud83c[\udffb-\udfff]|\ud83e\uddd1\u200d\ud83e\udd1d\u200d\ud83e\uddd1|\ud83d\udc6b\ud83c[\udffb-\udfff]|\ud83d\udc6c\ud83c[\udffb-\udfff]|\ud83d\udc6d\ud83c[\udffb-\udfff]|\ud83d[\udc6b-\udc6d])|(?:\ud83d[\udc68\udc69]|\ud83e\uddd1)(?:\ud83c[\udffb-\udfff])?\u200d(?:\u2695\ufe0f|\u2696\ufe0f|\u2708\ufe0f|\ud83c[\udf3e\udf73\udf7c\udf84\udf93\udfa4\udfa8\udfeb\udfed]|\ud83d[\udcbb\udcbc\udd27\udd2c\ude80\ude92]|\ud83e[\uddaf-\uddb3\uddbc\uddbd])|(?:\ud83c[\udfcb\udfcc]|\ud83d[\udd74\udd75]|\u26f9)((?:\ud83c[\udffb-\udfff]|\ufe0f)\u200d[\u2640\u2642]\ufe0f)|(?:\ud83c[\udfc3\udfc4\udfca]|\ud83d[\udc6e\udc70\udc71\udc73\udc77\udc81\udc82\udc86\udc87\ude45-\ude47\ude4b\ude4d\ude4e\udea3\udeb4-\udeb6]|\ud83e[\udd26\udd35\udd37-\udd39\udd3d\udd3e\uddb8\uddb9\uddcd-\uddcf\uddd6-\udddd])(?:\ud83c[\udffb-\udfff])?\u200d[\u2640\u2642]\ufe0f|(?:\ud83d\udc68\u200d\u2764\ufe0f\u200d\ud83d\udc8b\u200d\ud83d\udc68|\ud83d\udc68\u200d\ud83d\udc68\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc68\u200d\ud83d\udc68\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\u2764\ufe0f\u200d\ud83d\udc8b\u200d\ud83d[\udc68\udc69]|\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\u2764\ufe0f\u200d\ud83d\udc68|\ud83d\udc68\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc68\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\ud83d\udc68\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\u2764\ufe0f\u200d\ud83d[\udc68\udc69]|\ud83d\udc69\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d[\udc66\udc67]|\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f|\ud83c\udff3\ufe0f\u200d\ud83c\udf08|\ud83c\udff4\u200d\u2620\ufe0f|\ud83d\udc15\u200d\ud83e\uddba|\ud83d\udc3b\u200d\u2744\ufe0f|\ud83d\udc41\u200d\ud83d\udde8|\ud83d\udc68\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\ud83d[\udc66\udc67]|\ud83d\udc6f\u200d\u2640\ufe0f|\ud83d\udc6f\u200d\u2642\ufe0f|\ud83e\udd3c\u200d\u2640\ufe0f|\ud83e\udd3c\u200d\u2642\ufe0f|\ud83e\uddde\u200d\u2640\ufe0f|\ud83e\uddde\u200d\u2642\ufe0f|\ud83e\udddf\u200d\u2640\ufe0f|\ud83e\udddf\u200d\u2642\ufe0f|\ud83d\udc08\u200d\u2b1b)|[#*0-9]\ufe0f?\u20e3|(?:[©®\u2122\u265f]\ufe0f)|(?:\ud83c[\udc04\udd70\udd71\udd7e\udd7f\ude02\ude1a\ude2f\ude37\udf21\udf24-\udf2c\udf36\udf7d\udf96\udf97\udf99-\udf9b\udf9e\udf9f\udfcd\udfce\udfd4-\udfdf\udff3\udff5\udff7]|\ud83d[\udc3f\udc41\udcfd\udd49\udd4a\udd6f\udd70\udd73\udd76-\udd79\udd87\udd8a-\udd8d\udda5\udda8\uddb1\uddb2\uddbc\uddc2-\uddc4\uddd1-\uddd3\udddc-\uddde\udde1\udde3\udde8\uddef\uddf3\uddfa\udecb\udecd-\udecf\udee0-\udee5\udee9\udef0\udef3]|[\u203c\u2049\u2139\u2194-\u2199\u21a9\u21aa\u231a\u231b\u2328\u23cf\u23ed-\u23ef\u23f1\u23f2\u23f8-\u23fa\u24c2\u25aa\u25ab\u25b6\u25c0\u25fb-\u25fe\u2600-\u2604\u260e\u2611\u2614\u2615\u2618\u2620\u2622\u2623\u2626\u262a\u262e\u262f\u2638-\u263a\u2640\u2642\u2648-\u2653\u2660\u2663\u2665\u2666\u2668\u267b\u267f\u2692-\u2697\u2699\u269b\u269c\u26a0\u26a1\u26a7\u26aa\u26ab\u26b0\u26b1\u26bd\u26be\u26c4\u26c5\u26c8\u26cf\u26d1\u26d3\u26d4\u26e9\u26ea\u26f0-\u26f5\u26f8\u26fa\u26fd\u2702\u2708\u2709\u270f\u2712\u2714\u2716\u271d\u2721\u2733\u2734\u2744\u2747\u2757\u2763\u2764\u27a1\u2934\u2935\u2b05-\u2b07\u2b1b\u2b1c\u2b50\u2b55\u3030\u303d\u3297\u3299])(?:\ufe0f|(?!\ufe0e))|(?:(?:\ud83c[\udfcb\udfcc]|\ud83d[\udd74\udd75\udd90]|[\u261d\u26f7\u26f9\u270c\u270d])(?:\ufe0f|(?!\ufe0e))|(?:\ud83c[\udf85\udfc2-\udfc4\udfc7\udfca]|\ud83d[\udc42\udc43\udc46-\udc50\udc66-\udc69\udc6e\udc70-\udc78\udc7c\udc81-\udc83\udc85-\udc87\udcaa\udd7a\udd95\udd96\ude45-\ude47\ude4b-\ude4f\udea3\udeb4-\udeb6\udec0\udecc]|\ud83e[\udd0c\udd0f\udd18-\udd1c\udd1e\udd1f\udd26\udd30-\udd39\udd3d\udd3e\udd77\uddb5\uddb6\uddb8\uddb9\uddbb\uddcd-\uddcf\uddd1-\udddd]|[\u270a\u270b]))(?:\ud83c[\udffb-\udfff])?|(?:\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f|\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc73\udb40\udc63\udb40\udc74\udb40\udc7f|\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc77\udb40\udc6c\udb40\udc73\udb40\udc7f|\ud83c\udde6\ud83c[\udde8-\uddec\uddee\uddf1\uddf2\uddf4\uddf6-\uddfa\uddfc\uddfd\uddff]|\ud83c\udde7\ud83c[\udde6\udde7\udde9-\uddef\uddf1-\uddf4\uddf6-\uddf9\uddfb\uddfc\uddfe\uddff]|\ud83c\udde8\ud83c[\udde6\udde8\udde9\uddeb-\uddee\uddf0-\uddf5\uddf7\uddfa-\uddff]|\ud83c\udde9\ud83c[\uddea\uddec\uddef\uddf0\uddf2\uddf4\uddff]|\ud83c\uddea\ud83c[\udde6\udde8\uddea\uddec\udded\uddf7-\uddfa]|\ud83c\uddeb\ud83c[\uddee-\uddf0\uddf2\uddf4\uddf7]|\ud83c\uddec\ud83c[\udde6\udde7\udde9-\uddee\uddf1-\uddf3\uddf5-\uddfa\uddfc\uddfe]|\ud83c\udded\ud83c[\uddf0\uddf2\uddf3\uddf7\uddf9\uddfa]|\ud83c\uddee\ud83c[\udde8-\uddea\uddf1-\uddf4\uddf6-\uddf9]|\ud83c\uddef\ud83c[\uddea\uddf2\uddf4\uddf5]|\ud83c\uddf0\ud83c[\uddea\uddec-\uddee\uddf2\uddf3\uddf5\uddf7\uddfc\uddfe\uddff]|\ud83c\uddf1\ud83c[\udde6-\udde8\uddee\uddf0\uddf7-\uddfb\uddfe]|\ud83c\uddf2\ud83c[\udde6\udde8-\udded\uddf0-\uddff]|\ud83c\uddf3\ud83c[\udde6\udde8\uddea-\uddec\uddee\uddf1\uddf4\uddf5\uddf7\uddfa\uddff]|\ud83c\uddf4\ud83c\uddf2|\ud83c\uddf5\ud83c[\udde6\uddea-\udded\uddf0-\uddf3\uddf7-\uddf9\uddfc\uddfe]|\ud83c\uddf6\ud83c\udde6|\ud83c\uddf7\ud83c[\uddea\uddf4\uddf8\uddfa\uddfc]|\ud83c\uddf8\ud83c[\udde6-\uddea\uddec-\uddf4\uddf7-\uddf9\uddfb\uddfd-\uddff]|\ud83c\uddf9\ud83c[\udde6\udde8\udde9\uddeb-\udded\uddef-\uddf4\uddf7\uddf9\uddfb\uddfc\uddff]|\ud83c\uddfa\ud83c[\udde6\uddec\uddf2\uddf3\uddf8\uddfe\uddff]|\ud83c\uddfb\ud83c[\udde6\udde8\uddea\uddec\uddee\uddf3\uddfa]|\ud83c\uddfc\ud83c[\uddeb\uddf8]|\ud83c\uddfd\ud83c\uddf0|\ud83c\uddfe\ud83c[\uddea\uddf9]|\ud83c\uddff\ud83c[\udde6\uddf2\uddfc]|\ud83c[\udccf\udd8e\udd91-\udd9a\udde6-\uddff\ude01\ude32-\ude36\ude38-\ude3a\ude50\ude51\udf00-\udf20\udf2d-\udf35\udf37-\udf7c\udf7e-\udf84\udf86-\udf93\udfa0-\udfc1\udfc5\udfc6\udfc8\udfc9\udfcf-\udfd3\udfe0-\udff0\udff4\udff8-\udfff]|\ud83d[\udc00-\udc3e\udc40\udc44\udc45\udc51-\udc65\udc6a\udc6f\udc79-\udc7b\udc7d-\udc80\udc84\udc88-\udca9\udcab-\udcfc\udcff-\udd3d\udd4b-\udd4e\udd50-\udd67\udda4\uddfb-\ude44\ude48-\ude4a\ude80-\udea2\udea4-\udeb3\udeb7-\udebf\udec1-\udec5\uded0-\uded2\uded5-\uded7\udeeb\udeec\udef4-\udefc\udfe0-\udfeb]|\ud83e[\udd0d\udd0e\udd10-\udd17\udd1d\udd20-\udd25\udd27-\udd2f\udd3a\udd3c\udd3f-\udd45\udd47-\udd76\udd78\udd7a-\uddb4\uddb7\uddba\uddbc-\uddcb\uddd0\uddde-\uddff\ude70-\ude74\ude78-\ude7a\ude80-\ude86\ude90-\udea8\udeb0-\udeb6\udec0-\udec2\uded0-\uded6]|[\u23e9-\u23ec\u23f0\u23f3\u267e\u26ce\u2705\u2728\u274c\u274e\u2753-\u2755\u2795-\u2797\u27b0\u27bf\ue50a])|\ufe0f/g,
+            /////////////////////////
+            //  private functions  //
+            //     declaration     //
+            /////////////////////////
 
-            // avoid runtime RegExp creation for not so smart,
-            // not JIT based, and old browsers / engines
-            UFE0Fg = /\uFE0F/g,
-
-            // avoid using a string literal like '\u200D' here because minifiers expand it inline
-            U200D = String.fromCharCode(0x200D);
-
-        return twemoji;
-
-
-        /////////////////////////
-        //  private functions  //
-        //     declaration     //
-        /////////////////////////
-
-        /**
-         * Used to both remove the possible variant
-         *  and to convert utf16 into code points.
-         *  If there is a zero-width-joiner (U+200D), leave the variants in.
-         * @param   string    the raw text of the emoji match
-         * @return  string    the code point
-         */
-        function grabTheRightIcon(rawText) {
-            var unicodeSurrogates = rawText ? (rawText.indexOf(U200D) < 0 ? rawText.replace(UFE0Fg, '') : rawText) : rawText,
-                r = [],
-                c = 0,
-                p = 0,
-                i = 0;
-            while (i < unicodeSurrogates.length) {
-                c = unicodeSurrogates.charCodeAt(i++);
-                if (p) {
-                    r.push((0x10000 + ((p - 0xD800) << 10) + (c - 0xDC00)).toString(16));
-                    p = 0;
-                } else if (0xD800 <= c && c <= 0xDBFF) {
-                    p = c;
-                } else {
-                    r.push(c.toString(16));
+            /**
+             * Used to both remove the possible variant
+             *  and to convert utf16 into code points.
+             *  If there is a zero-width-joiner (U+200D), leave the variants in.
+             * @param   string    the raw text of the emoji match
+             * @return  string    the code point
+             */
+            function grabTheRightIcon(rawText) {
+                var unicodeSurrogates = rawText ? (rawText.indexOf(U200D) < 0 ? rawText.replace(UFE0Fg, '') : rawText) : rawText,
+                    r = [],
+                    c = 0,
+                    p = 0,
+                    i = 0;
+                while (i < unicodeSurrogates.length) {
+                    c = unicodeSurrogates.charCodeAt(i++);
+                    if (p) {
+                        r.push((0x10000 + ((p - 0xd800) << 10) + (c - 0xdc00)).toString(16));
+                        p = 0;
+                    } else if (0xd800 <= c && c <= 0xdbff) {
+                        p = c;
+                    } else {
+                        r.push(c.toString(16));
+                    }
                 }
+                return r.join('-');
             }
-            return r.join('-');
-        }
 
-        function parse(str, dontremove, emoticon) {
-            //Twitch title may contain < or > with causes html problems
-            if (!str) return '';
-            if (!dontremove) str = str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            //Replace line break
-            str = str.replace(/(\r\n|\n|\r)/gm, "");
-            return replace(str, function(rawText) {
-                var iconId = grabTheRightIcon(rawText);
+            function parse(str, dontremove, emoticon) {
+                //Twitch title may contain < or > with causes html problems
+                if (!str) return '';
+                if (!dontremove) str = str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                //Replace line break
+                str = str.replace(/(\r\n|\n|\r)/gm, '');
+                return replace(str, function(rawText) {
+                    var iconId = grabTheRightIcon(rawText);
 
-                return iconId ? '<img class="' + (emoticon ? 'emoticon' : 'emoji') + '" alt="" src="https://twemoji.maxcdn.com/2/72x72/' + iconId + '.png"/>' : rawText;
-            });
-        }
+                    return iconId ? '<img class="' + (emoticon ? 'emoticon' : 'emoji') + '" alt="" src="https://twemoji.maxcdn.com/2/72x72/' + iconId + '.png"/>' : rawText;
+                });
+            }
 
-        function parseIcon(str) {
-            if (!str) return '';
+            function parseIcon(str) {
+                if (!str) return '';
 
-            return replace(str, function(rawText) {
-                var iconId = grabTheRightIcon(rawText);
+                return replace(str, function(rawText) {
+                    var iconId = grabTheRightIcon(rawText);
 
-                return iconId ? 'https://twemoji.maxcdn.com/2/72x72/' + iconId + '.png' : rawText;
-            });
-        }
+                    return iconId ? 'https://twemoji.maxcdn.com/2/72x72/' + iconId + '.png' : rawText;
+                });
+            }
 
-        function replace(text, callback) {
-            return String(text).replace(re, callback);
-        }
+            function replace(text, callback) {
+                return String(text).replace(re, callback);
+            }
+        })();
 
-    }());
     /**
      * Define the public API
      * and all function need to be called outiside the API

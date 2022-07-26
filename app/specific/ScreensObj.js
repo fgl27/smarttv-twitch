@@ -330,11 +330,11 @@ function ScreensObj_InitChannelVod() {
                     } else Screens_OffSetStart();
                 } else Main_OpenVod(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
             },
-            SwitchesIcons: ['movie-play', 'history', 'offset'],
+            SwitchesIcons: ['movie-play', 'history'],
             addSwitches: function () {
                 this.TopRowCreated = true;
                 this.row = document.createElement('div');
-                var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_TYPE, STR_SPACE + STR_SPACE + STR_SWITCH_POS];
+                var SwitchesStrings = [STR_SPACE + STR_SPACE + STR_SWITCH_VOD, STR_SPACE + STR_SPACE + STR_SWITCH_TYPE];
                 var thumbfollow,
                     div,
                     i = 0;
@@ -378,7 +378,7 @@ function ScreensObj_InitChannelVod() {
 
                 ScreensObj_SetTopLable(
                     Main_values.Main_selectedChannelDisplayname,
-                    (this.highlight ? STR_PAST_HIGHL : STR_PAST_BROA) + (this.periodPos === 1 ? STR_TIME : STR_VIWES) + ', Offset ' + inUseObj.extraoffset
+                    (this.highlight ? STR_PAST_HIGHL : STR_PAST_BROA) + (this.periodPos === 1 ? STR_TIME : STR_VIWES) //+ ', Offset ' + inUseObj.extraoffset
                 );
             },
             label_exit: function () {

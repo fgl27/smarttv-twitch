@@ -413,7 +413,7 @@ function Screens_createCellVod(id, idArray, valuesArray) {
             idArray[9] +
             id +
             '"class="stream_info_live">' +
-            (valuesArray[10] !== '' && valuesArray[10] !== null ? STR_STARTED + STR_PLAYING + valuesArray[10] : '') +
+            (valuesArray[10] !== '' && valuesArray[10] ? STR_STARTED + STR_PLAYING + valuesArray[10] : '') +
             '</div>' +
             '<div style="line-height: 1.3ch;"><div id="' +
             idArray[4] +

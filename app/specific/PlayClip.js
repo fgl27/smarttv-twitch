@@ -51,13 +51,13 @@ function PlayClip_Start() {
     } else Chat_NoVod();
 
     Play_LoadLogo(document.getElementById('stream_info_icon'), Main_values.Main_selectedChannelLogo);
-    Main_textContent("stream_info_name", Main_values.Main_selectedChannelDisplayname);
-    Main_innerHTML("stream_info_title", ChannelClip_title);
-    Main_innerHTML("stream_info_game", ChannelClip_game);
+    Main_textContent('stream_info_name', Main_values.Main_selectedChannelDisplayname);
+    Main_innerHTML('stream_info_title', ChannelClip_title);
+    Main_innerHTML('stream_info_game', ChannelClip_game);
 
-    Main_innerHTML("stream_live_time", ChannelClip_createdAt + ',' + STR_SPACE + ChannelClip_views);
-    Main_textContent("stream_live_viewers", '');
-    Main_textContent("stream_watching_time", '');
+    Main_innerHTML('stream_live_time', ChannelClip_createdAt + ',' + STR_SPACE + ChannelClip_views);
+    Main_textContent('stream_live_viewers', '');
+    Main_textContent('stream_watching_time', '');
 
     Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
     Play_DefaultjumpTimers = PlayClip_jumpTimers;
@@ -108,15 +108,15 @@ function PlayClip_Start() {
     else PlayClip_qualityChanged();
     PlayClip_replay = false;
 
-    document.body.removeEventListener("keyup", Main_handleKeyUp);
+    document.body.removeEventListener('keyup', Main_handleKeyUp);
 
     PlayClip_loadingtreamerInfoTry = 0;
     PlayClip_GetStreamerInfo();
     PlayVod_loadingInfoDataTry = 0;
     if (PlayClip_HasVOD) PlayClip_updateVodInfo();
     else {
-        Main_textContent("end_vod_name_text", '');
-        Main_innerHTML("end_vod_title_text", '');
+        Main_textContent('end_vod_name_text', '');
+        Main_innerHTML('end_vod_title_text', '');
         Play_controls[Play_controlsOpenVod].setLable('');
     }
     Play_controls[Play_controlsChanelCont].setLable(Main_values.Main_selectedChannelDisplayname);
@@ -146,7 +146,7 @@ function PlayClip_updateVodInfo() {
 
 function PlayClip_updateVodInfoSucess(response) {
     ChannelVod_title = twemoji.parse(JSON.parse(response).title, false, false);
-    Main_innerHTML("end_vod_title_text", ChannelVod_title);
+    Main_innerHTML('end_vod_title_text', ChannelVod_title);
     Play_controls[Play_controlsOpenVod].setLable(ChannelVod_title);
 }
 
@@ -182,28 +182,28 @@ function PlayClip_loadData() {
 }
 
 var PlayClip_BaseClipUrl = 'https://gql.twitch.tv/gql';
-var PlayClip_postMessage = '{"operationName":"VideoAccessToken_Clip","variables":{"slug":"%x"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"36b89d2507fce29e5ca551df756d27c1cfe079e2609642b4390aa4c35796eb11"}}}';
+var PlayClip_postMessage =
+    '{"operationName":"VideoAccessToken_Clip","variables":{"slug":"%x"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"36b89d2507fce29e5ca551df756d27c1cfe079e2609642b4390aa4c35796eb11"}}}';
 
 function PlayClip_loadDataRequest() {
-
     var xmlHttp = new XMLHttpRequest();
 
-    xmlHttp.open("POST", PlayClip_BaseClipUrl, true);
+    xmlHttp.open('POST', PlayClip_BaseClipUrl, true);
     xmlHttp.timeout = PlayClip_loadingDataTimeout;
     xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
     xmlHttp.setRequestHeader('Content-Type', 'application/json');
 
-    xmlHttp.ontimeout = function() { };
+    xmlHttp.ontimeout = function () {};
 
-    xmlHttp.onreadystatechange = function() {
+    xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState === 4) {
             if (xmlHttp.status === 200) {
                 PlayClip_QualityGenerate(xmlHttp.responseText);
             } else if (xmlHttp.status === 410) {
                 PlayClip_loadData410 = true;
-                window.setTimeout(function() {
+                window.setTimeout(function () {
                     PlayClip_loadData410 = false;
-                }, 60 * 60 * 1000);//try again after 1h
+                }, 60 * 60 * 1000); //try again after 1h
                 PlayClip_loadDataSuccess410();
             } else {
                 PlayClip_loadDataError();
@@ -217,8 +217,8 @@ function PlayClip_loadDataRequest() {
 function PlayClip_loadDataSuccess410() {
     PlayClip_qualities = [];
     PlayClip_qualities.push({
-        'id': 'Auto | mp4',
-        'url': ChannelClip_playUrl2
+        id: 'Auto | mp4',
+        url: ChannelClip_playUrl2
     });
 
     PlayClip_state = PlayClip_STATE_PLAYING;
@@ -246,15 +246,15 @@ function PlayClip_loadDataSuccessFake() {
 }
 
 var PlayClip_listener = {
-    onbufferingstart: function() {
+    onbufferingstart: function () {
         Play_showBufferDialog();
         PlayClip_bufferingcomplete = false;
         PlayClip_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = Play_Buffer;
         PlayClip_PlayerCheckQualityChanged = true;
-        if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + (new Date()));
+        if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + new Date());
     },
-    onbufferingcomplete: function() {
+    onbufferingcomplete: function () {
         Play_HideBufferDialog();
         PlayClip_bufferingcomplete = true;
         // reset the values after using
@@ -262,9 +262,9 @@ var PlayClip_listener = {
         PlayClip_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = Play_Buffer;
         PlayClip_PlayerCheckQualityChanged = true;
-        if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + (new Date()));
+        if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + new Date());
     },
-    onbufferingprogress: function(percent) {
+    onbufferingprogress: function (percent) {
         if (percent < 5) PlayClip_PlayerCheckCount = 0;
 
         Play_PlayerCheckTimer = Play_Buffer;
@@ -280,19 +280,18 @@ var PlayClip_listener = {
             Play_bufferingcomplete = true;
             // reset the values after using
             PlayClip_offsettime = 0;
-            if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + (new Date()));
+            if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + new Date());
         }
     },
-    oncurrentplaytime: function(currentTime) {
+    oncurrentplaytime: function (currentTime) {
         if (PlayClip_currentTime !== currentTime) PlayClip_updateCurrentTime(currentTime);
     },
-    onstreamcompleted: function() {
+    onstreamcompleted: function () {
         Play_PannelEndStart(3);
     },
-    onerror: function(eventType) {
-        if (!Main_isReleased) console.log('onerror:', 'date: ' + (new Date()) + ' eventType: ' + eventType);
-        if (eventType === "PLAYER_ERROR_CONNECTION_FAILED" || eventType === "PLAYER_ERROR_INVALID_URI")
-            Play_PannelEndStart(3);
+    onerror: function (eventType) {
+        if (!Main_isReleased) console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
+        if (eventType === 'PLAYER_ERROR_CONNECTION_FAILED' || eventType === 'PLAYER_ERROR_INVALID_URI') Play_PannelEndStart(3);
     }
 };
 
@@ -303,20 +302,19 @@ function PlayClip_QualityGenerate(response) {
     var token;
 
     if (response && response.hasOwnProperty('data') && response.data.hasOwnProperty('clip')) {
-        token = "?sig=" + encodeURIComponent(response.data.clip.playbackAccessToken.signature) + "&token=" + encodeURIComponent(response.data.clip.playbackAccessToken.value);
+        token = '?sig=' + encodeURIComponent(response.data.clip.playbackAccessToken.signature) + '&token=' + encodeURIComponent(response.data.clip.playbackAccessToken.value);
         response = response.data.clip.videoQualities;
 
         for (var i = 0; i < response.length; i++) {
-
             if (!PlayClip_qualities.length) {
                 PlayClip_qualities.push({
-                    'id': response[i].quality + 'p' + PlayClip_FrameRate(response[i].frameRate) + ' | source | mp4',
-                    'url': response[i].sourceURL + token
+                    id: response[i].quality + 'p' + PlayClip_FrameRate(response[i].frameRate) + ' | source | mp4',
+                    url: response[i].sourceURL + token
                 });
             } else {
                 PlayClip_qualities.push({
-                    'id': response[i].quality + 'p' + PlayClip_FrameRate(response[i].frameRate) + ' | mp4',
-                    'url': response[i].sourceURL + token
+                    id: response[i].quality + 'p' + PlayClip_FrameRate(response[i].frameRate) + ' | mp4',
+                    url: response[i].sourceURL + token
                 });
             }
         }
@@ -341,7 +339,8 @@ function PlayClip_qualityChanged() {
             PlayClip_qualityIndex = i;
             PlayClip_playingUrl = PlayClip_qualities[i].url;
             break;
-        } else if (PlayClip_qualities[i].id.indexOf(PlayClip_quality) !== -1) { //make shore to set a value before break out
+        } else if (PlayClip_qualities[i].id.indexOf(PlayClip_quality) !== -1) {
+            //make shore to set a value before break out
             PlayClip_qualityIndex = i;
             PlayClip_playingUrl = PlayClip_qualities[i].url;
         }
@@ -363,7 +362,7 @@ function PlayClip_onPlayer() {
     Play_showBufferDialog();
 
     if (!Main_isReleased) {
-        console.log('PlayClip_onPlayer:', 'date: ' + (new Date()));
+        console.log('PlayClip_onPlayer:', 'date: ' + new Date());
         console.log('PlayClip_onPlayer:', '\n' + '\n"' + PlayClip_playingUrl + '"\n');
     }
 
@@ -385,39 +384,40 @@ function PlayClip_onPlayer() {
             Play_clearPause();
         }
 
-        Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_PLAY", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayClip_Buffer);
-        Play_avplay.setBufferingParam("PLAYER_BUFFER_FOR_RESUME", "PLAYER_BUFFER_SIZE_IN_SECOND", PlayClip_Buffer);
+        Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_PLAY', 'PLAYER_BUFFER_SIZE_IN_SECOND', PlayClip_Buffer);
+        Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_RESUME', 'PLAYER_BUFFER_SIZE_IN_SECOND', PlayClip_Buffer);
         Play_SetFullScreen(Play_isFullScreen);
         Play_avplay.setListener(PlayClip_listener);
 
-        Play_avplay.prepareAsync(function() { //successCallback
+        Play_avplay.prepareAsync(
+            function () {
+                //successCallback
 
-            if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip OK:', 'date: ' + (new Date()));
+                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip OK:', 'date: ' + new Date());
 
-            Play_avplay.play();
-            PlayClip_DurationSeconds = Play_avplay.getDuration() / 1000;
-            Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
-            if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+                Play_avplay.play();
+                PlayClip_DurationSeconds = Play_avplay.getDuration() / 1000;
+                Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
+                if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
 
-            PlayClip_PlayerCheckCount = 0;
-            Play_PlayerCheckTimer = 1 + (PlayClip_Buffer * 2);
-            PlayClip_PlayerCheckQualityChanged = false;
-            window.clearInterval(PlayClip_streamCheckId);
-            PlayClip_streamCheckId = window.setInterval(PlayClip_PlayerCheck, Play_PlayerCheckInterval);
+                PlayClip_PlayerCheckCount = 0;
+                Play_PlayerCheckTimer = 1 + PlayClip_Buffer * 2;
+                PlayClip_PlayerCheckQualityChanged = false;
+                window.clearInterval(PlayClip_streamCheckId);
+                PlayClip_streamCheckId = window.setInterval(PlayClip_PlayerCheck, Play_PlayerCheckInterval);
+            },
+            function () {
+                //errorCallback
 
-        }, function() { //errorCallback
-
-            if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip NOK:', 'date: ' + (new Date()));
-            Play_onPlayerCounter++;
-            if (Play_onPlayerCounter < 5) PlayClip_onPlayer();
-            else {
-                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip fail too mutch exit:', 'date: ' + (new Date()));
-                Play_EndStart(false, 3);
+                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip NOK:', 'date: ' + new Date());
+                Play_onPlayerCounter++;
+                if (Play_onPlayerCounter < 5) PlayClip_onPlayer();
+                else {
+                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip fail too mutch exit:', 'date: ' + new Date());
+                    Play_EndStart(false, 3);
+                }
             }
-
-        });
-
-
+        );
     }
 }
 
@@ -429,9 +429,8 @@ function PlayClip_PlayerCheck() {
     if (PlayClip_isOn && PlayClip_PlayerTime === PlayClip_currentTime && Play_isIdleOrPlaying()) {
         PlayClip_PlayerCheckCount++;
         if (PlayClip_PlayerCheckCount > Play_PlayerCheckTimer) {
-
             //Don't change the first time only retry
-            if (PlayClip_PlayerCheckQualityChanged && PlayClip_PlayerCheckRun && (PlayClip_qualityIndex < PlayClip_getQualitiesCount() - 1)) PlayClip_qualityIndex++;
+            if (PlayClip_PlayerCheckQualityChanged && PlayClip_PlayerCheckRun && PlayClip_qualityIndex < PlayClip_getQualitiesCount() - 1) PlayClip_qualityIndex++;
             else if (!PlayClip_PlayerCheckQualityChanged && PlayClip_PlayerCheckRun) PlayClip_PlayerCheckCounter++;
 
             if (!navigator.onLine) Play_EndStart(false, 3);
@@ -442,20 +441,17 @@ function PlayClip_PlayerCheck() {
                 PlayClip_qualityChanged();
                 PlayClip_PlayerCheckRun = true;
             }
-
         } // else we try for too long let the listener onerror catch it
     } else {
         PlayClip_PlayerCheckCounter = 0;
         PlayClip_PlayerCheckCount = 0;
         PlayClip_PlayerCheckRun = false;
-
     }
 
     PlayClip_PlayerTime = PlayClip_currentTime;
 }
 
 function PlayClip_DropOneQuality(ConnectionDrop) {
-
     if (!ConnectionDrop) {
         if (PlayClip_qualityIndex < PlayClip_getQualitiesCount() - 1) PlayClip_qualityIndex++;
         else {
@@ -473,13 +469,12 @@ function PlayClip_DropOneQuality(ConnectionDrop) {
 
 function PlayClip_updateCurrentTime(currentTime) {
     PlayClip_currentTime = currentTime;
-    if (PlayClip_HasVOD) PlayVod_currentTime = PlayClip_currentTime + (ChannelVod_vodOffset * 1000);
+    if (PlayClip_HasVOD) PlayVod_currentTime = PlayClip_currentTime + ChannelVod_vodOffset * 1000;
 
     if (!Play_IsWarning && Play_WarningDialogVisible()) Play_HideWarningDialog();
     if (PlayClip_bufferingcomplete && Play_BufferDialogVisible()) Play_HideBufferDialog();
 
-    if (Play_isPanelShown() && !Play_BufferDialogVisible())
-        PlayVod_ProgresBarrUpdate((PlayClip_currentTime / 1000), PlayClip_DurationSeconds, !PlayVod_IsJumping);
+    if (Play_isPanelShown() && !Play_BufferDialogVisible()) PlayVod_ProgresBarrUpdate(PlayClip_currentTime / 1000, PlayClip_DurationSeconds, !PlayVod_IsJumping);
 }
 
 function PlayClip_shutdownStream() {
@@ -500,7 +495,7 @@ function PlayClip_PreshutdownStream() {
     Chat_Clear();
     Play_ClearPlayer();
     UserLiveFeed_Hide(true);
-    document.body.removeEventListener("keydown", PlayClip_handleKeyDown);
+    document.body.removeEventListener('keydown', PlayClip_handleKeyDown);
     document.removeEventListener('visibilitychange', PlayClip_Resume);
     ChannelVod_vodOffset = 0;
 }
@@ -516,11 +511,11 @@ function PlayClip_UpdateNext() {
     if (nextid) {
         PlayClip_HasNext = true;
         text = JSON.parse(document.getElementById(inUseObj.ids[8] + nextid).getAttribute(Main_DataAttribute));
-        Main_textContent("next_button_text_name", text[4]);
-        Main_innerHTML("next_button_text_title", text[9]);
+        Main_textContent('next_button_text_name', text[4]);
+        Main_innerHTML('next_button_text_title', text[9]);
 
-        Main_textContent("end_next_button_text_name", text[4]);
-        Main_innerHTML("end_next_button_text_title", text[9]);
+        Main_textContent('end_next_button_text_name', text[4]);
+        Main_innerHTML('end_next_button_text_title', text[9]);
 
         PlayClip_HideShowNext(0, 1);
     } else PlayClip_HideShowNext(0, 0);
@@ -528,17 +523,15 @@ function PlayClip_UpdateNext() {
     if (backid) {
         PlayClip_HasBack = true;
         text = JSON.parse(document.getElementById(inUseObj.ids[8] + backid).getAttribute(Main_DataAttribute));
-        Main_textContent("back_button_text_name", text[4]);
-        Main_innerHTML("back_button_text_title", text[9]);
+        Main_textContent('back_button_text_name', text[4]);
+        Main_innerHTML('back_button_text_title', text[9]);
         PlayClip_HideShowNext(1, 1);
     } else PlayClip_HideShowNext(1, 0);
 }
 
 function PlayClip_getIdNext(y, x) {
-    if (Main_ThumbNull((inUseObj.posY), (inUseObj.posX + y), inUseObj.ids[0]))
-        return inUseObj.posY + '_' + (inUseObj.posX + y);
-    else if (Main_ThumbNull((inUseObj.posY + y), x, inUseObj.ids[0]))
-        return (inUseObj.posY + y) + '_' + x;
+    if (Main_ThumbNull(inUseObj.posY, inUseObj.posX + y, inUseObj.ids[0])) return inUseObj.posY + '_' + (inUseObj.posX + y);
+    else if (Main_ThumbNull(inUseObj.posY + y, x, inUseObj.ids[0])) return inUseObj.posY + y + '_' + x;
 
     return null;
 }
@@ -570,7 +563,7 @@ function PlayClip_PlayPreviously() {
 
 function PlayClip_PlayNextPreviously() {
     Play_ForceHidePannel();
-    Main_ready(function() {
+    Main_ready(function () {
         PlayClip_PreshutdownStream();
         Main_OpenClip(inUseObj.posY + '_' + inUseObj.posX, inUseObj.ids, Screens_handleKeyDown);
     });
@@ -584,13 +577,13 @@ function PlayClip_hidePanel() {
     Play_clearHidePanel();
     PlayClip_quality = PlayClip_qualityPlaying;
     Play_ForceHidePannel();
-    PlayVod_ProgresBarrUpdate((PlayClip_currentTime / 1000), PlayClip_DurationSeconds, true);
+    PlayVod_ProgresBarrUpdate(PlayClip_currentTime / 1000, PlayClip_DurationSeconds, true);
     Main_innerHTML('progress_bar_jump_to', STR_SPACE);
     document.getElementById('progress_bar_steps').style.display = 'none';
 }
 
 function PlayClip_showPanel() {
-    PlayVod_ProgresBarrUpdate((PlayClip_currentTime / 1000), PlayClip_DurationSeconds, true);
+    PlayVod_ProgresBarrUpdate(PlayClip_currentTime / 1000, PlayClip_DurationSeconds, true);
     Play_clock();
     Play_CleanHideExit();
     PlayVod_IconsBottonResetFocus();
@@ -607,7 +600,8 @@ function PlayClip_qualityIndexReset() {
         if (PlayClip_qualities[i].id === PlayClip_quality) {
             PlayClip_qualityIndex = i;
             break;
-        } else if (PlayClip_qualities[i].id.indexOf(PlayClip_quality) !== -1) { //make shore to set a value before break out
+        } else if (PlayClip_qualities[i].id.indexOf(PlayClip_quality) !== -1) {
+            //make shore to set a value before break out
             PlayClip_qualityIndex = i;
         }
     }
@@ -619,17 +613,17 @@ function PlayClip_getQualitiesCount() {
 
 function PlayClip_qualityDisplay() {
     if (PlayClip_getQualitiesCount() === 1) {
-        document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "0";
-        document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "0";
+        document.getElementById('control_arrow_up_' + Play_controlsQuality).style.opacity = '0';
+        document.getElementById('control_arrow_down' + Play_controlsQuality).style.opacity = '0';
     } else if (!PlayClip_qualityIndex) {
-        document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "0.2";
-        document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "1";
+        document.getElementById('control_arrow_up_' + Play_controlsQuality).style.opacity = '0.2';
+        document.getElementById('control_arrow_down' + Play_controlsQuality).style.opacity = '1';
     } else if (PlayClip_qualityIndex === PlayClip_getQualitiesCount() - 1) {
-        document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "1";
-        document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "0.2";
+        document.getElementById('control_arrow_up_' + Play_controlsQuality).style.opacity = '1';
+        document.getElementById('control_arrow_down' + Play_controlsQuality).style.opacity = '0.2';
     } else {
-        document.getElementById("control_arrow_up_" + Play_controlsQuality).style.opacity = "1";
-        document.getElementById("control_arrow_down" + Play_controlsQuality).style.opacity = "1";
+        document.getElementById('control_arrow_up_' + Play_controlsQuality).style.opacity = '1';
+        document.getElementById('control_arrow_down' + Play_controlsQuality).style.opacity = '1';
     }
 
     PlayClip_SetHtmlQuality('controls_name_' + Play_controlsQuality);
@@ -641,7 +635,7 @@ function PlayClip_SetHtmlQuality(element) {
     PlayClip_quality = PlayClip_qualities[PlayClip_qualityIndex].id;
 
     var quality_string = PlayClip_quality;
-    if (PlayClip_quality.indexOf('source') !== -1) quality_string = quality_string.replace("source", STR_SOURCE);
+    if (PlayClip_quality.indexOf('source') !== -1) quality_string = quality_string.replace('source', STR_SOURCE);
 
     Main_textContent(element, PlayClip_quality);
 }
@@ -658,14 +652,14 @@ function PlayClip_OpenVod() {
     if (PlayClip_HasVOD) {
         Main_values.vodOffset = ChannelVod_vodOffset;
         PlayClip_PreshutdownStream();
-        document.body.addEventListener("keydown", PlayVod_handleKeyDown, false);
+        document.body.addEventListener('keydown', PlayVod_handleKeyDown, false);
         Play_IconsResetFocus();
         Main_ready(PlayVod_Start);
     } else {
         Play_clearHidePanel();
         Play_IsWarning = true;
         Play_showWarningDialog(STR_NO_BROADCAST_WARNING);
-        window.setTimeout(function() {
+        window.setTimeout(function () {
             Play_IsWarning = false;
             Play_HideWarningDialog();
         }, 2000);
@@ -735,7 +729,7 @@ function PlayClip_handleKeyDown(e) {
                 break;
             case KEY_RIGHT:
                 if (UserLiveFeed_isFeedShow() && (!Play_EndFocus || !Play_isEndDialogVisible())) {
-                    if (Play_FeedPos < (UserLiveFeed_GetSize() - 1) && !UserLiveFeed_loadingData) {
+                    if (Play_FeedPos < UserLiveFeed_GetSize() - 1 && !UserLiveFeed_loadingData) {
                         UserLiveFeed_FeedRemoveFocus();
                         Play_FeedPos++;
                         UserLiveFeed_FeedAddFocus();
@@ -774,8 +768,8 @@ function PlayClip_handleKeyDown(e) {
             case KEY_UP:
                 if (Play_isEndDialogVisible()) {
                     Play_EndTextClear();
-                    document.body.removeEventListener("keydown", PlayClip_handleKeyDown, false);
-                    document.body.addEventListener("keyup", Play_handleKeyUp, false);
+                    document.body.removeEventListener('keydown', PlayClip_handleKeyDown, false);
+                    document.body.addEventListener('keyup', Play_handleKeyUp, false);
                     Play_EndUpclear = false;
                     Play_EndUpclearCalback = PlayClip_handleKeyDown;
                     Play_EndUpclearID = window.setTimeout(Play_keyUpEnd, 250);

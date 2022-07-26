@@ -79,4 +79,3 @@ function TVKeyValue_fixKey() {
     KEY_MEDIAREWIND = 79; //key O
     KEY_MEDIAFASTFORWARD = 80; //key P
 }
-

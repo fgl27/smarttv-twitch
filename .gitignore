@@ -40,3 +40,4 @@ release/temp_maker/
 index_release.html
 release/testing.sh
 app/*.js
+node_modules/* 

@@ -9,7 +9,7 @@ function calculateFontSize() {
     var initialFontSize = 29 + Settings_value.global_font_offset.values[Main_getItemInt('global_font_offset', Settings_value.global_font_offset.defaultValue) - 1],
         initialWidth = 1920,
         initialHeight = 1080,
-        doc = document.getElementById("body_container"),
+        doc = document.getElementById('body_container'),
         currentHeight,
         scaleFactor,
         scaledWidth;
@@ -24,7 +24,7 @@ function calculateFontSize() {
     // Calculate scaled body/divs size.
     scaledWidth = initialWidth * scaleFactor;
 
-    //Set new body width/height recalculated to 16 by 9 and scaled fontSize 
+    //Set new body width/height recalculated to 16 by 9 and scaled fontSize
     doc.style.width = scaledWidth + 'px';
     doc.style.height = currentHeight + 'px';
     document.body.style.fontSize = BodyfontSize + 'px';

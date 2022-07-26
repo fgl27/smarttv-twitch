@@ -18,7 +18,7 @@ function Search_init() {
 
 function Search_exit() {
     Search_RemoveinputFocus(false);
-    document.body.removeEventListener("keydown", Search_handleKeyDown);
+    document.body.removeEventListener('keydown', Search_handleKeyDown);
     Search_refreshInputFocusTools();
     Main_values.Main_Go = Main_values.Main_BeforeSearch;
     Main_HideElement('label_side_panel');
@@ -29,7 +29,7 @@ function Search_exit() {
 
 function Search_loadData() {
     Search_exit();
-    Main_ready(function() {
+    Main_ready(function () {
         if (!Search_cursorX) {
             inUseObj = SearchChannels;
             Screens_init();
@@ -113,7 +113,7 @@ function Search_handleKeyDown(event) {
                     Search_loadData();
                 } else {
                     Main_showWarningDialog(STR_SEARCH_EMPTY);
-                    window.setTimeout(function() {
+                    window.setTimeout(function () {
                         Main_HideWarningDialog();
                     }, 1000);
                 }
@@ -125,8 +125,8 @@ function Search_handleKeyDown(event) {
 }
 
 function Search_inputFocus() {
-    document.body.removeEventListener("keydown", Search_handleKeyDown);
-    document.body.addEventListener("keydown", Search_KeyboardEvent, false);
+    document.body.removeEventListener('keydown', Search_handleKeyDown);
+    document.body.addEventListener('keydown', Search_KeyboardEvent, false);
     Main_SearchInput.placeholder = STR_PLACEHOLDER_SEARCH;
     Main_SearchInput.focus();
     Search_keyBoardOn = true;
@@ -135,10 +135,10 @@ function Search_inputFocus() {
 function Search_RemoveinputFocus(EnaKeydown) {
     Main_SearchInput.blur();
     Search_removeEventListener();
-    document.body.removeEventListener("keydown", Search_KeyboardEvent);
+    document.body.removeEventListener('keydown', Search_KeyboardEvent);
     Main_SearchInput.placeholder = STR_PLACEHOLDER_PRESS + STR_PLACEHOLDER_SEARCH;
 
-    if (EnaKeydown) document.body.addEventListener("keydown", Search_handleKeyDown, false);
+    if (EnaKeydown) document.body.addEventListener('keydown', Search_handleKeyDown, false);
     Search_keyBoardOn = false;
 }
 
@@ -146,7 +146,7 @@ function Search_removeEventListener() {
     if (Main_SearchInput !== null) {
         var elClone = Main_SearchInput.cloneNode(true);
         Main_SearchInput.parentNode.replaceChild(elClone, Main_SearchInput);
-        Main_SearchInput = document.getElementById("search_input");
+        Main_SearchInput = document.getElementById('search_input');
     }
 }
 

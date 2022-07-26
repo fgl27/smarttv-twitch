@@ -19,8 +19,8 @@ function AddUser_init() {
 
 function AddUser_exit() {
     AddUser_RemoveinputFocus(false);
-    document.body.removeEventListener("keydown", AddUser_handleKeyDown);
-    document.body.removeEventListener("keydown", AddUser_KeyboardEvent);
+    document.body.removeEventListener('keydown', AddUser_handleKeyDown);
+    document.body.removeEventListener('keydown', AddUser_KeyboardEvent);
     Main_HideElement('add_user_scroll');
 }
 
@@ -52,8 +52,8 @@ function AddUser_handleKeyDown(event) {
 }
 
 function AddUser_inputFocus() {
-    document.body.removeEventListener("keydown", AddUser_handleKeyDown);
-    document.body.addEventListener("keydown", AddUser_KeyboardEvent, false);
+    document.body.removeEventListener('keydown', AddUser_handleKeyDown);
+    document.body.addEventListener('keydown', AddUser_KeyboardEvent, false);
     Main_AddUserInput.placeholder = STR_PLACEHOLDER_USER;
 
     Main_AddUserInput.focus();
@@ -64,19 +64,19 @@ function AddUser_removeEventListener() {
     if (Main_AddUserInput !== null) {
         var elClone = Main_AddUserInput.cloneNode(true);
         Main_AddUserInput.parentNode.replaceChild(elClone, Main_AddUserInput);
-        Main_AddUserInput = document.getElementById("user_input");
+        Main_AddUserInput = document.getElementById('user_input');
     }
 }
 
 function AddUser_RemoveinputFocus(EnaKeydown) {
     Main_AddUserInput.blur();
     AddUser_removeEventListener();
-    document.body.removeEventListener("keydown", AddUser_KeyboardEvent);
+    document.body.removeEventListener('keydown', AddUser_KeyboardEvent);
     Main_AddUserInput.placeholder = STR_PLACEHOLDER_PRESS + STR_PLACEHOLDER_USER;
 
-    if (EnaKeydown) document.body.addEventListener("keydown", AddUser_handleKeyDown, false);
-    window.setTimeout(function() {
-        Main_ready(function() {
+    if (EnaKeydown) document.body.addEventListener('keydown', AddUser_handleKeyDown, false);
+    window.setTimeout(function () {
+        Main_ready(function () {
             AddUser_keyBoardOn = false;
         });
     }, 500);
@@ -104,7 +104,6 @@ function AddUser_KeyboardEvent(event) {
         case KEY_KEYBOARD_CANCEL:
         case KEY_DOWN:
             if (Main_AddUserInput.value !== '' && Main_AddUserInput.value !== null) {
-
                 AddUser_Username = Main_AddUserInput.value;
 
                 if (!AddUser_UserCodeExist(AddUser_Username)) {
@@ -116,8 +115,8 @@ function AddUser_KeyboardEvent(event) {
                     AddUser_loadDataRequest();
                 } else {
                     Main_HideLoadDialog();
-                    Main_showWarningDialog(STR_USER + " " + AddUser_Username + STR_USER_SET);
-                    window.setTimeout(function() {
+                    Main_showWarningDialog(STR_USER + ' ' + AddUser_Username + STR_USER_SET);
+                    window.setTimeout(function () {
                         Main_HideWarningDialog();
                         AddUser_inputFocus();
                     }, 1500);
@@ -139,23 +138,13 @@ function AddUser_KeyboardEvent(event) {
 function AddUser_loadDataRequest() {
     var theUrl = Main_helix_api + 'users?login=' + encodeURIComponent(AddUser_Username);
 
-    BasexmlHttpGet(
-        theUrl,
-        AddUser_loadingDataTimeout,
-        2,
-        null,
-        AddUser_loadDataRequestSuccess,
-        AddUser_loadDataError,
-        false,
-        null,
-        true
-    );
+    BasexmlHttpGet(theUrl, AddUser_loadingDataTimeout, 2, null, AddUser_loadDataRequestSuccess, AddUser_loadDataError, false, null, true);
 }
 
 function AddUser_loadDataRequestSuccess(response) {
     if (JSON.parse(response).data.length) {
         Main_AddUserInput.value = '';
-        document.body.removeEventListener("keydown", AddUser_handleKeyDown);
+        document.body.removeEventListener('keydown', AddUser_handleKeyDown);
         AddUser_SaveNewUser(response);
     } else AddUser_loadDataNoUser();
 }
@@ -172,7 +161,7 @@ function AddUser_loadDataNoUser() {
     AddUser_Username = null;
     Main_HideLoadDialog();
     Main_showWarningDialog(STR_USER_ERROR);
-    window.setTimeout(function() {
+    window.setTimeout(function () {
         AddUser_init();
     }, 1000);
     AddUser_loadingData = false;
@@ -188,7 +177,6 @@ function AddUser_RestoreUsers() {
 
             if (!i) AddUser_UpdateSidepanel();
             AddUser_UpdateUser(i, 0);
-
         }
     } else AddUser_UpdateSidepanelDefault();
 }
@@ -202,13 +190,13 @@ function AddUser_UpdateSidepanelDefault() {
 }
 
 function AddUser_UpdateSidepanelSize(logo, username) {
-    Main_innerHTML("side_panel_new_0_img", '<img class="side_panel_new_img" alt="" src="' + logo + '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'">');
+    Main_innerHTML('side_panel_new_0_img', '<img class="side_panel_new_img" alt="" src="' + logo + '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'">');
     Sidepannel_SetUserlable(username);
 
     var size = username.length,
         doc = document.getElementById('side_panel_movel');
 
-    size = (size > 11 ? size - 11 : 0);
+    size = size > 11 ? size - 11 : 0;
 
     doc.style.marginLeft = 'calc(-' + Sidepannel_MoveldefaultMargin + '% - ' + size + 'ch)';
     doc.style.width = 'calc(' + Sidepannel_MoveldefaultWidth + '% + ' + size + 'ch)';
@@ -221,17 +209,7 @@ function AddUser_UserIsSet() {
 function AddUser_UpdateUser(position, tryes) {
     var theUrl = Main_helix_api + 'users?login=' + encodeURIComponent(AddUser_UsernameArray[position].name);
 
-    BasexmlHttpGet(
-        theUrl,
-        AddUser_loadingDataTimeout,
-        2,
-        null,
-        AddUser_UpdateUsertSuccess,
-        AddUser_UpdateUserError,
-        position,
-        tryes,
-        true
-    );
+    BasexmlHttpGet(theUrl, AddUser_loadingDataTimeout, 2, null, AddUser_UpdateUsertSuccess, AddUser_UpdateUserError, position, tryes, true);
 }
 
 function AddUser_UpdateUsertSuccess(response, position) {
@@ -260,7 +238,7 @@ function AddUser_SaveNewUser(responseText) {
         access_token: 0,
         refresh_token: 0,
         expires_in: 0,
-        timeout_id: null,
+        timeout_id: null
     });
 
     AddUser_SaveUserArray();
@@ -302,8 +280,8 @@ function AddUser_SaveUserArray() {
     if (AddUser_UsernameArray.length > 0) {
         //Remove first user alphabetical sort and add first back
         var mainuser = AddUser_UsernameArray.splice(0, 1);
-        AddUser_UsernameArray.sort(function(a, b) {
-            return (a.display_name).toLowerCase().localeCompare((b.display_name).toLowerCase());
+        AddUser_UsernameArray.sort(function (a, b) {
+            return a.display_name.toLowerCase().localeCompare(b.display_name.toLowerCase());
         });
         AddUser_UsernameArray.splice(0, 0, mainuser[0]);
     }
@@ -326,13 +304,15 @@ function AddUser_UserMakeOne(position) {
 }
 
 function AddUser_UserCodeExist(user) {
-    return AddUser_UsernameArray.filter(function(array) {
-        return array.name === user;
-    }).length > 0;
+    return (
+        AddUser_UsernameArray.filter(function (array) {
+            return array.name === user;
+        }).length > 0
+    );
 }
 
 function AddUser_UserFindpos(user) {
-    return AddUser_UsernameArray.map(function(array) {
+    return AddUser_UsernameArray.map(function (array) {
         return array.name;
     }).indexOf(user);
 }

@@ -2,143 +2,143 @@
 var Languages_cursorY = 0;
 var Languages_Selected = '';
 var Languages_value = {
-    "All": {
-        "values": ["off", "on"],
-        "defaultValue": 2,
-        "set_values": ""
+    All: {
+        values: ['off', 'on'],
+        defaultValue: 2,
+        set_values: ''
     },
-    "Bulgarian [BG]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "bg"
+    'Bulgarian [BG]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'bg'
     },
-    "Čeština [CS]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "cs"
+    'Čeština [CS]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'cs'
     },
-    "Dansk [DA]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "da"
+    'Dansk [DA]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'da'
     },
-    "Deutsch [DE]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "de"
+    'Deutsch [DE]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'de'
     },
-    "Ελληνικά [EL]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "el"
+    'Ελληνικά [EL]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'el'
     },
-    "English [EN]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "en"
+    'English [EN]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'en'
     },
-    "Español [ES]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "es"
+    'Español [ES]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'es'
     },
-    "Suomi [FI]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "fi"
+    'Suomi [FI]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'fi'
     },
-    "Français [FR]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "fr"
+    'Français [FR]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'fr'
     },
-    "Italiano [IT]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "it"
+    'Italiano [IT]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'it'
     },
-    "Magyar [HU]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "hu"
+    'Magyar [HU]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'hu'
     },
-    "日本語 [JA]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "ja"
+    '日本語 [JA]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'ja'
     },
-    "한국어 [KO]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "ko"
+    '한국어 [KO]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'ko'
     },
-    "Nederlands [NL]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "nl"
+    'Nederlands [NL]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'nl'
     },
-    "Norsk [NO]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "no"
+    'Norsk [NO]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'no'
     },
-    "Polski [PL]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "pl"
+    'Polski [PL]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'pl'
     },
-    "Português [PT]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "pt"
+    'Português [PT]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'pt'
     },
-    "Română [RO]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "ro"
+    'Română [RO]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'ro'
     },
-    "Русский [RU]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "ru"
+    'Русский [RU]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'ru'
     },
-    "Slovenčina [SK]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "sk"
+    'Slovenčina [SK]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'sk'
     },
-    "Svenska [SV]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "sv"
+    'Svenska [SV]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'sv'
     },
-    "ภาษาไทย [TH]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "th"
+    'ภาษาไทย [TH]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'th'
     },
-    "Türkçe [TR]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "tr"
+    'Türkçe [TR]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'tr'
     },
-    "Tiếng Việt [VI]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "vi"
+    'Tiếng Việt [VI]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'vi'
     },
-    "中文 [ZH]": {
-        "values": ["off", "on"],
-        "defaultValue": 1,
-        "set_values": "zh"
+    '中文 [ZH]': {
+        values: ['off', 'on'],
+        defaultValue: 1,
+        set_values: 'zh'
     }
 };
 
 //For clips the api accept a coma and extra languages
 var Languages_Extra = {
-    "en": "en,en-gb",
-    "es": "es,es-mx",
-    "pt": "pt,pt-br"
+    en: 'en,en-gb',
+    es: 'es,es-mx',
+    pt: 'pt,pt-br'
 };
 
 var Languages_value_keys = [];
@@ -146,20 +146,20 @@ var Languages_positions_length = 0;
 //Variable initialization end
 
 function Languages_init() {
-    document.body.removeEventListener("keydown", Settings_handleKeyDown);
+    document.body.removeEventListener('keydown', Settings_handleKeyDown);
     Main_HideElement('settings_main');
     Main_ShowElement('settings_lang');
     Languages_HideShowAll();
     ScreensObj_SetTopLable(STR_SETTINGS + STR_SPACE + STR_CONTENT_LANG);
-    document.body.addEventListener("keydown", Languages_handleKeyDown, false);
+    document.body.addEventListener('keydown', Languages_handleKeyDown, false);
     Languages_cursorY = 0;
     Languages_inputFocus(Languages_cursorY);
     Languages_ResetLang();
 }
 
 function Languages_exit() {
-    document.body.removeEventListener("keydown", Languages_handleKeyDown);
-    document.body.addEventListener("keydown", Settings_handleKeyDown, false);
+    document.body.removeEventListener('keydown', Languages_handleKeyDown);
+    document.body.addEventListener('keydown', Settings_handleKeyDown, false);
     Settings_ScrollTableReset();
     Main_ShowElement('settings_main');
     Main_HideElement('settings_lang');
@@ -169,7 +169,7 @@ function Languages_exit() {
 }
 
 function Languages_ResetLang() {
-    if (Main_ContentLang === "") {
+    if (Main_ContentLang === '') {
         Languages_Selected = STR_LANG_ALL;
         Languages_value.All.defaultValue = 1;
         Languages_ChangeSettigs(0);
@@ -180,7 +180,7 @@ function Languages_ResetLang() {
 }
 
 function Languages_SetLang() {
-    Main_ContentLang = "";
+    Main_ContentLang = '';
     if (!Languages_Obj_default('All')) {
         for (var key in Languages_value) {
             if (Languages_Obj_default(key)) Main_ContentLang += ',' + Languages_value[key].set_values;
@@ -189,10 +189,10 @@ function Languages_SetLang() {
         //the app allowed more then one language but twitch api block it now
         if (Main_A_includes_B(Main_ContentLang, ',')) {
             Languages_ResetAll();
-            Main_ContentLang = "";
+            Main_ContentLang = '';
         }
     }
-    if (Main_ContentLang === "") Languages_Selected = STR_LANG_ALL;
+    if (Main_ContentLang === '') Languages_Selected = STR_LANG_ALL;
     else Languages_Selected = Main_ContentLang.toUpperCase();
 }
 
@@ -206,16 +206,33 @@ function Languages_SetSettings() {
         div += Languages_DivOptionNoSummary(key, key);
     }
 
-    Main_innerHTML("settings_lang", div);
+    Main_innerHTML('settings_lang', div);
     Languages_positions_length = Languages_value_keys.length;
 }
 
 function Languages_DivOptionNoSummary(key, string) {
-    return '<div id="' + key + '_div" class="settings_div"><div id="' +
-        key + '_name" class="settings_name">' + string + '</div>' +
-        '<div class="settings_arraw_div"><div id="' + key + 'arrow_left" class="left"></div></div>' +
-        '<div id="' + key + '" class="' + (Languages_Obj_default(key) ? 'red_text ' : '') + 'strokedeline settings_value">' + Languages_Obj_values(key) + '</div>' +
-        '<div class="settings_arraw_div"><div id="' + key + 'arrow_right" class="right"></div></div></div>';
+    return (
+        '<div id="' +
+        key +
+        '_div" class="settings_div"><div id="' +
+        key +
+        '_name" class="settings_name">' +
+        string +
+        '</div>' +
+        '<div class="settings_arraw_div"><div id="' +
+        key +
+        'arrow_left" class="left"></div></div>' +
+        '<div id="' +
+        key +
+        '" class="' +
+        (Languages_Obj_default(key) ? 'red_text ' : '') +
+        'strokedeline settings_value">' +
+        Languages_Obj_values(key) +
+        '</div>' +
+        '<div class="settings_arraw_div"><div id="' +
+        key +
+        'arrow_right" class="right"></div></div></div>'
+    );
 }
 
 function Languages_SetDefautls() {
@@ -252,16 +269,14 @@ function Languages_inputFocus(position) {
 
 function Languages_RemoveinputFocus() {
     var key = Languages_value_keys[Languages_cursorY];
-    document.getElementById(key + "arrow_left").style.opacity = "0";
-    document.getElementById(key + "arrow_right").style.opacity = "0";
+    document.getElementById(key + 'arrow_left').style.opacity = '0';
+    document.getElementById(key + 'arrow_right').style.opacity = '0';
     Main_RemoveClass(key, 'settings_value_focus');
     Main_RemoveClass(key + '_div', 'settings_div_focus');
 }
 
 function Languages_ScrollTable() {
-
-    document.getElementById('settings_scroll').scrollTop =
-        (Languages_cursorY > 7) ? document.getElementById(Languages_value_keys[Languages_cursorY - 7]).offsetTop : 0;
+    document.getElementById('settings_scroll').scrollTop = Languages_cursorY > 7 ? document.getElementById(Languages_value_keys[Languages_cursorY - 7]).offsetTop : 0;
 }
 
 function Languages_ChangeSettigs(position) {
@@ -298,14 +313,14 @@ function Languages_SetarrowsKey(key) {
     var maxValue = Languages_Obj_length(key);
 
     if (currentValue > 0 && currentValue < maxValue) {
-        document.getElementById(key + "arrow_left").style.opacity = "1";
-        document.getElementById(key + "arrow_right").style.opacity = "1";
+        document.getElementById(key + 'arrow_left').style.opacity = '1';
+        document.getElementById(key + 'arrow_right').style.opacity = '1';
     } else if (currentValue === maxValue) {
-        document.getElementById(key + "arrow_left").style.opacity = "1";
-        document.getElementById(key + "arrow_right").style.opacity = "0.2";
+        document.getElementById(key + 'arrow_left').style.opacity = '1';
+        document.getElementById(key + 'arrow_right').style.opacity = '0.2';
     } else {
-        document.getElementById(key + "arrow_left").style.opacity = "0.2";
-        document.getElementById(key + "arrow_right").style.opacity = "1";
+        document.getElementById(key + 'arrow_left').style.opacity = '0.2';
+        document.getElementById(key + 'arrow_right').style.opacity = '1';
     }
 }
 
@@ -352,7 +367,7 @@ function Languages_handleKeyDown(event) {
             }
             break;
         case KEY_DOWN:
-            if (!Languages_Obj_default('All') && Languages_cursorY < (Languages_positions_length - 1)) {
+            if (!Languages_Obj_default('All') && Languages_cursorY < Languages_positions_length - 1) {
                 Languages_RemoveinputFocus();
                 Languages_cursorY++;
                 Languages_inputFocus(Languages_cursorY);

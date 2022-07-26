@@ -28,9 +28,24 @@ var Chat_loadChatNextId;
 var Chat_offset = 0;
 var Chat_title = '';
 var defaultColors = [
-    "#FC4F4F", "#ff8736", "#ffd830", "#ffff35", "#81ff2c", "#2dff2d",
-    "#21ff7a", "#0fffc0", "#0fffff", "#20cfff", "#4d9bff", "#ff74ff",
-    "#ff93ff", "#ff63ab", "#63FFBF", "#A363FF", "#B3FF63", "#D463FF"
+    '#FC4F4F',
+    '#ff8736',
+    '#ffd830',
+    '#ffff35',
+    '#81ff2c',
+    '#2dff2d',
+    '#21ff7a',
+    '#0fffc0',
+    '#0fffff',
+    '#20cfff',
+    '#4d9bff',
+    '#ff74ff',
+    '#ff93ff',
+    '#ff63ab',
+    '#63FFBF',
+    '#A363FF',
+    '#B3FF63',
+    '#D463FF'
 ];
 
 var defaultColorsLength = defaultColors.length;
@@ -59,11 +74,7 @@ function Chat_Init() {
 
     Chat_loadBadgesGlobal();
 
-    ChatLive_SetOptions(
-        0,
-        Main_values.Main_selectedChannel_id,
-        Main_values.Main_selectedChannel
-    );
+    ChatLive_SetOptions(0, Main_values.Main_selectedChannel_id, Main_values.Main_selectedChannel);
 
     Chat_loadChat(Chat_Id[0]);
 }
@@ -80,26 +91,11 @@ function Chat_loadBadgesGlobal() {
 }
 
 function Chat_BaseLoadUrl(theUrl, tryes, callbackSucess, calbackError) {
-
-    BasexmlHttpGet(
-        theUrl,
-        (DefaultHttpGetTimeout * 2) + (tryes * DefaultHttpGetTimeoutPlus),
-        0,
-        null,
-        callbackSucess,
-        calbackError,
-        tryes
-    );
-
+    BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2 + tryes * DefaultHttpGetTimeoutPlus, 0, null, callbackSucess, calbackError, tryes);
 }
 
 function Chat_loadBadgesGlobalRequest(tryes) {
-    Chat_BaseLoadUrl(
-        'https://badges.twitch.tv/v1/badges/global/display',
-        tryes,
-        Chat_loadBadgesGlobalSuccess,
-        Chat_loadBadgesGlobalError
-    );
+    Chat_BaseLoadUrl('https://badges.twitch.tv/v1/badges/global/display', tryes, Chat_loadBadgesGlobalSuccess, Chat_loadBadgesGlobalError);
 }
 
 function Chat_loadBadgesGlobalError(tryes) {
@@ -107,7 +103,11 @@ function Chat_loadBadgesGlobalError(tryes) {
 }
 
 function Chat_loadBadgesGlobalSuccess(responseText) {
-    var versions, property, version, url, innerHTML = '';
+    var versions,
+        property,
+        version,
+        url,
+        innerHTML = '';
 
     var responseObjt = JSON.parse(responseText);
 
@@ -124,7 +124,12 @@ function Chat_loadBadgesGlobalSuccess(responseText) {
 }
 
 function Chat_loadBadgesTransform(responseText, checkSubMissing) {
-    var versions, property, version, url, innerHTML = [], versionInt;
+    var versions,
+        property,
+        version,
+        url,
+        innerHTML = [],
+        versionInt;
 
     innerHTML[0] = '';
     innerHTML[1] = '';
@@ -138,16 +143,12 @@ function Chat_loadBadgesTransform(responseText, checkSubMissing) {
 
             //some channel may be missing 0 3 6 12 etc badges but they have 2000 2003 etc
             if (checkSubMissing) {
-
-                versionInt = parseInt(version) -
-                    parseInt(version.toString()[0]) * Math.pow(10, version.length - 1);
+                versionInt = parseInt(version) - parseInt(version.toString()[0]) * Math.pow(10, version.length - 1);
 
                 if (versionInt > -1 && !versions.hasOwnProperty(versionInt)) {
-
                     innerHTML[0] += Chat_BasetagCSS(property + 0, versionInt, url);
                     innerHTML[1] += Chat_BasetagCSS(property + 1, versionInt, url);
                 }
-
             }
         }
     }
@@ -157,31 +158,24 @@ function Chat_loadBadgesTransform(responseText, checkSubMissing) {
 
 function Chat_BasetagCSS(type, version, url) {
     //a prevent class starting with numbers
-    return ('.a' + type + '-' + version + url);
+    return '.a' + type + '-' + version + url;
 }
 
 function Chat_BasetagCSSUrl(url) {
     //a prevent class starting with numbers
-    return (' { background-image: url("' + url.replace('http:', 'https:') + '"); }');
+    return ' { background-image: url("' + url.replace('http:', 'https:') + '"); }';
 }
 
 function Chat_tagCSS(content, doc) {
-    Main_ready(function() {
-
+    Main_ready(function () {
         var style = document.createElement('style');
         style.innerHTML = content;
         doc.appendChild(style);
-
     });
 }
 
 function Chat_loadBTTVGlobalEmotes(tryes) {
-    Chat_BaseLoadUrl(
-        'https://api.betterttv.net/3/cached/emotes/global',
-        tryes,
-        Chat_loadEmotesSuccessBttv,
-        Chat_loadEmotesBttvError
-    );
+    Chat_BaseLoadUrl('https://api.betterttv.net/3/cached/emotes/global', tryes, Chat_loadEmotesSuccessBttv, Chat_loadEmotesBttvError);
 }
 
 function Chat_loadEmotesBttvError(tryes) {
@@ -198,8 +192,7 @@ function Chat_loadEmotesbttvGlobal(data) {
     var url, chat_div, id;
 
     try {
-        data.forEach(function(emote) {
-
+        data.forEach(function (emote) {
             url = ChatLive_Base_BTTV_url + emote.id + '/3x';
             chat_div = emoteTemplate(url);
             id = emote.code + emote.id;
@@ -221,34 +214,22 @@ function Chat_loadEmotesbttvGlobal(data) {
     } catch (e) {
         Main_Log('Chat_loadEmotesbttvGlobal ' + e);
     }
-
 }
 
 function Chat_loadSeven_tvGlobalEmotes(tryes) {
-    Chat_BaseLoadUrl(
-        'https://api.7tv.app/v2/emotes/global',
-        tryes,
-        Chat_loadEmotesSuccessSeven_tv,
-        Chat_loadEmotesErrorSeven_tv
-    );
+    Chat_BaseLoadUrl('https://api.7tv.app/v2/emotes/global', tryes, Chat_loadEmotesSuccessSeven_tv, Chat_loadEmotesErrorSeven_tv);
 }
 
 function Chat_loadEmotesErrorSeven_tv(tryes) {
     if (tryes < DefaultHttpGetReTryMax) Chat_loadSeven_tvGlobalEmotes(tryes + 1);
 }
 
-
 function Chat_loadEmotesSuccessSeven_tv(data) {
     ChatLive_loadEmotesseven_tv(JSON.parse(data), 0, true);
 }
 
 function Chat_loadEmotesffz(tryes) {
-    Chat_BaseLoadUrl(
-        'https://api.frankerfacez.com/v1/set/global',
-        tryes,
-        Chat_loadEmotesSuccessffz,
-        Chat_loadEmotesErrorffz
-    );
+    Chat_BaseLoadUrl('https://api.frankerfacez.com/v1/set/global', tryes, Chat_loadEmotesSuccessffz, Chat_loadEmotesErrorffz);
 }
 
 function Chat_loadEmotesErrorffz(tryes) {
@@ -264,27 +245,17 @@ function Chat_loadChat(id) {
 }
 
 function Chat_loadChatRequest(id) {
+    var theUrl =
+        'https://api.twitch.tv/v5/videos/' + Main_values.ChannelVod_vodId + '/comments?client_id=' + AddCode_clientId + (Chat_offset ? '&content_offset_seconds=' + parseInt(Chat_offset) : '');
 
-    var theUrl = 'https://api.twitch.tv/v5/videos/' + Main_values.ChannelVod_vodId +
-        '/comments?client_id=' + AddCode_clientId + (Chat_offset ? '&content_offset_seconds=' + parseInt(Chat_offset) : '');
-
-    BasexmlHttpGet(
-        theUrl,
-        DefaultHttpGetTimeout * 2,
-        0,
-        null,
-        Chat_loadChatSuccess,
-        Chat_loadChatError,
-        id
-    );
+    BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2, 0, null, Chat_loadChatSuccess, Chat_loadChatError, id);
 }
 
 function Chat_loadChatError(id) {
     if (Chat_Id[0] === id) {
-
         Chat_loadChatId = Main_setTimeout(
-            function() {
-                var time = (PlayVod_currentTime / 1000);
+            function () {
+                var time = PlayVod_currentTime / 1000;
                 if (time && time < Chat_offset) Chat_offset = time;
 
                 Chat_loadChatRequest(id, 0);
@@ -292,45 +263,42 @@ function Chat_loadChatError(id) {
             2500,
             Chat_loadChatId
         );
-
     }
 }
 
 function Chat_loadChatSuccess(responseText, id) {
-
     if (Chat_hasEnded || Chat_Id[0] !== id) return;
 
     responseText = JSON.parse(responseText);
     var div,
-        mmessage, null_next = (Chat_next === null),
+        mmessage,
+        null_next = Chat_next === null,
         nickColor,
         atstreamer,
         atuser,
         hasbits,
         message_text,
-        comments, badges, fragment,
-        i, len, j, len_j,
+        comments,
+        badges,
+        fragment,
+        i,
+        len,
+        j,
+        len_j,
         messageObj;
 
     if (null_next) {
+        Chat_MessageVector({
+            chat_number: 0,
+            time: 0,
+            message: '<span class="message">' + STR_LOADING_CHAT + STR_SPACE + Main_values.Main_selectedChannelDisplayname + STR_SPACE + Chat_title + '</span>'
+        });
 
-        Chat_MessageVector(
-            {
-                chat_number: 0,
-                time: 0,
-                message: '<span class="message">' + STR_LOADING_CHAT + STR_SPACE + Main_values.Main_selectedChannelDisplayname + STR_SPACE + Chat_title + '</span>'
-            }
-        );
-
-
-        Chat_MessageVector(
-            {
-                chat_number: 0,
-                time: 0,
-                message: '<span class="message">' + STR_CHAT_CONNECTED + '</span>'
-            }
-        );
-
+        Chat_MessageVector({
+            chat_number: 0,
+            time: 0,
+            message: '<span class="message">' + STR_CHAT_CONNECTED + '</span>'
+        });
     }
     Chat_offset = 0;
     Chat_next = responseText._next;
@@ -338,7 +306,6 @@ function Chat_loadChatSuccess(responseText, id) {
     comments = responseText.comments || [];
 
     for (i = 0, len = comments.length; i < len; i++) {
-
         atstreamer = false;
         atuser = false;
         hasbits = false;
@@ -355,80 +322,60 @@ function Chat_loadChatSuccess(responseText, id) {
 
         //Add badges
         if (mmessage.hasOwnProperty('user_badges')) {
-
             for (j = 0, len_j = mmessage.user_badges.length; j < len_j; j++) {
                 badges = mmessage.user_badges[j];
 
-                div += '<span class="a' + badges._id + "0-" + badges.version + ' tag"></span>';
-
+                div += '<span class="a' + badges._id + '0-' + badges.version + ' tag"></span>';
             }
         }
 
         hasbits = mmessage.hasOwnProperty('bits_spent') && cheers.hasOwnProperty(ChatLive_selectedChannel_id[0]);
 
         if (mmessage.fragments) {
-
             for (j = 0, len_j = mmessage.fragments.length; j < len_j; j++) {
                 fragment = mmessage.fragments[j];
 
                 if (fragment.hasOwnProperty('emoticon')) message_text += emoteTemplate(emoteURL(fragment.emoticon.emoticon_id));
                 else {
-
-                    message_text +=
-                        ChatLive_extraMessageTokenize(
-                            [fragment.text],
-                            0,
-                            (hasbits ? mmessage.bits_spent : 0)
-                        );
+                    message_text += ChatLive_extraMessageTokenize([fragment.text], 0, hasbits ? mmessage.bits_spent : 0);
 
                     if (!atstreamer && ChatLive_Highlight_AtStreamer && ChatLive_Channel_Regex_Search[0].test(fragment.text)) {
-
                         atstreamer = true;
-
                     } else if (!atuser && ChatLive_Highlight_AtUser && ChatLive_User_Regex_Search.test(fragment.text)) {
-
                         atuser = true;
-
                     }
                 }
-
             }
         }
 
-        if (ChatLive_Highlight_User_send &&
-            Main_A_includes_B((comments[i].commenter.display_name).toLowerCase(), (AddUser_UsernameArray[0].display_name).toLowerCase())) {
-
+        if (ChatLive_Highlight_User_send && Main_A_includes_B(comments[i].commenter.display_name.toLowerCase(), AddUser_UsernameArray[0].display_name.toLowerCase())) {
             atuser = true;
-
         }
 
         //Add nick
         if (atstreamer || (ChatLive_Highlight_Bits && hasbits)) {
-
             nickColor = chat_Line_highlight_green;
-
         } else if (atuser) {
-
             nickColor = chat_Line_highlight_blue;
-
         } else {
-
             if (!ChatLive_Custom_Nick_Color && mmessage.hasOwnProperty('user_color')) {
-
                 nickColor = 'style="color: ' + mmessage.user_color + ';"';
-
             } else {
-
-                nickColor = 'style="color: ' + (defaultColors[(comments[i].commenter.display_name).charCodeAt(0) % defaultColorsLength]) + ';"';
-
+                nickColor = 'style="color: ' + defaultColors[comments[i].commenter.display_name.charCodeAt(0) % defaultColorsLength] + ';"';
             }
-
         }
-        div += '<span ' + (mmessage.is_action ? ('class="class_bold" ' + nickColor) : '') + nickColor + '>' +
-            comments[i].commenter.display_name + '</span>' + (mmessage.is_action ? '' : '&#58;') + '&nbsp;';
+        div +=
+            '<span ' +
+            (mmessage.is_action ? 'class="class_bold" ' + nickColor : '') +
+            nickColor +
+            '>' +
+            comments[i].commenter.display_name +
+            '</span>' +
+            (mmessage.is_action ? '' : '&#58;') +
+            '&nbsp;';
 
         //Add mesage
-        div += '<span class="message' + (mmessage.is_action ? (' class_bold" ' + nickColor) : '"') + '>' + message_text + '</span>';
+        div += '<span class="message' + (mmessage.is_action ? ' class_bold" ' + nickColor : '"') + '>' + message_text + '</span>';
 
         messageObj = {
             chat_number: 0,
@@ -436,12 +383,11 @@ function Chat_loadChatSuccess(responseText, id) {
             message: div,
             atstreamer: atstreamer,
             atuser: atuser,
-            hasbits: (hasbits && ChatLive_Highlight_Bits)
+            hasbits: hasbits && ChatLive_Highlight_Bits
         };
 
         if (null_next) Chat_MessageVector(messageObj);
         else if (Chat_next !== undefined) Chat_MessageVectorNext(messageObj);
-
     }
 
     if (null_next && Chat_Id[0] === id) {
@@ -463,7 +409,7 @@ function Chat_Play(id) {
     if (!Chat_JustStarted && !Chat_hasEnded && Chat_Id[0] === id && !Main_values.Play_ChatForceDisable) {
         Main_Addline(id);
         Chat_addlinesId = Main_setInterval(
-            function() {
+            function () {
                 Main_Addline(id);
             },
             1000,
@@ -493,15 +439,14 @@ function Chat_Clear() {
 }
 
 function Main_Addline(id) {
-    var i, len = Chat_Messages.length;
+    var i,
+        len = Chat_Messages.length;
 
-    if (Chat_Position < (len - 1)) {
+    if (Chat_Position < len - 1) {
         i = Chat_Position;
         for (i; i < len; i++, Chat_Position++) {
-            if (Chat_Messages[i].time < (PlayVod_currentTime / 1000)) {
-
+            if (Chat_Messages[i].time < PlayVod_currentTime / 1000) {
                 ChatLive_ElemntAdd(Chat_Messages[i]);
-
             } else {
                 break;
             }
@@ -518,15 +463,14 @@ function Main_Addline(id) {
 
             if (Chat_Id[0] === id) Chat_loadChatNext(id);
             Chat_Clean(0);
-        } else { //Chat has eneded
+        } else {
+            //Chat has eneded
 
             if (!Chat_hasEnded) {
-                ChatLive_ElemntAdd(
-                    {
-                        chat_number: 0,
-                        message: '&nbsp;<span class="message">' + STR_BR + STR_BR + STR_CHAT_END + STR_BR + STR_BR + '</span>',
-                    }
-                );
+                ChatLive_ElemntAdd({
+                    chat_number: 0,
+                    message: '&nbsp;<span class="message">' + STR_BR + STR_BR + STR_CHAT_END + STR_BR + STR_BR + '</span>'
+                });
             }
 
             Chat_hasEnded = true;
@@ -540,31 +484,20 @@ function Chat_loadChatNext(id) {
 }
 
 function Chat_loadChatNextRequest(id) {
-    var theUrl = 'https://api.twitch.tv/v5/videos/' + Main_values.ChannelVod_vodId +
-        '/comments?client_id=' + AddCode_clientId + (Chat_next !== null ? '&cursor=' + Chat_next : '');
+    var theUrl = 'https://api.twitch.tv/v5/videos/' + Main_values.ChannelVod_vodId + '/comments?client_id=' + AddCode_clientId + (Chat_next !== null ? '&cursor=' + Chat_next : '');
 
-    BasexmlHttpGet(
-        theUrl,
-        DefaultHttpGetTimeout * 2,
-        0,
-        null,
-        Chat_loadChatSuccess,
-        Chat_loadChatNextError,
-        id
-    );
+    BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2, 0, null, Chat_loadChatSuccess, Chat_loadChatNextError, id);
 }
 
 function Chat_loadChatNextError(id) {
     if (Chat_Id[0] === id) {
-
         Chat_loadChatNextId = Main_setTimeout(
-            function() {
+            function () {
                 Chat_loadChatNextRequest(id, 0);
             },
             2500,
             Chat_loadChatNextId
         );
-
     }
 }
 
@@ -593,14 +526,13 @@ function Chat_SingleLine(Line) {
 
 function Chat_Clean(chat_number) {
     //delete old lines out of view
-    var linesToDelete = Chat_div[chat_number].getElementsByClassName("chat_line"),
-        i = 0, len = (linesToDelete.length - Chat_CleanMax);
+    var linesToDelete = Chat_div[chat_number].getElementsByClassName('chat_line'),
+        i = 0,
+        len = linesToDelete.length - Chat_CleanMax;
 
     if (len > 0) {
-
         for (i; i < len; i++) {
             Chat_div[chat_number].removeChild(linesToDelete[0]);
         }
-
     }
 }

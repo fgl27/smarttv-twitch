@@ -38,7 +38,9 @@ var extraEmotesDone = {
     ffz: {},
     seven_tv: {},
     cheers: {},
-    BadgesChannel: {}
+    BadgesChannel: {},
+    GlobalTwitch: null,
+    ChannelEmotes: {}
 };
 
 var emojis = [];
@@ -224,13 +226,36 @@ function ChatLive_checkSub(chat_number, id) {
     }
 
     var theUrl = Main_helix_api + 'subscriptions/user?broadcaster_id=' + ChatLive_selectedChannel_id[chat_number] + '&user_id=' + AddUser_UsernameArray[0].id;
-    BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2, 3, Main_OAuth + AddUser_UsernameArray[0].access_token, ChatLive_checkSubSucess, ChatLive_checkSubFail, chat_number, id, true);
+    BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2, 2, null, ChatLive_checkSubSucess, ChatLive_checkSubFail, chat_number, id, true);
 }
 
 function ChatLive_checkSubSucess(responseText, chat_number, id) {
     if (id !== Chat_Id[chat_number]) return;
 
     ChatLive_SubState[chat_number].state = true;
+    ChatLive_loadChannelEmotes(chat_number, id);
+}
+
+function ChatLive_loadChannelEmotes(chat_number, id) {
+    if (!extraEmotesDone.ChannelEmotes[ChatLive_selectedChannel_id[chat_number]]) {
+        extraEmotesDone.ChannelEmotes[ChatLive_selectedChannel_id[chat_number]] = {};
+
+        var theUrl = Main_helix_api + 'chat/emotes?broadcaster_id=' + ChatLive_selectedChannel_id[chat_number];
+
+        BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2, 2, null, ChatLive_loadChannelEmotesSucess, noop_fun, chat_number, id, true);
+    } else {
+        ChatLive_SetTwitchEmotesSuccess(extraEmotesDone.ChannelEmotes[ChatLive_selectedChannel_id[chat_number]]);
+    }
+}
+
+function ChatLive_loadChannelEmotesSucess(responseText, chat_number, chat_id) {
+    ChatLive_loadTwitchEmotesSucess(responseText, chat_number, chat_id, extraEmotesDone.ChannelEmotes[ChatLive_selectedChannel_id[chat_number]]);
+}
+
+function ChatLive_checkSubFail(chat_number, id) {
+    if (id !== Chat_Id[chat_number]) return;
+
+    ChatLive_SubState[chat_number].state = false;
 }
 
 function ChatLive_checkSubFail(chat_number, id) {

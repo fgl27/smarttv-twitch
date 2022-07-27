@@ -949,7 +949,8 @@ var Base_Clip_obj = {
                     '[' + cell.language.toUpperCase() + ']',
                     STR_CREATED_AT + Main_videoCreatedAt(cell.created_at),
                     Main_addCommas(cell.view_count) + STR_VIEWS,
-                    cell.thumbnail_url
+                    cell.thumbnail_url,
+                    cell.game_id
                 ])
             );
 

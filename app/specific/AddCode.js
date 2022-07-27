@@ -453,7 +453,7 @@ function AddCode_CheckFollow() {
 }
 
 function AddCode_RequestCheckFollow() {
-    var theUrl = Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/follows/channels/' + AddCode_Channel_id + Main_TwithcV5Flag_I;
+    var theUrl = Main_helix_api + 'users/follows?from_id=' + AddUser_UsernameArray[0].id + '&to_id=' + AddCode_Channel_id;
 
     AddCode_BasexmlHttpGet(theUrl, 'GET', 2, null, AddCode_RequestCheckFollowReady);
 }
@@ -461,8 +461,13 @@ function AddCode_RequestCheckFollow() {
 function AddCode_RequestCheckFollowReady(xmlHttp) {
     if (xmlHttp.readyState === 4) {
         if (xmlHttp.status === 200) {
-            //yes
-            AddCode_RequestCheckFollowOK();
+            var response = JSON.parse(xmlHttp.responseText);
+
+            if (response && response.data.length) {
+                AddCode_RequestCheckFollowOK();
+            } else {
+                AddCode_RequestCheckFollowError();
+            }
         } else if (xmlHttp.status === 404) {
             //no
             AddCode_RequestCheckFollowNOK(xmlHttp.responseText);
@@ -729,9 +734,16 @@ function AddCode_BasexmlHttpGet(theUrl, type, HeaderQuatity, access_token, callb
     xmlHttp.open(type, theUrl, true);
     xmlHttp.timeout = AddCode_loadingDataTimeout;
 
-    Main_Headers[2][1] = access_token;
+    var header;
 
-    for (var i = 0; i < HeaderQuatity; i++) xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
+    if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
+        Main_Bearer_User_Headers[1][1] = Main_Bearer + AddUser_UsernameArray[0].access_token;
+        header = Main_Bearer_User_Headers;
+    } else {
+        header = Main_Bearer_Headers;
+    }
+
+    for (var i = 0; i < HeaderQuatity; i++) xmlHttp.setRequestHeader(header[i][0], header[i][1]);
 
     xmlHttp.ontimeout = function () {};
 

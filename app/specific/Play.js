@@ -651,7 +651,6 @@ function Play_partnerIcon(name, partner, islive, lang) {
     }
 
     div += '<div class="lang_text" ">' + STR_SPACE + STR_SPACE + lang + '</div>';
-
     Main_innerHTML('stream_info_name', div);
 }
 

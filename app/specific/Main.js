@@ -946,11 +946,11 @@ function Main_OpenClip(id, idsArray, handleKeyDownFunction) {
     Main_values.Main_selectedChannel_id = ChannelClip_playUrl[6];
     Main_values.ChannelVod_vodId = ChannelClip_playUrl[7];
     ChannelVod_vodOffset = parseInt(ChannelClip_playUrl[8]);
-    Main_values.Play_gameSelected_id = null;
+    Main_values.Play_gameSelected_id = ChannelClip_playUrl[14];
 
     ChannelClip_title = ChannelClip_playUrl[9];
     ChannelClip_language = ChannelClip_playUrl[10];
-    ChannelClip_game = ChannelClip_playUrl[2] !== '' ? STR_PLAYING + ChannelClip_playUrl[2] : '';
+    ChannelClip_game = ChannelClip_playUrl[2] && ChannelClip_playUrl[2] !== '' ? STR_PLAYING + ChannelClip_playUrl[2] : '';
     ChannelClip_createdAt = ChannelClip_playUrl[11];
     ChannelClip_views = ChannelClip_playUrl[12];
 

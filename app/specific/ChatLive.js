@@ -458,9 +458,9 @@ function ChatLive_loadCheersChannel(chat_number, id) {
 
     if (!extraEmotesDone.cheers[ChatLive_selectedChannel_id[chat_number]]) {
         BasexmlHttpGet(
-            'https://api.twitch.tv/v5/bits/actions?channel_id=' + encodeURIComponent(ChatLive_selectedChannel_id[chat_number]),
+            'https://api.twitch.tv/v5/bits/actions?channel_id=' + encodeURIComponent(ChatLive_selectedChannel_id[chat_number]) + '&client_id=' + AddCode_client_backup,
             DefaultHttpGetTimeout * 2,
-            1,
+            0,
             null,
             ChatLive_loadCheersChannelSuccess,
             noop_fun,

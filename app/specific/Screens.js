@@ -317,7 +317,7 @@ function Screens_createCellGame(id, idArray, valuesArray) {
 }
 
 function Screens_createCellClip(id, idArray, valuesArray) {
-    var playing = valuesArray[2] !== '' ? STR_PLAYING + valuesArray[2] : '';
+    var playing = valuesArray[2] && valuesArray[2] !== '' ? STR_PLAYING + valuesArray[2] : '';
 
     return Screens_createCell(
         idArray[8] + id,

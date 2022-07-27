@@ -125,6 +125,8 @@ var Main_stringVersion_Min = '4.0.1';
 var Main_minversion = 'Feb 19 2022';
 var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
 var Main_IsNotBrowserVersion = '';
+
+var Main_Periods_Helix = [0, 1, 7, 30, 0];
 var Main_ClockOffset = 0;
 var Main_IsNotBrowser = 0;
 var Main_randomimg = '?' + Math.random();

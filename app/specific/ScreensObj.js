@@ -871,7 +871,7 @@ var Base_Clip_obj = {
     rowClass: 'animate_height_transition',
     thumbclass: 'stream_thumbnail_live_holder',
     cursor: null,
-    object: 'clips',
+    object: 'data',
     period: ['day', 'week', 'month', 'all'],
     img_404: IMG_404_VIDEO,
     empty_str: function () {
@@ -909,8 +909,8 @@ var Base_Clip_obj = {
         document.getElementById(this.table).appendChild(this.row);
     },
     setMax: function (tempObj) {
-        this.cursor = this.use_helix ? tempObj.pagination.cursor : tempObj._cursor;
-        if (!this.cursor || this.cursor === '') this.dataEnded = true;
+        this.cursor = tempObj.pagination.cursor;
+        if (!this.cursor) this.dataEnded = true;
     },
     key_play: function () {
         if (this.posY === -1) {
@@ -928,26 +928,28 @@ var Base_Clip_obj = {
     },
     Cells: [],
     addCell: function (cell) {
-        if (!this.idObject[cell.tracking_id]) {
+        var idValue = this.use_helix ? cell.id : cell.tracking_id;
+
+        if (!this.idObject[idValue]) {
             this.itemsCount++;
-            this.idObject[cell.tracking_id] = 1;
+            this.idObject[idValue] = 1;
 
             this.row.appendChild(
                 Screens_createCellClip(this.row_id + '_' + this.coloumn_id, this.ids, [
-                    cell.slug,
+                    cell.id,
                     cell.duration,
-                    cell.game,
-                    cell.broadcaster.name,
-                    cell.broadcaster.display_name,
-                    cell.broadcaster.logo.replace('150x150', '300x300'),
-                    cell.broadcaster.id,
-                    cell.vod !== null ? cell.vod.id : null,
-                    cell.vod !== null ? cell.vod.offset : null,
+                    null,
+                    cell.broadcaster_name ? cell.broadcaster_name.toLowerCase() : cell.broadcaster_name,
+                    cell.broadcaster_name,
+                    null,
+                    cell.broadcaster_id,
+                    cell.video_id && cell.video_id !== '' ? cell.video_id : null, //8
+                    null,
                     twemoji.parse(cell.title),
                     '[' + cell.language.toUpperCase() + ']',
                     STR_CREATED_AT + Main_videoCreatedAt(cell.created_at),
-                    Main_addCommas(cell.views) + STR_VIEWS,
-                    cell.thumbnails.medium
+                    Main_addCommas(cell.view_count) + STR_VIEWS,
+                    cell.thumbnail_url
                 ])
             );
 
@@ -997,21 +999,21 @@ function ScreensObj_InitClip() {
 function ScreensObj_InitChannelClip() {
     ChannelClip = Screens_assign(
         {
+            use_helix: true,
             ids: Screens_ScreenIds('ChannelClip'),
             table: 'stream_table_channel_clip',
             screen: Main_ChannelClip,
             key_pgUp: Main_ChannelVod,
             periodPos: Main_getItemInt('ChannelClip_periodPos', 2),
-            base_url: Main_kraken_api + 'clips/top?channel=',
+            base_url: Main_helix_api + 'clips?broadcaster_id=',
             set_url: function () {
                 this.url =
                     this.base_url +
-                    encodeURIComponent(Main_values.Main_selectedChannel) +
-                    '&limit=' +
+                    encodeURIComponent(Main_values.Main_selectedChannel_id) +
+                    '&first=' +
                     Main_ItemsLimitMax +
-                    '&period=' +
-                    this.period[this.periodPos - 1] +
-                    (this.cursor ? '&cursor=' + this.cursor : '');
+                    ScreensObj_ClipGetPeriod(this.periodPos) +
+                    (this.cursor ? '&after=' + this.cursor : '');
             },
             SetPeriod: function () {
                 Main_setItem('ChannelClip_periodPos', this.periodPos);
@@ -1037,23 +1039,18 @@ function ScreensObj_InitChannelClip() {
 function ScreensObj_InitAGameClip() {
     AGameClip = Screens_assign(
         {
+            use_helix: true,
             ids: Screens_ScreenIds('AGameClip'),
             table: 'stream_table_a_game_clip',
             screen: Main_AGameClip,
             key_pgDown: Main_Vod,
             key_pgUp: Main_Featured,
             periodPos: Main_getItemInt('AGameClip_periodPos', 2),
-            base_url: Main_kraken_api + 'clips/top?game=',
+            base_url: Main_helix_api + 'clips?game_id=',
             set_url: function () {
-                this.url =
-                    this.base_url +
-                    encodeURIComponent(Main_values.Main_gameSelected) +
-                    '&limit=' +
-                    Main_ItemsLimitMax +
-                    '&period=' +
-                    this.period[this.periodPos - 1] +
-                    (this.cursor ? '&cursor=' + this.cursor : '') +
-                    (Main_ContentLang !== '' ? '&language=' + (Languages_Extra[Main_ContentLang] ? Languages_Extra[Main_ContentLang] : Main_ContentLang) : '');
+                this.url = this.base_url + Main_values.Main_gameSelected_id + '&first=' + Main_ItemsLimitMax + ScreensObj_ClipGetPeriod(this.periodPos) + (this.cursor ? '&after=' + this.cursor : '');
+
+                console.log(this.url);
             },
             SetPeriod: function () {
                 Main_setItem('AGameClip_periodPos', this.periodPos);
@@ -1402,4 +1399,33 @@ function ScreensObj_TopLableUserInit() {
 
 function ScreensObj_SetTopLable(text, small_text) {
     Main_innerHTML('top_lable', text + STR_SPACE + (small_text ? '<div style="font-size: 65%;display: inline-block;">' + small_text + '</div>' : ''));
+}
+
+function ScreensObj_ClipGetPeriod(periodPos) {
+    if (periodPos === 4) return '';
+
+    var date = '',
+        today = new Date(),
+        newDate = today,
+        day = today.getDate(),
+        month = today.getMonth() + 1,
+        year = today.getFullYear();
+
+    if (day < 10) day = '0' + day;
+    if (month < 10) month = '0' + month;
+    dayEnd = '&ended_at=' + year + '-' + month + '-' + day + 'T23:59:59Z';
+
+    newDate.setDate(newDate.getDate() - Main_Periods_Helix[periodPos]);
+    day = newDate.getDate();
+    month = newDate.getMonth() + 1;
+    year = newDate.getFullYear();
+
+    if (day < 10) day = '0' + day;
+    if (month < 10) month = '0' + month;
+
+    date = '&started_at=' + year + '-' + month + '-' + day + 'T00:00:00Z';
+
+    date += dayEnd;
+
+    return date;
 }

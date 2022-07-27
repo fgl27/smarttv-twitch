@@ -104,9 +104,13 @@ function ChatLive_Init() {
     ChatLive_SendStart(chat_number, Chat_Id[chat_number]);
 
     ChatLive_loadChatters(chat_number, Chat_Id[chat_number]);
-    ChatLive_loadEmotesUser();
-    ChatLive_checkFallow(chat_number, Chat_Id[chat_number]);
-    ChatLive_checkSub(chat_number, Chat_Id[chat_number]);
+
+    if (ChatLive_User_Set) {
+        ChatLive_loadGlobalEmotes(chat_number, Chat_Id[chat_number]);
+
+        ChatLive_checkFallow(chat_number, Chat_Id[chat_number]);
+        ChatLive_checkSub(chat_number, Chat_Id[chat_number]);
+    }
 }
 
 var ChatLive_Logging;
@@ -333,59 +337,78 @@ function ChatLive_loadChattersSuccess(responseText, chat_number, id) {
     }
 }
 
-function ChatLive_loadEmotesUser() {
-    if (AddUser_IsUserSet() && AddUser_UsernameArray[0].access_token) {
-        BasexmlHttpGet(
-            Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/emotes',
-            DefaultHttpGetTimeout * 2,
-            3,
-            Main_OAuth + AddUser_UsernameArray[0].access_token,
-            ChatLive_loadEmotesUserSuccess,
-            noop_fun,
-            0,
-            0
-        );
+function ChatLive_loadGlobalEmotes(chat_number, id) {
+    if (!extraEmotesDone.GlobalTwitch) {
+        extraEmotesDone.GlobalTwitch = {};
+        var theUrl = Main_helix_api + 'chat/emotes/global';
+
+        BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2, 2, null, ChatLive_loadGlobalEmotesSucess, noop_fun, chat_number, id, true);
+    } else {
+        ChatLive_SetTwitchEmotesSuccess(extraEmotesDone.GlobalTwitch);
     }
 }
 
-function ChatLive_loadEmotesUserSuccess(result) {
-    try {
-        var data = JSON.parse(result);
-        if (!userEmote.hasOwnProperty(AddUser_UsernameArray[0].id)) userEmote[AddUser_UsernameArray[0].id] = {};
+function ChatLive_loadGlobalEmotesSucess(responseText, chat_number, chat_id) {
+    ChatLive_loadTwitchEmotesSucess(responseText, chat_number, chat_id, extraEmotesDone.GlobalTwitch);
+}
+
+function ChatLive_SetTwitchEmotesSuccess(obj) {
+    if (!userEmote.hasOwnProperty(AddUser_UsernameArray[0].id)) {
+        userEmote[AddUser_UsernameArray[0].id] = {};
+    }
+
+    for (var emote in obj) {
+        userEmote[AddUser_UsernameArray[0].id][emote] = {
+            code: emote,
+            id: obj[emote].id,
+            '4x': obj[emote]['4x']
+        };
+    }
+}
+
+function ChatLive_loadTwitchEmotesSucess(responseText, chat_number, chat_id, extraEmotesDone_obj) {
+    if (chat_id !== Chat_Id[chat_number]) return;
+
+    var response = JSON.parse(responseText);
+
+    if (response && response.data.length) {
+        var data = response.data;
+
+        if (!userEmote.hasOwnProperty(AddUser_UsernameArray[0].id)) {
+            userEmote[AddUser_UsernameArray[0].id] = {};
+        }
 
         var url, id;
 
-        Object.keys(data.emoticon_sets).forEach(function (set) {
-            set = data.emoticon_sets[set];
-            if (Array.isArray(set)) {
-                set.forEach(function (emoticon) {
-                    if (!emoticon.code || !emoticon.id) return;
-                    if (typeof emoticon.code !== 'string' || typeof emoticon.id !== 'number') return;
+        data.forEach(function (emoticon) {
+            if (!emoticon.name || !emoticon.id || typeof emoticon.name !== 'string') return;
 
-                    emoticon.code = emoteReplace[emoticon.code] || emoticon.code;
+            emoticon.code = emoteReplace[emoticon.name] || emoticon.name;
 
-                    if (userEmote[AddUser_UsernameArray[0].id].hasOwnProperty(emoticon.code)) return;
+            if (userEmote[AddUser_UsernameArray[0].id].hasOwnProperty(emoticon.code)) return;
 
-                    url = emoteURL(emoticon.id);
-                    id = emoticon.code + emoticon.id; //combine code and id to make t uniq
+            url = emoteURL(emoticon.id);
+            id = emoticon.code + emoticon.id; //combine code and id to make t uniq
 
-                    extraEmotes[emoticon.code] = {
-                        code: emoticon.code,
-                        id: id,
-                        chat_div: emoteTemplate(url),
-                        '4x': url
-                    };
+            extraEmotes[emoticon.code] = {
+                code: emoticon.code,
+                id: id,
+                chat_div: emoteTemplate(url),
+                '4x': url
+            };
 
-                    userEmote[AddUser_UsernameArray[0].id][emoticon.code] = {
-                        code: emoticon.code,
-                        id: id,
-                        '4x': url
-                    };
-                });
-            }
+            extraEmotesDone_obj[emoticon.code] = {
+                code: emoticon.code,
+                id: id,
+                '4x': url
+            };
+
+            userEmote[AddUser_UsernameArray[0].id][emoticon.code] = {
+                code: emoticon.code,
+                id: id,
+                '4x': url
+            };
         });
-    } catch (e) {
-        Main_Log('ChatLive_loadEmotesUserSuccess ' + e);
     }
 }
 

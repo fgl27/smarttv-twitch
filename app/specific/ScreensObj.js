@@ -1267,8 +1267,7 @@ function ScreensObj_InitSearchGames() {
             isSearch: true,
             base_url: Main_helix_api + 'search/categories?query=',
             set_url: function () {
-                this.dataEnded = true;
-                this.url = this.base_url + encodeURIComponent(Main_values.Search_data);
+                this.url = this.base_url + encodeURIComponent(Main_values.Search_data) + '&first=' + Main_ItemsLimitMax + (this.cursor ? '&after=' + this.cursor : '');
             },
             label_init: function () {
                 if (!Main_values.gameSelectedOld) Main_values.gameSelectedOld = Main_values.Main_gameSelected;
@@ -1290,7 +1289,6 @@ function ScreensObj_InitSearchGames() {
     );
 
     SearchGames = Screens_assign(SearchGames, Base_Game_obj);
-    SearchGames.ItemsLimit = 100;
 }
 
 var Base_Channel_obj = {
@@ -1302,8 +1300,13 @@ var Base_Channel_obj = {
     rowClass: 'animate_height_transition_channel',
     img_404: IMG_404_LOGO,
     setMax: function (tempObj) {
-        this.MaxOffset = tempObj._total;
-        if (this.data.length >= this.MaxOffset || typeof this.MaxOffset === 'undefined') this.dataEnded = true;
+        if (this.use_helix) {
+            this.cursor = tempObj.pagination.cursor;
+            if (!this.cursor || this.cursor === '') this.dataEnded = true;
+        } else {
+            this.MaxOffset = tempObj._total;
+            if (this.data.length >= this.MaxOffset || typeof this.MaxOffset === 'undefined') this.dataEnded = true;
+        }
     },
     empty_str: function () {
         return STR_NO + STR_SPACE + STR_USER_CHANNEL;
@@ -1384,8 +1387,7 @@ function ScreensObj_InitSearchChannels() {
             use_helix: true,
             base_url: Main_helix_api + 'search/channels?first=' + Main_ItemsLimitMax + '&query=',
             set_url: function () {
-                if (this.offset && this.offset + Main_ItemsLimitMax > this.MaxOffset) this.dataEnded = true;
-                this.url = this.base_url + encodeURIComponent(Main_values.Search_data) + '&after=' + (this.cursor ? this.cursor : ''); // offset probably still broken, the behaviour changed
+                this.url = this.base_url + encodeURIComponent(Main_values.Search_data) + '&after=' + (this.cursor ? this.cursor : '');
             },
             label_init: function () {
                 Main_values.Search_isSearching = true;

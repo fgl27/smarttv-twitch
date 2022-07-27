@@ -148,7 +148,7 @@ function PlayClip_loadVodOffsetStartVod() {
         }
     };
 
-    xmlHttp.send(PlayClip_videoOffsetSeconds.replace('%x', ChannelClip_playUrl));
+    xmlHttp.send(PlayClip_ExtraClipInfo.replace('%x', ChannelClip_playUrl));
 }
 
 function PlayClip_loadVodOffsetStartVodResult(responseText) {
@@ -184,7 +184,7 @@ function PlayClip_loadVodOffsett() {
         }
     };
 
-    xmlHttp.send(PlayClip_videoOffsetSeconds.replace('%x', ChannelClip_playUrl));
+    xmlHttp.send(PlayClip_ExtraClipInfo.replace('%x', ChannelClip_playUrl));
 }
 
 function PlayClip_loadVodOffsettResult(responseText) {

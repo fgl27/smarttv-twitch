@@ -1114,7 +1114,7 @@ var Base_Game_obj = {
         var hasLive = this.isLive || this.screen === Main_games;
         var game = this.hasGameProp && !this.isQuery ? cell.game : cell;
 
-        var id_cell = this.useHelix || this.isQuery ? game.id : game._id;
+        var id_cell = this.use_helix || this.isQuery ? game.id : game._id;
 
         if (!this.idObject[id_cell]) {
             this.itemsCount++;

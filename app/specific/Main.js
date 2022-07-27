@@ -277,7 +277,11 @@ function Main_loadTranslations(language) {
                 ];
             }
 
-            AddCode_AppTokenCheck(0, Main_initWindowsCheck, Main_initWindowsCheckFail);
+            if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
+                Main_initWindowsCheck();
+            } else {
+                AddCode_AppTokenCheck(0, Main_initWindowsCheck, Main_initWindowsCheckFail);
+            }
         });
     });
 }

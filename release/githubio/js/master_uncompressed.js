@@ -4322,7 +4322,7 @@
 
         if (!extraEmotesDone.ffz[ChatLive_selectedChannel_id[chat_number]]) {
             BasexmlHttpGet(
-                'https://api.frankerfacez.com/v1/room/' + encodeURIComponent(ChatLive_selectedChannel[chat_number]),
+                'https://api.frankerfacez.com/v1/room/id/' + encodeURIComponent(ChatLive_selectedChannel_id[chat_number]),
                 DefaultHttpGetTimeout * 2,
                 0,
                 null,
@@ -4428,6 +4428,9 @@
 
         try {
             data.forEach(function(emote) {
+                if (!emote.urls || !emote.urls.length) {
+                    return;
+                }
                 url = emote.urls[3][1];
                 chat_div = emoteTemplate(url);
                 id = emote.name + emote.id;

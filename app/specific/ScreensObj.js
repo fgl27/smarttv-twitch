@@ -1120,7 +1120,14 @@ var Base_Game_obj = {
             this.itemsCount++;
             this.idObject[id_cell] = 1;
             if (this.use_helix) {
-                this.row.appendChild(Screens_createCellGame(this.row_id + '_' + this.coloumn_id, this.ids, [game.box_art_url.replace('{width}x{height}', Main_GameSize), game.name, '', id_cell]));
+                this.row.appendChild(
+                    Screens_createCellGame(this.row_id + '_' + this.coloumn_id, this.ids, [
+                        game.box_art_url.replace(this.isSearch ? '52x72' : '{width}x{height}', Main_GameSize),
+                        game.name,
+                        '',
+                        id_cell
+                    ])
+                );
             } else if (this.isQuery) {
                 if (!game) {
                     return;
@@ -1249,14 +1256,16 @@ function ScreensObj_InitUserGames() {
 function ScreensObj_InitSearchGames() {
     SearchGames = Screens_assign(
         {
+            use_helix: true,
             ids: Screens_ScreenIds('SearchGames'),
             table: 'stream_table_search_game',
             screen: Main_SearchGames,
             isLive: false,
             OldUserName: '',
-            object: 'games',
+            object: 'data',
             lastData: '',
-            base_url: Main_kraken_api + 'search/games?query=',
+            isSearch: true,
+            base_url: Main_helix_api + 'search/categories?query=',
             set_url: function () {
                 this.dataEnded = true;
                 this.url = this.base_url + encodeURIComponent(Main_values.Search_data);

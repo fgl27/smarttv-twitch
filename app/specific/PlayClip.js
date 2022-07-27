@@ -37,7 +37,7 @@ var PlayClip_All = false;
 var PlayClip_All_Forced = true;
 var PlayClip_loadingtreamerInfoTry = 0;
 var PlayClip_bufferingcomplete = false;
-var PlayClip_videoOffsetSeconds = '{"query":"{clip(slug:\\"%x\\"){game{displayName},videoOffsetSeconds,broadcaster{roles{isPartner},displayName,profileImageURL(width: 300)}}}"}';
+var PlayClip_ExtraClipInfo = '{"query":"{clip(slug:\\"%x\\"){game{displayName},videoOffsetSeconds,broadcaster{roles{isPartner},displayName,profileImageURL(width: 300)}}}"}';
 
 //Variable initialization end
 
@@ -52,7 +52,9 @@ function PlayClip_Start() {
             Chat_offset = ChannelVod_vodOffset;
             Chat_Init();
         }
-    } else Chat_NoVod();
+    } else {
+        Chat_NoVod();
+    }
 
     PlayClip_loadVodOffsett();
 
@@ -214,8 +216,6 @@ function PlayClip_loadVodOffsettResult(responseText) {
                 Main_values.Main_selectedChannelPartner = clip.broadcaster.roles.isPartner;
             }
         }
-
-        return;
     }
 }
 

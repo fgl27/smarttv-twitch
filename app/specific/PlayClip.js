@@ -128,6 +128,18 @@ function PlayClip_Start() {
     Play_controls[Play_controlsChanelCont].setLable(Main_values.Main_selectedChannelDisplayname);
 }
 
+function PlayClip_UpdateGameInfo() {
+    var theUrl = Main_helix_api + 'games?name=' + Main_values.Play_gameSelected;
+    BasexmlHttpGet(theUrl, Play_loadingInfoDataTimeout, 2, null, PlayClip_UpdateGameInfoSuccess, null, false, null, true);
+}
+
+function PlayClip_UpdateGameInfoSuccess(response) {
+    response = JSON.parse(response);
+    if (response.data && response.data.length) {
+        Main_values.Play_gameSelected_id = response.data[0].id;
+    }
+}
+
 function PlayClip_loadVodOffsetStartVod() {
     var xmlHttp = new XMLHttpRequest();
 

@@ -2543,7 +2543,7 @@ function Play_MakeControls() {
         setLable: function (string, AddCode_IsFollowing) {
             Main_textContent('extra_button_text' + this.position, string);
             this.setIcon(AddCode_IsFollowing);
-            Main_textContent('extra_button_' + this.position, AddCode_IsFollowing ? STR_CLICK_UNFOLLOW : STR_CLICK_FOLLOW);
+            //Main_textContent('extra_button_' + this.position, AddCode_IsFollowing ? STR_CLICK_UNFOLLOW : STR_CLICK_FOLLOW);
         },
         setIcon: function (AddCode_IsFollowing) {
             Main_innerHTML(

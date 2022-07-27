@@ -890,7 +890,7 @@ function ScreensObj_InitFeatured() {
                     this.ids,
                     [
                         cell.stream.previewImageURL ? cell.stream.previewImageURL.replace('{width}x{height}', Main_VideoSize) : '',
-                        cell.stream.game.displayName,
+                        cell.stream.broadcaster.displayName,
                         cell.stream.title,
                         cell.stream.game.displayName,
                         STR_SINCE + Play_streamLiveAt(cell.stream.createdAt) + STR_SPACE + STR_FOR + Main_addCommas(cell.stream.viewersCoun) + STR_SPACE + STR_VIEWER,

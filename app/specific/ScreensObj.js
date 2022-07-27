@@ -829,17 +829,19 @@ function ScreensObj_InitAGame() {
 function ScreensObj_InitFeatured() {
     Featured = Screens_assign(
         {
+            isQuery: true,
             HeaderQuatity: 2,
             ids: Screens_ScreenIds('Featured'),
             table: 'stream_table_featured',
             screen: Main_Featured,
             key_pgDown: Main_games,
             key_pgUp: Main_Live,
-            base_url: Main_kraken_api + 'streams/featured?limit=' + Main_ItemsLimitMax,
+            object: 'data',
+            base_post: featuredQuery,
             set_url: function () {
-                this.check_offset();
-
-                this.url = this.base_url + '&offset=' + this.offset + (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token ? '&oauth_token=' + AddUser_UsernameArray[0].access_token : '');
+                this.dataEnded = true;
+                this.url = PlayClip_BaseClipUrl;
+                this.post = this.base_post.replace('%x', Main_ContentLang === '' ? '' : ',language:\\"' + Main_ContentLang + '\\"');
             },
             label_init: function () {
                 Sidepannel_SetDefaultLables();
@@ -858,9 +860,47 @@ function ScreensObj_InitFeatured() {
 
     Featured = Screens_assign(Featured, Base_Live_obj);
 
+    Featured.concatenate = function (responseText) {
+        var responseObj = JSON.parse(responseText);
+
+        var hasData = responseObj.data && responseObj.data.featuredStreams;
+
+        if (hasData) {
+            this.data = responseObj.data.featuredStreams;
+            this.loadDataSuccess();
+        }
+
+        this.loadingData = false;
+    };
+
     Featured.addCell = function (cell) {
-        cell = cell.stream;
-        this.addCellTemp(cell);
+        if (!cell || !cell.stream) {
+            return;
+        }
+        var id_cell = cell.stream.broadcaster.id;
+
+        if (!this.idObject[id_cell]) {
+            this.itemsCount++;
+            this.idObject[id_cell] = 1;
+
+            this.row.appendChild(
+                Screens_createCellLive(
+                    this.row_id + '_' + this.coloumn_id,
+                    [cell.stream.broadcaster.login, cell.stream.broadcaster.id, Main_is_rerun(cell.stream.type), cell.stream.game.id],
+                    this.ids,
+                    [
+                        cell.stream.previewImageURL ? cell.stream.previewImageURL.replace('{width}x{height}', Main_VideoSize) : '',
+                        cell.stream.game.displayName,
+                        cell.stream.title,
+                        cell.stream.game.displayName,
+                        STR_SINCE + Play_streamLiveAt(cell.stream.createdAt) + STR_SPACE + STR_FOR + Main_addCommas(cell.stream.viewersCoun) + STR_SPACE + STR_VIEWER,
+                        '[' + cell.stream.broadcaster.language.toUpperCase() + ']'
+                    ]
+                )
+            );
+
+            this.coloumn_id++;
+        }
     };
 }
 
@@ -1206,7 +1246,6 @@ function ScreensObj_InitUserGames() {
             hasGameProp: true,
             OldUserName: '',
             object: 'data',
-            object: 'data',
             isQuery: true,
             base_post: userGameQuery,
             set_url: function () {
@@ -1334,7 +1373,7 @@ function ScreensObj_InitUserChannels() {
             screen: Main_UserChannels,
             object: 'data',
             key_pgDown: Main_UserLive,
-            key_pgUp: Main_UserVod,
+            key_pgUp: Main_usergames,
             key_pgUpNext: Main_UserChannels,
             base_url: Main_helix_api + 'users/follows?first=' + Main_ItemsLimitMax + '&from_id=',
             base_url_channels: Main_helix_api + 'users?',

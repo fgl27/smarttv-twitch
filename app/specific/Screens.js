@@ -124,6 +124,9 @@ function Screens_StartLoad() {
     inUseObj.followerChannels = [];
     inUseObj.followerChannelsDone = false;
     inUseObj.coloumn_id = 0;
+    inUseObj.channelDataPos = 0;
+    inUseObj.getFollowed = true;
+    inUseObj.channelData = null;
     inUseObj.data = null;
     inUseObj.data_cursor = 0;
     inUseObj.dataEnded = false;

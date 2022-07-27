@@ -1299,6 +1299,7 @@ var Base_Channel_obj = {
     thumbclass: 'stream_thumbnail_channel_holder',
     rowClass: 'animate_height_transition_channel',
     img_404: IMG_404_LOGO,
+    cursor: null,
     setMax: function (tempObj) {
         if (this.use_helix) {
             this.cursor = tempObj.pagination.cursor;
@@ -1326,18 +1327,39 @@ var Base_Channel_obj = {
 function ScreensObj_InitUserChannels() {
     UserChannels = Screens_assign(
         {
+            use_helix: true,
             HeaderQuatity: 2,
             ids: Screens_ScreenIds('UserChannels'),
             table: 'stream_table_user_channels',
             screen: Main_UserChannels,
-            object: 'follows',
+            object: 'data',
             key_pgDown: Main_UserLive,
             key_pgUp: Main_UserVod,
             key_pgUpNext: Main_UserChannels,
-            base_url: Main_kraken_api + 'users/',
+            base_url: Main_helix_api + 'users/follows?first=' + Main_ItemsLimitMax + '&from_id=',
+            base_url_channels: Main_helix_api + 'users?',
+            channelDataPos: 0,
             set_url: function () {
-                if (this.offset && this.offset + Main_ItemsLimitMax > this.MaxOffset) this.dataEnded = true;
-                this.url = this.base_url + encodeURIComponent(AddUser_UsernameArray[0].id) + '/follows/channels?limit=' + Main_ItemsLimitMax + '&offset=' + this.offset + '&sortby=login&direction=asc';
+                if (this.getFollowed) {
+                    this.url = this.base_url + AddUser_UsernameArray[0].id + (this.cursor ? '&after=' + this.cursor : '');
+                } else {
+                    this.channels = 'id=' + this.channelData[this.channelDataPos].to_id;
+                    var i = this.channelDataPos + 1,
+                        dataLen = this.channelData.length,
+                        len = Math.min(dataLen, i + 99);
+
+                    this.channelDataPos++;
+                    for (i; i < len; i++) {
+                        this.channels += '&id=' + this.channelData[i].to_id;
+                        this.channelDataPos++;
+                    }
+
+                    this.url = this.base_url_channels + this.channels;
+
+                    if (dataLen <= i) {
+                        this.dataEnded = true;
+                    }
+                }
             },
             label_init: function () {
                 ScreensObj_TopLableUserInit();
@@ -1364,8 +1386,16 @@ function ScreensObj_InitUserChannels() {
                 Main_SwitchScreen();
             },
             addCell: function (cell) {
-                cell = cell.channel;
-                this.addCellTemp(cell);
+                if (!this.idObject[cell.id]) {
+                    this.itemsCount++;
+                    this.idObject[cell.id] = 1;
+
+                    this.row.appendChild(
+                        Screens_createCellChannel(this.row_id + '_' + this.coloumn_id, this.ids, [cell.login, cell.id, cell.profile_image_url, cell.display_name, cell.broadcaster_type === 'partner'])
+                    );
+
+                    this.coloumn_id++;
+                }
             }
         },
         Base_obj
@@ -1374,6 +1404,64 @@ function ScreensObj_InitUserChannels() {
     UserChannels = Screens_assign(UserChannels, Base_Channel_obj);
     UserChannels.addrow = Screens_addrowChannel;
     UserChannels.visiblerows = 5;
+
+    UserChannels.concatenate = function (responseText) {
+        var responseObj = JSON.parse(responseText);
+
+        if (this.getFollowed) {
+            var data = responseObj[this.object];
+
+            this.cursor = responseObj.pagination.cursor;
+
+            if (data.length) {
+                if (!this.channelData) {
+                    this.channelData = data;
+                } else {
+                    this.channelData.push.apply(this.channelData, responseObj[this.object]);
+                }
+            } else if (!this.channelData) {
+                this.dataEnded = true;
+                this.data = [];
+                this.loadDataSuccess();
+                this.loadingData = false;
+                return;
+            }
+
+            if (this.cursor && this.cursor !== '') {
+                Screens_loadDataRequest(this.screen);
+            } else {
+                //sort
+                this.channelData.sort(function (a, b) {
+                    return a.to_login < b.to_login ? -1 : a.to_login > b.to_login ? 1 : 0;
+                });
+                this.getFollowed = false;
+                Screens_loadDataRequest(this.screen);
+            }
+        } else {
+            var tempData = responseObj[this.object];
+            if (tempData) {
+                tempData.sort(function (a, b) {
+                    return a.login < b.login ? -1 : a.login > b.login ? 1 : 0;
+                });
+            }
+
+            if (this.data) {
+                if (tempData) {
+                    this.data.push.apply(this.data, tempData);
+                    this.offset = this.data.length;
+                }
+            } else {
+                this.data = tempData;
+                if (this.data) {
+                    this.offset = this.data.length;
+                } else this.data = [];
+
+                this.loadDataSuccess();
+            }
+
+            this.loadingData = false;
+        }
+    };
 }
 
 function ScreensObj_InitSearchChannels() {

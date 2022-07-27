@@ -1050,8 +1050,6 @@ function ScreensObj_InitAGameClip() {
             base_url: Main_helix_api + 'clips?game_id=',
             set_url: function () {
                 this.url = this.base_url + Main_values.Main_gameSelected_id + '&first=' + Main_ItemsLimitMax + ScreensObj_ClipGetPeriod(this.periodPos) + (this.cursor ? '&after=' + this.cursor : '');
-
-                console.log(this.url);
             },
             SetPeriod: function () {
                 Main_setItem('AGameClip_periodPos', this.periodPos);

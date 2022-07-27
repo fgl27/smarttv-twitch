@@ -258,12 +258,6 @@ function ChatLive_checkSubFail(chat_number, id) {
     ChatLive_SubState[chat_number].state = false;
 }
 
-function ChatLive_checkSubFail(chat_number, id) {
-    if (id !== Chat_Id[chat_number]) return;
-
-    ChatLive_SubState[chat_number].state = false;
-}
-
 function ChatLive_loadBadgesChannel(chat_number, id) {
     if (id !== Chat_Id[chat_number]) return;
 

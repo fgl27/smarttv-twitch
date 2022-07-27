@@ -1259,33 +1259,33 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
     xmlHttp.send(null);
 }
 
-function BasexmlHttpGetBack(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
-    var xmlHttp = new XMLHttpRequest();
+// function BasexmlHttpGetBack(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
+//     var xmlHttp = new XMLHttpRequest();
 
-    xmlHttp.open('GET', theUrl, true);
-    xmlHttp.timeout = Timeout;
+//     xmlHttp.open('GET', theUrl, true);
+//     xmlHttp.timeout = Timeout;
 
-    Main_Headers_Backup[2][1] = access_token;
+//     Main_Headers_Backup[2][1] = access_token;
 
-    for (var i = 0; i < HeaderQuatity; i++) xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
+//     for (var i = 0; i < HeaderQuatity; i++) xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
 
-    xmlHttp.ontimeout = function () {};
+//     xmlHttp.ontimeout = function () {};
 
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) {
-                callbackSucess(xmlHttp.responseText);
-            } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) {
-                //token expired, only Screens HeaderQuatity will be > 2
-                AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
-            } else {
-                calbackError();
-            }
-        }
-    };
+//     xmlHttp.onreadystatechange = function () {
+//         if (xmlHttp.readyState === 4) {
+//             if (xmlHttp.status === 200) {
+//                 callbackSucess(xmlHttp.responseText);
+//             } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) {
+//                 //token expired, only Screens HeaderQuatity will be > 2
+//                 AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
+//             } else {
+//                 calbackError();
+//             }
+//         }
+//     };
 
-    xmlHttp.send(null);
-}
+//     xmlHttp.send(null);
+// }
 
 var Main_GetHostBaseUrl =
     '{"operationName":"UseHosting","variables":{"channelLogin":"%x"},"extensions":{"persistedQuery":{"version": 1,"sha256Hash":"427f55a3daca510f726c02695a898ef3a0de4355b39af328848876052ea6b337"}}}';

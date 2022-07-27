@@ -850,7 +850,6 @@ function ScreensObj_InitFeatured() {
 
                 ScreensObj_SetTopLable(STR_FEATURED);
             },
-            object: 'featured',
             key_play: function () {
                 Main_OpenLiveStream(this.posY + '_' + this.posX, this.ids, Screens_handleKeyDown);
             }
@@ -1600,7 +1599,7 @@ function ScreensObj_ClipGetPeriod(periodPos) {
 
     if (day < 10) day = '0' + day;
     if (month < 10) month = '0' + month;
-    dayEnd = '&ended_at=' + year + '-' + month + '-' + day + 'T23:59:59Z';
+    var dayEnd = '&ended_at=' + year + '-' + month + '-' + day + 'T23:59:59Z';
 
     newDate.setDate(newDate.getDate() - Main_Periods_Helix[periodPos]);
     day = newDate.getDate();

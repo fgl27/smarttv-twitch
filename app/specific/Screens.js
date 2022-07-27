@@ -144,8 +144,28 @@ function Screens_loadDataPrepare() {
 
 function Screens_loadDataRequest() {
     inUseObj.set_url();
-    if (inUseObj.use_hls) BasexmlHttpGetBack(inUseObj.url + Main_TwithcV5Flag, inUseObj.loadingDataTimeout, inUseObj.HeaderQuatity, inUseObj.token, Screens_concatenate, Screens_loadDataError);
-    else
+    if (inUseObj.isQuery) {
+        var xmlHttp = new XMLHttpRequest();
+
+        xmlHttp.open('POST', inUseObj.url, true);
+        xmlHttp.timeout = inUseObj.loadingDataTimeout;
+        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
+        xmlHttp.setRequestHeader('Content-Type', 'application/json');
+
+        xmlHttp.ontimeout = function () {};
+
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState === 4) {
+                if (xmlHttp.status === 200) {
+                    Screens_concatenate(xmlHttp.responseText);
+                } else {
+                    Screens_loadDataError();
+                }
+            }
+        };
+
+        xmlHttp.send(inUseObj.post);
+    } else {
         BasexmlHttpGet(
             inUseObj.url + (inUseObj.use_helix ? '' : Main_TwithcV5Flag),
             inUseObj.loadingDataTimeout,
@@ -157,6 +177,7 @@ function Screens_loadDataRequest() {
             null,
             inUseObj.use_helix
         );
+    }
 }
 
 function Screens_loadDataError() {

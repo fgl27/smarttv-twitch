@@ -23,6 +23,9 @@ var Vod_DoAnimateThumb = 1;
 var AGame_following = false;
 
 var noop_fun = function () {};
+var userGameQuery = '{"query":"{user(id: \\"%x\\") {followedGames(first: 100,type:LIVE){nodes {id displayName boxArtURL viewersCount channelsCount }}}}"}';
+var featuredQuery =
+    '{"query":"{featuredStreams(first:10,acceptedMature:true%x){stream{type,game{displayName,id},title,id,previewImageURL,viewersCount,createdAt,broadcaster{roles{isPartner},id,login,displayName,language,profileImageURL(width: 300)}}}}"}';
 
 //Screens
 var Clip;
@@ -1109,15 +1112,35 @@ var Base_Game_obj = {
     },
     addCell: function (cell) {
         var hasLive = this.isLive || this.screen === Main_games;
-        var game = this.hasGameProp ? cell.game : cell;
+        var game = this.hasGameProp && !this.isQuery ? cell.game : cell;
 
-        var id_cell = this.use_helix ? game.id : game._id;
+        var id_cell = this.useHelix || this.isQuery ? game.id : game._id;
 
         if (!this.idObject[id_cell]) {
             this.itemsCount++;
             this.idObject[id_cell] = 1;
             if (this.use_helix) {
                 this.row.appendChild(Screens_createCellGame(this.row_id + '_' + this.coloumn_id, this.ids, [game.box_art_url.replace('{width}x{height}', Main_GameSize), game.name, '', id_cell]));
+            } else if (this.isQuery) {
+                if (!game) {
+                    return;
+                }
+
+                this.row.appendChild(
+                    Screens_createCellGame(this.row_id + '_' + this.coloumn_id, this.ids, [
+                        game.boxArtURL.replace('{width}x{height}', Main_GameSize),
+                        game.displayName,
+                        (cell.channelsCount ? Main_addCommas(cell.channelsCount) : 0) +
+                            STR_SPACE +
+                            STR_CHANNELS +
+                            STR_BR +
+                            STR_FOR +
+                            (cell.viewersCount ? Main_addCommas(cell.viewersCount) : 0) +
+                            STR_SPACE +
+                            STR_VIEWER,
+                        id_cell
+                    ])
+                );
             } else {
                 this.row.appendChild(
                     Screens_createCellGame(this.row_id + '_' + this.coloumn_id, this.ids, [
@@ -1175,12 +1198,14 @@ function ScreensObj_InitUserGames() {
             isLive: false,
             hasGameProp: true,
             OldUserName: '',
-            object: 'follows',
-            base_url: Main_kraken_api + 'users/',
+            object: 'data',
+            object: 'data',
+            isQuery: true,
+            base_post: userGameQuery,
             set_url: function () {
-                if (this.offset && this.offset + Main_ItemsLimitMax > this.MaxOffset) this.dataEnded = true;
-
-                this.url = this.base_url + encodeURIComponent(AddUser_UsernameArray[0].id) + '/follows/games?limit=' + Main_ItemsLimitMax + '&offset=' + this.offset;
+                this.dataEnded = true;
+                this.url = PlayClip_BaseClipUrl;
+                this.post = this.base_post.replace('%x', AddUser_UsernameArray[0].id);
             },
             label_init: function () {
                 ScreensObj_TopLableUserInit();
@@ -1194,6 +1219,28 @@ function ScreensObj_InitUserGames() {
     );
 
     UserGames = Screens_assign(UserGames, Base_Game_obj);
+
+    UserGames.concatenate = function (responseText) {
+        var responseObj = JSON.parse(responseText);
+
+        var hasData = responseObj.data && responseObj.data.user && responseObj.data.user.followedGames && responseObj.data.user.followedGames.nodes;
+
+        if (hasData) {
+            this.data = responseObj.data.user.followedGames.nodes;
+
+            this.data.sort(function (a, b) {
+                return a.displayName < b.displayName ? -1 : a.displayName > b.displayName ? 1 : 0;
+            });
+
+            this.loadDataSuccess();
+        }
+
+        this.loadingData = false;
+
+        if (this.hasBackupData) {
+            this.setBackupData(responseObj, this.data, this.lastRefresh, this.gameSelected_Id, this.ContentLang, this.Lang);
+        }
+    };
 }
 
 function ScreensObj_InitSearchGames() {

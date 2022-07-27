@@ -126,6 +126,10 @@ function PlayClip_Start() {
         Play_controls[Play_controlsOpenVod].setLable('');
     }
     Play_controls[Play_controlsChanelCont].setLable(Main_values.Main_selectedChannelDisplayname);
+
+    if (!Main_values.Play_gameSelected_id && Main_values.Play_gameSelected) {
+        PlayClip_UpdateGameInfo();
+    }
 }
 
 function PlayClip_UpdateGameInfo() {

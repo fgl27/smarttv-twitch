@@ -7970,7 +7970,7 @@
 
             if (PlayClip_offsettime > 0 && PlayClip_offsettime !== Play_avplay.getCurrentTime()) {
                 try {
-                    Play_avplay.seekTo(PlayClip_offsettime - 3500); // minor delay on the seekTo to show were it stop or at least before
+                    Play_avplay.seekTo(Math.max(PlayClip_offsettime - 3500, 0)); // minor delay on the seekTo to show were it stop or at least before
                 } catch (e) {
                     console.log('PlayClip_onPlayer seekTo ' + e);
                 }

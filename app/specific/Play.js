@@ -2573,6 +2573,9 @@ function Play_MakeControls() {
                 Play_onPlayer();
             } else if (PlayVodClip === 2) {
                 PlayVod_hidePanel();
+                if (Main_IsNotBrowser) {
+                    Main_values.vodOffset = Play_avplay.getCurrentTime() / 1000;
+                }
                 PlayVod_quality = PlayVod_qualities[PlayVod_qualityIndex].id;
                 PlayVod_qualityPlaying = PlayVod_quality;
                 PlayVod_playingUrl = PlayVod_qualities[PlayVod_qualityIndex].url;
@@ -2580,6 +2583,9 @@ function Play_MakeControls() {
                 PlayVod_onPlayer();
             } else if (PlayVodClip === 3) {
                 PlayClip_hidePanel();
+                if (Main_IsNotBrowser) {
+                    PlayClip_offsettime = Play_avplay.getCurrentTime() - 1;
+                }
                 PlayClip_quality = PlayClip_qualities[PlayClip_qualityIndex].id;
                 PlayClip_qualityPlaying = PlayClip_quality;
                 PlayClip_playingUrl = PlayClip_qualities[PlayClip_qualityIndex].url;

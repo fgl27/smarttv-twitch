@@ -881,7 +881,6 @@ function ScreensObj_InitFeatured() {
         if (!this.idObject[id_cell]) {
             this.itemsCount++;
             this.idObject[id_cell] = 1;
-            var broadcasterLanguage = cell.stream.broadcaster.language ? cell.stream.broadcaster.language.toUpperCase() : '';
 
             this.row.appendChild(
                 Screens_createCellLive(
@@ -894,7 +893,7 @@ function ScreensObj_InitFeatured() {
                         cell.stream.title,
                         cell.stream.game.displayName,
                         STR_SINCE + Play_streamLiveAt(cell.stream.createdAt) + STR_SPACE + STR_FOR + Main_addCommas(cell.stream.viewersCount) + STR_SPACE + STR_VIEWER,
-                        '[' + broadcasterLanguage + ']'
+                        cell.stream.broadcaster.language ? '[' + cell.stream.broadcaster.language.toUpperCase() + ']' : ''
                     ]
                 )
             );

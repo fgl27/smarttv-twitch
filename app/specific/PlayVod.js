@@ -102,7 +102,7 @@ function PlayVod_Start() {
         Main_replaceClassEmoji('stream_info_title');
     }
 
-    PlayVod_updateStreamLogo();
+    PlayVod_SetStart();
 
     if (PlayVod_VodIds['#' + Main_values.ChannelVod_vodId] && !Main_values.vodOffset) {
         Play_HideBufferDialog();
@@ -114,6 +114,11 @@ function PlayVod_Start() {
     if (!Main_values.Play_gameSelected_id && Main_values.Play_gameSelected) {
         PlayClip_UpdateGameInfo();
     }
+}
+
+function PlayVod_SetStart() {
+    PlayVod_updateStreamLogo();
+    PlayVod_get_vod_extra_info();
 }
 
 function PlayVod_PosStart() {
@@ -158,7 +163,6 @@ function PlayVod_PosStart() {
     document.body.removeEventListener('keyup', Main_handleKeyUp);
 
     Play_controls[Play_controlsChanelCont].setLable(Main_values.Main_selectedChannelDisplayname);
-    Play_controls[Play_controlsGameCont].setLable(Main_values.Play_gameSelected);
 }
 
 function PlayVod_PrepareLoad() {
@@ -185,6 +189,52 @@ function PlayVod_updateStreamLogoValues(responseText) {
     }
 
     PlayVod_updateVodInfo();
+}
+
+var previewUrl = '{"query":"{video(id:%x){game{displayName, id},seekPreviewsURL}}"}';
+
+function PlayVod_get_vod_extra_info() {
+    var xmlHttp = new XMLHttpRequest();
+
+    xmlHttp.open('POST', PlayClip_BaseClipUrl, true);
+    xmlHttp.timeout = PlayClip_loadingDataTimeout;
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
+    xmlHttp.setRequestHeader('Content-Type', 'application/json');
+
+    xmlHttp.ontimeout = function () {};
+
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) {
+                PlayVod_get_vod_extra_infoResult(xmlHttp.responseText);
+            }
+        }
+    };
+
+    xmlHttp.send(previewUrl.replace('%x', Main_values.ChannelVod_vodId));
+}
+
+function PlayVod_get_vod_extra_infoResult(responseText) {
+    if (PlayVod_isOn) {
+        var obj = JSON.parse(responseText);
+
+        if (obj.data && obj.data.video) {
+            if (obj.data.video.game) {
+                PlayVod_UpdateGameInfoLabels(obj.data.video.game.id, obj.data.video.game.displayName);
+            }
+        }
+    }
+}
+
+function PlayVod_UpdateGameInfoLabels(gameId, gameName) {
+    Main_values.Play_gameSelected_id = gameId;
+
+    ChannelVod_game = gameName;
+    Main_values.Play_gameSelected = gameName;
+    if (gameName) {
+        Play_controls[Play_controlsGameCont].setLable(gameName);
+        Main_innerHTML('stream_info_game', STR_PLAYING + gameName);
+    }
 }
 
 function PlayVod_updateStreamerInfoValues() {

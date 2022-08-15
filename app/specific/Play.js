@@ -1146,6 +1146,7 @@ function Play_onPlayer() {
 
         Play_SetFullScreen(Play_isFullScreen);
         Play_avplay.setListener(Play_listener);
+        Play_avplay.setSilentSubtitle(true);
         Play_offsettime = Play_oldcurrentTime;
 
         if (!Main_isReleased) console.log('Before Play_avplay.prepareAsync:', 'date: ' + new Date());

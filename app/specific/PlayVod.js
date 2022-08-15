@@ -638,6 +638,7 @@ function PlayVod_onPlayer() {
         Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_RESUME', 'PLAYER_BUFFER_SIZE_IN_SECOND', PlayVod_Buffer);
         Play_SetFullScreen(Play_isFullScreen);
         Play_avplay.setListener(PlayVod_listener);
+        Play_avplay.setSilentSubtitle(true);
 
         Play_avplay.prepareAsync(
             function () {

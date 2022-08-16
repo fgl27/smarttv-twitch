@@ -9651,8 +9651,14 @@
 
             Play_SetFullScreen(Play_isFullScreen);
             Play_avplay.setListener(Play_listener);
-            Play_avplay.setSilentSubtitle(true);
             Play_offsettime = Play_oldcurrentTime;
+
+            try {
+                //Disabled closed caption as ins't properly supported by all devices
+                Play_avplay.setSilentSubtitle(true);
+            } catch (e) {
+                console.log('PlayVod_onPlayer open ' + e);
+            }
 
             if (!Main_isReleased) console.log('Before Play_avplay.prepareAsync:', 'date: ' + new Date());
 
@@ -12242,7 +12248,6 @@
             Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_RESUME', 'PLAYER_BUFFER_SIZE_IN_SECOND', PlayVod_Buffer);
             Play_SetFullScreen(Play_isFullScreen);
             Play_avplay.setListener(PlayVod_listener);
-            Play_avplay.setSilentSubtitle(true);
 
             Play_avplay.prepareAsync(
                 function() {

@@ -1146,8 +1146,14 @@ function Play_onPlayer() {
 
         Play_SetFullScreen(Play_isFullScreen);
         Play_avplay.setListener(Play_listener);
-        Play_avplay.setSilentSubtitle(true);
         Play_offsettime = Play_oldcurrentTime;
+
+        try {
+            //Disabled closed caption as ins't properly supported by all devices
+            Play_avplay.setSilentSubtitle(true);
+        } catch (e) {
+            console.log('PlayVod_onPlayer open ' + e);
+        }
 
         if (!Main_isReleased) console.log('Before Play_avplay.prepareAsync:', 'date: ' + new Date());
 

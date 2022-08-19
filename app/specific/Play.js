@@ -108,7 +108,7 @@ var Play_live_ttv_lol_links = 'https://api.ttv.lol/playlist/';
 var ttv_lol_headers = [['X-Donate-To', 'https://ttv.lol/donate']];
 
 var use_proxy;
-var purpel_proxy = 'https://jupter.ga/hls/v2/channel/';
+var purple_proxy = 'https://jupter.ga/hls/v2/channel/';
 var proxy_timeout = 5000;
 var proxy_url = '';
 var proxy_headers = null;

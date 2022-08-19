@@ -10,7 +10,19 @@ var ChannelContent_itemsCountOffset = 0;
 var ChannelContent_isoffline = false;
 var ChannelContent_UserChannels = false;
 var ChannelContent_TargetId;
-var ChannelContent_ids = ['cc_thumbdiv', 'cc_img', 'cc_infodiv', 'cc_name', 'cc_createdon', 'cc_game', 'cc_viwers', 'cc_duration', 'cc_cell', 'sccempty_', 'channel_content_scroll'];
+var ChannelContent_ids = [
+    'cc_thumbdiv',
+    'cc_img',
+    'cc_infodiv',
+    'cc_name',
+    'cc_createdon',
+    'cc_game',
+    'cc_viwers',
+    'cc_duration',
+    'cc_cell',
+    'sccempty_',
+    'channel_content_scroll'
+];
 var ChannelContent_status = false;
 var ChannelContent_lastselectedChannel = '';
 var ChannelContent_responseText = null;
@@ -28,7 +40,8 @@ var ChannelContent_clear = false;
 function ChannelContent_init() {
     Main_values.Main_CenterLablesVectorPos = 1;
     Main_values.Main_Go = Main_ChannelContent;
-    if (ChannelContent_ChannelValueIsset && !Main_values.Search_isSearching && Main_values.Main_selectedChannel_id) ChannelContent_RestoreChannelValue();
+    if (ChannelContent_ChannelValueIsset && !Main_values.Search_isSearching && Main_values.Main_selectedChannel_id)
+        ChannelContent_RestoreChannelValue();
     if (ChannelContent_lastselectedChannel !== Main_values.Main_selectedChannel) ChannelContent_status = false;
     Main_cleanTopLabel();
     document.body.addEventListener('keydown', ChannelContent_handleKeyDown, false);
@@ -89,9 +102,22 @@ function ChannelContent_loadDataPrepare() {
 
 function ChannelContent_loadDataRequest() {
     // Changed to Get Streams https://dev.twitch.tv/docs/api/reference#get-streams
-    var theUrl = Main_helix_api + 'streams?user_id=' + encodeURIComponent(ChannelContent_TargetId !== undefined ? ChannelContent_TargetId : Main_values.Main_selectedChannel_id);
+    var theUrl =
+        Main_helix_api +
+        'streams?user_id=' +
+        encodeURIComponent(ChannelContent_TargetId !== undefined ? ChannelContent_TargetId : Main_values.Main_selectedChannel_id);
 
-    BasexmlHttpGet(theUrl, ChannelContent_loadingDataTimeout, 2, null, ChannelContent_loadDataRequestSuccess, ChannelContent_loadDataError, false, null, true);
+    BasexmlHttpGet(
+        theUrl,
+        ChannelContent_loadingDataTimeout,
+        2,
+        null,
+        ChannelContent_loadDataRequestSuccess,
+        ChannelContent_loadDataError,
+        false,
+        null,
+        true
+    );
 }
 
 function ChannelContent_loadDataRequestSuccess(response) {
@@ -157,7 +183,17 @@ function ChannelContent_GetStreamerInfo() {
     // https://dev.twitch.tv/docs/api/reference#get-users
     var theUrl = Main_helix_api + 'users?id=' + Main_values.Main_selectedChannel_id;
 
-    BasexmlHttpGet(theUrl, PlayVod_loadingInfoDataTimeout, 2, null, ChannelContent_GetStreamerInfoSuccess, ChannelContent_GetStreamerInfoError, false, null, true);
+    BasexmlHttpGet(
+        theUrl,
+        PlayVod_loadingInfoDataTimeout,
+        2,
+        null,
+        ChannelContent_GetStreamerInfoSuccess,
+        ChannelContent_GetStreamerInfoError,
+        false,
+        null,
+        true
+    );
 }
 
 function ChannelContent_GetStreamerInfoSuccess(responseText) {
@@ -166,7 +202,9 @@ function ChannelContent_GetStreamerInfoSuccess(responseText) {
     if (obj.data && obj.data.length) {
         var channel = obj.data[0];
         ChannelContent_offline_image = channel.offline_image_url;
-        ChannelContent_offline_image = ChannelContent_offline_image ? ChannelContent_offline_image.replace('1920x1080', Main_VideoSize) : ChannelContent_offline_image;
+        ChannelContent_offline_image = ChannelContent_offline_image
+            ? ChannelContent_offline_image.replace('1920x1080', Main_VideoSize)
+            : ChannelContent_offline_image;
         //ChannelContent_profile_banner = channel.profile_image_url ? channel.profile_image_url : IMG_404_BANNER;
         ChannelContent_selectedChannelViews = channel.view_count;
         //ChannelContent_selectedChannelFollower = channel.followers;
@@ -197,8 +235,19 @@ function ChannelContent_GetStreamerInfoError() {
 }
 
 function ChannelContent_setFollow() {
-    if (AddCode_IsFollowing) Main_innerHTML('channel_content_titley_2', '<i class="icon-heart" style="color: #6441a4; font-size: 100%;"></i>' + STR_SPACE + STR_SPACE + STR_FOLLOWING);
-    else Main_innerHTML('channel_content_titley_2', '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + (AddUser_UserIsSet() ? STR_FOLLOW : STR_NOKEY));
+    if (AddCode_IsFollowing)
+        Main_innerHTML(
+            'channel_content_titley_2',
+            '<i class="icon-heart" style="color: #6441a4; font-size: 100%;"></i>' + STR_SPACE + STR_SPACE + STR_FOLLOWING
+        );
+    else
+        Main_innerHTML(
+            'channel_content_titley_2',
+            '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' +
+                STR_SPACE +
+                STR_SPACE +
+                (AddUser_UserIsSet() ? STR_FOLLOW : STR_NOKEY)
+        );
 }
 
 function ChannelContent_loadDataSuccess() {
@@ -206,18 +255,32 @@ function ChannelContent_loadDataSuccess() {
 
     Main_innerHTML(
         'channel_content_thumbdiv0_1',
-        '<img class="stream_img_channel_logo" alt="" src="' + Main_values.Main_selectedChannelLogo.replace('300x300', '600x600') + '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'">'
+        '<img class="stream_img_channel_logo" alt="" src="' +
+            Main_values.Main_selectedChannelLogo.replace('300x300', '600x600') +
+            '" onerror="this.onerror=null;this.src=\'' +
+            IMG_404_LOGO +
+            '\'">'
     );
 
-    Main_innerHTML('channel_content_img0_1', '<img class="stream_img_channel" alt="" src="' + ChannelContent_profile_banner + '" onerror="this.onerror=null;this.src=\'' + IMG_404_BANNER + '\'">');
+    Main_innerHTML(
+        'channel_content_img0_1',
+        '<img class="stream_img_channel" alt="" src="' +
+            ChannelContent_profile_banner +
+            '" onerror="this.onerror=null;this.src=\'' +
+            IMG_404_BANNER +
+            '\'">'
+    );
 
     var streamer_bio = Main_values.Main_selectedChannelDisplayname;
 
-    streamer_bio += Main_values.Main_selectedChannelPartner ? STR_SPACE + STR_SPACE + '<img style="display: inline-block; width: 2ch; vertical-align: middle;" alt="" src="' + IMG_PARTNER + '">' : '';
+    streamer_bio += Main_values.Main_selectedChannelPartner
+        ? STR_SPACE + STR_SPACE + '<img style="display: inline-block; width: 2ch; vertical-align: middle;" alt="" src="' + IMG_PARTNER + '">'
+        : '';
 
     streamer_bio += ChannelContent_selectedChannelViews !== '' ? STR_BR + Main_addCommas(ChannelContent_selectedChannelViews) + STR_VIEWS : '';
 
-    streamer_bio += ChannelContent_selectedChannelFollower !== '' ? STR_BR + Main_addCommas(ChannelContent_selectedChannelFollower) + STR_FOLLOWERS : '';
+    streamer_bio +=
+        ChannelContent_selectedChannelFollower !== '' ? STR_BR + Main_addCommas(ChannelContent_selectedChannelFollower) + STR_FOLLOWERS : '';
 
     streamer_bio += ChannelContent_description !== '' ? STR_BR + STR_BR + STR_ABOUT + ':' + STR_BR + twemoji.parse(ChannelContent_description) : '';
 
@@ -230,7 +293,7 @@ function ChannelContent_loadDataSuccess() {
             var stream = ChannelContent_responseText[0];
 
             ChannelContent_createCell(
-                stream.user_name,
+                stream.user_login,
                 stream.id,
                 stream.thumbnail_url,
                 twemoji.parse(stream.title),
@@ -248,11 +311,23 @@ function ChannelContent_loadDataSuccess() {
     ChannelContent_loadDataSuccessFinish();
 }
 
-function ChannelContent_createCell(channel_name, channel_id, preview_thumbnail, stream_title, stream_game, channel_display_name, viewers, quality, rerun) {
+function ChannelContent_createCell(
+    channel_name,
+    channel_id,
+    preview_thumbnail,
+    stream_title,
+    stream_game,
+    channel_display_name,
+    viewers,
+    quality,
+    rerun
+) {
     var ishosting = ChannelContent_TargetId !== undefined;
     if (!preview_thumbnail) preview_thumbnail = IMG_404_VIDEO;
 
-    document.getElementById('channel_content_cell0_1').setAttribute(Main_DataAttribute, JSON.stringify([channel_name, channel_id, rerun, channel_display_name]));
+    document
+        .getElementById('channel_content_cell0_1')
+        .setAttribute(Main_DataAttribute, JSON.stringify([channel_name, channel_id, rerun, channel_display_name]));
 
     Main_innerHTML(
         'channel_content_thumbdiv0_0',

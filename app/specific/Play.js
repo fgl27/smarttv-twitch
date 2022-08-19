@@ -810,7 +810,6 @@ function Play_loadDataRequest(skipProxy) {
             xmlHttp.open('GET', url, true);
 
             xmlHttp.timeout = proxy_timeout;
-            console.log(proxy_timeout);
         } else {
             headers = Play_Headers;
             if (Play_state === Play_STATE_LOADING_TOKEN) {

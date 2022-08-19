@@ -37,7 +37,8 @@ var PlayClip_All = false;
 var PlayClip_All_Forced = true;
 var PlayClip_loadingtreamerInfoTry = 0;
 var PlayClip_bufferingcomplete = false;
-var PlayClip_ExtraClipInfo = '{"query":"{clip(slug:\\"%x\\"){game{displayName},videoOffsetSeconds,broadcaster{roles{isPartner},displayName,profileImageURL(width: 300)}}}"}';
+var PlayClip_ExtraClipInfo =
+    '{"query":"{clip(slug:\\"%x\\"){game{displayName},videoOffsetSeconds,broadcaster{roles{isPartner},displayName,profileImageURL(width: 300)}}}"}';
 
 //Variable initialization end
 
@@ -126,6 +127,8 @@ function PlayClip_Start() {
         Play_controls[Play_controlsOpenVod].setLable('');
     }
     Play_controls[Play_controlsChanelCont].setLable(Main_values.Main_selectedChannelDisplayname);
+
+    Play_UpdateVideoStatus();
 
     if (!Main_values.Play_gameSelected_id && Main_values.Play_gameSelected) {
         PlayClip_UpdateGameInfo();
@@ -224,7 +227,12 @@ function PlayClip_loadVodOffsettResult(responseText) {
             }
 
             if (clip.broadcaster) {
-                Play_partnerIcon(clip.broadcaster.displayName, clip.broadcaster.roles && clip.broadcaster.roles.isPartner, false, ChannelClip_language);
+                Play_partnerIcon(
+                    clip.broadcaster.displayName,
+                    clip.broadcaster.roles && clip.broadcaster.roles.isPartner,
+                    false,
+                    ChannelClip_language
+                );
 
                 Play_LoadLogo(Main_getElementById('stream_info_icon'), clip.broadcaster.profileImageURL);
 
@@ -387,7 +395,11 @@ function PlayClip_QualityGenerate(response) {
     var token;
 
     if (response && response.hasOwnProperty('data') && response.data.hasOwnProperty('clip')) {
-        token = '?sig=' + encodeURIComponent(response.data.clip.playbackAccessToken.signature) + '&token=' + encodeURIComponent(response.data.clip.playbackAccessToken.value);
+        token =
+            '?sig=' +
+            encodeURIComponent(response.data.clip.playbackAccessToken.signature) +
+            '&token=' +
+            encodeURIComponent(response.data.clip.playbackAccessToken.value);
         response = response.data.clip.videoQualities;
 
         for (var i = 0; i < response.length; i++) {
@@ -515,7 +527,8 @@ function PlayClip_PlayerCheck() {
         PlayClip_PlayerCheckCount++;
         if (PlayClip_PlayerCheckCount > Play_PlayerCheckTimer) {
             //Don't change the first time only retry
-            if (PlayClip_PlayerCheckQualityChanged && PlayClip_PlayerCheckRun && PlayClip_qualityIndex < PlayClip_getQualitiesCount() - 1) PlayClip_qualityIndex++;
+            if (PlayClip_PlayerCheckQualityChanged && PlayClip_PlayerCheckRun && PlayClip_qualityIndex < PlayClip_getQualitiesCount() - 1)
+                PlayClip_qualityIndex++;
             else if (!PlayClip_PlayerCheckQualityChanged && PlayClip_PlayerCheckRun) PlayClip_PlayerCheckCounter++;
 
             if (!navigator.onLine) Play_EndStart(false, 3);
@@ -559,7 +572,8 @@ function PlayClip_updateCurrentTime(currentTime) {
     if (!Play_IsWarning && Play_WarningDialogVisible()) Play_HideWarningDialog();
     if (PlayClip_bufferingcomplete && Play_BufferDialogVisible()) Play_HideBufferDialog();
 
-    if (Play_isPanelShown() && !Play_BufferDialogVisible()) PlayVod_ProgresBarrUpdate(PlayClip_currentTime / 1000, PlayClip_DurationSeconds, !PlayVod_IsJumping);
+    if (Play_isPanelShown() && !Play_BufferDialogVisible())
+        PlayVod_ProgresBarrUpdate(PlayClip_currentTime / 1000, PlayClip_DurationSeconds, !PlayVod_IsJumping);
 }
 
 function PlayClip_shutdownStream() {

@@ -114,6 +114,9 @@ var proxy_url = '';
 var proxy_headers = null;
 var proxy_has_parameter = false;
 
+var proxy_fail_counter = 0;
+var proxy_fail_counter_checker = 0;
+
 //var proxy_ping_url = 'https://api.ttv
 
 //counterclockwise movement, Vertical/horizontal Play_ChatPositions
@@ -800,6 +803,9 @@ function Play_loadDataRequest(skipProxy) {
         var useProxy;
 
         if (use_proxy && !skipProxy && Play_state === Play_STATE_LOADING_TOKEN) {
+            //if at te end of a request the values are different we have a issues
+            proxy_fail_counter_checker = proxy_fail_counter;
+
             useProxy = true;
             Play_state = Play_STATE_LOADING_PLAYLIST;
             headers = proxy_headers ? proxy_headers : [];
@@ -853,6 +859,7 @@ function Play_loadDataRequest(skipProxy) {
                     //Play_410ERROR = false;
                 } else if (useProxy) {
                     //if proxy fails fall back to normal request
+                    proxy_fail_counter++;
                     Play_state = Play_STATE_LOADING_TOKEN;
                     Play_loadData(true);
                 } else if (xmlHttp.status === 403 || xmlHttp.status === 404) {
@@ -1588,10 +1595,32 @@ function Play_showPanel() {
     Play_SetHtmlQuality('stream_quality', true);
     Play_RefreshWatchingtime();
     Play_clock();
+    Play_UpdateVideoStatus();
     Play_CleanHideExit();
     Play_ForceShowPannel();
     Play_clearHidePanel();
     Play_setHidePanel();
+}
+
+function Play_UpdateVideoStatus() {
+    Main_innerHTML('stream_status', Play_UpdateVideoStatusGetProxy());
+}
+
+function Play_UpdateVideoStatusGetProxy() {
+    if (!Play_isOn) {
+        return '';
+    }
+    var proxyString = STR_BR + PROXY_SERVICE;
+
+    if (!use_proxy) {
+        return proxyString + PROXY_SERVICE_OFF;
+    }
+
+    if (proxy_fail_counter > proxy_fail_counter_checker) {
+        return proxyString + PROXY_SERVICE_FAIL.replace('%x', proxy_fail_counter);
+    }
+
+    return proxyString + PROXY_SERVICE_STATUS;
 }
 
 function Play_ForceShowPannel() {

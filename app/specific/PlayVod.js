@@ -119,6 +119,7 @@ function PlayVod_Start() {
 function PlayVod_SetStart() {
     PlayVod_updateStreamLogo();
     PlayVod_get_vod_extra_info();
+    Play_UpdateVideoStatus();
 }
 
 function PlayVod_PosStart() {
@@ -239,7 +240,12 @@ function PlayVod_UpdateGameInfoLabels(gameId, gameName) {
 
 function PlayVod_updateStreamerInfoValues() {
     Play_LoadLogo(document.getElementById('stream_info_icon'), Main_values.Main_selectedChannelLogo);
-    Play_partnerIcon(Main_values.Main_selectedChannelDisplayname, Main_values.Main_selectedChannelPartner, false, ' [' + ChannelVod_language.toUpperCase() + ']');
+    Play_partnerIcon(
+        Main_values.Main_selectedChannelDisplayname,
+        Main_values.Main_selectedChannelPartner,
+        false,
+        ' [' + ChannelVod_language.toUpperCase() + ']'
+    );
 
     //The chat init will happens after user click on vod dialog
     if (!PlayVod_VodIds['#' + Main_values.ChannelVod_vodId]) Chat_Init();
@@ -277,12 +283,20 @@ function PlayVod_updateVodInfoPannel(response) {
         //if (response.muted_segments) console.log(response.muted_segments);
 
         //Main_values.Main_selectedChannelPartner = response.channel.partner;
-        Play_partnerIcon(Main_values.Main_selectedChannelDisplayname, Main_values.Main_selectedChannelPartner, false, '[' + response.language.toUpperCase() + ']');
+        Play_partnerIcon(
+            Main_values.Main_selectedChannelDisplayname,
+            Main_values.Main_selectedChannelPartner,
+            false,
+            '[' + response.language.toUpperCase() + ']'
+        );
 
         Main_innerHTML('stream_info_title', ChannelVod_title);
         //Main_innerHTML('stream_info_game', response.game !== '' && response.game !== null ? STR_STARTED + STR_PLAYING + response.game : '');
 
-        Main_innerHTML('stream_live_time', STR_STREAM_ON + Main_videoCreatedAt(response.created_at) + ',' + STR_SPACE + Main_addCommas(response.view_count) + STR_VIEWS);
+        Main_innerHTML(
+            'stream_live_time',
+            STR_STREAM_ON + Main_videoCreatedAt(response.created_at) + ',' + STR_SPACE + Main_addCommas(response.view_count) + STR_VIEWS
+        );
         Main_textContent('stream_live_viewers', '');
         Main_textContent('stream_watching_time', '');
 
@@ -674,7 +688,13 @@ function PlayVod_PlayerCheck() {
         PlayVod_PlayerCheckCount++;
         if (PlayVod_PlayerCheckCount > Play_PlayerCheckTimer) {
             //Don't change the first time only retry, and don't change if in Auto mode
-            if (PlayVod_PlayerCheckQualityChanged && PlayVod_PlayerCheckRun && PlayVod_qualityIndex < PlayVod_getQualitiesCount() - 1 && PlayVod_quality.indexOf('Auto') === -1) PlayVod_qualityIndex++;
+            if (
+                PlayVod_PlayerCheckQualityChanged &&
+                PlayVod_PlayerCheckRun &&
+                PlayVod_qualityIndex < PlayVod_getQualitiesCount() - 1 &&
+                PlayVod_quality.indexOf('Auto') === -1
+            )
+                PlayVod_qualityIndex++;
             else if (!PlayVod_PlayerCheckQualityChanged && PlayVod_PlayerCheckRun) PlayVod_PlayerCheckCounter++;
 
             if (!navigator.onLine) Play_EndStart(false, 2);
@@ -701,7 +721,8 @@ function PlayVod_updateCurrentTime(currentTime) {
     if (!Play_IsWarning && Play_WarningDialogVisible()) Play_HideWarningDialog();
     if (PlayVod_bufferingcomplete && Play_BufferDialogVisible()) Play_HideBufferDialog();
 
-    if (Play_isPanelShown() && !Play_BufferDialogVisible()) PlayVod_ProgresBarrUpdate(PlayVod_currentTime / 1000, ChannelVod_DurationSeconds, !PlayVod_IsJumping);
+    if (Play_isPanelShown() && !Play_BufferDialogVisible())
+        PlayVod_ProgresBarrUpdate(PlayVod_currentTime / 1000, ChannelVod_DurationSeconds, !PlayVod_IsJumping);
 }
 
 function PlayVod_DropOneQuality(ConnectionDrop) {
@@ -944,7 +965,16 @@ function PlayVod_jumpSteps(duration_seconds) {
 }
 
 function PlayVod_jumpTime() {
-    Main_textContent('progress_bar_jump_to', STR_JUMP_TIME + ' (' + (PlayVod_addToJump < 0 ? '-' : '') + Play_timeS(Math.abs(PlayVod_addToJump)) + ')' + STR_JUMP_T0 + Play_timeS(PlayVod_TimeToJump));
+    Main_textContent(
+        'progress_bar_jump_to',
+        STR_JUMP_TIME +
+            ' (' +
+            (PlayVod_addToJump < 0 ? '-' : '') +
+            Play_timeS(Math.abs(PlayVod_addToJump)) +
+            ')' +
+            STR_JUMP_T0 +
+            Play_timeS(PlayVod_TimeToJump)
+    );
 }
 
 function PlayVod_jumpStart(multiplier, duration_seconds) {

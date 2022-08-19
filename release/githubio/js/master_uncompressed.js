@@ -410,7 +410,22 @@
     var STR_WARNING_NEW;
     var STR_BITCOIN_SUMMARY;
     var STR_FAIL_VOD_INFO;
+    var STR_TTV_LOL;
+    var STR_TTV_LOL_SUMMARY;
+    var PROXY_SERVICE;
+    var PROXY_SERVICE_STATUS;
+    var PROXY_SERVICE_FAIL;
+    var PROXY_SERVICE_OFF;
+    var PROXY_SETTINGS;
+    var PROXY_SETTINGS_SUMMARY;
+    var STR_PURPLE_ADBLOCK;
+    var STR_PURPLE_ADBLOCK_SUMMARY;
+    var STR_PROXY_TIMEOUT;
+    var STR_PROXY_TIMEOUT_SUMMARY;
+    var STR_PROXY_DONATE_SUMMARY;
     // Bellow here are the all untranslatable string,they are a combination of strings and html code use by pats of the code
+    var LINK_COLOR = '#328df5';
+    var STR_SPACE_HTML = '&nbsp;';
     var STR_ABOUT_EMAIL = 'fglfgl27@gmail.com';
     var STR_BR = '<br>';
     var STR_DOT = '<i  class="icon-circle class_bold" style="font-size: 50%; vertical-align: middle;"></i>' + '  ';
@@ -430,6 +445,7 @@
     var STR_BITCOIN;
     var STR_BITCOIN_WALLET = '1DuhCT6L3VfBtFcS8FNfVXgBzE2rwCPx3x';
     var STR_DIV_LINK = '<div style="text-align: center; width: 100%; display: inline-block; color: #0366d6;">';
+    var STR_SPAN_LINK = '<span style="color: ' + LINK_COLOR + ';">';
 
     // This function is called after the main language is loaded, the above are initialized empty so it doesn't cause loading exceptions
     function DefaultLang() {
@@ -567,7 +583,12 @@
             STR_BR +
             STR_ABOUT_INFO_1 +
             STR_BR +
-            (Main_IsNotBrowser ? '' : STR_BR + '<div class="class_bold" style="display: inline-block; color: #FF0000; font-size: 110%;">' + STR_ABOUT_INFO_2_SOURCE + '</div>') +
+            (Main_IsNotBrowser ?
+                '' :
+                STR_BR +
+                '<div class="class_bold" style="display: inline-block; color: #FF0000; font-size: 110%;">' +
+                STR_ABOUT_INFO_2_SOURCE +
+                '</div>') +
             '</div>' +
             STR_BR +
             STR_DIV_TITLE +
@@ -625,7 +646,10 @@
             STR_OAUTH_EXPLAIN1 +
             STR_BR +
             STR_DOT +
-            STR_OAUTH_EXPLAIN2.replace('link_link', '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-family: \'Roboto-Bold\';">http://tiny.cc/twitchkey</div>') +
+            STR_OAUTH_EXPLAIN2.replace(
+                'link_link',
+                '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-family: \'Roboto-Bold\';">http://tiny.cc/twitchkey</div>'
+            ) +
             STR_BR +
             STR_DOT +
             STR_OAUTH_EXPLAIN3 +
@@ -638,6 +662,23 @@
             STR_BR +
             STR_DOT +
             STR_OAUTH_EXPLAIN6;
+
+        STR_PURPLE_ADBLOCK_SUMMARY =
+            STR_PROXY_DONATE_SUMMARY +
+            STR_SPACE_HTML +
+            STR_SPACE_HTML +
+            STR_SPAN_LINK +
+            DefaultMakeLink('https://github.com/arthurbolsoni/Purple-adblock') +
+            '</span>';
+
+        STR_TTV_LOL_SUMMARY =
+            STR_PROXY_DONATE_SUMMARY + STR_SPACE_HTML + STR_SPACE_HTML + STR_SPAN_LINK + DefaultMakeLink('https://ttv.lol/donate') + '</span>';
+    }
+
+    function DefaultMakeLink(link, prefix) {
+        return (
+            '<a style="color: ' + LINK_COLOR + '; text-decoration:none;" href="' + (prefix ? prefix : '') + link + '" target="_blank">' + link + '</a>'
+        );
     }
     //Spacing for reease maker not trow erros frm jshint
     function en_USLang() {
@@ -1064,6 +1105,22 @@
         STR_WARNING_NEW =
             "Twitch is shutting down some of they API, making necessary to update all app API calls to they new API, the new API is different because of that it demands a lot of work.<br><br>Because of that the app is going thru a update phase, during this time some app content may not work.<br><br>Be aware with this new Twitch API is necessary to add a User and a Authentication key, if you don’t you may not have access to any content in future updates or after Twitch completely shutting they old API.<br><br>Some users may need to reinstall the app...If you have problem after see this warning, hold channel key up until you see a warning, now hold key down until the app restar, if that doesn't work, reinstall  the app.<br><br>This dialog will auto hide in 1 minute, or press any key to hide it";
         STR_FAIL_VOD_INFO = 'Fail to load VOD info';
+        STR_PROXY_DONATE_SUMMARY = 'If you wanna to thanks the proxy server maintainer use the link:';
+
+        STR_TTV_LOL = 'TTV LOL';
+        STR_PURPLE_ADBLOCK = 'Purple Adblock ';
+
+        STR_PROXY_TIMEOUT = 'Proxy timeout (time in seconds)';
+        STR_PROXY_TIMEOUT_SUMMARY = 'If the proxy server is out this will be the time that will take to "give up" on the connection and fallback to default Twitch implementation';
+
+        PROXY_SERVICE = 'Proxy: ';
+        PROXY_SERVICE_STATUS = 'Enabled and working';
+        PROXY_SERVICE_OFF = 'Disabled in settings';
+        PROXY_SERVICE_FAIL = 'Not working, fail %x times';
+
+        PROXY_SETTINGS = 'Proxy Settings (Internet censorship and related proxy)';
+        PROXY_SETTINGS_SUMMARY =
+            'Only one proxy can be enable, enables proxy server to get stream links from a different server, that may allow you to see content that is forbidden on yours region and avoid ads, disable this if you have any live stream issue too many or longer buffers, freezes or slow connection that may cause the stream quality to drop.';
     }
     /*
      * Copyright (c) 2017-2020 Felipe de Leon <fglfgl27@gmail.com>
@@ -6164,7 +6221,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'July 27 2022';
+    var Main_minversion = 'August 19 2022';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
 
@@ -6455,7 +6512,10 @@
 
         Main_innerHTML('channel_content_titley_0', '<i class="icon-movie-play stream_channel_follow_icon"></i>' + STR_SPACE + STR_SPACE + STR_VIDEOS);
         Main_innerHTML('channel_content_titley_1', '<i class="icon-movie stream_channel_follow_icon"></i>' + STR_SPACE + STR_SPACE + STR_CLIPS);
-        Main_innerHTML('channel_content_titley_2', '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + STR_FOLLOW);
+        Main_innerHTML(
+            'channel_content_titley_2',
+            '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + STR_FOLLOW
+        );
 
         Main_textContent('chat_send_button0', STR_OPTIONS);
         Main_textContent('chat_send_button1', STR_CHAT_DELL_ALL);
@@ -7030,7 +7090,10 @@
         Main_values.Main_selectedChannelDisplayname = Main_values.ChannelVod_vodId[1];
         ChannelVod_createdAt = Main_values.ChannelVod_vodId[2];
         ChannelVod_title = Main_values.ChannelVod_vodId[3];
-        ChannelVod_game = Main_values.Play_gameSelected !== '' && Main_values.Play_gameSelected !== null ? STR_STARTED + STR_PLAYING + Main_values.Play_gameSelected : '';
+        ChannelVod_game =
+            Main_values.Play_gameSelected !== '' && Main_values.Play_gameSelected !== null ?
+            STR_STARTED + STR_PLAYING + Main_values.Play_gameSelected :
+            '';
         ChannelVod_views = Main_values.ChannelVod_vodId[4];
         Main_values.Play_gameSelected_id = null;
 
@@ -7248,7 +7311,8 @@
     // To see supported fonts and etc info about the unknown char
     function Main_PrintUnicode(string) {
         console.log(string);
-        for (var i = 0; i < string.length; i++) console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
+        for (var i = 0; i < string.length; i++)
+            console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
     }
 
     function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, key, id, use_helix, skip_user_token) {
@@ -7266,7 +7330,8 @@
 
                 Main_Bearer_User_Headers[1][1] = Main_Bearer + AddUser_UsernameArray[0].access_token;
 
-                for (i; i < Main_Bearer_User_Headers.length; i++) xmlHttp.setRequestHeader(Main_Bearer_User_Headers[i][0], Main_Bearer_User_Headers[i][1]);
+                for (i; i < Main_Bearer_User_Headers.length; i++)
+                    xmlHttp.setRequestHeader(Main_Bearer_User_Headers[i][0], Main_Bearer_User_Headers[i][1]);
             } else {
                 appToken = true;
                 for (i; i < Main_Bearer_Headers.length; i++) xmlHttp.setRequestHeader(Main_Bearer_Headers[i][0], Main_Bearer_Headers[i][1]);
@@ -8609,6 +8674,22 @@
     var Play_ProgresBarrElm;
     var Play_DefaultjumpTimers = [];
     var Play_UserLiveFeedPressed = false;
+
+    var Play_base_parameters = 'reassignments_supported=true&playlist_include_framerate=true&allow_source=true&fast_bread=true&cdm=wv&p=%d';
+    var Play_live_ttv_lol_links = 'https://api.ttv.lol/playlist/';
+    var ttv_lol_headers = [
+        ['X-Donate-To', 'https://ttv.lol/donate']
+    ];
+
+    var use_proxy;
+    var purpel_proxy = 'https://jupter.ga/hls/v2/channel/';
+    var proxy_timeout = 5000;
+    var proxy_url = '';
+    var proxy_headers = null;
+    var proxy_has_parameter = false;
+
+    //var proxy_ping_url = 'https://api.ttv
+
     //counterclockwise movement, Vertical/horizontal Play_ChatPositions
     //sizeOffset in relation to the size
     var Play_ChatPositionVal = [{
@@ -8749,7 +8830,11 @@
 
         Main_innerHTML(
             'user_feed_notify_img_holder',
-            '<img id="user_feed_notify_img" alt="" class="notify_img" src="' + IMG_404_LOGO + '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'" >'
+            '<img id="user_feed_notify_img" alt="" class="notify_img" src="' +
+            IMG_404_LOGO +
+            '" onerror="this.onerror=null;this.src=\'' +
+            IMG_404_LOGO +
+            '\'" >'
         );
 
         var Main_clientIdHeader = 'Client-ID';
@@ -9115,7 +9200,12 @@
         if (response.data && response.data.length) {
             response.stream = response.data[0];
 
-            Play_partnerIcon(Play_isHost ? Main_values.Play_DisplaynameHost : Main_values.Play_selectedChannelDisplayname, response.stream.broadcaster_type === 'partner', true, Play_Lang); //response.stream.channel.partner
+            Play_partnerIcon(
+                Play_isHost ? Main_values.Play_DisplaynameHost : Main_values.Play_selectedChannelDisplayname,
+                response.stream.broadcaster_type === 'partner',
+                true,
+                Play_Lang
+            ); //response.stream.channel.partner
             Main_values.Play_selectedChannelLogo = response.stream.profile_image_url;
             Play_LoadLogoSucess = true;
             Play_LoadLogo(document.getElementById('stream_info_icon'), Main_values.Play_selectedChannelLogo);
@@ -9134,11 +9224,27 @@
 
     function Play_updateStreamInfoStart() {
         var theUrl = Main_helix_api + 'streams/?user_id=' + Main_values.Play_selectedChannel_id;
-        BasexmlHttpGet(theUrl, Play_loadingInfoDataTimeout, 2, null, Play_updateStreamInfoStartValues, Play_updateStreamInfoStartError, false, null, true);
+        BasexmlHttpGet(
+            theUrl,
+            Play_loadingInfoDataTimeout,
+            2,
+            null,
+            Play_updateStreamInfoStartValues,
+            Play_updateStreamInfoStartError,
+            false,
+            null,
+            true
+        );
     }
 
     function Play_partnerIcon(name, partner, islive, lang) {
-        var div = '<div class="partnericon_div"> ' + name + STR_SPACE + STR_SPACE + '</div>' + (partner ? '<img class="partnericon_img" alt="" src="' + IMG_PARTNER + '">' : '');
+        var div =
+            '<div class="partnericon_div"> ' +
+            name +
+            STR_SPACE +
+            STR_SPACE +
+            '</div>' +
+            (partner ? '<img class="partnericon_img" alt="" src="' + IMG_PARTNER + '">' : '');
 
         if (islive) {
             div +=
@@ -9251,48 +9357,64 @@
         ImgObjet.src = link;
     }
 
-    function Play_loadData() {
+    function Play_loadData(skipProxy) {
         Play_loadingDataTry = 0;
         Play_loadingDataTimeout = 2000 + (Play_RestoreFromResume ? 3000 : 0);
-        Play_loadDataRequest();
+        Play_loadDataRequest(skipProxy);
     }
 
     var Play_410ERROR = true;
 
-    function Play_loadDataRequest() {
+    function Play_loadDataRequest(skipProxy) {
         try {
             var theUrl;
             var xmlHttp = new XMLHttpRequest();
+            var headers;
+            var useProxy;
 
-            if (Play_state === Play_STATE_LOADING_TOKEN) {
-                xmlHttp.open('POST', 'https://gql.twitch.tv/gql', true);
+            if (use_proxy && !skipProxy && Play_state === Play_STATE_LOADING_TOKEN) {
+                useProxy = true;
+                Play_state = Play_STATE_LOADING_PLAYLIST;
+                headers = proxy_headers ? proxy_headers : [];
+
+                var URL_parameters = Play_base_parameters.replace('%d', Math.random() * 100000);
+                var url = proxy_url + Main_values.Play_selectedChannel + (proxy_has_parameter ? '.m3u8' + encodeURIComponent('?' + URL_parameters) : '');
+
+                xmlHttp.open('GET', url, true);
+
+                xmlHttp.timeout = proxy_timeout;
+                console.log(proxy_timeout);
             } else {
-                if (!Play_tokenResponse.hasOwnProperty('value') || !Play_tokenResponse.hasOwnProperty('signature')) {
-                    Play_410ERROR = true;
-                    if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
-                    Play_loadDataError();
-                    return;
+                headers = Play_Headers;
+                if (Play_state === Play_STATE_LOADING_TOKEN) {
+                    xmlHttp.open('POST', 'https://gql.twitch.tv/gql', true);
+                } else {
+                    if (!Play_tokenResponse.hasOwnProperty('value') || !Play_tokenResponse.hasOwnProperty('signature')) {
+                        Play_410ERROR = true;
+                        if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                        Play_loadDataError();
+                        return;
+                    }
+
+                    theUrl =
+                        'https://usher.ttvnw.net/api/channel/hls/' +
+                        Main_values.Play_selectedChannel +
+                        '.m3u8?&token=' +
+                        encodeURIComponent(Play_tokenResponse.value) +
+                        '&sig=' +
+                        Play_tokenResponse.signature +
+                        '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true&fast_bread=true&cdm=wv&p=' +
+                        Main_RandomInt();
+
+                    xmlHttp.open('GET', theUrl, true);
                 }
-
-                theUrl =
-                    'https://usher.ttvnw.net/api/channel/hls/' +
-                    Main_values.Play_selectedChannel +
-                    '.m3u8?&token=' +
-                    encodeURIComponent(Play_tokenResponse.value) +
-                    '&sig=' +
-                    Play_tokenResponse.signature +
-                    '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true&fast_bread=true&cdm=wv&p=' +
-                    Main_RandomInt();
-
-                xmlHttp.open('GET', theUrl, true);
+                xmlHttp.timeout = Play_loadingDataTimeout;
             }
 
-            xmlHttp.timeout = Play_loadingDataTimeout;
+            if (headers && headers.length) {
+                var len = headers.length;
 
-            if (Play_Headers && Play_Headers.length) {
-                var len = Play_Headers.length;
-
-                for (var i = 0; i < len; i++) xmlHttp.setRequestHeader(Play_Headers[i][0], Play_Headers[i][1]);
+                for (var i = 0; i < len; i++) xmlHttp.setRequestHeader(headers[i][0], headers[i][1]);
             }
 
             xmlHttp.ontimeout = function() {};
@@ -9303,6 +9425,10 @@
                         Play_loadingDataTry = 0;
                         if (Play_isOn) Play_loadDataSuccess(xmlHttp.responseText);
                         //Play_410ERROR = false;
+                    } else if (useProxy) {
+                        //if proxy fails fall back to normal request
+                        Play_state = Play_STATE_LOADING_TOKEN;
+                        Play_loadData(true);
                     } else if (xmlHttp.status === 403 || xmlHttp.status === 404) {
                         //forbidden access
                         //404 = off line
@@ -9712,7 +9838,13 @@
             Play_PlayerCheckCount++;
             if (Play_PlayerCheckCount > Play_PlayerCheckTimer) {
                 //Don't change the first time only retry, and don't change if in Auto mode
-                if (Play_PlayerCheckQualityChanged && Play_PlayerCheckRun && Play_qualityIndex < Play_getQualitiesCount() - 1 && Play_qualityPlaying.indexOf('Auto') === -1) Play_qualityIndex++;
+                if (
+                    Play_PlayerCheckQualityChanged &&
+                    Play_PlayerCheckRun &&
+                    Play_qualityIndex < Play_getQualitiesCount() - 1 &&
+                    Play_qualityPlaying.indexOf('Auto') === -1
+                )
+                    Play_qualityIndex++;
                 else if (!Play_PlayerCheckQualityChanged && Play_PlayerCheckRun) Play_PlayerCheckCounter++;
 
                 if (!navigator.onLine) Play_EndStart(false, 1);
@@ -10113,7 +10245,8 @@
         if (Play_ChatPositions < 0) Play_ChatPositions = bool ? 2 : 7;
         else if (Play_ChatPositions > (bool ? 2 : 7)) Play_ChatPositions = 0;
 
-        Play_chat_container.style.top = (bool ? 0.2 : Play_ChatPositionVal[Play_ChatPositions].top + Play_ChatPositionVal[Play_ChatPositions].sizeOffset[Play_ChatSizeValue]) + '%';
+        Play_chat_container.style.top =
+            (bool ? 0.2 : Play_ChatPositionVal[Play_ChatPositions].top + Play_ChatPositionVal[Play_ChatPositions].sizeOffset[Play_ChatSizeValue]) + '%';
 
         Play_chat_container.style.left = Play_ChatPositionVal[Play_ChatPositions + (bool ? 2 : 0)].left + '%';
 
@@ -10376,7 +10509,10 @@
 
             Play_EndTextsReset();
             Main_innerHTML('end_channel_name_text', Main_values.Play_selectedChannelDisplayname);
-            Main_innerHTML('end_vod_title_text', Main_values.Play_selectedChannelDisplayname + STR_IS_NOW + STR_USER_HOSTING + Play_TargetHost.displayName);
+            Main_innerHTML(
+                'end_vod_title_text',
+                Main_values.Play_selectedChannelDisplayname + STR_IS_NOW + STR_USER_HOSTING + Play_TargetHost.displayName
+            );
         } else if (PlayVodClip === 1) {
             // play
             Play_EndIconsRemoveFocus();
@@ -10429,7 +10565,8 @@
 
     function Play_OpenChannel(PlayVodClip) {
         if (!Main_values.Main_BeforeChannelisSet && Main_values.Main_Go !== Main_ChannelVod && Main_values.Main_Go !== Main_ChannelClip) {
-            Main_values.Main_BeforeChannel = Main_values.Main_BeforeAgameisSet && Main_values.Main_Go !== Main_aGame ? Main_values.Main_BeforeAgame : Main_values.Main_Go;
+            Main_values.Main_BeforeChannel =
+                Main_values.Main_BeforeAgameisSet && Main_values.Main_Go !== Main_aGame ? Main_values.Main_BeforeAgame : Main_values.Main_Go;
             Main_values.Main_BeforeChannelisSet = true;
         }
 
@@ -10477,7 +10614,10 @@
 
         if (!Main_values.Main_BeforeAgameisSet && Main_values.Main_Go !== Main_AGameVod && Main_values.Main_Go !== Main_AGameClip) {
             Main_values.Main_BeforeAgame =
-                Main_values.Main_BeforeChannelisSet && Main_values.Main_Go !== Main_ChannelContent && Main_values.Main_Go !== Main_ChannelVod && Main_values.Main_Go !== Main_ChannelClip ?
+                Main_values.Main_BeforeChannelisSet &&
+                Main_values.Main_Go !== Main_ChannelContent &&
+                Main_values.Main_Go !== Main_ChannelVod &&
+                Main_values.Main_Go !== Main_ChannelClip ?
                 Main_values.Main_BeforeChannel :
                 Main_values.Main_Go;
             Main_values.Main_BeforeAgameisSet = true;
@@ -11004,7 +11144,10 @@
                 Play_OpenChannel(PlayVodClip);
             },
             setLable: function(title) {
-                Main_innerHTML('extra_button_' + this.position, '<div style="max-width: 27%; text-overflow: ellipsis; overflow: hidden; transform: translate(135.5%, 0);">' + title + '</div>');
+                Main_innerHTML(
+                    'extra_button_' + this.position,
+                    '<div style="max-width: 27%; text-overflow: ellipsis; overflow: hidden; transform: translate(135.5%, 0);">' + title + '</div>'
+                );
             }
         };
 
@@ -11022,7 +11165,9 @@
             setLable: function(title) {
                 Main_innerHTML(
                     'extra_button_' + this.position,
-                    '<div style="max-width: 40%; text-overflow: ellipsis; overflow: hidden; transform: translate(75%, 0);">' + (title === '' ? STR_NO_GAME : title) + '</div>'
+                    '<div style="max-width: 40%; text-overflow: ellipsis; overflow: hidden; transform: translate(75%, 0);">' +
+                    (title === '' ? STR_NO_GAME : title) +
+                    '</div>'
                 );
             }
         };
@@ -11039,7 +11184,10 @@
                 PlayClip_OpenVod();
             },
             setLable: function(title) {
-                Main_innerHTML('extra_button_' + this.position, '<div style="max-width: 60%; text-overflow: ellipsis; overflow: hidden; transform: translate(33%, 0);">' + title + '</div>');
+                Main_innerHTML(
+                    'extra_button_' + this.position,
+                    '<div style="max-width: 60%; text-overflow: ellipsis; overflow: hidden; transform: translate(33%, 0);">' + title + '</div>'
+                );
             }
         };
 
@@ -11064,7 +11212,11 @@
             setIcon: function(AddCode_IsFollowing) {
                 Main_innerHTML(
                     'controls_icon_' + this.position,
-                    '<i class="pause_button3d icon-' + (AddCode_IsFollowing ? 'heart' : 'heart-o') + '" style="color: #' + (AddCode_IsFollowing ? '6441a4' : 'FFFFFF') + ';" ></i>'
+                    '<i class="pause_button3d icon-' +
+                    (AddCode_IsFollowing ? 'heart' : 'heart-o') +
+                    '" style="color: #' +
+                    (AddCode_IsFollowing ? '6441a4' : 'FFFFFF') +
+                    ';" ></i>'
                 );
             }
         };
@@ -11239,7 +11391,10 @@
                 Play_controls[Play_controlsChat].setLable();
             },
             setIcon: function() {
-                Main_innerHTML('controls_icon_' + this.position, '<i class="pause_button3d icon-' + (Play_isFullScreen ? 'resize-down' : 'resize-up') + '" ></i>');
+                Main_innerHTML(
+                    'controls_icon_' + this.position,
+                    '<i class="pause_button3d icon-' + (Play_isFullScreen ? 'resize-down' : 'resize-up') + '" ></i>'
+                );
             }
         };
 
@@ -11299,7 +11454,10 @@
                 this.setLable();
             },
             setLable: function() {
-                Main_textContent('controls_name_' + Play_controlsChatPos, Play_controls[Play_controlsChatPos].values[Play_controls[Play_controlsChatPos].defaultValue]);
+                Main_textContent(
+                    'controls_name_' + Play_controlsChatPos,
+                    Play_controls[Play_controlsChatPos].values[Play_controls[Play_controlsChatPos].defaultValue]
+                );
             },
             bottomArrows: function() {
                 Play_BottomArrows(this.position);
@@ -11310,7 +11468,29 @@
             //chat_brightness
             icons: 'chat-brig',
             string: STR_CHAT_BRIGHTNESS,
-            values: ['0%', '5%', '10%', '15%', '20%', '25%', '30%', '35%', '40%', '45%', '50%', '55%', '60%', '65%', '70%', '75%', '80%', '85%', '90%', '95%', '100%'],
+            values: [
+                '0%',
+                '5%',
+                '10%',
+                '15%',
+                '20%',
+                '25%',
+                '30%',
+                '35%',
+                '40%',
+                '45%',
+                '50%',
+                '55%',
+                '60%',
+                '65%',
+                '70%',
+                '75%',
+                '80%',
+                '85%',
+                '90%',
+                '95%',
+                '100%'
+            ],
             defaultValue: Main_values.ChatBackground,
             opacity: 0,
             isChat: true,
@@ -11434,8 +11614,10 @@
         Main_AddClass('controls_button_' + Play_Panelcounter, 'progress_bar_div_focus');
         document.getElementById('controls_button_text_' + Play_Panelcounter).style.opacity = '1';
 
-        if (Play_controls[Play_Panelcounter].isChat && (!Play_isChatShown() || !Play_isFullScreen)) document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = '1';
-        else if (Play_Panelcounter !== Play_controlsChat && !Play_controls[Play_Panelcounter].isChat) document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = '0';
+        if (Play_controls[Play_Panelcounter].isChat && (!Play_isChatShown() || !Play_isFullScreen))
+            document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = '1';
+        else if (Play_Panelcounter !== Play_controlsChat && !Play_controls[Play_Panelcounter].isChat)
+            document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = '0';
     }
 
     function Play_IconsRemoveFocus() {
@@ -16129,6 +16311,26 @@
             //Migrated to dialog
             values: ['no', 'yes'],
             defaultValue: 1
+        },
+        ttv_lolProxy: {
+            //Migrated to dialog
+            values: ['no', 'yes'],
+            defaultValue: 1
+        },
+        proxy_timeout: {
+            //Migrated to dialog
+            values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 30],
+            defaultValue: 10
+        },
+        purple_adblock: {
+            //Migrated to dialog
+            values: ['no', 'yes'],
+            defaultValue: 1
+        },
+        proxy_settings: {
+            values: ['None'],
+            set_values: [''],
+            defaultValue: 1
         }
     };
 
@@ -16212,7 +16414,16 @@
         //live_feed_sort
         key = 'live_feed_sort';
         Settings_value_keys.push(key);
-        Settings_value[key].values = [STR_VIWES_MOST, STR_VIWES_LOWEST, STR_NAME_A_Z, STR_NAME_Z_A, STR_GAME_A_Z, STR_GAME_Z_A, STR_CREATED_NEWEST, STR_CREATED_OLDEST];
+        Settings_value[key].values = [
+            STR_VIWES_MOST,
+            STR_VIWES_LOWEST,
+            STR_NAME_A_Z,
+            STR_NAME_Z_A,
+            STR_GAME_A_Z,
+            STR_GAME_Z_A,
+            STR_CREATED_NEWEST,
+            STR_CREATED_OLDEST
+        ];
 
         div += Settings_DivOptionWithSummary(key, STR_LIVE_FEED_SORT, STR_LIVE_FEED_SORT_SUMMARY);
 
@@ -16285,6 +16496,12 @@
 
         // Player settings title
         div += Settings_DivTitle('play', STR_SETTINGS_PLAYER);
+
+        key = 'proxy_settings';
+        Settings_value_keys.push(key);
+        Settings_value[key].values = [STR_CONTENT_LANG_SUMARRY];
+
+        div += Settings_DivOptionNoSummary(key, PROXY_SETTINGS);
 
         key = 'single_click_exit';
         Settings_value_keys.push(key);
@@ -16386,7 +16603,10 @@
     }
 
     function Settings_DivOptionChangeLang(key, string_title, string_summary) {
-        Main_innerHTML(key + '_name', string_title + '<div id="' + key + '_summary" class="settings_summary" style="font-size: 65%;">' + string_summary + '</div>');
+        Main_innerHTML(
+            key + '_name',
+            string_title + '<div id="' + key + '_summary" class="settings_summary" style="font-size: 65%;">' + string_summary + '</div>'
+        );
     }
 
     // The order in Settings_SetStrings doesnot matter
@@ -16412,7 +16632,16 @@
         key = 'live_feed_sort';
         Settings_DivOptionChangeLang(key, STR_LIVE_FEED_SORT, STR_LIVE_FEED_SORT_SUMMARY);
         Main_textContent(key, Settings_Obj_values(key));
-        Settings_value[key].values = [STR_VIWES_MOST, STR_VIWES_LOWEST, STR_NAME_A_Z, STR_NAME_Z_A, STR_GAME_A_Z, STR_GAME_Z_A, STR_CREATED_NEWEST, STR_CREATED_OLDEST];
+        Settings_value[key].values = [
+            STR_VIWES_MOST,
+            STR_VIWES_LOWEST,
+            STR_NAME_A_Z,
+            STR_NAME_Z_A,
+            STR_GAME_A_Z,
+            STR_GAME_Z_A,
+            STR_CREATED_NEWEST,
+            STR_CREATED_OLDEST
+        ];
 
         //Player settings
         Main_textContent('setting_title_play', STR_SETTINGS_PLAYER);
@@ -16501,6 +16730,7 @@
         Play_SingleClickExit = Settings_Obj_default('single_click_exit');
         Play_EndSettingsCounter = Settings_Obj_default('end_dialog_counter');
         Settings_ShowCounter(Settings_Obj_default('show_screen_counter'));
+        Settings_proxy_set_start();
     }
 
     function Settings_Obj_values(key) {
@@ -16540,7 +16770,7 @@
         Main_setItem(key, Settings_Obj_default(key) + 1);
         Main_textContent(key, Settings_Obj_values(key));
         Settings_Setarrows(position);
-        Settings_SetDefault(position);
+        Settings_SetDefault(key);
     }
 
     function Settings_Setarrows(position) {
@@ -16564,8 +16794,6 @@
     }
 
     function Settings_SetDefault(position) {
-        position = Settings_value_keys[position];
-
         if (position === 'videos_animation') Vod_DoAnimateThumb = Settings_Obj_default('videos_animation');
         else if (position === 'clip_auto_play_next') PlayClip_All_Forced = Settings_Obj_default('clip_auto_play_next');
         else if (position === 'live_notification') UserLiveFeed_Notify = Settings_Obj_default('live_notification');
@@ -16579,9 +16807,68 @@
         else if (position === 'thumb_quality') Main_SetThumb();
         else if (position === 'global_font_offset') calculateFontSize();
         else if (position === 'show_screen_counter') Settings_ShowCounter(Settings_Obj_default('show_screen_counter'));
+        else if (position === 'ttv_lolProxy') Settings_set_TTV_LOL();
+        else if (position === 'proxy_timeout') Settings_set_proxy_timeout();
+        else if (position === 'purple_adblock') Settings_set_purple_adblock();
         else if (position === 'clock_offset') {
             Settings_SetClock();
             Main_updateclock();
+        }
+    }
+
+    function Settings_set_proxy_timeout() {
+        proxy_timeout = Settings_Obj_values('proxy_timeout') * 1000;
+    }
+
+    var proxyArray = ['ttv_lolProxy', 'purple_adblock'];
+
+    function Settings_set_purple_adblock() {
+        Settings_set_all_proxy('purple_adblock');
+    }
+
+    function Settings_set_TTV_LOL() {
+        Settings_set_all_proxy('ttv_lolProxy');
+    }
+
+    function Settings_set_all_proxy(current) {
+        var currentEnable = Settings_Obj_default(current) === 1;
+
+        use_proxy = currentEnable;
+
+        if (currentEnable) {
+            Settings_proxy_set_current(current);
+
+            var i = 0,
+                len = proxyArray.length;
+            for (i; i < len; i++) {
+                if (proxyArray[i] !== current && Settings_Obj_default(proxyArray[i]) === 1) {
+                    Settings_DialogRightLeftAfter(proxyArray[i], -1, true);
+                }
+            }
+        }
+    }
+
+    function Settings_proxy_set_start() {
+        var i = 0,
+            len = proxyArray.length;
+        for (i; i < len; i++) {
+            if (Settings_Obj_default(proxyArray[i]) === 1) {
+                use_proxy = true;
+                Settings_proxy_set_current(proxyArray[i]);
+                break;
+            }
+        }
+    }
+
+    function Settings_proxy_set_current(current) {
+        if (current === 'purple_adblock') {
+            proxy_url = purpel_proxy;
+            proxy_headers = null;
+            proxy_has_parameter = false;
+        } else {
+            proxy_url = Play_live_ttv_lol_links;
+            proxy_headers = ttv_lol_headers;
+            proxy_has_parameter = true;
         }
     }
 
@@ -16770,10 +17057,40 @@
             case KEY_ENTER:
                 if (!Settings_cursorY) Languages_init();
                 else if (Main_A_includes_B(Settings_value_keys[Settings_cursorY], 'chat_opt')) Settings_DialogShowChat();
+                else if (Main_A_includes_B(Settings_value_keys[Settings_cursorY], 'proxy_settings')) Settings_DialogShowProxy();
                 break;
             default:
                 break;
         }
+    }
+
+    function Settings_DialogShowProxy() {
+        var array_no_yes = [STR_NO, STR_YES];
+        Settings_value.ttv_lolProxy.values = array_no_yes;
+        Settings_value.purple_adblock.values = array_no_yes;
+
+        var obj = {
+            proxy_timeout: {
+                defaultValue: Settings_value.purple_adblock.defaultValue,
+                values: Settings_value.purple_adblock.values,
+                title: STR_PROXY_TIMEOUT,
+                summary: STR_PROXY_TIMEOUT_SUMMARY
+            },
+            purple_adblock: {
+                defaultValue: Settings_value.ttv_lolProxy.defaultValue,
+                values: Settings_value.ttv_lolProxy.values,
+                title: STR_PURPLE_ADBLOCK,
+                summary: STR_PURPLE_ADBLOCK_SUMMARY
+            },
+            ttv_lolProxy: {
+                defaultValue: Settings_value.purple_adblock.defaultValue,
+                values: Settings_value.purple_adblock.values,
+                title: STR_TTV_LOL,
+                summary: STR_TTV_LOL_SUMMARY
+            }
+        };
+
+        Settings_DialogShow(obj, PROXY_SETTINGS + STR_BR + STR_BR + PROXY_SETTINGS_SUMMARY);
     }
 
     function Settings_DialogShowChat() {
@@ -16945,11 +17262,11 @@
                 break;
             case KEY_LEFT:
                 key = Settings_DialogValue[Settings_DialogPos];
-                if (Settings_Obj_default(key) > 0) Settings_DialogRigthLeft(-1);
+                if (Settings_Obj_default(key) > 0) Settings_DialogRightLeft(-1);
                 break;
             case KEY_RIGHT:
                 key = Settings_DialogValue[Settings_DialogPos];
-                if (Settings_Obj_default(key) < Settings_Obj_length(key)) Settings_DialogRigthLeft(1);
+                if (Settings_Obj_default(key) < Settings_Obj_length(key)) Settings_DialogRightLeft(1);
                 break;
             case KEY_UP:
                 if (Settings_DialogPos > 0) Settings_DialogUpDown(-1);
@@ -16972,15 +17289,21 @@
         Settings_SetarrowsKey(key);
     }
 
-    function Settings_DialogRigthLeft(offset) {
+    function Settings_DialogRightLeft(offset) {
         var key = Settings_DialogValue[Settings_DialogPos];
+        Settings_DialogRightLeftAfter(key, offset);
+    }
 
+    function Settings_DialogRightLeftAfter(key, offset, skipDefault) {
         Settings_value[key].defaultValue += offset;
 
         Main_setItem(key, Settings_Obj_default(key) + 1);
         Main_textContent(key, Settings_Obj_values(key));
-        Settings_SetarrowsKey(key);
-        Settings_SetDefault(key);
+
+        if (!skipDefault) {
+            Settings_SetarrowsKey(key);
+            Settings_SetDefault(key);
+        }
     }
 
     function Settings_RemoveinputFocusKey(key) {
@@ -17482,7 +17805,9 @@
         else if (Main_values.Sidepannel_Pos === 6) Sidepannel_Go(Main_UserChannels);
         else if (Main_values.Sidepannel_Pos === 7) {
             Main_values.Main_selectedChannel_id = AddUser_UsernameArray[0].id;
-            Main_values.Main_selectedChannelDisplayname = AddUser_UsernameArray[0].display_name ? AddUser_UsernameArray[0].display_name : AddUser_UsernameArray[0].name;
+            Main_values.Main_selectedChannelDisplayname = AddUser_UsernameArray[0].display_name ?
+                AddUser_UsernameArray[0].display_name :
+                AddUser_UsernameArray[0].name;
             Main_values.Main_selectedChannel = AddUser_UsernameArray[0].name;
 
             Main_values.Main_BeforeChannel = Main_values.Main_Go;
@@ -17516,7 +17841,10 @@
             else AddUser_init();
         } else if (Main_values.Sidepannel_Pos === 1) {
             if (Main_values.Main_Go !== Main_Search) {
-                if (!Main_values.Search_isSearching && (Main_values.Main_Go === Main_ChannelContent || Main_values.Main_Go === Main_ChannelClip || Main_values.Main_Go === Main_ChannelVod))
+                if (
+                    !Main_values.Search_isSearching &&
+                    (Main_values.Main_Go === Main_ChannelContent || Main_values.Main_Go === Main_ChannelClip || Main_values.Main_Go === Main_ChannelVod)
+                )
                     ChannelContent_SetChannelValue();
                 Main_OpenSearch();
             } else document.body.addEventListener('keydown', Sidepannel_Callback, false);
@@ -17608,7 +17936,8 @@
         if (Play_FeedOldUserName !== AddUser_UsernameArray[0].name) UserLiveFeed_status = false;
         Play_FeedOldUserName = AddUser_UsernameArray[0].name;
 
-        if (!UserLiveFeed_ThumbNull(0, UserLiveFeed_ids[0]) || !Main_A_equals_B(UserLiveFeed_Sort, Settings_value.live_feed_sort.defaultValue)) UserLiveFeed_status = false;
+        if (!UserLiveFeed_ThumbNull(0, UserLiveFeed_ids[0]) || !Main_A_equals_B(UserLiveFeed_Sort, Settings_value.live_feed_sort.defaultValue))
+            UserLiveFeed_status = false;
 
         if (!UserLiveFeed_status && !UserLiveFeed_loadingData) UserLiveFeed_StartLoad();
 
@@ -17624,7 +17953,8 @@
 
         if (hideAll) document.getElementById('side_panel_fix').style.marginLeft = '-' + Sidepannel_FixdefaultMargin + '%';
 
-        document.getElementById('side_panel_movel').style.marginLeft = 'calc(-' + (hideAll ? Sidepannel_MoveldefaultWidth + 0.5 : Sidepannel_MoveldefaultMargin) + '% - ' + size + 'ch)';
+        document.getElementById('side_panel_movel').style.marginLeft =
+            'calc(-' + (hideAll ? Sidepannel_MoveldefaultWidth + 0.5 : Sidepannel_MoveldefaultMargin) + '% - ' + size + 'ch)';
     }
 
     function Sidepannel_Hide() {
@@ -17645,7 +17975,8 @@
         if (Sidepannel_Pos_Screens[Main_Go]) Main_values.Sidepannel_Pos = Sidepannel_Pos_Screens[Main_Go];
         Sidepannel_UnSetTopOpacity();
 
-        if (Main_values.Sidepannel_Pos && Main_values.Sidepannel_Pos < 8) Main_AddClass('side_panel_new_' + Main_values.Sidepannel_Pos, 'side_panel_new_icons_text');
+        if (Main_values.Sidepannel_Pos && Main_values.Sidepannel_Pos < 8)
+            Main_AddClass('side_panel_new_' + Main_values.Sidepannel_Pos, 'side_panel_new_icons_text');
     }
 
     var Sidepannel_Pos_Screens = [
@@ -17746,7 +18077,14 @@
     function Sidepannel_SetUserlable(text) {
         Main_innerHTML(
             'side_panel_movel_new_0',
-            STR_SPACE + text + STR_BR + '<div style="font-size: 45%;display: inline-block; transform: translateY(-80%);">' + STR_SPACE + STR_SPACE + STR_USER_EXTRAS + '</div>'
+            STR_SPACE +
+            text +
+            STR_BR +
+            '<div style="font-size: 45%;display: inline-block; transform: translateY(-80%);">' +
+            STR_SPACE +
+            STR_SPACE +
+            STR_USER_EXTRAS +
+            '</div>'
         );
     }
 
@@ -17846,7 +18184,7 @@
     }
 
     function Sidepannel_handleMainKey(Down) {
-        if (!Main_values.Sidepannel_IsUser && Main_values.Sidepannel_Pos === 8) Main_values.Sidepannel_Pos += Down ? 1 : -1;
+        if (!Main_values.Sidepannel_IsUser && Main_values.Sidepannel_Pos === 7) Main_values.Sidepannel_Pos += Down ? 1 : -1;
         //Workaround for hiden options
         var feed5 = Down ? 8 : 5;
 

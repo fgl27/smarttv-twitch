@@ -122,7 +122,7 @@ var Main_DataAttribute = 'data_attribute';
 
 var Main_version = 401;
 var Main_stringVersion_Min = '4.0.1';
-var Main_minversion = 'July 27 2022';
+var Main_minversion = 'August 19 2022';
 var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
 var Main_IsNotBrowserVersion = '';
 
@@ -412,7 +412,10 @@ function Main_SetStringsSecondary() {
 
     Main_innerHTML('channel_content_titley_0', '<i class="icon-movie-play stream_channel_follow_icon"></i>' + STR_SPACE + STR_SPACE + STR_VIDEOS);
     Main_innerHTML('channel_content_titley_1', '<i class="icon-movie stream_channel_follow_icon"></i>' + STR_SPACE + STR_SPACE + STR_CLIPS);
-    Main_innerHTML('channel_content_titley_2', '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + STR_FOLLOW);
+    Main_innerHTML(
+        'channel_content_titley_2',
+        '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + STR_FOLLOW
+    );
 
     Main_textContent('chat_send_button0', STR_OPTIONS);
     Main_textContent('chat_send_button1', STR_CHAT_DELL_ALL);
@@ -987,7 +990,10 @@ function Main_OpenVod(id, idsArray, handleKeyDownFunction) {
     Main_values.Main_selectedChannelDisplayname = Main_values.ChannelVod_vodId[1];
     ChannelVod_createdAt = Main_values.ChannelVod_vodId[2];
     ChannelVod_title = Main_values.ChannelVod_vodId[3];
-    ChannelVod_game = Main_values.Play_gameSelected !== '' && Main_values.Play_gameSelected !== null ? STR_STARTED + STR_PLAYING + Main_values.Play_gameSelected : '';
+    ChannelVod_game =
+        Main_values.Play_gameSelected !== '' && Main_values.Play_gameSelected !== null
+            ? STR_STARTED + STR_PLAYING + Main_values.Play_gameSelected
+            : '';
     ChannelVod_views = Main_values.ChannelVod_vodId[4];
     Main_values.Play_gameSelected_id = null;
 
@@ -1204,7 +1210,8 @@ function Main_getItemBool(item, default_value) {
 // To see supported fonts and etc info about the unknown char
 function Main_PrintUnicode(string) {
     console.log(string);
-    for (var i = 0; i < string.length; i++) console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
+    for (var i = 0; i < string.length; i++)
+        console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
 }
 
 function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, key, id, use_helix, skip_user_token) {
@@ -1222,7 +1229,8 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
 
             Main_Bearer_User_Headers[1][1] = Main_Bearer + AddUser_UsernameArray[0].access_token;
 
-            for (i; i < Main_Bearer_User_Headers.length; i++) xmlHttp.setRequestHeader(Main_Bearer_User_Headers[i][0], Main_Bearer_User_Headers[i][1]);
+            for (i; i < Main_Bearer_User_Headers.length; i++)
+                xmlHttp.setRequestHeader(Main_Bearer_User_Headers[i][0], Main_Bearer_User_Headers[i][1]);
         } else {
             appToken = true;
             for (i; i < Main_Bearer_Headers.length; i++) xmlHttp.setRequestHeader(Main_Bearer_Headers[i][0], Main_Bearer_Headers[i][1]);

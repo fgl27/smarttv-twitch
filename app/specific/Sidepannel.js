@@ -105,7 +105,9 @@ function Sidepannel_KeyEnterUser() {
     else if (Main_values.Sidepannel_Pos === 6) Sidepannel_Go(Main_UserChannels);
     else if (Main_values.Sidepannel_Pos === 7) {
         Main_values.Main_selectedChannel_id = AddUser_UsernameArray[0].id;
-        Main_values.Main_selectedChannelDisplayname = AddUser_UsernameArray[0].display_name ? AddUser_UsernameArray[0].display_name : AddUser_UsernameArray[0].name;
+        Main_values.Main_selectedChannelDisplayname = AddUser_UsernameArray[0].display_name
+            ? AddUser_UsernameArray[0].display_name
+            : AddUser_UsernameArray[0].name;
         Main_values.Main_selectedChannel = AddUser_UsernameArray[0].name;
 
         Main_values.Main_BeforeChannel = Main_values.Main_Go;
@@ -139,7 +141,10 @@ function Sidepannel_KeyEnterBase() {
         else AddUser_init();
     } else if (Main_values.Sidepannel_Pos === 1) {
         if (Main_values.Main_Go !== Main_Search) {
-            if (!Main_values.Search_isSearching && (Main_values.Main_Go === Main_ChannelContent || Main_values.Main_Go === Main_ChannelClip || Main_values.Main_Go === Main_ChannelVod))
+            if (
+                !Main_values.Search_isSearching &&
+                (Main_values.Main_Go === Main_ChannelContent || Main_values.Main_Go === Main_ChannelClip || Main_values.Main_Go === Main_ChannelVod)
+            )
                 ChannelContent_SetChannelValue();
             Main_OpenSearch();
         } else document.body.addEventListener('keydown', Sidepannel_Callback, false);
@@ -231,7 +236,8 @@ function Sidepannel_ShowFeed() {
     if (Play_FeedOldUserName !== AddUser_UsernameArray[0].name) UserLiveFeed_status = false;
     Play_FeedOldUserName = AddUser_UsernameArray[0].name;
 
-    if (!UserLiveFeed_ThumbNull(0, UserLiveFeed_ids[0]) || !Main_A_equals_B(UserLiveFeed_Sort, Settings_value.live_feed_sort.defaultValue)) UserLiveFeed_status = false;
+    if (!UserLiveFeed_ThumbNull(0, UserLiveFeed_ids[0]) || !Main_A_equals_B(UserLiveFeed_Sort, Settings_value.live_feed_sort.defaultValue))
+        UserLiveFeed_status = false;
 
     if (!UserLiveFeed_status && !UserLiveFeed_loadingData) UserLiveFeed_StartLoad();
 
@@ -247,7 +253,8 @@ function Sidepannel_HideMain(hideAll) {
 
     if (hideAll) document.getElementById('side_panel_fix').style.marginLeft = '-' + Sidepannel_FixdefaultMargin + '%';
 
-    document.getElementById('side_panel_movel').style.marginLeft = 'calc(-' + (hideAll ? Sidepannel_MoveldefaultWidth + 0.5 : Sidepannel_MoveldefaultMargin) + '% - ' + size + 'ch)';
+    document.getElementById('side_panel_movel').style.marginLeft =
+        'calc(-' + (hideAll ? Sidepannel_MoveldefaultWidth + 0.5 : Sidepannel_MoveldefaultMargin) + '% - ' + size + 'ch)';
 }
 
 function Sidepannel_Hide() {
@@ -268,7 +275,8 @@ function Sidepannel_SetTopOpacity(Main_Go) {
     if (Sidepannel_Pos_Screens[Main_Go]) Main_values.Sidepannel_Pos = Sidepannel_Pos_Screens[Main_Go];
     Sidepannel_UnSetTopOpacity();
 
-    if (Main_values.Sidepannel_Pos && Main_values.Sidepannel_Pos < 8) Main_AddClass('side_panel_new_' + Main_values.Sidepannel_Pos, 'side_panel_new_icons_text');
+    if (Main_values.Sidepannel_Pos && Main_values.Sidepannel_Pos < 8)
+        Main_AddClass('side_panel_new_' + Main_values.Sidepannel_Pos, 'side_panel_new_icons_text');
 }
 
 var Sidepannel_Pos_Screens = [
@@ -369,7 +377,14 @@ function Sidepannel_SetDefaultLables() {
 function Sidepannel_SetUserlable(text) {
     Main_innerHTML(
         'side_panel_movel_new_0',
-        STR_SPACE + text + STR_BR + '<div style="font-size: 45%;display: inline-block; transform: translateY(-80%);">' + STR_SPACE + STR_SPACE + STR_USER_EXTRAS + '</div>'
+        STR_SPACE +
+            text +
+            STR_BR +
+            '<div style="font-size: 45%;display: inline-block; transform: translateY(-80%);">' +
+            STR_SPACE +
+            STR_SPACE +
+            STR_USER_EXTRAS +
+            '</div>'
     );
 }
 
@@ -469,7 +484,7 @@ function Sidepannel_handleKeyDown(event) {
 }
 
 function Sidepannel_handleMainKey(Down) {
-    if (!Main_values.Sidepannel_IsUser && Main_values.Sidepannel_Pos === 8) Main_values.Sidepannel_Pos += Down ? 1 : -1;
+    if (!Main_values.Sidepannel_IsUser && Main_values.Sidepannel_Pos === 7) Main_values.Sidepannel_Pos += Down ? 1 : -1;
     //Workaround for hiden options
     var feed5 = Down ? 8 : 5;
 

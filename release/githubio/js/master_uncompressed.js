@@ -2423,7 +2423,19 @@
     var ChannelContent_isoffline = false;
     var ChannelContent_UserChannels = false;
     var ChannelContent_TargetId;
-    var ChannelContent_ids = ['cc_thumbdiv', 'cc_img', 'cc_infodiv', 'cc_name', 'cc_createdon', 'cc_game', 'cc_viwers', 'cc_duration', 'cc_cell', 'sccempty_', 'channel_content_scroll'];
+    var ChannelContent_ids = [
+        'cc_thumbdiv',
+        'cc_img',
+        'cc_infodiv',
+        'cc_name',
+        'cc_createdon',
+        'cc_game',
+        'cc_viwers',
+        'cc_duration',
+        'cc_cell',
+        'sccempty_',
+        'channel_content_scroll'
+    ];
     var ChannelContent_status = false;
     var ChannelContent_lastselectedChannel = '';
     var ChannelContent_responseText = null;
@@ -2441,7 +2453,8 @@
     function ChannelContent_init() {
         Main_values.Main_CenterLablesVectorPos = 1;
         Main_values.Main_Go = Main_ChannelContent;
-        if (ChannelContent_ChannelValueIsset && !Main_values.Search_isSearching && Main_values.Main_selectedChannel_id) ChannelContent_RestoreChannelValue();
+        if (ChannelContent_ChannelValueIsset && !Main_values.Search_isSearching && Main_values.Main_selectedChannel_id)
+            ChannelContent_RestoreChannelValue();
         if (ChannelContent_lastselectedChannel !== Main_values.Main_selectedChannel) ChannelContent_status = false;
         Main_cleanTopLabel();
         document.body.addEventListener('keydown', ChannelContent_handleKeyDown, false);
@@ -2502,9 +2515,22 @@
 
     function ChannelContent_loadDataRequest() {
         // Changed to Get Streams https://dev.twitch.tv/docs/api/reference#get-streams
-        var theUrl = Main_helix_api + 'streams?user_id=' + encodeURIComponent(ChannelContent_TargetId !== undefined ? ChannelContent_TargetId : Main_values.Main_selectedChannel_id);
+        var theUrl =
+            Main_helix_api +
+            'streams?user_id=' +
+            encodeURIComponent(ChannelContent_TargetId !== undefined ? ChannelContent_TargetId : Main_values.Main_selectedChannel_id);
 
-        BasexmlHttpGet(theUrl, ChannelContent_loadingDataTimeout, 2, null, ChannelContent_loadDataRequestSuccess, ChannelContent_loadDataError, false, null, true);
+        BasexmlHttpGet(
+            theUrl,
+            ChannelContent_loadingDataTimeout,
+            2,
+            null,
+            ChannelContent_loadDataRequestSuccess,
+            ChannelContent_loadDataError,
+            false,
+            null,
+            true
+        );
     }
 
     function ChannelContent_loadDataRequestSuccess(response) {
@@ -2571,7 +2597,17 @@
         // https://dev.twitch.tv/docs/api/reference#get-users
         var theUrl = Main_helix_api + 'users?id=' + Main_values.Main_selectedChannel_id;
 
-        BasexmlHttpGet(theUrl, PlayVod_loadingInfoDataTimeout, 2, null, ChannelContent_GetStreamerInfoSuccess, ChannelContent_GetStreamerInfoError, false, null, true);
+        BasexmlHttpGet(
+            theUrl,
+            PlayVod_loadingInfoDataTimeout,
+            2,
+            null,
+            ChannelContent_GetStreamerInfoSuccess,
+            ChannelContent_GetStreamerInfoError,
+            false,
+            null,
+            true
+        );
     }
 
     function ChannelContent_GetStreamerInfoSuccess(responseText) {
@@ -2580,7 +2616,9 @@
         if (obj.data && obj.data.length) {
             var channel = obj.data[0];
             ChannelContent_offline_image = channel.offline_image_url;
-            ChannelContent_offline_image = ChannelContent_offline_image ? ChannelContent_offline_image.replace('1920x1080', Main_VideoSize) : ChannelContent_offline_image;
+            ChannelContent_offline_image = ChannelContent_offline_image ?
+                ChannelContent_offline_image.replace('1920x1080', Main_VideoSize) :
+                ChannelContent_offline_image;
             //ChannelContent_profile_banner = channel.profile_image_url ? channel.profile_image_url : IMG_404_BANNER;
             ChannelContent_selectedChannelViews = channel.view_count;
             //ChannelContent_selectedChannelFollower = channel.followers;
@@ -2611,8 +2649,19 @@
     }
 
     function ChannelContent_setFollow() {
-        if (AddCode_IsFollowing) Main_innerHTML('channel_content_titley_2', '<i class="icon-heart" style="color: #6441a4; font-size: 100%;"></i>' + STR_SPACE + STR_SPACE + STR_FOLLOWING);
-        else Main_innerHTML('channel_content_titley_2', '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' + STR_SPACE + STR_SPACE + (AddUser_UserIsSet() ? STR_FOLLOW : STR_NOKEY));
+        if (AddCode_IsFollowing)
+            Main_innerHTML(
+                'channel_content_titley_2',
+                '<i class="icon-heart" style="color: #6441a4; font-size: 100%;"></i>' + STR_SPACE + STR_SPACE + STR_FOLLOWING
+            );
+        else
+            Main_innerHTML(
+                'channel_content_titley_2',
+                '<i class="icon-heart-o" style="color: #FFFFFF; font-size: 100%; "></i>' +
+                STR_SPACE +
+                STR_SPACE +
+                (AddUser_UserIsSet() ? STR_FOLLOW : STR_NOKEY)
+            );
     }
 
     function ChannelContent_loadDataSuccess() {
@@ -2620,18 +2669,32 @@
 
         Main_innerHTML(
             'channel_content_thumbdiv0_1',
-            '<img class="stream_img_channel_logo" alt="" src="' + Main_values.Main_selectedChannelLogo.replace('300x300', '600x600') + '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'">'
+            '<img class="stream_img_channel_logo" alt="" src="' +
+            Main_values.Main_selectedChannelLogo.replace('300x300', '600x600') +
+            '" onerror="this.onerror=null;this.src=\'' +
+            IMG_404_LOGO +
+            '\'">'
         );
 
-        Main_innerHTML('channel_content_img0_1', '<img class="stream_img_channel" alt="" src="' + ChannelContent_profile_banner + '" onerror="this.onerror=null;this.src=\'' + IMG_404_BANNER + '\'">');
+        Main_innerHTML(
+            'channel_content_img0_1',
+            '<img class="stream_img_channel" alt="" src="' +
+            ChannelContent_profile_banner +
+            '" onerror="this.onerror=null;this.src=\'' +
+            IMG_404_BANNER +
+            '\'">'
+        );
 
         var streamer_bio = Main_values.Main_selectedChannelDisplayname;
 
-        streamer_bio += Main_values.Main_selectedChannelPartner ? STR_SPACE + STR_SPACE + '<img style="display: inline-block; width: 2ch; vertical-align: middle;" alt="" src="' + IMG_PARTNER + '">' : '';
+        streamer_bio += Main_values.Main_selectedChannelPartner ?
+            STR_SPACE + STR_SPACE + '<img style="display: inline-block; width: 2ch; vertical-align: middle;" alt="" src="' + IMG_PARTNER + '">' :
+            '';
 
         streamer_bio += ChannelContent_selectedChannelViews !== '' ? STR_BR + Main_addCommas(ChannelContent_selectedChannelViews) + STR_VIEWS : '';
 
-        streamer_bio += ChannelContent_selectedChannelFollower !== '' ? STR_BR + Main_addCommas(ChannelContent_selectedChannelFollower) + STR_FOLLOWERS : '';
+        streamer_bio +=
+            ChannelContent_selectedChannelFollower !== '' ? STR_BR + Main_addCommas(ChannelContent_selectedChannelFollower) + STR_FOLLOWERS : '';
 
         streamer_bio += ChannelContent_description !== '' ? STR_BR + STR_BR + STR_ABOUT + ':' + STR_BR + twemoji.parse(ChannelContent_description) : '';
 
@@ -2644,7 +2707,7 @@
                 var stream = ChannelContent_responseText[0];
 
                 ChannelContent_createCell(
-                    stream.user_name,
+                    stream.user_login,
                     stream.id,
                     stream.thumbnail_url,
                     twemoji.parse(stream.title),
@@ -2662,11 +2725,23 @@
         ChannelContent_loadDataSuccessFinish();
     }
 
-    function ChannelContent_createCell(channel_name, channel_id, preview_thumbnail, stream_title, stream_game, channel_display_name, viewers, quality, rerun) {
+    function ChannelContent_createCell(
+        channel_name,
+        channel_id,
+        preview_thumbnail,
+        stream_title,
+        stream_game,
+        channel_display_name,
+        viewers,
+        quality,
+        rerun
+    ) {
         var ishosting = ChannelContent_TargetId !== undefined;
         if (!preview_thumbnail) preview_thumbnail = IMG_404_VIDEO;
 
-        document.getElementById('channel_content_cell0_1').setAttribute(Main_DataAttribute, JSON.stringify([channel_name, channel_id, rerun, channel_display_name]));
+        document
+            .getElementById('channel_content_cell0_1')
+            .setAttribute(Main_DataAttribute, JSON.stringify([channel_name, channel_id, rerun, channel_display_name]));
 
         Main_innerHTML(
             'channel_content_thumbdiv0_0',
@@ -7610,7 +7685,8 @@
     var PlayClip_All_Forced = true;
     var PlayClip_loadingtreamerInfoTry = 0;
     var PlayClip_bufferingcomplete = false;
-    var PlayClip_ExtraClipInfo = '{"query":"{clip(slug:\\"%x\\"){game{displayName},videoOffsetSeconds,broadcaster{roles{isPartner},displayName,profileImageURL(width: 300)}}}"}';
+    var PlayClip_ExtraClipInfo =
+        '{"query":"{clip(slug:\\"%x\\"){game{displayName},videoOffsetSeconds,broadcaster{roles{isPartner},displayName,profileImageURL(width: 300)}}}"}';
 
     //Variable initialization end
 
@@ -7699,6 +7775,8 @@
             Play_controls[Play_controlsOpenVod].setLable('');
         }
         Play_controls[Play_controlsChanelCont].setLable(Main_values.Main_selectedChannelDisplayname);
+
+        Play_UpdateVideoStatus();
 
         if (!Main_values.Play_gameSelected_id && Main_values.Play_gameSelected) {
             PlayClip_UpdateGameInfo();
@@ -7797,7 +7875,12 @@
                 }
 
                 if (clip.broadcaster) {
-                    Play_partnerIcon(clip.broadcaster.displayName, clip.broadcaster.roles && clip.broadcaster.roles.isPartner, false, ChannelClip_language);
+                    Play_partnerIcon(
+                        clip.broadcaster.displayName,
+                        clip.broadcaster.roles && clip.broadcaster.roles.isPartner,
+                        false,
+                        ChannelClip_language
+                    );
 
                     Play_LoadLogo(Main_getElementById('stream_info_icon'), clip.broadcaster.profileImageURL);
 
@@ -7960,7 +8043,11 @@
         var token;
 
         if (response && response.hasOwnProperty('data') && response.data.hasOwnProperty('clip')) {
-            token = '?sig=' + encodeURIComponent(response.data.clip.playbackAccessToken.signature) + '&token=' + encodeURIComponent(response.data.clip.playbackAccessToken.value);
+            token =
+                '?sig=' +
+                encodeURIComponent(response.data.clip.playbackAccessToken.signature) +
+                '&token=' +
+                encodeURIComponent(response.data.clip.playbackAccessToken.value);
             response = response.data.clip.videoQualities;
 
             for (var i = 0; i < response.length; i++) {
@@ -8088,7 +8175,8 @@
             PlayClip_PlayerCheckCount++;
             if (PlayClip_PlayerCheckCount > Play_PlayerCheckTimer) {
                 //Don't change the first time only retry
-                if (PlayClip_PlayerCheckQualityChanged && PlayClip_PlayerCheckRun && PlayClip_qualityIndex < PlayClip_getQualitiesCount() - 1) PlayClip_qualityIndex++;
+                if (PlayClip_PlayerCheckQualityChanged && PlayClip_PlayerCheckRun && PlayClip_qualityIndex < PlayClip_getQualitiesCount() - 1)
+                    PlayClip_qualityIndex++;
                 else if (!PlayClip_PlayerCheckQualityChanged && PlayClip_PlayerCheckRun) PlayClip_PlayerCheckCounter++;
 
                 if (!navigator.onLine) Play_EndStart(false, 3);
@@ -8132,7 +8220,8 @@
         if (!Play_IsWarning && Play_WarningDialogVisible()) Play_HideWarningDialog();
         if (PlayClip_bufferingcomplete && Play_BufferDialogVisible()) Play_HideBufferDialog();
 
-        if (Play_isPanelShown() && !Play_BufferDialogVisible()) PlayVod_ProgresBarrUpdate(PlayClip_currentTime / 1000, PlayClip_DurationSeconds, !PlayVod_IsJumping);
+        if (Play_isPanelShown() && !Play_BufferDialogVisible())
+            PlayVod_ProgresBarrUpdate(PlayClip_currentTime / 1000, PlayClip_DurationSeconds, !PlayVod_IsJumping);
     }
 
     function PlayClip_shutdownStream() {
@@ -8682,11 +8771,14 @@
     ];
 
     var use_proxy;
-    var purpel_proxy = 'https://jupter.ga/hls/v2/channel/';
+    var purple_proxy = 'https://jupter.ga/hls/v2/channel/';
     var proxy_timeout = 5000;
     var proxy_url = '';
     var proxy_headers = null;
     var proxy_has_parameter = false;
+
+    var proxy_fail_counter = 0;
+    var proxy_fail_counter_checker = 0;
 
     //var proxy_ping_url = 'https://api.ttv
 
@@ -9373,6 +9465,9 @@
             var useProxy;
 
             if (use_proxy && !skipProxy && Play_state === Play_STATE_LOADING_TOKEN) {
+                //if at te end of a request the values are different we have a issues
+                proxy_fail_counter_checker = proxy_fail_counter;
+
                 useProxy = true;
                 Play_state = Play_STATE_LOADING_PLAYLIST;
                 headers = proxy_headers ? proxy_headers : [];
@@ -9426,6 +9521,7 @@
                         //Play_410ERROR = false;
                     } else if (useProxy) {
                         //if proxy fails fall back to normal request
+                        proxy_fail_counter++;
                         Play_state = Play_STATE_LOADING_TOKEN;
                         Play_loadData(true);
                     } else if (xmlHttp.status === 403 || xmlHttp.status === 404) {
@@ -10160,10 +10256,32 @@
         Play_SetHtmlQuality('stream_quality', true);
         Play_RefreshWatchingtime();
         Play_clock();
+        Play_UpdateVideoStatus();
         Play_CleanHideExit();
         Play_ForceShowPannel();
         Play_clearHidePanel();
         Play_setHidePanel();
+    }
+
+    function Play_UpdateVideoStatus() {
+        Main_innerHTML('stream_status', Play_UpdateVideoStatusGetProxy());
+    }
+
+    function Play_UpdateVideoStatusGetProxy() {
+        if (!Play_isOn) {
+            return '';
+        }
+        var proxyString = STR_BR + PROXY_SERVICE;
+
+        if (!use_proxy) {
+            return proxyString + PROXY_SERVICE_OFF;
+        }
+
+        if (proxy_fail_counter > proxy_fail_counter_checker) {
+            return proxyString + PROXY_SERVICE_FAIL.replace('%x', proxy_fail_counter);
+        }
+
+        return proxyString + PROXY_SERVICE_STATUS;
     }
 
     function Play_ForceShowPannel() {
@@ -11910,6 +12028,7 @@
     function PlayVod_SetStart() {
         PlayVod_updateStreamLogo();
         PlayVod_get_vod_extra_info();
+        Play_UpdateVideoStatus();
     }
 
     function PlayVod_PosStart() {
@@ -12030,7 +12149,12 @@
 
     function PlayVod_updateStreamerInfoValues() {
         Play_LoadLogo(document.getElementById('stream_info_icon'), Main_values.Main_selectedChannelLogo);
-        Play_partnerIcon(Main_values.Main_selectedChannelDisplayname, Main_values.Main_selectedChannelPartner, false, ' [' + ChannelVod_language.toUpperCase() + ']');
+        Play_partnerIcon(
+            Main_values.Main_selectedChannelDisplayname,
+            Main_values.Main_selectedChannelPartner,
+            false,
+            ' [' + ChannelVod_language.toUpperCase() + ']'
+        );
 
         //The chat init will happens after user click on vod dialog
         if (!PlayVod_VodIds['#' + Main_values.ChannelVod_vodId]) Chat_Init();
@@ -12068,12 +12192,20 @@
             //if (response.muted_segments) console.log(response.muted_segments);
 
             //Main_values.Main_selectedChannelPartner = response.channel.partner;
-            Play_partnerIcon(Main_values.Main_selectedChannelDisplayname, Main_values.Main_selectedChannelPartner, false, '[' + response.language.toUpperCase() + ']');
+            Play_partnerIcon(
+                Main_values.Main_selectedChannelDisplayname,
+                Main_values.Main_selectedChannelPartner,
+                false,
+                '[' + response.language.toUpperCase() + ']'
+            );
 
             Main_innerHTML('stream_info_title', ChannelVod_title);
             //Main_innerHTML('stream_info_game', response.game !== '' && response.game !== null ? STR_STARTED + STR_PLAYING + response.game : '');
 
-            Main_innerHTML('stream_live_time', STR_STREAM_ON + Main_videoCreatedAt(response.created_at) + ',' + STR_SPACE + Main_addCommas(response.view_count) + STR_VIEWS);
+            Main_innerHTML(
+                'stream_live_time',
+                STR_STREAM_ON + Main_videoCreatedAt(response.created_at) + ',' + STR_SPACE + Main_addCommas(response.view_count) + STR_VIEWS
+            );
             Main_textContent('stream_live_viewers', '');
             Main_textContent('stream_watching_time', '');
 
@@ -12465,7 +12597,13 @@
             PlayVod_PlayerCheckCount++;
             if (PlayVod_PlayerCheckCount > Play_PlayerCheckTimer) {
                 //Don't change the first time only retry, and don't change if in Auto mode
-                if (PlayVod_PlayerCheckQualityChanged && PlayVod_PlayerCheckRun && PlayVod_qualityIndex < PlayVod_getQualitiesCount() - 1 && PlayVod_quality.indexOf('Auto') === -1) PlayVod_qualityIndex++;
+                if (
+                    PlayVod_PlayerCheckQualityChanged &&
+                    PlayVod_PlayerCheckRun &&
+                    PlayVod_qualityIndex < PlayVod_getQualitiesCount() - 1 &&
+                    PlayVod_quality.indexOf('Auto') === -1
+                )
+                    PlayVod_qualityIndex++;
                 else if (!PlayVod_PlayerCheckQualityChanged && PlayVod_PlayerCheckRun) PlayVod_PlayerCheckCounter++;
 
                 if (!navigator.onLine) Play_EndStart(false, 2);
@@ -12492,7 +12630,8 @@
         if (!Play_IsWarning && Play_WarningDialogVisible()) Play_HideWarningDialog();
         if (PlayVod_bufferingcomplete && Play_BufferDialogVisible()) Play_HideBufferDialog();
 
-        if (Play_isPanelShown() && !Play_BufferDialogVisible()) PlayVod_ProgresBarrUpdate(PlayVod_currentTime / 1000, ChannelVod_DurationSeconds, !PlayVod_IsJumping);
+        if (Play_isPanelShown() && !Play_BufferDialogVisible())
+            PlayVod_ProgresBarrUpdate(PlayVod_currentTime / 1000, ChannelVod_DurationSeconds, !PlayVod_IsJumping);
     }
 
     function PlayVod_DropOneQuality(ConnectionDrop) {
@@ -12735,7 +12874,16 @@
     }
 
     function PlayVod_jumpTime() {
-        Main_textContent('progress_bar_jump_to', STR_JUMP_TIME + ' (' + (PlayVod_addToJump < 0 ? '-' : '') + Play_timeS(Math.abs(PlayVod_addToJump)) + ')' + STR_JUMP_T0 + Play_timeS(PlayVod_TimeToJump));
+        Main_textContent(
+            'progress_bar_jump_to',
+            STR_JUMP_TIME +
+            ' (' +
+            (PlayVod_addToJump < 0 ? '-' : '') +
+            Play_timeS(Math.abs(PlayVod_addToJump)) +
+            ')' +
+            STR_JUMP_T0 +
+            Play_timeS(PlayVod_TimeToJump)
+        );
     }
 
     function PlayVod_jumpStart(multiplier, duration_seconds) {
@@ -16861,7 +17009,7 @@
 
     function Settings_proxy_set_current(current) {
         if (current === 'purple_adblock') {
-            proxy_url = purpel_proxy;
+            proxy_url = purple_proxy;
             proxy_headers = null;
             proxy_has_parameter = false;
         } else {

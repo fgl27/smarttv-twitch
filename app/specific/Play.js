@@ -102,6 +102,20 @@ var Play_IncrementView = '';
 var Play_ProgresBarrElm;
 var Play_DefaultjumpTimers = [];
 var Play_UserLiveFeedPressed = false;
+
+var Play_base_parameters = 'reassignments_supported=true&playlist_include_framerate=true&allow_source=true&fast_bread=true&cdm=wv&p=%d';
+var Play_live_ttv_lol_links = 'https://api.ttv.lol/playlist/';
+var ttv_lol_headers = [['X-Donate-To', 'https://ttv.lol/donate']];
+
+var use_proxy;
+var purpel_proxy = 'https://jupter.ga/hls/v2/channel/';
+var proxy_timeout = 5000;
+var proxy_url = '';
+var proxy_headers = null;
+var proxy_has_parameter = false;
+
+//var proxy_ping_url = 'https://api.ttv
+
 //counterclockwise movement, Vertical/horizontal Play_ChatPositions
 //sizeOffset in relation to the size
 var Play_ChatPositionVal = [
@@ -244,7 +258,11 @@ function Play_PreStart() {
 
     Main_innerHTML(
         'user_feed_notify_img_holder',
-        '<img id="user_feed_notify_img" alt="" class="notify_img" src="' + IMG_404_LOGO + '" onerror="this.onerror=null;this.src=\'' + IMG_404_LOGO + '\'" >'
+        '<img id="user_feed_notify_img" alt="" class="notify_img" src="' +
+            IMG_404_LOGO +
+            '" onerror="this.onerror=null;this.src=\'' +
+            IMG_404_LOGO +
+            '\'" >'
     );
 
     var Main_clientIdHeader = 'Client-ID';
@@ -610,7 +628,12 @@ function Play_updateStreamLogoValues(response) {
     if (response.data && response.data.length) {
         response.stream = response.data[0];
 
-        Play_partnerIcon(Play_isHost ? Main_values.Play_DisplaynameHost : Main_values.Play_selectedChannelDisplayname, response.stream.broadcaster_type === 'partner', true, Play_Lang); //response.stream.channel.partner
+        Play_partnerIcon(
+            Play_isHost ? Main_values.Play_DisplaynameHost : Main_values.Play_selectedChannelDisplayname,
+            response.stream.broadcaster_type === 'partner',
+            true,
+            Play_Lang
+        ); //response.stream.channel.partner
         Main_values.Play_selectedChannelLogo = response.stream.profile_image_url;
         Play_LoadLogoSucess = true;
         Play_LoadLogo(document.getElementById('stream_info_icon'), Main_values.Play_selectedChannelLogo);
@@ -629,11 +652,27 @@ function Play_updateStreamLogoError() {
 
 function Play_updateStreamInfoStart() {
     var theUrl = Main_helix_api + 'streams/?user_id=' + Main_values.Play_selectedChannel_id;
-    BasexmlHttpGet(theUrl, Play_loadingInfoDataTimeout, 2, null, Play_updateStreamInfoStartValues, Play_updateStreamInfoStartError, false, null, true);
+    BasexmlHttpGet(
+        theUrl,
+        Play_loadingInfoDataTimeout,
+        2,
+        null,
+        Play_updateStreamInfoStartValues,
+        Play_updateStreamInfoStartError,
+        false,
+        null,
+        true
+    );
 }
 
 function Play_partnerIcon(name, partner, islive, lang) {
-    var div = '<div class="partnericon_div"> ' + name + STR_SPACE + STR_SPACE + '</div>' + (partner ? '<img class="partnericon_img" alt="" src="' + IMG_PARTNER + '">' : '');
+    var div =
+        '<div class="partnericon_div"> ' +
+        name +
+        STR_SPACE +
+        STR_SPACE +
+        '</div>' +
+        (partner ? '<img class="partnericon_img" alt="" src="' + IMG_PARTNER + '">' : '');
 
     if (islive) {
         div +=
@@ -746,47 +785,63 @@ function Play_LoadLogo(ImgObjet, link) {
     ImgObjet.src = link;
 }
 
-function Play_loadData() {
+function Play_loadData(skipProxy) {
     Play_loadingDataTry = 0;
     Play_loadingDataTimeout = 2000 + (Play_RestoreFromResume ? 3000 : 0);
-    Play_loadDataRequest();
+    Play_loadDataRequest(skipProxy);
 }
 
 var Play_410ERROR = true;
-function Play_loadDataRequest() {
+function Play_loadDataRequest(skipProxy) {
     try {
         var theUrl;
         var xmlHttp = new XMLHttpRequest();
+        var headers;
+        var useProxy;
 
-        if (Play_state === Play_STATE_LOADING_TOKEN) {
-            xmlHttp.open('POST', 'https://gql.twitch.tv/gql', true);
+        if (use_proxy && !skipProxy && Play_state === Play_STATE_LOADING_TOKEN) {
+            useProxy = true;
+            Play_state = Play_STATE_LOADING_PLAYLIST;
+            headers = proxy_headers ? proxy_headers : [];
+
+            var URL_parameters = Play_base_parameters.replace('%d', Math.random() * 100000);
+            var url = proxy_url + Main_values.Play_selectedChannel + (proxy_has_parameter ? '.m3u8' + encodeURIComponent('?' + URL_parameters) : '');
+
+            xmlHttp.open('GET', url, true);
+
+            xmlHttp.timeout = proxy_timeout;
+            console.log(proxy_timeout);
         } else {
-            if (!Play_tokenResponse.hasOwnProperty('value') || !Play_tokenResponse.hasOwnProperty('signature')) {
-                Play_410ERROR = true;
-                if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
-                Play_loadDataError();
-                return;
+            headers = Play_Headers;
+            if (Play_state === Play_STATE_LOADING_TOKEN) {
+                xmlHttp.open('POST', 'https://gql.twitch.tv/gql', true);
+            } else {
+                if (!Play_tokenResponse.hasOwnProperty('value') || !Play_tokenResponse.hasOwnProperty('signature')) {
+                    Play_410ERROR = true;
+                    if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                    Play_loadDataError();
+                    return;
+                }
+
+                theUrl =
+                    'https://usher.ttvnw.net/api/channel/hls/' +
+                    Main_values.Play_selectedChannel +
+                    '.m3u8?&token=' +
+                    encodeURIComponent(Play_tokenResponse.value) +
+                    '&sig=' +
+                    Play_tokenResponse.signature +
+                    '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true&fast_bread=true&cdm=wv&p=' +
+                    Main_RandomInt();
+
+                xmlHttp.open('GET', theUrl, true);
             }
-
-            theUrl =
-                'https://usher.ttvnw.net/api/channel/hls/' +
-                Main_values.Play_selectedChannel +
-                '.m3u8?&token=' +
-                encodeURIComponent(Play_tokenResponse.value) +
-                '&sig=' +
-                Play_tokenResponse.signature +
-                '&playlist_include_framerate=true&reassignments_supported=true&allow_source=true&fast_bread=true&cdm=wv&p=' +
-                Main_RandomInt();
-
-            xmlHttp.open('GET', theUrl, true);
+            xmlHttp.timeout = Play_loadingDataTimeout;
         }
 
-        xmlHttp.timeout = Play_loadingDataTimeout;
+        if (headers && headers.length) {
+            var len = headers.length;
 
-        if (Play_Headers && Play_Headers.length) {
-            var len = Play_Headers.length;
-
-            for (var i = 0; i < len; i++) xmlHttp.setRequestHeader(Play_Headers[i][0], Play_Headers[i][1]);
+            for (var i = 0; i < len; i++) xmlHttp.setRequestHeader(headers[i][0], headers[i][1]);
         }
 
         xmlHttp.ontimeout = function () {};
@@ -797,6 +852,10 @@ function Play_loadDataRequest() {
                     Play_loadingDataTry = 0;
                     if (Play_isOn) Play_loadDataSuccess(xmlHttp.responseText);
                     //Play_410ERROR = false;
+                } else if (useProxy) {
+                    //if proxy fails fall back to normal request
+                    Play_state = Play_STATE_LOADING_TOKEN;
+                    Play_loadData(true);
                 } else if (xmlHttp.status === 403 || xmlHttp.status === 404) {
                     //forbidden access
                     //404 = off line
@@ -1207,7 +1266,13 @@ function Play_PlayerCheck() {
         Play_PlayerCheckCount++;
         if (Play_PlayerCheckCount > Play_PlayerCheckTimer) {
             //Don't change the first time only retry, and don't change if in Auto mode
-            if (Play_PlayerCheckQualityChanged && Play_PlayerCheckRun && Play_qualityIndex < Play_getQualitiesCount() - 1 && Play_qualityPlaying.indexOf('Auto') === -1) Play_qualityIndex++;
+            if (
+                Play_PlayerCheckQualityChanged &&
+                Play_PlayerCheckRun &&
+                Play_qualityIndex < Play_getQualitiesCount() - 1 &&
+                Play_qualityPlaying.indexOf('Auto') === -1
+            )
+                Play_qualityIndex++;
             else if (!Play_PlayerCheckQualityChanged && Play_PlayerCheckRun) Play_PlayerCheckCounter++;
 
             if (!navigator.onLine) Play_EndStart(false, 1);
@@ -1608,7 +1673,8 @@ function Play_ChatPosition() {
     if (Play_ChatPositions < 0) Play_ChatPositions = bool ? 2 : 7;
     else if (Play_ChatPositions > (bool ? 2 : 7)) Play_ChatPositions = 0;
 
-    Play_chat_container.style.top = (bool ? 0.2 : Play_ChatPositionVal[Play_ChatPositions].top + Play_ChatPositionVal[Play_ChatPositions].sizeOffset[Play_ChatSizeValue]) + '%';
+    Play_chat_container.style.top =
+        (bool ? 0.2 : Play_ChatPositionVal[Play_ChatPositions].top + Play_ChatPositionVal[Play_ChatPositions].sizeOffset[Play_ChatSizeValue]) + '%';
 
     Play_chat_container.style.left = Play_ChatPositionVal[Play_ChatPositions + (bool ? 2 : 0)].left + '%';
 
@@ -1871,7 +1937,10 @@ function Play_EndSet(PlayVodClip) {
 
         Play_EndTextsReset();
         Main_innerHTML('end_channel_name_text', Main_values.Play_selectedChannelDisplayname);
-        Main_innerHTML('end_vod_title_text', Main_values.Play_selectedChannelDisplayname + STR_IS_NOW + STR_USER_HOSTING + Play_TargetHost.displayName);
+        Main_innerHTML(
+            'end_vod_title_text',
+            Main_values.Play_selectedChannelDisplayname + STR_IS_NOW + STR_USER_HOSTING + Play_TargetHost.displayName
+        );
     } else if (PlayVodClip === 1) {
         // play
         Play_EndIconsRemoveFocus();
@@ -1924,7 +1993,8 @@ function Play_EndTextsReset() {
 
 function Play_OpenChannel(PlayVodClip) {
     if (!Main_values.Main_BeforeChannelisSet && Main_values.Main_Go !== Main_ChannelVod && Main_values.Main_Go !== Main_ChannelClip) {
-        Main_values.Main_BeforeChannel = Main_values.Main_BeforeAgameisSet && Main_values.Main_Go !== Main_aGame ? Main_values.Main_BeforeAgame : Main_values.Main_Go;
+        Main_values.Main_BeforeChannel =
+            Main_values.Main_BeforeAgameisSet && Main_values.Main_Go !== Main_aGame ? Main_values.Main_BeforeAgame : Main_values.Main_Go;
         Main_values.Main_BeforeChannelisSet = true;
     }
 
@@ -1972,7 +2042,10 @@ function Play_OpenGame(PlayVodClip) {
 
     if (!Main_values.Main_BeforeAgameisSet && Main_values.Main_Go !== Main_AGameVod && Main_values.Main_Go !== Main_AGameClip) {
         Main_values.Main_BeforeAgame =
-            Main_values.Main_BeforeChannelisSet && Main_values.Main_Go !== Main_ChannelContent && Main_values.Main_Go !== Main_ChannelVod && Main_values.Main_Go !== Main_ChannelClip
+            Main_values.Main_BeforeChannelisSet &&
+            Main_values.Main_Go !== Main_ChannelContent &&
+            Main_values.Main_Go !== Main_ChannelVod &&
+            Main_values.Main_Go !== Main_ChannelClip
                 ? Main_values.Main_BeforeChannel
                 : Main_values.Main_Go;
         Main_values.Main_BeforeAgameisSet = true;
@@ -2498,7 +2571,10 @@ function Play_MakeControls() {
             Play_OpenChannel(PlayVodClip);
         },
         setLable: function (title) {
-            Main_innerHTML('extra_button_' + this.position, '<div style="max-width: 27%; text-overflow: ellipsis; overflow: hidden; transform: translate(135.5%, 0);">' + title + '</div>');
+            Main_innerHTML(
+                'extra_button_' + this.position,
+                '<div style="max-width: 27%; text-overflow: ellipsis; overflow: hidden; transform: translate(135.5%, 0);">' + title + '</div>'
+            );
         }
     };
 
@@ -2516,7 +2592,9 @@ function Play_MakeControls() {
         setLable: function (title) {
             Main_innerHTML(
                 'extra_button_' + this.position,
-                '<div style="max-width: 40%; text-overflow: ellipsis; overflow: hidden; transform: translate(75%, 0);">' + (title === '' ? STR_NO_GAME : title) + '</div>'
+                '<div style="max-width: 40%; text-overflow: ellipsis; overflow: hidden; transform: translate(75%, 0);">' +
+                    (title === '' ? STR_NO_GAME : title) +
+                    '</div>'
             );
         }
     };
@@ -2533,7 +2611,10 @@ function Play_MakeControls() {
             PlayClip_OpenVod();
         },
         setLable: function (title) {
-            Main_innerHTML('extra_button_' + this.position, '<div style="max-width: 60%; text-overflow: ellipsis; overflow: hidden; transform: translate(33%, 0);">' + title + '</div>');
+            Main_innerHTML(
+                'extra_button_' + this.position,
+                '<div style="max-width: 60%; text-overflow: ellipsis; overflow: hidden; transform: translate(33%, 0);">' + title + '</div>'
+            );
         }
     };
 
@@ -2558,7 +2639,11 @@ function Play_MakeControls() {
         setIcon: function (AddCode_IsFollowing) {
             Main_innerHTML(
                 'controls_icon_' + this.position,
-                '<i class="pause_button3d icon-' + (AddCode_IsFollowing ? 'heart' : 'heart-o') + '" style="color: #' + (AddCode_IsFollowing ? '6441a4' : 'FFFFFF') + ';" ></i>'
+                '<i class="pause_button3d icon-' +
+                    (AddCode_IsFollowing ? 'heart' : 'heart-o') +
+                    '" style="color: #' +
+                    (AddCode_IsFollowing ? '6441a4' : 'FFFFFF') +
+                    ';" ></i>'
             );
         }
     };
@@ -2733,7 +2818,10 @@ function Play_MakeControls() {
             Play_controls[Play_controlsChat].setLable();
         },
         setIcon: function () {
-            Main_innerHTML('controls_icon_' + this.position, '<i class="pause_button3d icon-' + (Play_isFullScreen ? 'resize-down' : 'resize-up') + '" ></i>');
+            Main_innerHTML(
+                'controls_icon_' + this.position,
+                '<i class="pause_button3d icon-' + (Play_isFullScreen ? 'resize-down' : 'resize-up') + '" ></i>'
+            );
         }
     };
 
@@ -2793,7 +2881,10 @@ function Play_MakeControls() {
             this.setLable();
         },
         setLable: function () {
-            Main_textContent('controls_name_' + Play_controlsChatPos, Play_controls[Play_controlsChatPos].values[Play_controls[Play_controlsChatPos].defaultValue]);
+            Main_textContent(
+                'controls_name_' + Play_controlsChatPos,
+                Play_controls[Play_controlsChatPos].values[Play_controls[Play_controlsChatPos].defaultValue]
+            );
         },
         bottomArrows: function () {
             Play_BottomArrows(this.position);
@@ -2804,7 +2895,29 @@ function Play_MakeControls() {
         //chat_brightness
         icons: 'chat-brig',
         string: STR_CHAT_BRIGHTNESS,
-        values: ['0%', '5%', '10%', '15%', '20%', '25%', '30%', '35%', '40%', '45%', '50%', '55%', '60%', '65%', '70%', '75%', '80%', '85%', '90%', '95%', '100%'],
+        values: [
+            '0%',
+            '5%',
+            '10%',
+            '15%',
+            '20%',
+            '25%',
+            '30%',
+            '35%',
+            '40%',
+            '45%',
+            '50%',
+            '55%',
+            '60%',
+            '65%',
+            '70%',
+            '75%',
+            '80%',
+            '85%',
+            '90%',
+            '95%',
+            '100%'
+        ],
         defaultValue: Main_values.ChatBackground,
         opacity: 0,
         isChat: true,
@@ -2928,8 +3041,10 @@ function Play_IconsAddFocus() {
     Main_AddClass('controls_button_' + Play_Panelcounter, 'progress_bar_div_focus');
     document.getElementById('controls_button_text_' + Play_Panelcounter).style.opacity = '1';
 
-    if (Play_controls[Play_Panelcounter].isChat && (!Play_isChatShown() || !Play_isFullScreen)) document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = '1';
-    else if (Play_Panelcounter !== Play_controlsChat && !Play_controls[Play_Panelcounter].isChat) document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = '0';
+    if (Play_controls[Play_Panelcounter].isChat && (!Play_isChatShown() || !Play_isFullScreen))
+        document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = '1';
+    else if (Play_Panelcounter !== Play_controlsChat && !Play_controls[Play_Panelcounter].isChat)
+        document.getElementById('controls_button_text_' + Play_controlsChat).style.opacity = '0';
 }
 
 function Play_IconsRemoveFocus() {

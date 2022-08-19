@@ -1,4 +1,6 @@
 // Bellow here are the all untranslatable string,they are a combination of strings and html code use by pats of the code
+var LINK_COLOR = '#328df5';
+var STR_SPACE_HTML = '&nbsp;';
 var STR_ABOUT_EMAIL = 'fglfgl27@gmail.com';
 var STR_BR = '<br>';
 var STR_DOT = '<i  class="icon-circle class_bold" style="font-size: 50%; vertical-align: middle;"></i>' + '  ';
@@ -18,6 +20,7 @@ var STR_PAYPAL;
 var STR_BITCOIN;
 var STR_BITCOIN_WALLET = '1DuhCT6L3VfBtFcS8FNfVXgBzE2rwCPx3x';
 var STR_DIV_LINK = '<div style="text-align: center; width: 100%; display: inline-block; color: #0366d6;">';
+var STR_SPAN_LINK = '<span style="color: ' + LINK_COLOR + ';">';
 
 // This function is called after the main language is loaded, the above are initialized empty so it doesn't cause loading exceptions
 function DefaultLang() {
@@ -155,7 +158,12 @@ function DefaultLang() {
         STR_BR +
         STR_ABOUT_INFO_1 +
         STR_BR +
-        (Main_IsNotBrowser ? '' : STR_BR + '<div class="class_bold" style="display: inline-block; color: #FF0000; font-size: 110%;">' + STR_ABOUT_INFO_2_SOURCE + '</div>') +
+        (Main_IsNotBrowser
+            ? ''
+            : STR_BR +
+              '<div class="class_bold" style="display: inline-block; color: #FF0000; font-size: 110%;">' +
+              STR_ABOUT_INFO_2_SOURCE +
+              '</div>') +
         '</div>' +
         STR_BR +
         STR_DIV_TITLE +
@@ -213,7 +221,10 @@ function DefaultLang() {
         STR_OAUTH_EXPLAIN1 +
         STR_BR +
         STR_DOT +
-        STR_OAUTH_EXPLAIN2.replace('link_link', '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-family: \'Roboto-Bold\';">http://tiny.cc/twitchkey</div>') +
+        STR_OAUTH_EXPLAIN2.replace(
+            'link_link',
+            '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-family: \'Roboto-Bold\';">http://tiny.cc/twitchkey</div>'
+        ) +
         STR_BR +
         STR_DOT +
         STR_OAUTH_EXPLAIN3 +
@@ -226,4 +237,21 @@ function DefaultLang() {
         STR_BR +
         STR_DOT +
         STR_OAUTH_EXPLAIN6;
+
+    STR_PURPLE_ADBLOCK_SUMMARY =
+        STR_PROXY_DONATE_SUMMARY +
+        STR_SPACE_HTML +
+        STR_SPACE_HTML +
+        STR_SPAN_LINK +
+        DefaultMakeLink('https://github.com/arthurbolsoni/Purple-adblock') +
+        '</span>';
+
+    STR_TTV_LOL_SUMMARY =
+        STR_PROXY_DONATE_SUMMARY + STR_SPACE_HTML + STR_SPACE_HTML + STR_SPAN_LINK + DefaultMakeLink('https://ttv.lol/donate') + '</span>';
+}
+
+function DefaultMakeLink(link, prefix) {
+    return (
+        '<a style="color: ' + LINK_COLOR + '; text-decoration:none;" href="' + (prefix ? prefix : '') + link + '" target="_blank">' + link + '</a>'
+    );
 }

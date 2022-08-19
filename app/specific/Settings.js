@@ -171,6 +171,26 @@ var Settings_value = {
         //Migrated to dialog
         values: ['no', 'yes'],
         defaultValue: 1
+    },
+    ttv_lolProxy: {
+        //Migrated to dialog
+        values: ['no', 'yes'],
+        defaultValue: 1
+    },
+    proxy_timeout: {
+        //Migrated to dialog
+        values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 30],
+        defaultValue: 10
+    },
+    purple_adblock: {
+        //Migrated to dialog
+        values: ['no', 'yes'],
+        defaultValue: 1
+    },
+    proxy_settings: {
+        values: ['None'],
+        set_values: [''],
+        defaultValue: 1
     }
 };
 
@@ -254,7 +274,16 @@ function Settings_SetSettings() {
     //live_feed_sort
     key = 'live_feed_sort';
     Settings_value_keys.push(key);
-    Settings_value[key].values = [STR_VIWES_MOST, STR_VIWES_LOWEST, STR_NAME_A_Z, STR_NAME_Z_A, STR_GAME_A_Z, STR_GAME_Z_A, STR_CREATED_NEWEST, STR_CREATED_OLDEST];
+    Settings_value[key].values = [
+        STR_VIWES_MOST,
+        STR_VIWES_LOWEST,
+        STR_NAME_A_Z,
+        STR_NAME_Z_A,
+        STR_GAME_A_Z,
+        STR_GAME_Z_A,
+        STR_CREATED_NEWEST,
+        STR_CREATED_OLDEST
+    ];
 
     div += Settings_DivOptionWithSummary(key, STR_LIVE_FEED_SORT, STR_LIVE_FEED_SORT_SUMMARY);
 
@@ -327,6 +356,12 @@ function Settings_SetSettings() {
 
     // Player settings title
     div += Settings_DivTitle('play', STR_SETTINGS_PLAYER);
+
+    key = 'proxy_settings';
+    Settings_value_keys.push(key);
+    Settings_value[key].values = [STR_CONTENT_LANG_SUMARRY];
+
+    div += Settings_DivOptionNoSummary(key, PROXY_SETTINGS);
 
     key = 'single_click_exit';
     Settings_value_keys.push(key);
@@ -428,7 +463,10 @@ function Settings_DivOptionWithSummary(key, string_title, string_summary) {
 }
 
 function Settings_DivOptionChangeLang(key, string_title, string_summary) {
-    Main_innerHTML(key + '_name', string_title + '<div id="' + key + '_summary" class="settings_summary" style="font-size: 65%;">' + string_summary + '</div>');
+    Main_innerHTML(
+        key + '_name',
+        string_title + '<div id="' + key + '_summary" class="settings_summary" style="font-size: 65%;">' + string_summary + '</div>'
+    );
 }
 
 // The order in Settings_SetStrings doesnot matter
@@ -454,7 +492,16 @@ function Settings_SetStrings() {
     key = 'live_feed_sort';
     Settings_DivOptionChangeLang(key, STR_LIVE_FEED_SORT, STR_LIVE_FEED_SORT_SUMMARY);
     Main_textContent(key, Settings_Obj_values(key));
-    Settings_value[key].values = [STR_VIWES_MOST, STR_VIWES_LOWEST, STR_NAME_A_Z, STR_NAME_Z_A, STR_GAME_A_Z, STR_GAME_Z_A, STR_CREATED_NEWEST, STR_CREATED_OLDEST];
+    Settings_value[key].values = [
+        STR_VIWES_MOST,
+        STR_VIWES_LOWEST,
+        STR_NAME_A_Z,
+        STR_NAME_Z_A,
+        STR_GAME_A_Z,
+        STR_GAME_Z_A,
+        STR_CREATED_NEWEST,
+        STR_CREATED_OLDEST
+    ];
 
     //Player settings
     Main_textContent('setting_title_play', STR_SETTINGS_PLAYER);
@@ -542,6 +589,7 @@ function Settings_SetDefautls() {
     Play_SingleClickExit = Settings_Obj_default('single_click_exit');
     Play_EndSettingsCounter = Settings_Obj_default('end_dialog_counter');
     Settings_ShowCounter(Settings_Obj_default('show_screen_counter'));
+    Settings_proxy_set_start();
 }
 
 function Settings_Obj_values(key) {
@@ -581,7 +629,7 @@ function Settings_ChangeSettigs(position) {
     Main_setItem(key, Settings_Obj_default(key) + 1);
     Main_textContent(key, Settings_Obj_values(key));
     Settings_Setarrows(position);
-    Settings_SetDefault(position);
+    Settings_SetDefault(key);
 }
 
 function Settings_Setarrows(position) {
@@ -605,8 +653,6 @@ function Settings_Setarrows(position) {
 }
 
 function Settings_SetDefault(position) {
-    position = Settings_value_keys[position];
-
     if (position === 'videos_animation') Vod_DoAnimateThumb = Settings_Obj_default('videos_animation');
     else if (position === 'clip_auto_play_next') PlayClip_All_Forced = Settings_Obj_default('clip_auto_play_next');
     else if (position === 'live_notification') UserLiveFeed_Notify = Settings_Obj_default('live_notification');
@@ -620,9 +666,67 @@ function Settings_SetDefault(position) {
     else if (position === 'thumb_quality') Main_SetThumb();
     else if (position === 'global_font_offset') calculateFontSize();
     else if (position === 'show_screen_counter') Settings_ShowCounter(Settings_Obj_default('show_screen_counter'));
+    else if (position === 'ttv_lolProxy') Settings_set_TTV_LOL();
+    else if (position === 'proxy_timeout') Settings_set_proxy_timeout();
+    else if (position === 'purple_adblock') Settings_set_purple_adblock();
     else if (position === 'clock_offset') {
         Settings_SetClock();
         Main_updateclock();
+    }
+}
+
+function Settings_set_proxy_timeout() {
+    proxy_timeout = Settings_Obj_values('proxy_timeout') * 1000;
+}
+
+var proxyArray = ['ttv_lolProxy', 'purple_adblock'];
+function Settings_set_purple_adblock() {
+    Settings_set_all_proxy('purple_adblock');
+}
+
+function Settings_set_TTV_LOL() {
+    Settings_set_all_proxy('ttv_lolProxy');
+}
+
+function Settings_set_all_proxy(current) {
+    var currentEnable = Settings_Obj_default(current) === 1;
+
+    use_proxy = currentEnable;
+
+    if (currentEnable) {
+        Settings_proxy_set_current(current);
+
+        var i = 0,
+            len = proxyArray.length;
+        for (i; i < len; i++) {
+            if (proxyArray[i] !== current && Settings_Obj_default(proxyArray[i]) === 1) {
+                Settings_DialogRightLeftAfter(proxyArray[i], -1, true);
+            }
+        }
+    }
+}
+
+function Settings_proxy_set_start() {
+    var i = 0,
+        len = proxyArray.length;
+    for (i; i < len; i++) {
+        if (Settings_Obj_default(proxyArray[i]) === 1) {
+            use_proxy = true;
+            Settings_proxy_set_current(proxyArray[i]);
+            break;
+        }
+    }
+}
+
+function Settings_proxy_set_current(current) {
+    if (current === 'purple_adblock') {
+        proxy_url = purpel_proxy;
+        proxy_headers = null;
+        proxy_has_parameter = false;
+    } else {
+        proxy_url = Play_live_ttv_lol_links;
+        proxy_headers = ttv_lol_headers;
+        proxy_has_parameter = true;
     }
 }
 
@@ -811,10 +915,40 @@ function Settings_handleKeyDown(event) {
         case KEY_ENTER:
             if (!Settings_cursorY) Languages_init();
             else if (Main_A_includes_B(Settings_value_keys[Settings_cursorY], 'chat_opt')) Settings_DialogShowChat();
+            else if (Main_A_includes_B(Settings_value_keys[Settings_cursorY], 'proxy_settings')) Settings_DialogShowProxy();
             break;
         default:
             break;
     }
+}
+
+function Settings_DialogShowProxy() {
+    var array_no_yes = [STR_NO, STR_YES];
+    Settings_value.ttv_lolProxy.values = array_no_yes;
+    Settings_value.purple_adblock.values = array_no_yes;
+
+    var obj = {
+        proxy_timeout: {
+            defaultValue: Settings_value.purple_adblock.defaultValue,
+            values: Settings_value.purple_adblock.values,
+            title: STR_PROXY_TIMEOUT,
+            summary: STR_PROXY_TIMEOUT_SUMMARY
+        },
+        purple_adblock: {
+            defaultValue: Settings_value.ttv_lolProxy.defaultValue,
+            values: Settings_value.ttv_lolProxy.values,
+            title: STR_PURPLE_ADBLOCK,
+            summary: STR_PURPLE_ADBLOCK_SUMMARY
+        },
+        ttv_lolProxy: {
+            defaultValue: Settings_value.purple_adblock.defaultValue,
+            values: Settings_value.purple_adblock.values,
+            title: STR_TTV_LOL,
+            summary: STR_TTV_LOL_SUMMARY
+        }
+    };
+
+    Settings_DialogShow(obj, PROXY_SETTINGS + STR_BR + STR_BR + PROXY_SETTINGS_SUMMARY);
 }
 
 function Settings_DialogShowChat() {
@@ -986,11 +1120,11 @@ function Settings_DialoghandleKeyDown(event) {
             break;
         case KEY_LEFT:
             key = Settings_DialogValue[Settings_DialogPos];
-            if (Settings_Obj_default(key) > 0) Settings_DialogRigthLeft(-1);
+            if (Settings_Obj_default(key) > 0) Settings_DialogRightLeft(-1);
             break;
         case KEY_RIGHT:
             key = Settings_DialogValue[Settings_DialogPos];
-            if (Settings_Obj_default(key) < Settings_Obj_length(key)) Settings_DialogRigthLeft(1);
+            if (Settings_Obj_default(key) < Settings_Obj_length(key)) Settings_DialogRightLeft(1);
             break;
         case KEY_UP:
             if (Settings_DialogPos > 0) Settings_DialogUpDown(-1);
@@ -1013,15 +1147,21 @@ function Settings_DialogUpDown(offset) {
     Settings_SetarrowsKey(key);
 }
 
-function Settings_DialogRigthLeft(offset) {
+function Settings_DialogRightLeft(offset) {
     var key = Settings_DialogValue[Settings_DialogPos];
+    Settings_DialogRightLeftAfter(key, offset);
+}
 
+function Settings_DialogRightLeftAfter(key, offset, skipDefault) {
     Settings_value[key].defaultValue += offset;
 
     Main_setItem(key, Settings_Obj_default(key) + 1);
     Main_textContent(key, Settings_Obj_values(key));
-    Settings_SetarrowsKey(key);
-    Settings_SetDefault(key);
+
+    if (!skipDefault) {
+        Settings_SetarrowsKey(key);
+        Settings_SetDefault(key);
+    }
 }
 
 function Settings_RemoveinputFocusKey(key) {

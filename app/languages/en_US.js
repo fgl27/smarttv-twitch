@@ -423,4 +423,20 @@ function en_USLang() {
     STR_WARNING_NEW =
         "Twitch is shutting down some of they API, making necessary to update all app API calls to they new API, the new API is different because of that it demands a lot of work.<br><br>Because of that the app is going thru a update phase, during this time some app content may not work.<br><br>Be aware with this new Twitch API is necessary to add a User and a Authentication key, if you don’t you may not have access to any content in future updates or after Twitch completely shutting they old API.<br><br>Some users may need to reinstall the app...If you have problem after see this warning, hold channel key up until you see a warning, now hold key down until the app restar, if that doesn't work, reinstall  the app.<br><br>This dialog will auto hide in 1 minute, or press any key to hide it";
     STR_FAIL_VOD_INFO = 'Fail to load VOD info';
+    STR_PROXY_DONATE_SUMMARY = 'If you wanna to thanks the proxy server maintainer use the link:';
+
+    STR_TTV_LOL = 'TTV LOL';
+    STR_PURPLE_ADBLOCK = 'Purple Adblock ';
+
+    STR_PROXY_TIMEOUT = 'Proxy timeout (time in seconds)';
+    STR_PROXY_TIMEOUT_SUMMARY = 'If the proxy server is out this will be the time that will take to "give up" on the connection and fallback to default Twitch implementation';
+
+    PROXY_SERVICE = 'Proxy: ';
+    PROXY_SERVICE_STATUS = 'Enabled and working';
+    PROXY_SERVICE_OFF = 'Disabled in settings';
+    PROXY_SERVICE_FAIL = 'Not working, fail %x times';
+
+    PROXY_SETTINGS = 'Proxy Settings (Internet censorship and related proxy)';
+    PROXY_SETTINGS_SUMMARY =
+        'Only one proxy can be enable, enables proxy server to get stream links from a different server, that may allow you to see content that is forbidden on yours region and avoid ads, disable this if you have any live stream issue too many or longer buffers, freezes or slow connection that may cause the stream quality to drop.';
 }

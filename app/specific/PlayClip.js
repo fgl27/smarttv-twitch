@@ -76,6 +76,7 @@ function PlayClip_Start() {
     document.getElementById('controls_' + Play_controlsChatDelay).style.display = 'none';
     document.getElementById('controls_' + Play_controlsLowLatency).style.display = 'none';
     document.getElementById('controls_' + Play_controlsChatSend).style.display = 'none';
+    document.getElementById('controls_' + Play_controlsProxy).style.display = 'none';
     Play_CurrentSpeed = 3;
     Play_IconsResetFocus();
 

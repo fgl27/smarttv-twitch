@@ -254,7 +254,7 @@ function Play_PreStart() {
     }
     if (Main_values.Chat_font_size_new > Play_ChatFontObj.length - 1) Main_values.Chat_font_size_new = Play_ChatFontObj.length - 1;
 
-    Play_ClearPlayer();
+    //Play_ClearPlayer();
     Play_ChatSize(false);
     Play_ChatBackgroundChange(false);
     Play_SetChatFont();
@@ -380,6 +380,7 @@ function Play_SetChatFont() {
 
 function Play_Start() {
     Play_showBufferDialog();
+    Play_ResetProxy();
 
     Main_empty('stream_info_title');
     Play_LoadLogoSucess = false;
@@ -392,6 +393,7 @@ function Play_Start() {
     //Chat delay
     document.getElementById('controls_' + Play_controlsChatDelay).style.display = '';
     document.getElementById('controls_' + Play_controlsChatSend).style.display = '';
+    document.getElementById('controls_' + Play_controlsProxy).style.display = '';
 
     document.getElementById('controls_' + Play_controlsLowLatency).style.display = Play_CanLowLatency ? '' : 'none';
 
@@ -1502,6 +1504,17 @@ function Play_ClearPlayer() {
     }
 }
 
+function Play_ResetProxy() {
+    Play_A_Control(Settings_get_enabled(), Play_controlsProxy);
+}
+
+function Play_A_Control(value, control) {
+    //After setting we only reset this if the app is close/re opened
+    Play_controls[control].defaultValue = value;
+    if (Play_controls[control].bottomArrows) Play_controls[control].bottomArrows();
+    Play_controls[control].setLable();
+}
+
 function Play_ClearPlay(clearChat) {
     Play_Playing = false;
     document.body.removeEventListener('keydown', Play_handleKeyDown);
@@ -1586,6 +1599,7 @@ function Play_hidePanel() {
     Play_clearHidePanel();
     Play_ForceHidePannel();
     Play_quality = Play_qualityPlaying;
+    Play_ResetProxy();
 }
 
 function Play_showPanel() {
@@ -2569,6 +2583,7 @@ var Play_controlsChatBright = 12;
 var Play_controlsChatFont = 13;
 var Play_controlsChatDelay = 14;
 var Play_controlsChatForceDis = 15;
+var Play_controlsProxy = 16;
 
 var Play_controlsDefault = Play_controlsChat;
 var Play_Panelcounter = Play_controlsDefault;
@@ -3061,6 +3076,56 @@ function Play_MakeControls() {
         },
         setLable: function () {
             Main_textContent('extra_button_' + this.position, '(' + (Main_values.Play_ChatForceDisable ? STR_YES : STR_NO) + ')');
+        }
+    };
+
+    Play_controls[Play_controlsProxy] = {
+        opacity: 0,
+        icons: 'proxy',
+        string: PROXY_SERVICE,
+        values: STR_PROXY_CONTROLS_ARRAY,
+        defaultValue: Settings_get_enabled(),
+        enterKey: function () {
+            var currentProxyEnabled = Settings_get_enabled(),
+                i,
+                key;
+
+            if (this.defaultValue < 2) {
+                key = proxyArray[this.defaultValue];
+                Settings_value[key].defaultValue = 1;
+                Main_setItem(key, 2);
+                Settings_set_all_proxy(key);
+            } else {
+                //reset all proxy to disable
+                i = 0;
+                var len = proxyArray.length;
+                for (i; i < len; i++) {
+                    key = proxyArray[i];
+                    Settings_value[key].defaultValue = 0;
+                    Main_setItem(key, 1);
+                }
+                use_proxy = false;
+            }
+
+            if (currentProxyEnabled !== Settings_get_enabled()) {
+                Play_state = Play_STATE_LOADING_TOKEN;
+                Play_loadData();
+            }
+
+            Play_ResetProxy();
+            Play_UpdateVideoStatus();
+        },
+        updown: function (adder) {
+            this.defaultValue += adder;
+            if (this.defaultValue < 0) this.defaultValue = 0;
+            else if (this.defaultValue > this.values.length - 1) this.defaultValue = this.values.length - 1;
+            this.bottomArrows();
+        },
+        bottomArrows: function () {
+            Play_BottomArrows(this.position);
+        },
+        setLable: function () {
+            Main_textContent('extra_button_text' + this.position, PROXY_SERVICE + this.values[this.defaultValue]);
         }
     };
 }

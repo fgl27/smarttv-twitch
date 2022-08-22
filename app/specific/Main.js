@@ -470,7 +470,11 @@ function Main_innerHTML(div, value) {
 }
 
 function Main_textContent(div, value) {
-    document.getElementById(div).textContent = value;
+    Main_textContentWithEle(document.getElementById(div), value);
+}
+
+function Main_textContentWithEle(elem, value) {
+    if (elem) elem.textContent = value;
 }
 
 function Main_replaceClassEmoji(div) {

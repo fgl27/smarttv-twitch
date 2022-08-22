@@ -3108,6 +3108,7 @@ function Play_MakeControls() {
             }
 
             if (currentProxyEnabled !== Settings_get_enabled()) {
+                Play_showBufferDialog();
                 Play_state = Play_STATE_LOADING_TOKEN;
                 Play_loadData();
             }

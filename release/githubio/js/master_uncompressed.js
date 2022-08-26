@@ -9529,9 +9529,8 @@
                         Play_loadingDataTry = 0;
                         if (Play_isOn) Play_loadDataSuccess(xmlHttp.responseText);
                         //Play_410ERROR = false;
-                    } else if (useProxy) {
+                    } else if (useProxy && PlayHLS_CheckProxyResultFail(xmlHttp.responseText)) {
                         //if proxy fails fall back to normal request
-                        proxy_fail_counter++;
                         Play_state = Play_STATE_LOADING_TOKEN;
                         Play_loadData(true);
                     } else if (xmlHttp.status === 403 || xmlHttp.status === 404) {
@@ -9557,6 +9556,14 @@
             console.log('Play_loadDataRequest e ' + e);
             Play_loadDataError();
         }
+    }
+
+    function PlayHLS_CheckProxyResultFail(responseText) {
+        if (Main_A_includes_B(responseText, 'not_found: transcode does not exist')) {
+            proxy_fail_counter++;
+            return false;
+        }
+        return true;
     }
 
     function Play_loadDataErrorLog(xmlHttp) {

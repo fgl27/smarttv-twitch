@@ -890,9 +890,11 @@ function Play_loadDataRequest(skipProxy) {
 
 function PlayHLS_CheckProxyResultFail(responseText) {
     if (Main_A_includes_B(responseText, 'not_found: transcode does not exist')) {
-        proxy_fail_counter++;
         return false;
     }
+
+    proxy_fail_counter++;
+
     return true;
 }
 

@@ -114,8 +114,8 @@ var Main_kraken_api = 'https://api.twitch.tv/kraken/';
 var Main_helix_api = 'https://api.twitch.tv/helix/';
 var Main_Authorization = 'Authorization';
 var Main_OAuth = 'OAuth ';
-var Main_TwithcV5Flag = '&api_version=5';
-var Main_TwithcV5Flag_I = '?api_version=5';
+var Main_TwitchV5Flag = '&api_version=5';
+var Main_TwitchV5Flag_I = '?api_version=5';
 
 var Main_classThumb = 'stream_thumbnail_focused';
 var Main_DataAttribute = 'data_attribute';
@@ -1218,7 +1218,7 @@ function Main_PrintUnicode(string) {
         console.log('Character is: ' + string.charAt(i) + " it's Unicode is: \\u" + string.charCodeAt(i).toString(16).toUpperCase());
 }
 
-function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError, key, id, use_helix, skip_user_token) {
+function BasexmlHttpGet(theUrl, Timeout, HeaderQuantity, access_token, callbackSucess, calbackError, key, id, use_helix, skip_user_token) {
     var xmlHttp = new XMLHttpRequest();
 
     xmlHttp.open('GET', theUrl, true);
@@ -1242,7 +1242,7 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
     } else {
         Main_Headers[2][1] = access_token;
 
-        for (i; i < HeaderQuatity; i++) xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
+        for (i; i < HeaderQuantity; i++) xmlHttp.setRequestHeader(Main_Headers[i][0], Main_Headers[i][1]);
     }
     xmlHttp.ontimeout = function () {};
 
@@ -1250,8 +1250,8 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
         if (xmlHttp.readyState === 4) {
             if (xmlHttp.status === 200) {
                 callbackSucess(xmlHttp.responseText, key, id);
-            } else if ((HeaderQuatity > 2 || use_helix) && (xmlHttp.status === 401 || xmlHttp.status === 403)) {
-                //token expired, only Screens HeaderQuatity will be > 2
+            } else if ((HeaderQuantity > 2 || use_helix) && (xmlHttp.status === 401 || xmlHttp.status === 403)) {
+                //token expired, only Screens HeaderQuantity will be > 2
                 var erroFun = function () {
                     calbackError(key, id);
                 };
@@ -1271,7 +1271,7 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
     xmlHttp.send(null);
 }
 
-// function BasexmlHttpGetBack(theUrl, Timeout, HeaderQuatity, access_token, callbackSucess, calbackError) {
+// function BasexmlHttpGetBack(theUrl, Timeout, HeaderQuantity, access_token, callbackSucess, calbackError) {
 //     var xmlHttp = new XMLHttpRequest();
 
 //     xmlHttp.open('GET', theUrl, true);
@@ -1279,7 +1279,7 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
 
 //     Main_Headers_Backup[2][1] = access_token;
 
-//     for (var i = 0; i < HeaderQuatity; i++) xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
+//     for (var i = 0; i < HeaderQuantity; i++) xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
 
 //     xmlHttp.ontimeout = function () {};
 
@@ -1287,8 +1287,8 @@ function BasexmlHttpGet(theUrl, Timeout, HeaderQuatity, access_token, callbackSu
 //         if (xmlHttp.readyState === 4) {
 //             if (xmlHttp.status === 200) {
 //                 callbackSucess(xmlHttp.responseText);
-//             } else if (HeaderQuatity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) {
-//                 //token expired, only Screens HeaderQuatity will be > 2
+//             } else if (HeaderQuantity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) {
+//                 //token expired, only Screens HeaderQuantity will be > 2
 //                 AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
 //             } else {
 //                 calbackError();

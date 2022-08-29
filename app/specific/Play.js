@@ -102,6 +102,7 @@ var Play_IncrementView = '';
 var Play_ProgresBarrElm;
 var Play_DefaultjumpTimers = [];
 var Play_UserLiveFeedPressed = false;
+var Play_base_kraken_headers_Array = [];
 
 var Play_base_parameters = 'reassignments_supported=true&playlist_include_framerate=true&allow_source=true&fast_bread=true&cdm=wv&p=%d';
 var Play_live_ttv_lol_links = 'https://api.ttv.lol/playlist/';
@@ -280,6 +281,11 @@ function Play_PreStart() {
         [Main_clientIdHeader, AddCode_client_backup],
         [Main_AcceptHeader, Main_TwitchV5Json],
         [Main_Authorization, null]
+    ];
+
+    Play_base_kraken_headers_Array = [
+        [Main_clientIdHeader, AddCode_client_backup],
+        ['Accept', 'application/vnd.twitchtv.v5+json']
     ];
 }
 

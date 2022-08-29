@@ -173,7 +173,12 @@ function AddCode_AppTokenCheckError(tryes, callbackFuncOK, callbackFuncNOK) {
 function AddCode_AppToken(tryes, callbackFunc, callbackFuncNOK) {
     var xmlHttp = new XMLHttpRequest();
 
-    var url = 'https://id.twitch.tv/oauth2/token?client_id=' + AddCode_clientId + '&client_secret=' + AddCode_client_token + '&grant_type=client_credentials';
+    var url =
+        'https://id.twitch.tv/oauth2/token?client_id=' +
+        AddCode_clientId +
+        '&client_secret=' +
+        AddCode_client_token +
+        '&grant_type=client_credentials';
 
     xmlHttp.open('POST', url, true);
     xmlHttp.timeout = AddCode_loadingDataTimeout;
@@ -510,7 +515,7 @@ function AddCode_Follow() {
 }
 
 function AddCode_FollowRequest() {
-    var theUrl = Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/follows/channels/' + AddCode_Channel_id + Main_TwithcV5Flag_I;
+    var theUrl = Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/follows/channels/' + AddCode_Channel_id + Main_TwitchV5Flag_I;
 
     AddCode_BasexmlHttpGet(theUrl, 'PUT', 3, Main_OAuth + AddUser_UsernameArray[0].access_token, AddCode_FollowRequestReady);
 }
@@ -543,7 +548,7 @@ function AddCode_UnFollow() {
 }
 
 function AddCode_UnFollowRequest() {
-    var theUrl = Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/follows/channels/' + AddCode_Channel_id + Main_TwithcV5Flag_I;
+    var theUrl = Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/follows/channels/' + AddCode_Channel_id + Main_TwitchV5Flag_I;
 
     AddCode_BasexmlHttpGet(theUrl, 'DELETE', 3, Main_OAuth + AddUser_UsernameArray[0].access_token, AddCode_UnFollowRequestReady);
 }
@@ -577,7 +582,7 @@ function AddCode_CheckSub() {
 }
 
 function AddCode_RequestCheckSub() {
-    var theUrl = Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/subscriptions/' + AddCode_Channel_id + Main_TwithcV5Flag_I;
+    var theUrl = Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/subscriptions/' + AddCode_Channel_id + Main_TwitchV5Flag_I;
 
     AddCode_BasexmlHttpGet(theUrl, 'GET', 3, Main_OAuth + AddUser_UsernameArray[0].access_token, AddCode_RequestCheckSubReady);
 }
@@ -652,7 +657,8 @@ function AddCode_GetGameIdError() {
 }
 
 function AddCode_RequestFollowGame() {
-    var theUrl = Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/follows/games/' + Main_values.Main_gameSelected_id + Main_TwithcV5Flag_I;
+    var theUrl =
+        Main_kraken_api + 'users/' + AddUser_UsernameArray[0].id + '/follows/games/' + Main_values.Main_gameSelected_id + Main_TwitchV5Flag_I;
 
     AddCode_BasexmlHttpGet(theUrl, 'PUT', 3, Main_OAuth + AddUser_UsernameArray[0].access_token, AddCode_RequestFollowGameReady);
 }
@@ -692,7 +698,7 @@ function AddCode_RequestUnFollowGame() {
         encodeURIComponent(Main_values.Main_gameSelected) +
         '?oauth_token=' +
         AddUser_UsernameArray[0].access_token +
-        Main_TwithcV5Flag;
+        Main_TwitchV5Flag;
 
     AddCode_BasexmlHttpGet(theUrl, 'DELETE', 2, null, AddCode_UnFollowGameRequestReady);
 }
@@ -728,7 +734,7 @@ function AddCode_UnFollowGameRequestError() {
     }
 }
 
-function AddCode_BasexmlHttpGet(theUrl, type, HeaderQuatity, access_token, callbackready) {
+function AddCode_BasexmlHttpGet(theUrl, type, HeaderQuantity, access_token, callbackready) {
     var xmlHttp = new XMLHttpRequest();
 
     xmlHttp.open(type, theUrl, true);
@@ -743,7 +749,7 @@ function AddCode_BasexmlHttpGet(theUrl, type, HeaderQuatity, access_token, callb
         header = Main_Bearer_Headers;
     }
 
-    for (var i = 0; i < HeaderQuatity; i++) xmlHttp.setRequestHeader(header[i][0], header[i][1]);
+    for (var i = 0; i < HeaderQuantity; i++) xmlHttp.setRequestHeader(header[i][0], header[i][1]);
 
     xmlHttp.ontimeout = function () {};
 
@@ -754,7 +760,7 @@ function AddCode_BasexmlHttpGet(theUrl, type, HeaderQuatity, access_token, callb
     xmlHttp.send(null);
 }
 
-function AddCode_BasexmlHttpGetBack(theUrl, type, HeaderQuatity, access_token, callbackready) {
+function AddCode_BasexmlHttpGetBack(theUrl, type, HeaderQuantity, access_token, callbackready) {
     var xmlHttp = new XMLHttpRequest();
 
     xmlHttp.open(type, theUrl, true);
@@ -762,7 +768,7 @@ function AddCode_BasexmlHttpGetBack(theUrl, type, HeaderQuatity, access_token, c
 
     Main_Headers_Backup[2][1] = access_token;
 
-    for (var i = 0; i < HeaderQuatity; i++) xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
+    for (var i = 0; i < HeaderQuantity; i++) xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
 
     xmlHttp.ontimeout = function () {};
 
@@ -800,5 +806,6 @@ var AddCode_main_token;
 
 var Play_Headers;
 
-var Play_live_token = '{"query":"{streamPlaybackAccessToken(channelName:\\"%x\\", params:{platform:\\"android\\",playerType:\\"mobile\\"}){value signature}}"}';
+var Play_live_token =
+    '{"query":"{streamPlaybackAccessToken(channelName:\\"%x\\", params:{platform:\\"android\\",playerType:\\"mobile\\"}){value signature}}"}';
 var Play_vod_token = '{"query":"{videoPlaybackAccessToken(id:\\"%x\\", params:{platform:\\"android\\",playerType:\\"mobile\\"}){value signature}}"}';

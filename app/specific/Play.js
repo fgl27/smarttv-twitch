@@ -874,16 +874,18 @@ function Play_loadDataRequest(skipProxy) {
                     //404 = off line
                     //403 = forbidden access
                     //410 = api v3 is gone use v5 bug
-                    Play_loadDataErrorLog(xmlHttp);
+
                     Play_loadDataErrorFinish(xmlHttp.status === 410, xmlHttp.status === 403);
                 } else {
                     if (xmlHttp.status === 410) {
                         Play_410ERROR = true;
                         if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
                     }
-                    Play_loadDataErrorLog(xmlHttp);
+
                     Play_loadDataError();
                 }
+
+                Play_loadDataErrorLog(xmlHttp);
             }
         };
 

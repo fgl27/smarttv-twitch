@@ -6413,7 +6413,8 @@
                     Main_IsNotBrowser = tizen !== null;
                     console.log('Main_IsNotBrowser tizen = ' + Main_IsNotBrowser);
                     Main_IsNotBrowserVersion = '1.0.0';
-                    if (!Main_isReleased) Main_isDebug = true;
+                    //if (!Main_isReleased)
+                    Main_isDebug = true;
                 } catch (e) {
                     Main_IsNotBrowserVersion = '1.0.0';
                     Main_IsNotBrowser = 0;
@@ -9551,16 +9552,18 @@
                         //404 = off line
                         //403 = forbidden access
                         //410 = api v3 is gone use v5 bug
-                        Play_loadDataErrorLog(xmlHttp);
+
                         Play_loadDataErrorFinish(xmlHttp.status === 410, xmlHttp.status === 403);
                     } else {
                         if (xmlHttp.status === 410) {
                             Play_410ERROR = true;
                             if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
                         }
-                        Play_loadDataErrorLog(xmlHttp);
+
                         Play_loadDataError();
                     }
+
+                    Play_loadDataErrorLog(xmlHttp);
                 }
             };
 

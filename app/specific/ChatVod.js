@@ -308,10 +308,10 @@ function Chat_loadChatError(id) {
     }
 }
 
-function Chat_loadChatSuccess(responseText, id) {
+function Chat_loadChatSuccess(response, id) {
     if (Chat_hasEnded || Chat_Id[0] !== id) return;
 
-    var responseText = JSON.parse(responseText),
+    var responseText = JSON.parse(response),
         comments;
 
     var div,

@@ -4140,7 +4140,8 @@
             return;
         }
 
-        var theUrl = Main_helix_api + 'subscriptions/user?broadcaster_id=' + ChatLive_selectedChannel_id[chat_number] + '&user_id=' + AddUser_UsernameArray[0].id;
+        var theUrl =
+            Main_helix_api + 'subscriptions/user?broadcaster_id=' + ChatLive_selectedChannel_id[chat_number] + '&user_id=' + AddUser_UsernameArray[0].id;
         BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2, 2, null, ChatLive_checkSubSucess, ChatLive_checkSubFail, chat_number, id, true);
     }
 
@@ -4255,7 +4256,16 @@
     }
 
     function ChatLive_loadChattersLoad(chat_number, id) {
-        BasexmlHttpGet(ChatLive_Base_chat_url + 'group/user/' + ChatLive_selectedChannel[chat_number], DefaultHttpGetTimeout, 0, null, ChatLive_loadChattersSuccess, noop_fun, chat_number, id);
+        BasexmlHttpGet(
+            ChatLive_Base_chat_url + 'group/user/' + ChatLive_selectedChannel[chat_number],
+            DefaultHttpGetTimeout,
+            0,
+            null,
+            ChatLive_loadChattersSuccess,
+            noop_fun,
+            chat_number,
+            id
+        );
     }
 
     function ChatLive_loadChattersSuccess(responseText, chat_number, id) {
@@ -4414,7 +4424,10 @@
 
         if (!extraEmotesDone.cheers[ChatLive_selectedChannel_id[chat_number]]) {
             BasexmlHttpGet(
-                'https://api.twitch.tv/v5/bits/actions?channel_id=' + encodeURIComponent(ChatLive_selectedChannel_id[chat_number]) + '&client_id=' + AddCode_client_backup,
+                'https://api.twitch.tv/v5/bits/actions?channel_id=' +
+                encodeURIComponent(ChatLive_selectedChannel_id[chat_number]) +
+                '&client_id=' +
+                AddCode_client_backup,
                 DefaultHttpGetTimeout * 2,
                 0,
                 null,
@@ -4608,7 +4621,9 @@
 
     function ChatLive_PreLoadChat(chat_number, id) {
         BasexmlHttpGet(
-            'https://recent-messages.robotty.de/api/v2/recent-messages/' + ChatLive_selectedChannel[chat_number] + '?limit=30&hide_moderation_messages=true',
+            'https://recent-messages.robotty.de/api/v2/recent-messages/' +
+            ChatLive_selectedChannel[chat_number] +
+            '?limit=30&hide_moderation_messages=true',
             DefaultHttpGetTimeout * 2,
             0,
             null,
@@ -4727,7 +4742,9 @@
 
                         ChatLive_LineAdd({
                             chat_number: chat_number,
-                            message: ChatLive_LineAddSimple(STR_CHAT_CONNECTED + ' as ' + (useToken[chat_number] ? AddUser_UsernameArray[0].display_name : STR_ANONYMOUS_USER))
+                            message: ChatLive_LineAddSimple(
+                                STR_CHAT_CONNECTED + ' as ' + (useToken[chat_number] ? AddUser_UsernameArray[0].display_name : STR_ANONYMOUS_USER)
+                            )
                         });
 
                         if (Play_ChatDelayPosition) {
@@ -4738,7 +4755,12 @@
 
                             ChatLive_LineAdd({
                                 chat_number: chat_number,
-                                message: ChatLive_LineAddSimple(STR_CHAT_DELAY + ' ' + Play_controls[Play_controlsChatDelay].values[Play_controls[Play_controlsChatDelay].defaultValue] + stringSec)
+                                message: ChatLive_LineAddSimple(
+                                    STR_CHAT_DELAY +
+                                    ' ' +
+                                    Play_controls[Play_controlsChatDelay].values[Play_controls[Play_controlsChatDelay].defaultValue] +
+                                    stringSec
+                                )
                             });
                         }
 
@@ -4747,7 +4769,8 @@
                         //On that device the onclose is automatic call after 60 seconds of inactivity
                         ChatLive_PingId[chat_number] = Main_setInterval(
                             function() {
-                                if (ChatLive_socket[chat_number] && ChatLive_socket[chat_number].readyState === 1) ChatLive_socket[chat_number].send('PONG tmi.twitch.tv');
+                                if (ChatLive_socket[chat_number] && ChatLive_socket[chat_number].readyState === 1)
+                                    ChatLive_socket[chat_number].send('PONG tmi.twitch.tv');
                             },
                             30 * 1000, //30
                             ChatLive_PingId[chat_number]
@@ -5245,7 +5268,8 @@
                 ChatLive_User_Set &&
                 recipient &&
                 recipientId &&
-                (Main_A_equals_B(recipient + '', AddUser_UsernameArray[0].id + '') || Main_A_equals_B(recipientId.toLowerCase() + '', AddUser_UsernameArray[0].name.toLowerCase() + ''))
+                (Main_A_equals_B(recipient + '', AddUser_UsernameArray[0].id + '') ||
+                    Main_A_equals_B(recipientId.toLowerCase() + '', AddUser_UsernameArray[0].name.toLowerCase() + ''))
             ) {
                 ChatLive_Warn((isAnon ? STR_GIFT_ANONYMOUS : tags['display-name']) + STR_GIFT_SUB, 10000);
             }
@@ -5316,7 +5340,10 @@
             atstreamer = true;
         } else if (ChatLive_Highlight_AtUser && ChatLive_User_Regex_Search.test(mmessage)) {
             atuser = true;
-        } else if (ChatLive_Highlight_User_send && Main_A_includes_B(tags['display-name'].toLowerCase(), AddUser_UsernameArray[0].display_name.toLowerCase())) {
+        } else if (
+            ChatLive_Highlight_User_send &&
+            Main_A_includes_B(tags['display-name'].toLowerCase(), AddUser_UsernameArray[0].display_name.toLowerCase())
+        ) {
             atuser = true;
         }
 
@@ -5469,7 +5496,10 @@
         if (messageObj.atstreamer) {
             classname += ' chat_atstreamer';
 
-            messageObj.message = messageObj.message.replace(ChatLive_Channel_Regex_Replace[messageObj.chat_number], "<span style='color: #34B5FF; font-weight: bold'>$&</span>");
+            messageObj.message = messageObj.message.replace(
+                ChatLive_Channel_Regex_Replace[messageObj.chat_number],
+                "<span style='color: #34B5FF; font-weight: bold'>$&</span>"
+            );
         } else if (messageObj.atuser) {
             classname += ' chat_atuser';
 
@@ -5667,7 +5697,7 @@
     var Chat_Messages = [];
     var Chat_MessagesNext = [];
     var Chat_addlinesId;
-    var Chat_next = null;
+    var Chat_cursor = null;
     var Chat_loadChatId;
     var Chat_loadChatNextId;
     var Chat_offset = 0;
@@ -5699,6 +5729,14 @@
     var Chat_hasEnded = false;
     var Chat_CleanMax = 60;
     var Chat_JustStarted = true;
+
+    var Chat_loadChatRequestPost =
+        '{"operationName":"VideoCommentsByOffsetOrCursor","variables":{"videoID":"%v","contentOffsetSeconds":%o},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"b70a3591ff0f4e0313d126c6a1502d79a1c02baebb288227c582044aa76adf6a"}}}';
+    var Chat_loadChatRequestPost_Cursor =
+        '{"operationName":"VideoCommentsByOffsetOrCursor","variables":{"videoID":"%v","cursor":"%c"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"b70a3591ff0f4e0313d126c6a1502d79a1c02baebb288227c582044aa76adf6a"}}}';
+
+    var Chat_UserJPKRegex = new RegExp('[^\x00-\x7F]', 'g');
+
     //Variable initialization end
 
     function Chat_Preinit() {
@@ -5712,9 +5750,14 @@
     function Chat_Init() {
         Chat_JustStarted = true;
         Chat_Clear();
-        if (!Main_IsNotBrowser || Main_values.Play_ChatForceDisable) {
+
+        if (Main_values.Play_ChatForceDisable) {
             Chat_Disable();
             return;
+        }
+
+        if (!Main_IsNotBrowser) {
+            Chat_StartFakeClock();
         }
 
         Chat_loadBadgesGlobal();
@@ -5722,6 +5765,19 @@
         ChatLive_SetOptions(0, Main_values.Main_selectedChannel_id, Main_values.Main_selectedChannel);
 
         Chat_loadChat(Chat_Id[0]);
+    }
+
+    function Chat_StartFakeClock() {
+        PlayVod_currentTime = Chat_offset * 1000;
+        Chat_StartFakeClockTimeout();
+    }
+
+    function Chat_StartFakeClockTimeout() {
+        if ((PlayClip_isOn || PlayVod_isOn) && !Chat_hasEnded) {
+            PlayVod_currentTime += 1000;
+
+            Main_setTimeout(Chat_StartFakeClockTimeout, 1000);
+        }
     }
 
     var Chat_LoadGlobalBadges = false;
@@ -5755,10 +5811,10 @@
             url,
             innerHTML = '';
 
-        var responseObjt = JSON.parse(responseText);
+        var responseObj = JSON.parse(responseText);
 
-        for (property in responseObjt.badge_sets) {
-            versions = responseObjt.badge_sets[property].versions;
+        for (property in responseObj.badge_sets) {
+            versions = responseObj.badge_sets[property].versions;
             for (version in versions) {
                 url = Chat_BasetagCSSUrl(versions[version].image_url_4x);
                 innerHTML += Chat_BasetagCSS(property + 0, version, url);
@@ -5891,10 +5947,26 @@
     }
 
     function Chat_loadChatRequest(id) {
-        var theUrl =
-            'https://api.twitch.tv/v5/videos/' + Main_values.ChannelVod_vodId + '/comments?client_id=' + AddCode_client_backup + (Chat_offset ? '&content_offset_seconds=' + parseInt(Chat_offset) : '');
+        var xmlHttp = new XMLHttpRequest();
 
-        BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2, 0, null, Chat_loadChatSuccess, Chat_loadChatError, id);
+        xmlHttp.open('POST', PlayClip_BaseClipUrl, true);
+        xmlHttp.timeout = DefaultHttpGetTimeout * 2;
+        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
+        xmlHttp.setRequestHeader('Content-Type', 'application/json');
+
+        xmlHttp.ontimeout = function() {};
+
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState === 4) {
+                if (xmlHttp.status === 200) {
+                    Chat_loadChatSuccess(xmlHttp.responseText, id);
+                } else {
+                    Chat_loadChatError(id);
+                }
+            }
+        };
+
+        xmlHttp.send(Chat_loadChatRequestPost.replace('%v', Main_values.ChannelVod_vodId).replace('%o', Chat_offset ? parseInt(Chat_offset) : 0));
     }
 
     function Chat_loadChatError(id) {
@@ -5912,19 +5984,20 @@
         }
     }
 
-    function Chat_loadChatSuccess(responseText, id) {
+    function Chat_loadChatSuccess(response, id) {
         if (Chat_hasEnded || Chat_Id[0] !== id) return;
 
-        responseText = JSON.parse(responseText);
+        var responseText = JSON.parse(response),
+            comments;
+
         var div,
             mmessage,
-            null_next = Chat_next === null,
+            null_next = Chat_cursor === null,
             nickColor,
             atstreamer,
             atuser,
             hasbits,
             message_text,
-            comments,
             badges,
             fragment,
             i,
@@ -5933,11 +6006,24 @@
             len_j,
             messageObj;
 
+        if (responseText.data && responseText.data.video && responseText.data.video.comments && responseText.data.video.comments.edges) {
+            comments = responseText.data.video.comments.edges || [];
+            Chat_cursor = comments.length ? comments[0].cursor : '';
+        } else {
+            return;
+        }
+
         if (null_next) {
             Chat_MessageVector({
                 chat_number: 0,
                 time: 0,
-                message: '<span class="message">' + STR_LOADING_CHAT + STR_SPACE + Main_values.Main_selectedChannelDisplayname + STR_SPACE + Chat_title + '</span>'
+                message: '<span class="message">' +
+                    STR_LOADING_CHAT +
+                    STR_SPACE +
+                    Main_values.Main_selectedChannelDisplayname +
+                    STR_SPACE +
+                    Chat_title +
+                    '</span>'
             });
 
             Chat_MessageVector({
@@ -5947,11 +6033,13 @@
             });
         }
         Chat_offset = 0;
-        Chat_next = responseText._next;
-
-        comments = responseText.comments || [];
 
         for (i = 0, len = comments.length; i < len; i++) {
+            comments[i] = comments[i].node;
+
+            //some comments have no commenter I assume those have ben deleted during live chat but not fully from chat history
+            if (!comments[i].commenter) continue;
+
             atstreamer = false;
             atuser = false;
             hasbits = false;
@@ -5963,25 +6051,26 @@
             if (!ChatLive_Highlight_Actions && mmessage.is_action) continue;
 
             if (ChatLive_Show_TimeStamp) {
-                div += Play_timeS(comments[i].content_offset_seconds) + ' ';
+                div += Play_timeS(comments[i].contentOffsetSeconds) + ' ';
             }
 
             //Add badges
-            if (mmessage.hasOwnProperty('user_badges')) {
-                for (j = 0, len_j = mmessage.user_badges.length; j < len_j; j++) {
-                    badges = mmessage.user_badges[j];
+            if (mmessage.hasOwnProperty('userBadges')) {
+                for (j = 0, len_j = mmessage.userBadges.length; j < len_j; j++) {
+                    badges = mmessage.userBadges[j];
 
-                    div += '<span class="a' + badges._id + '0-' + badges.version + ' tag"></span>';
+                    div += '<span class="a' + badges.setID + '0-' + badges.version + ' tag"></span>';
                 }
             }
 
-            hasbits = mmessage.hasOwnProperty('bits_spent') && cheers.hasOwnProperty(ChatLive_selectedChannel_id[0]);
+            //TODO check support for this feature
+            //hasbits = mmessage.hasOwnProperty('bits_spent') && cheers.hasOwnProperty(ChatLive_selectedChannel_id[0]);
 
             if (mmessage.fragments) {
                 for (j = 0, len_j = mmessage.fragments.length; j < len_j; j++) {
                     fragment = mmessage.fragments[j];
 
-                    if (fragment.hasOwnProperty('emoticon')) message_text += emoteTemplate(emoteURL(fragment.emoticon.emoticon_id));
+                    if (fragment.emote) message_text += emoteTemplate(emoteURL(fragment.emote.emoteID));
                     else {
                         message_text += ChatLive_extraMessageTokenize([fragment.text], 0, hasbits ? mmessage.bits_spent : 0);
 
@@ -5994,7 +6083,10 @@
                 }
             }
 
-            if (ChatLive_Highlight_User_send && Main_A_includes_B(comments[i].commenter.display_name.toLowerCase(), AddUser_UsernameArray[0].display_name.toLowerCase())) {
+            if (
+                ChatLive_Highlight_User_send &&
+                Main_A_includes_B(comments[i].commenter.displayName.toLowerCase(), AddUser_UsernameArray[0].display_name.toLowerCase())
+            ) {
                 atuser = true;
             }
 
@@ -6004,10 +6096,10 @@
             } else if (atuser) {
                 nickColor = chat_Line_highlight_blue;
             } else {
-                if (!ChatLive_Custom_Nick_Color && mmessage.hasOwnProperty('user_color')) {
-                    nickColor = 'style="color: ' + mmessage.user_color + ';"';
+                if (!ChatLive_Custom_Nick_Color && mmessage.userColor) {
+                    nickColor = 'style="color: ' + mmessage.userColor + ';"';
                 } else {
-                    nickColor = 'style="color: ' + defaultColors[comments[i].commenter.display_name.charCodeAt(0) % defaultColorsLength] + ';"';
+                    nickColor = 'style="color: ' + defaultColors[comments[i].commenter.displayName.charCodeAt(0) % defaultColorsLength] + ';"';
                 }
             }
             div +=
@@ -6015,7 +6107,8 @@
                 (mmessage.is_action ? 'class="class_bold" ' + nickColor : '') +
                 nickColor +
                 '>' +
-                comments[i].commenter.display_name +
+                comments[i].commenter.displayName +
+                Chat_CheckUserName(comments[i].commenter.displayName, comments[i].commenter.login) +
                 '</span>' +
                 (mmessage.is_action ? '' : '&#58;') +
                 '&nbsp;';
@@ -6025,7 +6118,7 @@
 
             messageObj = {
                 chat_number: 0,
-                time: comments[i].content_offset_seconds,
+                time: comments[i].contentOffsetSeconds,
                 message: div,
                 atstreamer: atstreamer,
                 atuser: atuser,
@@ -6033,14 +6126,22 @@
             };
 
             if (null_next) Chat_MessageVector(messageObj);
-            else if (Chat_next !== undefined) Chat_MessageVectorNext(messageObj);
+            else if (Chat_cursor !== '') Chat_MessageVectorNext(messageObj);
         }
 
         if (null_next && Chat_Id[0] === id) {
             Chat_JustStarted = false;
             Chat_Play(id);
-            if (Chat_next !== undefined) Chat_loadChatNext(id); //if (Chat_next === undefined) chat has ended
+            if (Chat_cursor !== '') Chat_loadChatNext(id); //if (Chat_cursor === '') chat has ended
         }
+    }
+
+    function Chat_CheckUserName(displayName, login) {
+        if (displayName && Chat_UserJPKRegex.test(displayName)) {
+            return ' (' + login + ')';
+        }
+
+        return '';
     }
 
     function Chat_MessageVector(messageObj) {
@@ -6076,7 +6177,7 @@
         Chat_Pause();
         Chat_Id[0] = 0;
         Main_emptyWithEle(Chat_div[0]);
-        Chat_next = null;
+        Chat_cursor = null;
         Chat_Messages = [];
         Chat_MessagesNext = [];
         Chat_Position = 0;
@@ -6099,7 +6200,7 @@
             }
         } else {
             Chat_Pause();
-            if (Chat_next !== undefined) {
+            if (Chat_cursor !== '') {
                 //array.slice() may crash RangeError: Maximum call stack size exceeded
                 Chat_Messages = Main_Slice(Chat_MessagesNext);
 
@@ -6130,9 +6231,26 @@
     }
 
     function Chat_loadChatNextRequest(id) {
-        var theUrl = 'https://api.twitch.tv/v5/videos/' + Main_values.ChannelVod_vodId + '/comments?client_id=' + AddCode_client_backup + (Chat_next !== null ? '&cursor=' + Chat_next : '');
+        var xmlHttp = new XMLHttpRequest();
 
-        BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2, 0, null, Chat_loadChatSuccess, Chat_loadChatNextError, id);
+        xmlHttp.open('POST', PlayClip_BaseClipUrl, true);
+        xmlHttp.timeout = DefaultHttpGetTimeout * 2;
+        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
+        xmlHttp.setRequestHeader('Content-Type', 'application/json');
+
+        xmlHttp.ontimeout = function() {};
+
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState === 4) {
+                if (xmlHttp.status === 200) {
+                    Chat_loadChatSuccess(xmlHttp.responseText, id);
+                } else {
+                    Chat_loadChatNextError(id);
+                }
+            }
+        };
+
+        xmlHttp.send(Chat_loadChatRequestPost_Cursor.replace('%v', Main_values.ChannelVod_vodId).replace('%c', Chat_cursor));
     }
 
     function Chat_loadChatNextError(id) {
@@ -6306,7 +6424,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'August 29 2022';
+    var Main_minversion = 'December 17 2022';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
 
@@ -8179,6 +8297,8 @@
                     }
                 }
             );
+        } else {
+            if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
         }
     }
 
@@ -12097,6 +12217,7 @@
         Main_values.Play_isHost = false;
         PlayClip_HideShowNext(0, 0);
         PlayClip_HideShowNext(1, 0);
+        PlayVod_isOn = true;
 
         if (Main_values.vodOffset) {
             // this is a vod coming from a clip or from restore playback
@@ -12161,7 +12282,7 @@
         PlayVod_playingTry = 0;
         document.addEventListener('visibilitychange', PlayVod_Resume, false);
         Play_jumping = false;
-        PlayVod_isOn = true;
+
         PlayVod_WasSubChekd = false;
 
         if (!PlayVod_replay) PlayVod_loadData();
@@ -12690,6 +12811,8 @@
                     }
                 }
             );
+        } else {
+            if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
         }
     }
 

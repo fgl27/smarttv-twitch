@@ -89,6 +89,7 @@ function PlayVod_Start() {
     Main_values.Play_isHost = false;
     PlayClip_HideShowNext(0, 0);
     PlayClip_HideShowNext(1, 0);
+    PlayVod_isOn = true;
 
     if (Main_values.vodOffset) {
         // this is a vod coming from a clip or from restore playback
@@ -153,7 +154,7 @@ function PlayVod_PosStart() {
     PlayVod_playingTry = 0;
     document.addEventListener('visibilitychange', PlayVod_Resume, false);
     Play_jumping = false;
-    PlayVod_isOn = true;
+
     PlayVod_WasSubChekd = false;
 
     if (!PlayVod_replay) PlayVod_loadData();
@@ -682,6 +683,8 @@ function PlayVod_onPlayer() {
                 }
             }
         );
+    } else {
+        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
     }
 }
 

@@ -516,6 +516,8 @@ function PlayClip_onPlayer() {
                 }
             }
         );
+    } else {
+        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
     }
 }
 

@@ -225,7 +225,8 @@ function ChatLive_checkSub(chat_number, id) {
         return;
     }
 
-    var theUrl = Main_helix_api + 'subscriptions/user?broadcaster_id=' + ChatLive_selectedChannel_id[chat_number] + '&user_id=' + AddUser_UsernameArray[0].id;
+    var theUrl =
+        Main_helix_api + 'subscriptions/user?broadcaster_id=' + ChatLive_selectedChannel_id[chat_number] + '&user_id=' + AddUser_UsernameArray[0].id;
     BasexmlHttpGet(theUrl, DefaultHttpGetTimeout * 2, 2, null, ChatLive_checkSubSucess, ChatLive_checkSubFail, chat_number, id, true);
 }
 
@@ -340,7 +341,16 @@ function ChatLive_loadChattersViewersSuccess(responseText, chat_number, id) {
 }
 
 function ChatLive_loadChattersLoad(chat_number, id) {
-    BasexmlHttpGet(ChatLive_Base_chat_url + 'group/user/' + ChatLive_selectedChannel[chat_number], DefaultHttpGetTimeout, 0, null, ChatLive_loadChattersSuccess, noop_fun, chat_number, id);
+    BasexmlHttpGet(
+        ChatLive_Base_chat_url + 'group/user/' + ChatLive_selectedChannel[chat_number],
+        DefaultHttpGetTimeout,
+        0,
+        null,
+        ChatLive_loadChattersSuccess,
+        noop_fun,
+        chat_number,
+        id
+    );
 }
 
 function ChatLive_loadChattersSuccess(responseText, chat_number, id) {
@@ -499,7 +509,10 @@ function ChatLive_loadCheersChannel(chat_number, id) {
 
     if (!extraEmotesDone.cheers[ChatLive_selectedChannel_id[chat_number]]) {
         BasexmlHttpGet(
-            'https://api.twitch.tv/v5/bits/actions?channel_id=' + encodeURIComponent(ChatLive_selectedChannel_id[chat_number]) + '&client_id=' + AddCode_client_backup,
+            'https://api.twitch.tv/v5/bits/actions?channel_id=' +
+                encodeURIComponent(ChatLive_selectedChannel_id[chat_number]) +
+                '&client_id=' +
+                AddCode_client_backup,
             DefaultHttpGetTimeout * 2,
             0,
             null,
@@ -693,7 +706,9 @@ function ChatLive_loadEmotesseven_tv(data, chat_number, isGlobal) {
 
 function ChatLive_PreLoadChat(chat_number, id) {
     BasexmlHttpGet(
-        'https://recent-messages.robotty.de/api/v2/recent-messages/' + ChatLive_selectedChannel[chat_number] + '?limit=30&hide_moderation_messages=true',
+        'https://recent-messages.robotty.de/api/v2/recent-messages/' +
+            ChatLive_selectedChannel[chat_number] +
+            '?limit=30&hide_moderation_messages=true',
         DefaultHttpGetTimeout * 2,
         0,
         null,
@@ -812,7 +827,9 @@ function ChatLive_loadChatRequest(chat_number, id) {
 
                     ChatLive_LineAdd({
                         chat_number: chat_number,
-                        message: ChatLive_LineAddSimple(STR_CHAT_CONNECTED + ' as ' + (useToken[chat_number] ? AddUser_UsernameArray[0].display_name : STR_ANONYMOUS_USER))
+                        message: ChatLive_LineAddSimple(
+                            STR_CHAT_CONNECTED + ' as ' + (useToken[chat_number] ? AddUser_UsernameArray[0].display_name : STR_ANONYMOUS_USER)
+                        )
                     });
 
                     if (Play_ChatDelayPosition) {
@@ -823,7 +840,12 @@ function ChatLive_loadChatRequest(chat_number, id) {
 
                         ChatLive_LineAdd({
                             chat_number: chat_number,
-                            message: ChatLive_LineAddSimple(STR_CHAT_DELAY + ' ' + Play_controls[Play_controlsChatDelay].values[Play_controls[Play_controlsChatDelay].defaultValue] + stringSec)
+                            message: ChatLive_LineAddSimple(
+                                STR_CHAT_DELAY +
+                                    ' ' +
+                                    Play_controls[Play_controlsChatDelay].values[Play_controls[Play_controlsChatDelay].defaultValue] +
+                                    stringSec
+                            )
                         });
                     }
 
@@ -832,7 +854,8 @@ function ChatLive_loadChatRequest(chat_number, id) {
                     //On that device the onclose is automatic call after 60 seconds of inactivity
                     ChatLive_PingId[chat_number] = Main_setInterval(
                         function () {
-                            if (ChatLive_socket[chat_number] && ChatLive_socket[chat_number].readyState === 1) ChatLive_socket[chat_number].send('PONG tmi.twitch.tv');
+                            if (ChatLive_socket[chat_number] && ChatLive_socket[chat_number].readyState === 1)
+                                ChatLive_socket[chat_number].send('PONG tmi.twitch.tv');
                         },
                         30 * 1000, //30
                         ChatLive_PingId[chat_number]
@@ -1329,7 +1352,8 @@ function ChatLive_CheckIfSub(message, chat_number) {
             ChatLive_User_Set &&
             recipient &&
             recipientId &&
-            (Main_A_equals_B(recipient + '', AddUser_UsernameArray[0].id + '') || Main_A_equals_B(recipientId.toLowerCase() + '', AddUser_UsernameArray[0].name.toLowerCase() + ''))
+            (Main_A_equals_B(recipient + '', AddUser_UsernameArray[0].id + '') ||
+                Main_A_equals_B(recipientId.toLowerCase() + '', AddUser_UsernameArray[0].name.toLowerCase() + ''))
         ) {
             ChatLive_Warn((isAnon ? STR_GIFT_ANONYMOUS : tags['display-name']) + STR_GIFT_SUB, 10000);
         }
@@ -1400,7 +1424,10 @@ function ChatLive_loadChatSuccess(message, chat_number, addToStart) {
         atstreamer = true;
     } else if (ChatLive_Highlight_AtUser && ChatLive_User_Regex_Search.test(mmessage)) {
         atuser = true;
-    } else if (ChatLive_Highlight_User_send && Main_A_includes_B(tags['display-name'].toLowerCase(), AddUser_UsernameArray[0].display_name.toLowerCase())) {
+    } else if (
+        ChatLive_Highlight_User_send &&
+        Main_A_includes_B(tags['display-name'].toLowerCase(), AddUser_UsernameArray[0].display_name.toLowerCase())
+    ) {
         atuser = true;
     }
 
@@ -1553,7 +1580,10 @@ function ChatLive_ElemntAdd(messageObj) {
     if (messageObj.atstreamer) {
         classname += ' chat_atstreamer';
 
-        messageObj.message = messageObj.message.replace(ChatLive_Channel_Regex_Replace[messageObj.chat_number], "<span style='color: #34B5FF; font-weight: bold'>$&</span>");
+        messageObj.message = messageObj.message.replace(
+            ChatLive_Channel_Regex_Replace[messageObj.chat_number],
+            "<span style='color: #34B5FF; font-weight: bold'>$&</span>"
+        );
     } else if (messageObj.atuser) {
         classname += ' chat_atuser';
 

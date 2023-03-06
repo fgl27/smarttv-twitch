@@ -172,7 +172,6 @@ function PlayClip_loadVodOffsetStartVod() {
 }
 
 function PlayClip_loadVodOffsetStartVodResult(responseText) {
-    console.log(responseText);
     if (PlayClip_isOn) {
         var obj = JSON.parse(responseText);
 

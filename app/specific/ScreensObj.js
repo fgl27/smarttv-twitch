@@ -156,22 +156,30 @@ var Base_Vod_obj = {
     AnimateThumb: function (screen) {
         window.clearInterval(screen.AnimateThumbId);
         if (!Vod_DoAnimateThumb) return;
-        var div = document.getElementById(this.ids[6] + this.posY + '_' + this.posX);
 
-        // Only load the animation if it can be loaded
-        // This prevent starting animating before it has loaded or animated a empty image
-        this.Vod_newImg.onload = function () {
-            this.onload = null;
-            Main_HideElement(screen.ids[1] + screen.posY + '_' + screen.posX);
-            div.style.backgroundSize = div.offsetWidth + 'px';
-            var frame = 0;
-            screen.AnimateThumbId = window.setInterval(function () {
-                // 10 = quantity of frames in the preview img
-                div.style.backgroundPosition = '0px ' + (++frame % 10) * -div.offsetHeight + 'px';
-            }, 650);
-        };
+        var id = this.posY + '_' + this.posX;
+        var divAttribute = document.getElementById(this.ids[8] + id);
+        var data = JSON.parse(divAttribute.getAttribute(Main_DataAttribute));
 
-        this.Vod_newImg.src = div.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
+        if (!data[7]) {
+            ScreensObj_getVodAnimatedUrl(data, screen, divAttribute, id);
+        } else {
+            var div = document.getElementById(this.ids[6] + id);
+            // Only load the animation if it can be loaded
+            // This prevent starting animating before it has loaded or animated a empty image
+            this.Vod_newImg.onload = function () {
+                this.onload = null;
+                Main_HideElement(screen.ids[1] + screen.posY + '_' + screen.posX);
+                div.style.backgroundSize = div.offsetWidth + 'px';
+                var frame = 0;
+                screen.AnimateThumbId = window.setInterval(function () {
+                    // 10 = quantity of frames in the preview img
+                    div.style.backgroundPosition = '0px ' + (++frame % 10) * -div.offsetHeight + 'px';
+                }, 650);
+            };
+
+            this.Vod_newImg.src = div.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
+        }
     },
     addCellBase: function (cell, thubnail) {
         if (!this.idObject[cell.id] && (thubnail + '').indexOf('404_processing') === -1) {
@@ -1733,4 +1741,43 @@ function ScreensObj_ClipGetPeriod(periodPos) {
     date += dayEnd;
 
     return date;
+}
+
+var ScreensObj_getVodAnimatedUrlPost = '{"query":"{video(id:%x){animatedPreviewURL}}"}';
+
+function ScreensObj_getVodAnimatedUrl(data, screen, div, id) {
+    var xmlHttp = new XMLHttpRequest();
+
+    xmlHttp.open('POST', PlayClip_BaseClipUrl, true);
+    xmlHttp.timeout = PlayClip_loadingDataTimeout;
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
+    xmlHttp.setRequestHeader('Content-Type', 'application/json');
+
+    xmlHttp.ontimeout = function () {};
+
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) {
+                ScreensObj_getVodAnimatedUrlResult(xmlHttp.responseText, data, screen, div, id);
+            }
+        }
+    };
+
+    xmlHttp.send(ScreensObj_getVodAnimatedUrlPost.replace('%x', data[8]));
+}
+
+function ScreensObj_getVodAnimatedUrlResult(responseText, data, screen, divAttribute, id) {
+    var obj = JSON.parse(responseText);
+
+    if (obj.data && obj.data.video && obj.data.video.animatedPreviewURL) {
+        data[7] = obj.data.video.animatedPreviewURL;
+        divAttribute.setAttribute(Main_DataAttribute, JSON.stringify(data));
+        var div = Main_getElementById(screen.ids[6] + id);
+        div.style.cssText =
+            'width: 100%; padding-bottom: 56.25%; background-size: 0 0; background-image: url(' + obj.data.video.animatedPreviewURL + ');';
+
+        if (screen.posY + '_' + screen.posX === id) {
+            screen.AnimateThumb(screen);
+        }
+    }
 }

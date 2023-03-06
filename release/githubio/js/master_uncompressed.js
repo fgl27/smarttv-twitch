@@ -675,7 +675,7 @@
         STR_TTV_LOL_SUMMARY =
             STR_PROXY_DONATE_SUMMARY + STR_SPACE_HTML + STR_SPACE_HTML + STR_SPAN_LINK + DefaultMakeLink('https://ttv.lol/donate') + '</span>';
 
-        STR_PROXY_CONTROLS_ARRAY = [STR_PURPLE_ADBLOCK, STR_TTV_LOL, STR_DISABLED];
+        STR_PROXY_CONTROLS_ARRAY = [STR_TTV_LOL, STR_DISABLED];
     }
 
     function DefaultMakeLink(link, prefix) {
@@ -2636,10 +2636,41 @@
             Main_values.Main_selectedChannelLogo = channel.profile_image_url;
             Main_values.Main_selectedChannelPartner = channel.broadcaster_type === 'partner';
 
-            ChannelContent_loadDataSuccess();
+            ChannelContent_BannerFollowers();
         } else {
             ChannelContent_loadDataError();
         }
+    }
+
+    var ChannelContent_BannerFollowersPost = '{"query":"{user(login: \\"%x\\") {bannerImageURL, followers(){totalCount}}}"}';
+
+    function ChannelContent_BannerFollowers() {
+        var xmlHttp = new XMLHttpRequest();
+
+        xmlHttp.open('POST', PlayClip_BaseClipUrl, true);
+        xmlHttp.timeout = PlayClip_loadingDataTimeout;
+        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
+        xmlHttp.setRequestHeader('Content-Type', 'application/json');
+
+        xmlHttp.ontimeout = function() {};
+
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState === 4) {
+                if (xmlHttp.status === 200) {
+                    var obj = JSON.parse(xmlHttp.responseText);
+
+                    if (obj.data && obj.data.user) {
+                        ChannelContent_profile_banner = obj.data.user.bannerImageURL ? obj.data.user.bannerImageURL : IMG_404_BANNER;
+                        ChannelContent_selectedChannelFollower =
+                            obj.data.user.followers && obj.data.user.followers.totalCount ? obj.data.user.followers.totalCount : '';
+                    }
+                }
+
+                ChannelContent_loadDataSuccess();
+            }
+        };
+
+        xmlHttp.send(ChannelContent_BannerFollowersPost.replace('%x', Main_values.Main_selectedChannel));
     }
 
     function ChannelContent_GetStreamerInfoError() {
@@ -7953,7 +7984,6 @@
     }
 
     function PlayClip_loadVodOffsetStartVodResult(responseText) {
-        console.log(responseText);
         if (PlayClip_isOn) {
             var obj = JSON.parse(responseText);
 
@@ -9600,6 +9630,7 @@
     }
 
     var Play_410ERROR = true;
+    var Play_hlsBaseURL = 'http://usher.ttvnw.net/api/channel/hls/';
 
     function Play_loadDataRequest(skipProxy) {
         try {
@@ -9635,7 +9666,7 @@
                     }
 
                     theUrl =
-                        'https://usher.ttvnw.net/api/channel/hls/' +
+                        Play_hlsBaseURL +
                         Main_values.Play_selectedChannel +
                         '.m3u8?&token=' +
                         encodeURIComponent(Play_tokenResponse.value) +
@@ -9667,6 +9698,15 @@
                         //if proxy fails fall back to normal request
                         Play_state = Play_STATE_LOADING_TOKEN;
                         Play_loadData(true);
+                    } else if (xmlHttp.status === 0 && Main_startsWith(Play_hlsBaseURL, 'https:')) {
+                        //https issue
+                        //some devices are triggered with a status 0 when trying to get the playlist URL related to cors
+                        //change to http to see if it fixes
+
+                        //problem is that some devices will not allow http connection they demand https
+
+                        Play_hlsBaseURL = Play_hlsBaseURL.replace('https:', 'http:');
+                        Play_loadDataRequest(skipProxy);
                     } else if (xmlHttp.status === 403 || xmlHttp.status === 404) {
                         //forbidden access
                         //404 = off line
@@ -11905,7 +11945,7 @@
                     i,
                     key;
 
-                if (this.defaultValue < 2) {
+                if (this.defaultValue < 1) {
                     key = proxyArray[this.defaultValue];
                     Settings_value[key].defaultValue = 1;
                     Main_setItem(key, 2);
@@ -12520,6 +12560,8 @@
         PlayVod_loadDataRequest();
     }
 
+    var PlayVod_hlsBaseURL = 'https://usher.ttvnw.net/vod/';
+
     function PlayVod_loadDataRequest() {
         var theUrl,
             state = PlayVod_state === Play_STATE_LOADING_TOKEN;
@@ -12538,7 +12580,7 @@
                 }
 
                 theUrl =
-                    'https://usher.ttvnw.net/vod/' +
+                    PlayVod_hlsBaseURL +
                     Main_values.ChannelVod_vodId +
                     '.m3u8?&nauth=' +
                     encodeURIComponent(PlayVod_tokenResponse.value) +
@@ -12570,6 +12612,16 @@
                         if (xmlHttp.status === 410) {
                             Play_410ERROR = true;
                             if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                        } else if (xmlHttp.status === 0 && Main_startsWith(PlayVod_hlsBaseURL, 'https:')) {
+                            //https issue
+                            //some devices are triggered with a status 0 when trying to get the playlist URL related to cors
+                            //change to http to see if it fixes
+
+                            //problem is that some devices will not allow http connection they demand https
+
+                            PlayVod_hlsBaseURL = PlayVod_hlsBaseURL.replace('https:', 'http:');
+                            PlayVod_loadDataRequest();
+                            return;
                         }
                         PlayVod_loadDataError();
                     }
@@ -14939,22 +14991,30 @@
         AnimateThumb: function(screen) {
             window.clearInterval(screen.AnimateThumbId);
             if (!Vod_DoAnimateThumb) return;
-            var div = document.getElementById(this.ids[6] + this.posY + '_' + this.posX);
 
-            // Only load the animation if it can be loaded
-            // This prevent starting animating before it has loaded or animated a empty image
-            this.Vod_newImg.onload = function() {
-                this.onload = null;
-                Main_HideElement(screen.ids[1] + screen.posY + '_' + screen.posX);
-                div.style.backgroundSize = div.offsetWidth + 'px';
-                var frame = 0;
-                screen.AnimateThumbId = window.setInterval(function() {
-                    // 10 = quantity of frames in the preview img
-                    div.style.backgroundPosition = '0px ' + (++frame % 10) * -div.offsetHeight + 'px';
-                }, 650);
-            };
+            var id = this.posY + '_' + this.posX;
+            var divAttribute = document.getElementById(this.ids[8] + id);
+            var data = JSON.parse(divAttribute.getAttribute(Main_DataAttribute));
 
-            this.Vod_newImg.src = div.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
+            if (!data[7]) {
+                ScreensObj_getVodAnimatedUrl(data, screen, divAttribute, id);
+            } else {
+                var div = document.getElementById(this.ids[6] + id);
+                // Only load the animation if it can be loaded
+                // This prevent starting animating before it has loaded or animated a empty image
+                this.Vod_newImg.onload = function() {
+                    this.onload = null;
+                    Main_HideElement(screen.ids[1] + screen.posY + '_' + screen.posX);
+                    div.style.backgroundSize = div.offsetWidth + 'px';
+                    var frame = 0;
+                    screen.AnimateThumbId = window.setInterval(function() {
+                        // 10 = quantity of frames in the preview img
+                        div.style.backgroundPosition = '0px ' + (++frame % 10) * -div.offsetHeight + 'px';
+                    }, 650);
+                };
+
+                this.Vod_newImg.src = div.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
+            }
         },
         addCellBase: function(cell, thubnail) {
             if (!this.idObject[cell.id] && (thubnail + '').indexOf('404_processing') === -1) {
@@ -16500,6 +16560,45 @@
 
         return date;
     }
+
+    var ScreensObj_getVodAnimatedUrlPost = '{"query":"{video(id:%x){animatedPreviewURL}}"}';
+
+    function ScreensObj_getVodAnimatedUrl(data, screen, div, id) {
+        var xmlHttp = new XMLHttpRequest();
+
+        xmlHttp.open('POST', PlayClip_BaseClipUrl, true);
+        xmlHttp.timeout = PlayClip_loadingDataTimeout;
+        xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
+        xmlHttp.setRequestHeader('Content-Type', 'application/json');
+
+        xmlHttp.ontimeout = function() {};
+
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState === 4) {
+                if (xmlHttp.status === 200) {
+                    ScreensObj_getVodAnimatedUrlResult(xmlHttp.responseText, data, screen, div, id);
+                }
+            }
+        };
+
+        xmlHttp.send(ScreensObj_getVodAnimatedUrlPost.replace('%x', data[8]));
+    }
+
+    function ScreensObj_getVodAnimatedUrlResult(responseText, data, screen, divAttribute, id) {
+        var obj = JSON.parse(responseText);
+
+        if (obj.data && obj.data.video && obj.data.video.animatedPreviewURL) {
+            data[7] = obj.data.video.animatedPreviewURL;
+            divAttribute.setAttribute(Main_DataAttribute, JSON.stringify(data));
+            var div = Main_getElementById(screen.ids[6] + id);
+            div.style.cssText =
+                'width: 100%; padding-bottom: 56.25%; background-size: 0 0; background-image: url(' + obj.data.video.animatedPreviewURL + ');';
+
+            if (screen.posY + '_' + screen.posX === id) {
+                screen.AnimateThumb(screen);
+            }
+        }
+    }
     //Variable initialization
     var Search_cursorY = 0;
     var Search_cursorX = 0;
@@ -17366,17 +17465,14 @@
     }
 
     function Settings_get_enabled() {
-        if (Settings_Obj_default('purple_adblock') === 1) {
+        if (Settings_Obj_default('ttv_lolProxy') === 1) {
             return 0;
         }
-        if (Settings_Obj_default('ttv_lolProxy') === 1) {
-            return 1;
-        }
 
-        return 2;
+        return 1;
     }
 
-    var proxyArray = ['purple_adblock', 'ttv_lolProxy'];
+    var proxyArray = ['ttv_lolProxy'];
 
     function Settings_set_purple_adblock() {
         Settings_set_all_proxy('purple_adblock');
@@ -17623,24 +17719,18 @@
     function Settings_DialogShowProxy() {
         var array_no_yes = [STR_NO, STR_YES];
         Settings_value.ttv_lolProxy.values = array_no_yes;
-        Settings_value.purple_adblock.values = array_no_yes;
+        Settings_value.ttv_lolProxy.values = array_no_yes;
 
         var obj = {
             proxy_timeout: {
-                defaultValue: Settings_value.purple_adblock.defaultValue,
-                values: Settings_value.purple_adblock.values,
+                defaultValue: Settings_value.proxy_timeout.defaultValue,
+                values: Settings_value.proxy_timeout.values,
                 title: STR_PROXY_TIMEOUT,
                 summary: STR_PROXY_TIMEOUT_SUMMARY
             },
-            purple_adblock: {
+            ttv_lolProxy: {
                 defaultValue: Settings_value.ttv_lolProxy.defaultValue,
                 values: Settings_value.ttv_lolProxy.values,
-                title: STR_PURPLE_ADBLOCK,
-                summary: STR_PURPLE_ADBLOCK_SUMMARY
-            },
-            ttv_lolProxy: {
-                defaultValue: Settings_value.purple_adblock.defaultValue,
-                values: Settings_value.purple_adblock.values,
                 title: STR_TTV_LOL,
                 summary: STR_TTV_LOL_SUMMARY
             }

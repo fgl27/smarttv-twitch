@@ -803,6 +803,7 @@ function Play_loadData(skipProxy) {
 }
 
 var Play_410ERROR = true;
+var Play_hlsBaseURL = 'http://usher.ttvnw.net/api/channel/hls/';
 function Play_loadDataRequest(skipProxy) {
     try {
         var theUrl;
@@ -837,7 +838,7 @@ function Play_loadDataRequest(skipProxy) {
                 }
 
                 theUrl =
-                    'https://usher.ttvnw.net/api/channel/hls/' +
+                    Play_hlsBaseURL +
                     Main_values.Play_selectedChannel +
                     '.m3u8?&token=' +
                     encodeURIComponent(Play_tokenResponse.value) +
@@ -869,6 +870,15 @@ function Play_loadDataRequest(skipProxy) {
                     //if proxy fails fall back to normal request
                     Play_state = Play_STATE_LOADING_TOKEN;
                     Play_loadData(true);
+                } else if (xmlHttp.status === 0 && Main_startsWith(Play_hlsBaseURL, 'https:')) {
+                    //https issue
+                    //some devices are triggered with a status 0 when trying to get the playlist URL related to cors
+                    //change to http to see if it fixes
+
+                    //problem is that some devices will not allow http connection they demand https
+
+                    Play_hlsBaseURL = Play_hlsBaseURL.replace('https:', 'http:');
+                    Play_loadDataRequest(skipProxy);
                 } else if (xmlHttp.status === 403 || xmlHttp.status === 404) {
                     //forbidden access
                     //404 = off line

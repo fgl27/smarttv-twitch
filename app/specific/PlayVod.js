@@ -392,6 +392,8 @@ function PlayVod_loadData() {
     PlayVod_loadDataRequest();
 }
 
+var PlayVod_hlsBaseURL = 'https://usher.ttvnw.net/vod/';
+
 function PlayVod_loadDataRequest() {
     var theUrl,
         state = PlayVod_state === Play_STATE_LOADING_TOKEN;
@@ -410,7 +412,7 @@ function PlayVod_loadDataRequest() {
             }
 
             theUrl =
-                'https://usher.ttvnw.net/vod/' +
+                PlayVod_hlsBaseURL +
                 Main_values.ChannelVod_vodId +
                 '.m3u8?&nauth=' +
                 encodeURIComponent(PlayVod_tokenResponse.value) +
@@ -442,6 +444,16 @@ function PlayVod_loadDataRequest() {
                     if (xmlHttp.status === 410) {
                         Play_410ERROR = true;
                         if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                    } else if (xmlHttp.status === 0 && Main_startsWith(PlayVod_hlsBaseURL, 'https:')) {
+                        //https issue
+                        //some devices are triggered with a status 0 when trying to get the playlist URL related to cors
+                        //change to http to see if it fixes
+
+                        //problem is that some devices will not allow http connection they demand https
+
+                        PlayVod_hlsBaseURL = PlayVod_hlsBaseURL.replace('https:', 'http:');
+                        PlayVod_loadDataRequest();
+                        return;
                     }
                     PlayVod_loadDataError();
                 }

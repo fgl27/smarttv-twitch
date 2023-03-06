@@ -212,10 +212,40 @@ function ChannelContent_GetStreamerInfoSuccess(responseText) {
         Main_values.Main_selectedChannelLogo = channel.profile_image_url;
         Main_values.Main_selectedChannelPartner = channel.broadcaster_type === 'partner';
 
-        ChannelContent_loadDataSuccess();
+        ChannelContent_BannerFollowers();
     } else {
         ChannelContent_loadDataError();
     }
+}
+
+var ChannelContent_BannerFollowersPost = '{"query":"{user(login: \\"%x\\") {bannerImageURL, followers(){totalCount}}}"}';
+function ChannelContent_BannerFollowers() {
+    var xmlHttp = new XMLHttpRequest();
+
+    xmlHttp.open('POST', PlayClip_BaseClipUrl, true);
+    xmlHttp.timeout = PlayClip_loadingDataTimeout;
+    xmlHttp.setRequestHeader(Main_clientIdHeader, Main_Headers_Backup[0][1]);
+    xmlHttp.setRequestHeader('Content-Type', 'application/json');
+
+    xmlHttp.ontimeout = function () {};
+
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) {
+                var obj = JSON.parse(xmlHttp.responseText);
+
+                if (obj.data && obj.data.user) {
+                    ChannelContent_profile_banner = obj.data.user.bannerImageURL ? obj.data.user.bannerImageURL : IMG_404_BANNER;
+                    ChannelContent_selectedChannelFollower =
+                        obj.data.user.followers && obj.data.user.followers.totalCount ? obj.data.user.followers.totalCount : '';
+                }
+            }
+
+            ChannelContent_loadDataSuccess();
+        }
+    };
+
+    xmlHttp.send(ChannelContent_BannerFollowersPost.replace('%x', Main_values.Main_selectedChannel));
 }
 
 function ChannelContent_GetStreamerInfoError() {

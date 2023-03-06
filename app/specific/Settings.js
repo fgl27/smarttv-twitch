@@ -680,17 +680,14 @@ function Settings_set_proxy_timeout() {
 }
 
 function Settings_get_enabled() {
-    if (Settings_Obj_default('purple_adblock') === 1) {
+    if (Settings_Obj_default('ttv_lolProxy') === 1) {
         return 0;
     }
-    if (Settings_Obj_default('ttv_lolProxy') === 1) {
-        return 1;
-    }
 
-    return 2;
+    return 1;
 }
 
-var proxyArray = ['purple_adblock', 'ttv_lolProxy'];
+var proxyArray = ['ttv_lolProxy'];
 function Settings_set_purple_adblock() {
     Settings_set_all_proxy('purple_adblock');
 }
@@ -936,24 +933,18 @@ function Settings_handleKeyDown(event) {
 function Settings_DialogShowProxy() {
     var array_no_yes = [STR_NO, STR_YES];
     Settings_value.ttv_lolProxy.values = array_no_yes;
-    Settings_value.purple_adblock.values = array_no_yes;
+    Settings_value.ttv_lolProxy.values = array_no_yes;
 
     var obj = {
         proxy_timeout: {
-            defaultValue: Settings_value.purple_adblock.defaultValue,
-            values: Settings_value.purple_adblock.values,
+            defaultValue: Settings_value.proxy_timeout.defaultValue,
+            values: Settings_value.proxy_timeout.values,
             title: STR_PROXY_TIMEOUT,
             summary: STR_PROXY_TIMEOUT_SUMMARY
         },
-        purple_adblock: {
+        ttv_lolProxy: {
             defaultValue: Settings_value.ttv_lolProxy.defaultValue,
             values: Settings_value.ttv_lolProxy.values,
-            title: STR_PURPLE_ADBLOCK,
-            summary: STR_PURPLE_ADBLOCK_SUMMARY
-        },
-        ttv_lolProxy: {
-            defaultValue: Settings_value.purple_adblock.defaultValue,
-            values: Settings_value.purple_adblock.values,
             title: STR_TTV_LOL,
             summary: STR_TTV_LOL_SUMMARY
         }

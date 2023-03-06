@@ -3107,7 +3107,7 @@ function Play_MakeControls() {
                 i,
                 key;
 
-            if (this.defaultValue < 2) {
+            if (this.defaultValue < 1) {
                 key = proxyArray[this.defaultValue];
                 Settings_value[key].defaultValue = 1;
                 Main_setItem(key, 2);

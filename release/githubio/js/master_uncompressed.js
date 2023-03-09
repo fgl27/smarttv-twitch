@@ -9706,6 +9706,9 @@
                         //problem is that some devices will not allow http connection they demand https
 
                         Play_hlsBaseURL = Play_hlsBaseURL.replace('https:', 'http:');
+                        Play_live_ttv_lol_links = Play_live_ttv_lol_links.replace('https:', 'http:');
+                        proxy_url = proxy_url.replace('https:', 'http:');
+
                         Play_loadDataRequest(skipProxy);
                     } else if (xmlHttp.status === 403 || xmlHttp.status === 404) {
                         //forbidden access

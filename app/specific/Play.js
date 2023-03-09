@@ -543,7 +543,7 @@ function Play_CheckIfIsLiveLink() {
     var theUrl;
     try {
         theUrl =
-            'https://usher.ttvnw.net/api/channel/hls/' +
+            Play_hlsBaseURL +
             Play_CheckIfIsLiveStartChannel +
             '.m3u8?&token=' +
             encodeURIComponent(Play_tokenResponse.value) +
@@ -803,7 +803,7 @@ function Play_loadData(skipProxy) {
 }
 
 var Play_410ERROR = true;
-var Play_hlsBaseURL = 'http://usher.ttvnw.net/api/channel/hls/';
+var Play_hlsBaseURL = 'https://usher.ttvnw.net/api/channel/hls/';
 function Play_loadDataRequest(skipProxy) {
     try {
         var theUrl;

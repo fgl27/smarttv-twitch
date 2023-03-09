@@ -6455,7 +6455,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'March 06 2022';
+    var Main_minversion = 'March 09 2022';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
 
@@ -9370,7 +9370,7 @@
         var theUrl;
         try {
             theUrl =
-                'https://usher.ttvnw.net/api/channel/hls/' +
+                Play_hlsBaseURL +
                 Play_CheckIfIsLiveStartChannel +
                 '.m3u8?&token=' +
                 encodeURIComponent(Play_tokenResponse.value) +
@@ -9630,7 +9630,7 @@
     }
 
     var Play_410ERROR = true;
-    var Play_hlsBaseURL = 'http://usher.ttvnw.net/api/channel/hls/';
+    var Play_hlsBaseURL = 'https://usher.ttvnw.net/api/channel/hls/';
 
     function Play_loadDataRequest(skipProxy) {
         try {

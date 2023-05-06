@@ -5760,11 +5760,12 @@
     var Chat_hasEnded = false;
     var Chat_CleanMax = 60;
     var Chat_JustStarted = true;
+    var Chat_comment_ids = {};
 
     var Chat_loadChatRequestPost =
         '{"operationName":"VideoCommentsByOffsetOrCursor","variables":{"videoID":"%v","contentOffsetSeconds":%o},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"b70a3591ff0f4e0313d126c6a1502d79a1c02baebb288227c582044aa76adf6a"}}}';
-    var Chat_loadChatRequestPost_Cursor =
-        '{"operationName":"VideoCommentsByOffsetOrCursor","variables":{"videoID":"%v","cursor":"%c"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"b70a3591ff0f4e0313d126c6a1502d79a1c02baebb288227c582044aa76adf6a"}}}';
+    // var Chat_loadChatRequestPost_Cursor =
+    //     '{"operationName":"VideoCommentsByOffsetOrCursor","variables":{"videoID":"%v","cursor":"%c"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"b70a3591ff0f4e0313d126c6a1502d79a1c02baebb288227c582044aa76adf6a"}}}';
 
     var Chat_UserJPKRegex = new RegExp('[^\x00-\x7F]', 'g');
 
@@ -5978,6 +5979,8 @@
     }
 
     function Chat_loadChatRequest(id) {
+        chat_next_offset = Chat_offset ? parseInt(Chat_offset) : 0;
+
         var xmlHttp = new XMLHttpRequest();
 
         xmlHttp.open('POST', PlayClip_BaseClipUrl, true);
@@ -5991,13 +5994,14 @@
             if (xmlHttp.readyState === 4) {
                 if (xmlHttp.status === 200) {
                     Chat_loadChatSuccess(xmlHttp.responseText, id);
+                    chat_next_offset++;
                 } else {
                     Chat_loadChatError(id);
                 }
             }
         };
 
-        xmlHttp.send(Chat_loadChatRequestPost.replace('%v', Main_values.ChannelVod_vodId).replace('%o', Chat_offset ? parseInt(Chat_offset) : 0));
+        xmlHttp.send(Chat_loadChatRequestPost.replace('%v', Main_values.ChannelVod_vodId).replace('%o', chat_next_offset));
     }
 
     function Chat_loadChatError(id) {
@@ -6021,7 +6025,8 @@
         var responseText = JSON.parse(response),
             comments;
 
-        var div,
+        var duplicatedCounter = 0,
+            div,
             mmessage,
             null_next = Chat_cursor === null,
             nickColor,
@@ -6067,6 +6072,11 @@
 
         for (i = 0, len = comments.length; i < len; i++) {
             comments[i] = comments[i].node;
+            if (Chat_comment_ids[comments[i].id]) {
+                duplicatedCounter++;
+                continue;
+            }
+            Chat_comment_ids[comments[i].id] = true;
 
             //some comments have no commenter I assume those have ben deleted during live chat but not fully from chat history
             if (!comments[i].commenter) continue;
@@ -6160,6 +6170,13 @@
             else if (Chat_cursor !== '') Chat_MessageVectorNext(messageObj);
         }
 
+        chat_next_offset = comments[comments.length - 1].contentOffsetSeconds;
+
+        //Iff all msg received are duplicated run again as it will run with a diff offset
+        if (duplicatedCounter >= comments.length && Chat_cursor !== '') {
+            Chat_loadChatNext(id);
+        }
+
         if (null_next && Chat_Id[0] === id) {
             Chat_JustStarted = false;
             Chat_Play(id);
@@ -6212,6 +6229,9 @@
         Chat_Messages = [];
         Chat_MessagesNext = [];
         Chat_Position = 0;
+        chat_next_offset = 0;
+        chat_next_offset_old = 0;
+        Chat_comment_ids = {};
         ChatLive_ClearIds(0);
         ChatLive_resetChatters(0);
     }
@@ -6230,19 +6250,18 @@
                 }
             }
         } else {
-            Chat_Pause();
             if (Chat_cursor !== '') {
                 //array.slice() may crash RangeError: Maximum call stack size exceeded
                 Chat_Messages = Main_Slice(Chat_MessagesNext);
 
                 Chat_Position = 0;
-                Chat_Play(id);
+
                 Chat_MessagesNext = [];
 
                 if (Chat_Id[0] === id) Chat_loadChatNext(id);
                 Chat_Clean(0);
             } else {
-                //Chat has eneded
+                //Chat has ended
 
                 if (!Chat_hasEnded) {
                     ChatLive_ElemntAdd({
@@ -6261,7 +6280,15 @@
         if (!Chat_hasEnded && Chat_Id[0] === id) Chat_loadChatNextRequest(id);
     }
 
+    var chat_next_offset = 0;
+    var chat_next_offset_old = 0;
+
     function Chat_loadChatNextRequest(id) {
+        if (chat_next_offset_old === chat_next_offset) {
+            chat_next_offset++;
+        }
+        chat_next_offset_old = chat_next_offset;
+
         var xmlHttp = new XMLHttpRequest();
 
         xmlHttp.open('POST', PlayClip_BaseClipUrl, true);
@@ -6281,7 +6308,7 @@
             }
         };
 
-        xmlHttp.send(Chat_loadChatRequestPost_Cursor.replace('%v', Main_values.ChannelVod_vodId).replace('%c', Chat_cursor));
+        xmlHttp.send(Chat_loadChatRequestPost.replace('%v', Main_values.ChannelVod_vodId).replace('%o', chat_next_offset));
     }
 
     function Chat_loadChatNextError(id) {
@@ -6455,7 +6482,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'March 09 2022';
+    var Main_minversion = 'May 05 2023';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
 

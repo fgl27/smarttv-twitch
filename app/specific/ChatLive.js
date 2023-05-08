@@ -84,7 +84,7 @@ var emoteReplace = {
 var ChatLive_ROOMSTATE_Regex = /emote-only=(\d+).*followers-only=(-1|\d+).*r9k=(\d+).*slow=(\d+).*subs-only=(\d+).*/;
 
 var ChatLive_Base_BTTV_url = 'https://cdn.betterttv.net/emote/';
-var ChatLive_Base_chat_url = 'https://tmi.twitch.tv/';
+
 //Variable initialization end
 
 function ChatLive_Init() {
@@ -307,12 +307,12 @@ function ChatLive_loadChatters(chat_number, id) {
 }
 
 function ChatLive_loadChattersCheckType(chat_number, id) {
-    if (Settings_value.show_chatters.defaultValue === 1 && Main_IsNotBrowser) ChatLive_loadChattersLoad(chat_number, id);
+    if (Settings_value.show_chatters.defaultValue === 1) ChatLive_loadChattersLoad(chat_number, id);
     else ChatLive_loadChattersViewers(chat_number, id);
 
     ChatLive_loadChattersId[chat_number] = Main_setInterval(
         function () {
-            if (Settings_value.show_chatters.defaultValue === 1 && Main_IsNotBrowser) ChatLive_loadChattersLoad(chat_number, id);
+            if (Settings_value.show_chatters.defaultValue === 1) ChatLive_loadChattersLoad(chat_number, id);
             else ChatLive_loadChattersViewers(chat_number, id);
         },
         5 * 60 * 1000, //5 min
@@ -340,25 +340,39 @@ function ChatLive_loadChattersViewersSuccess(responseText, chat_number, id) {
     }
 }
 
+var ChatLive_chat_count_post = '{"query":"{channels(ids: \\"%x\\") {chatters(){count}}}"}';
+
 function ChatLive_loadChattersLoad(chat_number, id) {
-    BasexmlHttpGet(
-        ChatLive_Base_chat_url + 'group/user/' + ChatLive_selectedChannel[chat_number],
-        DefaultHttpGetTimeout,
-        0,
-        null,
-        ChatLive_loadChattersSuccess,
-        noop_fun,
-        chat_number,
-        id
-    );
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open('POST', 'https://gql.twitch.tv/gql', true);
+    xmlHttp.timeout = Play_loadingDataTimeout;
+
+    if (Play_Headers && Play_Headers.length) {
+        var len = Play_Headers.length;
+
+        for (var i = 0; i < len; i++) xmlHttp.setRequestHeader(Play_Headers[i][0], Play_Headers[i][1]);
+    }
+
+    xmlHttp.ontimeout = function () {};
+
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) {
+                ChatLive_loadChattersSuccess(xmlHttp.responseText, chat_number, id);
+            }
+        }
+    };
+
+    xmlHttp.send(ChatLive_chat_count_post.replace('%x', ChatLive_selectedChannel_id[chat_number]));
 }
 
 function ChatLive_loadChattersSuccess(responseText, chat_number, id) {
     try {
         if (id === Chat_Id[chat_number]) {
             var resultObj = JSON.parse(responseText);
+            var counter = resultObj.data.channels[0].chatters.count;
 
-            Main_innerHTML('chat_loggedin' + chat_number, Main_addCommas(resultObj.chatter_count) + STR_IN_CHAT);
+            Main_innerHTML('chat_loggedin' + chat_number, Main_addCommas(counter) + STR_IN_CHAT);
         }
     } catch (e) {
         Main_Log('ChatLive_loadChattersSuccess ' + e);

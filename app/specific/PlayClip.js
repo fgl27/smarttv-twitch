@@ -345,7 +345,7 @@ var PlayClip_listener = {
         PlayClip_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = Play_Buffer;
         PlayClip_PlayerCheckQualityChanged = true;
-        if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + new Date());
+        console.log('onbufferingstart:', 'date: ' + new Date());
     },
     onbufferingcomplete: function () {
         Play_HideBufferDialog();
@@ -355,7 +355,7 @@ var PlayClip_listener = {
         PlayClip_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = Play_Buffer;
         PlayClip_PlayerCheckQualityChanged = true;
-        if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + new Date());
+        console.log('onbufferingcomplete:', 'date: ' + new Date());
     },
     onbufferingprogress: function (percent) {
         if (percent < 5) PlayClip_PlayerCheckCount = 0;
@@ -381,9 +381,10 @@ var PlayClip_listener = {
     },
     onstreamcompleted: function () {
         Play_PannelEndStart(3);
+        console.log('onstreamcompleted:', 'date: ' + new Date());
     },
     onerror: function (eventType) {
-        if (!Main_isReleased) console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
+        console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
         if (eventType === 'PLAYER_ERROR_CONNECTION_FAILED' || eventType === 'PLAYER_ERROR_INVALID_URI') Play_PannelEndStart(3);
     }
 };
@@ -458,10 +459,8 @@ function PlayClip_qualityChanged() {
 function PlayClip_onPlayer() {
     Play_showBufferDialog();
 
-    if (!Main_isReleased) {
-        console.log('PlayClip_onPlayer:', 'date: ' + new Date());
-        console.log('PlayClip_onPlayer:', '\n' + '\n"' + PlayClip_playingUrl + '"\n');
-    }
+    console.log('PlayClip_onPlayer:', 'date: ' + new Date());
+    console.log('PlayClip_onPlayer:', '\n' + '\n"' + PlayClip_playingUrl + '"\n');
 
     if (Main_IsNotBrowser) {
         try {
@@ -490,7 +489,7 @@ function PlayClip_onPlayer() {
             function () {
                 //successCallback
 
-                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip OK:', 'date: ' + new Date());
+                console.log('Play_avplay.prepareAsync Clip OK:', 'date: ' + new Date());
 
                 Play_avplay.play();
                 PlayClip_DurationSeconds = Play_avplay.getDuration() / 1000;
@@ -506,11 +505,11 @@ function PlayClip_onPlayer() {
             function () {
                 //errorCallback
 
-                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip NOK:', 'date: ' + new Date());
+                console.log('Play_avplay.prepareAsync Clip NOK:', 'date: ' + new Date());
                 Play_onPlayerCounter++;
                 if (Play_onPlayerCounter < 5) PlayClip_onPlayer();
                 else {
-                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip fail too mutch exit:', 'date: ' + new Date());
+                    console.log('Play_avplay.prepareAsync Clip fail too mutch exit:', 'date: ' + new Date());
                     Play_EndStart(false, 3);
                 }
             }

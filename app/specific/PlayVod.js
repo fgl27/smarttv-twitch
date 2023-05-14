@@ -406,7 +406,7 @@ function PlayVod_loadDataRequest() {
         } else {
             if (!PlayVod_tokenResponse.hasOwnProperty('value') || !PlayVod_tokenResponse.hasOwnProperty('signature')) {
                 Play_410ERROR = true;
-                if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                console.log('Play_410ERROR ' + Play_410ERROR);
                 PlayVod_loadDataError();
                 return;
             }
@@ -441,9 +441,11 @@ function PlayVod_loadDataRequest() {
                     PlayVod_loadDataSuccess(xmlHttp.responseText);
                     //Play_410ERROR = false;
                 } else {
+                    PlayVod_loadDataLog(xmlHttp);
+
                     if (xmlHttp.status === 410) {
                         Play_410ERROR = true;
-                        if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                        console.log('Play_410ERROR ' + Play_410ERROR);
                     } else if (
                         !Settings_Obj_default('force_http_override') &&
                         xmlHttp.status === 0 &&
@@ -469,6 +471,11 @@ function PlayVod_loadDataRequest() {
         PlayVod_loadDataError();
         console.log('PlayVod_loadDataRequest e ' + e);
     }
+}
+
+function PlayVod_loadDataLog(xmlHttp) {
+    console.log('PlayVod_loadDataLog status', xmlHttp.status);
+    console.log('PlayVod_loadDataLog responseText', xmlHttp.responseText);
 }
 
 function PlayVod_loadDataError() {
@@ -599,7 +606,7 @@ var PlayVod_listener = {
         PlayVod_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = PlayVod_Buffer;
         PlayVod_PlayerCheckQualityChanged = true;
-        if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + new Date());
+        console.log('onbufferingstart:', 'date: ' + new Date());
     },
     onbufferingcomplete: function () {
         Play_HideBufferDialog();
@@ -609,7 +616,7 @@ var PlayVod_listener = {
         PlayVod_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = PlayVod_Buffer;
         PlayVod_PlayerCheckQualityChanged = true;
-        if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + new Date());
+        console.log('onbufferingcomplete:', 'date: ' + new Date());
     },
     onbufferingprogress: function (percent) {
         if (percent < 5) PlayVod_PlayerCheckCount = 0;
@@ -634,9 +641,10 @@ var PlayVod_listener = {
     },
     onstreamcompleted: function () {
         Play_PannelEndStart(2);
+        console.log('onstreamcompleted:', 'date: ' + new Date());
     },
     onerror: function (eventType) {
-        if (!Main_isReleased) console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
+        console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
         if (eventType === 'PLAYER_ERROR_CONNECTION_FAILED' || eventType === 'PLAYER_ERROR_INVALID_URI') Play_PannelEndStart(2);
     }
 };
@@ -644,10 +652,8 @@ var PlayVod_listener = {
 function PlayVod_onPlayer() {
     Play_showBufferDialog();
 
-    if (!Main_isReleased) {
-        console.log('PlayVod_onPlayer:', 'date: ' + new Date());
-        console.log('PlayVod_onPlayer:', '\n' + '\n"' + PlayVod_playingUrl + '"\n');
-    }
+    console.log('PlayVod_onPlayer:', 'date: ' + new Date());
+    console.log('PlayVod_onPlayer:', '\n' + '\n"' + PlayVod_playingUrl + '"\n');
 
     if (Main_IsNotBrowser) {
         try {
@@ -675,7 +681,7 @@ function PlayVod_onPlayer() {
         Play_avplay.prepareAsync(
             function () {
                 //successCallback
-                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Vod OK:', 'date: ' + new Date());
+                console.log('Play_avplay.prepareAsync Vod OK:', 'date: ' + new Date());
                 Play_avplay.play();
                 ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;
                 Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
@@ -690,11 +696,11 @@ function PlayVod_onPlayer() {
             function () {
                 //errorCallback
 
-                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Vod NOK:', 'date: ' + new Date());
+                console.log('Play_avplay.prepareAsync Vod NOK:', 'date: ' + new Date());
                 Play_onPlayerCounter++;
                 if (Play_onPlayerCounter < 5) PlayVod_onPlayer();
                 else {
-                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Vod fail too mutch exit:', 'date: ' + new Date());
+                    console.log('Play_avplay.prepareAsync Vod fail too mutch exit:', 'date: ' + new Date());
                     Play_EndStart(false, 2);
                 }
             }

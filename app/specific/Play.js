@@ -832,7 +832,7 @@ function Play_loadDataRequest(skipProxy) {
             } else {
                 if (!Play_tokenResponse.hasOwnProperty('value') || !Play_tokenResponse.hasOwnProperty('signature')) {
                     Play_410ERROR = true;
-                    if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                    console.log('Play_410ERROR ' + Play_410ERROR);
                     Play_loadDataError();
                     return;
                 }
@@ -892,13 +892,13 @@ function Play_loadDataRequest(skipProxy) {
                 } else {
                     if (xmlHttp.status === 410) {
                         Play_410ERROR = true;
-                        if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                        console.log('Play_410ERROR ' + Play_410ERROR);
                     }
 
                     Play_loadDataError();
                 }
 
-                Play_loadDataErrorLog(xmlHttp);
+                Play_loadDataLog(xmlHttp);
             }
         };
 
@@ -919,11 +919,9 @@ function PlayHLS_CheckProxyResultFail(responseText) {
     return true;
 }
 
-function Play_loadDataErrorLog(xmlHttp) {
-    if (Main_isDebug) {
-        console.log(xmlHttp.status);
-        console.log(xmlHttp.responseText);
-    }
+function Play_loadDataLog(xmlHttp) {
+    console.log('Play_loadDataLog status', xmlHttp.status);
+    console.log('Play_loadDataLog responseText', xmlHttp.responseText);
 }
 
 function Play_loadDataError() {
@@ -1141,7 +1139,7 @@ function Play_qualityChanged() {
     Play_SetHtmlQuality('stream_quality', true);
 
     Play_state = Play_STATE_PLAYING;
-    if (Main_isDebug) console.log('Play_qualityChanged before Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
+    console.log('Play_qualityChanged before Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
 
     Play_BufferPercentage = 0;
     Play_onPlayerCounter = 0;
@@ -1158,7 +1156,7 @@ var Play_listener = {
         Play_PlayerCheckTimer = Play_Buffer;
         Play_PlayerCheckQualityChanged = true;
         // sync chat and stream
-        if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + new Date());
+        console.log('onbufferingstart:', 'date: ' + new Date());
     },
     onbufferingcomplete: function () {
         Play_HideBufferDialog();
@@ -1167,7 +1165,7 @@ var Play_listener = {
         Play_PlayerCheckCount = 0;
         Play_PlayerCheckTimer = Play_Buffer;
         Play_PlayerCheckQualityChanged = true;
-        if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + new Date());
+        console.log('onbufferingcomplete:', 'date: ' + new Date());
     },
     onbufferingprogress: function (percent) {
         if (percent < 5) Play_PlayerCheckCount = 0;
@@ -1190,7 +1188,7 @@ var Play_listener = {
     },
     onstreamcompleted: function () {
         Play_CheckHostStart();
-        if (!Main_isReleased) console.log('onstreamcompleted:', 'date: ' + new Date());
+        console.log('onstreamcompleted:', 'date: ' + new Date());
     },
     onerror: function (eventType) {
         console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
@@ -1215,10 +1213,9 @@ function Play_SetHtmlQuality(element) {
 
 function Play_onPlayer() {
     Play_showBufferDialog();
-    if (!Main_isReleased) {
-        console.log('Play_onPlayer:', 'date: ' + new Date());
-        console.log('Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
-    }
+
+    console.log('Play_onPlayer:', 'date: ' + new Date());
+    console.log('Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
 
     if (Main_IsNotBrowser) {
         Play_loadChat();
@@ -1252,14 +1249,14 @@ function Play_onPlayer() {
             console.log('PlayVod_onPlayer open ' + e);
         }
 
-        if (!Main_isReleased) console.log('Before Play_avplay.prepareAsync:', 'date: ' + new Date());
+        console.log('Before Play_avplay.prepareAsync:', 'date: ' + new Date());
 
         //Use prepareAsync as prepare() only can freeze up the app
         Play_avplay.prepareAsync(
             function () {
                 //successCallback
 
-                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live OK:', 'date: ' + new Date());
+                console.log('Play_avplay.prepareAsync Live OK:', 'date: ' + new Date());
 
                 try {
                     //GET_LIVE_DURATION not supported by all TVs
@@ -1278,11 +1275,11 @@ function Play_onPlayer() {
             },
             function () {
                 //errorCallback
-                if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live NOK:', 'date: ' + new Date());
+                console.log('Play_avplay.prepareAsync Live NOK:', 'date: ' + new Date());
                 Play_onPlayerCounter++;
                 if (Play_onPlayerCounter < 5) Play_onPlayer();
                 else {
-                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live fail too mutch exit:', 'date: ' + new Date());
+                    console.log('Play_avplay.prepareAsync Live fail too mutch exit:', 'date: ' + new Date());
                     Play_EndStart(false, 1);
                 }
             }

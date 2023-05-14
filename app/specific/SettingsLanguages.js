@@ -135,11 +135,11 @@ var Languages_value = {
 };
 
 //For clips the api accept a coma and extra languages
-var Languages_Extra = {
-    en: 'en,en-gb',
-    es: 'es,es-mx',
-    pt: 'pt,pt-br'
-};
+// var Languages_Extra = {
+//     en: 'en,en-gb',
+//     es: 'es,es-mx',
+//     pt: 'pt,pt-br'
+// };
 
 var Languages_value_keys = [];
 var Languages_positions_length = 0;
@@ -276,7 +276,8 @@ function Languages_RemoveinputFocus() {
 }
 
 function Languages_ScrollTable() {
-    document.getElementById('settings_scroll').scrollTop = Languages_cursorY > 7 ? document.getElementById(Languages_value_keys[Languages_cursorY - 7]).offsetTop : 0;
+    document.getElementById('settings_scroll').scrollTop =
+        Languages_cursorY > 7 ? document.getElementById(Languages_value_keys[Languages_cursorY - 7]).offsetTop : 0;
 }
 
 function Languages_ChangeSettigs(position) {

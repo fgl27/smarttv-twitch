@@ -1193,7 +1193,7 @@ var Play_listener = {
         if (!Main_isReleased) console.log('onstreamcompleted:', 'date: ' + new Date());
     },
     onerror: function (eventType) {
-        if (!Main_isReleased) console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
+        console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
         if (eventType === 'PLAYER_ERROR_CONNECTION_FAILED' || eventType === 'PLAYER_ERROR_INVALID_URI') Play_CheckHostStart();
     }
 };

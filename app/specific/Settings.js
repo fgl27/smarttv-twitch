@@ -191,6 +191,14 @@ var Settings_value = {
         values: ['None'],
         set_values: [''],
         defaultValue: 1
+    },
+    force_http: {
+        values: ['no', 'yes'],
+        defaultValue: 1
+    },
+    force_http_override: {
+        values: ['no', 'yes'],
+        defaultValue: 1
     }
 };
 
@@ -362,6 +370,12 @@ function Settings_SetSettings() {
     Settings_value[key].values = [STR_CONTENT_LANG_SUMARRY];
 
     div += Settings_DivOptionNoSummary(key, PROXY_SETTINGS);
+
+    key = 'force_http';
+    Settings_value_keys.push(key);
+    Settings_value[key].values = [STR_NO, STR_YES];
+
+    div += Settings_DivOptionWithSummary(key, STR_FORCE_HTTP, STR_FORCE_HTTP_SUMMARY);
 
     key = 'single_click_exit';
     Settings_value_keys.push(key);
@@ -590,6 +604,7 @@ function Settings_SetDefautls() {
     Play_EndSettingsCounter = Settings_Obj_default('end_dialog_counter');
     Settings_ShowCounter(Settings_Obj_default('show_screen_counter'));
     Settings_proxy_set_start();
+    Settings_set_http();
 }
 
 function Settings_Obj_values(key) {
@@ -669,9 +684,29 @@ function Settings_SetDefault(position) {
     else if (position === 'ttv_lolProxy') Settings_set_TTV_LOL();
     else if (position === 'proxy_timeout') Settings_set_proxy_timeout();
     else if (position === 'purple_adblock') Settings_set_purple_adblock();
-    else if (position === 'clock_offset') {
+    else if (position === 'force_http') {
+        Settings_set_http();
+        Main_setItem('force_http_override', 2);
+        Settings_value.force_http_override.defaultValue = 1;
+    } else if (position === 'clock_offset') {
         Settings_SetClock();
         Main_updateclock();
+    }
+}
+
+function Settings_set_http() {
+    var useHttp = Settings_Obj_default('force_http');
+
+    if (useHttp) {
+        Play_hlsBaseURL = Play_hlsBaseURL.replace('https:', 'http:');
+        Play_live_ttv_lol_links = Play_live_ttv_lol_links.replace('https:', 'http:');
+        proxy_url = proxy_url.replace('https:', 'http:');
+        PlayVod_hlsBaseURL = PlayVod_hlsBaseURL.replace('https:', 'http:');
+    } else {
+        Play_hlsBaseURL = Play_hlsBaseURL.replace('http:', 'https:');
+        Play_live_ttv_lol_links = Play_live_ttv_lol_links.replace('http:', 'https:');
+        proxy_url = proxy_url.replace('http:', 'https:');
+        PlayVod_hlsBaseURL = PlayVod_hlsBaseURL.replace('http:', 'https:');
     }
 }
 

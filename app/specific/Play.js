@@ -870,7 +870,7 @@ function Play_loadDataRequest(skipProxy) {
                     //if proxy fails fall back to normal request
                     Play_state = Play_STATE_LOADING_TOKEN;
                     Play_loadData(true);
-                } else if (xmlHttp.status === 0 && Main_startsWith(Play_hlsBaseURL, 'https:')) {
+                } else if (!Settings_Obj_default('force_http_override') && xmlHttp.status === 0 && Main_startsWith(Play_hlsBaseURL, 'https:')) {
                     //https issue
                     //some devices are triggered with a status 0 when trying to get the playlist URL related to cors
                     //change to http to see if it fixes

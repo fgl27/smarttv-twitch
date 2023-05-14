@@ -444,7 +444,11 @@ function PlayVod_loadDataRequest() {
                     if (xmlHttp.status === 410) {
                         Play_410ERROR = true;
                         if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
-                    } else if (xmlHttp.status === 0 && Main_startsWith(PlayVod_hlsBaseURL, 'https:')) {
+                    } else if (
+                        !Settings_Obj_default('force_http_override') &&
+                        xmlHttp.status === 0 &&
+                        Main_startsWith(PlayVod_hlsBaseURL, 'https:')
+                    ) {
                         //https issue
                         //some devices are triggered with a status 0 when trying to get the playlist URL related to cors
                         //change to http to see if it fixes

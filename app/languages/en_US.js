@@ -99,7 +99,8 @@ function en_USLang() {
     STR_CONTROLS_MAIN_4 = 'Exit the application: from side panel click exit';
     STR_CONTROLS_MAIN_5 = 'Force close the application: Hold the back key until it auto force close';
     STR_CONTROLS_MAIN_6 = 'Switch screen: CH Up/Down or use the side panel';
-    STR_CONTROLS_MAIN_10 = 'Start a search: from side panel click search, writing the search press the Enter key on the virtual keyboard and choose a search option';
+    STR_CONTROLS_MAIN_10 =
+        'Start a search: from side panel click search, writing the search press the Enter key on the virtual keyboard and choose a search option';
     STR_CONTROLS_MAIN_14 = 'About this application: from side panel click about';
     STR_ABOUT_INFO_1 =
         "This is a SmartTV Client for Twitch developed by a individual on his free time, for TVs that don't have access to a good official application, released for free to anyone who wants to use it.";
@@ -110,9 +111,11 @@ function en_USLang() {
     STR_ABOUT_INFO_6 = 'This application uses following dependencies:';
     STR_ABOUT_INFO_7 = 'irc-message - Performant, streaming IRC message parser (https://github.com/sigkell/irc-message)';
     STR_ABOUT_INFO_8 = 'Fontastic - Create your customized icon fonts in seconds (http://app.fontastic.me)';
-    STR_ABOUT_INFO_9 = 'Twemoji - A simple library that provides standard Unicode emoji support across all platforms (https://github.com/twitter/twemoji)';
+    STR_ABOUT_INFO_9 =
+        'Twemoji - A simple library that provides standard Unicode emoji support across all platforms (https://github.com/twitter/twemoji)';
     STR_ABOUT_INFO_10 = 'UglifyJS - is a JavaScript parser, minifier, compressor and beautifier toolkit (https://github.com/mishoo/UglifyJS2)';
-    STR_ABOUT_INFO_11 = 'punycode - A robust Punycode converter that fully complies to RFC 3492 and RFC 5891 (https://github.com/bestiejs/punycode.js)';
+    STR_ABOUT_INFO_11 =
+        'punycode - A robust Punycode converter that fully complies to RFC 3492 and RFC 5891 (https://github.com/bestiejs/punycode.js)';
     STR_ABOUT_INFO_12 = 'HTMLMinifier - A highly configurable, well-tested, JavaScript-based HTML minifier (https://github.com/kangax/html-minifier)';
     STR_ABOUT_INFO_13 = 'JSHint - A Static Code Analysis Tool for JavaScript (https://github.com/jshint/jshint)';
     STR_ABOUT_INFO_14 = 'Web:';
@@ -129,7 +132,8 @@ function en_USLang() {
     STR_CONTROLS_PLAY_8 = 'Change Chat position : ' + STR_KEY_UP_DOWN + STR_CONTROLS_PLAY_0;
     STR_CONTROLS_PLAY_9 = 'Change Chat size : D-pad down' + STR_CONTROLS_PLAY_0;
     STR_CONTROLS_PLAY_10 = 'Change Chat background brightness: change in player bottom controls';
-    STR_CONTROLS_PLAY_11 = "Force refresh the Chat in Live streams (in case it freezes or doesn't load): use the player bottom controls Chat force disable (click twice)";
+    STR_CONTROLS_PLAY_11 =
+        "Force refresh the Chat in Live streams (in case it freezes or doesn't load): use the player bottom controls Chat force disable (click twice)";
     STR_CONTROLS_PLAY_12 = 'Start a search: open information panel, navigate using use Directional pad (left/right) to "Search" and press enter';
     STR_CONTROLS_PLAY_13 = 'All media keys are supported (play, pause, stop, next track, fast forward, etc...)';
     STR_CONTROLS_PLAY_14 = 'Chat and video (Side by side): Color button red (A)';
@@ -253,7 +257,8 @@ function en_USLang() {
     STR_NORMAL = 'Normal';
     STR_AUTO = 'Auto';
     STR_DEF_QUALITY = 'Default player start quality';
-    STR_DEF_QUALITY_SUMARRY = 'Used when the app is first opened, after the user change the quality that becomes default for that section, a section ends when the apps is closed';
+    STR_DEF_QUALITY_SUMARRY =
+        'Used when the app is first opened, after the user change the quality that becomes default for that section, a section ends when the apps is closed';
     STR_VERY_LOW = 'Very low';
     STR_LOW = 'Low';
     STR_HIGH = 'High';
@@ -305,13 +310,19 @@ function en_USLang() {
     STR_CH_IS_OFFLINE = 'Is offline';
     STR_SCREEN_COUNTER = 'Show screen position counter';
     STR_SWITCH_POS = 'Switch: Starting Position offset';
-    STR_SWITCH_POS_SUMMARY = 'Instead of starting on the first possible video, start a a lower position on the list, prevents having to go down and down to find a older video';
+    STR_SWITCH_POS_SUMMARY =
+        'Instead of starting on the first possible video, start a a lower position on the list, prevents having to go down and down to find a older video';
     STR_USER_OPTION = 'Choose a option for user';
     STR_MAIN_USER = 'Main user';
     STR_USER_TOP_LABLE = 'Click on a user to see options';
     STR_USER_EXTRAS = 'User: Switch, add, key';
     STR_LOW_LATENCY = 'Low Latency';
-    STR_LOW_LATENCY_SUMARRY = 'If start getting buffers issue disable ' + STR_LOW_LATENCY + '<br>Use ' + STR_SETTINGS_BUFFER_LIVE + ' equal or bellow to 3 for this to have effect';
+    STR_LOW_LATENCY_SUMARRY =
+        'If start getting buffers issue disable ' +
+        STR_LOW_LATENCY +
+        '<br>Use ' +
+        STR_SETTINGS_BUFFER_LIVE +
+        ' equal or bellow to 3 for this to have effect';
     STR_LIVE_FEED_SORT = 'Live feed sort';
     STR_LIVE_FEED_SORT_SUMMARY = 'Sorts side panel live feed and player live feed';
     STR_A_Z = 'Alphabetical A - Z';
@@ -338,7 +349,8 @@ function en_USLang() {
     STR_CREATED_NEWEST = 'Created / Uptime newest';
     STR_CREATED_OLDEST = 'Created / Uptime Oldest';
     STR_RESET_DONE = 'All configuration erased the app will self restart';
-    STR_HOLD_RESET = '<br>Keep hold Key for 10 seconds to reset all app configuration this can help when the app is freezed, release to dismiss this<br><br>';
+    STR_HOLD_RESET =
+        '<br>Keep hold Key for 10 seconds to reset all app configuration this can help when the app is freezed, release to dismiss this<br><br>';
     STR_FORCE_RESET =
         'Force erase all app config: in case the app misbehave and stop working, hold key channel UP or Down for 20 seconds anywhere in the app, after it 10 seconds there is a confirmation';
 
@@ -348,7 +360,8 @@ function en_USLang() {
     STR_CHAT_BANNED = 'You are permanently banned from talking in  ';
     STR_CHAT_WRITE = 'Write to chat';
     STR_CHAT_EXTRA = 'Chat extra settings';
-    STR_PLACEHOLDER_CHAT = 'When this seleceted, press enter to show onscreen keyboard, If you have a physical keyboard connected press return or esc to hide the onscreen keyboard';
+    STR_PLACEHOLDER_CHAT =
+        'When this seleceted, press enter to show onscreen keyboard, If you have a physical keyboard connected press return or esc to hide the onscreen keyboard';
     STR_CHAT_ROOMSTATE = 'Chat ROOMSTATE:';
     STR_CHAT_NO_RESTRICTIONS = 'No restrictions';
     STR_OPTIONS = 'Options';
@@ -387,7 +400,8 @@ function en_USLang() {
     STR_CHAT_SHOW_SUB = 'Show Sub messages in chat (Dark orange background)';
     STR_CHAT_HIGHLIGHT_BIT = 'Highlight Bits message (Dark Yellow background)';
     STR_CHAT_HIGHLIGHT_ACTIONS = 'Show Actions messages (Usually this are from stream Bots)';
-    STR_CHAT_HIGHLIGHT_ACTIONS_SUMMARY = 'This messages are usually equal to Sub messages but sended via a stream bot, so if you have "Show sub..." enable this is redundant';
+    STR_CHAT_HIGHLIGHT_ACTIONS_SUMMARY =
+        'This messages are usually equal to Sub messages but sended via a stream bot, so if you have "Show sub..." enable this is redundant';
     STR_CHAT_INDIVIDUAL_BACKGROUND = 'Individual messages background color difference';
     STR_CHAT_INDIVIDUAL_BACKGROUND_SUMMARY =
         'Modes are disable, enable (auto mode), Bright or Darker, In auto mode if the chat is above the stream it odd message will have a darker background accent color from the even, if the chat is not above (side by side for example) the color will be brigh';
@@ -397,7 +411,8 @@ function en_USLang() {
         "The app will always logging to chat using current user when a authorization key is provided, unless chat is disable on player bottom controls, but if this option if set to NO it will prevent logging using current username and instead will logging as anonymous, even if providing a authorization key. This doesn't prevent from send chat message for this user if a key ws added but prevents form know if you are banned on the chat and prevent knowing the chat ROOMSTATE";
     STR_CHAT_TIMESTAMP = 'Show message timestamp';
     STR_CHAT_NICK_COLOR = 'Readable nick colors';
-    STR_CHAT_NICK_COLOR_SUMMARY = "Instead of using the default nick color that some times can't be readable on a dark background, use a custom easy to read color";
+    STR_CHAT_NICK_COLOR_SUMMARY =
+        "Instead of using the default nick color that some times can't be readable on a dark background, use a custom easy to read color";
     STR_CHAT_CLEAR_MSG = 'Clear chat, delete user’s message’s';
     STR_CHAT_MESSAGE_DELETED = 'This single user message was requested to be deleted';
     STR_CHAT_MESSAGE_DELETED_ALL = 'All messages from this user was requested to be deleted';
@@ -410,7 +425,8 @@ function en_USLang() {
         'Delete chat messages from a specific user (typically after they received a timeout or ban), deleted messages will always have a blue background, the message will be removed if this is set to yes if not only';
     STR_IN_CHAT = ' In chat';
     STR_SHOW_IN_CHAT = 'Show total logged in user on top of the chat or viewers';
-    STR_SHOW_IN_CHAT_SUMMARY = 'This is very helpfully to know for example if the offline chat has any user to talk to, also let the user know the difference from total viewer VS total chat user';
+    STR_SHOW_IN_CHAT_SUMMARY =
+        'This is very helpfully to know for example if the offline chat has any user to talk to, also let the user know the difference from total viewer VS total chat user';
     STR_SHOW_IN_CHAT_VIEWERS = 'Show viewers';
     STR_SHOW_IN_CHAT_CHATTERS = 'Show chatters';
     STR_UNKNOWN = 'Unknown';
@@ -429,7 +445,8 @@ function en_USLang() {
     STR_PURPLE_ADBLOCK = 'Purple Adblock ';
 
     STR_PROXY_TIMEOUT = 'Proxy timeout (time in seconds)';
-    STR_PROXY_TIMEOUT_SUMMARY = 'If the proxy server is out this will be the time that will take to "give up" on the connection and fallback to default Twitch implementation';
+    STR_PROXY_TIMEOUT_SUMMARY =
+        'If the proxy server is out this will be the time that will take to "give up" on the connection and fallback to default Twitch implementation';
 
     PROXY_SERVICE = 'Proxy: ';
     PROXY_SERVICE_STATUS = 'Enabled and working';
@@ -439,4 +456,7 @@ function en_USLang() {
     PROXY_SETTINGS = 'Proxy Settings (Internet censorship and related proxy)';
     PROXY_SETTINGS_SUMMARY =
         'Only one proxy can be enable, enables proxy server to get stream links from a different server, that may allow you to see content that is forbidden on yours region and avoid ads, disable this if you have any live stream issue too many or longer buffers, freezes or slow connection that may cause the stream quality to drop.';
+    STR_FORCE_HTTP = 'Force HTTP';
+    STR_FORCE_HTTP_SUMMARY =
+        "Some device can't perform some HTTPS request with may cause the player not to work, setting this will force some connection to use HTTP only, this may solve player and related issue";
 }

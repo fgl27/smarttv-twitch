@@ -458,5 +458,5 @@ function en_USLang() {
         'Only one proxy can be enable, enables proxy server to get stream links from a different server, that may allow you to see content that is forbidden on yours region and avoid ads, disable this if you have any live stream issue too many or longer buffers, freezes or slow connection that may cause the stream quality to drop.';
     STR_FORCE_HTTP = 'Force HTTP';
     STR_FORCE_HTTP_SUMMARY =
-        "Some device can't perform some HTTPS request with may cause the player not to work, setting this will force some connection to use HTTP only, this may solve player and related issue";
+        "Some devices can't perform some HTTPS requests with may cause the player not to work, setting this will force some connections to use HTTP only, this may solve player and related issues";
 }

@@ -1293,7 +1293,6 @@ function Main_GetHost(callbackSucess, checkResult, channel) {
         if (this.readyState === 4) {
             callbackSucess(this, checkResult);
 
-            console.log('Main_GetHost theUrl', theUrl);
             console.log('Main_GetHost status', xmlHttp.status);
             console.log('Main_GetHost responseText', xmlHttp.responseText);
         }

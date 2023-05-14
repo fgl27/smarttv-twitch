@@ -7654,39 +7654,15 @@
                 } else {
                     calbackError(key, id);
                 }
+
+                console.log('BasexmlHttpGet theUrl', theUrl);
+                console.log('BasexmlHttpGet status', xmlHttp.status);
+                console.log('BasexmlHttpGet responseText', xmlHttp.responseText);
             }
         };
 
         xmlHttp.send(null);
     }
-
-    // function BasexmlHttpGetBack(theUrl, Timeout, HeaderQuantity, access_token, callbackSucess, calbackError) {
-    //     var xmlHttp = new XMLHttpRequest();
-
-    //     xmlHttp.open('GET', theUrl, true);
-    //     xmlHttp.timeout = Timeout;
-
-    //     Main_Headers_Backup[2][1] = access_token;
-
-    //     for (var i = 0; i < HeaderQuantity; i++) xmlHttp.setRequestHeader(Main_Headers_Backup[i][0], Main_Headers_Backup[i][1]);
-
-    //     xmlHttp.ontimeout = function () {};
-
-    //     xmlHttp.onreadystatechange = function () {
-    //         if (xmlHttp.readyState === 4) {
-    //             if (xmlHttp.status === 200) {
-    //                 callbackSucess(xmlHttp.responseText);
-    //             } else if (HeaderQuantity > 2 && (xmlHttp.status === 401 || xmlHttp.status === 403)) {
-    //                 //token expired, only Screens HeaderQuantity will be > 2
-    //                 AddCode_refreshTokens(0, 0, Screens_loadDataRequestStart, Screens_loadDatafail);
-    //             } else {
-    //                 calbackError();
-    //             }
-    //         }
-    //     };
-
-    //     xmlHttp.send(null);
-    // }
 
     var Main_GetHostBaseUrl =
         '{"operationName":"UseHosting","variables":{"channelLogin":"%x"},"extensions":{"persistedQuery":{"version": 1,"sha256Hash":"427f55a3daca510f726c02695a898ef3a0de4355b39af328848876052ea6b337"}}}';
@@ -7704,6 +7680,9 @@
         xmlHttp.onreadystatechange = function() {
             if (this.readyState === 4) {
                 callbackSucess(this, checkResult);
+
+                console.log('Main_GetHost status', xmlHttp.status);
+                console.log('Main_GetHost responseText', xmlHttp.responseText);
             }
         };
 
@@ -8210,7 +8189,7 @@
             PlayClip_PlayerCheckCount = 0;
             Play_PlayerCheckTimer = Play_Buffer;
             PlayClip_PlayerCheckQualityChanged = true;
-            if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + new Date());
+            console.log('onbufferingstart:', 'date: ' + new Date());
         },
         onbufferingcomplete: function() {
             Play_HideBufferDialog();
@@ -8220,7 +8199,7 @@
             PlayClip_PlayerCheckCount = 0;
             Play_PlayerCheckTimer = Play_Buffer;
             PlayClip_PlayerCheckQualityChanged = true;
-            if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + new Date());
+            console.log('onbufferingcomplete:', 'date: ' + new Date());
         },
         onbufferingprogress: function(percent) {
             if (percent < 5) PlayClip_PlayerCheckCount = 0;
@@ -8246,9 +8225,10 @@
         },
         onstreamcompleted: function() {
             Play_PannelEndStart(3);
+            console.log('onstreamcompleted:', 'date: ' + new Date());
         },
         onerror: function(eventType) {
-            if (!Main_isReleased) console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
+            console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
             if (eventType === 'PLAYER_ERROR_CONNECTION_FAILED' || eventType === 'PLAYER_ERROR_INVALID_URI') Play_PannelEndStart(3);
         }
     };
@@ -8323,10 +8303,8 @@
     function PlayClip_onPlayer() {
         Play_showBufferDialog();
 
-        if (!Main_isReleased) {
-            console.log('PlayClip_onPlayer:', 'date: ' + new Date());
-            console.log('PlayClip_onPlayer:', '\n' + '\n"' + PlayClip_playingUrl + '"\n');
-        }
+        console.log('PlayClip_onPlayer:', 'date: ' + new Date());
+        console.log('PlayClip_onPlayer:', '\n' + '\n"' + PlayClip_playingUrl + '"\n');
 
         if (Main_IsNotBrowser) {
             try {
@@ -8355,7 +8333,7 @@
                 function() {
                     //successCallback
 
-                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip OK:', 'date: ' + new Date());
+                    console.log('Play_avplay.prepareAsync Clip OK:', 'date: ' + new Date());
 
                     Play_avplay.play();
                     PlayClip_DurationSeconds = Play_avplay.getDuration() / 1000;
@@ -8371,11 +8349,11 @@
                 function() {
                     //errorCallback
 
-                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip NOK:', 'date: ' + new Date());
+                    console.log('Play_avplay.prepareAsync Clip NOK:', 'date: ' + new Date());
                     Play_onPlayerCounter++;
                     if (Play_onPlayerCounter < 5) PlayClip_onPlayer();
                     else {
-                        if (!Main_isReleased) console.log('Play_avplay.prepareAsync Clip fail too mutch exit:', 'date: ' + new Date());
+                        console.log('Play_avplay.prepareAsync Clip fail too mutch exit:', 'date: ' + new Date());
                         Play_EndStart(false, 3);
                     }
                 }
@@ -9713,7 +9691,7 @@
                 } else {
                     if (!Play_tokenResponse.hasOwnProperty('value') || !Play_tokenResponse.hasOwnProperty('signature')) {
                         Play_410ERROR = true;
-                        if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                        console.log('Play_410ERROR ' + Play_410ERROR);
                         Play_loadDataError();
                         return;
                     }
@@ -9773,13 +9751,13 @@
                     } else {
                         if (xmlHttp.status === 410) {
                             Play_410ERROR = true;
-                            if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                            console.log('Play_410ERROR ' + Play_410ERROR);
                         }
 
                         Play_loadDataError();
                     }
 
-                    Play_loadDataErrorLog(xmlHttp);
+                    Play_loadDataLog(xmlHttp);
                 }
             };
 
@@ -9800,11 +9778,9 @@
         return true;
     }
 
-    function Play_loadDataErrorLog(xmlHttp) {
-        if (Main_isDebug) {
-            console.log(xmlHttp.status);
-            console.log(xmlHttp.responseText);
-        }
+    function Play_loadDataLog(xmlHttp) {
+        console.log('Play_loadDataLog status', xmlHttp.status);
+        console.log('Play_loadDataLog responseText', xmlHttp.responseText);
     }
 
     function Play_loadDataError() {
@@ -10021,7 +9997,7 @@
         Play_SetHtmlQuality('stream_quality', true);
 
         Play_state = Play_STATE_PLAYING;
-        if (Main_isDebug) console.log('Play_qualityChanged before Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
+        console.log('Play_qualityChanged before Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
 
         Play_BufferPercentage = 0;
         Play_onPlayerCounter = 0;
@@ -10038,7 +10014,7 @@
             Play_PlayerCheckTimer = Play_Buffer;
             Play_PlayerCheckQualityChanged = true;
             // sync chat and stream
-            if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + new Date());
+            console.log('onbufferingstart:', 'date: ' + new Date());
         },
         onbufferingcomplete: function() {
             Play_HideBufferDialog();
@@ -10047,7 +10023,7 @@
             Play_PlayerCheckCount = 0;
             Play_PlayerCheckTimer = Play_Buffer;
             Play_PlayerCheckQualityChanged = true;
-            if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + new Date());
+            console.log('onbufferingcomplete:', 'date: ' + new Date());
         },
         onbufferingprogress: function(percent) {
             if (percent < 5) Play_PlayerCheckCount = 0;
@@ -10070,7 +10046,7 @@
         },
         onstreamcompleted: function() {
             Play_CheckHostStart();
-            if (!Main_isReleased) console.log('onstreamcompleted:', 'date: ' + new Date());
+            console.log('onstreamcompleted:', 'date: ' + new Date());
         },
         onerror: function(eventType) {
             console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
@@ -10095,10 +10071,9 @@
 
     function Play_onPlayer() {
         Play_showBufferDialog();
-        if (!Main_isReleased) {
-            console.log('Play_onPlayer:', 'date: ' + new Date());
-            console.log('Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
-        }
+
+        console.log('Play_onPlayer:', 'date: ' + new Date());
+        console.log('Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
 
         if (Main_IsNotBrowser) {
             Play_loadChat();
@@ -10132,14 +10107,14 @@
                 console.log('PlayVod_onPlayer open ' + e);
             }
 
-            if (!Main_isReleased) console.log('Before Play_avplay.prepareAsync:', 'date: ' + new Date());
+            console.log('Before Play_avplay.prepareAsync:', 'date: ' + new Date());
 
             //Use prepareAsync as prepare() only can freeze up the app
             Play_avplay.prepareAsync(
                 function() {
                     //successCallback
 
-                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live OK:', 'date: ' + new Date());
+                    console.log('Play_avplay.prepareAsync Live OK:', 'date: ' + new Date());
 
                     try {
                         //GET_LIVE_DURATION not supported by all TVs
@@ -10158,11 +10133,11 @@
                 },
                 function() {
                     //errorCallback
-                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live NOK:', 'date: ' + new Date());
+                    console.log('Play_avplay.prepareAsync Live NOK:', 'date: ' + new Date());
                     Play_onPlayerCounter++;
                     if (Play_onPlayerCounter < 5) Play_onPlayer();
                     else {
-                        if (!Main_isReleased) console.log('Play_avplay.prepareAsync Live fail too mutch exit:', 'date: ' + new Date());
+                        console.log('Play_avplay.prepareAsync Live fail too mutch exit:', 'date: ' + new Date());
                         Play_EndStart(false, 1);
                     }
                 }
@@ -12630,7 +12605,7 @@
             } else {
                 if (!PlayVod_tokenResponse.hasOwnProperty('value') || !PlayVod_tokenResponse.hasOwnProperty('signature')) {
                     Play_410ERROR = true;
-                    if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                    console.log('Play_410ERROR ' + Play_410ERROR);
                     PlayVod_loadDataError();
                     return;
                 }
@@ -12665,9 +12640,11 @@
                         PlayVod_loadDataSuccess(xmlHttp.responseText);
                         //Play_410ERROR = false;
                     } else {
+                        PlayVod_loadDataLog(xmlHttp);
+
                         if (xmlHttp.status === 410) {
                             Play_410ERROR = true;
-                            if (Main_isDebug) console.log('Play_410ERROR ' + Play_410ERROR);
+                            console.log('Play_410ERROR ' + Play_410ERROR);
                         } else if (
                             !Settings_Obj_default('force_http_override') &&
                             xmlHttp.status === 0 &&
@@ -12693,6 +12670,11 @@
             PlayVod_loadDataError();
             console.log('PlayVod_loadDataRequest e ' + e);
         }
+    }
+
+    function PlayVod_loadDataLog(xmlHttp) {
+        console.log('PlayVod_loadDataLog status', xmlHttp.status);
+        console.log('PlayVod_loadDataLog responseText', xmlHttp.responseText);
     }
 
     function PlayVod_loadDataError() {
@@ -12823,7 +12805,7 @@
             PlayVod_PlayerCheckCount = 0;
             Play_PlayerCheckTimer = PlayVod_Buffer;
             PlayVod_PlayerCheckQualityChanged = true;
-            if (!Main_isReleased) console.log('onbufferingstart:', 'date: ' + new Date());
+            console.log('onbufferingstart:', 'date: ' + new Date());
         },
         onbufferingcomplete: function() {
             Play_HideBufferDialog();
@@ -12833,7 +12815,7 @@
             PlayVod_PlayerCheckCount = 0;
             Play_PlayerCheckTimer = PlayVod_Buffer;
             PlayVod_PlayerCheckQualityChanged = true;
-            if (!Main_isReleased) console.log('onbufferingcomplete:', 'date: ' + new Date());
+            console.log('onbufferingcomplete:', 'date: ' + new Date());
         },
         onbufferingprogress: function(percent) {
             if (percent < 5) PlayVod_PlayerCheckCount = 0;
@@ -12858,9 +12840,10 @@
         },
         onstreamcompleted: function() {
             Play_PannelEndStart(2);
+            console.log('onstreamcompleted:', 'date: ' + new Date());
         },
         onerror: function(eventType) {
-            if (!Main_isReleased) console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
+            console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
             if (eventType === 'PLAYER_ERROR_CONNECTION_FAILED' || eventType === 'PLAYER_ERROR_INVALID_URI') Play_PannelEndStart(2);
         }
     };
@@ -12868,10 +12851,8 @@
     function PlayVod_onPlayer() {
         Play_showBufferDialog();
 
-        if (!Main_isReleased) {
-            console.log('PlayVod_onPlayer:', 'date: ' + new Date());
-            console.log('PlayVod_onPlayer:', '\n' + '\n"' + PlayVod_playingUrl + '"\n');
-        }
+        console.log('PlayVod_onPlayer:', 'date: ' + new Date());
+        console.log('PlayVod_onPlayer:', '\n' + '\n"' + PlayVod_playingUrl + '"\n');
 
         if (Main_IsNotBrowser) {
             try {
@@ -12899,7 +12880,7 @@
             Play_avplay.prepareAsync(
                 function() {
                     //successCallback
-                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Vod OK:', 'date: ' + new Date());
+                    console.log('Play_avplay.prepareAsync Vod OK:', 'date: ' + new Date());
                     Play_avplay.play();
                     ChannelVod_DurationSeconds = Play_avplay.getDuration() / 1000;
                     Main_textContent('progress_bar_duration', Play_timeS(ChannelVod_DurationSeconds));
@@ -12914,11 +12895,11 @@
                 function() {
                     //errorCallback
 
-                    if (!Main_isReleased) console.log('Play_avplay.prepareAsync Vod NOK:', 'date: ' + new Date());
+                    console.log('Play_avplay.prepareAsync Vod NOK:', 'date: ' + new Date());
                     Play_onPlayerCounter++;
                     if (Play_onPlayerCounter < 5) PlayVod_onPlayer();
                     else {
-                        if (!Main_isReleased) console.log('Play_avplay.prepareAsync Vod fail too mutch exit:', 'date: ' + new Date());
+                        console.log('Play_avplay.prepareAsync Vod fail too mutch exit:', 'date: ' + new Date());
                         Play_EndStart(false, 2);
                     }
                 }

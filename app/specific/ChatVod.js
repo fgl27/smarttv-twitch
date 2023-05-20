@@ -394,6 +394,10 @@ function Chat_loadChatSuccess(response, id) {
             for (j = 0, len_j = mmessage.userBadges.length; j < len_j; j++) {
                 badges = mmessage.userBadges[j];
 
+                if (!badges.setID || !badges.version) {
+                    continue;
+                }
+
                 div += '<span class="a' + badges.setID + '0-' + badges.version + ' tag"></span>';
             }
         }

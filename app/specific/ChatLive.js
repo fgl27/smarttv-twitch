@@ -1498,6 +1498,10 @@ function ChatLive_GetBadges(tags, chat_number) {
             for (var i = 0, len = badges.length; i < len; i++) {
                 badge = badges[i].split('/');
 
+                if (!badge[0] || !badge[1]) {
+                    continue;
+                }
+
                 ret += '<span class="a' + badge[0] + chat_number + '-' + badge[1] + ' tag"></span>';
             }
 

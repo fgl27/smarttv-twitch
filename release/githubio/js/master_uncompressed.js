@@ -2652,7 +2652,7 @@
                 ChannelContent_offline_image.replace('1920x1080', Main_VideoSize) :
                 ChannelContent_offline_image;
             //ChannelContent_profile_banner = channel.profile_image_url ? channel.profile_image_url : IMG_404_BANNER;
-            ChannelContent_selectedChannelViews = channel.view_count;
+            //ChannelContent_selectedChannelViews = channel.view_count;
             //ChannelContent_selectedChannelFollower = channel.followers;
             ChannelContent_description = channel.description;
             Main_values.Main_selectedChannelLogo = channel.profile_image_url;

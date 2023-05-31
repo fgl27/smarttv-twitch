@@ -129,7 +129,7 @@ function Chat_loadBadgesGlobalRequest(tryes) {
         0,
         null,
         Chat_loadBadgesGlobalSuccess,
-        noop_fun,
+        Chat_loadBadgesGlobalError,
         tryes,
         0,
         true
@@ -143,7 +143,6 @@ function Chat_loadBadgesGlobalError(tryes) {
 function Chat_loadBadgesGlobalSuccess(responseText) {
     var versions,
         property,
-        version,
         url,
         innerHTML = '';
 

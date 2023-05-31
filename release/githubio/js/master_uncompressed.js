@@ -4232,14 +4232,15 @@
 
         if (!extraEmotesDone.BadgesChannel[ChatLive_selectedChannel_id[chat_number]]) {
             BasexmlHttpGet(
-                'https://badges.twitch.tv/v1/badges/channels/' + ChatLive_selectedChannel_id[chat_number] + '/display',
+                Main_helix_api + 'chat/badges?broadcaster_id=' + ChatLive_selectedChannel_id[chat_number],
                 DefaultHttpGetTimeout * 2,
                 0,
                 null,
                 ChatLive_loadBadgesChannelSuccess,
                 noop_fun,
                 chat_number,
-                id
+                id,
+                true
             );
         } else {
             Chat_tagCSS(extraEmotesDone.BadgesChannel[ChatLive_selectedChannel_id[chat_number]][chat_number], Chat_div[chat_number]);
@@ -5860,7 +5861,17 @@
     }
 
     function Chat_loadBadgesGlobalRequest(tryes) {
-        Chat_BaseLoadUrl('https://badges.twitch.tv/v1/badges/global/display', tryes, Chat_loadBadgesGlobalSuccess, Chat_loadBadgesGlobalError);
+        BasexmlHttpGet(
+            Main_helix_api + 'chat/badges/global',
+            DefaultHttpGetTimeout * 2 + tryes * DefaultHttpGetTimeoutPlus,
+            0,
+            null,
+            Chat_loadBadgesGlobalSuccess,
+            Chat_loadBadgesGlobalError,
+            tryes,
+            0,
+            true
+        );
     }
 
     function Chat_loadBadgesGlobalError(tryes) {
@@ -5870,28 +5881,29 @@
     function Chat_loadBadgesGlobalSuccess(responseText) {
         var versions,
             property,
-            version,
             url,
             innerHTML = '';
 
         var responseObj = JSON.parse(responseText);
 
-        for (property in responseObj.badge_sets) {
-            versions = responseObj.badge_sets[property].versions;
-            for (version in versions) {
-                url = Chat_BasetagCSSUrl(versions[version].image_url_4x);
-                innerHTML += Chat_BasetagCSS(property + 0, version, url);
-                innerHTML += Chat_BasetagCSS(property + 1, version, url);
-            }
-        }
+        responseObj.data.forEach(function(set) {
+            property = set.set_id;
+            versions = set.versions;
+
+            versions.forEach(function(version) {
+                url = Chat_BasetagCSSUrl(version.image_url_4x);
+                innerHTML += Chat_BasetagCSS(property + 0, version.id, url);
+                innerHTML += Chat_BasetagCSS(property + 1, version.id, url);
+            });
+        });
+
         Chat_tagCSS(innerHTML, document.head);
         Chat_LoadGlobalBadges = true;
     }
 
-    function Chat_loadBadgesTransform(responseText, checkSubMissing) {
+    function Chat_loadBadgesTransform(responseObj, checkSubMissing) {
         var versions,
             property,
-            version,
             url,
             innerHTML = [],
             versionInt;
@@ -5899,24 +5911,26 @@
         innerHTML[0] = '';
         innerHTML[1] = '';
 
-        for (property in responseText.badge_sets) {
-            versions = responseText.badge_sets[property].versions;
-            for (version in versions) {
-                url = Chat_BasetagCSSUrl(versions[version].image_url_4x);
-                innerHTML[0] += Chat_BasetagCSS(property + 0, version, url);
-                innerHTML[1] += Chat_BasetagCSS(property + 1, version, url);
+        responseObj.data.forEach(function(set) {
+            property = set.set_id;
+            versions = set.versions;
+
+            versions.forEach(function(version) {
+                url = Chat_BasetagCSSUrl(version.image_url_4x);
+                innerHTML[0] += Chat_BasetagCSS(property + 0, version.id, url);
+                innerHTML[1] += Chat_BasetagCSS(property + 1, version.id, url);
 
                 //some channel may be missing 0 3 6 12 etc badges but they have 2000 2003 etc
                 if (checkSubMissing) {
-                    versionInt = parseInt(version) - parseInt(version.toString()[0]) * Math.pow(10, version.length - 1);
+                    versionInt = parseInt(version.id) - parseInt(version.id.toString()[0]) * Math.pow(10, version.length - 1);
 
                     if (versionInt > -1 && !versions.hasOwnProperty(versionInt)) {
                         innerHTML[0] += Chat_BasetagCSS(property + 0, versionInt, url);
                         innerHTML[1] += Chat_BasetagCSS(property + 1, versionInt, url);
                     }
                 }
-            }
-        }
+            });
+        });
 
         return innerHTML;
     }
@@ -6499,7 +6513,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'May 14 2023';
+    var Main_minversion = 'May 31 2023';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
 

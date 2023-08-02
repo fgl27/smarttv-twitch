@@ -343,6 +343,8 @@ function PlayVod_Resume() {
             Chat_Pause();
             if (Main_IsNotBrowser) {
                 Play_avplay.pause();
+                Play_avplay.stop();
+                Play_avplay.close();
                 Main_values.vodOffset = parseInt(PlayVod_currentTime / 1000);
             }
             Play_ClearPlayer();
@@ -631,8 +633,6 @@ var PlayVod_listener = {
             Play_BufferPercentage = 0;
             Play_HideBufferDialog();
             Play_bufferingcomplete = true;
-            // reset the values after using
-            Main_values.vodOffset = 0;
             if (!Main_isReleased) console.log('onbufferingprogress > 98:', 'date: ' + new Date());
         }
     },

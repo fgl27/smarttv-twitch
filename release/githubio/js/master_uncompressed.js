@@ -7376,7 +7376,7 @@
         document.body.removeEventListener('keydown', handleKeyDownFunction);
         Main_values.ChannelVod_vodId = JSON.parse(document.getElementById(idsArray[8] + id).getAttribute(Main_DataAttribute));
 
-        ChannelVod_DurationSeconds = parseInt(Main_values.ChannelVod_vodId[6]);
+        ChannelVod_DurationSeconds = Play_timeHMS(Main_values.ChannelVod_vodId[6]);
         ChannelVod_Duration = STR_DURATION + Play_timeS(ChannelVod_DurationSeconds);
 
         ChannelVod_language = Main_values.ChannelVod_vodId[9];
@@ -12547,7 +12547,7 @@
                 Chat_Pause();
                 if (Main_IsNotBrowser) {
                     Play_avplay.pause();
-                    Main_values.vodOffset = Play_avplay.getCurrentTime() / 1000;
+                    Main_values.vodOffset = parseInt(PlayVod_currentTime / 1000);
                 }
                 Play_ClearPlayer();
                 UserLiveFeed_Hide(true);

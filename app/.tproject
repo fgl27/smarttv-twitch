@@ -2,7 +2,7 @@
 <tproject xmlns="http://www.tizen.org/tproject">
     <platforms>
         <platform>
-            <name>tv-samsung-6.5</name>
+            <name>tv-samsung-7.0</name>
         </platform>
     </platforms>
     <package>

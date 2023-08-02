@@ -343,7 +343,7 @@ function PlayVod_Resume() {
             Chat_Pause();
             if (Main_IsNotBrowser) {
                 Play_avplay.pause();
-                Main_values.vodOffset = Play_avplay.getCurrentTime() / 1000;
+                Main_values.vodOffset = parseInt(PlayVod_currentTime / 1000);
             }
             Play_ClearPlayer();
             UserLiveFeed_Hide(true);

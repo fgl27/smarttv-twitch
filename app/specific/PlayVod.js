@@ -383,6 +383,7 @@ function PlayVod_SaveOffset() {
     //Prevent setting it to 0 before it was used
     if (!Main_values.vodOffset) {
         Main_values.vodOffset = parseInt(PlayVod_currentTime / 1000);
+        console.log('Main_values.vodOffset ', Main_values.vodOffset);
         Main_SaveValues();
         Main_values.vodOffset = 0;
     }
@@ -949,10 +950,12 @@ function PlayVod_jump() {
         if (Play_isIdleOrPlaying()) Play_avplay.pause();
 
         try {
+            console.log('PlayVod_jump to', PlayVod_TimeToJump);
             Play_avplay.seekTo(PlayVod_TimeToJump > 0 ? PlayVod_TimeToJump * 1000 : 0);
         } catch (e) {
             Play_HideWarningDialog();
-            console.log('PlayVod_jump ' + e);
+
+            console.log('PlayVod_jump ', e);
             return;
         }
 

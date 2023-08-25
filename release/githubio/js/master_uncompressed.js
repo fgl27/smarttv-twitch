@@ -12587,9 +12587,9 @@
         //Prevent setting it to 0 before it was used
         if (!Main_values.vodOffset) {
             Main_values.vodOffset = parseInt(PlayVod_currentTime / 1000);
-            console.log('Main_values.vodOffset ', Main_values.vodOffset);
             Main_SaveValues();
             Main_values.vodOffset = 0;
+            console.log('Main_values.vodOffset ', Main_values.vodOffset);
         }
     }
 
@@ -12823,6 +12823,8 @@
             PlayVod_PlayerCheckCount = 0;
             Play_PlayerCheckTimer = PlayVod_Buffer;
             PlayVod_PlayerCheckQualityChanged = true;
+            // reset the values after using
+            Main_values.vodOffset = 0;
             console.log('onbufferingcomplete:', 'date: ' + new Date());
         },
         onbufferingprogress: function(percent) {
@@ -13155,7 +13157,11 @@
 
             try {
                 console.log('PlayVod_jump to', PlayVod_TimeToJump);
+                Main_values.vodOffset = PlayVod_TimeToJump;
+                Main_SaveValues();
                 Play_avplay.seekTo(PlayVod_TimeToJump > 0 ? PlayVod_TimeToJump * 1000 : 0);
+
+                Main_values.vodOffset = 0;
             } catch (e) {
                 Play_HideWarningDialog();
 
@@ -14159,6 +14165,7 @@
                 if (Settings_value.restor_playback.defaultValue && Main_values.Play_WasPlaying && inUseObj.status) {
                     Main_ExitCurrent(Main_values.Main_Go);
                     Main_values.Main_Go = Main_GoBefore;
+
                     if (!Main_values.vodOffset) Main_values.vodOffset = 1;
                     ChannelVod_DurationSeconds = Main_values.vodOffset + 1;
 

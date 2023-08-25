@@ -122,7 +122,7 @@ var Main_DataAttribute = 'data_attribute';
 
 var Main_version = 401;
 var Main_stringVersion_Min = '4.0.1';
-var Main_minversion = 'May 31 2023';
+var Main_minversion = 'August 25 2023';
 var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
 var Main_IsNotBrowserVersion = '';
 

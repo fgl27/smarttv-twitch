@@ -956,8 +956,6 @@ function PlayVod_jump() {
             Main_values.vodOffset = PlayVod_TimeToJump;
             Main_SaveValues();
             Play_avplay.seekTo(PlayVod_TimeToJump > 0 ? PlayVod_TimeToJump * 1000 : 0);
-
-            Main_values.vodOffset = 0;
         } catch (e) {
             Play_HideWarningDialog();
 

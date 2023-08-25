@@ -6513,7 +6513,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'May 31 2023';
+    var Main_minversion = 'August 25 2023';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
 
@@ -13160,8 +13160,6 @@
                 Main_values.vodOffset = PlayVod_TimeToJump;
                 Main_SaveValues();
                 Play_avplay.seekTo(PlayVod_TimeToJump > 0 ? PlayVod_TimeToJump * 1000 : 0);
-
-                Main_values.vodOffset = 0;
             } catch (e) {
                 Play_HideWarningDialog();
 

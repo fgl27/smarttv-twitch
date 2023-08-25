@@ -585,6 +585,7 @@ function Screens_loadDataSuccessFinish() {
             if (Settings_value.restor_playback.defaultValue && Main_values.Play_WasPlaying && inUseObj.status) {
                 Main_ExitCurrent(Main_values.Main_Go);
                 Main_values.Main_Go = Main_GoBefore;
+
                 if (!Main_values.vodOffset) Main_values.vodOffset = 1;
                 ChannelVod_DurationSeconds = Main_values.vodOffset + 1;
 

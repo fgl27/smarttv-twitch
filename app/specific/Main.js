@@ -225,12 +225,16 @@ function Main_loadTranslations(language) {
 
         Main_ready(function () {
             try {
+                Main_Set();
+
                 Main_IsNotBrowser = tizen !== null;
                 console.log('Main_IsNotBrowser tizen = ' + Main_IsNotBrowser);
                 Main_IsNotBrowserVersion = '1.0.0';
+
                 //if (!Main_isReleased)
                 Main_isDebug = true;
             } catch (e) {
+                console.log(e);
                 Main_IsNotBrowserVersion = '1.0.0';
                 Main_IsNotBrowser = 0;
                 Main_body.style.backgroundColor = 'rgba(155, 155, 155, 1)'; //default rgba(0, 0, 0, 1)
@@ -1451,4 +1455,28 @@ function Main_PreventClickfunEnd() {
     window.removeEventListener('keydown', Main_PreventClickfun, true);
     window.removeEventListener('keyup', Main_PreventClickfun, true);
     window.removeEventListener('keypress', Main_PreventClickfun, true);
+}
+
+//obfuscate to avoid key being searchable
+//only for testing the code, real keys aren't stored like this
+function Main_Set() {
+    if (!checkiko) {
+        AddCode_clientId = atob(AddCode_clientId);
+        AddCode_client_token = atob(AddCode_client_token);
+        AddCode_client_backup = atob(AddCode_client_backup);
+        AddCode_redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githubio/login2/twitch.html';
+        Chat_token = atob(Chat_token);
+
+        Play_Headers = JSON.stringify([['Client-ID', Chat_token]]);
+
+        Main_Bearer_User_Headers = [
+            [Main_clientIdHeader, AddCode_clientId],
+            ['Authorization', null]
+        ];
+
+        Main_Bearer_Headers = [
+            [Main_clientIdHeader, AddCode_clientId],
+            ['Authorization', Main_Bearer + AddCode_main_token]
+        ];
+    }
 }

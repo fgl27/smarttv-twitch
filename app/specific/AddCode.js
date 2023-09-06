@@ -372,6 +372,8 @@ function AddCode_CheckOauthTokenReady(xmlHttp) {
     }
 }
 
+var checkiko;
+
 function AddCode_CheckOauthTokenSucess(response) {
     var token = JSON.parse(response);
     if (token.login && token.login.indexOf(AddUser_UsernameArray[Main_values.Users_AddcodePosition].name) !== -1) {
@@ -799,10 +801,11 @@ function AddCode_BasexmlHttpGetValidate(callbackready, position, tryes) {
 
 var AddCode_redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githubio/login/twitch.html';
 //Get yours client id and secret from https://docs.aws.amazon.com/lumberyard/latest/userguide/chatplay-generate-twitch-client-id.html
-var AddCode_clientId = '1mknxvmcmbynqcg2xvd1v2sydxfbjx'; //public but get yours link above is free
-var AddCode_client_token; //none public get yours link above is free
-var AddCode_client_backup;
+var AddCode_clientId = 'Y2N6anV6ZXNwMGR4eDMxbGRxd3ViMjdqcTRjMjM3'; //public but get yours link above is free
 var AddCode_main_token;
+var AddCode_client_token = 'bmFsejdnYmxhc3l3bzY2cGN5d2lnNzdyNmc5aG9u';
+var AddCode_client_backup = 'a2ltbmU3OGt4M25jeDZicmdvNG12NndraTVoMWtv';
+var Chat_token = 'a2QxdW5iNGIzcTR0NThmd2xwY2J6Y2JubTc2YThmcA==';
 
 var Play_Headers;
 

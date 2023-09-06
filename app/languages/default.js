@@ -217,13 +217,15 @@ function DefaultLang() {
         STR_CLOSE_THIS +
         '</div></div>';
 
+    var tinyUrl = !checkiko ? 'http://tiny.cc/twitchkey2' : 'http://tiny.cc/twitchkey';
+
     STR_OAUTH_EXPLAIN =
         STR_OAUTH_EXPLAIN1 +
         STR_BR +
         STR_DOT +
         STR_OAUTH_EXPLAIN2.replace(
             'link_link',
-            '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-family: \'Roboto-Bold\';">http://tiny.cc/twitchkey</div>'
+            '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-family: \'Roboto-Bold\';">' + tinyUrl + '</div>'
         ) +
         STR_BR +
         STR_DOT +

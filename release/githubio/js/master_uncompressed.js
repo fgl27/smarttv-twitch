@@ -645,13 +645,15 @@
             STR_CLOSE_THIS +
             '</div></div>';
 
+        var tinyUrl = !checkiko ? 'http://tiny.cc/twitchkey2' : 'http://tiny.cc/twitchkey';
+
         STR_OAUTH_EXPLAIN =
             STR_OAUTH_EXPLAIN1 +
             STR_BR +
             STR_DOT +
             STR_OAUTH_EXPLAIN2.replace(
                 'link_link',
-                '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-family: \'Roboto-Bold\';">http://tiny.cc/twitchkey</div>'
+                '<div style="display: inline-block; color: #FF0000; font-size: 110%; font-family: \'Roboto-Bold\';">' + tinyUrl + '</div>'
             ) +
             STR_BR +
             STR_DOT +
@@ -1684,6 +1686,8 @@
         }
     }
 
+    var checkiko;
+
     function AddCode_CheckOauthTokenSucess(response) {
         var token = JSON.parse(response);
         if (token.login && token.login.indexOf(AddUser_UsernameArray[Main_values.Users_AddcodePosition].name) !== -1) {
@@ -2111,10 +2115,11 @@
 
     var AddCode_redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githubio/login/twitch.html';
     //Get yours client id and secret from https://docs.aws.amazon.com/lumberyard/latest/userguide/chatplay-generate-twitch-client-id.html
-    var AddCode_clientId = '1mknxvmcmbynqcg2xvd1v2sydxfbjx'; //public but get yours link above is free
-    var AddCode_client_token; //none public get yours link above is free
-    var AddCode_client_backup;
+    var AddCode_clientId = 'Y2N6anV6ZXNwMGR4eDMxbGRxd3ViMjdqcTRjMjM3'; //public but get yours link above is free
     var AddCode_main_token;
+    var AddCode_client_token = 'bmFsejdnYmxhc3l3bzY2cGN5d2lnNzdyNmc5aG9u';
+    var AddCode_client_backup = 'a2ltbmU3OGt4M25jeDZicmdvNG12NndraTVoMWtv';
+    var Chat_token = 'a2QxdW5iNGIzcTR0NThmd2xwY2J6Y2JubTc2YThmcA==';
 
     var Play_Headers;
 
@@ -5799,7 +5804,6 @@
         '{"operationName":"VideoCommentsByOffsetOrCursor","variables":{"videoID":"%v","cursor":"%c"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"b70a3591ff0f4e0313d126c6a1502d79a1c02baebb288227c582044aa76adf6a"}}}';
 
     var Chat_UserJPKRegex = new RegExp('[^\x00-\x7F]', 'g');
-    var Chat_token;
 
     //Variable initialization end
 
@@ -6617,12 +6621,16 @@
 
             Main_ready(function() {
                 try {
+                    Main_Set();
+
                     Main_IsNotBrowser = tizen !== null;
                     console.log('Main_IsNotBrowser tizen = ' + Main_IsNotBrowser);
                     Main_IsNotBrowserVersion = '1.0.0';
+
                     //if (!Main_isReleased)
                     Main_isDebug = true;
                 } catch (e) {
+                    console.log(e);
                     Main_IsNotBrowserVersion = '1.0.0';
                     Main_IsNotBrowser = 0;
                     Main_body.style.backgroundColor = 'rgba(155, 155, 155, 1)'; //default rgba(0, 0, 0, 1)
@@ -7846,6 +7854,21 @@
         window.removeEventListener('keydown', Main_PreventClickfun, true);
         window.removeEventListener('keyup', Main_PreventClickfun, true);
         window.removeEventListener('keypress', Main_PreventClickfun, true);
+    }
+
+    //obfuscate to avoid key being searchable
+    //only for testing the code, real keys aren't stored like this
+    function Main_Set() {
+        if (!checkiko) {
+            AddCode_clientId = atob(AddCode_clientId);
+            AddCode_client_token = atob(AddCode_client_token);
+            AddCode_client_backup = atob(AddCode_client_backup);
+            Chat_token = atob(Chat_token);
+
+            Play_Headers = JSON.stringify([
+                ['Client-ID', Chat_token]
+            ]);
+        }
     }
     //Variable initialization
     var PlayClip_PlayerTime = 0;

@@ -7863,11 +7863,22 @@
             AddCode_clientId = atob(AddCode_clientId);
             AddCode_client_token = atob(AddCode_client_token);
             AddCode_client_backup = atob(AddCode_client_backup);
+            AddCode_redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githubio/login2/twitch.html';
             Chat_token = atob(Chat_token);
 
             Play_Headers = JSON.stringify([
                 ['Client-ID', Chat_token]
             ]);
+
+            Main_Bearer_User_Headers = [
+                [Main_clientIdHeader, AddCode_clientId],
+                ['Authorization', null]
+            ];
+
+            Main_Bearer_Headers = [
+                [Main_clientIdHeader, AddCode_clientId],
+                ['Authorization', Main_Bearer + AddCode_main_token]
+            ];
         }
     }
     //Variable initialization

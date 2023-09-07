@@ -460,7 +460,7 @@ function AddCode_CheckFollow() {
 }
 
 function AddCode_RequestCheckFollow() {
-    var theUrl = Main_helix_api + 'users/follows?from_id=' + AddUser_UsernameArray[0].id + '&to_id=' + AddCode_Channel_id;
+    var theUrl = Main_helix_api + 'channels/followed?user_id=' + AddUser_UsernameArray[0].id + '&broadcaster_id=' + AddCode_Channel_id;
 
     AddCode_BasexmlHttpGet(theUrl, 'GET', 2, null, AddCode_RequestCheckFollowReady);
 }

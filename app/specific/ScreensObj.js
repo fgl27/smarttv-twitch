@@ -1564,21 +1564,21 @@ function ScreensObj_InitUserChannels() {
             key_pgDown: Main_UserLive,
             key_pgUp: Main_usergames,
             key_pgUpNext: Main_UserChannels,
-            base_url: Main_helix_api + 'users/follows?first=' + Main_ItemsLimitMax + '&from_id=',
+            base_url: Main_helix_api + 'channels/followed?first=' + Main_ItemsLimitMax + '&user_id=',
             base_url_channels: Main_helix_api + 'users?',
             channelDataPos: 0,
             set_url: function () {
                 if (this.getFollowed) {
                     this.url = this.base_url + AddUser_UsernameArray[0].id + (this.cursor ? '&after=' + this.cursor : '');
                 } else {
-                    this.channels = 'id=' + this.channelData[this.channelDataPos].to_id;
+                    this.channels = 'id=' + this.channelData[this.channelDataPos].broadcaster_id;
                     var i = this.channelDataPos + 1,
                         dataLen = this.channelData.length,
                         len = Math.min(dataLen, i + 99);
 
                     this.channelDataPos++;
                     for (i; i < len; i++) {
-                        this.channels += '&id=' + this.channelData[i].to_id;
+                        this.channels += '&id=' + this.channelData[i].broadcaster_id;
                         this.channelDataPos++;
                     }
 
@@ -1668,7 +1668,7 @@ function ScreensObj_InitUserChannels() {
             } else {
                 //sort
                 this.channelData.sort(function (a, b) {
-                    return a.to_login < b.to_login ? -1 : a.to_login > b.to_login ? 1 : 0;
+                    return a.broadcaster_login < b.broadcaster_login ? -1 : a.broadcaster_login > b.broadcaster_login ? 1 : 0;
                 });
                 this.getFollowed = false;
                 Screens_loadDataRequest(this.screen);

@@ -1467,7 +1467,7 @@ function Main_Set() {
         AddCode_redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githubio/login2/twitch.html';
         Chat_token = atob(Chat_token);
 
-        Play_Headers = JSON.stringify([['Client-ID', Chat_token]]);
+        Play_Headers = [['Client-ID', Chat_token]];
 
         Main_Bearer_User_Headers = [
             [Main_clientIdHeader, AddCode_clientId],

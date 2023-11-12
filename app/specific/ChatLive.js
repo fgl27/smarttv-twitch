@@ -737,14 +737,7 @@ function ChatLive_loadEmotesseven_tv(data, chat_number, isGlobal) {
 }
 
 function ChatLive_seven_tv_getEmoteUrl(emoteBaseUrl, emote) {
-    var actualEmoteUrl = emoteBaseUrl;
-
-    // emote url is like //cdn.7tv.app/emote/5f5e0e9f8f0a1c3720f6e0e2
-    if (Main_startsWith(emoteBaseUrl, '//')) {
-        actualEmoteUrl = 'https://' + emoteBaseUrl;
-    }
-
-    return actualEmoteUrl + '/' + emote.name;
+    return (Main_startsWith(emoteBaseUrl, '//') ? 'https:' : '') + emoteBaseUrl + '/' + emote.name;
 }
 
 function ChatLive_seven_tv_filterEmoteFiles(emoteFiles) {

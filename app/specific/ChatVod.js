@@ -257,7 +257,7 @@ function Chat_loadEmotesbttvGlobal(data) {
 }
 
 function Chat_loadSeven_tvGlobalEmotes(tryes) {
-    Chat_BaseLoadUrl('https://api.7tv.app/v2/emotes/global', tryes, Chat_loadEmotesSuccessSeven_tv, Chat_loadEmotesErrorSeven_tv);
+    Chat_BaseLoadUrl('https://7tv.io/v3/emote-sets/global', tryes, Chat_loadEmotesSuccessSeven_tv, Chat_loadEmotesErrorSeven_tv);
 }
 
 function Chat_loadEmotesErrorSeven_tv(tryes) {

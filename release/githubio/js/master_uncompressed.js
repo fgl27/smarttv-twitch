@@ -4620,7 +4620,7 @@
 
         if (!extraEmotesDone.seven_tv[ChatLive_selectedChannel_id[chat_number]]) {
             BasexmlHttpGet(
-                'https://api.7tv.app/v2/users/' + encodeURIComponent(ChatLive_selectedChannel_id[chat_number]) + '/emotes',
+                'https://7tv.io/v3/users/twitch/' + encodeURIComponent(ChatLive_selectedChannel_id[chat_number]),
                 DefaultHttpGetTimeout * 2,
                 0,
                 null,
@@ -4640,17 +4640,43 @@
     }
 
     function ChatLive_loadEmotesseven_tv(data, chat_number, isGlobal) {
-        if (isGlobal) extraEmotesDone.seven_tvGlobal = {};
-        else extraEmotesDone.seven_tv[ChatLive_selectedChannel_id[chat_number]] = {};
+        var emotes = [];
 
-        var url, chat_div, id;
+        if (isGlobal) {
+            if (data && data.emotes) {
+                emotes = data.emotes || [];
+            }
+
+            extraEmotesDone.seven_tvGlobal = {};
+        } else {
+            if (data && data.emote_set && data.emote_set.emotes) {
+                emotes = data.emote_set.emotes || [];
+            }
+
+            extraEmotesDone.seven_tv[ChatLive_selectedChannel_id[chat_number]] = {};
+        }
+
+        var url, chat_div, id, emoteUrls, baseEmoteUrl, emote;
 
         try {
-            data.forEach(function(emote) {
-                if (!emote.urls || !emote.urls.length) {
+            emotes.forEach(function(seven_tv_emote) {
+                emote = seven_tv_emote.data;
+                if (!emote || !emote.name || !emote.host || !emote.host.url || !emote.host.files) {
                     return;
                 }
-                url = emote.urls[3][1];
+
+                // the name on the outer emote object is the actual name to use
+                emote.name = seven_tv_emote.name;
+
+                // files can contain multiple emote formats
+                emoteUrls = ChatLive_seven_tv_filterEmoteFiles(emote.host.files);
+
+                if (!emoteUrls.length) {
+                    return;
+                }
+                baseEmoteUrl = emote.host.url;
+
+                url = ChatLive_seven_tv_getEmoteUrl(baseEmoteUrl, emoteUrls[emoteUrls.length - 1]);
                 chat_div = emoteTemplate(url);
                 id = emote.name + emote.id;
 
@@ -4681,6 +4707,27 @@
         } catch (e) {
             Main_Log('ChatLive_loadEmotesseven_tvChannel ' + e);
         }
+    }
+
+    function ChatLive_seven_tv_getEmoteUrl(emoteBaseUrl, emote) {
+        var actualEmoteUrl = emoteBaseUrl;
+
+        // emote url is like //cdn.7tv.app/emote/5f5e0e9f8f0a1c3720f6e0e2
+        if (Main_startsWith(emoteBaseUrl, '//')) {
+            actualEmoteUrl = 'https://' + emoteBaseUrl;
+        }
+
+        return actualEmoteUrl + '/' + emote.name;
+    }
+
+    function ChatLive_seven_tv_filterEmoteFiles(emoteFiles) {
+        var files = [];
+
+        files = emoteFiles.filter(function(file) {
+            return file.format === 'WEBP';
+        });
+
+        return files;
     }
 
     function ChatLive_PreLoadChat(chat_number, id) {
@@ -6001,7 +6048,7 @@
     }
 
     function Chat_loadSeven_tvGlobalEmotes(tryes) {
-        Chat_BaseLoadUrl('https://api.7tv.app/v2/emotes/global', tryes, Chat_loadEmotesSuccessSeven_tv, Chat_loadEmotesErrorSeven_tv);
+        Chat_BaseLoadUrl('https://7tv.io/v3/emote-sets/global', tryes, Chat_loadEmotesSuccessSeven_tv, Chat_loadEmotesErrorSeven_tv);
     }
 
     function Chat_loadEmotesErrorSeven_tv(tryes) {

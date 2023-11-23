@@ -401,7 +401,13 @@ function PlayClip_QualityGenerate(response) {
             encodeURIComponent(response.data.clip.playbackAccessToken.signature) +
             '&token=' +
             encodeURIComponent(response.data.clip.playbackAccessToken.value);
+
         response = response.data.clip.videoQualities;
+
+        //sort by quality as it may come randomly sorted
+        response.sort(function (a, b) {
+            return b.quality - a.quality;
+        });
 
         for (var i = 0; i < response.length; i++) {
             if (!PlayClip_qualities.length) {

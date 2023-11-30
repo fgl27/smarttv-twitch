@@ -1308,11 +1308,15 @@ function Play_PlayerCheck() {
                 Play_qualityPlaying.indexOf('Auto') === -1
             )
                 Play_qualityIndex++;
-            else if (!Play_PlayerCheckQualityChanged && Play_PlayerCheckRun) Play_PlayerCheckCounter++;
+            else if (!Play_PlayerCheckQualityChanged && Play_PlayerCheckRun) {
+                Play_PlayerCheckCounter++;
+            }
 
-            if (!navigator.onLine) Play_EndStart(false, 1);
-            else if (Play_PlayerCheckCounter > 1) Play_CheckConnection(Play_PlayerCheckCounter, 1, Play_DropOneQuality);
-            else {
+            if (!navigator.onLine) {
+                Play_EndStart(false, 1);
+            } else if (Play_PlayerCheckCounter > 1) {
+                Play_CheckConnection(Play_PlayerCheckCounter, 1, Play_DropOneQuality);
+            } else {
                 Play_qualityDisplay(Play_getQualitiesCount, Play_qualityIndex, Play_SetHtmlQuality);
                 Play_qualityChanged();
                 Play_PlayerCheckRun = true;
@@ -1330,8 +1334,21 @@ function Play_PlayerCheck() {
 // So we use PlayerCheck to avaluate if we are staled fro too long or not and drop the quality
 function Play_isIdleOrPlaying() {
     if (Main_IsNotBrowser) {
-        var state = Play_avplay.getState();
-        return !Play_isEndDialogVisible() && (state === 'IDLE' || state === 'PLAYING');
+        var state;
+        try {
+            state = Play_avplay.getState();
+        } catch (error) {
+            console.error(error);
+            //on error reset all player status and restart the player
+            state = 'ERROR';
+            Play_PlayerCheckRun = false;
+            PlayVod_PlayerCheckRun = false;
+            PlayClip_PlayerCheckRun = false;
+            Play_PlayerCheckCount = Play_PlayerCheckTimer;
+            PlayVod_PlayerCheckCount = Play_PlayerCheckTimer;
+            PlayClip_PlayerCheckCount = Play_PlayerCheckTimer;
+        }
+        return !Play_isEndDialogVisible() && (state === 'IDLE' || state === 'PLAYING' || state === 'ERROR');
     }
     return false;
 }

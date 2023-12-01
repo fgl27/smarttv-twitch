@@ -219,7 +219,7 @@ function Play_PreStart() {
         avplay.setAttribute('type', 'application/avplayer');
         avplay.setAttribute('style', 'width:100%; height:100%; position: absolute;');
         document.getElementById('scene2').appendChild(avplay);
-        Play_avplay = (window.tizen && window.webapis.avplay) || {};
+        Play_avplay = webapis.avplay;
         Play_TizenVersion = tizen.systeminfo.getCapability('http://tizen.org/feature/platform.version');
     }
 
@@ -1350,13 +1350,14 @@ function Play_isIdleOrPlaying() {
         try {
             state = Play_avplay.getState();
         } catch (error) {
+            console.error('Play_isIdleOrPlaying', error);
+
             try {
                 Play_avplay.close();
             } catch (e) {
                 console.log('Play_isIdleOrPlaying close', e);
             }
 
-            console.error(error);
             //on error reset all player status and restart the player
             state = 'ERROR';
             Play_PlayerCheckRun = false;

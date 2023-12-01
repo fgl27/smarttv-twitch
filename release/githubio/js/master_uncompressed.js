@@ -6558,7 +6558,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'November 30 2023';
+    var Main_minversion = 'December 01 2023';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
 
@@ -8393,13 +8393,7 @@
         console.log('PlayClip_onPlayer:', '\n' + '\n"' + PlayClip_playingUrl + '"\n');
 
         if (Main_IsNotBrowser) {
-            try {
-                Play_avplay.stop();
-                Play_avplay.close();
-                Play_avplay.open(PlayClip_playingUrl);
-            } catch (e) {
-                console.log('PlayClip_onPlayer open ' + e);
-            }
+            Play_StopAndCloseAndPlay(PlayClip_playingUrl);
 
             if (PlayClip_offsettime > 0 && PlayClip_offsettime !== Play_avplay.getCurrentTime()) {
                 try {
@@ -9236,13 +9230,8 @@
     //this are the global set option that need to be set only once
     //and they need to be set like this to work, faking a video playback
     function Play_SetAvPlayGlobal() {
-        try {
-            Play_avplay.stop();
-            Play_avplay.close();
-            Play_avplay.open('https://fgl27.github.io/smarttv-twitch/release/githubio/images/temp.mp4');
-        } catch (e) {
-            console.log(e + ' Play_SetAvPlayGlobal()');
-        }
+        Play_StopAndCloseAndPlay('https://fgl27.github.io/smarttv-twitch/release/githubio/images/temp.mp4');
+
         Play_SetFullScreen(Play_isFullScreen);
         Play_avplay.setListener(PlayStart_listener);
         Play_avplay.prepareAsync();
@@ -9250,14 +9239,37 @@
 
     var PlayStart_listener = {
         onstreamcompleted: function() {
-            try {
-                Play_avplay.stop();
-                Play_avplay.close();
-            } catch (e) {
-                console.log(e + ' PlayStart_listener');
-            }
+            Play_StopAndClose();
         }
     };
+
+    function Play_StopAndCloseAndPlay(url) {
+        Play_StopAndClose();
+        Play_OpenUrl(url);
+    }
+
+    function Play_StopAndClose() {
+        try {
+            Play_avplay.stop();
+        } catch (e) {
+            console.trace('Play_StopAndClose stop', e);
+        }
+
+        try {
+            Play_avplay.close();
+        } catch (e) {
+            console.trace('Play_StopAndClose close', e);
+        }
+    }
+
+    function Play_OpenUrl(url) {
+        try {
+            Play_avplay.open(url);
+        } catch (e) {
+            console.log('Play_OpenUrl open url', url);
+            console.trace('Play_OpenUrl open', e);
+        }
+    }
 
     var Play_isFullScreenold = true;
 
@@ -10164,23 +10176,7 @@
         if (Main_IsNotBrowser) {
             Play_loadChat();
 
-            try {
-                Play_avplay.stop();
-            } catch (e) {
-                console.log('Play_onPlayer stop ' + e);
-            }
-
-            try {
-                Play_avplay.close();
-            } catch (e) {
-                console.log('Play_onPlayer close ' + e);
-            }
-
-            try {
-                Play_avplay.open(Play_playingUrl);
-            } catch (e) {
-                console.log('Play_onPlayer open ' + e);
-            }
+            Play_StopAndCloseAndPlay(Play_playingUrl);
 
             Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_PLAY', 'PLAYER_BUFFER_SIZE_IN_SECOND', Play_Buffer);
             Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_RESUME', 'PLAYER_BUFFER_SIZE_IN_SECOND', Play_Buffer);
@@ -10292,6 +10288,12 @@
             try {
                 state = Play_avplay.getState();
             } catch (error) {
+                try {
+                    Play_avplay.close();
+                } catch (e) {
+                    console.log('Play_isIdleOrPlaying close', e);
+                }
+
                 console.error(error);
                 //on error reset all player status and restart the player
                 state = 'ERROR';
@@ -10441,12 +10443,7 @@
 
     function Play_offPlayer() {
         if (Main_IsNotBrowser) {
-            try {
-                Play_avplay.stop();
-                Play_avplay.close();
-            } catch (e) {
-                console.log('Play_offPlayer ' + e);
-            }
+            Play_StopAndClose();
         }
     }
 
@@ -12655,8 +12652,7 @@
                 Chat_Pause();
                 if (Main_IsNotBrowser) {
                     Play_avplay.pause();
-                    Play_avplay.stop();
-                    Play_avplay.close();
+                    Play_StopAndClose();
                     Main_values.vodOffset = parseInt(PlayVod_currentTime / 1000);
                 }
                 Play_ClearPlayer();
@@ -12971,13 +12967,7 @@
         console.log('PlayVod_onPlayer:', '\n' + '\n"' + PlayVod_playingUrl + '"\n');
 
         if (Main_IsNotBrowser) {
-            try {
-                Play_avplay.stop();
-                Play_avplay.close();
-                Play_avplay.open(PlayVod_playingUrl);
-            } catch (e) {
-                console.log('PlayVod_onPlayer open ' + e);
-            }
+            Play_StopAndCloseAndPlay(PlayVod_playingUrl);
 
             if (Main_values.vodOffset > ChannelVod_DurationSeconds) Main_values.vodOffset = 0;
 

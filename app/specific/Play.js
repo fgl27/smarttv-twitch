@@ -1222,7 +1222,17 @@ function Play_onPlayer() {
 
         try {
             Play_avplay.stop();
+        } catch (e) {
+            console.log('Play_onPlayer stop ' + e);
+        }
+
+        try {
             Play_avplay.close();
+        } catch (e) {
+            console.log('Play_onPlayer close ' + e);
+        }
+
+        try {
             Play_avplay.open(Play_playingUrl);
         } catch (e) {
             console.log('Play_onPlayer open ' + e);

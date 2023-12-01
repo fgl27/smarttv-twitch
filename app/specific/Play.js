@@ -292,13 +292,8 @@ function Play_PreStart() {
 //this are the global set option that need to be set only once
 //and they need to be set like this to work, faking a video playback
 function Play_SetAvPlayGlobal() {
-    try {
-        Play_avplay.stop();
-        Play_avplay.close();
-        Play_avplay.open('https://fgl27.github.io/smarttv-twitch/release/githubio/images/temp.mp4');
-    } catch (e) {
-        console.log(e + ' Play_SetAvPlayGlobal()');
-    }
+    Play_StopAndCloseAndPlay('https://fgl27.github.io/smarttv-twitch/release/githubio/images/temp.mp4');
+
     Play_SetFullScreen(Play_isFullScreen);
     Play_avplay.setListener(PlayStart_listener);
     Play_avplay.prepareAsync();
@@ -306,14 +301,37 @@ function Play_SetAvPlayGlobal() {
 
 var PlayStart_listener = {
     onstreamcompleted: function () {
-        try {
-            Play_avplay.stop();
-            Play_avplay.close();
-        } catch (e) {
-            console.log(e + ' PlayStart_listener');
-        }
+        Play_StopAndClose();
     }
 };
+
+function Play_StopAndCloseAndPlay(url) {
+    Play_StopAndClose();
+    Play_OpenUrl(url);
+}
+
+function Play_StopAndClose() {
+    try {
+        Play_avplay.stop();
+    } catch (e) {
+        console.trace('Play_StopAndClose stop', e);
+    }
+
+    try {
+        Play_avplay.close();
+    } catch (e) {
+        console.trace('Play_StopAndClose close', e);
+    }
+}
+
+function Play_OpenUrl(url) {
+    try {
+        Play_avplay.open(url);
+    } catch (e) {
+        console.log('Play_OpenUrl open url', url);
+        console.trace('Play_OpenUrl open', e);
+    }
+}
 
 var Play_isFullScreenold = true;
 
@@ -1220,23 +1238,7 @@ function Play_onPlayer() {
     if (Main_IsNotBrowser) {
         Play_loadChat();
 
-        try {
-            Play_avplay.stop();
-        } catch (e) {
-            console.log('Play_onPlayer stop ' + e);
-        }
-
-        try {
-            Play_avplay.close();
-        } catch (e) {
-            console.log('Play_onPlayer close ' + e);
-        }
-
-        try {
-            Play_avplay.open(Play_playingUrl);
-        } catch (e) {
-            console.log('Play_onPlayer open ' + e);
-        }
+        Play_StopAndCloseAndPlay(Play_playingUrl);
 
         Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_PLAY', 'PLAYER_BUFFER_SIZE_IN_SECOND', Play_Buffer);
         Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_RESUME', 'PLAYER_BUFFER_SIZE_IN_SECOND', Play_Buffer);
@@ -1348,6 +1350,12 @@ function Play_isIdleOrPlaying() {
         try {
             state = Play_avplay.getState();
         } catch (error) {
+            try {
+                Play_avplay.close();
+            } catch (e) {
+                console.log('Play_isIdleOrPlaying close', e);
+            }
+
             console.error(error);
             //on error reset all player status and restart the player
             state = 'ERROR';
@@ -1497,12 +1505,7 @@ function Play_PreshutdownStream(closePlayer) {
 
 function Play_offPlayer() {
     if (Main_IsNotBrowser) {
-        try {
-            Play_avplay.stop();
-            Play_avplay.close();
-        } catch (e) {
-            console.log('Play_offPlayer ' + e);
-        }
+        Play_StopAndClose();
     }
 }
 

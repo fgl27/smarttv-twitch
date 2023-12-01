@@ -343,8 +343,7 @@ function PlayVod_Resume() {
             Chat_Pause();
             if (Main_IsNotBrowser) {
                 Play_avplay.pause();
-                Play_avplay.stop();
-                Play_avplay.close();
+                Play_StopAndClose();
                 Main_values.vodOffset = parseInt(PlayVod_currentTime / 1000);
             }
             Play_ClearPlayer();
@@ -659,13 +658,7 @@ function PlayVod_onPlayer() {
     console.log('PlayVod_onPlayer:', '\n' + '\n"' + PlayVod_playingUrl + '"\n');
 
     if (Main_IsNotBrowser) {
-        try {
-            Play_avplay.stop();
-            Play_avplay.close();
-            Play_avplay.open(PlayVod_playingUrl);
-        } catch (e) {
-            console.log('PlayVod_onPlayer open ' + e);
-        }
+        Play_StopAndCloseAndPlay(PlayVod_playingUrl);
 
         if (Main_values.vodOffset > ChannelVod_DurationSeconds) Main_values.vodOffset = 0;
 

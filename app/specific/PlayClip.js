@@ -469,13 +469,7 @@ function PlayClip_onPlayer() {
     console.log('PlayClip_onPlayer:', '\n' + '\n"' + PlayClip_playingUrl + '"\n');
 
     if (Main_IsNotBrowser) {
-        try {
-            Play_avplay.stop();
-            Play_avplay.close();
-            Play_avplay.open(PlayClip_playingUrl);
-        } catch (e) {
-            console.log('PlayClip_onPlayer open ' + e);
-        }
+        Play_StopAndCloseAndPlay(PlayClip_playingUrl);
 
         if (PlayClip_offsettime > 0 && PlayClip_offsettime !== Play_avplay.getCurrentTime()) {
             try {

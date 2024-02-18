@@ -645,9 +645,22 @@ function Screens_handleKeyControls(event) {
         case KEY_RETURN:
             Main_HideControlsDialog();
             Main_HideAboutDialog();
-            document.body.addEventListener('keydown', Screens_handleKeyDown, false);
+            var handleKeyDown = Screens_handleKeyDown;
+
+            if (Main_values.Main_Go == Main_Users) {
+                handleKeyDown = Users_handleKeyDown;
+                Users_addFocus();
+            } else if (Main_values.Main_Go !== Main_ChannelContent) {
+                Screens_addFocus(true);
+            } else {
+                handleKeyDown = ChannelContent_handleKeyDown;
+                ChannelContent_addFocus();
+            }
+
+            document.body.addEventListener('keydown', handleKeyDown, false);
+
             document.body.removeEventListener('keydown', Screens_handleKeyControls);
-            Screens_addFocus(true);
+
             break;
         default:
             break;

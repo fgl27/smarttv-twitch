@@ -15193,7 +15193,7 @@
                 if (this.isQuery) {
                     this.row.appendChild(
                         Screens_createCellVod(this.row_id + '_' + this.coloumn_id, this.ids, [
-                            thubnail.replace('%{width}x%{height}', Main_VideoSize), //0
+                            thubnail ? thubnail.replace('%{width}x%{height}', Main_VideoSize) : null, //0
                             cell.creator ? cell.creator.displayName : '', //1
                             STR_STREAM_ON + Main_videoCreatedAt(cell.createdAt), //2
                             twemoji.parse(cell.title), //3
@@ -15214,7 +15214,7 @@
                 } else {
                     this.row.appendChild(
                         Screens_createCellVod(this.row_id + '_' + this.coloumn_id, this.ids, [
-                            thubnail.replace('%{width}x%{height}', Main_VideoSize), //0
+                            thubnail ? thubnail.replace('%{width}x%{height}', Main_VideoSize) : null, //0
                             cell.user_name, //1
                             STR_STREAM_ON + Main_videoCreatedAt(cell.created_at), //2
                             twemoji.parse(cell.title), //3

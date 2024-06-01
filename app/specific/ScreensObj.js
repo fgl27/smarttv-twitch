@@ -1817,7 +1817,7 @@ function ScreensObj_ClipGetPeriod(periodPos) {
     return date;
 }
 
-var ScreensObj_getVodAnimatedUrlPost = '{"query":"{video(id:%x){animatedPreviewURL}}"}';
+var ScreensObj_getVodAnimatedUrlPost = '{"query":"{video(id:\\"%x\\"){animatedPreviewURL}}"}';
 
 function ScreensObj_getVodAnimatedUrl(data, screen, div, id) {
     var xmlHttp = new XMLHttpRequest();

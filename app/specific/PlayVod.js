@@ -693,9 +693,17 @@ function PlayVod_onPlayer() {
                 //errorCallback
 
                 console.log('Play_avplay.prepareAsync Vod NOK:', 'date: ' + new Date());
+                console.log('Play_avplay.prepareAsync Vod NOK:', 'counter: ' + Play_onPlayerCounter);
+
                 Play_onPlayerCounter++;
-                if (Play_onPlayerCounter < 5) PlayVod_onPlayer();
-                else {
+                if (Play_onPlayerCounter < 2) {
+                    //try twice to recover else lower the quality
+                    PlayVod_onPlayer();
+                } else if (PlayVod_qualityIndex < PlayVod_getQualitiesCount() - 1) {
+                    console.log('Play_avplay.prepareAsync Vod NOK DropOneQuality:', 'date: ' + new Date());
+                    //some device will error out due to codec issue that affect only the main Source stream quality
+                    PlayVod_DropOneQuality();
+                } else {
                     console.log('Play_avplay.prepareAsync Vod fail too mutch exit:', 'date: ' + new Date());
                     Play_EndStart(false, 2);
                 }

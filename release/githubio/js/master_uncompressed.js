@@ -10099,7 +10099,10 @@
 
         Play_BufferPercentage = 0;
         Play_onPlayerCounter = 0;
-        if (Play_isOn) Play_onPlayer();
+
+        if (Play_isOn) {
+            Play_onPlayer();
+        }
         //Play_PannelEndStart(1);
     }
 
@@ -10226,10 +10229,18 @@
                 function() {
                     //errorCallback
                     console.log('Play_avplay.prepareAsync Live NOK:', 'date: ' + new Date());
+                    console.log('Play_avplay.prepareAsync Live NOK:', 'counter: ' + Play_onPlayerCounter);
+
                     Play_onPlayerCounter++;
-                    if (Play_onPlayerCounter < 5) Play_onPlayer();
-                    else {
-                        console.log('Play_avplay.prepareAsync Live fail too mutch exit:', 'date: ' + new Date());
+                    if (Play_onPlayerCounter < 2) {
+                        //try twice to recover else lower the quality
+                        Play_onPlayer();
+                    } else if (Play_qualityIndex < Play_getQualitiesCount() - 1) {
+                        console.log('Play_avplay.prepareAsync Live NOK DropOneQuality:', 'date: ' + new Date());
+                        //some device will error out due to codec issue that affect only the main Source stream quality
+                        Play_DropOneQuality();
+                    } else {
+                        console.log('Play_avplay.prepareAsync Live fail too much exit:', 'date: ' + new Date());
                         Play_EndStart(false, 1);
                     }
                 }
@@ -10312,8 +10323,9 @@
 
     function Play_DropOneQuality(ConnectionDrop) {
         if (!ConnectionDrop) {
-            if (Play_qualityIndex < Play_getQualitiesCount() - 1) Play_qualityIndex++;
-            else {
+            if (Play_qualityIndex < Play_getQualitiesCount() - 1) {
+                Play_qualityIndex++;
+            } else {
                 Play_CheckHostStart();
                 return;
             }
@@ -10340,8 +10352,12 @@
         xmlHttp.onreadystatechange = function() {
             if (xmlHttp.readyState === 4) {
                 if (xmlHttp.status === 200) {
-                    if (Play_isNotplaying()) DropOneQuality(counter > 2);
-                } else if (counter > 12) Play_EndStart(false, PlayVodClip);
+                    if (Play_isNotplaying()) {
+                        DropOneQuality(counter > 2);
+                    }
+                } else if (counter > 12) {
+                    Play_EndStart(false, PlayVodClip);
+                }
             }
         };
 
@@ -13003,9 +13019,17 @@
                     //errorCallback
 
                     console.log('Play_avplay.prepareAsync Vod NOK:', 'date: ' + new Date());
+                    console.log('Play_avplay.prepareAsync Vod NOK:', 'counter: ' + Play_onPlayerCounter);
+
                     Play_onPlayerCounter++;
-                    if (Play_onPlayerCounter < 5) PlayVod_onPlayer();
-                    else {
+                    if (Play_onPlayerCounter < 2) {
+                        //try twice to recover else lower the quality
+                        PlayVod_onPlayer();
+                    } else if (PlayVod_qualityIndex < PlayVod_getQualitiesCount() - 1) {
+                        console.log('Play_avplay.prepareAsync Vod NOK DropOneQuality:', 'date: ' + new Date());
+                        //some device will error out due to codec issue that affect only the main Source stream quality
+                        PlayVod_DropOneQuality();
+                    } else {
                         console.log('Play_avplay.prepareAsync Vod fail too mutch exit:', 'date: ' + new Date());
                         Play_EndStart(false, 2);
                     }

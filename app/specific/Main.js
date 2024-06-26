@@ -745,7 +745,6 @@ function Main_SwitchScreenAction(removekey) {
     if (Main_values.Main_Go !== Main_aGame) Main_values.Main_BeforeAgameisSet = false;
 
     Main_CounterDialogRst();
-
     if (Main_Switchobj[Main_values.Main_Go]) Main_Switchobj[Main_values.Main_Go]();
     else Main_Switchobj[1]();
 
@@ -753,7 +752,10 @@ function Main_SwitchScreenAction(removekey) {
 }
 
 function Main_OpenSearch() {
-    if (!Main_values.Search_isSearching) Main_values.Main_BeforeSearch = Main_values.Main_Go;
+    if (!Main_values.Search_isSearching) {
+        Main_values.Main_BeforeSearch = Main_values.Main_Go;
+    }
+
     Main_ExitCurrent(Main_values.Main_Go);
     Main_values.Main_Go = Main_Search;
     Main_HideWarningDialog();

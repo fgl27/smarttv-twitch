@@ -616,7 +616,7 @@ function Screens_loadDataSuccessFinish() {
                 });
             } else {
                 Main_ready(function () {
-                    //Values that need to be reset to prevent app odd behavier
+                    //Values that need to be reset to prevent app odd behavior
                     Main_values.Search_isSearching = false;
                     Main_values.Main_BeforeChannelisSet = false;
                     Main_values.Main_BeforeAgameisSet = false;

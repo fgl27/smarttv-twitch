@@ -144,8 +144,9 @@ function Sidepannel_KeyEnterBase() {
             if (
                 !Main_values.Search_isSearching &&
                 (Main_values.Main_Go === Main_ChannelContent || Main_values.Main_Go === Main_ChannelClip || Main_values.Main_Go === Main_ChannelVod)
-            )
+            ) {
                 ChannelContent_SetChannelValue();
+            }
             Main_OpenSearch();
         } else document.body.addEventListener('keydown', Sidepannel_Callback, false);
     } else if (Main_values.Sidepannel_Pos === 8) {
@@ -199,6 +200,7 @@ function Sidepannel_Go(GoTo) {
         document.body.addEventListener('keydown', Sidepannel_Callback, false);
         Main_SwitchScreenAction();
     } else {
+        Main_values.Search_isSearching = false;
         Main_values.Main_Before = Main_values.Main_Go;
         Main_values.Main_Go = GoTo;
         Main_ExitCurrent(Main_values.Main_Before);

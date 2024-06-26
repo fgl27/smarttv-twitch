@@ -20,7 +20,8 @@ function Search_exit() {
     Search_RemoveinputFocus(false);
     document.body.removeEventListener('keydown', Search_handleKeyDown);
     Search_refreshInputFocusTools();
-    Main_values.Main_Go = Main_values.Main_BeforeSearch;
+    Main_values.Main_Go = OpenSearchBefore ? OpenSearchBefore : Main_values.Main_BeforeSearch;
+    OpenSearchBefore = null;
     Main_HideElement('label_side_panel');
     Main_ShowElement('label_refresh');
     Main_SearchInput.value = '';

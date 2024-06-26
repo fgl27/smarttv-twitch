@@ -90,11 +90,16 @@ var Base_obj = {
                 Main_values.Main_Go = Main_values.Main_BeforeAgame;
                 Main_values.Main_BeforeAgame = Main_games;
             }
+
             Screens_BasicExit(Main_values.Main_Go);
             Main_SwitchScreenAction();
         } else if ((this.screen === Main_SearchLive || this.screen === Main_SearchGames || this.screen === Main_SearchChannels) && !goSidepanel) {
-            if (Main_values.Main_Go === Main_values.Main_BeforeSearch) Main_values.Main_Go = Main_Live;
-            else Main_values.Main_Go = Main_values.Main_BeforeSearch;
+            if (Main_values.Main_Go === Main_values.Main_BeforeSearch) {
+                Main_values.Main_Go = Main_Live;
+            } else {
+                Main_values.Main_Go = Main_values.Main_BeforeSearch;
+            }
+
             Main_values.Search_isSearching = false;
             Screens_BasicExit(Main_values.Main_Go);
             Main_SwitchScreenAction();

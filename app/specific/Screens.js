@@ -93,7 +93,11 @@ function Screens_init() {
 
 function Screens_exit() {
     Main_addFocusVideoOffset = 0;
-    if (inUseObj.label_exit) inUseObj.label_exit();
+
+    if (inUseObj.label_exit) {
+        inUseObj.label_exit();
+    }
+
     document.body.removeEventListener('keydown', Screens_handleKeyDown);
     Main_HideElement(inUseObj.ids[10]);
     Main_HideWarningDialog();

@@ -7178,19 +7178,38 @@
 
     function Main_SwitchScreenAction(removekey) {
         Main_HideWarningDialog();
-        if (Main_values.Main_Go !== Main_ChannelContent) Main_values.Main_BeforeChannelisSet = false;
-        if (Main_values.Main_Go !== Main_aGame) Main_values.Main_BeforeAgameisSet = false;
+
+        if (Main_values.Main_Go !== Main_ChannelContent) {
+            Main_values.Main_BeforeChannelisSet = false;
+        }
+
+        if (Main_values.Main_Go !== Main_aGame) {
+            Main_values.Main_BeforeAgameisSet = false;
+        }
 
         Main_CounterDialogRst();
-        if (Main_Switchobj[Main_values.Main_Go]) Main_Switchobj[Main_values.Main_Go]();
-        else Main_Switchobj[1]();
 
-        if (removekey) Main_RemoveKeys();
+        if (Main_Switchobj[Main_values.Main_Go]) {
+            Main_Switchobj[Main_values.Main_Go]();
+        } else {
+            Main_Switchobj[1]();
+        }
+
+        if (removekey) {
+            Main_RemoveKeys();
+        }
     }
+
+    //var used to allow to search in a search result,
+    //without looping over and over when using back
+    var OpenSearchBefore;
 
     function Main_OpenSearch() {
         if (!Main_values.Search_isSearching) {
             Main_values.Main_BeforeSearch = Main_values.Main_Go;
+            OpenSearchBefore = null;
+        } else {
+            OpenSearchBefore = Main_values.Main_Go;
         }
 
         Main_ExitCurrent(Main_values.Main_Go);
@@ -7234,8 +7253,13 @@
     Main_ExitCurrentobj[Main_games] = Screens_exit;
 
     function Main_ExitCurrent(ExitCurrent) {
-        if (Main_ExitCurrentobj[ExitCurrent]) Main_ExitCurrentobj[ExitCurrent]();
-        if (Main_isElementShowing('settings_holder')) Settings_exit();
+        if (Main_ExitCurrentobj[ExitCurrent]) {
+            Main_ExitCurrentobj[ExitCurrent]();
+        }
+
+        if (Main_isElementShowing('settings_holder')) {
+            Settings_exit();
+        }
     }
 
     function Main_RestoreTopLabel() {
@@ -13798,7 +13822,11 @@
 
     function Screens_exit() {
         Main_addFocusVideoOffset = 0;
-        if (inUseObj.label_exit) inUseObj.label_exit();
+
+        if (inUseObj.label_exit) {
+            inUseObj.label_exit();
+        }
+
         document.body.removeEventListener('keydown', Screens_handleKeyDown);
         Main_HideElement(inUseObj.ids[10]);
         Main_HideWarningDialog();
@@ -15117,11 +15145,16 @@
                     Main_values.Main_Go = Main_values.Main_BeforeAgame;
                     Main_values.Main_BeforeAgame = Main_games;
                 }
+
                 Screens_BasicExit(Main_values.Main_Go);
                 Main_SwitchScreenAction();
             } else if ((this.screen === Main_SearchLive || this.screen === Main_SearchGames || this.screen === Main_SearchChannels) && !goSidepanel) {
-                if (Main_values.Main_Go === Main_values.Main_BeforeSearch) Main_values.Main_Go = Main_Live;
-                else Main_values.Main_Go = Main_values.Main_BeforeSearch;
+                if (Main_values.Main_Go === Main_values.Main_BeforeSearch) {
+                    Main_values.Main_Go = Main_Live;
+                } else {
+                    Main_values.Main_Go = Main_values.Main_BeforeSearch;
+                }
+
                 Main_values.Search_isSearching = false;
                 Screens_BasicExit(Main_values.Main_Go);
                 Main_SwitchScreenAction();
@@ -16924,7 +16957,8 @@
         Search_RemoveinputFocus(false);
         document.body.removeEventListener('keydown', Search_handleKeyDown);
         Search_refreshInputFocusTools();
-        Main_values.Main_Go = Main_values.Main_BeforeSearch;
+        Main_values.Main_Go = OpenSearchBefore ? OpenSearchBefore : Main_values.Main_BeforeSearch;
+        OpenSearchBefore = null;
         Main_HideElement('label_side_panel');
         Main_ShowElement('label_refresh');
         Main_SearchInput.value = '';

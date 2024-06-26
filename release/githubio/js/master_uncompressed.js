@@ -7182,7 +7182,6 @@
         if (Main_values.Main_Go !== Main_aGame) Main_values.Main_BeforeAgameisSet = false;
 
         Main_CounterDialogRst();
-
         if (Main_Switchobj[Main_values.Main_Go]) Main_Switchobj[Main_values.Main_Go]();
         else Main_Switchobj[1]();
 
@@ -7190,7 +7189,10 @@
     }
 
     function Main_OpenSearch() {
-        if (!Main_values.Search_isSearching) Main_values.Main_BeforeSearch = Main_values.Main_Go;
+        if (!Main_values.Search_isSearching) {
+            Main_values.Main_BeforeSearch = Main_values.Main_Go;
+        }
+
         Main_ExitCurrent(Main_values.Main_Go);
         Main_values.Main_Go = Main_Search;
         Main_HideWarningDialog();
@@ -14317,7 +14319,7 @@
                     });
                 } else {
                     Main_ready(function() {
-                        //Values that need to be reset to prevent app odd behavier
+                        //Values that need to be reset to prevent app odd behavior
                         Main_values.Search_isSearching = false;
                         Main_values.Main_BeforeChannelisSet = false;
                         Main_values.Main_BeforeAgameisSet = false;
@@ -18827,8 +18829,9 @@
                 if (
                     !Main_values.Search_isSearching &&
                     (Main_values.Main_Go === Main_ChannelContent || Main_values.Main_Go === Main_ChannelClip || Main_values.Main_Go === Main_ChannelVod)
-                )
+                ) {
                     ChannelContent_SetChannelValue();
+                }
                 Main_OpenSearch();
             } else document.body.addEventListener('keydown', Sidepannel_Callback, false);
         } else if (Main_values.Sidepannel_Pos === 8) {
@@ -18882,6 +18885,7 @@
             document.body.addEventListener('keydown', Sidepannel_Callback, false);
             Main_SwitchScreenAction();
         } else {
+            Main_values.Search_isSearching = false;
             Main_values.Main_Before = Main_values.Main_Go;
             Main_values.Main_Go = GoTo;
             Main_ExitCurrent(Main_values.Main_Before);

@@ -6558,7 +6558,7 @@
 
     var Main_version = 401;
     var Main_stringVersion_Min = '4.0.1';
-    var Main_minversion = 'December 01 2023';
+    var Main_minversion = 'September 17 2024 - 3';
     var Main_versionTag = Main_stringVersion_Min + '-' + Main_minversion;
     var Main_IsNotBrowserVersion = '';
 
@@ -14378,7 +14378,7 @@
                 Main_HideAboutDialog();
                 var handleKeyDown = Screens_handleKeyDown;
 
-                if (Main_values.Main_Go == Main_Users) {
+                if (Main_values.Main_Go === Main_Users) {
                     handleKeyDown = Users_handleKeyDown;
                     Users_addFocus();
                 } else if (Main_values.Main_Go !== Main_ChannelContent) {
@@ -15415,6 +15415,8 @@
                 use_helix: true,
                 base_url: Main_helix_api + 'videos?first=' + Main_ItemsLimitMax + '&user_id=',
                 set_url: function() {
+                    this.base_url = Main_helix_api + 'videos?first=' + Main_ItemsLimitMax + '&user_id=';
+
                     // https://dev.twitch.tv/docs/api/reference#get-videos
                     this.url =
                         this.base_url +
@@ -15528,6 +15530,8 @@
                 periodPos: Main_getItemInt('AGameVod_periodPos', 2),
                 base_url: Main_helix_api + 'videos?first=' + Main_ItemsLimitMax + '&game_id=',
                 set_url: function() {
+                    this.base_url = Main_helix_api + 'videos?first=' + Main_ItemsLimitMax + '&game_id=';
+
                     this.url =
                         this.base_url +
                         Main_values.Main_gameSelected_id +
@@ -15790,7 +15794,7 @@
                 use_helix: true,
                 base_url: Main_helix_api + 'streams?first=' + Main_ItemsLimitMax,
                 set_url: function() {
-                    //this.check_offset();
+                    this.base_url = Main_helix_api + 'streams?first=' + Main_ItemsLimitMax;
 
                     this.url =
                         this.base_url + (this.cursor ? '&after=' + this.cursor : '') + (Main_ContentLang !== '' ? '&language=' + Main_ContentLang : '');
@@ -15869,7 +15873,7 @@
                 followerChannelsDone: false,
                 use_helix: true,
                 set_url: function() {
-                    //this.check_offset();
+                    this.base_url = Main_helix_api + 'streams/';
 
                     //this.token = Main_Bearer + AddUser_UsernameArray[0].access_token;
                     this.url =
@@ -15906,7 +15910,8 @@
                 use_helix: true,
                 base_url: Main_helix_api + 'streams?game_id=',
                 set_url: function() {
-                    //this.check_offset();
+                    this.base_url = Main_helix_api + 'streams?game_id=';
+
                     this.url =
                         this.base_url +
                         encodeURIComponent(Main_values.Main_gameSelected_id) +
@@ -16259,6 +16264,8 @@
                 periodPos: Main_getItemInt('ChannelClip_periodPos', 2),
                 base_url: Main_helix_api + 'clips?broadcaster_id=',
                 set_url: function() {
+                    this.base_url = Main_helix_api + 'clips?broadcaster_id=';
+
                     this.url =
                         this.base_url +
                         encodeURIComponent(Main_values.Main_selectedChannel_id) +
@@ -16299,6 +16306,8 @@
                 periodPos: Main_getItemInt('AGameClip_periodPos', 2),
                 base_url: Main_helix_api + 'clips?game_id=',
                 set_url: function() {
+                    this.base_url = Main_helix_api + 'clips?game_id=';
+
                     this.url =
                         this.base_url +
                         Main_values.Main_gameSelected_id +
@@ -16439,6 +16448,8 @@
                 use_helix: true,
                 base_url: Main_helix_api + 'games/top?first=' + Main_ItemsLimitMax,
                 set_url: function() {
+                    this.base_url = Main_helix_api + 'games/top?first=' + Main_ItemsLimitMax;
+
                     if (!this.use_helix && this.offset && this.offset + Main_ItemsLimitMax > this.MaxOffset) this.dataEnded = true;
                     this.url = this.base_url + (this.cursor ? '&after=' + this.cursor : '');
                 },
@@ -16527,6 +16538,8 @@
                 isSearch: true,
                 base_url: Main_helix_api + 'search/categories?query=',
                 set_url: function() {
+                    this.base_url = Main_helix_api + 'search/categories?query=';
+
                     this.url =
                         this.base_url +
                         encodeURIComponent(Main_values.Search_data) +
@@ -16612,6 +16625,10 @@
                 base_url_channels: Main_helix_api + 'users?',
                 channelDataPos: 0,
                 set_url: function() {
+                    this.base_url = Main_helix_api + 'channels/followed?first=' + Main_ItemsLimitMax + '&user_id=';
+
+                    this.base_url_channels = Main_helix_api + 'users?';
+
                     if (this.getFollowed) {
                         this.url = this.base_url + AddUser_UsernameArray[0].id + (this.cursor ? '&after=' + this.cursor : '');
                     } else {
@@ -16754,6 +16771,8 @@
                 use_helix: true,
                 base_url: Main_helix_api + 'search/channels?first=' + Main_ItemsLimitMax + '&query=',
                 set_url: function() {
+                    this.base_url = Main_helix_api + 'search/channels?first=' + Main_ItemsLimitMax + '&query=';
+
                     this.url = this.base_url + encodeURIComponent(Main_values.Search_data) + '&after=' + (this.cursor ? this.cursor : '');
                 },
                 label_init: function() {
@@ -17830,6 +17849,7 @@
         Play_live_ttv_lol_links = Play_live_ttv_lol_links.replace(b, a);
         proxy_url = proxy_url.replace(b, a);
         PlayVod_hlsBaseURL = PlayVod_hlsBaseURL.replace(b, a);
+        Main_helix_api = Main_helix_api.replace(b, a);
     }
 
     function Settings_set_proxy_timeout() {

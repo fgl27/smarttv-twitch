@@ -7287,13 +7287,16 @@
                 Main_tvModel;
 
             try {
+                console.log('App version: ' + Main_minversion);
+
                 Appversion = tizen.application.getAppInfo().version;
                 // Retrieving Platform Information https://developer.samsung.com/tv/develop/guides/fundamentals/retrieving-platform-information
                 TizenVersion = tizen.systeminfo.getCapability('http://tizen.org/feature/platform.version');
                 fw = webapis.productinfo.getFirmware();
                 Main_tvModel = webapis.productinfo.getModel();
-                console.log('App version: ' + Main_minversion);
-            } catch (e) {}
+            } catch (e) {
+                console.log('App version: e:' + e);
+            }
 
             if (Appversion !== null && TizenVersion !== null && Main_tvModel !== null && fw !== null) {
                 Main_versionTag =

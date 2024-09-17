@@ -651,7 +651,7 @@ function Screens_handleKeyControls(event) {
             Main_HideAboutDialog();
             var handleKeyDown = Screens_handleKeyDown;
 
-            if (Main_values.Main_Go == Main_Users) {
+            if (Main_values.Main_Go === Main_Users) {
                 handleKeyDown = Users_handleKeyDown;
                 Users_addFocus();
             } else if (Main_values.Main_Go !== Main_ChannelContent) {

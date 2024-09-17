@@ -362,6 +362,8 @@ function ScreensObj_InitChannelVod() {
             use_helix: true,
             base_url: Main_helix_api + 'videos?first=' + Main_ItemsLimitMax + '&user_id=',
             set_url: function () {
+                this.base_url = Main_helix_api + 'videos?first=' + Main_ItemsLimitMax + '&user_id=';
+
                 // https://dev.twitch.tv/docs/api/reference#get-videos
                 this.url =
                     this.base_url +
@@ -476,6 +478,8 @@ function ScreensObj_InitAGameVod() {
             periodPos: Main_getItemInt('AGameVod_periodPos', 2),
             base_url: Main_helix_api + 'videos?first=' + Main_ItemsLimitMax + '&game_id=',
             set_url: function () {
+                this.base_url = Main_helix_api + 'videos?first=' + Main_ItemsLimitMax + '&game_id=';
+
                 this.url =
                     this.base_url +
                     Main_values.Main_gameSelected_id +
@@ -740,7 +744,7 @@ function ScreensObj_InitLive() {
             use_helix: true,
             base_url: Main_helix_api + 'streams?first=' + Main_ItemsLimitMax,
             set_url: function () {
-                //this.check_offset();
+                this.base_url = Main_helix_api + 'streams?first=' + Main_ItemsLimitMax;
 
                 this.url =
                     this.base_url + (this.cursor ? '&after=' + this.cursor : '') + (Main_ContentLang !== '' ? '&language=' + Main_ContentLang : '');
@@ -821,7 +825,7 @@ function ScreensObj_InitUserLive() {
             followerChannelsDone: false,
             use_helix: true,
             set_url: function () {
-                //this.check_offset();
+                this.base_url = Main_helix_api + 'streams/';
 
                 //this.token = Main_Bearer + AddUser_UsernameArray[0].access_token;
                 this.url =
@@ -859,7 +863,8 @@ function ScreensObj_InitAGame() {
             use_helix: true,
             base_url: Main_helix_api + 'streams?game_id=',
             set_url: function () {
-                //this.check_offset();
+                this.base_url = Main_helix_api + 'streams?game_id=';
+
                 this.url =
                     this.base_url +
                     encodeURIComponent(Main_values.Main_gameSelected_id) +
@@ -1215,6 +1220,8 @@ function ScreensObj_InitChannelClip() {
             periodPos: Main_getItemInt('ChannelClip_periodPos', 2),
             base_url: Main_helix_api + 'clips?broadcaster_id=',
             set_url: function () {
+                this.base_url = Main_helix_api + 'clips?broadcaster_id=';
+
                 this.url =
                     this.base_url +
                     encodeURIComponent(Main_values.Main_selectedChannel_id) +
@@ -1256,6 +1263,8 @@ function ScreensObj_InitAGameClip() {
             periodPos: Main_getItemInt('AGameClip_periodPos', 2),
             base_url: Main_helix_api + 'clips?game_id=',
             set_url: function () {
+                this.base_url = Main_helix_api + 'clips?game_id=';
+
                 this.url =
                     this.base_url +
                     Main_values.Main_gameSelected_id +
@@ -1397,6 +1406,8 @@ function ScreensObj_InitGame() {
             use_helix: true,
             base_url: Main_helix_api + 'games/top?first=' + Main_ItemsLimitMax,
             set_url: function () {
+                this.base_url = Main_helix_api + 'games/top?first=' + Main_ItemsLimitMax;
+
                 if (!this.use_helix && this.offset && this.offset + Main_ItemsLimitMax > this.MaxOffset) this.dataEnded = true;
                 this.url = this.base_url + (this.cursor ? '&after=' + this.cursor : '');
             },
@@ -1487,6 +1498,8 @@ function ScreensObj_InitSearchGames() {
             isSearch: true,
             base_url: Main_helix_api + 'search/categories?query=',
             set_url: function () {
+                this.base_url = Main_helix_api + 'search/categories?query=';
+
                 this.url =
                     this.base_url +
                     encodeURIComponent(Main_values.Search_data) +
@@ -1573,6 +1586,10 @@ function ScreensObj_InitUserChannels() {
             base_url_channels: Main_helix_api + 'users?',
             channelDataPos: 0,
             set_url: function () {
+                this.base_url = Main_helix_api + 'channels/followed?first=' + Main_ItemsLimitMax + '&user_id=';
+
+                this.base_url_channels = Main_helix_api + 'users?';
+
                 if (this.getFollowed) {
                     this.url = this.base_url + AddUser_UsernameArray[0].id + (this.cursor ? '&after=' + this.cursor : '');
                 } else {
@@ -1716,6 +1733,8 @@ function ScreensObj_InitSearchChannels() {
             use_helix: true,
             base_url: Main_helix_api + 'search/channels?first=' + Main_ItemsLimitMax + '&query=',
             set_url: function () {
+                this.base_url = Main_helix_api + 'search/channels?first=' + Main_ItemsLimitMax + '&query=';
+
                 this.url = this.base_url + encodeURIComponent(Main_values.Search_data) + '&after=' + (this.cursor ? this.cursor : '');
             },
             label_init: function () {

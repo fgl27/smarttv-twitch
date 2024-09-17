@@ -695,20 +695,28 @@ function Settings_SetDefault(position) {
 }
 
 function Settings_set_http() {
-    var useHttp = Settings_Obj_default('force_http'),
-        a = 'http:',
-        b = 'https:';
+    console.log('Before Main_helix_api ' + Main_helix_api);
 
-    if (!useHttp) {
-        a = 'https:';
-        b = 'http:';
+    try {
+        var useHttp = Settings_Obj_default('force_http'),
+            a = 'http:',
+            b = 'https:';
+
+        if (!useHttp) {
+            a = 'https:';
+            b = 'http:';
+        }
+
+        Play_hlsBaseURL = Play_hlsBaseURL.replace(b, a);
+        Play_live_ttv_lol_links = Play_live_ttv_lol_links.replace(b, a);
+        proxy_url = proxy_url.replace(b, a);
+        PlayVod_hlsBaseURL = PlayVod_hlsBaseURL.replace(b, a);
+        Main_helix_api = Main_helix_api.replace(b, a);
+    } catch (e) {
+        console.log('Settings_set_http error:', e);
     }
 
-    Play_hlsBaseURL = Play_hlsBaseURL.replace(b, a);
-    Play_live_ttv_lol_links = Play_live_ttv_lol_links.replace(b, a);
-    proxy_url = proxy_url.replace(b, a);
-    PlayVod_hlsBaseURL = PlayVod_hlsBaseURL.replace(b, a);
-    Main_helix_api = Main_helix_api.replace(b, a);
+    console.log('After Main_helix_api ' + Main_helix_api);
 }
 
 function Settings_set_proxy_timeout() {

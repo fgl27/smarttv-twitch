@@ -2124,7 +2124,7 @@
     var Play_Headers;
 
     var Play_live_token =
-        '{"query":"{streamPlaybackAccessToken(channelName:\\"%x\\", params:{platform:\\"ios\\",playerType:\\"embed\\"}){value signature}}"}';
+        '{"query":"{streamPlaybackAccessToken(channelName:\\"%x\\", params:{platform:\\"ios\\",playerType:\\"mobile\\"}){value signature}}"}';
     var Play_vod_token = '{"query":"{videoPlaybackAccessToken(id:\\"%x\\", params:{platform:\\"android\\",playerType:\\"mobile\\"}){value signature}}"}';
     //Variable initialization
     var AddUser_loadingDataTry = 0;

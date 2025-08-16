@@ -809,7 +809,7 @@ function ChatLive_loadChatRequest(chat_number, id) {
     if (id !== Chat_Id[chat_number]) return;
     //Main_Log('ChatLive_loadChatRequest');
 
-    ChatLive_socket[chat_number] = new WebSocket('ws://irc-ws.chat.twitch.tv', 'irc');
+    ChatLive_socket[chat_number] = new WebSocket('wss://irc-ws.chat.twitch.tv:443', 'irc');
 
     ChatLive_socket[chat_number].onopen = function () {
         if (useToken[chat_number]) {
@@ -1148,7 +1148,7 @@ var ChatLive_socketSendCheckID;
 function ChatLive_SendPrepared(chat_number, id) {
     //Main_Log('ChatLive_SendPrepared');
 
-    ChatLive_socketSend = new WebSocket('ws://irc-ws.chat.twitch.tv', 'irc');
+    ChatLive_socketSend = new WebSocket('wss://irc-ws.chat.twitch.tv:443', 'irc');
 
     ChatLive_socketSend.onopen = function () {
         var username = AddUser_UsernameArray[0].name.toLowerCase();

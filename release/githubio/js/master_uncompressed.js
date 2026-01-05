@@ -2555,7 +2555,7 @@
         var theUrl =
             Main_helix_api +
             'streams?user_id=' +
-            encodeURIComponent(ChannelContent_TargetId !== undefined ? ChannelContent_TargetId : Main_values.Main_selectedChannel_id);
+            encodeURIComponent(ChannelContent_TargetId ? ChannelContent_TargetId : Main_values.Main_selectedChannel_id);
 
         BasexmlHttpGet(
             theUrl,
@@ -2573,7 +2573,7 @@
     function ChannelContent_loadDataRequestSuccess(response) {
         var obj = JSON.parse(response);
 
-        if (obj.data && obj.data.length) {
+        if (obj && obj.data && obj.data.length) {
             ChannelContent_responseText = obj.data;
             ChannelContent_loadDataPrepare();
             ChannelContent_GetStreamerInfo();
@@ -2589,6 +2589,7 @@
 
     function ChannelContent_loadDataError() {
         ChannelContent_loadingDataTry++;
+
         if (ChannelContent_loadingDataTry < ChannelContent_loadingDataTryMax) {
             ChannelContent_loadingDataTimeout += 500;
             ChannelContent_loadDataRequest();
@@ -2650,7 +2651,7 @@
     function ChannelContent_GetStreamerInfoSuccess(responseText) {
         var obj = JSON.parse(responseText);
 
-        if (obj.data && obj.data.length) {
+        if (obj && obj.data && obj.data.length) {
             var channel = obj.data[0];
             ChannelContent_offline_image = channel.offline_image_url;
             ChannelContent_offline_image = ChannelContent_offline_image ?
@@ -2665,7 +2666,7 @@
 
             ChannelContent_BannerFollowers();
         } else {
-            ChannelContent_loadDataError();
+            ChannelContent_loadDataSuccess();
         }
     }
 
@@ -2686,7 +2687,7 @@
                 if (xmlHttp.status === 200) {
                     var obj = JSON.parse(xmlHttp.responseText);
 
-                    if (obj.data && obj.data.user) {
+                    if (obj && obj.data && obj.data.user) {
                         ChannelContent_profile_banner = obj.data.user.bannerImageURL ? obj.data.user.bannerImageURL : IMG_404_BANNER;
                         ChannelContent_selectedChannelFollower =
                             obj.data.user.followers && obj.data.user.followers.totalCount ? obj.data.user.followers.totalCount : '';

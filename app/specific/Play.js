@@ -1109,6 +1109,18 @@ function Play_extractQualities(input) {
         } else tempCount++;
     }
 
+    //sort based on resolution as it may not come sorted
+    result.sort(function (a, b) {
+        if (!a || !b) {
+            return 0;
+        }
+        
+        var resA = parseInt(a.resolution.split('p')[0]);
+        var resB = parseInt(b.resolution.split('p')[0]);
+        
+        return resB - resA;
+    });
+
     return result;
 }
 

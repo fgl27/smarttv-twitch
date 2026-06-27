@@ -11,6 +11,7 @@ var Play_CanLowLatency = true;
 var Play_PanelHideID = null;
 var Play_quality = 'source';
 var Play_qualityPlaying = Play_quality;
+var Play_forceAvplayLive = false;
 var Play_isFullScreen = true;
 var Play_ChatPositionsBF;
 var Play_ChatEnableBF;
@@ -204,7 +205,32 @@ var Play_ChatSizeVal = [
 
 var Play_ChatFontObj = [];
 
+var hls;
 var Play_avplay;
+var Play_avplay_obj = null;
+var Play_avplay_hls_player;
+
+// Whether hls.js + MSE are usable on this device. Computed once, safely.
+// On devices without it we must NEVER throw at init (would black-screen the app)
+// and we fall back to the native Tizen avplay for live streams.
+var Play_HlsSupported = false;
+try {
+    Play_HlsSupported = typeof Hls !== 'undefined' && Hls.isSupported() && Hls.isMSESupported();
+} catch (e) {
+    Play_HlsSupported = false;
+}
+
+// Player selection: 0 = HLS (default), 1 = Native (avplay). Loaded in Play_PreStart.
+// HLS = use the HLS player when the device supports it, otherwise native.
+// Native = native player (lower latency) with automatic HLS fallback for fMP4/2K.
+var Play_PlayerMode = 0;
+var Play_PLAYER_HLS = 0;
+var Play_PLAYER_NATIVE = 1;
+// Effective player for the CURRENT live stream. Starts as Play_UseHlsForLive()
+// but can flip to true at runtime if the native player can't decode the stream
+// (fMP4/2K) and we fall back to HLS. Single source of truth for the live path.
+var Play_LiveUseHls = false;
+var Play_black_overlay = null;
 var Play_BufferPercentage = 0;
 var Play_bufferingcomplete = false;
 var Play_oldcurrentTime = 0;
@@ -212,16 +238,110 @@ var Play_offsettime = 0;
 var Play_offsettimeMinus = 0;
 //Variable initialization end
 
+function Play_GetHlsConfig() {
+    // Conservative profiles: LL reduces latency without aggressive auto-seek behavior.
+    if (Play_LowLatency) {
+        return {
+            lowLatencyMode: true,
+            liveSyncDurationCount: 2,
+            liveMaxLatencyDurationCount: 4
+        };
+    }
+
+    return {
+        lowLatencyMode: false,
+        liveSyncDurationCount: 3,
+        liveMaxLatencyDurationCount: 6
+    };
+}
+
+function initHLSPlayer() {
+    // Create HTML5 <video> tag
+    var video = document.createElement('video');
+    video.id = 'hlsplayer';
+    video.style.width = '100%';
+    video.style.height = '100%';
+    video.style.position = 'absolute';
+    video.style.zIndex = '0';
+    video.style.backgroundColor = 'black';
+    video.style.visibility = 'hidden';
+    video.onplay = function() {
+        Play_Playing = true;
+    };
+    video.onpause = function() {
+        Play_Playing = false;
+    };
+    video.onplaying = function () {
+        video.style.visibility = 'visible';
+        Play_HideBufferDialog();
+        Play_HideBlackOverlay();
+    };
+    video.oncanplay = function () {
+        Play_HideBufferDialog();
+        Play_HideBlackOverlay();
+    };
+    video.onwaiting = function () {
+        if (!Play_Playing) return;
+        Play_showBufferDialog();
+    };
+    video.onended = function () {
+        Play_Playing = false;
+    };
+
+    Play_avplay_hls_player = video;
+    document.getElementById('scene2').appendChild(video);
+
+    // The <video> element above is always created (clips also use it via video.src).
+    // hls.js is only created when MSE is usable. Wrapped in try/catch so init can
+    // NEVER throw - a throw here would abort Main_ready and black-screen the whole app.
+    if (!Play_HlsSupported) {
+        hls = null;
+        return;
+    }
+
+    try {
+        // Initialize hls.js controller
+        hls = new Hls(Play_GetHlsConfig());
+        hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+            console.log('<video> and hls.js are now bound together !');
+        });
+        hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+            console.log('manifest loaded, found ' + data.levels.length + ' quality level');
+        });
+        hls.on(Hls.Events.ERROR, function (event, data) {
+            console.error('HLS ERROR', event, data);
+        });
+
+        // Attach to <video> tag. We no longer load an external placeholder manifest:
+        // the real source is always set later via Play_PlayHLSUrl (loadSource), and
+        // attach-then-load is the documented hls.js usage. This removes a hard
+        // dependency on a third-party server at startup.
+        hls.attachMedia(video);
+    } catch (e) {
+        console.error('initHLSPlayer failed', e);
+        hls = null;
+    }
+}
+
+function Play_UseHlsForLive() {
+    if (Play_PlayerMode === Play_PLAYER_NATIVE) return false; // forced native
+    return Play_HlsSupported; // Auto and forced-HLS both require MSE support
+}
+
 function Play_PreStart() {
     if (Main_IsNotBrowser) {
-        //<object id="av-player" type="application/avplayer" style="width:100%; height:100%; position: absolute;"></object>
         var avplay = document.createElement('object');
+        avplay.setAttribute('id', 'av-player');
         avplay.setAttribute('type', 'application/avplayer');
-        avplay.setAttribute('style', 'width:100%; height:100%; position: absolute;');
+        avplay.setAttribute('style', 'width:100%; height:100%; position: absolute; z-index: 0;');
         document.getElementById('scene2').appendChild(avplay);
+        Play_avplay_obj = avplay;
         Play_avplay = webapis.avplay;
         Play_TizenVersion = tizen.systeminfo.getCapability('http://tizen.org/feature/platform.version');
     }
+
+    Play_EnsureBlackOverlay();
+    initHLSPlayer();
 
     Play_chat_container = document.getElementById('chat_container0');
     Play_ProgresBarrElm = document.getElementById('inner_progress_bar');
@@ -235,6 +355,9 @@ function Play_PreStart() {
     Play_ChatBackground = (Main_values.ChatBackground * 0.05).toFixed(2);
     Play_ChatDelayPosition = Main_getItemInt('Play_ChatDelayPosition', 0);
     Play_LowLatency = Main_getItemBool('Play_LowLatency', false);
+    // Stored by the Settings screen under 'player_mode' as a 1-based index.
+    Play_PlayerMode = Main_getItemInt('player_mode', 1) - 1;
+    if (Play_PlayerMode < Play_PLAYER_HLS || Play_PlayerMode > Play_PLAYER_NATIVE) Play_PlayerMode = Play_PLAYER_HLS;
 
     //"GET_LIVE_DURATION" is available since Tizen version 2.4.
     //That is used to get a Play_LowLatency scenario
@@ -292,11 +415,11 @@ function Play_PreStart() {
 //this are the global set option that need to be set only once
 //and they need to be set like this to work, faking a video playback
 function Play_SetAvPlayGlobal() {
-    Play_StopAndCloseAndPlay('https://fgl27.github.io/smarttv-twitch/release/githubio/images/temp.mp4');
+    // Play_StopAndCloseAndPlay('https://fgl27.github.io/smarttv-twitch/release/githubio/images/temp.mp4');
 
     Play_SetFullScreen(Play_isFullScreen);
-    Play_avplay.setListener(PlayStart_listener);
-    Play_avplay.prepareAsync();
+    // Play_avplay.setListener(PlayStart_listener);
+    // Play_avplay.prepareAsync();
 }
 
 var PlayStart_listener = {
@@ -312,13 +435,19 @@ function Play_StopAndCloseAndPlay(url) {
 
 function Play_StopAndClose() {
     try {
-        Play_avplay.stop();
+        if (Main_IsNotBrowser && Play_avplay) Play_avplay.stop();
     } catch (e) {
         console.trace('Play_StopAndClose stop', e);
     }
 
     try {
-        Play_avplay.close();
+        if (Play_avplay_hls_player) Play_avplay_hls_player.pause();
+    } catch (e) {
+        console.trace('Play_StopAndClose stop hls', e);
+    }
+
+    try {
+        if (Main_IsNotBrowser && Play_avplay) Play_avplay.close();
     } catch (e) {
         console.trace('Play_StopAndClose close', e);
     }
@@ -326,10 +455,66 @@ function Play_StopAndClose() {
 
 function Play_OpenUrl(url) {
     try {
-        Play_avplay.open(url);
+        Play_UseAvplay();
+        if (Main_IsNotBrowser && Play_avplay) Play_avplay.open(url);
     } catch (e) {
         console.log('Play_OpenUrl open url', url);
         console.trace('Play_OpenUrl open', e);
+    }
+}
+
+function Play_SetAvplayVisible(show) {
+    if (Play_avplay_obj) Play_avplay_obj.style.display = show ? 'block' : 'none';
+}
+
+function Play_SetHlsVisible(show) {
+    if (Play_avplay_hls_player) Play_avplay_hls_player.style.display = show ? 'block' : 'none';
+}
+
+function Play_EnsureBlackOverlay() {
+    if (Play_black_overlay) return;
+    var overlay = document.createElement('div');
+    overlay.id = 'play_black_overlay';
+    overlay.style.position = 'absolute';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'black';
+    overlay.style.zIndex = '1';
+    overlay.style.display = 'none';
+    overlay.style.pointerEvents = 'none';
+    document.getElementById('scene2').appendChild(overlay);
+    Play_black_overlay = overlay;
+}
+
+function Play_ShowBlackOverlay() {
+    Play_EnsureBlackOverlay();
+    if (Play_black_overlay) Play_black_overlay.style.display = 'block';
+}
+
+function Play_HideBlackOverlay() {
+    if (Play_black_overlay) Play_black_overlay.style.display = 'none';
+}
+
+function Play_UseAvplay() {
+    if (Play_avplay_hls_player) Play_avplay_hls_player.pause();
+    Play_SetHlsVisible(false);
+    Play_SetAvplayVisible(true);
+}
+
+function Play_UseHls() {
+    Play_SetAvplayVisible(false);
+    Play_SetHlsVisible(true);
+}
+
+function PlayNonStream_OpenUrl(url) {
+    try {
+        Play_StopAndClose();
+        Play_OpenUrl(url);
+    } catch (e) {
+        console.log('PlayNonStream_OpenUrl open url', url);
+        console.trace('PlayNonStream_OpenUrl open', e);
     }
 }
 
@@ -376,22 +561,26 @@ function Play_setDisplayRect(isfull) {
     if (res) Is_4_by_3 = parseInt(res[0]) / parseInt(res[1]) < 1.7;
 
     try {
-        Play_avplay.setDisplayMethod(Is_4_by_3 ? 'PLAYER_DISPLAY_MODE_LETTER_BOX' : 'PLAYER_DISPLAY_MODE_FULL_SCREEN');
+        if (Main_IsNotBrowser && Play_avplay) {
+            Play_avplay.setDisplayMethod(Is_4_by_3 ? 'PLAYER_DISPLAY_MODE_LETTER_BOX' : 'PLAYER_DISPLAY_MODE_FULL_SCREEN');
+        }
     } catch (e) {
         console.log('setDisplayMethod Is_4_by_3 ' + Is_4_by_3 + ' e ' + e);
     }
 
     if (isfull) {
         try {
-            Play_avplay.setDisplayRect(0, 0, screen.width, screen.height);
+            if (Main_IsNotBrowser && Play_avplay) Play_avplay.setDisplayRect(0, 0, screen.width, screen.height);
         } catch (e) {
             console.log(e + ' Play_SetFullScreen true');
         }
     } else {
         // Chat is 25% of the screen, resize to 75% and center left
         try {
-            if (Is_4_by_3) Play_avplay.setDisplayRect(0, 0, screen.width * 0.75, screen.height);
-            else Play_avplay.setDisplayRect(0, (screen.height * 0.25) / 2, screen.width * 0.75, screen.height * 0.75);
+            if (Main_IsNotBrowser && Play_avplay) {
+                if (Is_4_by_3) Play_avplay.setDisplayRect(0, 0, screen.width * 0.75, screen.height);
+                else Play_avplay.setDisplayRect(0, (screen.height * 0.25) / 2, screen.width * 0.75, screen.height * 0.75);
+            }
         } catch (e) {
             console.log(e + ' Play_SetFullScreen false');
         }
@@ -403,8 +592,10 @@ function Play_SetChatFont() {
 }
 
 function Play_Start() {
-    Play_showBufferDialog();
+    // Play_showBufferDialog();
     Play_ResetProxy();
+    Play_ShowBlackOverlay();
+    if (Play_avplay_hls_player) Play_avplay_hls_player.style.visibility = 'hidden';
 
     Main_empty('stream_info_title');
     Play_LoadLogoSucess = false;
@@ -463,7 +654,8 @@ function Play_Start() {
     Play_playlistResponse = 0;
     Play_playingTry = 0;
     Play_isOn = true;
-    Play_Playing = false;
+    Play_LiveUseHls = Play_UseHlsForLive();
+    // Play_Playing = false;
     Play_state = Play_STATE_LOADING_TOKEN;
     document.addEventListener('visibilitychange', Play_Resume, false);
     document.body.removeEventListener('keyup', Main_handleKeyUp);
@@ -488,7 +680,7 @@ var Play_CheckIfIsLiveStartCallback = 0;
 
 function Play_CheckIfIsLiveStart(callback) {
     if (Main_ThumbOpenIsNull(Play_FeedPos, UserLiveFeed_ids[0])) return;
-    Play_showBufferDialog();
+    // Play_showBufferDialog();
 
     Play_CheckIfIsLiveStartCounter = 0;
     Play_CheckIfIsLiveStartCallback = callback;
@@ -611,7 +803,7 @@ function Play_Resume() {
             Play_ClearPlayer();
             Play_offPlayer();
             UserLiveFeed_Hide(true);
-            Play_Playing = false;
+            // Play_Playing = false;
             ChatLive_Clear();
             window.clearInterval(Play_streamInfoTimerId);
             window.clearInterval(Play_streamCheckId);
@@ -620,7 +812,7 @@ function Play_Resume() {
         Play_isOn = true;
         Play_clearPause();
         if (Play_isOn) {
-            Play_showBufferDialog();
+            // Play_showBufferDialog();
             Play_loadingInfoDataTry = 0;
             Play_loadingInfoDataTimeout = 3000;
             Play_RestoreFromResume = true;
@@ -866,6 +1058,15 @@ function Play_loadDataRequest(skipProxy) {
                     Main_RandomInt();
 
                 xmlHttp.open('GET', theUrl, true);
+
+                if (hls && Play_LiveUseHls) {
+                    try {
+                        // Load stream url to HLS player
+                        hls.loadSource(theUrl);
+                    } catch (e) {
+                        console.error('Failed to load hls source!', e);
+                    }
+                }
             }
             xmlHttp.timeout = Play_loadingDataTimeout;
         }
@@ -1109,20 +1310,37 @@ function Play_extractQualities(input) {
         } else tempCount++;
     }
 
-    //sort based on resolution as it may not come sorted
     result.sort(function (a, b) {
-        if (!a || !b) {
-            return 0;
-        }
+        var ah = 0;
+        var bh = 0;
 
-        var resA = parseInt(a.resolution.split('p')[0]);
-        var resB = parseInt(b.resolution.split('p')[0]);
+        if (a.resolution && a.resolution.indexOf('x') !== -1) ah = parseInt(a.resolution.split('x')[1]) || 0;
+        if (b.resolution && b.resolution.indexOf('x') !== -1) bh = parseInt(b.resolution.split('x')[1]) || 0;
 
-        return resB - resA;
+        if (ah !== bh) return bh - ah;
+
+        var ab = parseFloat((a.band || '').replace(' | ', '').replace('Mbps', '')) || 0;
+        var bb = parseFloat((b.band || '').replace(' | ', '').replace('Mbps', '')) || 0;
+        return bb - ab;
     });
+
+    // Pin the 'source' tag to the highest-resolution rendition (index 0).
+    // Twitch lists renditions in an arbitrary order, so the first-parsed entry
+    // (which received the 'source' tag above) is NOT reliably the highest
+    // quality. Left as-is, the default 'source' preference in Play_qualityChanged
+    // text-matches that mislabeled entry and can start the stream in a LOW
+    // quality - most visibly on the first stream after launch, when the
+    // preference is still the bare 'source'.
+    for (var s = 0; s < result.length; s++) {
+        result[s].id = result[s].id.replace(' | source', '');
+    }
+    if (result.length && result[0].id.indexOf('source') === -1) {
+        result[0].id = result[0].id + ' | source';
+    }
 
     return result;
 }
+
 
 function Play_extractBand(input) {
     input = parseInt(input);
@@ -1225,7 +1443,27 @@ var Play_listener = {
     },
     onerror: function (eventType) {
         console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
-        if (eventType === 'PLAYER_ERROR_CONNECTION_FAILED' || eventType === 'PLAYER_ERROR_INVALID_URI') Play_CheckEndStart();
+        if (eventType === 'PLAYER_ERROR_NOT_SUPPORTED_FORMAT') {
+            // The native player can't decode this stream (2K/1440p-enabled channels
+            // deliver every rendition as fMP4).
+            if (Play_HlsSupported) {
+                // MSE-capable device: silently switch to the HLS player so "Native"
+                // stays a safe low-latency choice that still plays fMP4 streams.
+                Play_UseHlsFallbackLive('not-supported-format');
+            } else {
+                // Old device with no MSE: nothing can play it - tell the user and end.
+                Play_HideBufferDialog();
+                Play_IsWarning = true;
+                Play_showWarningDialog(STR_FORMAT_NOT_SUPPORTED);
+                window.setTimeout(function () {
+                    Play_IsWarning = false;
+                    Play_HideWarningDialog();
+                    if (Play_isOn) Play_CheckEndStart();
+                }, 4000);
+            }
+        } else if (eventType === 'PLAYER_ERROR_CONNECTION_FAILED' || eventType === 'PLAYER_ERROR_INVALID_URI') {
+            Play_CheckEndStart();
+        }
     }
 };
 
@@ -1245,7 +1483,7 @@ function Play_SetHtmlQuality(element) {
 }
 
 function Play_onPlayer() {
-    Play_showBufferDialog();
+    // Play_showBufferDialog();
 
     console.log('Play_onPlayer:', 'date: ' + new Date());
     console.log('Play_onPlayer:', '\n' + '\n"' + Play_playingUrl + '"\n');
@@ -1253,46 +1491,55 @@ function Play_onPlayer() {
     if (Main_IsNotBrowser) {
         Play_loadChat();
 
-        Play_StopAndCloseAndPlay(Play_playingUrl);
+        if (Play_LiveUseHls) {
+            Play_PlayHLSUrl(Play_playingUrl);
+            Play_SetFullScreen(Play_isFullScreen);
+            Play_offsettime = Play_oldcurrentTime;
 
-        Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_PLAY', 'PLAYER_BUFFER_SIZE_IN_SECOND', Play_Buffer);
-        Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_RESUME', 'PLAYER_BUFFER_SIZE_IN_SECOND', Play_Buffer);
+            try {
+                //Disabled closed caption as isn't properly supported by all devices
+                // Play_avplay.setSilentSubtitle(true);
+            } catch (e) {
+                console.log('PlayVod_onPlayer open ' + e);
+            }
 
-        //Old 4k check no longer used because causes problem
-        //leave it here to be recheck on a future 4k streams from twitch
-        //if (Main_Is4k && !Play_4K_ModeEnable) {
-        //    Play_avplay.setStreamingProperty("SET_MODE_4K", "TRUE");
-        //    Play_4K_ModeEnable = true;
-        //}
+            // Start stream in HLS player
+            Play_avplay_hls_player.play();
+        } else {
+            // Native Tizen avplay path (devices without MSE, or forced via settings)
+            Play_PlayNativeLive(Play_playingUrl);
+        }
 
-        Play_SetFullScreen(Play_isFullScreen);
-        Play_avplay.setListener(Play_listener);
+        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+    } else Play_loadChat();
+}
+
+// Plays a live stream variant playlist (m3u8) through the native Tizen avplay.
+// Used when hls.js/MSE is unavailable or the user forced the native player.
+function Play_PlayNativeLive(url) {
+    try {
+        Play_ShowBlackOverlay();
+        // Play_OpenUrl (inside Play_StopAndCloseAndPlay) switches visibility to avplay
+        Play_StopAndCloseAndPlay(url);
         Play_offsettime = Play_oldcurrentTime;
 
         try {
-            //Disabled closed caption as ins't properly supported by all devices
-            Play_avplay.setSilentSubtitle(true);
+            Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_PLAY', 'PLAYER_BUFFER_SIZE_IN_SECOND', Play_Buffer);
+            Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_RESUME', 'PLAYER_BUFFER_SIZE_IN_SECOND', Play_Buffer);
         } catch (e) {
-            console.log('PlayVod_onPlayer open ' + e);
+            console.log('Play_PlayNativeLive setBufferingParam ' + e);
         }
 
-        console.log('Before Play_avplay.prepareAsync:', 'date: ' + new Date());
+        Play_SetFullScreen(Play_isFullScreen);
+        Play_avplay.setListener(Play_listener);
+        Play_onPlayerCounter = 0;
 
-        //Use prepareAsync as prepare() only can freeze up the app
         Play_avplay.prepareAsync(
             function () {
-                //successCallback
-
                 console.log('Play_avplay.prepareAsync Live OK:', 'date: ' + new Date());
-
-                try {
-                    //GET_LIVE_DURATION not supported by all TVs
-                    if (Play_LowLatency) Play_avplay.seekTo(Play_avplay.getStreamingProperty('GET_LIVE_DURATION').split('|')[1] - 3000);
-                } catch (e) {}
-
                 Play_avplay.play();
-                Play_Playing = true;
-                if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+                Play_HideBufferDialog();
+                Play_HideBlackOverlay();
 
                 Play_PlayerCheckCount = 0;
                 Play_PlayerCheckTimer = 1 + Play_Buffer * 2;
@@ -1301,25 +1548,39 @@ function Play_onPlayer() {
                 Play_streamCheckId = window.setInterval(Play_PlayerCheck, Play_PlayerCheckInterval);
             },
             function () {
-                //errorCallback
                 console.log('Play_avplay.prepareAsync Live NOK:', 'date: ' + new Date());
-                console.log('Play_avplay.prepareAsync Live NOK:', 'counter: ' + Play_onPlayerCounter);
-
                 Play_onPlayerCounter++;
-                if (Play_onPlayerCounter < 2) {
-                    //try twice to recover else lower the quality
-                    Play_onPlayer();
-                } else if (Play_qualityIndex < Play_getQualitiesCount() - 1) {
-                    console.log('Play_avplay.prepareAsync Live NOK DropOneQuality:', 'date: ' + new Date());
-                    //some device will error out due to codec issue that affect only the main Source stream quality
-                    Play_DropOneQuality();
-                } else {
-                    console.log('Play_avplay.prepareAsync Live fail too much exit:', 'date: ' + new Date());
-                    Play_EndStart(false, 1);
-                }
+                if (Play_onPlayerCounter < 2) Play_PlayNativeLive(url);
+                else if (Play_qualityIndex < Play_getQualitiesCount() - 1) Play_DropOneQuality();
+                else if (Play_HlsSupported) Play_UseHlsFallbackLive('prepare-failed');
+                else Play_CheckEndStart();
             }
         );
-    } else Play_loadChat();
+    } catch (e) {
+        console.log('Play_PlayNativeLive error ' + e);
+        Play_CheckEndStart();
+    }
+}
+
+// Switch the current live stream from the native player to HLS at runtime.
+// Triggered when native avplay can't decode the stream (fMP4/2K) on an
+// MSE-capable device, so "Native" mode stays a safe low-latency choice.
+function Play_UseHlsFallbackLive(reason) {
+    if (Play_LiveUseHls || !Play_HlsSupported || !Play_isOn) return;
+    console.log('Play live fallback to HLS:', reason);
+    Play_LiveUseHls = true; // from now on the live path treats this stream as HLS
+
+    try {
+        Play_StopAndClose();
+    } catch (e) {
+        console.log('Play_UseHlsFallbackLive stop error', e);
+    }
+
+    Play_onPlayerCounter = 0;
+    Play_PlayHLSUrl(Play_playingUrl);
+    Play_SetFullScreen(Play_isFullScreen);
+    Play_offsettime = Play_oldcurrentTime;
+    if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
 }
 
 function Play_loadChat() {
@@ -1332,6 +1593,9 @@ function Play_loadChat() {
 }
 
 function Play_PlayerCheck() {
+    // In HLS mode the <video> element events handle stalls; this avplay-based
+    // check only applies to the native live path.
+    if (Play_LiveUseHls) return;
     if (Play_PlayerTime === Play_currentTime && Play_isIdleOrPlaying()) {
         Play_PlayerCheckCount++;
         if (Play_PlayerCheckCount > Play_PlayerCheckTimer) {
@@ -1371,12 +1635,12 @@ function Play_isIdleOrPlaying() {
     if (Main_IsNotBrowser) {
         var state;
         try {
-            state = Play_avplay.getState();
+            // state = Play_avplay.getState();
         } catch (error) {
             console.error('Play_isIdleOrPlaying', error);
 
             try {
-                Play_avplay.close();
+                // Play_avplay.close();
             } catch (e) {
                 console.log('Play_isIdleOrPlaying close', e);
             }
@@ -1439,8 +1703,21 @@ function Play_CheckConnection(counter, PlayVodClip, DropOneQuality) {
 }
 
 function Play_isNotplaying() {
-    if (Main_IsNotBrowser) return Play_avplay.getState() !== 'PLAYING';
-    return false;
+    if (!Main_IsNotBrowser) return false;
+
+    if (PlayVod_isOn && PlayVod_useHls) return !Play_avplay_hls_player || Play_avplay_hls_player.paused;
+    // Clips always play on the <video> element
+    if (PlayClip_isOn) return !Play_avplay_hls_player || Play_avplay_hls_player.paused;
+    if (Play_isOn) {
+        if (Play_LiveUseHls) return !Play_avplay_hls_player || Play_avplay_hls_player.paused;
+        try {
+            return Play_avplay.getState() !== 'PLAYING';
+        } catch (e) {
+            return true;
+        }
+    }
+
+    return true;
 }
 
 function Play_clock() {
@@ -1527,6 +1804,8 @@ function Play_PreshutdownStream(closePlayer) {
     if (closePlayer) Play_isOn = false;
     if (!Play_isEndDialogVisible() || closePlayer) UserLiveFeed_Hide(true);
 
+    Play_ShowBlackOverlay();
+    if (Play_avplay_hls_player) Play_avplay_hls_player.style.visibility = 'hidden';
     Play_ClearPlay(closePlayer);
     Play_ClearPlayer();
     Main_values.Play_selectedChannel_id = '';
@@ -1544,6 +1823,7 @@ function Play_exitMain() {
         Play_setFollow();
     } else Play_hideFollow();
 
+    Play_HideBlackOverlay();
     UserLiveFeed_PreventHide = false;
     PlayVod_ProgresBarrUpdate(0, 0);
     Main_ShowElement('scene1');
@@ -1602,7 +1882,7 @@ function Play_A_Control(value, control) {
 }
 
 function Play_ClearPlay(clearChat) {
-    Play_Playing = false;
+    // Play_Playing = false;
     document.body.removeEventListener('keydown', Play_handleKeyDown);
     document.removeEventListener('visibilitychange', Play_Resume);
     if (clearChat) ChatLive_Clear();
@@ -1828,7 +2108,9 @@ function Play_KeyPause(PlayVodClip) {
         if (Main_IsNotBrowser) {
             try {
                 webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_OFF);
-                Play_avplay.play();
+                if (PlayVodClip === 2 && PlayVod_useHls && Play_avplay_hls_player) Play_avplay_hls_player.play();
+                else if (PlayVodClip === 3 && Play_avplay_hls_player) Play_avplay_hls_player.play();
+                else if (Play_avplay_hls_player) Play_avplay_hls_player.play();
             } catch (e) {
                 console.log('Play_avplay.pause: ' + e);
                 return;
@@ -1855,13 +2137,16 @@ function Play_KeyPause(PlayVodClip) {
         if (Main_IsNotBrowser) {
             try {
                 webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_ON);
-                Play_avplay.pause();
+                if (PlayVodClip === 2 && PlayVod_useHls && Play_avplay_hls_player) Play_avplay_hls_player.pause();
+                else if (PlayVodClip === 3 && Play_avplay_hls_player) Play_avplay_hls_player.pause();
+                else if (Play_avplay_hls_player) Play_avplay_hls_player.pause();
             } catch (e) {
                 console.log('Play_avplay.pause: ' + e);
                 return;
             }
         }
         ChatLive_Playing = false;
+        Play_HideBufferDialog();
 
         window.clearInterval(Play_streamCheckId);
         window.clearInterval(PlayVod_streamCheckId);
@@ -2286,9 +2571,84 @@ function Play_CheckEndStart(error_410) {
         Play_showWarningDialog(STR_410_ERROR);
     }
 
-    Play_EndSet(1);
-    Main_values.Play_isHost = false;
-    Play_PlayEndStart(1);
+    // Play_showBufferDialog();
+    Play_state = -1;
+    Play_loadingDataTry = 0;
+    Play_loadingDataTimeout = 2000;
+    ChatLive_Clear();
+    window.clearInterval(Play_streamInfoTimerId);
+    window.clearInterval(Play_streamCheckId);
+    if (Main_values.Play_selectedChannel_id !== '') Play_loadDataCheckHost();
+    //else Play_CheckId();
+}
+
+// function Play_CheckId() {
+//     BasexmlHttpGet(
+//         'https://api.twitch.tv/kraken/users?login=' + Main_values.Play_selectedChannel,
+//         Play_loadingDataTimeout,
+//         2,
+//         null,
+//         Play_CheckIdValue,
+//         Play_CheckIdError,
+//         false
+//     );
+// }
+
+// function Play_CheckIdValue(musers) {
+//     musers = JSON.parse(musers).users[0];
+//     if (musers !== undefined) {
+//         Main_values.Play_selectedChannel_id = musers._id;
+//         Play_loadingDataTry = 0;
+//         Play_loadingDataTimeout = 2000;
+//         Play_loadDataCheckHost();
+//     } else Play_PlayEndStart(1);
+// }
+
+// function Play_CheckIdError() {
+//     Play_loadingDataTry++;
+//     if (Play_loadingDataTry < Play_loadingDataTryMax) {
+//         Play_loadingDataTimeout += 250;
+//         Play_CheckId();
+//     } else Play_EndStart(false, 1);
+// }
+
+var Play_loadDataCheckHostId;
+function Play_loadDataCheckHost() {
+    Play_loadDataCheckHostId = new Date().getTime();
+
+    // Main_GetHost(Play_CheckHost, Play_loadDataCheckHostId, Main_values.Main_selectedChannel);
+}
+
+function Play_CheckHost(responseObj, id) {
+    if (Play_isOn && Play_loadDataCheckHostId === id) {
+        if (responseObj.status === 200) {
+            var data = JSON.parse(responseObj.responseText).data;
+
+            if (data.user && data.user.hosting) {
+                var response = data.user.hosting;
+
+                Play_TargetHost = response;
+
+                Play_IsWarning = true;
+                Play_showWarningDialog(Main_values.Play_selectedChannelDisplayname + STR_IS_NOW + STR_USER_HOSTING + Play_TargetHost.displayName);
+
+                window.setTimeout(function () {
+                    Play_IsWarning = false;
+                }, 4000);
+
+                Play_EndSet(0);
+                Main_values.Play_isHost = true;
+
+                Play_PlayEndStart(1);
+
+                return;
+            }
+        }
+
+        Play_EndSet(1);
+        Main_values.Play_isHost = false;
+        Play_PlayEndStart(1);
+    }
 }
 
 function Play_setFollow() {
@@ -2319,6 +2679,92 @@ function Play_KeyReturn(is_vod) {
         } else {
             Play_showExitDialog();
         }
+    }
+}
+
+function Play_PlayHLSUrl(url) {
+    console.log('Play_PlayHLSUrl url:', url);
+
+    if (!url) {
+        console.error('HLS URL пустой!');
+        return;
+    }
+
+    if (!Play_HlsSupported) {
+        console.error('Play_PlayHLSUrl called but HLS is not supported on this device');
+        return;
+    }
+
+    try {
+        Play_showBufferDialog();
+        Play_ShowBlackOverlay();
+        Play_SetAvplayVisible(false);
+        // Убираем предыдущий плеер
+        if (hls) {
+            hls.destroy();
+            hls = null;
+        }
+
+        // Убираем старый <video>
+        if (Play_avplay_hls_player) {
+            Play_avplay_hls_player.style.visibility = 'hidden';
+            Play_avplay_hls_player.pause();
+            Play_SetHlsVisible(false);
+            Play_avplay_hls_player.removeAttribute('src');
+            Play_avplay_hls_player.load();
+            Play_avplay_hls_player.remove();
+        }
+
+        // Создаём новый <video> для HLS
+        initHLSPlayer();  // создаёт Play_avplay_hls_player и hls
+
+        // Загружаем URL
+        hls.loadSource(url);
+        hls.attachMedia(Play_avplay_hls_player);
+        Play_SetHlsVisible(true);
+        Play_avplay_hls_player.play();
+    } catch (e) {
+        console.error('Ошибка запуска HLS:', e);
+    }
+}
+
+// Plays a progressive (non-HLS) URL such as a clip MP4 directly on the HTML5
+// <video> element. hls.js cannot handle progressive MP4, so we set video.src
+// directly and let the browser/Tizen webview play it natively.
+function Play_PlayProgressiveUrl(url) {
+    console.log('Play_PlayProgressiveUrl url:', url);
+
+    if (!url) {
+        console.error('Play_PlayProgressiveUrl empty url');
+        return;
+    }
+
+    try {
+        Play_showBufferDialog();
+        Play_ShowBlackOverlay();
+        Play_SetAvplayVisible(false);
+
+        // hls.js must not be attached when we play a progressive source
+        if (hls) {
+            try {
+                hls.destroy();
+            } catch (e) {
+                console.log('Play_PlayProgressiveUrl hls destroy', e);
+            }
+            hls = null;
+        }
+
+        // The <video> element may not exist yet (e.g. init was skipped/failed)
+        if (!Play_avplay_hls_player) initHLSPlayer();
+
+        Play_avplay_hls_player.pause();
+        Play_avplay_hls_player.removeAttribute('src');
+        Play_avplay_hls_player.src = url;
+        Play_avplay_hls_player.load();
+        Play_SetHlsVisible(true);
+        Play_avplay_hls_player.play();
+    } catch (e) {
+        console.error('Play_PlayProgressiveUrl error:', e);
     }
 }
 
@@ -2408,24 +2854,8 @@ function Play_RestorePlayDataValues() {
 }
 
 function Play_handleKeyDown(e) {
-    if (Play_state !== Play_STATE_PLAYING) {
-        switch (e.keyCode) {
-            case KEY_RETURN_Q:
-            case KEY_KEYBOARD_BACKSPACE:
-            case KEY_RETURN:
-                if (Play_ExitDialogVisible() || Play_SingleClickExit) {
-                    Play_CleanHideExit();
-                    Play_hideChat();
-                    Play_shutdownStream();
-                } else {
-                    Play_showExitDialog();
-                }
-                break;
-            default:
-                break;
-        }
-    } else {
-        switch (e.keyCode) {
+    // if (Play_state !== Play_STATE_PLAYING) {
+    switch (e.keyCode) {
             case KEY_LEFT:
                 if (UserLiveFeed_isFeedShow() && (!Play_EndFocus || !Play_isEndDialogVisible())) {
                     if (Play_FeedPos && !UserLiveFeed_loadingData) {
@@ -2571,7 +3001,6 @@ function Play_handleKeyDown(e) {
                 break;
             default:
                 break;
-        }
     }
 }
 
@@ -2720,7 +3149,7 @@ function Play_MakeControls() {
             } else if (PlayVodClip === 2) {
                 PlayVod_hidePanel();
                 if (Main_IsNotBrowser) {
-                    Main_values.vodOffset = Play_avplay.getCurrentTime() / 1000;
+                    // Main_values.vodOffset = Play_avplay.getCurrentTime() / 1000;
                 }
                 PlayVod_quality = PlayVod_qualities[PlayVod_qualityIndex].id;
                 PlayVod_qualityPlaying = PlayVod_quality;
@@ -2729,8 +3158,9 @@ function Play_MakeControls() {
                 PlayVod_onPlayer();
             } else if (PlayVodClip === 3) {
                 PlayClip_hidePanel();
-                if (Main_IsNotBrowser) {
-                    PlayClip_offsettime = Play_avplay.getCurrentTime() - 1;
+                if (Main_IsNotBrowser && Play_avplay_hls_player) {
+                    // Preserve playback position across the quality switch
+                    PlayClip_offsettime = Math.floor((Play_avplay_hls_player.currentTime || 0) * 1000);
                 }
                 PlayClip_quality = PlayClip_qualities[PlayClip_qualityIndex].id;
                 PlayClip_qualityPlaying = PlayClip_quality;
@@ -3119,7 +3549,7 @@ function Play_MakeControls() {
             }
 
             if (currentProxyEnabled !== Settings_get_enabled()) {
-                Play_showBufferDialog();
+                // Play_showBufferDialog();
                 Play_state = Play_STATE_LOADING_TOKEN;
                 Play_loadData();
             }

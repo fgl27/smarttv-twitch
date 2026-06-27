@@ -1,3 +1,11 @@
+## FORK
+
+The goal of this fork is to allow the newer HLS formatted live streams to be played. These are streams which have 1440p resolution enabled. HLS requires hardware support, so this fork does not fix playback for every TV model. However it does fix it for some where hardware support is present, but the integrated video player is not up to par.
+
+See my [comment](https://github.com/fgl27/smarttv-twitch/issues/316#issuecomment-3017232513) on the original issue for details on what works, known issues, etc.
+
+## ORIGINAL
+
 **smarttv-twitch**
 
 -   [About the project](#about-the-project)

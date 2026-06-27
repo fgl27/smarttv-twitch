@@ -199,6 +199,11 @@ var Settings_value = {
     force_http_override: {
         values: ['no', 'yes'],
         defaultValue: 1
+    },
+    player_mode: {
+        //hls / native
+        values: ['hls', 'native'],
+        defaultValue: 1
     }
 };
 
@@ -376,6 +381,12 @@ function Settings_SetSettings() {
     Settings_value[key].values = [STR_NO, STR_YES];
 
     div += Settings_DivOptionWithSummary(key, STR_FORCE_HTTP, STR_FORCE_HTTP_SUMMARY);
+
+    key = 'player_mode';
+    Settings_value_keys.push(key);
+    Settings_value[key].values = [STR_PLAYER_MODE_HLS, STR_PLAYER_MODE_NATIVE];
+
+    div += Settings_DivOptionWithSummary(key, STR_PLAYER_MODE, STR_PLAYER_MODE_SUMMARY);
 
     key = 'single_click_exit';
     Settings_value_keys.push(key);
@@ -573,6 +584,10 @@ function Settings_SetStrings() {
     Settings_DivOptionChangeLang(key, STR_SINGLE_EXIT, STR_SINGLE_EXIT_SUMMARY);
     Settings_value[key].values = [STR_NO, STR_YES];
 
+    key = 'player_mode';
+    Settings_DivOptionChangeLang(key, STR_PLAYER_MODE, STR_PLAYER_MODE_SUMMARY);
+    Settings_value[key].values = [STR_PLAYER_MODE_HLS, STR_PLAYER_MODE_NATIVE];
+
     key = 'app_animations';
     Main_textContent(key + '_name', STR_APP_ANIMATIONS);
     Settings_value[key].values = [STR_NO, STR_YES];
@@ -601,6 +616,7 @@ function Settings_SetDefautls() {
     UserLiveFeed_Notify = Settings_Obj_default('live_notification');
     UserLiveFeed_NotifyTimeout = Settings_Obj_values('live_notification_time') * 1000;
     Play_SingleClickExit = Settings_Obj_default('single_click_exit');
+    Play_PlayerMode = Settings_Obj_default('player_mode');
     Play_EndSettingsCounter = Settings_Obj_default('end_dialog_counter');
     Settings_ShowCounter(Settings_Obj_default('show_screen_counter'));
     Settings_proxy_set_start();
@@ -688,6 +704,8 @@ function Settings_SetDefault(position) {
         Settings_set_http();
         Main_setItem('force_http_override', 2);
         Settings_value.force_http_override.defaultValue = 1;
+    } else if (position === 'player_mode') {
+        Play_PlayerMode = Settings_Obj_default('player_mode');
     } else if (position === 'clock_offset') {
         Settings_SetClock();
         Main_updateclock();

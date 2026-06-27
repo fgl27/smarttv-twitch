@@ -459,4 +459,11 @@ function en_USLang() {
     STR_FORCE_HTTP = 'Force HTTP';
     STR_FORCE_HTTP_SUMMARY =
         "Some devices can't perform some HTTPS requests with may cause the player not to work, setting this will force some connections to use HTTP only, this may solve player and related issues";
+    STR_PLAYER_MODE = 'Live stream player';
+    STR_PLAYER_MODE_SUMMARY =
+        "Which player to use for live streams. HLS plays newer formats (e.g. 2K/1440p) at slightly higher latency, and on older devices without HLS support it automatically falls back to the native player. Native has lower latency, and on devices that support HLS it automatically switches to HLS for streams the native player can't decode (2K/fMP4) - so it's a safe low-latency choice.";
+    STR_PLAYER_MODE_HLS = 'hls';
+    STR_PLAYER_MODE_NATIVE = 'native';
+    STR_FORMAT_NOT_SUPPORTED =
+        "This stream's format isn't supported by this device's player. Streamers using the new 2K/1440p format are delivered in fMP4, which older TVs cannot play in the native player.";
 }

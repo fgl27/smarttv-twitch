@@ -1324,6 +1324,20 @@ function Play_extractQualities(input) {
         return bb - ab;
     });
 
+    // Pin the 'source' tag to the highest-resolution rendition (index 0).
+    // Twitch lists renditions in an arbitrary order, so the first-parsed entry
+    // (which received the 'source' tag above) is NOT reliably the highest
+    // quality. Left as-is, the default 'source' preference in Play_qualityChanged
+    // text-matches that mislabeled entry and can start the stream in a LOW
+    // quality - most visibly on the first stream after launch, when the
+    // preference is still the bare 'source'.
+    for (var s = 0; s < result.length; s++) {
+        result[s].id = result[s].id.replace(' | source', '');
+    }
+    if (result.length && result[0].id.indexOf('source') === -1) {
+        result[0].id = result[0].id + ' | source';
+    }
+
     return result;
 }
 

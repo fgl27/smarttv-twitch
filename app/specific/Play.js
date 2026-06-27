@@ -209,6 +209,27 @@ var hls;
 var Play_avplay;
 var Play_avplay_obj = null;
 var Play_avplay_hls_player;
+
+// Whether hls.js + MSE are usable on this device. Computed once, safely.
+// On devices without it we must NEVER throw at init (would black-screen the app)
+// and we fall back to the native Tizen avplay for live streams.
+var Play_HlsSupported = false;
+try {
+    Play_HlsSupported = typeof Hls !== 'undefined' && Hls.isSupported() && Hls.isMSESupported();
+} catch (e) {
+    Play_HlsSupported = false;
+}
+
+// Player selection: 0 = HLS (default), 1 = Native (avplay). Loaded in Play_PreStart.
+// HLS = use the HLS player when the device supports it, otherwise native.
+// Native = native player (lower latency) with automatic HLS fallback for fMP4/2K.
+var Play_PlayerMode = 0;
+var Play_PLAYER_HLS = 0;
+var Play_PLAYER_NATIVE = 1;
+// Effective player for the CURRENT live stream. Starts as Play_UseHlsForLive()
+// but can flip to true at runtime if the native player can't decode the stream
+// (fMP4/2K) and we fall back to HLS. Single source of truth for the live path.
+var Play_LiveUseHls = false;
 var Play_black_overlay = null;
 var Play_BufferPercentage = 0;
 var Play_bufferingcomplete = false;
@@ -270,26 +291,41 @@ function initHLSPlayer() {
     Play_avplay_hls_player = video;
     document.getElementById('scene2').appendChild(video);
 
-    // Initialize hls.js controller
-    hls = new Hls(Play_GetHlsConfig());
-    hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-      console.log('<video> and hls.js are now bound together !');
-    });
-    hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
-      console.log(
-        'manifest loaded, found ' + data.levels.length + ' quality level',
-      );
-    });
-    hls.on(Hls.Events.ERROR, function (event, data) {
-        console.error('HLS ERROR', event, data);
-    });
+    // The <video> element above is always created (clips also use it via video.src).
+    // hls.js is only created when MSE is usable. Wrapped in try/catch so init can
+    // NEVER throw - a throw here would abort Main_ready and black-screen the whole app.
+    if (!Play_HlsSupported) {
+        hls = null;
+        return;
+    }
 
-    // Placeholder HLS fMP4 stream url - it is required to properly initialize the player
-    // Removing it breaks it for some reason, and refuses to play any url loaded later
-    hls.loadSource('https://stream-akamai.castr.com/5b9352dbda7b8c769937e459/live_2361c920455111ea85db6911fe397b9e/index.fmp4.m3u8');
+    try {
+        // Initialize hls.js controller
+        hls = new Hls(Play_GetHlsConfig());
+        hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+            console.log('<video> and hls.js are now bound together !');
+        });
+        hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+            console.log('manifest loaded, found ' + data.levels.length + ' quality level');
+        });
+        hls.on(Hls.Events.ERROR, function (event, data) {
+            console.error('HLS ERROR', event, data);
+        });
 
-    // Attach to <video> tag
-    hls.attachMedia(video);
+        // Attach to <video> tag. We no longer load an external placeholder manifest:
+        // the real source is always set later via Play_PlayHLSUrl (loadSource), and
+        // attach-then-load is the documented hls.js usage. This removes a hard
+        // dependency on a third-party server at startup.
+        hls.attachMedia(video);
+    } catch (e) {
+        console.error('initHLSPlayer failed', e);
+        hls = null;
+    }
+}
+
+function Play_UseHlsForLive() {
+    if (Play_PlayerMode === Play_PLAYER_NATIVE) return false; // forced native
+    return Play_HlsSupported; // Auto and forced-HLS both require MSE support
 }
 
 function Play_PreStart() {
@@ -319,6 +355,9 @@ function Play_PreStart() {
     Play_ChatBackground = (Main_values.ChatBackground * 0.05).toFixed(2);
     Play_ChatDelayPosition = Main_getItemInt('Play_ChatDelayPosition', 0);
     Play_LowLatency = Main_getItemBool('Play_LowLatency', false);
+    // Stored by the Settings screen under 'player_mode' as a 1-based index.
+    Play_PlayerMode = Main_getItemInt('player_mode', 1) - 1;
+    if (Play_PlayerMode < Play_PLAYER_HLS || Play_PlayerMode > Play_PLAYER_NATIVE) Play_PlayerMode = Play_PLAYER_HLS;
 
     //"GET_LIVE_DURATION" is available since Tizen version 2.4.
     //That is used to get a Play_LowLatency scenario
@@ -615,6 +654,7 @@ function Play_Start() {
     Play_playlistResponse = 0;
     Play_playingTry = 0;
     Play_isOn = true;
+    Play_LiveUseHls = Play_UseHlsForLive();
     // Play_Playing = false;
     Play_state = Play_STATE_LOADING_TOKEN;
     document.addEventListener('visibilitychange', Play_Resume, false);
@@ -1019,11 +1059,13 @@ function Play_loadDataRequest(skipProxy) {
 
                 xmlHttp.open('GET', theUrl, true);
 
-                try {
-                    // Load stream url to HLS player
-                    hls.loadSource(theUrl);
-                } catch (e) {
-                    console.error('Failed to load hls source!', e);
+                if (hls && Play_LiveUseHls) {
+                    try {
+                        // Load stream url to HLS player
+                        hls.loadSource(theUrl);
+                    } catch (e) {
+                        console.error('Failed to load hls source!', e);
+                    }
                 }
             }
             xmlHttp.timeout = Play_loadingDataTimeout;
@@ -1387,7 +1429,27 @@ var Play_listener = {
     },
     onerror: function (eventType) {
         console.log('onerror:', 'date: ' + new Date() + ' eventType: ' + eventType);
-        if (eventType === 'PLAYER_ERROR_CONNECTION_FAILED' || eventType === 'PLAYER_ERROR_INVALID_URI') Play_CheckEndStart();
+        if (eventType === 'PLAYER_ERROR_NOT_SUPPORTED_FORMAT') {
+            // The native player can't decode this stream (2K/1440p-enabled channels
+            // deliver every rendition as fMP4).
+            if (Play_HlsSupported) {
+                // MSE-capable device: silently switch to the HLS player so "Native"
+                // stays a safe low-latency choice that still plays fMP4 streams.
+                Play_UseHlsFallbackLive('not-supported-format');
+            } else {
+                // Old device with no MSE: nothing can play it - tell the user and end.
+                Play_HideBufferDialog();
+                Play_IsWarning = true;
+                Play_showWarningDialog(STR_FORMAT_NOT_SUPPORTED);
+                window.setTimeout(function () {
+                    Play_IsWarning = false;
+                    Play_HideWarningDialog();
+                    if (Play_isOn) Play_CheckEndStart();
+                }, 4000);
+            }
+        } else if (eventType === 'PLAYER_ERROR_CONNECTION_FAILED' || eventType === 'PLAYER_ERROR_INVALID_URI') {
+            Play_CheckEndStart();
+        }
     }
 };
 
@@ -1415,21 +1477,96 @@ function Play_onPlayer() {
     if (Main_IsNotBrowser) {
         Play_loadChat();
 
-        Play_PlayHLSUrl(Play_playingUrl);
-        Play_SetFullScreen(Play_isFullScreen);
+        if (Play_LiveUseHls) {
+            Play_PlayHLSUrl(Play_playingUrl);
+            Play_SetFullScreen(Play_isFullScreen);
+            Play_offsettime = Play_oldcurrentTime;
+
+            try {
+                //Disabled closed caption as isn't properly supported by all devices
+                // Play_avplay.setSilentSubtitle(true);
+            } catch (e) {
+                console.log('PlayVod_onPlayer open ' + e);
+            }
+
+            // Start stream in HLS player
+            Play_avplay_hls_player.play();
+        } else {
+            // Native Tizen avplay path (devices without MSE, or forced via settings)
+            Play_PlayNativeLive(Play_playingUrl);
+        }
+
+        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
+    } else Play_loadChat();
+}
+
+// Plays a live stream variant playlist (m3u8) through the native Tizen avplay.
+// Used when hls.js/MSE is unavailable or the user forced the native player.
+function Play_PlayNativeLive(url) {
+    try {
+        Play_ShowBlackOverlay();
+        // Play_OpenUrl (inside Play_StopAndCloseAndPlay) switches visibility to avplay
+        Play_StopAndCloseAndPlay(url);
         Play_offsettime = Play_oldcurrentTime;
 
         try {
-            //Disabled closed caption as isn't properly supported by all devices
-            // Play_avplay.setSilentSubtitle(true);
+            Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_PLAY', 'PLAYER_BUFFER_SIZE_IN_SECOND', Play_Buffer);
+            Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_RESUME', 'PLAYER_BUFFER_SIZE_IN_SECOND', Play_Buffer);
         } catch (e) {
-            console.log('PlayVod_onPlayer open ' + e);
+            console.log('Play_PlayNativeLive setBufferingParam ' + e);
         }
 
-        // Start stream in HLS player
-        Play_avplay_hls_player.play();
-        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-    } else Play_loadChat();
+        Play_SetFullScreen(Play_isFullScreen);
+        Play_avplay.setListener(Play_listener);
+        Play_onPlayerCounter = 0;
+
+        Play_avplay.prepareAsync(
+            function () {
+                console.log('Play_avplay.prepareAsync Live OK:', 'date: ' + new Date());
+                Play_avplay.play();
+                Play_HideBufferDialog();
+                Play_HideBlackOverlay();
+
+                Play_PlayerCheckCount = 0;
+                Play_PlayerCheckTimer = 1 + Play_Buffer * 2;
+                Play_PlayerCheckQualityChanged = false;
+                window.clearInterval(Play_streamCheckId);
+                Play_streamCheckId = window.setInterval(Play_PlayerCheck, Play_PlayerCheckInterval);
+            },
+            function () {
+                console.log('Play_avplay.prepareAsync Live NOK:', 'date: ' + new Date());
+                Play_onPlayerCounter++;
+                if (Play_onPlayerCounter < 2) Play_PlayNativeLive(url);
+                else if (Play_qualityIndex < Play_getQualitiesCount() - 1) Play_DropOneQuality();
+                else if (Play_HlsSupported) Play_UseHlsFallbackLive('prepare-failed');
+                else Play_CheckEndStart();
+            }
+        );
+    } catch (e) {
+        console.log('Play_PlayNativeLive error ' + e);
+        Play_CheckEndStart();
+    }
+}
+
+// Switch the current live stream from the native player to HLS at runtime.
+// Triggered when native avplay can't decode the stream (fMP4/2K) on an
+// MSE-capable device, so "Native" mode stays a safe low-latency choice.
+function Play_UseHlsFallbackLive(reason) {
+    if (Play_LiveUseHls || !Play_HlsSupported || !Play_isOn) return;
+    console.log('Play live fallback to HLS:', reason);
+    Play_LiveUseHls = true; // from now on the live path treats this stream as HLS
+
+    try {
+        Play_StopAndClose();
+    } catch (e) {
+        console.log('Play_UseHlsFallbackLive stop error', e);
+    }
+
+    Play_onPlayerCounter = 0;
+    Play_PlayHLSUrl(Play_playingUrl);
+    Play_SetFullScreen(Play_isFullScreen);
+    Play_offsettime = Play_oldcurrentTime;
+    if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
 }
 
 function Play_loadChat() {
@@ -1442,6 +1579,9 @@ function Play_loadChat() {
 }
 
 function Play_PlayerCheck() {
+    // In HLS mode the <video> element events handle stalls; this avplay-based
+    // check only applies to the native live path.
+    if (Play_LiveUseHls) return;
     if (Play_PlayerTime === Play_currentTime && Play_isIdleOrPlaying()) {
         Play_PlayerCheckCount++;
         if (Play_PlayerCheckCount > Play_PlayerCheckTimer) {
@@ -1552,8 +1692,10 @@ function Play_isNotplaying() {
     if (!Main_IsNotBrowser) return false;
 
     if (PlayVod_isOn && PlayVod_useHls) return !Play_avplay_hls_player || Play_avplay_hls_player.paused;
-    if (Play_isOn) return !Play_avplay_hls_player || Play_avplay_hls_player.paused;
-    if (PlayClip_isOn) {
+    // Clips always play on the <video> element
+    if (PlayClip_isOn) return !Play_avplay_hls_player || Play_avplay_hls_player.paused;
+    if (Play_isOn) {
+        if (Play_LiveUseHls) return !Play_avplay_hls_player || Play_avplay_hls_player.paused;
         try {
             return Play_avplay.getState() !== 'PLAYING';
         } catch (e) {
@@ -1953,7 +2095,7 @@ function Play_KeyPause(PlayVodClip) {
             try {
                 webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_OFF);
                 if (PlayVodClip === 2 && PlayVod_useHls && Play_avplay_hls_player) Play_avplay_hls_player.play();
-                else if (PlayVodClip === 3 && Play_avplay) Play_avplay.play();
+                else if (PlayVodClip === 3 && Play_avplay_hls_player) Play_avplay_hls_player.play();
                 else if (Play_avplay_hls_player) Play_avplay_hls_player.play();
             } catch (e) {
                 console.log('Play_avplay.pause: ' + e);
@@ -1982,7 +2124,7 @@ function Play_KeyPause(PlayVodClip) {
             try {
                 webapis.appcommon.setScreenSaver(webapis.appcommon.AppCommonScreenSaverState.SCREEN_SAVER_ON);
                 if (PlayVodClip === 2 && PlayVod_useHls && Play_avplay_hls_player) Play_avplay_hls_player.pause();
-                else if (PlayVodClip === 3 && Play_avplay) Play_avplay.pause();
+                else if (PlayVodClip === 3 && Play_avplay_hls_player) Play_avplay_hls_player.pause();
                 else if (Play_avplay_hls_player) Play_avplay_hls_player.pause();
             } catch (e) {
                 console.log('Play_avplay.pause: ' + e);
@@ -2534,6 +2676,11 @@ function Play_PlayHLSUrl(url) {
         return;
     }
 
+    if (!Play_HlsSupported) {
+        console.error('Play_PlayHLSUrl called but HLS is not supported on this device');
+        return;
+    }
+
     try {
         Play_showBufferDialog();
         Play_ShowBlackOverlay();
@@ -2564,6 +2711,46 @@ function Play_PlayHLSUrl(url) {
         Play_avplay_hls_player.play();
     } catch (e) {
         console.error('Ошибка запуска HLS:', e);
+    }
+}
+
+// Plays a progressive (non-HLS) URL such as a clip MP4 directly on the HTML5
+// <video> element. hls.js cannot handle progressive MP4, so we set video.src
+// directly and let the browser/Tizen webview play it natively.
+function Play_PlayProgressiveUrl(url) {
+    console.log('Play_PlayProgressiveUrl url:', url);
+
+    if (!url) {
+        console.error('Play_PlayProgressiveUrl empty url');
+        return;
+    }
+
+    try {
+        Play_showBufferDialog();
+        Play_ShowBlackOverlay();
+        Play_SetAvplayVisible(false);
+
+        // hls.js must not be attached when we play a progressive source
+        if (hls) {
+            try {
+                hls.destroy();
+            } catch (e) {
+                console.log('Play_PlayProgressiveUrl hls destroy', e);
+            }
+            hls = null;
+        }
+
+        // The <video> element may not exist yet (e.g. init was skipped/failed)
+        if (!Play_avplay_hls_player) initHLSPlayer();
+
+        Play_avplay_hls_player.pause();
+        Play_avplay_hls_player.removeAttribute('src');
+        Play_avplay_hls_player.src = url;
+        Play_avplay_hls_player.load();
+        Play_SetHlsVisible(true);
+        Play_avplay_hls_player.play();
+    } catch (e) {
+        console.error('Play_PlayProgressiveUrl error:', e);
     }
 }
 
@@ -2957,8 +3144,9 @@ function Play_MakeControls() {
                 PlayVod_onPlayer();
             } else if (PlayVodClip === 3) {
                 PlayClip_hidePanel();
-                if (Main_IsNotBrowser) {
-                    // PlayClip_offsettime = Play_avplay.getCurrentTime() - 1;
+                if (Main_IsNotBrowser && Play_avplay_hls_player) {
+                    // Preserve playback position across the quality switch
+                    PlayClip_offsettime = Math.floor((Play_avplay_hls_player.currentTime || 0) * 1000);
                 }
                 PlayClip_quality = PlayClip_qualities[PlayClip_qualityIndex].id;
                 PlayClip_qualityPlaying = PlayClip_quality;

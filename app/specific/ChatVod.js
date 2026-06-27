@@ -56,10 +56,15 @@ var Chat_CleanMax = 60;
 var Chat_JustStarted = true;
 var Chat_comment_ids = {};
 
+// Send the FULL GraphQL query instead of a persistedQuery hash, so VOD chat
+// replay keeps working if Twitch rotates the hash (same hardening as clips).
+// Note: the cursor variable maps to the `after` argument on Video.comments.
+var Chat_VodCommentsQuery =
+    'query VideoCommentsByOffsetOrCursor($videoID: ID!, $contentOffsetSeconds: Int, $cursor: Cursor) { video(id: $videoID) { id comments(contentOffsetSeconds: $contentOffsetSeconds, after: $cursor) { edges { cursor node { id contentOffsetSeconds commenter { login displayName } message { userColor userBadges { setID version } fragments { text emote { emoteID } } } } } } } }';
 var Chat_loadChatRequestPost =
-    '{"operationName":"VideoCommentsByOffsetOrCursor","variables":{"videoID":"%v","contentOffsetSeconds":%o},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"b70a3591ff0f4e0313d126c6a1502d79a1c02baebb288227c582044aa76adf6a"}}}';
+    '{"operationName":"VideoCommentsByOffsetOrCursor","variables":{"videoID":"%v","contentOffsetSeconds":%o},"query":"' + Chat_VodCommentsQuery + '"}';
 var Chat_loadChatRequestPost_Cursor =
-    '{"operationName":"VideoCommentsByOffsetOrCursor","variables":{"videoID":"%v","cursor":"%c"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"b70a3591ff0f4e0313d126c6a1502d79a1c02baebb288227c582044aa76adf6a"}}}';
+    '{"operationName":"VideoCommentsByOffsetOrCursor","variables":{"videoID":"%v","cursor":"%c"},"query":"' + Chat_VodCommentsQuery + '"}';
 
 var Chat_UserJPKRegex = new RegExp('[^\x00-\x7F]', 'g');
 

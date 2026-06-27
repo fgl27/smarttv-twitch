@@ -311,8 +311,20 @@ function Main_initWindows() {
             for (var key in TV_Keys) TVKeyValue_regKey(TV_Keys[key]);
         }
 
-        Play_PreStart();
-        Chat_Preinit();
+        // Guard player/chat init so a failure (e.g. hls.js/MSE unsupported on a
+        // device) can NEVER abort the rest of startup. Without this an exception
+        // here would skip Screens_InitScreens() and the keyup handler below,
+        // leaving the user with a black screen and an unresponsive remote.
+        try {
+            Play_PreStart();
+        } catch (e) {
+            console.error('Play_PreStart failed', e);
+        }
+        try {
+            Chat_Preinit();
+        } catch (e) {
+            console.error('Chat_Preinit failed', e);
+        }
 
         if (AddUser_UserIsSet() && AddUser_UsernameArray[0].access_token) {
             window.clearInterval(Main_updateUserFeedId);

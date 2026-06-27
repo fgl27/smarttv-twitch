@@ -60,7 +60,10 @@ var PlayVod_hlsSeekApplied = false;
 function PlayVod_Start() {
     Play_showBufferDialog();
     Play_HideEndDialog();
-    PlayVod_useHls = true;
+    // Honor device MSE support and the player toggle: on devices without MSE
+    // (or when the user forced the native player) start VODs on the native
+    // avplay instead of the HLS <video> player.
+    PlayVod_useHls = Play_UseHlsForLive();
     PlayVod_hlsListenerBound = false;
     PlayVod_switchingToHls = false;
     PlayVod_hlsSeekApplied = false;
@@ -1041,18 +1044,24 @@ function PlayVod_jump() {
 
     Play_clearPause();
     if (!Play_isEndDialogVisible()) {
-        if (!PlayVod_useHls && Main_IsNotBrowser) {
+        if (!PlayVod_useHls && !PlayClip_isOn && Main_IsNotBrowser) {
             if (Play_isIdleOrPlaying()) Play_avplay.pause();
         }
 
         try {
             console.log('PlayVod_jump to', PlayVod_TimeToJump);
-            Main_values.vodOffset = PlayVod_TimeToJump;
-            Main_SaveValues();
-            if (PlayVod_useHls && Play_avplay_hls_player) {
-                Play_avplay_hls_player.currentTime = Math.max(PlayVod_TimeToJump, 0);
-            } else if (Main_IsNotBrowser) {
-                Play_avplay.seekTo(PlayVod_TimeToJump > 0 ? PlayVod_TimeToJump * 1000 : 0);
+            if (PlayClip_isOn) {
+                // Clips play on the <video> element (seconds-based currentTime)
+                if (Play_avplay_hls_player) Play_avplay_hls_player.currentTime = Math.max(PlayVod_TimeToJump, 0);
+                PlayClip_currentTime = PlayVod_TimeToJump * 1000;
+            } else {
+                Main_values.vodOffset = PlayVod_TimeToJump;
+                Main_SaveValues();
+                if (PlayVod_useHls && Play_avplay_hls_player) {
+                    Play_avplay_hls_player.currentTime = Math.max(PlayVod_TimeToJump, 0);
+                } else if (Main_IsNotBrowser) {
+                    Play_avplay.seekTo(PlayVod_TimeToJump > 0 ? PlayVod_TimeToJump * 1000 : 0);
+                }
             }
         } catch (e) {
             Play_HideWarningDialog();
@@ -1065,14 +1074,16 @@ function PlayVod_jump() {
         PlayClip_PlayerCheckQualityChanged = false;
 
         //Save in case we crash or something related
-        PlayVod_currentTime = PlayVod_TimeToJump * 1000;
-        PlayVod_SaveVodIds();
+        if (!PlayClip_isOn) {
+            PlayVod_currentTime = PlayVod_TimeToJump * 1000;
+            PlayVod_SaveVodIds();
+        }
 
         if (PlayVod_isOn) Chat_offset = PlayVod_TimeToJump;
         else Chat_offset = ChannelVod_vodOffset;
 
         if (PlayClip_HasVOD) Chat_Init();
-        if (!PlayVod_useHls && Main_IsNotBrowser && !Play_isIdleOrPlaying()) Play_avplay.play();
+        if (!PlayVod_useHls && !PlayClip_isOn && Main_IsNotBrowser && !Play_isIdleOrPlaying()) Play_avplay.play();
     }
     Main_innerHTML('progress_bar_jump_to', STR_SPACE);
     document.getElementById('progress_bar_steps').style.display = 'none';

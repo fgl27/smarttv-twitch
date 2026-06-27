@@ -26,6 +26,11 @@ var PlayClip_PlayerCheckRun = false;
 var PlayClip_Buffer = 2000;
 var PlayClip_loadData410 = false;
 
+// Clips are progressive MP4 and play on the HTML5 <video> element
+// (Play_avplay_hls_player) via video.src, not on the native avplay.
+var PlayClip_hlsListenerBound = false;
+var PlayClip_hlsSeekApplied = false;
+
 var PlayClip_jumpTimers = [0, 5];
 var PlayClip_DurationSeconds = 0;
 
@@ -95,6 +100,8 @@ function PlayClip_Start() {
     Main_ShowElement('controls_holder');
 
     PlayClip_offsettime = 0;
+    PlayClip_hlsListenerBound = false;
+    PlayClip_hlsSeekApplied = false;
     PlayClip_PlayerCheckCounter = 0;
     PlayClip_PlayerCheckCount = 0;
     window.clearInterval(PlayClip_streamCheckId);
@@ -283,8 +290,11 @@ function PlayClip_loadData() {
 }
 
 var PlayClip_BaseClipUrl = 'https://gql.twitch.tv/gql';
+// Send the FULL GraphQL query instead of a persistedQuery hash. Twitch rotates
+// those hashes and the old one now returns "PersistedQueryNotFound", which left
+// videoQualities empty and broke clip playback entirely (regardless of player).
 var PlayClip_postMessage =
-    '{"operationName":"VideoAccessToken_Clip","variables":{"slug":"%x"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"36b89d2507fce29e5ca551df756d27c1cfe079e2609642b4390aa4c35796eb11"}}}';
+    '{"operationName":"VideoAccessToken_Clip","variables":{"slug":"%x"},"query":"query VideoAccessToken_Clip($slug: ID!) { clip(slug: $slug) { id playbackAccessToken(params: {platform: \\"web\\", playerBackend: \\"mediaplayer\\", playerType: \\"site\\"}) { signature value } videoQualities { frameRate quality sourceURL } } }"}';
 
 function PlayClip_loadDataRequest() {
     var xmlHttp = new XMLHttpRequest();
@@ -478,57 +488,86 @@ function PlayClip_onPlayer() {
 
     if (Main_IsNotBrowser) {
         Play_ShowBlackOverlay();
-        Play_UseAvplay();
-        PlayNonStream_OpenUrl(PlayClip_playingUrl);
 
-        if (PlayClip_offsettime > 0 && PlayClip_offsettime !== Play_avplay.getCurrentTime()) {
-            try {
-                Play_avplay.seekTo(Math.max(PlayClip_offsettime - 3500, 0)); // minor delay on the seekTo to show were it stop or at least before
-            } catch (e) {
-                console.log('PlayClip_onPlayer seekTo ' + e);
-            }
-            Play_clearPause();
-        }
+        // Clips are progressive MP4 - play them natively on the HTML5 <video>
+        // element. hls.js cannot handle MP4, so we set video.src directly.
+        PlayClip_hlsSeekApplied = false;
+        Play_PlayProgressiveUrl(PlayClip_playingUrl);
+        PlayClip_BindVideoListeners();
 
-        Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_PLAY', 'PLAYER_BUFFER_SIZE_IN_SECOND', PlayClip_Buffer);
-        Play_avplay.setBufferingParam('PLAYER_BUFFER_FOR_RESUME', 'PLAYER_BUFFER_SIZE_IN_SECOND', PlayClip_Buffer);
-        Play_SetFullScreen(Play_isFullScreen);
-        Play_avplay.setListener(PlayClip_listener);
-
-        Play_avplay.prepareAsync(
-            function () {
-                //successCallback
-
-                console.log('Play_avplay.prepareAsync Clip OK:', 'date: ' + new Date());
-
-                Play_avplay.play();
-                PlayClip_DurationSeconds = Play_avplay.getDuration() / 1000;
-                Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
-                Play_HideBufferDialog();
-                Play_HideBlackOverlay();
-                if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
-
-                PlayClip_PlayerCheckCount = 0;
-                Play_PlayerCheckTimer = 1 + PlayClip_Buffer * 2;
-                PlayClip_PlayerCheckQualityChanged = false;
-                window.clearInterval(PlayClip_streamCheckId);
-                PlayClip_streamCheckId = window.setInterval(PlayClip_PlayerCheck, Play_PlayerCheckInterval);
-            },
-            function () {
-                //errorCallback
-
-                console.log('Play_avplay.prepareAsync Clip NOK:', 'date: ' + new Date());
-                Play_onPlayerCounter++;
-                if (Play_onPlayerCounter < 5) PlayClip_onPlayer();
-                else {
-                    console.log('Play_avplay.prepareAsync Clip fail too mutch exit:', 'date: ' + new Date());
-                    Play_EndStart(false, 3);
-                }
-            }
-        );
+        if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
     } else {
         if (Play_ChatEnable && !Play_isChatShown()) Play_showChat();
     }
+}
+
+function PlayClip_BindVideoListeners() {
+    if (!Play_avplay_hls_player || PlayClip_hlsListenerBound) return;
+    PlayClip_hlsListenerBound = true;
+
+    Play_avplay_hls_player.onloadedmetadata = function () {
+        if (!PlayClip_isOn) return;
+        var dur = Math.floor(Play_avplay_hls_player.duration || 0);
+        if (dur) {
+            PlayClip_DurationSeconds = dur;
+            Main_textContent('progress_bar_duration', Play_timeS(PlayClip_DurationSeconds));
+        }
+        // Resume position after a quality switch (PlayClip_offsettime is in ms)
+        if (PlayClip_offsettime > 0 && !PlayClip_hlsSeekApplied) {
+            try {
+                Play_avplay_hls_player.currentTime = Math.max(PlayClip_offsettime / 1000 - 3.5, 0);
+                PlayClip_hlsSeekApplied = true;
+            } catch (e) {
+                console.log('PlayClip video seek error', e);
+            }
+        }
+    };
+
+    Play_avplay_hls_player.ontimeupdate = function () {
+        if (!PlayClip_isOn) return;
+        if (Play_avplay_hls_player.currentTime > 0) {
+            Play_avplay_hls_player.style.visibility = 'visible';
+            Play_HideBlackOverlay();
+            Play_HideBufferDialog();
+        }
+        var currentTime = Math.floor(Play_avplay_hls_player.currentTime * 1000);
+        if (PlayClip_currentTime !== currentTime) PlayClip_updateCurrentTime(currentTime);
+    };
+
+    Play_avplay_hls_player.onplaying = function () {
+        if (!PlayClip_isOn) return;
+        PlayClip_offsettime = 0;
+        PlayClip_bufferingcomplete = true;
+        Play_HideBlackOverlay();
+        Play_HideBufferDialog();
+    };
+
+    Play_avplay_hls_player.onwaiting = function () {
+        if (!PlayClip_isOn) return;
+        if (!Play_BufferDialogVisible()) Play_showBufferDialog();
+    };
+
+    Play_avplay_hls_player.onended = function () {
+        if (!PlayClip_isOn) return;
+        if (PlayClip_currentTime < 1000) return;
+        Play_PannelEndStart(3);
+    };
+
+    Play_avplay_hls_player.onerror = function () {
+        if (!PlayClip_isOn) return;
+        console.log('PlayClip video onerror');
+        Play_onPlayerCounter++;
+        if (Play_onPlayerCounter < 3) {
+            PlayClip_onPlayer();
+        } else if (PlayClip_qualityIndex < PlayClip_getQualitiesCount() - 1) {
+            if (!PlayClip_offsettime) PlayClip_offsettime = Math.floor((Play_avplay_hls_player.currentTime || 0) * 1000);
+            PlayClip_qualityIndex++;
+            PlayClip_qualityDisplay();
+            PlayClip_qualityChanged();
+        } else {
+            Play_EndStart(false, 3);
+        }
+    };
 }
 
 function PlayClip_Resume() {
@@ -536,6 +575,9 @@ function PlayClip_Resume() {
 }
 
 function PlayClip_PlayerCheck() {
+    // Clips run on the HTML5 <video> element; its events (onwaiting/onerror)
+    // handle stalls, so the avplay-based stall detection below is unused.
+    return;
     if (PlayClip_isOn && PlayClip_PlayerTime === PlayClip_currentTime && Play_isIdleOrPlaying()) {
         PlayClip_PlayerCheckCount++;
         if (PlayClip_PlayerCheckCount > Play_PlayerCheckTimer) {
@@ -600,6 +642,18 @@ function PlayClip_shutdownStream() {
 
 function PlayClip_PreshutdownStream() {
     if (Main_IsNotBrowser) Play_offPlayer();
+    // Clips play on the <video> element - stop and detach it too.
+    if (Play_avplay_hls_player) {
+        try {
+            Play_avplay_hls_player.pause();
+            Play_avplay_hls_player.removeAttribute('src');
+            Play_avplay_hls_player.load();
+        } catch (e) {
+            console.log('PlayClip_PreshutdownStream video clear', e);
+        }
+    }
+    PlayClip_hlsListenerBound = false;
+    PlayClip_hlsSeekApplied = false;
     PlayClip_hidePanel();
     PlayClip_qualities = [];
     window.clearInterval(PlayClip_streamCheckId);
